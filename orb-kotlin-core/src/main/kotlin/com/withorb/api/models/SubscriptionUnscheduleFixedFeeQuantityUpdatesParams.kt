@@ -96,6 +96,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .priceId()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -161,6 +169,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [SubscriptionUnscheduleFixedFeeQuantityUpdatesParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .subscriptionId()
+         * .priceId()
+         * ```
+         */
         fun builder() = Builder()
     }
 

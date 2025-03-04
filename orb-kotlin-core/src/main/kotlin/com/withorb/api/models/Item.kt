@@ -83,6 +83,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Item].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .createdAt()
+         * .externalConnections()
+         * .name()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -205,6 +216,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ExternalConnection].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .externalConnectionName()
+             * .externalEntityId()
+             * ```
+             */
             fun builder() = Builder()
         }
 

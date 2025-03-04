@@ -53,6 +53,7 @@ private constructor(
 
         fun none(): EventBackfillListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [EventBackfillListParams]. */
         fun builder() = Builder()
     }
 

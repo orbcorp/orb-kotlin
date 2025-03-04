@@ -211,6 +211,28 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CreditNote].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .createdAt()
+         * .creditNoteNumber()
+         * .creditNotePdf()
+         * .customer()
+         * .invoiceId()
+         * .lineItems()
+         * .maximumAmountAdjustment()
+         * .memo()
+         * .minimumAmountRefunded()
+         * .reason()
+         * .subtotal()
+         * .total()
+         * .type()
+         * .voidedAt()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -461,6 +483,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Customer].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .externalCustomerId()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -641,6 +672,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [LineItem].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .itemId()
+             * .name()
+             * .quantity()
+             * .subtotal()
+             * .taxAmounts()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -834,6 +879,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [TaxAmount].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amount()
+                 * .taxRateDescription()
+                 * .taxRatePercentage()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1018,6 +1073,18 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Discount].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .amountApplied()
+                 * .appliesToPriceIds()
+                 * .discountType()
+                 * .percentageDiscount()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1347,6 +1414,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [MaximumAmountAdjustment].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amountApplied()
+             * .discountType()
+             * .percentageDiscount()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1574,6 +1651,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [AppliesToPrice].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .name()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1945,6 +2031,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Discount].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amountApplied()
+             * .discountType()
+             * .percentageDiscount()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -2172,6 +2268,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [AppliesToPrice].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .name()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 

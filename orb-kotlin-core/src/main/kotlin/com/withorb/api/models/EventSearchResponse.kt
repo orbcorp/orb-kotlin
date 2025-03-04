@@ -51,6 +51,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [EventSearchResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .data()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -226,6 +234,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Data].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .customerId()
+             * .deprecated()
+             * .eventName()
+             * .externalCustomerId()
+             * .properties()
+             * .timestamp()
+             * ```
+             */
             fun builder() = Builder()
         }
 

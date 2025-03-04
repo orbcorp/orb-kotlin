@@ -51,6 +51,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CustomerCostListResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .data()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -180,6 +188,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Data].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .perPriceCosts()
+             * .subtotal()
+             * .timeframeEnd()
+             * .timeframeStart()
+             * .total()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -348,6 +368,17 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [PerPriceCost].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .price()
+                 * .priceId()
+                 * .subtotal()
+                 * .total()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 

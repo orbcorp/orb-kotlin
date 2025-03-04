@@ -295,6 +295,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [SubscriptionFetchUsageParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .subscriptionId()
+         * ```
+         */
         fun builder() = Builder()
     }
 

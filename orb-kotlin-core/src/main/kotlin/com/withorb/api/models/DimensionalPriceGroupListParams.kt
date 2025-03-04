@@ -46,6 +46,10 @@ private constructor(
 
         fun none(): DimensionalPriceGroupListParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [DimensionalPriceGroupListParams].
+         */
         fun builder() = Builder()
     }
 

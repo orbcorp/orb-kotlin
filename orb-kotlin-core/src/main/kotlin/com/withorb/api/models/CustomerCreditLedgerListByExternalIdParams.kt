@@ -190,6 +190,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CustomerCreditLedgerListByExternalIdParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .externalCustomerId()
+         * ```
+         */
         fun builder() = Builder()
     }
 

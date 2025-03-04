@@ -60,6 +60,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CouponSubscriptionListParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .couponId()
+         * ```
+         */
         fun builder() = Builder()
     }
 

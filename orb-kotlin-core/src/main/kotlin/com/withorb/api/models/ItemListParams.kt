@@ -46,6 +46,7 @@ private constructor(
 
         fun none(): ItemListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [ItemListParams]. */
         fun builder() = Builder()
     }
 

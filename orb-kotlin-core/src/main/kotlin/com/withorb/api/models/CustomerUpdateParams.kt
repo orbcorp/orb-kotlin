@@ -897,6 +897,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Body]. */
             fun builder() = Builder()
         }
 
@@ -1446,6 +1447,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CustomerUpdateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .customerId()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -2065,6 +2074,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [AccountingSyncConfiguration].
+             */
             fun builder() = Builder()
         }
 
@@ -2178,6 +2191,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [AccountingProvider].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .externalProviderId()
+                 * .providerType()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -2349,6 +2371,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [BillingAddress]. */
             fun builder() = Builder()
         }
 
@@ -2509,6 +2532,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Hierarchy]. */
             fun builder() = Builder()
         }
 
@@ -2642,6 +2666,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             fun builder() = Builder()
         }
 
@@ -2853,6 +2878,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ReportingConfiguration].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .exempt()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -2991,6 +3024,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [ShippingAddress]. */
             fun builder() = Builder()
         }
 
@@ -3293,6 +3327,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [NewAvalaraTaxConfiguration].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .taxExempt()
+                 * .taxProvider()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -3521,6 +3565,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [NewTaxJarConfiguration].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .taxExempt()
+                 * .taxProvider()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -3848,6 +3902,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [TaxId].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .country()
+             * .type()
+             * .value()
+             * ```
+             */
             fun builder() = Builder()
         }
 
