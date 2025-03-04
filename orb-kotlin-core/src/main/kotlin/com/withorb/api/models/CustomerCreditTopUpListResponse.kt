@@ -145,6 +145,20 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CustomerCreditTopUpListResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .amount()
+         * .currency()
+         * .invoiceSettings()
+         * .perUnitCostBasis()
+         * .threshold()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -377,6 +391,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [InvoiceSettings].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .autoCollection()
+             * .netTerms()
+             * ```
+             */
             fun builder() = Builder()
         }
 

@@ -92,6 +92,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AmountDiscount].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .amountDiscount()
+         * .appliesToPriceIds()
+         * .discountType()
+         * ```
+         */
         fun builder() = Builder()
     }
 

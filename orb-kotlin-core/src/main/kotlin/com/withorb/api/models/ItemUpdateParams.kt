@@ -110,6 +110,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Body]. */
             fun builder() = Builder()
         }
 
@@ -194,6 +195,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ItemUpdateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .itemId()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -404,6 +413,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ExternalConnection].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .externalConnectionName()
+             * .externalEntityId()
+             * ```
+             */
             fun builder() = Builder()
         }
 

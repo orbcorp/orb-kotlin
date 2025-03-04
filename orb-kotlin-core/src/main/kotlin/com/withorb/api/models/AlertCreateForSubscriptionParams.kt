@@ -137,6 +137,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .thresholds()
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -233,6 +242,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [AlertCreateForSubscriptionParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .subscriptionId()
+         * .thresholds()
+         * .type()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -450,6 +470,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Threshold].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .value()
+             * ```
+             */
             fun builder() = Builder()
         }
 

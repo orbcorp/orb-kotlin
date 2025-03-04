@@ -17,6 +17,7 @@ class OrbOkHttpClient private constructor() {
 
     companion object {
 
+        /** Returns a mutable builder for constructing an instance of [OrbOkHttpClient]. */
         fun builder() = Builder()
 
         fun fromEnv(): OrbClient = builder().fromEnv().build()

@@ -341,6 +341,37 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Plan].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .adjustments()
+         * .basePlan()
+         * .basePlanId()
+         * .createdAt()
+         * .currency()
+         * .defaultInvoiceMemo()
+         * .description()
+         * .discount()
+         * .externalPlanId()
+         * .invoicingCurrency()
+         * .maximum()
+         * .maximumAmount()
+         * .metadata()
+         * .minimum()
+         * .minimumAmount()
+         * .name()
+         * .netTerms()
+         * .planPhases()
+         * .prices()
+         * .product()
+         * .status()
+         * .trialConfig()
+         * .version()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -1306,6 +1337,21 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [PlanPhaseUsageDiscountAdjustment].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .adjustmentType()
+                 * .appliesToPriceIds()
+                 * .isInvoiceLevel()
+                 * .planPhaseOrder()
+                 * .reason()
+                 * .usageDiscount()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1683,6 +1729,21 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [PlanPhaseAmountDiscountAdjustment].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .adjustmentType()
+                 * .amountDiscount()
+                 * .appliesToPriceIds()
+                 * .isInvoiceLevel()
+                 * .planPhaseOrder()
+                 * .reason()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -2060,6 +2121,21 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [PlanPhasePercentageDiscountAdjustment].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .adjustmentType()
+                 * .appliesToPriceIds()
+                 * .isInvoiceLevel()
+                 * .percentageDiscount()
+                 * .planPhaseOrder()
+                 * .reason()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -2447,6 +2523,22 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [PlanPhaseMinimumAdjustment].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .adjustmentType()
+                 * .appliesToPriceIds()
+                 * .isInvoiceLevel()
+                 * .itemId()
+                 * .minimumAmount()
+                 * .planPhaseOrder()
+                 * .reason()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -2829,6 +2921,21 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [PlanPhaseMaximumAdjustment].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .adjustmentType()
+                 * .appliesToPriceIds()
+                 * .isInvoiceLevel()
+                 * .maximumAmount()
+                 * .planPhaseOrder()
+                 * .reason()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -3148,6 +3255,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [BasePlan].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .externalPlanId()
+             * .name()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -3294,6 +3411,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Maximum].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .appliesToPriceIds()
+             * .maximumAmount()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -3420,6 +3546,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             fun builder() = Builder()
         }
 
@@ -3528,6 +3655,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Minimum].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .appliesToPriceIds()
+             * .minimumAmount()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -3753,6 +3889,24 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [PlanPhase].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .description()
+             * .discount()
+             * .duration()
+             * .durationUnit()
+             * .maximum()
+             * .maximumAmount()
+             * .minimum()
+             * .minimumAmount()
+             * .name()
+             * .order()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -4088,6 +4242,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Maximum].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .appliesToPriceIds()
+                 * .maximumAmount()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -4246,6 +4409,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Minimum].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .appliesToPriceIds()
+                 * .minimumAmount()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -4415,6 +4587,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Product].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .createdAt()
+             * .name()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -4642,6 +4824,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [TrialConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .trialPeriod()
+             * .trialPeriodUnit()
+             * ```
+             */
             fun builder() = Builder()
         }
 

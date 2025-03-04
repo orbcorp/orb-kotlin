@@ -537,6 +537,26 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [IncrementLedgerEntry].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .startingBalance()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -745,6 +765,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [CreditBlock].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -875,6 +905,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Customer].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1179,6 +1218,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 fun builder() = Builder()
             }
 
@@ -1430,6 +1470,26 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [DecrementLedgerEntry].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .startingBalance()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1659,6 +1719,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [CreditBlock].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1789,6 +1859,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Customer].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -2093,6 +2172,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 fun builder() = Builder()
             }
 
@@ -2331,6 +2411,28 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [ExpirationChangeLedgerEntry].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .newBlockExpiryDate()
+             * .startingBalance()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -2550,6 +2652,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [CreditBlock].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -2680,6 +2792,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Customer].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -2984,6 +3105,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 fun builder() = Builder()
             }
 
@@ -3211,6 +3333,27 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [CreditBlockExpiryLedgerEntry].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .startingBalance()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -3420,6 +3563,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [CreditBlock].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -3550,6 +3703,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Customer].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -3854,6 +4016,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 fun builder() = Builder()
             }
 
@@ -4101,6 +4264,28 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [VoidLedgerEntry].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .startingBalance()
+             * .voidAmount()
+             * .voidReason()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -4323,6 +4508,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [CreditBlock].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -4453,6 +4648,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Customer].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -4757,6 +4961,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 fun builder() = Builder()
             }
 
@@ -5015,6 +5220,29 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [VoidInitiatedLedgerEntry].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .newBlockExpiryDate()
+             * .startingBalance()
+             * .voidAmount()
+             * .voidReason()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -5247,6 +5475,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [CreditBlock].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -5377,6 +5615,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Customer].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -5681,6 +5928,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 fun builder() = Builder()
             }
 
@@ -5908,6 +6156,26 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [AmendmentLedgerEntry].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .startingBalance()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -6116,6 +6384,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [CreditBlock].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -6246,6 +6524,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Customer].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -6550,6 +6837,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 fun builder() = Builder()
             }
 

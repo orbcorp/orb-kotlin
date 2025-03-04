@@ -716,6 +716,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [AddIncrementCreditLedgerEntryRequestParams].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amount()
+                 * .entryType()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1099,6 +1109,15 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [InvoiceSettings].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .autoCollection()
+                     * .netTerms()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -1251,6 +1270,7 @@ private constructor(
 
                 companion object {
 
+                    /** Returns a mutable builder for constructing an instance of [Metadata]. */
                     fun builder() = Builder()
                 }
 
@@ -1431,6 +1451,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [AddDecrementCreditLedgerEntryRequestParams].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amount()
+                 * .entryType()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1679,6 +1709,7 @@ private constructor(
 
                 companion object {
 
+                    /** Returns a mutable builder for constructing an instance of [Metadata]. */
                     fun builder() = Builder()
                 }
 
@@ -1905,6 +1936,17 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [AddExpirationChangeCreditLedgerEntryRequestParams].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .entryType()
+                 * .expiryDate()
+                 * .targetExpiryDate()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -2211,6 +2253,7 @@ private constructor(
 
                 companion object {
 
+                    /** Returns a mutable builder for constructing an instance of [Metadata]. */
                     fun builder() = Builder()
                 }
 
@@ -2413,6 +2456,17 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [AddVoidCreditLedgerEntryRequestParams].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amount()
+                 * .blockId()
+                 * .entryType()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -2680,6 +2734,7 @@ private constructor(
 
                 companion object {
 
+                    /** Returns a mutable builder for constructing an instance of [Metadata]. */
                     fun builder() = Builder()
                 }
 
@@ -2968,6 +3023,17 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [AddAmendmentCreditLedgerEntryRequestParams].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amount()
+                 * .blockId()
+                 * .entryType()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -3225,6 +3291,7 @@ private constructor(
 
                 companion object {
 
+                    /** Returns a mutable builder for constructing an instance of [Metadata]. */
                     fun builder() = Builder()
                 }
 
@@ -3302,6 +3369,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CustomerCreditLedgerCreateEntryParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .customerId()
+         * .body()
+         * ```
+         */
         fun builder() = Builder()
     }
 

@@ -76,6 +76,18 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [SubscriptionFetchScheduleResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .createdAt()
+         * .endDate()
+         * .plan()
+         * .startDate()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -203,6 +215,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Plan].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .externalPlanId()
+             * .name()
+             * ```
+             */
             fun builder() = Builder()
         }
 

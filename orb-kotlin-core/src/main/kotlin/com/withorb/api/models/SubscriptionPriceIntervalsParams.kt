@@ -257,6 +257,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Body]. */
             fun builder() = Builder()
         }
 
@@ -420,6 +421,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [SubscriptionPriceIntervalsParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .subscriptionId()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -852,6 +862,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Add].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .startDate()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1572,6 +1590,17 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [AllocationPrice].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amount()
+                 * .cadence()
+                 * .currency()
+                 * .expiresAtEndOfCadence()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -2075,6 +2104,16 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [AmountDiscountCreationParams].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .amountDiscount()
+                     * .discountType()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -2313,6 +2352,16 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [PercentageDiscountCreationParams].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .discountType()
+                     * .percentageDiscount()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -2557,6 +2606,16 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [UsageDiscountCreationParams].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .discountType()
+                     * .usageDiscount()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -2937,6 +2996,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [FixedFeeQuantityTransition].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .effectiveDate()
+                 * .quantity()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -4519,6 +4588,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingUnitPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .unitConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -5058,6 +5141,14 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of [UnitConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .unitAmount()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -5182,6 +5273,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -5427,6 +5528,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -5650,6 +5761,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -5967,6 +6079,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingPackagePrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .packageConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -6526,6 +6652,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [PackageConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .packageAmount()
+                         * .packageSize()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -6668,6 +6804,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -6913,6 +7059,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -7136,6 +7292,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -7453,6 +7610,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingMatrixPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .matrixConfig()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -7925,6 +8096,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of [MatrixConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .defaultUnitAmount()
+                         * .dimensions()
+                         * .matrixValues()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -8086,6 +8267,16 @@ private constructor(
 
                         companion object {
 
+                            /**
+                             * Returns a mutable builder for constructing an instance of
+                             * [MatrixValue].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .dimensionValues()
+                             * .unitAmount()
+                             * ```
+                             */
                             fun builder() = Builder()
                         }
 
@@ -8365,6 +8556,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -8610,6 +8811,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -8833,6 +9044,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -9153,6 +9365,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingMatrixWithAllocationPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .matrixWithAllocationConfig()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -9643,6 +9869,18 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [MatrixWithAllocationConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .allocation()
+                         * .defaultUnitAmount()
+                         * .dimensions()
+                         * .matrixValues()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -9821,6 +10059,16 @@ private constructor(
 
                         companion object {
 
+                            /**
+                             * Returns a mutable builder for constructing an instance of
+                             * [MatrixValue].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .dimensionValues()
+                             * .unitAmount()
+                             * ```
+                             */
                             fun builder() = Builder()
                         }
 
@@ -10100,6 +10348,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -10345,6 +10603,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -10568,6 +10836,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -10885,6 +11154,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingTieredPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .tieredConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -11425,6 +11708,14 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of [TieredConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .tiers()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -11558,6 +11849,15 @@ private constructor(
 
                         companion object {
 
+                            /**
+                             * Returns a mutable builder for constructing an instance of [Tier].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .firstUnit()
+                             * .unitAmount()
+                             * ```
+                             */
                             fun builder() = Builder()
                         }
 
@@ -11736,6 +12036,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -11981,6 +12291,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -12204,6 +12524,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -12522,6 +12843,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingTieredBpsPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .tieredBpsConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -13070,6 +13405,15 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [TieredBpsConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .tiers()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -13214,6 +13558,15 @@ private constructor(
 
                         companion object {
 
+                            /**
+                             * Returns a mutable builder for constructing an instance of [Tier].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .bps()
+                             * .minimumAmount()
+                             * ```
+                             */
                             fun builder() = Builder()
                         }
 
@@ -13390,6 +13743,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -13635,6 +13998,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -13858,6 +14231,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -14175,6 +14549,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingBpsPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .bpsConfig()
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -14494,6 +14882,14 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of [BpsConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .bps()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -14858,6 +15254,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -15103,6 +15509,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -15326,6 +15742,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -15643,6 +16060,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingBulkBpsPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .bulkBpsConfig()
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -15960,6 +16391,15 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BulkBpsConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .tiers()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -16091,6 +16531,14 @@ private constructor(
 
                         companion object {
 
+                            /**
+                             * Returns a mutable builder for constructing an instance of [Tier].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .bps()
+                             * ```
+                             */
                             fun builder() = Builder()
                         }
 
@@ -16485,6 +16933,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -16730,6 +17188,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -16953,6 +17421,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -17270,6 +17739,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingBulkPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .bulkConfig()
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -17579,6 +18062,14 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of [BulkConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .tiers()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -17690,6 +18181,14 @@ private constructor(
 
                         companion object {
 
+                            /**
+                             * Returns a mutable builder for constructing an instance of [Tier].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .unitAmount()
+                             * ```
+                             */
                             fun builder() = Builder()
                         }
 
@@ -18079,6 +18578,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -18324,6 +18833,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -18547,6 +19066,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -18867,6 +19387,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingThresholdTotalAmountPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .thresholdTotalAmountConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -19401,6 +19935,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [ThresholdTotalAmountConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -19514,6 +20052,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -19759,6 +20307,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -19982,6 +20540,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -20300,6 +20859,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingTieredPackagePrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .tieredPackageConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -20832,6 +21405,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [TieredPackageConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -20944,6 +21521,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -21189,6 +21776,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -21412,6 +22009,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -21730,6 +22328,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingGroupedTieredPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .groupedTieredConfig()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -22162,6 +22774,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [GroupedTieredConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -22374,6 +22990,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -22619,6 +23245,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -22842,6 +23478,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -23162,6 +23799,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingMaxGroupTieredPackagePrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .maxGroupTieredPackageConfig()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -23603,6 +24254,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [MaxGroupTieredPackageConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -23817,6 +24472,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -24062,6 +24727,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -24285,6 +24960,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -24605,6 +25281,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingTieredWithMinimumPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .tieredWithMinimumConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -25137,6 +25827,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [TieredWithMinimumConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -25250,6 +25944,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -25495,6 +26199,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -25718,6 +26432,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -26038,6 +26753,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingPackageWithAllocationPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .packageWithAllocationConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -26579,6 +27308,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [PackageWithAllocationConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -26693,6 +27426,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -26938,6 +27681,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -27161,6 +27914,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -27482,6 +28236,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingTieredPackageWithMinimumPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .tieredPackageWithMinimumConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -28026,6 +28794,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [TieredPackageWithMinimumConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -28140,6 +28912,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -28385,6 +29167,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -28608,6 +29400,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -28928,6 +29721,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingUnitWithPercentPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .unitWithPercentConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -29460,6 +30267,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [UnitWithPercentConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -29572,6 +30383,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -29817,6 +30638,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -30040,6 +30871,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -30360,6 +31192,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingTieredWithProrationPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .tieredWithProrationConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -30894,6 +31740,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [TieredWithProrationConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -31007,6 +31857,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -31252,6 +32112,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -31475,6 +32345,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -31795,6 +32666,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingUnitWithProrationPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .unitWithProrationConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -32327,6 +33212,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [UnitWithProrationConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -32440,6 +33329,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -32685,6 +33584,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -32908,6 +33817,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -33228,6 +34138,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingGroupedAllocationPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .groupedAllocationConfig()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -33660,6 +34584,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [GroupedAllocationConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -33873,6 +34801,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -34118,6 +35056,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -34341,6 +35289,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -34664,6 +35613,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingGroupedWithProratedMinimumPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .groupedWithProratedMinimumConfig()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -35114,6 +36077,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [GroupedWithProratedMinimumConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -35328,6 +36295,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -35573,6 +36550,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -35796,6 +36783,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -36119,6 +37107,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingGroupedWithMeteredMinimumPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .groupedWithMeteredMinimumConfig()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -36568,6 +37570,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [GroupedWithMeteredMinimumConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -36782,6 +37788,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -37027,6 +38043,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -37250,6 +38276,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -37570,6 +38597,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingMatrixWithDisplayNamePrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .matrixWithDisplayNameConfig()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -38011,6 +39052,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [MatrixWithDisplayNameConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -38225,6 +39270,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -38470,6 +39525,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -38693,6 +39758,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -39013,6 +40079,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingBulkWithProrationPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .bulkWithProrationConfig()
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -39315,6 +40395,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BulkWithProrationConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -39658,6 +40742,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -39903,6 +40997,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -40126,6 +41230,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -40446,6 +41551,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingGroupedTieredPackagePrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .groupedTieredPackageConfig()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -40880,6 +41999,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [GroupedTieredPackageConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -41093,6 +42216,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -41338,6 +42471,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -41561,6 +42704,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -41885,6 +43029,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingScalableMatrixWithUnitPricingPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .scalableMatrixWithUnitPricingConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -42443,6 +43601,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [ScalableMatrixWithUnitPricingConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -42558,6 +43720,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -42803,6 +43975,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -43026,6 +44208,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -43350,6 +44533,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingScalableMatrixWithTieredPricingPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * .scalableMatrixWithTieredPricingConfig()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -43909,6 +45106,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [ScalableMatrixWithTieredPricingConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -44027,6 +45228,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -44272,6 +45483,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -44495,6 +45716,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -44815,6 +46037,20 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewFloatingCumulativeGroupedBulkPrice].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .cumulativeGroupedBulkConfig()
+                     * .currency()
+                     * .itemId()
+                     * .modelType()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -45256,6 +46492,10 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [CumulativeGroupedBulkConfig].
+                         */
                         fun builder() = Builder()
                     }
 
@@ -45470,6 +46710,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [BillingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -45715,6 +46965,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [InvoicingCycleConfiguration].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .duration()
+                         * .durationUnit()
+                         * ```
+                         */
                         fun builder() = Builder()
                     }
 
@@ -45938,6 +47198,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         fun builder() = Builder()
                     }
 
@@ -46102,6 +47363,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [AddAdjustment].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .adjustment()
+             * .startDate()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -46539,6 +47809,17 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewPercentageDiscount].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .adjustmentType()
+                     * .appliesToPriceIds()
+                     * .percentageDiscount()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -46837,6 +48118,16 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [NewUsageDiscount].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .adjustmentType()
+                     * .appliesToPriceIds()
+                     * .usageDiscount()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -47134,6 +48425,17 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [NewAmountDiscount].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .adjustmentType()
+                     * .amountDiscount()
+                     * .appliesToPriceIds()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -47441,6 +48743,17 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [NewMinimum].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .adjustmentType()
+                     * .appliesToPriceIds()
+                     * .itemId()
+                     * .minimumAmount()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -47746,6 +49059,16 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [NewMaximum].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .adjustmentType()
+                     * .appliesToPriceIds()
+                     * .maximumAmount()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -48423,6 +49746,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Edit].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .priceIntervalId()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -48845,6 +50176,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [FixedFeeQuantityTransition].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .effectiveDate()
+                 * .quantity()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -49158,6 +50499,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [EditAdjustment].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .adjustmentIntervalId()
+             * ```
+             */
             fun builder() = Builder()
         }
 

@@ -35,6 +35,7 @@ private constructor(
 
         fun none(): TopLevelPingParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [TopLevelPingParams]. */
         fun builder() = Builder()
     }
 

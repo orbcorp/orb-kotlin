@@ -165,6 +165,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .description()
+             * .itemId()
+             * .name()
+             * .sql()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -279,6 +290,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [MetricCreateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .description()
+         * .itemId()
+         * .name()
+         * .sql()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -490,6 +512,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             fun builder() = Builder()
         }
 

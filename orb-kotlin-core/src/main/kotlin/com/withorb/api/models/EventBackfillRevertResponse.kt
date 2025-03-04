@@ -191,6 +191,23 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [EventBackfillRevertResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .closeTime()
+         * .createdAt()
+         * .customerId()
+         * .eventsIngested()
+         * .replaceExistingEvents()
+         * .revertedAt()
+         * .status()
+         * .timeframeEnd()
+         * .timeframeStart()
+         * ```
+         */
         fun builder() = Builder()
     }
 

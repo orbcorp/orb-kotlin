@@ -114,6 +114,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .lineItems()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -207,6 +215,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CreditNoteCreateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .lineItems()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -415,6 +431,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [LineItem].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amount()
+             * .invoiceLineItemId()
+             * ```
+             */
             fun builder() = Builder()
         }
 

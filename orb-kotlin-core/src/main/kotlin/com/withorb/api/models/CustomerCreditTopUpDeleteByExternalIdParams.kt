@@ -52,6 +52,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CustomerCreditTopUpDeleteByExternalIdParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .externalCustomerId()
+         * .topUpId()
+         * ```
+         */
         fun builder() = Builder()
     }
 
