@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
@@ -73,12 +74,8 @@ private constructor(
 
         fun addData(data: Data) = apply {
             this.data =
-                (this.data ?: JsonField.of(mutableListOf())).apply {
-                    (asKnown()
-                            ?: throw IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            ))
-                        .add(data)
+                (this.data ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("data", it).add(data)
                 }
         }
 
@@ -215,12 +212,8 @@ private constructor(
 
             fun addPerPriceCost(perPriceCost: PerPriceCost) = apply {
                 perPriceCosts =
-                    (perPriceCosts ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(perPriceCost)
+                    (perPriceCosts ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("perPriceCosts", it).add(perPriceCost)
                     }
             }
 

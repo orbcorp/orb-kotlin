@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -205,12 +206,8 @@ private constructor(
             /** The set of keys (in order) used to disambiguate prices in the group. */
             fun addDimension(dimension: String) = apply {
                 dimensions =
-                    (dimensions ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(dimension)
+                    (dimensions ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("dimensions", it).add(dimension)
                     }
             }
 

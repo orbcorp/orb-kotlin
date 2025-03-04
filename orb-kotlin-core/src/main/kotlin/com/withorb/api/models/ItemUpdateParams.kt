@@ -13,6 +13,7 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -135,12 +136,8 @@ private constructor(
 
             fun addExternalConnection(externalConnection: ExternalConnection) = apply {
                 externalConnections =
-                    (externalConnections ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(externalConnection)
+                    (externalConnections ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("externalConnections", it).add(externalConnection)
                     }
             }
 

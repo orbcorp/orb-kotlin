@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
@@ -244,12 +245,8 @@ private constructor(
         /** The thresholds that define the conditions under which the alert will be triggered. */
         fun addThreshold(threshold: Threshold) = apply {
             thresholds =
-                (thresholds ?: JsonField.of(mutableListOf())).apply {
-                    (asKnown()
-                            ?: throw IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            ))
-                        .add(threshold)
+                (thresholds ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("thresholds", it).add(threshold)
                 }
         }
 
