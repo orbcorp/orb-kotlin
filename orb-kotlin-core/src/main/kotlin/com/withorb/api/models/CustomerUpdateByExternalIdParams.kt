@@ -22,6 +22,7 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
@@ -971,12 +972,8 @@ private constructor(
              */
             fun addAdditionalEmail(additionalEmail: String) = apply {
                 additionalEmails =
-                    (additionalEmails ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(additionalEmail)
+                    (additionalEmails ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("additionalEmails", it).add(additionalEmail)
                     }
             }
 
@@ -2099,12 +2096,8 @@ private constructor(
 
             fun addAccountingProvider(accountingProvider: AccountingProvider) = apply {
                 accountingProviders =
-                    (accountingProviders ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(accountingProvider)
+                    (accountingProviders ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("accountingProviders", it).add(accountingProvider)
                     }
             }
 
@@ -2556,12 +2549,8 @@ private constructor(
              */
             fun addChildCustomerId(childCustomerId: String) = apply {
                 childCustomerIds =
-                    (childCustomerIds ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(childCustomerId)
+                    (childCustomerIds ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("childCustomerIds", it).add(childCustomerId)
                     }
             }
 

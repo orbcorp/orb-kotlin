@@ -22,6 +22,7 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
@@ -287,12 +288,8 @@ private constructor(
             /** A list of price intervals to add to the subscription. */
             fun addAdd(add: Add) = apply {
                 this.add =
-                    (this.add ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(add)
+                    (this.add ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("add", it).add(add)
                     }
             }
 
@@ -308,12 +305,8 @@ private constructor(
             /** A list of adjustments to add to the subscription. */
             fun addAddAdjustment(addAdjustment: AddAdjustment) = apply {
                 addAdjustments =
-                    (addAdjustments ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(addAdjustment)
+                    (addAdjustments ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("addAdjustments", it).add(addAdjustment)
                     }
             }
 
@@ -353,12 +346,8 @@ private constructor(
             /** A list of price intervals to edit on the subscription. */
             fun addEdit(edit: Edit) = apply {
                 this.edit =
-                    (this.edit ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(edit)
+                    (this.edit ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("edit", it).add(edit)
                     }
             }
 
@@ -374,12 +363,8 @@ private constructor(
             /** A list of adjustments to edit on the subscription. */
             fun addEditAdjustment(editAdjustment: EditAdjustment) = apply {
                 editAdjustments =
-                    (editAdjustments ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(editAdjustment)
+                    (editAdjustments ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("editAdjustments", it).add(editAdjustment)
                     }
             }
 
@@ -951,12 +936,8 @@ private constructor(
             /** A list of discounts to initialize on the price interval. */
             fun addDiscount(discount: Discount) = apply {
                 discounts =
-                    (discounts ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(discount)
+                    (discounts ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("discounts", it).add(discount)
                     }
             }
 
@@ -1084,11 +1065,8 @@ private constructor(
                 fixedFeeQuantityTransition: FixedFeeQuantityTransition
             ) = apply {
                 fixedFeeQuantityTransitions =
-                    (fixedFeeQuantityTransitions ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
+                    (fixedFeeQuantityTransitions ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("fixedFeeQuantityTransitions", it)
                             .add(fixedFeeQuantityTransition)
                     }
             }
@@ -1328,12 +1306,8 @@ private constructor(
              */
             fun addUsageCustomerId(usageCustomerId: String) = apply {
                 usageCustomerIds =
-                    (usageCustomerIds ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(usageCustomerId)
+                    (usageCustomerIds ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("usageCustomerIds", it).add(usageCustomerId)
                     }
             }
 
@@ -7997,12 +7971,8 @@ private constructor(
                         /** One or two event property values to evaluate matrix groups by */
                         fun addDimension(dimension: String) = apply {
                             dimensions =
-                                (dimensions ?: JsonField.of(mutableListOf())).apply {
-                                    (asKnown()
-                                            ?: throw IllegalStateException(
-                                                "Field was set to non-list type: ${javaClass.simpleName}"
-                                            ))
-                                        .add(dimension)
+                                (dimensions ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("dimensions", it).add(dimension)
                                 }
                         }
 
@@ -8018,12 +7988,8 @@ private constructor(
                         /** Matrix values for specified matrix grouping keys */
                         fun addMatrixValue(matrixValue: MatrixValue) = apply {
                             matrixValues =
-                                (matrixValues ?: JsonField.of(mutableListOf())).apply {
-                                    (asKnown()
-                                            ?: throw IllegalStateException(
-                                                "Field was set to non-list type: ${javaClass.simpleName}"
-                                            ))
-                                        .add(matrixValue)
+                                (matrixValues ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("matrixValues", it).add(matrixValue)
                                 }
                         }
 
@@ -8163,12 +8129,8 @@ private constructor(
                              */
                             fun addDimensionValue(dimensionValue: String) = apply {
                                 dimensionValues =
-                                    (dimensionValues ?: JsonField.of(mutableListOf())).apply {
-                                        (asKnown()
-                                                ?: throw IllegalStateException(
-                                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                                ))
-                                            .add(dimensionValue)
+                                    (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                        checkKnown("dimensionValues", it).add(dimensionValue)
                                     }
                             }
 
@@ -9743,12 +9705,8 @@ private constructor(
                         /** One or two event property values to evaluate matrix groups by */
                         fun addDimension(dimension: String) = apply {
                             dimensions =
-                                (dimensions ?: JsonField.of(mutableListOf())).apply {
-                                    (asKnown()
-                                            ?: throw IllegalStateException(
-                                                "Field was set to non-list type: ${javaClass.simpleName}"
-                                            ))
-                                        .add(dimension)
+                                (dimensions ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("dimensions", it).add(dimension)
                                 }
                         }
 
@@ -9764,12 +9722,8 @@ private constructor(
                         /** Matrix values for specified matrix grouping keys */
                         fun addMatrixValue(matrixValue: MatrixValue) = apply {
                             matrixValues =
-                                (matrixValues ?: JsonField.of(mutableListOf())).apply {
-                                    (asKnown()
-                                            ?: throw IllegalStateException(
-                                                "Field was set to non-list type: ${javaClass.simpleName}"
-                                            ))
-                                        .add(matrixValue)
+                                (matrixValues ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("matrixValues", it).add(matrixValue)
                                 }
                         }
 
@@ -9910,12 +9864,8 @@ private constructor(
                              */
                             fun addDimensionValue(dimensionValue: String) = apply {
                                 dimensionValues =
-                                    (dimensionValues ?: JsonField.of(mutableListOf())).apply {
-                                        (asKnown()
-                                                ?: throw IllegalStateException(
-                                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                                ))
-                                            .add(dimensionValue)
+                                    (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                        checkKnown("dimensionValues", it).add(dimensionValue)
                                     }
                             }
 
@@ -11507,12 +11457,8 @@ private constructor(
                          */
                         fun addTier(tier: Tier) = apply {
                             tiers =
-                                (tiers ?: JsonField.of(mutableListOf())).apply {
-                                    (asKnown()
-                                            ?: throw IllegalStateException(
-                                                "Field was set to non-list type: ${javaClass.simpleName}"
-                                            ))
-                                        .add(tier)
+                                (tiers ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("tiers", it).add(tier)
                                 }
                         }
 
@@ -13160,12 +13106,8 @@ private constructor(
                          */
                         fun addTier(tier: Tier) = apply {
                             tiers =
-                                (tiers ?: JsonField.of(mutableListOf())).apply {
-                                    (asKnown()
-                                            ?: throw IllegalStateException(
-                                                "Field was set to non-list type: ${javaClass.simpleName}"
-                                            ))
-                                        .add(tier)
+                                (tiers ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("tiers", it).add(tier)
                                 }
                         }
 
@@ -16053,12 +15995,8 @@ private constructor(
                          */
                         fun addTier(tier: Tier) = apply {
                             tiers =
-                                (tiers ?: JsonField.of(mutableListOf())).apply {
-                                    (asKnown()
-                                            ?: throw IllegalStateException(
-                                                "Field was set to non-list type: ${javaClass.simpleName}"
-                                            ))
-                                        .add(tier)
+                                (tiers ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("tiers", it).add(tier)
                                 }
                         }
 
@@ -17667,12 +17605,8 @@ private constructor(
                         /** Bulk tiers for rating based on total usage volume */
                         fun addTier(tier: Tier) = apply {
                             tiers =
-                                (tiers ?: JsonField.of(mutableListOf())).apply {
-                                    (asKnown()
-                                            ?: throw IllegalStateException(
-                                                "Field was set to non-list type: ${javaClass.simpleName}"
-                                            ))
-                                        .add(tier)
+                                (tiers ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("tiers", it).add(tier)
                                 }
                         }
 
@@ -46646,12 +46580,8 @@ private constructor(
                     /** The set of price IDs to which this adjustment applies. */
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
-                            (appliesToPriceIds ?: JsonField.of(mutableListOf())).apply {
-                                (asKnown()
-                                        ?: throw IllegalStateException(
-                                            "Field was set to non-list type: ${javaClass.simpleName}"
-                                        ))
-                                    .add(appliesToPriceId)
+                            (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                             }
                     }
 
@@ -46947,12 +46877,8 @@ private constructor(
                     /** The set of price IDs to which this adjustment applies. */
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
-                            (appliesToPriceIds ?: JsonField.of(mutableListOf())).apply {
-                                (asKnown()
-                                        ?: throw IllegalStateException(
-                                            "Field was set to non-list type: ${javaClass.simpleName}"
-                                        ))
-                                    .add(appliesToPriceId)
+                            (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                             }
                     }
 
@@ -47255,12 +47181,8 @@ private constructor(
                     /** The set of price IDs to which this adjustment applies. */
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
-                            (appliesToPriceIds ?: JsonField.of(mutableListOf())).apply {
-                                (asKnown()
-                                        ?: throw IllegalStateException(
-                                            "Field was set to non-list type: ${javaClass.simpleName}"
-                                        ))
-                                    .add(appliesToPriceId)
+                            (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                             }
                     }
 
@@ -47560,12 +47482,8 @@ private constructor(
                     /** The set of price IDs to which this adjustment applies. */
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
-                            (appliesToPriceIds ?: JsonField.of(mutableListOf())).apply {
-                                (asKnown()
-                                        ?: throw IllegalStateException(
-                                            "Field was set to non-list type: ${javaClass.simpleName}"
-                                        ))
-                                    .add(appliesToPriceId)
+                            (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                             }
                     }
 
@@ -47867,12 +47785,8 @@ private constructor(
                     /** The set of price IDs to which this adjustment applies. */
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
-                            (appliesToPriceIds ?: JsonField.of(mutableListOf())).apply {
-                                (asKnown()
-                                        ?: throw IllegalStateException(
-                                            "Field was set to non-list type: ${javaClass.simpleName}"
-                                        ))
-                                    .add(appliesToPriceId)
+                            (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                             }
                     }
 
@@ -48640,11 +48554,8 @@ private constructor(
                 fixedFeeQuantityTransition: FixedFeeQuantityTransition
             ) = apply {
                 fixedFeeQuantityTransitions =
-                    (fixedFeeQuantityTransitions ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
+                    (fixedFeeQuantityTransitions ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("fixedFeeQuantityTransitions", it)
                             .add(fixedFeeQuantityTransition)
                     }
             }
@@ -48707,12 +48618,8 @@ private constructor(
              */
             fun addUsageCustomerId(usageCustomerId: String) = apply {
                 usageCustomerIds =
-                    (usageCustomerIds ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(usageCustomerId)
+                    (usageCustomerIds ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("usageCustomerIds", it).add(usageCustomerId)
                     }
             }
 
