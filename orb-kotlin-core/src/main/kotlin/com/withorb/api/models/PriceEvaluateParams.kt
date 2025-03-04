@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -318,12 +319,8 @@ private constructor(
              */
             fun addGroupingKey(groupingKey: String) = apply {
                 groupingKeys =
-                    (groupingKeys ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(groupingKey)
+                    (groupingKeys ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("groupingKeys", it).add(groupingKey)
                     }
             }
 

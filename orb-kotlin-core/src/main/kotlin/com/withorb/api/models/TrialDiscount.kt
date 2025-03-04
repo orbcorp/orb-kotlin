@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
@@ -147,12 +148,8 @@ private constructor(
          */
         fun addAppliesToPriceId(appliesToPriceId: String) = apply {
             appliesToPriceIds =
-                (appliesToPriceIds ?: JsonField.of(mutableListOf())).apply {
-                    (asKnown()
-                            ?: throw IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            ))
-                        .add(appliesToPriceId)
+                (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                 }
         }
 

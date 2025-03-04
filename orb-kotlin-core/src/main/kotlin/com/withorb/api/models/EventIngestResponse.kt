@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
@@ -111,12 +112,8 @@ private constructor(
          */
         fun addValidationFailed(validationFailed: ValidationFailed) = apply {
             this.validationFailed =
-                (this.validationFailed ?: JsonField.of(mutableListOf())).apply {
-                    (asKnown()
-                            ?: throw IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            ))
-                        .add(validationFailed)
+                (this.validationFailed ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("validationFailed", it).add(validationFailed)
                 }
         }
 
@@ -252,12 +249,8 @@ private constructor(
              */
             fun addValidationError(validationError: String) = apply {
                 validationErrors =
-                    (validationErrors ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(validationError)
+                    (validationErrors ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("validationErrors", it).add(validationError)
                     }
             }
 
@@ -380,12 +373,8 @@ private constructor(
 
             fun addDuplicate(duplicate: String) = apply {
                 this.duplicate =
-                    (this.duplicate ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(duplicate)
+                    (this.duplicate ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("duplicate", it).add(duplicate)
                     }
             }
 
@@ -397,12 +386,8 @@ private constructor(
 
             fun addIngested(ingested: String) = apply {
                 this.ingested =
-                    (this.ingested ?: JsonField.of(mutableListOf())).apply {
-                        (asKnown()
-                                ?: throw IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                ))
-                            .add(ingested)
+                    (this.ingested ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("ingested", it).add(ingested)
                     }
             }
 
