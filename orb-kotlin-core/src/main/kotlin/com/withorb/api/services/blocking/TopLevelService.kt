@@ -2,11 +2,18 @@
 
 package com.withorb.api.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.TopLevelPingParams
 import com.withorb.api.models.TopLevelPingResponse
 
 interface TopLevelService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * This endpoint allows you to test your connection to the Orb API and check the validity of
@@ -31,4 +38,26 @@ interface TopLevelService {
      */
     fun ping(requestOptions: RequestOptions): TopLevelPingResponse =
         ping(TopLevelPingParams.none(), requestOptions)
+
+    /** A view of [TopLevelService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `get /ping`, but is otherwise the same as
+         * [TopLevelService.ping].
+         */
+        @MustBeClosed
+        fun ping(
+            params: TopLevelPingParams = TopLevelPingParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TopLevelPingResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /ping`, but is otherwise the same as
+         * [TopLevelService.ping].
+         */
+        @MustBeClosed
+        fun ping(requestOptions: RequestOptions): HttpResponseFor<TopLevelPingResponse> =
+            ping(TopLevelPingParams.none(), requestOptions)
+    }
 }

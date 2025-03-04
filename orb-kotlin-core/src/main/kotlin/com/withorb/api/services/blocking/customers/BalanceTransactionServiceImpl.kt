@@ -10,6 +10,8 @@ import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.core.http.parseable
 import com.withorb.api.core.json
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
@@ -21,88 +23,91 @@ import com.withorb.api.models.CustomerBalanceTransactionListParams
 class BalanceTransactionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     BalanceTransactionService {
 
-    private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: BalanceTransactionService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val createHandler: Handler<CustomerBalanceTransactionCreateResponse> =
-        jsonHandler<CustomerBalanceTransactionCreateResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    override fun withRawResponse(): BalanceTransactionService.WithRawResponse = withRawResponse
 
-    /**
-     * Creates an immutable balance transaction that updates the customer's balance and returns back
-     * the newly created transaction.
-     */
     override fun create(
         params: CustomerBalanceTransactionCreateParams,
         requestOptions: RequestOptions,
-    ): CustomerBalanceTransactionCreateResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("customers", params.getPathParam(0), "balance_transactions")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { createHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): CustomerBalanceTransactionCreateResponse =
+        // post /customers/{customer_id}/balance_transactions
+        withRawResponse().create(params, requestOptions).parse()
 
-    private val listHandler: Handler<CustomerBalanceTransactionListPage.Response> =
-        jsonHandler<CustomerBalanceTransactionListPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /**
-     * ## The customer balance
-     *
-     * The customer balance is an amount in the customer's currency, which Orb automatically applies
-     * to subsequent invoices. This balance can be adjusted manually via Orb's webapp on the
-     * customer details page. You can use this balance to provide a fixed mid-period credit to the
-     * customer. Commonly, this is done due to system downtime/SLA violation, or an adhoc adjustment
-     * discussed with the customer.
-     *
-     * If the balance is a positive value at the time of invoicing, it represents that the customer
-     * has credit that should be used to offset the amount due on the next issued invoice. In this
-     * case, Orb will automatically reduce the next invoice by the balance amount, and roll over any
-     * remaining balance if the invoice is fully discounted.
-     *
-     * If the balance is a negative value at the time of invoicing, Orb will increase the invoice's
-     * amount due with a positive adjustment, and reset the balance to 0.
-     *
-     * This endpoint retrieves all customer balance transactions in reverse chronological order for
-     * a single customer, providing a complete audit trail of all adjustments and invoice
-     * applications.
-     *
-     * ## Eligibility
-     *
-     * The customer balance can only be applied to invoices or adjusted manually if invoices are not
-     * synced to a separate invoicing provider. If a payment gateway such as Stripe is used, the
-     * balance will be applied to the invoice before forwarding payment to the gateway.
-     */
     override fun list(
         params: CustomerBalanceTransactionListParams,
         requestOptions: RequestOptions,
-    ): CustomerBalanceTransactionListPage {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("customers", params.getPathParam(0), "balance_transactions")
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): CustomerBalanceTransactionListPage =
+        // get /customers/{customer_id}/balance_transactions
+        withRawResponse().list(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        BalanceTransactionService.WithRawResponse {
+
+        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+
+        private val createHandler: Handler<CustomerBalanceTransactionCreateResponse> =
+            jsonHandler<CustomerBalanceTransactionCreateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun create(
+            params: CustomerBalanceTransactionCreateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerBalanceTransactionCreateResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("customers", params.getPathParam(0), "balance_transactions")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
-            .let { CustomerBalanceTransactionListPage.of(this, params, it) }
+        }
+
+        private val listHandler: Handler<CustomerBalanceTransactionListPage.Response> =
+            jsonHandler<CustomerBalanceTransactionListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun list(
+            params: CustomerBalanceTransactionListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerBalanceTransactionListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("customers", params.getPathParam(0), "balance_transactions")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        CustomerBalanceTransactionListPage.of(
+                            BalanceTransactionServiceImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
+            }
+        }
     }
 }
