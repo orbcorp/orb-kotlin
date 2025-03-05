@@ -453,7 +453,7 @@ private constructor(
                 )
 
             /** An optional discount to attach to the invoice. */
-            fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
+            fun discount(usage: UsageDiscount) = discount(Discount.ofUsage(usage))
 
             /** An optional discount to attach to the invoice. */
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -666,7 +666,7 @@ private constructor(
         }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(usage: Discount.UsageDiscount) = apply { body.discount(usage) }
+        fun discount(usage: UsageDiscount) = apply { body.discount(usage) }
 
         /** An optional discount to attach to the invoice. */
         fun discount(amount: AmountDiscount) = apply { body.discount(amount) }
