@@ -15,10 +15,10 @@ class PlanTest {
             Plan.builder()
                 .id("id")
                 .addAdjustment(
-                    AdjustmentModel.PlanPhaseUsageDiscountAdjustment.builder()
+                    Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                         .id("id")
                         .adjustmentType(
-                            AdjustmentModel.PlanPhaseUsageDiscountAdjustment.AdjustmentType
+                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.AdjustmentType
                                 .USAGE_DISCOUNT
                         )
                         .addAppliesToPriceId("string")
@@ -29,7 +29,7 @@ class PlanTest {
                         .build()
                 )
                 .basePlan(
-                    PlanMinifiedModel.builder()
+                    Plan.BasePlan.builder()
                         .id("m2t5akQeh2obwxeU")
                         .externalPlanId("m2t5akQeh2obwxeU")
                         .name("Example plan")
@@ -52,7 +52,7 @@ class PlanTest {
                 .externalPlanId("external_plan_id")
                 .invoicingCurrency("invoicing_currency")
                 .maximum(
-                    MaximumModel.builder()
+                    Plan.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
@@ -64,7 +64,7 @@ class PlanTest {
                         .build()
                 )
                 .minimum(
-                    MinimumModel.builder()
+                    Plan.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -88,14 +88,14 @@ class PlanTest {
                         .duration(0L)
                         .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
                         .maximum(
-                            MaximumModel.builder()
+                            Plan.PlanPhase.Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
                         .maximumAmount("maximum_amount")
                         .minimum(
-                            MinimumModel.builder()
+                            Plan.PlanPhase.Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .minimumAmount("minimum_amount")
                                 .build()
@@ -106,20 +106,22 @@ class PlanTest {
                         .build()
                 )
                 .addPrice(
-                    PriceModel.UnitPrice.builder()
+                    Price.UnitPrice.builder()
                         .id("id")
-                        .billableMetric(BillableMetricTinyModel.builder().id("id").build())
+                        .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())
                         .billingCycleConfiguration(
-                            BillingCycleConfigurationModel.builder()
+                            Price.UnitPrice.BillingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(BillingCycleConfigurationModel.DurationUnit.DAY)
+                                .durationUnit(
+                                    Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
+                                )
                                 .build()
                         )
-                        .cadence(PriceModel.UnitPrice.Cadence.ONE_TIME)
+                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
                         .conversionRate(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditAllocation(
-                            AllocationModel.builder()
+                            Price.UnitPrice.CreditAllocation.builder()
                                 .allowsRollover(true)
                                 .currency("currency")
                                 .build()
@@ -137,38 +139,42 @@ class PlanTest {
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
                         .invoicingCycleConfiguration(
-                            BillingCycleConfigurationModel.builder()
+                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(BillingCycleConfigurationModel.DurationUnit.DAY)
+                                .durationUnit(
+                                    Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                                )
                                 .build()
                         )
-                        .item(ItemSlimModel.builder().id("id").name("name").build())
+                        .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
                         .maximum(
-                            MaximumModel.builder()
+                            Price.UnitPrice.Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
                         .maximumAmount("maximum_amount")
                         .metadata(
-                            PriceModel.UnitPrice.Metadata.builder()
+                            Price.UnitPrice.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
                         .minimum(
-                            MinimumModel.builder()
+                            Price.UnitPrice.Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
                         .minimumAmount("minimum_amount")
-                        .modelType(PriceModel.UnitPrice.ModelType.UNIT)
+                        .modelType(Price.UnitPrice.ModelType.UNIT)
                         .name("name")
                         .planPhaseOrder(0L)
-                        .priceType(PriceModel.UnitPrice.PriceType.USAGE_PRICE)
-                        .unitConfig(UnitConfigModel.builder().unitAmount("unit_amount").build())
+                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                        .unitConfig(
+                            Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
+                        )
                         .dimensionalPriceConfiguration(
-                            DimensionalPriceConfigurationModel.builder()
+                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
                                 .addDimensionValue("string")
                                 .dimensionalPriceGroupId("dimensional_price_group_id")
                                 .build()
@@ -195,11 +201,11 @@ class PlanTest {
         assertThat(plan.id()).isEqualTo("id")
         assertThat(plan.adjustments())
             .containsExactly(
-                AdjustmentModel.ofPlanPhaseUsageDiscountAdjustment(
-                    AdjustmentModel.PlanPhaseUsageDiscountAdjustment.builder()
+                Plan.Adjustment.ofPlanPhaseUsageDiscount(
+                    Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                         .id("id")
                         .adjustmentType(
-                            AdjustmentModel.PlanPhaseUsageDiscountAdjustment.AdjustmentType
+                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.AdjustmentType
                                 .USAGE_DISCOUNT
                         )
                         .addAppliesToPriceId("string")
@@ -212,7 +218,7 @@ class PlanTest {
             )
         assertThat(plan.basePlan())
             .isEqualTo(
-                PlanMinifiedModel.builder()
+                Plan.BasePlan.builder()
                     .id("m2t5akQeh2obwxeU")
                     .externalPlanId("m2t5akQeh2obwxeU")
                     .name("Example plan")
@@ -239,7 +245,7 @@ class PlanTest {
         assertThat(plan.invoicingCurrency()).isEqualTo("invoicing_currency")
         assertThat(plan.maximum())
             .isEqualTo(
-                MaximumModel.builder()
+                Plan.Maximum.builder()
                     .addAppliesToPriceId("string")
                     .maximumAmount("maximum_amount")
                     .build()
@@ -253,7 +259,7 @@ class PlanTest {
             )
         assertThat(plan.minimum())
             .isEqualTo(
-                MinimumModel.builder()
+                Plan.Minimum.builder()
                     .addAppliesToPriceId("string")
                     .minimumAmount("minimum_amount")
                     .build()
@@ -278,14 +284,14 @@ class PlanTest {
                     .duration(0L)
                     .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
                     .maximum(
-                        MaximumModel.builder()
+                        Plan.PlanPhase.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .minimum(
-                        MinimumModel.builder()
+                        Plan.PlanPhase.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -297,21 +303,23 @@ class PlanTest {
             )
         assertThat(plan.prices())
             .containsExactly(
-                PriceModel.ofUnitPrice(
-                    PriceModel.UnitPrice.builder()
+                Price.ofUnit(
+                    Price.UnitPrice.builder()
                         .id("id")
-                        .billableMetric(BillableMetricTinyModel.builder().id("id").build())
+                        .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())
                         .billingCycleConfiguration(
-                            BillingCycleConfigurationModel.builder()
+                            Price.UnitPrice.BillingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(BillingCycleConfigurationModel.DurationUnit.DAY)
+                                .durationUnit(
+                                    Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
+                                )
                                 .build()
                         )
-                        .cadence(PriceModel.UnitPrice.Cadence.ONE_TIME)
+                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
                         .conversionRate(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditAllocation(
-                            AllocationModel.builder()
+                            Price.UnitPrice.CreditAllocation.builder()
                                 .allowsRollover(true)
                                 .currency("currency")
                                 .build()
@@ -329,38 +337,42 @@ class PlanTest {
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
                         .invoicingCycleConfiguration(
-                            BillingCycleConfigurationModel.builder()
+                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(BillingCycleConfigurationModel.DurationUnit.DAY)
+                                .durationUnit(
+                                    Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                                )
                                 .build()
                         )
-                        .item(ItemSlimModel.builder().id("id").name("name").build())
+                        .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
                         .maximum(
-                            MaximumModel.builder()
+                            Price.UnitPrice.Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
                         .maximumAmount("maximum_amount")
                         .metadata(
-                            PriceModel.UnitPrice.Metadata.builder()
+                            Price.UnitPrice.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
                         .minimum(
-                            MinimumModel.builder()
+                            Price.UnitPrice.Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
                         .minimumAmount("minimum_amount")
-                        .modelType(PriceModel.UnitPrice.ModelType.UNIT)
+                        .modelType(Price.UnitPrice.ModelType.UNIT)
                         .name("name")
                         .planPhaseOrder(0L)
-                        .priceType(PriceModel.UnitPrice.PriceType.USAGE_PRICE)
-                        .unitConfig(UnitConfigModel.builder().unitAmount("unit_amount").build())
+                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                        .unitConfig(
+                            Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
+                        )
                         .dimensionalPriceConfiguration(
-                            DimensionalPriceConfigurationModel.builder()
+                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
                                 .addDimensionValue("string")
                                 .dimensionalPriceGroupId("dimensional_price_group_id")
                                 .build()

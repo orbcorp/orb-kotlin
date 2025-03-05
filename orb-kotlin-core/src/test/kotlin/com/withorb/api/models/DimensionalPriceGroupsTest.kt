@@ -13,14 +13,14 @@ class DimensionalPriceGroupsTest {
         val dimensionalPriceGroups =
             DimensionalPriceGroups.builder()
                 .addData(
-                    DimensionalPriceGroupModel.builder()
+                    DimensionalPriceGroup.builder()
                         .id("id")
                         .billableMetricId("billable_metric_id")
                         .addDimension("region")
                         .addDimension("instance_type")
                         .externalDimensionalPriceGroupId("my_dimensional_price_group_id")
                         .metadata(
-                            DimensionalPriceGroupModel.Metadata.builder()
+                            DimensionalPriceGroup.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
@@ -34,14 +34,14 @@ class DimensionalPriceGroupsTest {
         assertThat(dimensionalPriceGroups).isNotNull
         assertThat(dimensionalPriceGroups.data())
             .containsExactly(
-                DimensionalPriceGroupModel.builder()
+                DimensionalPriceGroup.builder()
                     .id("id")
                     .billableMetricId("billable_metric_id")
                     .addDimension("region")
                     .addDimension("instance_type")
                     .externalDimensionalPriceGroupId("my_dimensional_price_group_id")
                     .metadata(
-                        DimensionalPriceGroupModel.Metadata.builder()
+                        DimensionalPriceGroup.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )

@@ -31,7 +31,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<PriceModel> = response().data()
+    fun data(): List<Price> = response().data()
 
     fun paginationMetadata(): PaginationMetadata = response().paginationMetadata()
 
@@ -83,19 +83,19 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data") private val data: JsonField<List<PriceModel>> = JsonMissing.of(),
+        @JsonProperty("data") private val data: JsonField<List<Price>> = JsonMissing.of(),
         @JsonProperty("pagination_metadata")
         private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<PriceModel> = data.getNullable("data") ?: listOf()
+        fun data(): List<Price> = data.getNullable("data") ?: listOf()
 
         fun paginationMetadata(): PaginationMetadata =
             paginationMetadata.getRequired("pagination_metadata")
 
-        @JsonProperty("data") fun _data(): JsonField<List<PriceModel>>? = data
+        @JsonProperty("data") fun _data(): JsonField<List<Price>>? = data
 
         @JsonProperty("pagination_metadata")
         fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
@@ -139,7 +139,7 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<PriceModel>> = JsonMissing.of()
+            private var data: JsonField<List<Price>> = JsonMissing.of()
             private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -149,9 +149,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<PriceModel>) = data(JsonField.of(data))
+            fun data(data: List<Price>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<PriceModel>>) = apply { this.data = data }
+            fun data(data: JsonField<List<Price>>) = apply { this.data = data }
 
             fun paginationMetadata(paginationMetadata: PaginationMetadata) =
                 paginationMetadata(JsonField.of(paginationMetadata))
@@ -168,9 +168,9 @@ private constructor(
         }
     }
 
-    class AutoPager(private val firstPage: PriceListPageAsync) : Flow<PriceModel> {
+    class AutoPager(private val firstPage: PriceListPageAsync) : Flow<Price> {
 
-        override suspend fun collect(collector: FlowCollector<PriceModel>) {
+        override suspend fun collect(collector: FlowCollector<Price>) {
             var page = firstPage
             var index = 0
             while (true) {

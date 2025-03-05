@@ -12,7 +12,6 @@ import com.withorb.api.models.AlertEnableParams
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 import com.withorb.api.models.CreateCustomerAlertRequest
-import com.withorb.api.models.ThresholdModel
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -29,10 +28,10 @@ class AlertServiceAsyncTest {
                 .build()
         val alertServiceAsync = client.alerts()
 
-        val alertModel =
+        val alert =
             alertServiceAsync.retrieve(AlertRetrieveParams.builder().alertId("alert_id").build())
 
-        alertModel.validate()
+        alert.validate()
     }
 
     @Test
@@ -44,15 +43,15 @@ class AlertServiceAsyncTest {
                 .build()
         val alertServiceAsync = client.alerts()
 
-        val alertModel =
+        val alert =
             alertServiceAsync.update(
                 AlertUpdateParams.builder()
                     .alertConfigurationId("alert_configuration_id")
-                    .addThreshold(ThresholdModel.builder().value(0.0).build())
+                    .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
                     .build()
             )
 
-        alertModel.validate()
+        alert.validate()
     }
 
     @Disabled("plan_version=0 breaks Prism")
@@ -79,7 +78,7 @@ class AlertServiceAsyncTest {
                 .build()
         val alertServiceAsync = client.alerts()
 
-        val alertModel =
+        val alert =
             alertServiceAsync.createForCustomer(
                 AlertCreateForCustomerParams.builder()
                     .customerId("customer_id")
@@ -87,13 +86,15 @@ class AlertServiceAsyncTest {
                         CreateCustomerAlertRequest.builder()
                             .currency("currency")
                             .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                            .addThreshold(ThresholdModel.builder().value(0.0).build())
+                            .addThreshold(
+                                CreateCustomerAlertRequest.Threshold.builder().value(0.0).build()
+                            )
                             .build()
                     )
                     .build()
             )
 
-        alertModel.validate()
+        alert.validate()
     }
 
     @Test
@@ -105,7 +106,7 @@ class AlertServiceAsyncTest {
                 .build()
         val alertServiceAsync = client.alerts()
 
-        val alertModel =
+        val alert =
             alertServiceAsync.createForExternalCustomer(
                 AlertCreateForExternalCustomerParams.builder()
                     .externalCustomerId("external_customer_id")
@@ -113,13 +114,15 @@ class AlertServiceAsyncTest {
                         CreateCustomerAlertRequest.builder()
                             .currency("currency")
                             .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                            .addThreshold(ThresholdModel.builder().value(0.0).build())
+                            .addThreshold(
+                                CreateCustomerAlertRequest.Threshold.builder().value(0.0).build()
+                            )
                             .build()
                     )
                     .build()
             )
 
-        alertModel.validate()
+        alert.validate()
     }
 
     @Test
@@ -131,17 +134,19 @@ class AlertServiceAsyncTest {
                 .build()
         val alertServiceAsync = client.alerts()
 
-        val alertModel =
+        val alert =
             alertServiceAsync.createForSubscription(
                 AlertCreateForSubscriptionParams.builder()
                     .subscriptionId("subscription_id")
-                    .addThreshold(ThresholdModel.builder().value(0.0).build())
+                    .addThreshold(
+                        AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build()
+                    )
                     .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                     .metricId("metric_id")
                     .build()
             )
 
-        alertModel.validate()
+        alert.validate()
     }
 
     @Test
@@ -153,7 +158,7 @@ class AlertServiceAsyncTest {
                 .build()
         val alertServiceAsync = client.alerts()
 
-        val alertModel =
+        val alert =
             alertServiceAsync.disable(
                 AlertDisableParams.builder()
                     .alertConfigurationId("alert_configuration_id")
@@ -161,7 +166,7 @@ class AlertServiceAsyncTest {
                     .build()
             )
 
-        alertModel.validate()
+        alert.validate()
     }
 
     @Test
@@ -173,7 +178,7 @@ class AlertServiceAsyncTest {
                 .build()
         val alertServiceAsync = client.alerts()
 
-        val alertModel =
+        val alert =
             alertServiceAsync.enable(
                 AlertEnableParams.builder()
                     .alertConfigurationId("alert_configuration_id")
@@ -181,6 +186,6 @@ class AlertServiceAsyncTest {
                     .build()
             )
 
-        alertModel.validate()
+        alert.validate()
     }
 }

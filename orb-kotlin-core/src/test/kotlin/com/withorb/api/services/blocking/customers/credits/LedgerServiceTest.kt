@@ -43,7 +43,7 @@ class LedgerServiceTest {
                 .build()
         val ledgerService = client.customers().credits().ledger()
 
-        val creditLedgerEntryModel =
+        val response =
             ledgerService.createEntry(
                 CustomerCreditLedgerCreateEntryParams.builder()
                     .customerId("customer_id")
@@ -86,7 +86,7 @@ class LedgerServiceTest {
                     .build()
             )
 
-        creditLedgerEntryModel.validate()
+        response.validate()
     }
 
     @Test
@@ -98,7 +98,7 @@ class LedgerServiceTest {
                 .build()
         val ledgerService = client.customers().credits().ledger()
 
-        val creditLedgerEntryModel =
+        val response =
             ledgerService.createEntryByExternalId(
                 CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
                     .externalCustomerId("external_customer_id")
@@ -141,7 +141,7 @@ class LedgerServiceTest {
                     .build()
             )
 
-        creditLedgerEntryModel.validate()
+        response.validate()
     }
 
     @Test

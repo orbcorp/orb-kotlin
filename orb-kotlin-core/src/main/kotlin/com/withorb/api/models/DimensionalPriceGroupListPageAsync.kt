@@ -28,7 +28,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<DimensionalPriceGroupModel> = response().data()
+    fun data(): List<DimensionalPriceGroup> = response().data()
 
     fun paginationMetadata(): PaginationMetadata = response().paginationMetadata()
 
@@ -84,19 +84,19 @@ private constructor(
     @JsonCreator
     constructor(
         @JsonProperty("data")
-        private val data: JsonField<List<DimensionalPriceGroupModel>> = JsonMissing.of(),
+        private val data: JsonField<List<DimensionalPriceGroup>> = JsonMissing.of(),
         @JsonProperty("pagination_metadata")
         private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<DimensionalPriceGroupModel> = data.getNullable("data") ?: listOf()
+        fun data(): List<DimensionalPriceGroup> = data.getNullable("data") ?: listOf()
 
         fun paginationMetadata(): PaginationMetadata =
             paginationMetadata.getRequired("pagination_metadata")
 
-        @JsonProperty("data") fun _data(): JsonField<List<DimensionalPriceGroupModel>>? = data
+        @JsonProperty("data") fun _data(): JsonField<List<DimensionalPriceGroup>>? = data
 
         @JsonProperty("pagination_metadata")
         fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
@@ -143,7 +143,7 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<DimensionalPriceGroupModel>> = JsonMissing.of()
+            private var data: JsonField<List<DimensionalPriceGroup>> = JsonMissing.of()
             private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -153,9 +153,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<DimensionalPriceGroupModel>) = data(JsonField.of(data))
+            fun data(data: List<DimensionalPriceGroup>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<DimensionalPriceGroupModel>>) = apply { this.data = data }
+            fun data(data: JsonField<List<DimensionalPriceGroup>>) = apply { this.data = data }
 
             fun paginationMetadata(paginationMetadata: PaginationMetadata) =
                 paginationMetadata(JsonField.of(paginationMetadata))
@@ -173,9 +173,9 @@ private constructor(
     }
 
     class AutoPager(private val firstPage: DimensionalPriceGroupListPageAsync) :
-        Flow<DimensionalPriceGroupModel> {
+        Flow<DimensionalPriceGroup> {
 
-        override suspend fun collect(collector: FlowCollector<DimensionalPriceGroupModel>) {
+        override suspend fun collect(collector: FlowCollector<DimensionalPriceGroup>) {
             var page = firstPage
             var index = 0
             while (true) {

@@ -6,7 +6,7 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.InvoiceLineItemCreateParams
-import com.withorb.api.models.InvoiceLineItemModel
+import com.withorb.api.models.InvoiceLineItemCreateResponse
 
 interface InvoiceLineItemService {
 
@@ -22,7 +22,7 @@ interface InvoiceLineItemService {
     fun create(
         params: InvoiceLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): InvoiceLineItemModel
+    ): InvoiceLineItemCreateResponse
 
     /**
      * A view of [InvoiceLineItemService] that provides access to raw HTTP responses for each
@@ -38,6 +38,6 @@ interface InvoiceLineItemService {
         fun create(
             params: InvoiceLineItemCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<InvoiceLineItemModel>
+        ): HttpResponseFor<InvoiceLineItemCreateResponse>
     }
 }

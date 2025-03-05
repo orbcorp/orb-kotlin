@@ -16,13 +16,13 @@ class BillableMetricTest {
                 .id("id")
                 .description("description")
                 .item(
-                    ItemModel.builder()
+                    Item.builder()
                         .id("id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addExternalConnection(
-                            ItemExternalConnectionModel.builder()
+                            Item.ExternalConnection.builder()
                                 .externalConnectionName(
-                                    ItemExternalConnectionModel.ExternalConnectionName.STRIPE
+                                    Item.ExternalConnection.ExternalConnectionName.STRIPE
                                 )
                                 .externalEntityId("external_entity_id")
                                 .build()
@@ -43,13 +43,13 @@ class BillableMetricTest {
         assertThat(billableMetric.description()).isEqualTo("description")
         assertThat(billableMetric.item())
             .isEqualTo(
-                ItemModel.builder()
+                Item.builder()
                     .id("id")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addExternalConnection(
-                        ItemExternalConnectionModel.builder()
+                        Item.ExternalConnection.builder()
                             .externalConnectionName(
-                                ItemExternalConnectionModel.ExternalConnectionName.STRIPE
+                                Item.ExternalConnection.ExternalConnectionName.STRIPE
                             )
                             .externalEntityId("external_entity_id")
                             .build()

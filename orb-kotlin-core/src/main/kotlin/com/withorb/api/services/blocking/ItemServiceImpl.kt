@@ -15,11 +15,11 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
+import com.withorb.api.models.Item
 import com.withorb.api.models.ItemCreateParams
 import com.withorb.api.models.ItemFetchParams
 import com.withorb.api.models.ItemListPage
 import com.withorb.api.models.ItemListParams
-import com.withorb.api.models.ItemModel
 import com.withorb.api.models.ItemUpdateParams
 
 class ItemServiceImpl internal constructor(private val clientOptions: ClientOptions) : ItemService {
@@ -30,11 +30,11 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withRawResponse(): ItemService.WithRawResponse = withRawResponse
 
-    override fun create(params: ItemCreateParams, requestOptions: RequestOptions): ItemModel =
+    override fun create(params: ItemCreateParams, requestOptions: RequestOptions): Item =
         // post /items
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun update(params: ItemUpdateParams, requestOptions: RequestOptions): ItemModel =
+    override fun update(params: ItemUpdateParams, requestOptions: RequestOptions): Item =
         // put /items/{item_id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -42,7 +42,7 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
         // get /items
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun fetch(params: ItemFetchParams, requestOptions: RequestOptions): ItemModel =
+    override fun fetch(params: ItemFetchParams, requestOptions: RequestOptions): Item =
         // get /items/{item_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
@@ -51,13 +51,13 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<ItemModel> =
-            jsonHandler<ItemModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<Item> =
+            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: ItemCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ItemModel> {
+        ): HttpResponseFor<Item> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -78,13 +78,13 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val updateHandler: Handler<ItemModel> =
-            jsonHandler<ItemModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Item> =
+            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: ItemUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ItemModel> {
+        ): HttpResponseFor<Item> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -133,13 +133,13 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val fetchHandler: Handler<ItemModel> =
-            jsonHandler<ItemModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<Item> =
+            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun fetch(
             params: ItemFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ItemModel> {
+        ): HttpResponseFor<Item> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

@@ -15,7 +15,7 @@ class SubscriptionFetchScheduleResponseTest {
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .plan(
-                    PlanMinifiedModel.builder()
+                    SubscriptionFetchScheduleResponse.Plan.builder()
                         .id("m2t5akQeh2obwxeU")
                         .externalPlanId("m2t5akQeh2obwxeU")
                         .name("Example plan")
@@ -30,7 +30,7 @@ class SubscriptionFetchScheduleResponseTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(subscriptionFetchScheduleResponse.plan())
             .isEqualTo(
-                PlanMinifiedModel.builder()
+                SubscriptionFetchScheduleResponse.Plan.builder()
                     .id("m2t5akQeh2obwxeU")
                     .externalPlanId("m2t5akQeh2obwxeU")
                     .name("Example plan")
