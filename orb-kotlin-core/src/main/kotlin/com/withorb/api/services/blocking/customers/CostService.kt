@@ -6,8 +6,9 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.CustomerCostListByExternalIdParams
+import com.withorb.api.models.CustomerCostListByExternalIdResponse
 import com.withorb.api.models.CustomerCostListParams
-import com.withorb.api.models.CustomerCostsModel
+import com.withorb.api.models.CustomerCostListResponse
 
 interface CostService {
 
@@ -129,7 +130,7 @@ interface CostService {
     fun list(
         params: CustomerCostListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CustomerCostsModel
+    ): CustomerCostListResponse
 
     /**
      * This endpoint is used to fetch a day-by-day snapshot of a customer's costs in Orb, calculated
@@ -244,7 +245,7 @@ interface CostService {
     fun listByExternalId(
         params: CustomerCostListByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CustomerCostsModel
+    ): CustomerCostListByExternalIdResponse
 
     /** A view of [CostService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -257,7 +258,7 @@ interface CostService {
         fun list(
             params: CustomerCostListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CustomerCostsModel>
+        ): HttpResponseFor<CustomerCostListResponse>
 
         /**
          * Returns a raw HTTP response for `get
@@ -268,6 +269,6 @@ interface CostService {
         fun listByExternalId(
             params: CustomerCostListByExternalIdParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CustomerCostsModel>
+        ): HttpResponseFor<CustomerCostListByExternalIdResponse>
     }
 }

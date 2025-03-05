@@ -13,9 +13,9 @@ class ItemUpdateParamsTest {
         ItemUpdateParams.builder()
             .itemId("item_id")
             .addExternalConnection(
-                ItemExternalConnectionModel.builder()
+                ItemUpdateParams.ExternalConnection.builder()
                     .externalConnectionName(
-                        ItemExternalConnectionModel.ExternalConnectionName.STRIPE
+                        ItemUpdateParams.ExternalConnection.ExternalConnectionName.STRIPE
                     )
                     .externalEntityId("external_entity_id")
                     .build()
@@ -30,9 +30,9 @@ class ItemUpdateParamsTest {
             ItemUpdateParams.builder()
                 .itemId("item_id")
                 .addExternalConnection(
-                    ItemExternalConnectionModel.builder()
+                    ItemUpdateParams.ExternalConnection.builder()
                         .externalConnectionName(
-                            ItemExternalConnectionModel.ExternalConnectionName.STRIPE
+                            ItemUpdateParams.ExternalConnection.ExternalConnectionName.STRIPE
                         )
                         .externalEntityId("external_entity_id")
                         .build()
@@ -46,9 +46,9 @@ class ItemUpdateParamsTest {
         assertThat(body.externalConnections())
             .isEqualTo(
                 listOf(
-                    ItemExternalConnectionModel.builder()
+                    ItemUpdateParams.ExternalConnection.builder()
                         .externalConnectionName(
-                            ItemExternalConnectionModel.ExternalConnectionName.STRIPE
+                            ItemUpdateParams.ExternalConnection.ExternalConnectionName.STRIPE
                         )
                         .externalEntityId("external_entity_id")
                         .build()

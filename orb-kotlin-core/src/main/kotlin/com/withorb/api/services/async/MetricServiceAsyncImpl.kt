@@ -15,7 +15,7 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
-import com.withorb.api.models.BillableMetricModel
+import com.withorb.api.models.BillableMetric
 import com.withorb.api.models.MetricCreateParams
 import com.withorb.api.models.MetricFetchParams
 import com.withorb.api.models.MetricListPageAsync
@@ -34,14 +34,14 @@ class MetricServiceAsyncImpl internal constructor(private val clientOptions: Cli
     override suspend fun create(
         params: MetricCreateParams,
         requestOptions: RequestOptions,
-    ): BillableMetricModel =
+    ): BillableMetric =
         // post /metrics
         withRawResponse().create(params, requestOptions).parse()
 
     override suspend fun update(
         params: MetricUpdateParams,
         requestOptions: RequestOptions,
-    ): BillableMetricModel =
+    ): BillableMetric =
         // put /metrics/{metric_id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -55,7 +55,7 @@ class MetricServiceAsyncImpl internal constructor(private val clientOptions: Cli
     override suspend fun fetch(
         params: MetricFetchParams,
         requestOptions: RequestOptions,
-    ): BillableMetricModel =
+    ): BillableMetric =
         // get /metrics/{metric_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
@@ -64,14 +64,13 @@ class MetricServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<BillableMetricModel> =
-            jsonHandler<BillableMetricModel>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val createHandler: Handler<BillableMetric> =
+            jsonHandler<BillableMetric>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun create(
             params: MetricCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<BillableMetricModel> {
+        ): HttpResponseFor<BillableMetric> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -92,14 +91,13 @@ class MetricServiceAsyncImpl internal constructor(private val clientOptions: Cli
             }
         }
 
-        private val updateHandler: Handler<BillableMetricModel> =
-            jsonHandler<BillableMetricModel>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val updateHandler: Handler<BillableMetric> =
+            jsonHandler<BillableMetric>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun update(
             params: MetricUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<BillableMetricModel> {
+        ): HttpResponseFor<BillableMetric> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -150,14 +148,13 @@ class MetricServiceAsyncImpl internal constructor(private val clientOptions: Cli
             }
         }
 
-        private val fetchHandler: Handler<BillableMetricModel> =
-            jsonHandler<BillableMetricModel>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<BillableMetric> =
+            jsonHandler<BillableMetric>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun fetch(
             params: MetricFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<BillableMetricModel> {
+        ): HttpResponseFor<BillableMetric> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

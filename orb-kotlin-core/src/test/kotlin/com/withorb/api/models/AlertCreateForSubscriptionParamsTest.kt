@@ -12,7 +12,7 @@ class AlertCreateForSubscriptionParamsTest {
     fun create() {
         AlertCreateForSubscriptionParams.builder()
             .subscriptionId("subscription_id")
-            .addThreshold(ThresholdModel.builder().value(0.0).build())
+            .addThreshold(AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build())
             .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
             .metricId("metric_id")
             .build()
@@ -23,7 +23,9 @@ class AlertCreateForSubscriptionParamsTest {
         val params =
             AlertCreateForSubscriptionParams.builder()
                 .subscriptionId("subscription_id")
-                .addThreshold(ThresholdModel.builder().value(0.0).build())
+                .addThreshold(
+                    AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build()
+                )
                 .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .metricId("metric_id")
                 .build()
@@ -31,7 +33,10 @@ class AlertCreateForSubscriptionParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-        assertThat(body.thresholds()).isEqualTo(listOf(ThresholdModel.builder().value(0.0).build()))
+        assertThat(body.thresholds())
+            .isEqualTo(
+                listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build())
+            )
         assertThat(body.type()).isEqualTo(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
         assertThat(body.metricId()).isEqualTo("metric_id")
     }
@@ -41,14 +46,19 @@ class AlertCreateForSubscriptionParamsTest {
         val params =
             AlertCreateForSubscriptionParams.builder()
                 .subscriptionId("subscription_id")
-                .addThreshold(ThresholdModel.builder().value(0.0).build())
+                .addThreshold(
+                    AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build()
+                )
                 .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .build()
 
         val body = params._body()
 
         assertNotNull(body)
-        assertThat(body.thresholds()).isEqualTo(listOf(ThresholdModel.builder().value(0.0).build()))
+        assertThat(body.thresholds())
+            .isEqualTo(
+                listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build())
+            )
         assertThat(body.type()).isEqualTo(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
     }
 
@@ -57,7 +67,9 @@ class AlertCreateForSubscriptionParamsTest {
         val params =
             AlertCreateForSubscriptionParams.builder()
                 .subscriptionId("subscription_id")
-                .addThreshold(ThresholdModel.builder().value(0.0).build())
+                .addThreshold(
+                    AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build()
+                )
                 .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .build()
         assertThat(params).isNotNull

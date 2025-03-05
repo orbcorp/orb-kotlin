@@ -15,13 +15,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
-import com.withorb.api.models.AddressInputModel
 import com.withorb.api.models.CustomerCreateParams
-import com.withorb.api.models.CustomerHierarchyConfigModel
-import com.withorb.api.models.CustomerTaxIdModel
-import com.withorb.api.models.NewAccountingSyncConfigurationModel
-import com.withorb.api.models.NewReportingConfigurationModel
-import com.withorb.api.models.NewTaxConfigurationModel
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -49,9 +43,10 @@ internal class ServiceParamsTest {
                 .email("dev@stainless.com")
                 .name("x")
                 .accountingSyncConfiguration(
-                    NewAccountingSyncConfigurationModel.builder()
+                    CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .addAccountingProvider(
-                            NewAccountingSyncConfigurationModel.AccountingProvider.builder()
+                            CustomerCreateParams.AccountingSyncConfiguration.AccountingProvider
+                                .builder()
                                 .externalProviderId("external_provider_id")
                                 .providerType("provider_type")
                                 .build()
@@ -62,7 +57,7 @@ internal class ServiceParamsTest {
                 .addAdditionalEmail("string")
                 .autoCollection(true)
                 .billingAddress(
-                    AddressInputModel.builder()
+                    CustomerCreateParams.BillingAddress.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -75,7 +70,7 @@ internal class ServiceParamsTest {
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
                 .hierarchy(
-                    CustomerHierarchyConfigModel.builder()
+                    CustomerCreateParams.Hierarchy.builder()
                         .addChildCustomerId("string")
                         .parentCustomerId("parent_customer_id")
                         .build()
@@ -88,10 +83,10 @@ internal class ServiceParamsTest {
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
-                    NewReportingConfigurationModel.builder().exempt(true).build()
+                    CustomerCreateParams.ReportingConfiguration.builder().exempt(true).build()
                 )
                 .shippingAddress(
-                    AddressInputModel.builder()
+                    CustomerCreateParams.ShippingAddress.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -101,18 +96,20 @@ internal class ServiceParamsTest {
                         .build()
                 )
                 .taxConfiguration(
-                    NewTaxConfigurationModel.NewAvalaraTaxConfiguration.builder()
+                    CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
                         .taxExempt(true)
                         .taxProvider(
-                            NewTaxConfigurationModel.NewAvalaraTaxConfiguration.TaxProvider.AVALARA
+                            CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                .TaxProvider
+                                .AVALARA
                         )
                         .taxExemptionCode("tax_exemption_code")
                         .build()
                 )
                 .taxId(
-                    CustomerTaxIdModel.builder()
-                        .country(CustomerTaxIdModel.Country.AD)
-                        .type(CustomerTaxIdModel.Type.AD_NRT)
+                    CustomerCreateParams.TaxId.builder()
+                        .country(CustomerCreateParams.TaxId.Country.AD)
+                        .type(CustomerCreateParams.TaxId.Type.AD_NRT)
                         .value("value")
                         .build()
                 )

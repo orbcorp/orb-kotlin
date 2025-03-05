@@ -5,8 +5,8 @@ package com.withorb.api.services.async.dimensionalPriceGroups
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.models.DimensionalPriceGroup
 import com.withorb.api.models.DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams
-import com.withorb.api.models.DimensionalPriceGroupModel
 
 interface ExternalDimensionalPriceGroupIdServiceAsync {
 
@@ -19,7 +19,7 @@ interface ExternalDimensionalPriceGroupIdServiceAsync {
     suspend fun retrieve(
         params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DimensionalPriceGroupModel
+    ): DimensionalPriceGroup
 
     /**
      * A view of [ExternalDimensionalPriceGroupIdServiceAsync] that provides access to raw HTTP
@@ -36,6 +36,6 @@ interface ExternalDimensionalPriceGroupIdServiceAsync {
         suspend fun retrieve(
             params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DimensionalPriceGroupModel>
+        ): HttpResponseFor<DimensionalPriceGroup>
     }
 }

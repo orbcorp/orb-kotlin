@@ -14,28 +14,32 @@ class SubscriptionFetchCostsResponseTest {
         val subscriptionFetchCostsResponse =
             SubscriptionFetchCostsResponse.builder()
                 .addData(
-                    AggregatedCostModel.builder()
+                    SubscriptionFetchCostsResponse.Data.builder()
                         .addPerPriceCost(
-                            AggregatedCostModel.PerPriceCost.builder()
+                            SubscriptionFetchCostsResponse.Data.PerPriceCost.builder()
                                 .price(
-                                    PriceModel.UnitPrice.builder()
+                                    Price.UnitPrice.builder()
                                         .id("id")
                                         .billableMetric(
-                                            BillableMetricTinyModel.builder().id("id").build()
+                                            Price.UnitPrice.BillableMetric.builder()
+                                                .id("id")
+                                                .build()
                                         )
                                         .billingCycleConfiguration(
-                                            BillingCycleConfigurationModel.builder()
+                                            Price.UnitPrice.BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    BillingCycleConfigurationModel.DurationUnit.DAY
+                                                    Price.UnitPrice.BillingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
                                                 )
                                                 .build()
                                         )
-                                        .cadence(PriceModel.UnitPrice.Cadence.ONE_TIME)
+                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
                                         .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
-                                            AllocationModel.builder()
+                                            Price.UnitPrice.CreditAllocation.builder()
                                                 .allowsRollover(true)
                                                 .currency("currency")
                                                 .build()
@@ -55,23 +59,30 @@ class SubscriptionFetchCostsResponseTest {
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
-                                            BillingCycleConfigurationModel.builder()
+                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    BillingCycleConfigurationModel.DurationUnit.DAY
+                                                    Price.UnitPrice.InvoicingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
                                                 )
                                                 .build()
                                         )
-                                        .item(ItemSlimModel.builder().id("id").name("name").build())
+                                        .item(
+                                            Price.UnitPrice.Item.builder()
+                                                .id("id")
+                                                .name("name")
+                                                .build()
+                                        )
                                         .maximum(
-                                            MaximumModel.builder()
+                                            Price.UnitPrice.Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
                                         .metadata(
-                                            PriceModel.UnitPrice.Metadata.builder()
+                                            Price.UnitPrice.Metadata.builder()
                                                 .putAdditionalProperty(
                                                     "foo",
                                                     JsonValue.from("string"),
@@ -79,23 +90,23 @@ class SubscriptionFetchCostsResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            MinimumModel.builder()
+                                            Price.UnitPrice.Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(PriceModel.UnitPrice.ModelType.UNIT)
+                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
-                                        .priceType(PriceModel.UnitPrice.PriceType.USAGE_PRICE)
+                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                         .unitConfig(
-                                            UnitConfigModel.builder()
+                                            Price.UnitPrice.UnitConfig.builder()
                                                 .unitAmount("unit_amount")
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
-                                            DimensionalPriceConfigurationModel.builder()
+                                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
                                                 .addDimensionValue("string")
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
@@ -120,28 +131,30 @@ class SubscriptionFetchCostsResponseTest {
         assertThat(subscriptionFetchCostsResponse).isNotNull
         assertThat(subscriptionFetchCostsResponse.data())
             .containsExactly(
-                AggregatedCostModel.builder()
+                SubscriptionFetchCostsResponse.Data.builder()
                     .addPerPriceCost(
-                        AggregatedCostModel.PerPriceCost.builder()
+                        SubscriptionFetchCostsResponse.Data.PerPriceCost.builder()
                             .price(
-                                PriceModel.UnitPrice.builder()
+                                Price.UnitPrice.builder()
                                     .id("id")
                                     .billableMetric(
-                                        BillableMetricTinyModel.builder().id("id").build()
+                                        Price.UnitPrice.BillableMetric.builder().id("id").build()
                                     )
                                     .billingCycleConfiguration(
-                                        BillingCycleConfigurationModel.builder()
+                                        Price.UnitPrice.BillingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                BillingCycleConfigurationModel.DurationUnit.DAY
+                                                Price.UnitPrice.BillingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
                                             )
                                             .build()
                                     )
-                                    .cadence(PriceModel.UnitPrice.Cadence.ONE_TIME)
+                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
                                     .conversionRate(0.0)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditAllocation(
-                                        AllocationModel.builder()
+                                        Price.UnitPrice.CreditAllocation.builder()
                                             .allowsRollover(true)
                                             .currency("currency")
                                             .build()
@@ -161,42 +174,48 @@ class SubscriptionFetchCostsResponseTest {
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(0.0)
                                     .invoicingCycleConfiguration(
-                                        BillingCycleConfigurationModel.builder()
+                                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                BillingCycleConfigurationModel.DurationUnit.DAY
+                                                Price.UnitPrice.InvoicingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
                                             )
                                             .build()
                                     )
-                                    .item(ItemSlimModel.builder().id("id").name("name").build())
+                                    .item(
+                                        Price.UnitPrice.Item.builder().id("id").name("name").build()
+                                    )
                                     .maximum(
-                                        MaximumModel.builder()
+                                        Price.UnitPrice.Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
                                     .maximumAmount("maximum_amount")
                                     .metadata(
-                                        PriceModel.UnitPrice.Metadata.builder()
+                                        Price.UnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
                                             .build()
                                     )
                                     .minimum(
-                                        MinimumModel.builder()
+                                        Price.UnitPrice.Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .minimumAmount("minimum_amount")
                                             .build()
                                     )
                                     .minimumAmount("minimum_amount")
-                                    .modelType(PriceModel.UnitPrice.ModelType.UNIT)
+                                    .modelType(Price.UnitPrice.ModelType.UNIT)
                                     .name("name")
                                     .planPhaseOrder(0L)
-                                    .priceType(PriceModel.UnitPrice.PriceType.USAGE_PRICE)
+                                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                     .unitConfig(
-                                        UnitConfigModel.builder().unitAmount("unit_amount").build()
+                                        Price.UnitPrice.UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
                                     )
                                     .dimensionalPriceConfiguration(
-                                        DimensionalPriceConfigurationModel.builder()
+                                        Price.UnitPrice.DimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
                                             .build()

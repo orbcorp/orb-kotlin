@@ -15,9 +15,9 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
+import com.withorb.api.models.Price
 import com.withorb.api.models.PriceExternalPriceIdFetchParams
 import com.withorb.api.models.PriceExternalPriceIdUpdateParams
-import com.withorb.api.models.PriceModel
 
 class ExternalPriceIdServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     ExternalPriceIdService {
@@ -31,14 +31,14 @@ class ExternalPriceIdServiceImpl internal constructor(private val clientOptions:
     override fun update(
         params: PriceExternalPriceIdUpdateParams,
         requestOptions: RequestOptions,
-    ): PriceModel =
+    ): Price =
         // put /prices/external_price_id/{external_price_id}
         withRawResponse().update(params, requestOptions).parse()
 
     override fun fetch(
         params: PriceExternalPriceIdFetchParams,
         requestOptions: RequestOptions,
-    ): PriceModel =
+    ): Price =
         // get /prices/external_price_id/{external_price_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
@@ -47,13 +47,13 @@ class ExternalPriceIdServiceImpl internal constructor(private val clientOptions:
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val updateHandler: Handler<PriceModel> =
-            jsonHandler<PriceModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Price> =
+            jsonHandler<Price>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: PriceExternalPriceIdUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PriceModel> {
+        ): HttpResponseFor<Price> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -74,13 +74,13 @@ class ExternalPriceIdServiceImpl internal constructor(private val clientOptions:
             }
         }
 
-        private val fetchHandler: Handler<PriceModel> =
-            jsonHandler<PriceModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<Price> =
+            jsonHandler<Price>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun fetch(
             params: PriceExternalPriceIdFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PriceModel> {
+        ): HttpResponseFor<Price> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

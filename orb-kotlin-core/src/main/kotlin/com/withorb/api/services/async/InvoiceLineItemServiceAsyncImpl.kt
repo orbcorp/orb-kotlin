@@ -16,7 +16,7 @@ import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.InvoiceLineItemCreateParams
-import com.withorb.api.models.InvoiceLineItemModel
+import com.withorb.api.models.InvoiceLineItemCreateResponse
 
 class InvoiceLineItemServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : InvoiceLineItemServiceAsync {
@@ -30,7 +30,7 @@ internal constructor(private val clientOptions: ClientOptions) : InvoiceLineItem
     override suspend fun create(
         params: InvoiceLineItemCreateParams,
         requestOptions: RequestOptions,
-    ): InvoiceLineItemModel =
+    ): InvoiceLineItemCreateResponse =
         // post /invoice_line_items
         withRawResponse().create(params, requestOptions).parse()
 
@@ -39,14 +39,14 @@ internal constructor(private val clientOptions: ClientOptions) : InvoiceLineItem
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<InvoiceLineItemModel> =
-            jsonHandler<InvoiceLineItemModel>(clientOptions.jsonMapper)
+        private val createHandler: Handler<InvoiceLineItemCreateResponse> =
+            jsonHandler<InvoiceLineItemCreateResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun create(
             params: InvoiceLineItemCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<InvoiceLineItemModel> {
+        ): HttpResponseFor<InvoiceLineItemCreateResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

@@ -15,7 +15,7 @@ class AlertCreateForExternalCustomerParamsTest {
                 CreateCustomerAlertRequest.builder()
                     .currency("currency")
                     .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                    .addThreshold(ThresholdModel.builder().value(0.0).build())
+                    .addThreshold(CreateCustomerAlertRequest.Threshold.builder().value(0.0).build())
                     .build()
             )
             .build()
@@ -30,7 +30,9 @@ class AlertCreateForExternalCustomerParamsTest {
                     CreateCustomerAlertRequest.builder()
                         .currency("currency")
                         .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                        .addThreshold(ThresholdModel.builder().value(0.0).build())
+                        .addThreshold(
+                            CreateCustomerAlertRequest.Threshold.builder().value(0.0).build()
+                        )
                         .build()
                 )
                 .build()
@@ -42,7 +44,7 @@ class AlertCreateForExternalCustomerParamsTest {
                 CreateCustomerAlertRequest.builder()
                     .currency("currency")
                     .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                    .addThreshold(ThresholdModel.builder().value(0.0).build())
+                    .addThreshold(CreateCustomerAlertRequest.Threshold.builder().value(0.0).build())
                     .build()
             )
     }

@@ -12,7 +12,7 @@ class AlertUpdateParamsTest {
     fun create() {
         AlertUpdateParams.builder()
             .alertConfigurationId("alert_configuration_id")
-            .addThreshold(ThresholdModel.builder().value(0.0).build())
+            .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
             .build()
     }
 
@@ -21,13 +21,14 @@ class AlertUpdateParamsTest {
         val params =
             AlertUpdateParams.builder()
                 .alertConfigurationId("alert_configuration_id")
-                .addThreshold(ThresholdModel.builder().value(0.0).build())
+                .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
                 .build()
 
         val body = params._body()
 
         assertNotNull(body)
-        assertThat(body.thresholds()).isEqualTo(listOf(ThresholdModel.builder().value(0.0).build()))
+        assertThat(body.thresholds())
+            .isEqualTo(listOf(AlertUpdateParams.Threshold.builder().value(0.0).build()))
     }
 
     @Test
@@ -35,13 +36,14 @@ class AlertUpdateParamsTest {
         val params =
             AlertUpdateParams.builder()
                 .alertConfigurationId("alert_configuration_id")
-                .addThreshold(ThresholdModel.builder().value(0.0).build())
+                .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
                 .build()
 
         val body = params._body()
 
         assertNotNull(body)
-        assertThat(body.thresholds()).isEqualTo(listOf(ThresholdModel.builder().value(0.0).build()))
+        assertThat(body.thresholds())
+            .isEqualTo(listOf(AlertUpdateParams.Threshold.builder().value(0.0).build()))
     }
 
     @Test
@@ -49,7 +51,7 @@ class AlertUpdateParamsTest {
         val params =
             AlertUpdateParams.builder()
                 .alertConfigurationId("alert_configuration_id")
-                .addThreshold(ThresholdModel.builder().value(0.0).build())
+                .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
                 .build()
         assertThat(params).isNotNull
         // path param "alertConfigurationId"

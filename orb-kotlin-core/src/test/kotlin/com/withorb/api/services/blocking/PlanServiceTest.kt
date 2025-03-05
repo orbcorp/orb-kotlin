@@ -5,12 +5,9 @@ package com.withorb.api.services.blocking
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
-import com.withorb.api.models.EditPlanModel
-import com.withorb.api.models.NewBillingCycleConfigurationModel
 import com.withorb.api.models.PlanCreateParams
 import com.withorb.api.models.PlanFetchParams
 import com.withorb.api.models.PlanUpdateParams
-import com.withorb.api.models.UnitConfigModel
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -26,7 +23,7 @@ class PlanServiceTest {
                 .build()
         val planService = client.plans()
 
-        val planModel =
+        val plan =
             planService.create(
                 PlanCreateParams.builder()
                     .currency("currency")
@@ -37,14 +34,22 @@ class PlanServiceTest {
                             .itemId("item_id")
                             .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(UnitConfigModel.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .build()
+                            )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                NewBillingCycleConfigurationModel.builder()
+                                PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration
+                                    .builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        NewBillingCycleConfigurationModel.DurationUnit.DAY
+                                        PlanCreateParams.Price.NewPlanUnitPrice
+                                            .BillingCycleConfiguration
+                                            .DurationUnit
+                                            .DAY
                                     )
                                     .build()
                             )
@@ -54,10 +59,14 @@ class PlanServiceTest {
                             .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
-                                NewBillingCycleConfigurationModel.builder()
+                                PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
+                                    .builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        NewBillingCycleConfigurationModel.DurationUnit.DAY
+                                        PlanCreateParams.Price.NewPlanUnitPrice
+                                            .InvoicingCycleConfiguration
+                                            .DurationUnit
+                                            .DAY
                                     )
                                     .build()
                             )
@@ -80,7 +89,7 @@ class PlanServiceTest {
                     .build()
             )
 
-        planModel.validate()
+        plan.validate()
     }
 
     @Test
@@ -92,24 +101,20 @@ class PlanServiceTest {
                 .build()
         val planService = client.plans()
 
-        val planModel =
+        val plan =
             planService.update(
                 PlanUpdateParams.builder()
                     .planId("plan_id")
-                    .editPlanModel(
-                        EditPlanModel.builder()
-                            .externalPlanId("external_plan_id")
-                            .metadata(
-                                EditPlanModel.Metadata.builder()
-                                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                                    .build()
-                            )
+                    .externalPlanId("external_plan_id")
+                    .metadata(
+                        PlanUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .build()
             )
 
-        planModel.validate()
+        plan.validate()
     }
 
     @Test
@@ -135,8 +140,8 @@ class PlanServiceTest {
                 .build()
         val planService = client.plans()
 
-        val planModel = planService.fetch(PlanFetchParams.builder().planId("plan_id").build())
+        val plan = planService.fetch(PlanFetchParams.builder().planId("plan_id").build())
 
-        planModel.validate()
+        plan.validate()
     }
 }

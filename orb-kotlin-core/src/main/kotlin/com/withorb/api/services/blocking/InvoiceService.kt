@@ -5,6 +5,7 @@ package com.withorb.api.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.models.Invoice
 import com.withorb.api.models.InvoiceCreateParams
 import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
@@ -13,7 +14,6 @@ import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceListPage
 import com.withorb.api.models.InvoiceListParams
 import com.withorb.api.models.InvoiceMarkPaidParams
-import com.withorb.api.models.InvoiceModel
 import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
 import com.withorb.api.models.InvoiceVoidParams
@@ -29,7 +29,7 @@ interface InvoiceService {
     fun create(
         params: InvoiceCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): InvoiceModel
+    ): Invoice
 
     /**
      * This endpoint allows you to update the `metadata` property on an invoice. If you pass null
@@ -40,7 +40,7 @@ interface InvoiceService {
     fun update(
         params: InvoiceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): InvoiceModel
+    ): Invoice
 
     /**
      * This endpoint returns a list of all [`Invoice`](/core-concepts#invoice)s for an account in a
@@ -84,7 +84,7 @@ interface InvoiceService {
     fun fetch(
         params: InvoiceFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): InvoiceModel
+    ): Invoice
 
     /**
      * This endpoint can be used to fetch the upcoming [invoice](/core-concepts#invoice) for the
@@ -105,7 +105,7 @@ interface InvoiceService {
     fun issue(
         params: InvoiceIssueParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): InvoiceModel
+    ): Invoice
 
     /**
      * This endpoint allows an invoice's status to be set the `paid` status. This can only be done
@@ -114,7 +114,7 @@ interface InvoiceService {
     fun markPaid(
         params: InvoiceMarkPaidParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): InvoiceModel
+    ): Invoice
 
     /**
      * This endpoint collects payment for an invoice using the customer's default payment method.
@@ -123,7 +123,7 @@ interface InvoiceService {
     fun pay(
         params: InvoicePayParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): InvoiceModel
+    ): Invoice
 
     /**
      * This endpoint allows an invoice's status to be set the `void` status. This can only be done
@@ -140,7 +140,7 @@ interface InvoiceService {
     fun void(
         params: InvoiceVoidParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): InvoiceModel
+    ): Invoice
 
     /** A view of [InvoiceService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -153,7 +153,7 @@ interface InvoiceService {
         fun create(
             params: InvoiceCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<InvoiceModel>
+        ): HttpResponseFor<Invoice>
 
         /**
          * Returns a raw HTTP response for `put /invoices/{invoice_id}`, but is otherwise the same
@@ -163,7 +163,7 @@ interface InvoiceService {
         fun update(
             params: InvoiceUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<InvoiceModel>
+        ): HttpResponseFor<Invoice>
 
         /**
          * Returns a raw HTTP response for `get /invoices`, but is otherwise the same as
@@ -191,7 +191,7 @@ interface InvoiceService {
         fun fetch(
             params: InvoiceFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<InvoiceModel>
+        ): HttpResponseFor<Invoice>
 
         /**
          * Returns a raw HTTP response for `get /invoices/upcoming`, but is otherwise the same as
@@ -211,7 +211,7 @@ interface InvoiceService {
         fun issue(
             params: InvoiceIssueParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<InvoiceModel>
+        ): HttpResponseFor<Invoice>
 
         /**
          * Returns a raw HTTP response for `post /invoices/{invoice_id}/mark_paid`, but is otherwise
@@ -221,7 +221,7 @@ interface InvoiceService {
         fun markPaid(
             params: InvoiceMarkPaidParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<InvoiceModel>
+        ): HttpResponseFor<Invoice>
 
         /**
          * Returns a raw HTTP response for `post /invoices/{invoice_id}/pay`, but is otherwise the
@@ -231,7 +231,7 @@ interface InvoiceService {
         fun pay(
             params: InvoicePayParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<InvoiceModel>
+        ): HttpResponseFor<Invoice>
 
         /**
          * Returns a raw HTTP response for `post /invoices/{invoice_id}/void`, but is otherwise the
@@ -241,6 +241,6 @@ interface InvoiceService {
         fun void(
             params: InvoiceVoidParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<InvoiceModel>
+        ): HttpResponseFor<Invoice>
     }
 }

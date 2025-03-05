@@ -5,6 +5,7 @@ package com.withorb.api.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.models.Alert
 import com.withorb.api.models.AlertCreateForCustomerParams
 import com.withorb.api.models.AlertCreateForExternalCustomerParams
 import com.withorb.api.models.AlertCreateForSubscriptionParams
@@ -12,7 +13,6 @@ import com.withorb.api.models.AlertDisableParams
 import com.withorb.api.models.AlertEnableParams
 import com.withorb.api.models.AlertListPageAsync
 import com.withorb.api.models.AlertListParams
-import com.withorb.api.models.AlertModel
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 
@@ -27,13 +27,13 @@ interface AlertServiceAsync {
     suspend fun retrieve(
         params: AlertRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AlertModel
+    ): Alert
 
     /** This endpoint updates the thresholds of an alert. */
     suspend fun update(
         params: AlertUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AlertModel
+    ): Alert
 
     /**
      * This endpoint returns a list of alerts within Orb.
@@ -76,7 +76,7 @@ interface AlertServiceAsync {
     suspend fun createForCustomer(
         params: AlertCreateForCustomerParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AlertModel
+    ): Alert
 
     /**
      * This endpoint creates a new alert to monitor a customer's credit balance. There are three
@@ -89,7 +89,7 @@ interface AlertServiceAsync {
     suspend fun createForExternalCustomer(
         params: AlertCreateForExternalCustomerParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AlertModel
+    ): Alert
 
     /**
      * This endpoint is used to create alerts at the subscription level.
@@ -106,7 +106,7 @@ interface AlertServiceAsync {
     suspend fun createForSubscription(
         params: AlertCreateForSubscriptionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AlertModel
+    ): Alert
 
     /**
      * This endpoint allows you to disable an alert. To disable a plan-level alert for a specific
@@ -116,7 +116,7 @@ interface AlertServiceAsync {
     suspend fun disable(
         params: AlertDisableParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AlertModel
+    ): Alert
 
     /**
      * This endpoint allows you to enable an alert. To enable a plan-level alert for a specific
@@ -126,7 +126,7 @@ interface AlertServiceAsync {
     suspend fun enable(
         params: AlertEnableParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AlertModel
+    ): Alert
 
     /** A view of [AlertServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -139,7 +139,7 @@ interface AlertServiceAsync {
         suspend fun retrieve(
             params: AlertRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AlertModel>
+        ): HttpResponseFor<Alert>
 
         /**
          * Returns a raw HTTP response for `put /alerts/{alert_configuration_id}`, but is otherwise
@@ -149,7 +149,7 @@ interface AlertServiceAsync {
         suspend fun update(
             params: AlertUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AlertModel>
+        ): HttpResponseFor<Alert>
 
         /**
          * Returns a raw HTTP response for `get /alerts`, but is otherwise the same as
@@ -177,7 +177,7 @@ interface AlertServiceAsync {
         suspend fun createForCustomer(
             params: AlertCreateForCustomerParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AlertModel>
+        ): HttpResponseFor<Alert>
 
         /**
          * Returns a raw HTTP response for `post
@@ -188,7 +188,7 @@ interface AlertServiceAsync {
         suspend fun createForExternalCustomer(
             params: AlertCreateForExternalCustomerParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AlertModel>
+        ): HttpResponseFor<Alert>
 
         /**
          * Returns a raw HTTP response for `post /alerts/subscription_id/{subscription_id}`, but is
@@ -198,7 +198,7 @@ interface AlertServiceAsync {
         suspend fun createForSubscription(
             params: AlertCreateForSubscriptionParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AlertModel>
+        ): HttpResponseFor<Alert>
 
         /**
          * Returns a raw HTTP response for `post /alerts/{alert_configuration_id}/disable`, but is
@@ -208,7 +208,7 @@ interface AlertServiceAsync {
         suspend fun disable(
             params: AlertDisableParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AlertModel>
+        ): HttpResponseFor<Alert>
 
         /**
          * Returns a raw HTTP response for `post /alerts/{alert_configuration_id}/enable`, but is
@@ -218,6 +218,6 @@ interface AlertServiceAsync {
         suspend fun enable(
             params: AlertEnableParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AlertModel>
+        ): HttpResponseFor<Alert>
     }
 }
