@@ -14,11 +14,13 @@ class SubscriptionCreateParamsTest {
     fun create() {
         SubscriptionCreateParams.builder()
             .addAddAdjustment(
-                AddSubscriptionAdjustmentParams.builder()
+                SubscriptionCreateParams.AddAdjustment.builder()
                     .adjustment(
-                        AddSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount.builder()
+                        SubscriptionCreateParams.AddAdjustment.Adjustment.NewPercentageDiscount
+                            .builder()
                             .adjustmentType(
-                                AddSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount
+                                SubscriptionCreateParams.AddAdjustment.Adjustment
+                                    .NewPercentageDiscount
                                     .AdjustmentType
                                     .PERCENTAGE_DISCOUNT
                             )
@@ -34,19 +36,21 @@ class SubscriptionCreateParamsTest {
                     .build()
             )
             .addAddPrice(
-                AddSubscriptionPriceParams.builder()
+                SubscriptionCreateParams.AddPrice.builder()
                     .allocationPrice(
-                        AddSubscriptionPriceParams.AllocationPrice.builder()
+                        SubscriptionCreateParams.AddPrice.AllocationPrice.builder()
                             .amount("10.00")
-                            .cadence(AddSubscriptionPriceParams.AllocationPrice.Cadence.ONE_TIME)
+                            .cadence(
+                                SubscriptionCreateParams.AddPrice.AllocationPrice.Cadence.ONE_TIME
+                            )
                             .currency("USD")
                             .expiresAtEndOfCadence(true)
                             .build()
                     )
                     .addDiscount(
-                        AddSubscriptionPriceParams.Discount.builder()
+                        SubscriptionCreateParams.AddPrice.Discount.builder()
                             .discountType(
-                                AddSubscriptionPriceParams.Discount.DiscountType.PERCENTAGE
+                                SubscriptionCreateParams.AddPrice.Discount.DiscountType.PERCENTAGE
                             )
                             .amountDiscount("amount_discount")
                             .percentageDiscount(0.15)
@@ -59,19 +63,22 @@ class SubscriptionCreateParamsTest {
                     .minimumAmount("1.23")
                     .planPhaseOrder(0L)
                     .price(
-                        AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice.builder()
+                        SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice.builder()
                             .cadence(
-                                AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice.Cadence
+                                SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
+                                    .Cadence
                                     .ANNUAL
                             )
                             .itemId("item_id")
                             .modelType(
-                                AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice.ModelType
+                                SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
+                                    .ModelType
                                     .UNIT
                             )
                             .name("Annual fee")
                             .unitConfig(
-                                AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice.UnitConfig
+                                SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
+                                    .UnitConfig
                                     .builder()
                                     .unitAmount("unit_amount")
                                     .build()
@@ -79,12 +86,13 @@ class SubscriptionCreateParamsTest {
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                     .BillingCycleConfiguration
                                     .builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                        SubscriptionCreateParams.AddPrice.Price
+                                            .NewSubscriptionUnitPrice
                                             .BillingCycleConfiguration
                                             .DurationUnit
                                             .DAY
@@ -97,12 +105,13 @@ class SubscriptionCreateParamsTest {
                             .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
-                                AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                     .InvoicingCycleConfiguration
                                     .builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                        SubscriptionCreateParams.AddPrice.Price
+                                            .NewSubscriptionUnitPrice
                                             .InvoicingCycleConfiguration
                                             .DurationUnit
                                             .DAY
@@ -110,7 +119,8 @@ class SubscriptionCreateParamsTest {
                                     .build()
                             )
                             .metadata(
-                                AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice.Metadata
+                                SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
+                                    .Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
@@ -155,23 +165,24 @@ class SubscriptionCreateParamsTest {
             .planVersionNumber(0L)
             .addPriceOverride(JsonValue.from(mapOf<String, Any>()))
             .addRemoveAdjustment(
-                RemoveSubscriptionAdjustmentParams.builder()
+                SubscriptionCreateParams.RemoveAdjustment.builder()
                     .adjustmentId("h74gfhdjvn7ujokd")
                     .build()
             )
             .addRemovePrice(
-                RemoveSubscriptionPriceParams.builder()
+                SubscriptionCreateParams.RemovePrice.builder()
                     .externalPriceId("external_price_id")
                     .priceId("h74gfhdjvn7ujokd")
                     .build()
             )
             .addReplaceAdjustment(
-                ReplaceSubscriptionAdjustmentParams.builder()
+                SubscriptionCreateParams.ReplaceAdjustment.builder()
                     .adjustment(
-                        ReplaceSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount
+                        SubscriptionCreateParams.ReplaceAdjustment.Adjustment.NewPercentageDiscount
                             .builder()
                             .adjustmentType(
-                                ReplaceSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount
+                                SubscriptionCreateParams.ReplaceAdjustment.Adjustment
+                                    .NewPercentageDiscount
                                     .AdjustmentType
                                     .PERCENTAGE_DISCOUNT
                             )
@@ -185,22 +196,24 @@ class SubscriptionCreateParamsTest {
                     .build()
             )
             .addReplacePrice(
-                ReplaceSubscriptionPriceParams.builder()
+                SubscriptionCreateParams.ReplacePrice.builder()
                     .replacesPriceId("replaces_price_id")
                     .allocationPrice(
-                        ReplaceSubscriptionPriceParams.AllocationPrice.builder()
+                        SubscriptionCreateParams.ReplacePrice.AllocationPrice.builder()
                             .amount("10.00")
                             .cadence(
-                                ReplaceSubscriptionPriceParams.AllocationPrice.Cadence.ONE_TIME
+                                SubscriptionCreateParams.ReplacePrice.AllocationPrice.Cadence
+                                    .ONE_TIME
                             )
                             .currency("USD")
                             .expiresAtEndOfCadence(true)
                             .build()
                     )
                     .addDiscount(
-                        ReplaceSubscriptionPriceParams.Discount.builder()
+                        SubscriptionCreateParams.ReplacePrice.Discount.builder()
                             .discountType(
-                                ReplaceSubscriptionPriceParams.Discount.DiscountType.PERCENTAGE
+                                SubscriptionCreateParams.ReplacePrice.Discount.DiscountType
+                                    .PERCENTAGE
                             )
                             .amountDiscount("amount_discount")
                             .percentageDiscount(0.15)
@@ -212,21 +225,22 @@ class SubscriptionCreateParamsTest {
                     .maximumAmount("1.23")
                     .minimumAmount("1.23")
                     .price(
-                        ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice.builder()
+                        SubscriptionCreateParams.ReplacePrice.Price.NewSubscriptionUnitPrice
+                            .builder()
                             .cadence(
-                                ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                SubscriptionCreateParams.ReplacePrice.Price.NewSubscriptionUnitPrice
                                     .Cadence
                                     .ANNUAL
                             )
                             .itemId("item_id")
                             .modelType(
-                                ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                SubscriptionCreateParams.ReplacePrice.Price.NewSubscriptionUnitPrice
                                     .ModelType
                                     .UNIT
                             )
                             .name("Annual fee")
                             .unitConfig(
-                                ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                SubscriptionCreateParams.ReplacePrice.Price.NewSubscriptionUnitPrice
                                     .UnitConfig
                                     .builder()
                                     .unitAmount("unit_amount")
@@ -235,12 +249,12 @@ class SubscriptionCreateParamsTest {
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                SubscriptionCreateParams.ReplacePrice.Price.NewSubscriptionUnitPrice
                                     .BillingCycleConfiguration
                                     .builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        ReplaceSubscriptionPriceParams.Price
+                                        SubscriptionCreateParams.ReplacePrice.Price
                                             .NewSubscriptionUnitPrice
                                             .BillingCycleConfiguration
                                             .DurationUnit
@@ -254,12 +268,12 @@ class SubscriptionCreateParamsTest {
                             .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
-                                ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                SubscriptionCreateParams.ReplacePrice.Price.NewSubscriptionUnitPrice
                                     .InvoicingCycleConfiguration
                                     .builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        ReplaceSubscriptionPriceParams.Price
+                                        SubscriptionCreateParams.ReplacePrice.Price
                                             .NewSubscriptionUnitPrice
                                             .InvoicingCycleConfiguration
                                             .DurationUnit
@@ -268,7 +282,7 @@ class SubscriptionCreateParamsTest {
                                     .build()
                             )
                             .metadata(
-                                ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                SubscriptionCreateParams.ReplacePrice.Price.NewSubscriptionUnitPrice
                                     .Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -291,12 +305,13 @@ class SubscriptionCreateParamsTest {
         val params =
             SubscriptionCreateParams.builder()
                 .addAddAdjustment(
-                    AddSubscriptionAdjustmentParams.builder()
+                    SubscriptionCreateParams.AddAdjustment.builder()
                         .adjustment(
-                            AddSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount
+                            SubscriptionCreateParams.AddAdjustment.Adjustment.NewPercentageDiscount
                                 .builder()
                                 .adjustmentType(
-                                    AddSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount
+                                    SubscriptionCreateParams.AddAdjustment.Adjustment
+                                        .NewPercentageDiscount
                                         .AdjustmentType
                                         .PERCENTAGE_DISCOUNT
                                 )
@@ -312,21 +327,23 @@ class SubscriptionCreateParamsTest {
                         .build()
                 )
                 .addAddPrice(
-                    AddSubscriptionPriceParams.builder()
+                    SubscriptionCreateParams.AddPrice.builder()
                         .allocationPrice(
-                            AddSubscriptionPriceParams.AllocationPrice.builder()
+                            SubscriptionCreateParams.AddPrice.AllocationPrice.builder()
                                 .amount("10.00")
                                 .cadence(
-                                    AddSubscriptionPriceParams.AllocationPrice.Cadence.ONE_TIME
+                                    SubscriptionCreateParams.AddPrice.AllocationPrice.Cadence
+                                        .ONE_TIME
                                 )
                                 .currency("USD")
                                 .expiresAtEndOfCadence(true)
                                 .build()
                         )
                         .addDiscount(
-                            AddSubscriptionPriceParams.Discount.builder()
+                            SubscriptionCreateParams.AddPrice.Discount.builder()
                                 .discountType(
-                                    AddSubscriptionPriceParams.Discount.DiscountType.PERCENTAGE
+                                    SubscriptionCreateParams.AddPrice.Discount.DiscountType
+                                        .PERCENTAGE
                                 )
                                 .amountDiscount("amount_discount")
                                 .percentageDiscount(0.15)
@@ -339,21 +356,22 @@ class SubscriptionCreateParamsTest {
                         .minimumAmount("1.23")
                         .planPhaseOrder(0L)
                         .price(
-                            AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice.builder()
+                            SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
+                                .builder()
                                 .cadence(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .Cadence
                                         .ANNUAL
                                 )
                                 .itemId("item_id")
                                 .modelType(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .ModelType
                                         .UNIT
                                 )
                                 .name("Annual fee")
                                 .unitConfig(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .UnitConfig
                                         .builder()
                                         .unitAmount("unit_amount")
@@ -362,12 +380,12 @@ class SubscriptionCreateParamsTest {
                                 .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .billingCycleConfiguration(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .BillingCycleConfiguration
                                         .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            AddSubscriptionPriceParams.Price
+                                            SubscriptionCreateParams.AddPrice.Price
                                                 .NewSubscriptionUnitPrice
                                                 .BillingCycleConfiguration
                                                 .DurationUnit
@@ -381,12 +399,12 @@ class SubscriptionCreateParamsTest {
                                 .fixedPriceQuantity(0.0)
                                 .invoiceGroupingKey("invoice_grouping_key")
                                 .invoicingCycleConfiguration(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .InvoicingCycleConfiguration
                                         .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            AddSubscriptionPriceParams.Price
+                                            SubscriptionCreateParams.AddPrice.Price
                                                 .NewSubscriptionUnitPrice
                                                 .InvoicingCycleConfiguration
                                                 .DurationUnit
@@ -395,7 +413,7 @@ class SubscriptionCreateParamsTest {
                                         .build()
                                 )
                                 .metadata(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .Metadata
                                         .builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -441,23 +459,24 @@ class SubscriptionCreateParamsTest {
                 .planVersionNumber(0L)
                 .addPriceOverride(JsonValue.from(mapOf<String, Any>()))
                 .addRemoveAdjustment(
-                    RemoveSubscriptionAdjustmentParams.builder()
+                    SubscriptionCreateParams.RemoveAdjustment.builder()
                         .adjustmentId("h74gfhdjvn7ujokd")
                         .build()
                 )
                 .addRemovePrice(
-                    RemoveSubscriptionPriceParams.builder()
+                    SubscriptionCreateParams.RemovePrice.builder()
                         .externalPriceId("external_price_id")
                         .priceId("h74gfhdjvn7ujokd")
                         .build()
                 )
                 .addReplaceAdjustment(
-                    ReplaceSubscriptionAdjustmentParams.builder()
+                    SubscriptionCreateParams.ReplaceAdjustment.builder()
                         .adjustment(
-                            ReplaceSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount
+                            SubscriptionCreateParams.ReplaceAdjustment.Adjustment
+                                .NewPercentageDiscount
                                 .builder()
                                 .adjustmentType(
-                                    ReplaceSubscriptionAdjustmentParams.Adjustment
+                                    SubscriptionCreateParams.ReplaceAdjustment.Adjustment
                                         .NewPercentageDiscount
                                         .AdjustmentType
                                         .PERCENTAGE_DISCOUNT
@@ -472,22 +491,24 @@ class SubscriptionCreateParamsTest {
                         .build()
                 )
                 .addReplacePrice(
-                    ReplaceSubscriptionPriceParams.builder()
+                    SubscriptionCreateParams.ReplacePrice.builder()
                         .replacesPriceId("replaces_price_id")
                         .allocationPrice(
-                            ReplaceSubscriptionPriceParams.AllocationPrice.builder()
+                            SubscriptionCreateParams.ReplacePrice.AllocationPrice.builder()
                                 .amount("10.00")
                                 .cadence(
-                                    ReplaceSubscriptionPriceParams.AllocationPrice.Cadence.ONE_TIME
+                                    SubscriptionCreateParams.ReplacePrice.AllocationPrice.Cadence
+                                        .ONE_TIME
                                 )
                                 .currency("USD")
                                 .expiresAtEndOfCadence(true)
                                 .build()
                         )
                         .addDiscount(
-                            ReplaceSubscriptionPriceParams.Discount.builder()
+                            SubscriptionCreateParams.ReplacePrice.Discount.builder()
                                 .discountType(
-                                    ReplaceSubscriptionPriceParams.Discount.DiscountType.PERCENTAGE
+                                    SubscriptionCreateParams.ReplacePrice.Discount.DiscountType
+                                        .PERCENTAGE
                                 )
                                 .amountDiscount("amount_discount")
                                 .percentageDiscount(0.15)
@@ -499,21 +520,25 @@ class SubscriptionCreateParamsTest {
                         .maximumAmount("1.23")
                         .minimumAmount("1.23")
                         .price(
-                            ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice.builder()
+                            SubscriptionCreateParams.ReplacePrice.Price.NewSubscriptionUnitPrice
+                                .builder()
                                 .cadence(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .Cadence
                                         .ANNUAL
                                 )
                                 .itemId("item_id")
                                 .modelType(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .ModelType
                                         .UNIT
                                 )
                                 .name("Annual fee")
                                 .unitConfig(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .UnitConfig
                                         .builder()
                                         .unitAmount("unit_amount")
@@ -522,12 +547,13 @@ class SubscriptionCreateParamsTest {
                                 .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .billingCycleConfiguration(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .BillingCycleConfiguration
                                         .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            ReplaceSubscriptionPriceParams.Price
+                                            SubscriptionCreateParams.ReplacePrice.Price
                                                 .NewSubscriptionUnitPrice
                                                 .BillingCycleConfiguration
                                                 .DurationUnit
@@ -541,12 +567,13 @@ class SubscriptionCreateParamsTest {
                                 .fixedPriceQuantity(0.0)
                                 .invoiceGroupingKey("invoice_grouping_key")
                                 .invoicingCycleConfiguration(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .InvoicingCycleConfiguration
                                         .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            ReplaceSubscriptionPriceParams.Price
+                                            SubscriptionCreateParams.ReplacePrice.Price
                                                 .NewSubscriptionUnitPrice
                                                 .InvoicingCycleConfiguration
                                                 .DurationUnit
@@ -555,7 +582,8 @@ class SubscriptionCreateParamsTest {
                                         .build()
                                 )
                                 .metadata(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .Metadata
                                         .builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -578,12 +606,13 @@ class SubscriptionCreateParamsTest {
         assertThat(body.addAdjustments())
             .isEqualTo(
                 listOf(
-                    AddSubscriptionAdjustmentParams.builder()
+                    SubscriptionCreateParams.AddAdjustment.builder()
                         .adjustment(
-                            AddSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount
+                            SubscriptionCreateParams.AddAdjustment.Adjustment.NewPercentageDiscount
                                 .builder()
                                 .adjustmentType(
-                                    AddSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount
+                                    SubscriptionCreateParams.AddAdjustment.Adjustment
+                                        .NewPercentageDiscount
                                         .AdjustmentType
                                         .PERCENTAGE_DISCOUNT
                                 )
@@ -602,21 +631,23 @@ class SubscriptionCreateParamsTest {
         assertThat(body.addPrices())
             .isEqualTo(
                 listOf(
-                    AddSubscriptionPriceParams.builder()
+                    SubscriptionCreateParams.AddPrice.builder()
                         .allocationPrice(
-                            AddSubscriptionPriceParams.AllocationPrice.builder()
+                            SubscriptionCreateParams.AddPrice.AllocationPrice.builder()
                                 .amount("10.00")
                                 .cadence(
-                                    AddSubscriptionPriceParams.AllocationPrice.Cadence.ONE_TIME
+                                    SubscriptionCreateParams.AddPrice.AllocationPrice.Cadence
+                                        .ONE_TIME
                                 )
                                 .currency("USD")
                                 .expiresAtEndOfCadence(true)
                                 .build()
                         )
                         .addDiscount(
-                            AddSubscriptionPriceParams.Discount.builder()
+                            SubscriptionCreateParams.AddPrice.Discount.builder()
                                 .discountType(
-                                    AddSubscriptionPriceParams.Discount.DiscountType.PERCENTAGE
+                                    SubscriptionCreateParams.AddPrice.Discount.DiscountType
+                                        .PERCENTAGE
                                 )
                                 .amountDiscount("amount_discount")
                                 .percentageDiscount(0.15)
@@ -629,21 +660,22 @@ class SubscriptionCreateParamsTest {
                         .minimumAmount("1.23")
                         .planPhaseOrder(0L)
                         .price(
-                            AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice.builder()
+                            SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
+                                .builder()
                                 .cadence(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .Cadence
                                         .ANNUAL
                                 )
                                 .itemId("item_id")
                                 .modelType(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .ModelType
                                         .UNIT
                                 )
                                 .name("Annual fee")
                                 .unitConfig(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .UnitConfig
                                         .builder()
                                         .unitAmount("unit_amount")
@@ -652,12 +684,12 @@ class SubscriptionCreateParamsTest {
                                 .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .billingCycleConfiguration(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .BillingCycleConfiguration
                                         .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            AddSubscriptionPriceParams.Price
+                                            SubscriptionCreateParams.AddPrice.Price
                                                 .NewSubscriptionUnitPrice
                                                 .BillingCycleConfiguration
                                                 .DurationUnit
@@ -671,12 +703,12 @@ class SubscriptionCreateParamsTest {
                                 .fixedPriceQuantity(0.0)
                                 .invoiceGroupingKey("invoice_grouping_key")
                                 .invoicingCycleConfiguration(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .InvoicingCycleConfiguration
                                         .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            AddSubscriptionPriceParams.Price
+                                            SubscriptionCreateParams.AddPrice.Price
                                                 .NewSubscriptionUnitPrice
                                                 .InvoicingCycleConfiguration
                                                 .DurationUnit
@@ -685,7 +717,7 @@ class SubscriptionCreateParamsTest {
                                         .build()
                                 )
                                 .metadata(
-                                    AddSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
                                         .Metadata
                                         .builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -738,7 +770,7 @@ class SubscriptionCreateParamsTest {
         assertThat(body.removeAdjustments())
             .isEqualTo(
                 listOf(
-                    RemoveSubscriptionAdjustmentParams.builder()
+                    SubscriptionCreateParams.RemoveAdjustment.builder()
                         .adjustmentId("h74gfhdjvn7ujokd")
                         .build()
                 )
@@ -746,7 +778,7 @@ class SubscriptionCreateParamsTest {
         assertThat(body.removePrices())
             .isEqualTo(
                 listOf(
-                    RemoveSubscriptionPriceParams.builder()
+                    SubscriptionCreateParams.RemovePrice.builder()
                         .externalPriceId("external_price_id")
                         .priceId("h74gfhdjvn7ujokd")
                         .build()
@@ -755,12 +787,13 @@ class SubscriptionCreateParamsTest {
         assertThat(body.replaceAdjustments())
             .isEqualTo(
                 listOf(
-                    ReplaceSubscriptionAdjustmentParams.builder()
+                    SubscriptionCreateParams.ReplaceAdjustment.builder()
                         .adjustment(
-                            ReplaceSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount
+                            SubscriptionCreateParams.ReplaceAdjustment.Adjustment
+                                .NewPercentageDiscount
                                 .builder()
                                 .adjustmentType(
-                                    ReplaceSubscriptionAdjustmentParams.Adjustment
+                                    SubscriptionCreateParams.ReplaceAdjustment.Adjustment
                                         .NewPercentageDiscount
                                         .AdjustmentType
                                         .PERCENTAGE_DISCOUNT
@@ -778,22 +811,24 @@ class SubscriptionCreateParamsTest {
         assertThat(body.replacePrices())
             .isEqualTo(
                 listOf(
-                    ReplaceSubscriptionPriceParams.builder()
+                    SubscriptionCreateParams.ReplacePrice.builder()
                         .replacesPriceId("replaces_price_id")
                         .allocationPrice(
-                            ReplaceSubscriptionPriceParams.AllocationPrice.builder()
+                            SubscriptionCreateParams.ReplacePrice.AllocationPrice.builder()
                                 .amount("10.00")
                                 .cadence(
-                                    ReplaceSubscriptionPriceParams.AllocationPrice.Cadence.ONE_TIME
+                                    SubscriptionCreateParams.ReplacePrice.AllocationPrice.Cadence
+                                        .ONE_TIME
                                 )
                                 .currency("USD")
                                 .expiresAtEndOfCadence(true)
                                 .build()
                         )
                         .addDiscount(
-                            ReplaceSubscriptionPriceParams.Discount.builder()
+                            SubscriptionCreateParams.ReplacePrice.Discount.builder()
                                 .discountType(
-                                    ReplaceSubscriptionPriceParams.Discount.DiscountType.PERCENTAGE
+                                    SubscriptionCreateParams.ReplacePrice.Discount.DiscountType
+                                        .PERCENTAGE
                                 )
                                 .amountDiscount("amount_discount")
                                 .percentageDiscount(0.15)
@@ -805,21 +840,25 @@ class SubscriptionCreateParamsTest {
                         .maximumAmount("1.23")
                         .minimumAmount("1.23")
                         .price(
-                            ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice.builder()
+                            SubscriptionCreateParams.ReplacePrice.Price.NewSubscriptionUnitPrice
+                                .builder()
                                 .cadence(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .Cadence
                                         .ANNUAL
                                 )
                                 .itemId("item_id")
                                 .modelType(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .ModelType
                                         .UNIT
                                 )
                                 .name("Annual fee")
                                 .unitConfig(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .UnitConfig
                                         .builder()
                                         .unitAmount("unit_amount")
@@ -828,12 +867,13 @@ class SubscriptionCreateParamsTest {
                                 .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .billingCycleConfiguration(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .BillingCycleConfiguration
                                         .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            ReplaceSubscriptionPriceParams.Price
+                                            SubscriptionCreateParams.ReplacePrice.Price
                                                 .NewSubscriptionUnitPrice
                                                 .BillingCycleConfiguration
                                                 .DurationUnit
@@ -847,12 +887,13 @@ class SubscriptionCreateParamsTest {
                                 .fixedPriceQuantity(0.0)
                                 .invoiceGroupingKey("invoice_grouping_key")
                                 .invoicingCycleConfiguration(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .InvoicingCycleConfiguration
                                         .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            ReplaceSubscriptionPriceParams.Price
+                                            SubscriptionCreateParams.ReplacePrice.Price
                                                 .NewSubscriptionUnitPrice
                                                 .InvoicingCycleConfiguration
                                                 .DurationUnit
@@ -861,7 +902,8 @@ class SubscriptionCreateParamsTest {
                                         .build()
                                 )
                                 .metadata(
-                                    ReplaceSubscriptionPriceParams.Price.NewSubscriptionUnitPrice
+                                    SubscriptionCreateParams.ReplacePrice.Price
+                                        .NewSubscriptionUnitPrice
                                         .Metadata
                                         .builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))

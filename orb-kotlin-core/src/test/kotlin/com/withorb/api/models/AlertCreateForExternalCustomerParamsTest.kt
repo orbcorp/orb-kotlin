@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -11,12 +12,10 @@ class AlertCreateForExternalCustomerParamsTest {
     fun create() {
         AlertCreateForExternalCustomerParams.builder()
             .externalCustomerId("external_customer_id")
-            .createCustomerAlertRequest(
-                CreateCustomerAlertRequest.builder()
-                    .currency("currency")
-                    .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                    .addThreshold(CreateCustomerAlertRequest.Threshold.builder().value(0.0).build())
-                    .build()
+            .currency("currency")
+            .type(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
+            .addThreshold(
+                AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
             )
             .build()
     }
@@ -26,26 +25,21 @@ class AlertCreateForExternalCustomerParamsTest {
         val params =
             AlertCreateForExternalCustomerParams.builder()
                 .externalCustomerId("external_customer_id")
-                .createCustomerAlertRequest(
-                    CreateCustomerAlertRequest.builder()
-                        .currency("currency")
-                        .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                        .addThreshold(
-                            CreateCustomerAlertRequest.Threshold.builder().value(0.0).build()
-                        )
-                        .build()
+                .currency("currency")
+                .type(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
+                .addThreshold(
+                    AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
                 )
                 .build()
 
         val body = params._body()
 
-        assertThat(body)
+        assertNotNull(body)
+        assertThat(body.currency()).isEqualTo("currency")
+        assertThat(body.type()).isEqualTo(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
+        assertThat(body.thresholds())
             .isEqualTo(
-                CreateCustomerAlertRequest.builder()
-                    .currency("currency")
-                    .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                    .addThreshold(CreateCustomerAlertRequest.Threshold.builder().value(0.0).build())
-                    .build()
+                listOf(AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build())
             )
     }
 
@@ -54,23 +48,15 @@ class AlertCreateForExternalCustomerParamsTest {
         val params =
             AlertCreateForExternalCustomerParams.builder()
                 .externalCustomerId("external_customer_id")
-                .createCustomerAlertRequest(
-                    CreateCustomerAlertRequest.builder()
-                        .currency("currency")
-                        .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                        .build()
-                )
+                .currency("currency")
+                .type(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
                 .build()
 
         val body = params._body()
 
-        assertThat(body)
-            .isEqualTo(
-                CreateCustomerAlertRequest.builder()
-                    .currency("currency")
-                    .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                    .build()
-            )
+        assertNotNull(body)
+        assertThat(body.currency()).isEqualTo("currency")
+        assertThat(body.type()).isEqualTo(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
     }
 
     @Test
@@ -78,12 +64,8 @@ class AlertCreateForExternalCustomerParamsTest {
         val params =
             AlertCreateForExternalCustomerParams.builder()
                 .externalCustomerId("external_customer_id")
-                .createCustomerAlertRequest(
-                    CreateCustomerAlertRequest.builder()
-                        .currency("currency")
-                        .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                        .build()
-                )
+                .currency("currency")
+                .type(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
                 .build()
         assertThat(params).isNotNull
         // path param "externalCustomerId"
