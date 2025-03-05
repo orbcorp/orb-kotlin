@@ -53,7 +53,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<CustomerBalanceTransactionListResponse> = response().data()
+    fun data(): List<CustomerBalanceTransactionModel> = response().data()
 
     fun paginationMetadata(): PaginationMetadata = response().paginationMetadata()
 
@@ -109,22 +109,19 @@ private constructor(
     @JsonCreator
     constructor(
         @JsonProperty("data")
-        private val data: JsonField<List<CustomerBalanceTransactionListResponse>> =
-            JsonMissing.of(),
+        private val data: JsonField<List<CustomerBalanceTransactionModel>> = JsonMissing.of(),
         @JsonProperty("pagination_metadata")
         private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<CustomerBalanceTransactionListResponse> =
-            data.getNullable("data") ?: listOf()
+        fun data(): List<CustomerBalanceTransactionModel> = data.getNullable("data") ?: listOf()
 
         fun paginationMetadata(): PaginationMetadata =
             paginationMetadata.getRequired("pagination_metadata")
 
-        @JsonProperty("data")
-        fun _data(): JsonField<List<CustomerBalanceTransactionListResponse>>? = data
+        @JsonProperty("data") fun _data(): JsonField<List<CustomerBalanceTransactionModel>>? = data
 
         @JsonProperty("pagination_metadata")
         fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
@@ -171,8 +168,7 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<CustomerBalanceTransactionListResponse>> =
-                JsonMissing.of()
+            private var data: JsonField<List<CustomerBalanceTransactionModel>> = JsonMissing.of()
             private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -182,9 +178,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<CustomerBalanceTransactionListResponse>) = data(JsonField.of(data))
+            fun data(data: List<CustomerBalanceTransactionModel>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<CustomerBalanceTransactionListResponse>>) = apply {
+            fun data(data: JsonField<List<CustomerBalanceTransactionModel>>) = apply {
                 this.data = data
             }
 
@@ -204,11 +200,9 @@ private constructor(
     }
 
     class AutoPager(private val firstPage: CustomerBalanceTransactionListPageAsync) :
-        Flow<CustomerBalanceTransactionListResponse> {
+        Flow<CustomerBalanceTransactionModel> {
 
-        override suspend fun collect(
-            collector: FlowCollector<CustomerBalanceTransactionListResponse>
-        ) {
+        override suspend fun collect(collector: FlowCollector<CustomerBalanceTransactionModel>) {
             var page = firstPage
             var index = 0
             while (true) {

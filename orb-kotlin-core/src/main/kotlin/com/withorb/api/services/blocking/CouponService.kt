@@ -5,12 +5,12 @@ package com.withorb.api.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
-import com.withorb.api.models.Coupon
 import com.withorb.api.models.CouponArchiveParams
 import com.withorb.api.models.CouponCreateParams
 import com.withorb.api.models.CouponFetchParams
 import com.withorb.api.models.CouponListPage
 import com.withorb.api.models.CouponListParams
+import com.withorb.api.models.CouponModel
 import com.withorb.api.services.blocking.coupons.SubscriptionService
 
 interface CouponService {
@@ -29,7 +29,7 @@ interface CouponService {
     fun create(
         params: CouponCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Coupon
+    ): CouponModel
 
     /**
      * This endpoint returns a list of all coupons for an account in a list format.
@@ -63,7 +63,7 @@ interface CouponService {
     fun archive(
         params: CouponArchiveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Coupon
+    ): CouponModel
 
     /**
      * This endpoint retrieves a coupon by its ID. To fetch coupons by their redemption code, use
@@ -72,7 +72,7 @@ interface CouponService {
     fun fetch(
         params: CouponFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Coupon
+    ): CouponModel
 
     /** A view of [CouponService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -87,7 +87,7 @@ interface CouponService {
         fun create(
             params: CouponCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Coupon>
+        ): HttpResponseFor<CouponModel>
 
         /**
          * Returns a raw HTTP response for `get /coupons`, but is otherwise the same as
@@ -115,7 +115,7 @@ interface CouponService {
         fun archive(
             params: CouponArchiveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Coupon>
+        ): HttpResponseFor<CouponModel>
 
         /**
          * Returns a raw HTTP response for `get /coupons/{coupon_id}`, but is otherwise the same as
@@ -125,6 +125,6 @@ interface CouponService {
         fun fetch(
             params: CouponFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Coupon>
+        ): HttpResponseFor<CouponModel>
     }
 }

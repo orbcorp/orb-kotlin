@@ -5,7 +5,7 @@ package com.withorb.api.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
-import com.withorb.api.models.BillableMetric
+import com.withorb.api.models.BillableMetricModel
 import com.withorb.api.models.MetricCreateParams
 import com.withorb.api.models.MetricFetchParams
 import com.withorb.api.models.MetricListPageAsync
@@ -27,7 +27,7 @@ interface MetricServiceAsync {
     suspend fun create(
         params: MetricCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): BillableMetric
+    ): BillableMetricModel
 
     /**
      * This endpoint allows you to update the `metadata` property on a metric. If you pass `null`
@@ -36,7 +36,7 @@ interface MetricServiceAsync {
     suspend fun update(
         params: MetricUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): BillableMetric
+    ): BillableMetricModel
 
     /**
      * This endpoint is used to fetch [metric](/core-concepts##metric) details given a metric
@@ -63,7 +63,7 @@ interface MetricServiceAsync {
     suspend fun fetch(
         params: MetricFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): BillableMetric
+    ): BillableMetricModel
 
     /**
      * A view of [MetricServiceAsync] that provides access to raw HTTP responses for each method.
@@ -78,7 +78,7 @@ interface MetricServiceAsync {
         suspend fun create(
             params: MetricCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<BillableMetric>
+        ): HttpResponseFor<BillableMetricModel>
 
         /**
          * Returns a raw HTTP response for `put /metrics/{metric_id}`, but is otherwise the same as
@@ -88,7 +88,7 @@ interface MetricServiceAsync {
         suspend fun update(
             params: MetricUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<BillableMetric>
+        ): HttpResponseFor<BillableMetricModel>
 
         /**
          * Returns a raw HTTP response for `get /metrics`, but is otherwise the same as
@@ -116,6 +116,6 @@ interface MetricServiceAsync {
         suspend fun fetch(
             params: MetricFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<BillableMetric>
+        ): HttpResponseFor<BillableMetricModel>
     }
 }

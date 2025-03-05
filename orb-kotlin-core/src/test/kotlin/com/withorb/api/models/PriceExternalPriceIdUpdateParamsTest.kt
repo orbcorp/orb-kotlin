@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,9 +12,13 @@ class PriceExternalPriceIdUpdateParamsTest {
     fun create() {
         PriceExternalPriceIdUpdateParams.builder()
             .externalPriceId("external_price_id")
-            .metadata(
-                PriceExternalPriceIdUpdateParams.Metadata.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("string"))
+            .updatePriceRequestParams(
+                UpdatePriceRequestParams.builder()
+                    .metadata(
+                        UpdatePriceRequestParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
             .build()
@@ -26,20 +29,27 @@ class PriceExternalPriceIdUpdateParamsTest {
         val params =
             PriceExternalPriceIdUpdateParams.builder()
                 .externalPriceId("external_price_id")
-                .metadata(
-                    PriceExternalPriceIdUpdateParams.Metadata.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                .updatePriceRequestParams(
+                    UpdatePriceRequestParams.builder()
+                        .metadata(
+                            UpdatePriceRequestParams.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .build()
                 )
                 .build()
 
         val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.metadata())
+        assertThat(body)
             .isEqualTo(
-                PriceExternalPriceIdUpdateParams.Metadata.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                UpdatePriceRequestParams.builder()
+                    .metadata(
+                        UpdatePriceRequestParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
     }
@@ -47,17 +57,23 @@ class PriceExternalPriceIdUpdateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params =
-            PriceExternalPriceIdUpdateParams.builder().externalPriceId("external_price_id").build()
+            PriceExternalPriceIdUpdateParams.builder()
+                .externalPriceId("external_price_id")
+                .updatePriceRequestParams(UpdatePriceRequestParams.builder().build())
+                .build()
 
         val body = params._body()
 
-        assertNotNull(body)
+        assertThat(body).isEqualTo(UpdatePriceRequestParams.builder().build())
     }
 
     @Test
     fun getPathParam() {
         val params =
-            PriceExternalPriceIdUpdateParams.builder().externalPriceId("external_price_id").build()
+            PriceExternalPriceIdUpdateParams.builder()
+                .externalPriceId("external_price_id")
+                .updatePriceRequestParams(UpdatePriceRequestParams.builder().build())
+                .build()
         assertThat(params).isNotNull
         // path param "externalPriceId"
         assertThat(params.getPathParam(0)).isEqualTo("external_price_id")

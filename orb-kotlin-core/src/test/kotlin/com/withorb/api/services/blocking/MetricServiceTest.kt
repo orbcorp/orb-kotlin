@@ -23,7 +23,7 @@ class MetricServiceTest {
                 .build()
         val metricService = client.metrics()
 
-        val billableMetric =
+        val billableMetricModel =
             metricService.create(
                 MetricCreateParams.builder()
                     .description("Sum of bytes downloaded in fast mode")
@@ -38,7 +38,7 @@ class MetricServiceTest {
                     .build()
             )
 
-        billableMetric.validate()
+        billableMetricModel.validate()
     }
 
     @Test
@@ -50,7 +50,7 @@ class MetricServiceTest {
                 .build()
         val metricService = client.metrics()
 
-        val billableMetric =
+        val billableMetricModel =
             metricService.update(
                 MetricUpdateParams.builder()
                     .metricId("metric_id")
@@ -62,7 +62,7 @@ class MetricServiceTest {
                     .build()
             )
 
-        billableMetric.validate()
+        billableMetricModel.validate()
     }
 
     @Test
@@ -88,9 +88,9 @@ class MetricServiceTest {
                 .build()
         val metricService = client.metrics()
 
-        val billableMetric =
+        val billableMetricModel =
             metricService.fetch(MetricFetchParams.builder().metricId("metric_id").build())
 
-        billableMetric.validate()
+        billableMetricModel.validate()
     }
 }

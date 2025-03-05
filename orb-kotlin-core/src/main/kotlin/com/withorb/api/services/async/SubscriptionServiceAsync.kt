@@ -5,11 +5,9 @@ package com.withorb.api.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
-import com.withorb.api.models.Subscription
+import com.withorb.api.models.MutatedSubscriptionModel
 import com.withorb.api.models.SubscriptionCancelParams
-import com.withorb.api.models.SubscriptionCancelResponse
 import com.withorb.api.models.SubscriptionCreateParams
-import com.withorb.api.models.SubscriptionCreateResponse
 import com.withorb.api.models.SubscriptionFetchCostsParams
 import com.withorb.api.models.SubscriptionFetchCostsResponse
 import com.withorb.api.models.SubscriptionFetchParams
@@ -18,23 +16,16 @@ import com.withorb.api.models.SubscriptionFetchScheduleParams
 import com.withorb.api.models.SubscriptionFetchUsageParams
 import com.withorb.api.models.SubscriptionListPageAsync
 import com.withorb.api.models.SubscriptionListParams
+import com.withorb.api.models.SubscriptionModel
 import com.withorb.api.models.SubscriptionPriceIntervalsParams
-import com.withorb.api.models.SubscriptionPriceIntervalsResponse
 import com.withorb.api.models.SubscriptionSchedulePlanChangeParams
-import com.withorb.api.models.SubscriptionSchedulePlanChangeResponse
 import com.withorb.api.models.SubscriptionTriggerPhaseParams
-import com.withorb.api.models.SubscriptionTriggerPhaseResponse
 import com.withorb.api.models.SubscriptionUnscheduleCancellationParams
-import com.withorb.api.models.SubscriptionUnscheduleCancellationResponse
 import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
-import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse
 import com.withorb.api.models.SubscriptionUnschedulePendingPlanChangesParams
-import com.withorb.api.models.SubscriptionUnschedulePendingPlanChangesResponse
 import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityParams
-import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityResponse
 import com.withorb.api.models.SubscriptionUpdateParams
 import com.withorb.api.models.SubscriptionUpdateTrialParams
-import com.withorb.api.models.SubscriptionUpdateTrialResponse
 import com.withorb.api.models.SubscriptionUsage
 
 interface SubscriptionServiceAsync {
@@ -285,7 +276,7 @@ interface SubscriptionServiceAsync {
     suspend fun create(
         params: SubscriptionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SubscriptionCreateResponse
+    ): MutatedSubscriptionModel
 
     /**
      * This endpoint can be used to update the `metadata`, `net terms`, `auto_collection`,
@@ -294,7 +285,7 @@ interface SubscriptionServiceAsync {
     suspend fun update(
         params: SubscriptionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Subscription
+    ): SubscriptionModel
 
     /**
      * This endpoint returns a list of all subscriptions for an account as a
@@ -380,7 +371,7 @@ interface SubscriptionServiceAsync {
     suspend fun cancel(
         params: SubscriptionCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SubscriptionCancelResponse
+    ): MutatedSubscriptionModel
 
     /**
      * This endpoint is used to fetch a [Subscription](/core-concepts##subscription) given an
@@ -389,7 +380,7 @@ interface SubscriptionServiceAsync {
     suspend fun fetch(
         params: SubscriptionFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Subscription
+    ): SubscriptionModel
 
     /**
      * This endpoint is used to fetch a day-by-day snapshot of a subscription's costs in Orb,
@@ -669,7 +660,7 @@ interface SubscriptionServiceAsync {
     suspend fun priceIntervals(
         params: SubscriptionPriceIntervalsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SubscriptionPriceIntervalsResponse
+    ): MutatedSubscriptionModel
 
     /**
      * This endpoint can be used to change an existing subscription's plan. It returns the
@@ -840,7 +831,7 @@ interface SubscriptionServiceAsync {
     suspend fun schedulePlanChange(
         params: SubscriptionSchedulePlanChangeParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SubscriptionSchedulePlanChangeResponse
+    ): MutatedSubscriptionModel
 
     /**
      * Manually trigger a phase, effective the given date (or the current time, if not specified).
@@ -848,7 +839,7 @@ interface SubscriptionServiceAsync {
     suspend fun triggerPhase(
         params: SubscriptionTriggerPhaseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SubscriptionTriggerPhaseResponse
+    ): MutatedSubscriptionModel
 
     /**
      * This endpoint can be used to unschedule any pending cancellations for a subscription.
@@ -860,7 +851,7 @@ interface SubscriptionServiceAsync {
     suspend fun unscheduleCancellation(
         params: SubscriptionUnscheduleCancellationParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SubscriptionUnscheduleCancellationResponse
+    ): MutatedSubscriptionModel
 
     /**
      * This endpoint can be used to clear scheduled updates to the quantity for a fixed fee.
@@ -871,7 +862,7 @@ interface SubscriptionServiceAsync {
     suspend fun unscheduleFixedFeeQuantityUpdates(
         params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse
+    ): MutatedSubscriptionModel
 
     /**
      * This endpoint can be used to unschedule any pending plan changes on an existing subscription.
@@ -879,7 +870,7 @@ interface SubscriptionServiceAsync {
     suspend fun unschedulePendingPlanChanges(
         params: SubscriptionUnschedulePendingPlanChangesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SubscriptionUnschedulePendingPlanChangesResponse
+    ): MutatedSubscriptionModel
 
     /**
      * This endpoint can be used to update the quantity for a fixed fee.
@@ -898,7 +889,7 @@ interface SubscriptionServiceAsync {
     suspend fun updateFixedFeeQuantity(
         params: SubscriptionUpdateFixedFeeQuantityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SubscriptionUpdateFixedFeeQuantityResponse
+    ): MutatedSubscriptionModel
 
     /**
      * This endpoint is used to update the trial end date for a subscription. The new trial end date
@@ -921,7 +912,7 @@ interface SubscriptionServiceAsync {
     suspend fun updateTrial(
         params: SubscriptionUpdateTrialParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SubscriptionUpdateTrialResponse
+    ): MutatedSubscriptionModel
 
     /**
      * A view of [SubscriptionServiceAsync] that provides access to raw HTTP responses for each
@@ -937,7 +928,7 @@ interface SubscriptionServiceAsync {
         suspend fun create(
             params: SubscriptionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<SubscriptionCreateResponse>
+        ): HttpResponseFor<MutatedSubscriptionModel>
 
         /**
          * Returns a raw HTTP response for `put /subscriptions/{subscription_id}`, but is otherwise
@@ -947,7 +938,7 @@ interface SubscriptionServiceAsync {
         suspend fun update(
             params: SubscriptionUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Subscription>
+        ): HttpResponseFor<SubscriptionModel>
 
         /**
          * Returns a raw HTTP response for `get /subscriptions`, but is otherwise the same as
@@ -977,7 +968,7 @@ interface SubscriptionServiceAsync {
         suspend fun cancel(
             params: SubscriptionCancelParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<SubscriptionCancelResponse>
+        ): HttpResponseFor<MutatedSubscriptionModel>
 
         /**
          * Returns a raw HTTP response for `get /subscriptions/{subscription_id}`, but is otherwise
@@ -987,7 +978,7 @@ interface SubscriptionServiceAsync {
         suspend fun fetch(
             params: SubscriptionFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Subscription>
+        ): HttpResponseFor<SubscriptionModel>
 
         /**
          * Returns a raw HTTP response for `get /subscriptions/{subscription_id}/costs`, but is
@@ -1027,7 +1018,7 @@ interface SubscriptionServiceAsync {
         suspend fun priceIntervals(
             params: SubscriptionPriceIntervalsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<SubscriptionPriceIntervalsResponse>
+        ): HttpResponseFor<MutatedSubscriptionModel>
 
         /**
          * Returns a raw HTTP response for `post
@@ -1038,7 +1029,7 @@ interface SubscriptionServiceAsync {
         suspend fun schedulePlanChange(
             params: SubscriptionSchedulePlanChangeParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<SubscriptionSchedulePlanChangeResponse>
+        ): HttpResponseFor<MutatedSubscriptionModel>
 
         /**
          * Returns a raw HTTP response for `post /subscriptions/{subscription_id}/trigger_phase`,
@@ -1048,7 +1039,7 @@ interface SubscriptionServiceAsync {
         suspend fun triggerPhase(
             params: SubscriptionTriggerPhaseParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<SubscriptionTriggerPhaseResponse>
+        ): HttpResponseFor<MutatedSubscriptionModel>
 
         /**
          * Returns a raw HTTP response for `post
@@ -1059,7 +1050,7 @@ interface SubscriptionServiceAsync {
         suspend fun unscheduleCancellation(
             params: SubscriptionUnscheduleCancellationParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<SubscriptionUnscheduleCancellationResponse>
+        ): HttpResponseFor<MutatedSubscriptionModel>
 
         /**
          * Returns a raw HTTP response for `post
@@ -1070,7 +1061,7 @@ interface SubscriptionServiceAsync {
         suspend fun unscheduleFixedFeeQuantityUpdates(
             params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse>
+        ): HttpResponseFor<MutatedSubscriptionModel>
 
         /**
          * Returns a raw HTTP response for `post
@@ -1081,7 +1072,7 @@ interface SubscriptionServiceAsync {
         suspend fun unschedulePendingPlanChanges(
             params: SubscriptionUnschedulePendingPlanChangesParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<SubscriptionUnschedulePendingPlanChangesResponse>
+        ): HttpResponseFor<MutatedSubscriptionModel>
 
         /**
          * Returns a raw HTTP response for `post
@@ -1092,7 +1083,7 @@ interface SubscriptionServiceAsync {
         suspend fun updateFixedFeeQuantity(
             params: SubscriptionUpdateFixedFeeQuantityParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<SubscriptionUpdateFixedFeeQuantityResponse>
+        ): HttpResponseFor<MutatedSubscriptionModel>
 
         /**
          * Returns a raw HTTP response for `post /subscriptions/{subscription_id}/update_trial`, but
@@ -1102,6 +1093,6 @@ interface SubscriptionServiceAsync {
         suspend fun updateTrial(
             params: SubscriptionUpdateTrialParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<SubscriptionUpdateTrialResponse>
+        ): HttpResponseFor<MutatedSubscriptionModel>
     }
 }

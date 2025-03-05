@@ -15,11 +15,11 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
-import com.withorb.api.models.Plan
 import com.withorb.api.models.PlanCreateParams
 import com.withorb.api.models.PlanFetchParams
 import com.withorb.api.models.PlanListPage
 import com.withorb.api.models.PlanListParams
+import com.withorb.api.models.PlanModel
 import com.withorb.api.models.PlanUpdateParams
 import com.withorb.api.services.blocking.plans.ExternalPlanIdService
 import com.withorb.api.services.blocking.plans.ExternalPlanIdServiceImpl
@@ -38,11 +38,11 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun externalPlanId(): ExternalPlanIdService = externalPlanId
 
-    override fun create(params: PlanCreateParams, requestOptions: RequestOptions): Plan =
+    override fun create(params: PlanCreateParams, requestOptions: RequestOptions): PlanModel =
         // post /plans
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun update(params: PlanUpdateParams, requestOptions: RequestOptions): Plan =
+    override fun update(params: PlanUpdateParams, requestOptions: RequestOptions): PlanModel =
         // put /plans/{plan_id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -50,7 +50,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
         // get /plans
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun fetch(params: PlanFetchParams, requestOptions: RequestOptions): Plan =
+    override fun fetch(params: PlanFetchParams, requestOptions: RequestOptions): PlanModel =
         // get /plans/{plan_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
@@ -65,13 +65,13 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         override fun externalPlanId(): ExternalPlanIdService.WithRawResponse = externalPlanId
 
-        private val createHandler: Handler<Plan> =
-            jsonHandler<Plan>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<PlanModel> =
+            jsonHandler<PlanModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: PlanCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Plan> {
+        ): HttpResponseFor<PlanModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -92,13 +92,13 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val updateHandler: Handler<Plan> =
-            jsonHandler<Plan>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<PlanModel> =
+            jsonHandler<PlanModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: PlanUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Plan> {
+        ): HttpResponseFor<PlanModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -147,13 +147,13 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val fetchHandler: Handler<Plan> =
-            jsonHandler<Plan>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<PlanModel> =
+            jsonHandler<PlanModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun fetch(
             params: PlanFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Plan> {
+        ): HttpResponseFor<PlanModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
