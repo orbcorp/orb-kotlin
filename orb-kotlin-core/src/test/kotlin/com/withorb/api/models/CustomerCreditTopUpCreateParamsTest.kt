@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import java.time.OffsetDateTime
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,25 +13,21 @@ class CustomerCreditTopUpCreateParamsTest {
     fun create() {
         CustomerCreditTopUpCreateParams.builder()
             .customerId("customer_id")
-            .addCreditTopUpRequest(
-                AddCreditTopUpRequest.builder()
-                    .amount("amount")
-                    .currency("currency")
-                    .invoiceSettings(
-                        AddCreditTopUpRequest.InvoiceSettings.builder()
-                            .autoCollection(true)
-                            .netTerms(0L)
-                            .memo("memo")
-                            .requireSuccessfulPayment(true)
-                            .build()
-                    )
-                    .perUnitCostBasis("per_unit_cost_basis")
-                    .threshold("threshold")
-                    .activeFrom(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .expiresAfter(0L)
-                    .expiresAfterUnit(AddCreditTopUpRequest.ExpiresAfterUnit.DAY)
+            .amount("amount")
+            .currency("currency")
+            .invoiceSettings(
+                CustomerCreditTopUpCreateParams.InvoiceSettings.builder()
+                    .autoCollection(true)
+                    .netTerms(0L)
+                    .memo("memo")
+                    .requireSuccessfulPayment(true)
                     .build()
             )
+            .perUnitCostBasis("per_unit_cost_basis")
+            .threshold("threshold")
+            .activeFrom(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+            .expiresAfter(0L)
+            .expiresAfterUnit(CustomerCreditTopUpCreateParams.ExpiresAfterUnit.DAY)
             .build()
     }
 
@@ -39,49 +36,43 @@ class CustomerCreditTopUpCreateParamsTest {
         val params =
             CustomerCreditTopUpCreateParams.builder()
                 .customerId("customer_id")
-                .addCreditTopUpRequest(
-                    AddCreditTopUpRequest.builder()
-                        .amount("amount")
-                        .currency("currency")
-                        .invoiceSettings(
-                            AddCreditTopUpRequest.InvoiceSettings.builder()
-                                .autoCollection(true)
-                                .netTerms(0L)
-                                .memo("memo")
-                                .requireSuccessfulPayment(true)
-                                .build()
-                        )
-                        .perUnitCostBasis("per_unit_cost_basis")
-                        .threshold("threshold")
-                        .activeFrom(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .expiresAfter(0L)
-                        .expiresAfterUnit(AddCreditTopUpRequest.ExpiresAfterUnit.DAY)
+                .amount("amount")
+                .currency("currency")
+                .invoiceSettings(
+                    CustomerCreditTopUpCreateParams.InvoiceSettings.builder()
+                        .autoCollection(true)
+                        .netTerms(0L)
+                        .memo("memo")
+                        .requireSuccessfulPayment(true)
                         .build()
                 )
+                .perUnitCostBasis("per_unit_cost_basis")
+                .threshold("threshold")
+                .activeFrom(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .expiresAfter(0L)
+                .expiresAfterUnit(CustomerCreditTopUpCreateParams.ExpiresAfterUnit.DAY)
                 .build()
 
         val body = params._body()
 
-        assertThat(body)
+        assertNotNull(body)
+        assertThat(body.amount()).isEqualTo("amount")
+        assertThat(body.currency()).isEqualTo("currency")
+        assertThat(body.invoiceSettings())
             .isEqualTo(
-                AddCreditTopUpRequest.builder()
-                    .amount("amount")
-                    .currency("currency")
-                    .invoiceSettings(
-                        AddCreditTopUpRequest.InvoiceSettings.builder()
-                            .autoCollection(true)
-                            .netTerms(0L)
-                            .memo("memo")
-                            .requireSuccessfulPayment(true)
-                            .build()
-                    )
-                    .perUnitCostBasis("per_unit_cost_basis")
-                    .threshold("threshold")
-                    .activeFrom(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .expiresAfter(0L)
-                    .expiresAfterUnit(AddCreditTopUpRequest.ExpiresAfterUnit.DAY)
+                CustomerCreditTopUpCreateParams.InvoiceSettings.builder()
+                    .autoCollection(true)
+                    .netTerms(0L)
+                    .memo("memo")
+                    .requireSuccessfulPayment(true)
                     .build()
             )
+        assertThat(body.perUnitCostBasis()).isEqualTo("per_unit_cost_basis")
+        assertThat(body.threshold()).isEqualTo("threshold")
+        assertThat(body.activeFrom()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(body.expiresAfter()).isEqualTo(0L)
+        assertThat(body.expiresAfterUnit())
+            .isEqualTo(CustomerCreditTopUpCreateParams.ExpiresAfterUnit.DAY)
     }
 
     @Test
@@ -89,39 +80,32 @@ class CustomerCreditTopUpCreateParamsTest {
         val params =
             CustomerCreditTopUpCreateParams.builder()
                 .customerId("customer_id")
-                .addCreditTopUpRequest(
-                    AddCreditTopUpRequest.builder()
-                        .amount("amount")
-                        .currency("currency")
-                        .invoiceSettings(
-                            AddCreditTopUpRequest.InvoiceSettings.builder()
-                                .autoCollection(true)
-                                .netTerms(0L)
-                                .build()
-                        )
-                        .perUnitCostBasis("per_unit_cost_basis")
-                        .threshold("threshold")
+                .amount("amount")
+                .currency("currency")
+                .invoiceSettings(
+                    CustomerCreditTopUpCreateParams.InvoiceSettings.builder()
+                        .autoCollection(true)
+                        .netTerms(0L)
                         .build()
                 )
+                .perUnitCostBasis("per_unit_cost_basis")
+                .threshold("threshold")
                 .build()
 
         val body = params._body()
 
-        assertThat(body)
+        assertNotNull(body)
+        assertThat(body.amount()).isEqualTo("amount")
+        assertThat(body.currency()).isEqualTo("currency")
+        assertThat(body.invoiceSettings())
             .isEqualTo(
-                AddCreditTopUpRequest.builder()
-                    .amount("amount")
-                    .currency("currency")
-                    .invoiceSettings(
-                        AddCreditTopUpRequest.InvoiceSettings.builder()
-                            .autoCollection(true)
-                            .netTerms(0L)
-                            .build()
-                    )
-                    .perUnitCostBasis("per_unit_cost_basis")
-                    .threshold("threshold")
+                CustomerCreditTopUpCreateParams.InvoiceSettings.builder()
+                    .autoCollection(true)
+                    .netTerms(0L)
                     .build()
             )
+        assertThat(body.perUnitCostBasis()).isEqualTo("per_unit_cost_basis")
+        assertThat(body.threshold()).isEqualTo("threshold")
     }
 
     @Test
@@ -129,20 +113,16 @@ class CustomerCreditTopUpCreateParamsTest {
         val params =
             CustomerCreditTopUpCreateParams.builder()
                 .customerId("customer_id")
-                .addCreditTopUpRequest(
-                    AddCreditTopUpRequest.builder()
-                        .amount("amount")
-                        .currency("currency")
-                        .invoiceSettings(
-                            AddCreditTopUpRequest.InvoiceSettings.builder()
-                                .autoCollection(true)
-                                .netTerms(0L)
-                                .build()
-                        )
-                        .perUnitCostBasis("per_unit_cost_basis")
-                        .threshold("threshold")
+                .amount("amount")
+                .currency("currency")
+                .invoiceSettings(
+                    CustomerCreditTopUpCreateParams.InvoiceSettings.builder()
+                        .autoCollection(true)
+                        .netTerms(0L)
                         .build()
                 )
+                .perUnitCostBasis("per_unit_cost_basis")
+                .threshold("threshold")
                 .build()
         assertThat(params).isNotNull
         // path param "customerId"

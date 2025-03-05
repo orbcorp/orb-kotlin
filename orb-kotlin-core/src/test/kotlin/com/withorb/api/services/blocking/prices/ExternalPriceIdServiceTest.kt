@@ -7,7 +7,6 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.PriceExternalPriceIdFetchParams
 import com.withorb.api.models.PriceExternalPriceIdUpdateParams
-import com.withorb.api.models.UpdatePriceRequestParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -27,13 +26,9 @@ class ExternalPriceIdServiceTest {
             externalPriceIdService.update(
                 PriceExternalPriceIdUpdateParams.builder()
                     .externalPriceId("external_price_id")
-                    .updatePriceRequestParams(
-                        UpdatePriceRequestParams.builder()
-                            .metadata(
-                                UpdatePriceRequestParams.Metadata.builder()
-                                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                                    .build()
-                            )
+                    .metadata(
+                        PriceExternalPriceIdUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .build()
