@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.31 (2025-03-05)
+
+Full Changelog: [v0.1.0-alpha.30...v0.1.0-alpha.31](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.30...v0.1.0-alpha.31)
+
+### Features
+
+* **api:** manual updates ([#265](https://github.com/orbcorp/orb-kotlin/issues/265)) ([ec85b31](https://github.com/orbcorp/orb-kotlin/commit/ec85b316e132d01914f7a3da8acdb9c289e9cb2f))
+
 ## 0.1.0-alpha.30 (2025-03-05)
 
 Full Changelog: [v0.1.0-alpha.29...v0.1.0-alpha.30](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.29...v0.1.0-alpha.30)
