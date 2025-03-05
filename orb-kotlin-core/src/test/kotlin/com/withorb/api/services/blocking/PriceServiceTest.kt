@@ -9,7 +9,6 @@ import com.withorb.api.models.PriceCreateParams
 import com.withorb.api.models.PriceEvaluateParams
 import com.withorb.api.models.PriceFetchParams
 import com.withorb.api.models.PriceUpdateParams
-import com.withorb.api.models.UpdatePriceRequestParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -99,13 +98,9 @@ class PriceServiceTest {
             priceService.update(
                 PriceUpdateParams.builder()
                     .priceId("price_id")
-                    .updatePriceRequestParams(
-                        UpdatePriceRequestParams.builder()
-                            .metadata(
-                                UpdatePriceRequestParams.Metadata.builder()
-                                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                                    .build()
-                            )
+                    .metadata(
+                        PriceUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .build()

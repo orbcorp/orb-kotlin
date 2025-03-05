@@ -11,7 +11,6 @@ import com.withorb.api.models.AlertDisableParams
 import com.withorb.api.models.AlertEnableParams
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
-import com.withorb.api.models.CreateCustomerAlertRequest
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -82,14 +81,10 @@ class AlertServiceAsyncTest {
             alertServiceAsync.createForCustomer(
                 AlertCreateForCustomerParams.builder()
                     .customerId("customer_id")
-                    .createCustomerAlertRequest(
-                        CreateCustomerAlertRequest.builder()
-                            .currency("currency")
-                            .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                            .addThreshold(
-                                CreateCustomerAlertRequest.Threshold.builder().value(0.0).build()
-                            )
-                            .build()
+                    .currency("currency")
+                    .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
+                    .addThreshold(
+                        AlertCreateForCustomerParams.Threshold.builder().value(0.0).build()
                     )
                     .build()
             )
@@ -110,14 +105,10 @@ class AlertServiceAsyncTest {
             alertServiceAsync.createForExternalCustomer(
                 AlertCreateForExternalCustomerParams.builder()
                     .externalCustomerId("external_customer_id")
-                    .createCustomerAlertRequest(
-                        CreateCustomerAlertRequest.builder()
-                            .currency("currency")
-                            .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
-                            .addThreshold(
-                                CreateCustomerAlertRequest.Threshold.builder().value(0.0).build()
-                            )
-                            .build()
+                    .currency("currency")
+                    .type(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
+                    .addThreshold(
+                        AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
                     )
                     .build()
             )

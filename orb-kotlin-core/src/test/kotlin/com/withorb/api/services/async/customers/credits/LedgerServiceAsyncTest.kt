@@ -5,7 +5,6 @@ package com.withorb.api.services.async.customers.credits
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
-import com.withorb.api.models.AddCreditLedgerEntryRequest
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryParams
 import com.withorb.api.models.CustomerCreditLedgerListByExternalIdParams
@@ -47,12 +46,13 @@ class LedgerServiceAsyncTest {
             ledgerServiceAsync.createEntry(
                 CustomerCreditLedgerCreateEntryParams.builder()
                     .customerId("customer_id")
-                    .addCreditLedgerEntryRequest(
-                        AddCreditLedgerEntryRequest.AddIncrementCreditLedgerEntryRequestParams
+                    .body(
+                        CustomerCreditLedgerCreateEntryParams.Body
+                            .AddIncrementCreditLedgerEntryRequestParams
                             .builder()
                             .amount(0.0)
                             .entryType(
-                                AddCreditLedgerEntryRequest
+                                CustomerCreditLedgerCreateEntryParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .EntryType
                                     .INCREMENT
@@ -62,7 +62,7 @@ class LedgerServiceAsyncTest {
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .invoiceSettings(
-                                AddCreditLedgerEntryRequest
+                                CustomerCreditLedgerCreateEntryParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .InvoiceSettings
                                     .builder()
@@ -73,7 +73,7 @@ class LedgerServiceAsyncTest {
                                     .build()
                             )
                             .metadata(
-                                AddCreditLedgerEntryRequest
+                                CustomerCreditLedgerCreateEntryParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .Metadata
                                     .builder()
@@ -102,12 +102,13 @@ class LedgerServiceAsyncTest {
             ledgerServiceAsync.createEntryByExternalId(
                 CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
                     .externalCustomerId("external_customer_id")
-                    .addCreditLedgerEntryRequest(
-                        AddCreditLedgerEntryRequest.AddIncrementCreditLedgerEntryRequestParams
+                    .body(
+                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
+                            .AddIncrementCreditLedgerEntryRequestParams
                             .builder()
                             .amount(0.0)
                             .entryType(
-                                AddCreditLedgerEntryRequest
+                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .EntryType
                                     .INCREMENT
@@ -117,7 +118,7 @@ class LedgerServiceAsyncTest {
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .invoiceSettings(
-                                AddCreditLedgerEntryRequest
+                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .InvoiceSettings
                                     .builder()
@@ -128,7 +129,7 @@ class LedgerServiceAsyncTest {
                                     .build()
                             )
                             .metadata(
-                                AddCreditLedgerEntryRequest
+                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .Metadata
                                     .builder()
