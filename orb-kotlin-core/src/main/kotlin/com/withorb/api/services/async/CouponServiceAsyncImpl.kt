@@ -15,12 +15,12 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
+import com.withorb.api.models.Coupon
 import com.withorb.api.models.CouponArchiveParams
 import com.withorb.api.models.CouponCreateParams
 import com.withorb.api.models.CouponFetchParams
 import com.withorb.api.models.CouponListPageAsync
 import com.withorb.api.models.CouponListParams
-import com.withorb.api.models.CouponModel
 import com.withorb.api.services.async.coupons.SubscriptionServiceAsync
 import com.withorb.api.services.async.coupons.SubscriptionServiceAsyncImpl
 
@@ -42,7 +42,7 @@ class CouponServiceAsyncImpl internal constructor(private val clientOptions: Cli
     override suspend fun create(
         params: CouponCreateParams,
         requestOptions: RequestOptions,
-    ): CouponModel =
+    ): Coupon =
         // post /coupons
         withRawResponse().create(params, requestOptions).parse()
 
@@ -56,14 +56,11 @@ class CouponServiceAsyncImpl internal constructor(private val clientOptions: Cli
     override suspend fun archive(
         params: CouponArchiveParams,
         requestOptions: RequestOptions,
-    ): CouponModel =
+    ): Coupon =
         // post /coupons/{coupon_id}/archive
         withRawResponse().archive(params, requestOptions).parse()
 
-    override suspend fun fetch(
-        params: CouponFetchParams,
-        requestOptions: RequestOptions,
-    ): CouponModel =
+    override suspend fun fetch(params: CouponFetchParams, requestOptions: RequestOptions): Coupon =
         // get /coupons/{coupon_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
@@ -78,13 +75,13 @@ class CouponServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
         override fun subscriptions(): SubscriptionServiceAsync.WithRawResponse = subscriptions
 
-        private val createHandler: Handler<CouponModel> =
-            jsonHandler<CouponModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<Coupon> =
+            jsonHandler<Coupon>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun create(
             params: CouponCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CouponModel> {
+        ): HttpResponseFor<Coupon> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -135,13 +132,13 @@ class CouponServiceAsyncImpl internal constructor(private val clientOptions: Cli
             }
         }
 
-        private val archiveHandler: Handler<CouponModel> =
-            jsonHandler<CouponModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val archiveHandler: Handler<Coupon> =
+            jsonHandler<Coupon>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun archive(
             params: CouponArchiveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CouponModel> {
+        ): HttpResponseFor<Coupon> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -162,13 +159,13 @@ class CouponServiceAsyncImpl internal constructor(private val clientOptions: Cli
             }
         }
 
-        private val fetchHandler: Handler<CouponModel> =
-            jsonHandler<CouponModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<Coupon> =
+            jsonHandler<Coupon>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun fetch(
             params: CouponFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CouponModel> {
+        ): HttpResponseFor<Coupon> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

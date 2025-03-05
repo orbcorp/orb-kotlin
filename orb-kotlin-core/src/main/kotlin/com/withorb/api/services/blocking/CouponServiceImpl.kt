@@ -15,12 +15,12 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
+import com.withorb.api.models.Coupon
 import com.withorb.api.models.CouponArchiveParams
 import com.withorb.api.models.CouponCreateParams
 import com.withorb.api.models.CouponFetchParams
 import com.withorb.api.models.CouponListPage
 import com.withorb.api.models.CouponListParams
-import com.withorb.api.models.CouponModel
 import com.withorb.api.services.blocking.coupons.SubscriptionService
 import com.withorb.api.services.blocking.coupons.SubscriptionServiceImpl
 
@@ -39,7 +39,7 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun subscriptions(): SubscriptionService = subscriptions
 
-    override fun create(params: CouponCreateParams, requestOptions: RequestOptions): CouponModel =
+    override fun create(params: CouponCreateParams, requestOptions: RequestOptions): Coupon =
         // post /coupons
         withRawResponse().create(params, requestOptions).parse()
 
@@ -47,11 +47,11 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
         // get /coupons
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun archive(params: CouponArchiveParams, requestOptions: RequestOptions): CouponModel =
+    override fun archive(params: CouponArchiveParams, requestOptions: RequestOptions): Coupon =
         // post /coupons/{coupon_id}/archive
         withRawResponse().archive(params, requestOptions).parse()
 
-    override fun fetch(params: CouponFetchParams, requestOptions: RequestOptions): CouponModel =
+    override fun fetch(params: CouponFetchParams, requestOptions: RequestOptions): Coupon =
         // get /coupons/{coupon_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
@@ -66,13 +66,13 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
 
         override fun subscriptions(): SubscriptionService.WithRawResponse = subscriptions
 
-        private val createHandler: Handler<CouponModel> =
-            jsonHandler<CouponModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<Coupon> =
+            jsonHandler<Coupon>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: CouponCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CouponModel> {
+        ): HttpResponseFor<Coupon> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -121,13 +121,13 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
             }
         }
 
-        private val archiveHandler: Handler<CouponModel> =
-            jsonHandler<CouponModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val archiveHandler: Handler<Coupon> =
+            jsonHandler<Coupon>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun archive(
             params: CouponArchiveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CouponModel> {
+        ): HttpResponseFor<Coupon> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -148,13 +148,13 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
             }
         }
 
-        private val fetchHandler: Handler<CouponModel> =
-            jsonHandler<CouponModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<Coupon> =
+            jsonHandler<Coupon>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun fetch(
             params: CouponFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CouponModel> {
+        ): HttpResponseFor<Coupon> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

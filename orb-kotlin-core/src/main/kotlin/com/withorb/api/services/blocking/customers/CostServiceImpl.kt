@@ -15,8 +15,9 @@ import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CustomerCostListByExternalIdParams
+import com.withorb.api.models.CustomerCostListByExternalIdResponse
 import com.withorb.api.models.CustomerCostListParams
-import com.withorb.api.models.CustomerCostsModel
+import com.withorb.api.models.CustomerCostListResponse
 
 class CostServiceImpl internal constructor(private val clientOptions: ClientOptions) : CostService {
 
@@ -29,14 +30,14 @@ class CostServiceImpl internal constructor(private val clientOptions: ClientOpti
     override fun list(
         params: CustomerCostListParams,
         requestOptions: RequestOptions,
-    ): CustomerCostsModel =
+    ): CustomerCostListResponse =
         // get /customers/{customer_id}/costs
         withRawResponse().list(params, requestOptions).parse()
 
     override fun listByExternalId(
         params: CustomerCostListByExternalIdParams,
         requestOptions: RequestOptions,
-    ): CustomerCostsModel =
+    ): CustomerCostListByExternalIdResponse =
         // get /customers/external_customer_id/{external_customer_id}/costs
         withRawResponse().listByExternalId(params, requestOptions).parse()
 
@@ -45,13 +46,14 @@ class CostServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val listHandler: Handler<CustomerCostsModel> =
-            jsonHandler<CustomerCostsModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val listHandler: Handler<CustomerCostListResponse> =
+            jsonHandler<CustomerCostListResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun list(
             params: CustomerCostListParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CustomerCostsModel> {
+        ): HttpResponseFor<CustomerCostListResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -71,13 +73,14 @@ class CostServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val listByExternalIdHandler: Handler<CustomerCostsModel> =
-            jsonHandler<CustomerCostsModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val listByExternalIdHandler: Handler<CustomerCostListByExternalIdResponse> =
+            jsonHandler<CustomerCostListByExternalIdResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun listByExternalId(
             params: CustomerCostListByExternalIdParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CustomerCostsModel> {
+        ): HttpResponseFor<CustomerCostListByExternalIdResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

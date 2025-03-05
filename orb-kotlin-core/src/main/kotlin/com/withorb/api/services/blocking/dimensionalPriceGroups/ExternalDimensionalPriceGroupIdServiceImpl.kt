@@ -14,8 +14,8 @@ import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
+import com.withorb.api.models.DimensionalPriceGroup
 import com.withorb.api.models.DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams
-import com.withorb.api.models.DimensionalPriceGroupModel
 
 class ExternalDimensionalPriceGroupIdServiceImpl
 internal constructor(private val clientOptions: ClientOptions) :
@@ -31,7 +31,7 @@ internal constructor(private val clientOptions: ClientOptions) :
     override fun retrieve(
         params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
         requestOptions: RequestOptions,
-    ): DimensionalPriceGroupModel =
+    ): DimensionalPriceGroup =
         // get
         // /dimensional_price_groups/external_dimensional_price_group_id/{external_dimensional_price_group_id}
         withRawResponse().retrieve(params, requestOptions).parse()
@@ -41,14 +41,14 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<DimensionalPriceGroupModel> =
-            jsonHandler<DimensionalPriceGroupModel>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<DimensionalPriceGroup> =
+            jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DimensionalPriceGroupModel> {
+        ): HttpResponseFor<DimensionalPriceGroup> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

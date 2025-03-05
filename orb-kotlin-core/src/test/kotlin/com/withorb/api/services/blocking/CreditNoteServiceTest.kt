@@ -21,7 +21,7 @@ class CreditNoteServiceTest {
                 .build()
         val creditNoteService = client.creditNotes()
 
-        val creditNoteModel =
+        val creditNote =
             creditNoteService.create(
                 CreditNoteCreateParams.builder()
                     .addLineItem(
@@ -35,7 +35,7 @@ class CreditNoteServiceTest {
                     .build()
             )
 
-        creditNoteModel.validate()
+        creditNote.validate()
     }
 
     @Test
@@ -61,11 +61,11 @@ class CreditNoteServiceTest {
                 .build()
         val creditNoteService = client.creditNotes()
 
-        val creditNoteModel =
+        val creditNote =
             creditNoteService.fetch(
                 CreditNoteFetchParams.builder().creditNoteId("credit_note_id").build()
             )
 
-        creditNoteModel.validate()
+        creditNote.validate()
     }
 }

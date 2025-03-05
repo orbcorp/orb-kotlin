@@ -18,14 +18,15 @@ import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CustomerCreditTopUpCreateByExternalIdParams
+import com.withorb.api.models.CustomerCreditTopUpCreateByExternalIdResponse
 import com.withorb.api.models.CustomerCreditTopUpCreateParams
+import com.withorb.api.models.CustomerCreditTopUpCreateResponse
 import com.withorb.api.models.CustomerCreditTopUpDeleteByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpDeleteParams
 import com.withorb.api.models.CustomerCreditTopUpListByExternalIdPageAsync
 import com.withorb.api.models.CustomerCreditTopUpListByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpListPageAsync
 import com.withorb.api.models.CustomerCreditTopUpListParams
-import com.withorb.api.models.TopUpModel
 
 class TopUpServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     TopUpServiceAsync {
@@ -39,7 +40,7 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
     override suspend fun create(
         params: CustomerCreditTopUpCreateParams,
         requestOptions: RequestOptions,
-    ): TopUpModel =
+    ): CustomerCreditTopUpCreateResponse =
         // post /customers/{customer_id}/credits/top_ups
         withRawResponse().create(params, requestOptions).parse()
 
@@ -61,7 +62,7 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
     override suspend fun createByExternalId(
         params: CustomerCreditTopUpCreateByExternalIdParams,
         requestOptions: RequestOptions,
-    ): TopUpModel =
+    ): CustomerCreditTopUpCreateByExternalIdResponse =
         // post /customers/external_customer_id/{external_customer_id}/credits/top_ups
         withRawResponse().createByExternalId(params, requestOptions).parse()
 
@@ -85,13 +86,14 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<TopUpModel> =
-            jsonHandler<TopUpModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CustomerCreditTopUpCreateResponse> =
+            jsonHandler<CustomerCreditTopUpCreateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override suspend fun create(
             params: CustomerCreditTopUpCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TopUpModel> {
+        ): HttpResponseFor<CustomerCreditTopUpCreateResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -170,13 +172,15 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return response.parseable { response.use { deleteHandler.handle(it) } }
         }
 
-        private val createByExternalIdHandler: Handler<TopUpModel> =
-            jsonHandler<TopUpModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createByExternalIdHandler:
+            Handler<CustomerCreditTopUpCreateByExternalIdResponse> =
+            jsonHandler<CustomerCreditTopUpCreateByExternalIdResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override suspend fun createByExternalId(
             params: CustomerCreditTopUpCreateByExternalIdParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TopUpModel> {
+        ): HttpResponseFor<CustomerCreditTopUpCreateByExternalIdResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

@@ -18,7 +18,7 @@ class CustomerTest {
                 .autoCollection(true)
                 .balance("balance")
                 .billingAddress(
-                    AddressModel.builder()
+                    Customer.BillingAddress.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -36,13 +36,13 @@ class CustomerTest {
                 .hierarchy(
                     Customer.Hierarchy.builder()
                         .addChild(
-                            CustomerMinifiedModel.builder()
+                            Customer.Hierarchy.Child.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
                         )
                         .parent(
-                            CustomerMinifiedModel.builder()
+                            Customer.Hierarchy.Parent.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
@@ -59,7 +59,7 @@ class CustomerTest {
                 .paymentProviderId("payment_provider_id")
                 .portalUrl("portal_url")
                 .shippingAddress(
-                    AddressModel.builder()
+                    Customer.ShippingAddress.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -69,9 +69,9 @@ class CustomerTest {
                         .build()
                 )
                 .taxId(
-                    CustomerTaxIdModel.builder()
-                        .country(CustomerTaxIdModel.Country.AD)
-                        .type(CustomerTaxIdModel.Type.AD_NRT)
+                    Customer.TaxId.builder()
+                        .country(Customer.TaxId.Country.AD)
+                        .type(Customer.TaxId.Type.AD_NRT)
                         .value("value")
                         .build()
                 )
@@ -102,7 +102,7 @@ class CustomerTest {
         assertThat(customer.balance()).isEqualTo("balance")
         assertThat(customer.billingAddress())
             .isEqualTo(
-                AddressModel.builder()
+                Customer.BillingAddress.builder()
                     .city("city")
                     .country("country")
                     .line1("line1")
@@ -121,13 +121,13 @@ class CustomerTest {
             .isEqualTo(
                 Customer.Hierarchy.builder()
                     .addChild(
-                        CustomerMinifiedModel.builder()
+                        Customer.Hierarchy.Child.builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
                             .build()
                     )
                     .parent(
-                        CustomerMinifiedModel.builder()
+                        Customer.Hierarchy.Parent.builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
                             .build()
@@ -146,7 +146,7 @@ class CustomerTest {
         assertThat(customer.portalUrl()).isEqualTo("portal_url")
         assertThat(customer.shippingAddress())
             .isEqualTo(
-                AddressModel.builder()
+                Customer.ShippingAddress.builder()
                     .city("city")
                     .country("country")
                     .line1("line1")
@@ -157,9 +157,9 @@ class CustomerTest {
             )
         assertThat(customer.taxId())
             .isEqualTo(
-                CustomerTaxIdModel.builder()
-                    .country(CustomerTaxIdModel.Country.AD)
-                    .type(CustomerTaxIdModel.Type.AD_NRT)
+                Customer.TaxId.builder()
+                    .country(Customer.TaxId.Country.AD)
+                    .type(Customer.TaxId.Type.AD_NRT)
                     .value("value")
                     .build()
             )

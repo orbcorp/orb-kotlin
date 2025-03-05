@@ -15,10 +15,10 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
+import com.withorb.api.models.DimensionalPriceGroup
 import com.withorb.api.models.DimensionalPriceGroupCreateParams
 import com.withorb.api.models.DimensionalPriceGroupListPage
 import com.withorb.api.models.DimensionalPriceGroupListParams
-import com.withorb.api.models.DimensionalPriceGroupModel
 import com.withorb.api.models.DimensionalPriceGroupRetrieveParams
 import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdService
 import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdServiceImpl
@@ -42,14 +42,14 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
     override fun create(
         params: DimensionalPriceGroupCreateParams,
         requestOptions: RequestOptions,
-    ): DimensionalPriceGroupModel =
+    ): DimensionalPriceGroup =
         // post /dimensional_price_groups
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: DimensionalPriceGroupRetrieveParams,
         requestOptions: RequestOptions,
-    ): DimensionalPriceGroupModel =
+    ): DimensionalPriceGroup =
         // get /dimensional_price_groups/{dimensional_price_group_id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
@@ -73,14 +73,14 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
         override fun externalDimensionalPriceGroupId():
             ExternalDimensionalPriceGroupIdService.WithRawResponse = externalDimensionalPriceGroupId
 
-        private val createHandler: Handler<DimensionalPriceGroupModel> =
-            jsonHandler<DimensionalPriceGroupModel>(clientOptions.jsonMapper)
+        private val createHandler: Handler<DimensionalPriceGroup> =
+            jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun create(
             params: DimensionalPriceGroupCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DimensionalPriceGroupModel> {
+        ): HttpResponseFor<DimensionalPriceGroup> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -101,14 +101,14 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
             }
         }
 
-        private val retrieveHandler: Handler<DimensionalPriceGroupModel> =
-            jsonHandler<DimensionalPriceGroupModel>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<DimensionalPriceGroup> =
+            jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: DimensionalPriceGroupRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DimensionalPriceGroupModel> {
+        ): HttpResponseFor<DimensionalPriceGroup> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

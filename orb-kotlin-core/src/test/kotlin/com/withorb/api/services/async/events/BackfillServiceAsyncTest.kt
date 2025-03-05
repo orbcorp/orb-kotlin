@@ -24,7 +24,7 @@ class BackfillServiceAsyncTest {
                 .build()
         val backfillServiceAsync = client.events().backfills()
 
-        val backfillModel =
+        val backfill =
             backfillServiceAsync.create(
                 EventBackfillCreateParams.builder()
                     .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -37,7 +37,7 @@ class BackfillServiceAsyncTest {
                     .build()
             )
 
-        backfillModel.validate()
+        backfill.validate()
     }
 
     @Test
@@ -63,12 +63,12 @@ class BackfillServiceAsyncTest {
                 .build()
         val backfillServiceAsync = client.events().backfills()
 
-        val backfillModel =
+        val response =
             backfillServiceAsync.close(
                 EventBackfillCloseParams.builder().backfillId("backfill_id").build()
             )
 
-        backfillModel.validate()
+        response.validate()
     }
 
     @Test
@@ -80,12 +80,12 @@ class BackfillServiceAsyncTest {
                 .build()
         val backfillServiceAsync = client.events().backfills()
 
-        val backfillModel =
+        val response =
             backfillServiceAsync.fetch(
                 EventBackfillFetchParams.builder().backfillId("backfill_id").build()
             )
 
-        backfillModel.validate()
+        response.validate()
     }
 
     @Test
@@ -97,11 +97,11 @@ class BackfillServiceAsyncTest {
                 .build()
         val backfillServiceAsync = client.events().backfills()
 
-        val backfillModel =
+        val response =
             backfillServiceAsync.revert(
                 EventBackfillRevertParams.builder().backfillId("backfill_id").build()
             )
 
-        backfillModel.validate()
+        response.validate()
     }
 }

@@ -5,13 +5,10 @@ package com.withorb.api.services.blocking
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
-import com.withorb.api.models.NewBillingCycleConfigurationModel
-import com.withorb.api.models.NewFloatingPriceModel
 import com.withorb.api.models.PriceCreateParams
 import com.withorb.api.models.PriceEvaluateParams
 import com.withorb.api.models.PriceFetchParams
 import com.withorb.api.models.PriceUpdateParams
-import com.withorb.api.models.UnitConfigModel
 import com.withorb.api.models.UpdatePriceRequestParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -29,24 +26,33 @@ class PriceServiceTest {
                 .build()
         val priceService = client.prices()
 
-        val priceModel =
+        val price =
             priceService.create(
                 PriceCreateParams.builder()
-                    .newFloatingPriceModel(
-                        NewFloatingPriceModel.NewFloatingUnitPrice.builder()
-                            .cadence(NewFloatingPriceModel.NewFloatingUnitPrice.Cadence.ANNUAL)
+                    .body(
+                        PriceCreateParams.Body.NewFloatingUnitPrice.builder()
+                            .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
                             .currency("currency")
                             .itemId("item_id")
-                            .modelType(NewFloatingPriceModel.NewFloatingUnitPrice.ModelType.UNIT)
+                            .modelType(PriceCreateParams.Body.NewFloatingUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(UnitConfigModel.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .build()
+                            )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                NewBillingCycleConfigurationModel.builder()
+                                PriceCreateParams.Body.NewFloatingUnitPrice
+                                    .BillingCycleConfiguration
+                                    .builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        NewBillingCycleConfigurationModel.DurationUnit.DAY
+                                        PriceCreateParams.Body.NewFloatingUnitPrice
+                                            .BillingCycleConfiguration
+                                            .DurationUnit
+                                            .DAY
                                     )
                                     .build()
                             )
@@ -55,15 +61,20 @@ class PriceServiceTest {
                             .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
-                                NewBillingCycleConfigurationModel.builder()
+                                PriceCreateParams.Body.NewFloatingUnitPrice
+                                    .InvoicingCycleConfiguration
+                                    .builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        NewBillingCycleConfigurationModel.DurationUnit.DAY
+                                        PriceCreateParams.Body.NewFloatingUnitPrice
+                                            .InvoicingCycleConfiguration
+                                            .DurationUnit
+                                            .DAY
                                     )
                                     .build()
                             )
                             .metadata(
-                                NewFloatingPriceModel.NewFloatingUnitPrice.Metadata.builder()
+                                PriceCreateParams.Body.NewFloatingUnitPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
@@ -72,7 +83,7 @@ class PriceServiceTest {
                     .build()
             )
 
-        priceModel.validate()
+        price.validate()
     }
 
     @Test
@@ -84,7 +95,7 @@ class PriceServiceTest {
                 .build()
         val priceService = client.prices()
 
-        val priceModel =
+        val price =
             priceService.update(
                 PriceUpdateParams.builder()
                     .priceId("price_id")
@@ -100,7 +111,7 @@ class PriceServiceTest {
                     .build()
             )
 
-        priceModel.validate()
+        price.validate()
     }
 
     @Test
@@ -151,8 +162,8 @@ class PriceServiceTest {
                 .build()
         val priceService = client.prices()
 
-        val priceModel = priceService.fetch(PriceFetchParams.builder().priceId("price_id").build())
+        val price = priceService.fetch(PriceFetchParams.builder().priceId("price_id").build())
 
-        priceModel.validate()
+        price.validate()
     }
 }

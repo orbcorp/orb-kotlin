@@ -17,7 +17,7 @@ class CreditNoteTest {
                 .creditNoteNumber("credit_note_number")
                 .creditNotePdf("credit_note_pdf")
                 .customer(
-                    CustomerMinifiedModel.builder()
+                    CreditNote.Customer.builder()
                         .id("id")
                         .externalCustomerId("external_customer_id")
                         .build()
@@ -32,7 +32,7 @@ class CreditNoteTest {
                         .quantity(0.0)
                         .subtotal("subtotal")
                         .addTaxAmount(
-                            TaxAmountModel.builder()
+                            CreditNote.LineItem.TaxAmount.builder()
                                 .amount("amount")
                                 .taxRateDescription("tax_rate_description")
                                 .taxRatePercentage("tax_rate_percentage")
@@ -52,12 +52,12 @@ class CreditNoteTest {
                         .build()
                 )
                 .maximumAmountAdjustment(
-                    CreditNoteDiscountModel.builder()
+                    CreditNote.MaximumAmountAdjustment.builder()
                         .amountApplied("amount_applied")
-                        .discountType(CreditNoteDiscountModel.DiscountType.PERCENTAGE)
+                        .discountType(CreditNote.MaximumAmountAdjustment.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.0)
                         .addAppliesToPrice(
-                            CreditNoteDiscountModel.AppliesToPrice.builder()
+                            CreditNote.MaximumAmountAdjustment.AppliesToPrice.builder()
                                 .id("id")
                                 .name("name")
                                 .build()
@@ -73,12 +73,12 @@ class CreditNoteTest {
                 .type(CreditNote.Type.REFUND)
                 .voidedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addDiscount(
-                    CreditNoteDiscountModel.builder()
+                    CreditNote.Discount.builder()
                         .amountApplied("amount_applied")
-                        .discountType(CreditNoteDiscountModel.DiscountType.PERCENTAGE)
+                        .discountType(CreditNote.Discount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.0)
                         .addAppliesToPrice(
-                            CreditNoteDiscountModel.AppliesToPrice.builder()
+                            CreditNote.Discount.AppliesToPrice.builder()
                                 .id("id")
                                 .name("name")
                                 .build()
@@ -95,7 +95,7 @@ class CreditNoteTest {
         assertThat(creditNote.creditNotePdf()).isEqualTo("credit_note_pdf")
         assertThat(creditNote.customer())
             .isEqualTo(
-                CustomerMinifiedModel.builder()
+                CreditNote.Customer.builder()
                     .id("id")
                     .externalCustomerId("external_customer_id")
                     .build()
@@ -111,7 +111,7 @@ class CreditNoteTest {
                     .quantity(0.0)
                     .subtotal("subtotal")
                     .addTaxAmount(
-                        TaxAmountModel.builder()
+                        CreditNote.LineItem.TaxAmount.builder()
                             .amount("amount")
                             .taxRateDescription("tax_rate_description")
                             .taxRatePercentage("tax_rate_percentage")
@@ -132,12 +132,12 @@ class CreditNoteTest {
             )
         assertThat(creditNote.maximumAmountAdjustment())
             .isEqualTo(
-                CreditNoteDiscountModel.builder()
+                CreditNote.MaximumAmountAdjustment.builder()
                     .amountApplied("amount_applied")
-                    .discountType(CreditNoteDiscountModel.DiscountType.PERCENTAGE)
+                    .discountType(CreditNote.MaximumAmountAdjustment.DiscountType.PERCENTAGE)
                     .percentageDiscount(0.0)
                     .addAppliesToPrice(
-                        CreditNoteDiscountModel.AppliesToPrice.builder()
+                        CreditNote.MaximumAmountAdjustment.AppliesToPrice.builder()
                             .id("id")
                             .name("name")
                             .build()
@@ -155,15 +155,12 @@ class CreditNoteTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(creditNote.discounts())
             .containsExactly(
-                CreditNoteDiscountModel.builder()
+                CreditNote.Discount.builder()
                     .amountApplied("amount_applied")
-                    .discountType(CreditNoteDiscountModel.DiscountType.PERCENTAGE)
+                    .discountType(CreditNote.Discount.DiscountType.PERCENTAGE)
                     .percentageDiscount(0.0)
                     .addAppliesToPrice(
-                        CreditNoteDiscountModel.AppliesToPrice.builder()
-                            .id("id")
-                            .name("name")
-                            .build()
+                        CreditNote.Discount.AppliesToPrice.builder().id("id").name("name").build()
                     )
                     .reason("reason")
                     .build()
