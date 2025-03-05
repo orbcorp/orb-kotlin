@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,9 +11,13 @@ class AlertCreateForCustomerParamsTest {
     fun create() {
         AlertCreateForCustomerParams.builder()
             .customerId("customer_id")
-            .currency("currency")
-            .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
-            .addThreshold(AlertCreateForCustomerParams.Threshold.builder().value(0.0).build())
+            .createCustomerAlertRequest(
+                CreateCustomerAlertRequest.builder()
+                    .currency("currency")
+                    .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
+                    .addThreshold(ThresholdModel.builder().value(0.0).build())
+                    .build()
+            )
             .build()
     }
 
@@ -23,18 +26,25 @@ class AlertCreateForCustomerParamsTest {
         val params =
             AlertCreateForCustomerParams.builder()
                 .customerId("customer_id")
-                .currency("currency")
-                .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
-                .addThreshold(AlertCreateForCustomerParams.Threshold.builder().value(0.0).build())
+                .createCustomerAlertRequest(
+                    CreateCustomerAlertRequest.builder()
+                        .currency("currency")
+                        .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
+                        .addThreshold(ThresholdModel.builder().value(0.0).build())
+                        .build()
+                )
                 .build()
 
         val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.currency()).isEqualTo("currency")
-        assertThat(body.type()).isEqualTo(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
-        assertThat(body.thresholds())
-            .isEqualTo(listOf(AlertCreateForCustomerParams.Threshold.builder().value(0.0).build()))
+        assertThat(body)
+            .isEqualTo(
+                CreateCustomerAlertRequest.builder()
+                    .currency("currency")
+                    .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
+                    .addThreshold(ThresholdModel.builder().value(0.0).build())
+                    .build()
+            )
     }
 
     @Test
@@ -42,15 +52,23 @@ class AlertCreateForCustomerParamsTest {
         val params =
             AlertCreateForCustomerParams.builder()
                 .customerId("customer_id")
-                .currency("currency")
-                .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
+                .createCustomerAlertRequest(
+                    CreateCustomerAlertRequest.builder()
+                        .currency("currency")
+                        .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
+                        .build()
+                )
                 .build()
 
         val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.currency()).isEqualTo("currency")
-        assertThat(body.type()).isEqualTo(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
+        assertThat(body)
+            .isEqualTo(
+                CreateCustomerAlertRequest.builder()
+                    .currency("currency")
+                    .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
+                    .build()
+            )
     }
 
     @Test
@@ -58,8 +76,12 @@ class AlertCreateForCustomerParamsTest {
         val params =
             AlertCreateForCustomerParams.builder()
                 .customerId("customer_id")
-                .currency("currency")
-                .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
+                .createCustomerAlertRequest(
+                    CreateCustomerAlertRequest.builder()
+                        .currency("currency")
+                        .type(CreateCustomerAlertRequest.Type.USAGE_EXCEEDED)
+                        .build()
+                )
                 .build()
         assertThat(params).isNotNull
         // path param "customerId"

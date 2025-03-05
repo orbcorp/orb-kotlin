@@ -20,21 +20,13 @@ class PlanCreateParamsTest {
                     .itemId("item_id")
                     .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                     .name("Annual fee")
-                    .unitConfig(
-                        PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                            .unitAmount("unit_amount")
-                            .build()
-                    )
+                    .unitConfig(UnitConfigModel.builder().unitAmount("unit_amount").build())
                     .billableMetricId("billable_metric_id")
                     .billedInAdvance(true)
                     .billingCycleConfiguration(
-                        PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration.builder()
+                        NewBillingCycleConfigurationModel.builder()
                             .duration(0L)
-                            .durationUnit(
-                                PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration
-                                    .DurationUnit
-                                    .DAY
-                            )
+                            .durationUnit(NewBillingCycleConfigurationModel.DurationUnit.DAY)
                             .build()
                     )
                     .conversionRate(0.0)
@@ -43,14 +35,9 @@ class PlanCreateParamsTest {
                     .fixedPriceQuantity(0.0)
                     .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
-                        PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
-                            .builder()
+                        NewBillingCycleConfigurationModel.builder()
                             .duration(0L)
-                            .durationUnit(
-                                PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
-                                    .DurationUnit
-                                    .DAY
-                            )
+                            .durationUnit(NewBillingCycleConfigurationModel.DurationUnit.DAY)
                             .build()
                     )
                     .metadata(
@@ -84,23 +71,13 @@ class PlanCreateParamsTest {
                         .itemId("item_id")
                         .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
-                        .unitConfig(
-                            PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
+                        .unitConfig(UnitConfigModel.builder().unitAmount("unit_amount").build())
                         .billableMetricId("billable_metric_id")
                         .billedInAdvance(true)
                         .billingCycleConfiguration(
-                            PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration
-                                .builder()
+                            NewBillingCycleConfigurationModel.builder()
                                 .duration(0L)
-                                .durationUnit(
-                                    PlanCreateParams.Price.NewPlanUnitPrice
-                                        .BillingCycleConfiguration
-                                        .DurationUnit
-                                        .DAY
-                                )
+                                .durationUnit(NewBillingCycleConfigurationModel.DurationUnit.DAY)
                                 .build()
                         )
                         .conversionRate(0.0)
@@ -109,15 +86,9 @@ class PlanCreateParamsTest {
                         .fixedPriceQuantity(0.0)
                         .invoiceGroupingKey("invoice_grouping_key")
                         .invoicingCycleConfiguration(
-                            PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
-                                .builder()
+                            NewBillingCycleConfigurationModel.builder()
                                 .duration(0L)
-                                .durationUnit(
-                                    PlanCreateParams.Price.NewPlanUnitPrice
-                                        .InvoicingCycleConfiguration
-                                        .DurationUnit
-                                        .DAY
-                                )
+                                .durationUnit(NewBillingCycleConfigurationModel.DurationUnit.DAY)
                                 .build()
                         )
                         .metadata(
@@ -152,22 +123,14 @@ class PlanCreateParamsTest {
                             .itemId("item_id")
                             .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(
-                                PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
+                            .unitConfig(UnitConfigModel.builder().unitAmount("unit_amount").build())
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration
-                                    .builder()
+                                NewBillingCycleConfigurationModel.builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        PlanCreateParams.Price.NewPlanUnitPrice
-                                            .BillingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
+                                        NewBillingCycleConfigurationModel.DurationUnit.DAY
                                     )
                                     .build()
                             )
@@ -177,14 +140,10 @@ class PlanCreateParamsTest {
                             .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
-                                PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
-                                    .builder()
+                                NewBillingCycleConfigurationModel.builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        PlanCreateParams.Price.NewPlanUnitPrice
-                                            .InvoicingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
+                                        NewBillingCycleConfigurationModel.DurationUnit.DAY
                                     )
                                     .build()
                             )
@@ -221,11 +180,7 @@ class PlanCreateParamsTest {
                         .itemId("item_id")
                         .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
-                        .unitConfig(
-                            PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
+                        .unitConfig(UnitConfigModel.builder().unitAmount("unit_amount").build())
                         .build()
                 )
                 .build()
@@ -244,11 +199,7 @@ class PlanCreateParamsTest {
                             .itemId("item_id")
                             .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(
-                                PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
+                            .unitConfig(UnitConfigModel.builder().unitAmount("unit_amount").build())
                             .build()
                     )
                 )

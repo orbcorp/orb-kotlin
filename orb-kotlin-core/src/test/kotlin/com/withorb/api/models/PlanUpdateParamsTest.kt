@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,10 +12,14 @@ class PlanUpdateParamsTest {
     fun create() {
         PlanUpdateParams.builder()
             .planId("plan_id")
-            .externalPlanId("external_plan_id")
-            .metadata(
-                PlanUpdateParams.Metadata.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("string"))
+            .editPlanModel(
+                EditPlanModel.builder()
+                    .externalPlanId("external_plan_id")
+                    .metadata(
+                        EditPlanModel.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
             .build()
@@ -27,38 +30,53 @@ class PlanUpdateParamsTest {
         val params =
             PlanUpdateParams.builder()
                 .planId("plan_id")
-                .externalPlanId("external_plan_id")
-                .metadata(
-                    PlanUpdateParams.Metadata.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                .editPlanModel(
+                    EditPlanModel.builder()
+                        .externalPlanId("external_plan_id")
+                        .metadata(
+                            EditPlanModel.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .build()
                 )
                 .build()
 
         val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
-        assertThat(body.metadata())
+        assertThat(body)
             .isEqualTo(
-                PlanUpdateParams.Metadata.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                EditPlanModel.builder()
+                    .externalPlanId("external_plan_id")
+                    .metadata(
+                        EditPlanModel.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
     }
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = PlanUpdateParams.builder().planId("plan_id").build()
+        val params =
+            PlanUpdateParams.builder()
+                .planId("plan_id")
+                .editPlanModel(EditPlanModel.builder().build())
+                .build()
 
         val body = params._body()
 
-        assertNotNull(body)
+        assertThat(body).isEqualTo(EditPlanModel.builder().build())
     }
 
     @Test
     fun getPathParam() {
-        val params = PlanUpdateParams.builder().planId("plan_id").build()
+        val params =
+            PlanUpdateParams.builder()
+                .planId("plan_id")
+                .editPlanModel(EditPlanModel.builder().build())
+                .build()
         assertThat(params).isNotNull
         // path param "planId"
         assertThat(params.getPathParam(0)).isEqualTo("plan_id")

@@ -5,11 +5,11 @@ package com.withorb.api.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
-import com.withorb.api.models.CreditNote
 import com.withorb.api.models.CreditNoteCreateParams
 import com.withorb.api.models.CreditNoteFetchParams
 import com.withorb.api.models.CreditNoteListPageAsync
 import com.withorb.api.models.CreditNoteListParams
+import com.withorb.api.models.CreditNoteModel
 
 interface CreditNoteServiceAsync {
 
@@ -22,7 +22,7 @@ interface CreditNoteServiceAsync {
     suspend fun create(
         params: CreditNoteCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CreditNote
+    ): CreditNoteModel
 
     /**
      * Get a paginated list of CreditNotes. Users can also filter by customer_id, subscription_id,
@@ -49,7 +49,7 @@ interface CreditNoteServiceAsync {
     suspend fun fetch(
         params: CreditNoteFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CreditNote
+    ): CreditNoteModel
 
     /**
      * A view of [CreditNoteServiceAsync] that provides access to raw HTTP responses for each
@@ -65,7 +65,7 @@ interface CreditNoteServiceAsync {
         suspend fun create(
             params: CreditNoteCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CreditNote>
+        ): HttpResponseFor<CreditNoteModel>
 
         /**
          * Returns a raw HTTP response for `get /credit_notes`, but is otherwise the same as
@@ -93,6 +93,6 @@ interface CreditNoteServiceAsync {
         suspend fun fetch(
             params: CreditNoteFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CreditNote>
+        ): HttpResponseFor<CreditNoteModel>
     }
 }

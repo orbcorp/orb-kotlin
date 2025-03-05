@@ -15,11 +15,11 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
-import com.withorb.api.models.Item
 import com.withorb.api.models.ItemCreateParams
 import com.withorb.api.models.ItemFetchParams
 import com.withorb.api.models.ItemListPageAsync
 import com.withorb.api.models.ItemListParams
+import com.withorb.api.models.ItemModel
 import com.withorb.api.models.ItemUpdateParams
 
 class ItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -31,11 +31,17 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): ItemServiceAsync.WithRawResponse = withRawResponse
 
-    override suspend fun create(params: ItemCreateParams, requestOptions: RequestOptions): Item =
+    override suspend fun create(
+        params: ItemCreateParams,
+        requestOptions: RequestOptions,
+    ): ItemModel =
         // post /items
         withRawResponse().create(params, requestOptions).parse()
 
-    override suspend fun update(params: ItemUpdateParams, requestOptions: RequestOptions): Item =
+    override suspend fun update(
+        params: ItemUpdateParams,
+        requestOptions: RequestOptions,
+    ): ItemModel =
         // put /items/{item_id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -46,7 +52,7 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
         // get /items
         withRawResponse().list(params, requestOptions).parse()
 
-    override suspend fun fetch(params: ItemFetchParams, requestOptions: RequestOptions): Item =
+    override suspend fun fetch(params: ItemFetchParams, requestOptions: RequestOptions): ItemModel =
         // get /items/{item_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
@@ -55,13 +61,13 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Item> =
-            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<ItemModel> =
+            jsonHandler<ItemModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun create(
             params: ItemCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Item> {
+        ): HttpResponseFor<ItemModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -82,13 +88,13 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val updateHandler: Handler<Item> =
-            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<ItemModel> =
+            jsonHandler<ItemModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun update(
             params: ItemUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Item> {
+        ): HttpResponseFor<ItemModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -137,13 +143,13 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val fetchHandler: Handler<Item> =
-            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<ItemModel> =
+            jsonHandler<ItemModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun fetch(
             params: ItemFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Item> {
+        ): HttpResponseFor<ItemModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

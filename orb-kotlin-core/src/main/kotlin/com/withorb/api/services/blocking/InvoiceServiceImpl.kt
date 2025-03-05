@@ -15,7 +15,6 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
-import com.withorb.api.models.Invoice
 import com.withorb.api.models.InvoiceCreateParams
 import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
@@ -24,6 +23,7 @@ import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceListPage
 import com.withorb.api.models.InvoiceListParams
 import com.withorb.api.models.InvoiceMarkPaidParams
+import com.withorb.api.models.InvoiceModel
 import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
 import com.withorb.api.models.InvoiceVoidParams
@@ -37,11 +37,11 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): InvoiceService.WithRawResponse = withRawResponse
 
-    override fun create(params: InvoiceCreateParams, requestOptions: RequestOptions): Invoice =
+    override fun create(params: InvoiceCreateParams, requestOptions: RequestOptions): InvoiceModel =
         // post /invoices
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun update(params: InvoiceUpdateParams, requestOptions: RequestOptions): Invoice =
+    override fun update(params: InvoiceUpdateParams, requestOptions: RequestOptions): InvoiceModel =
         // put /invoices/{invoice_id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -49,7 +49,7 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
         // get /invoices
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun fetch(params: InvoiceFetchParams, requestOptions: RequestOptions): Invoice =
+    override fun fetch(params: InvoiceFetchParams, requestOptions: RequestOptions): InvoiceModel =
         // get /invoices/{invoice_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
@@ -60,19 +60,22 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
         // get /invoices/upcoming
         withRawResponse().fetchUpcoming(params, requestOptions).parse()
 
-    override fun issue(params: InvoiceIssueParams, requestOptions: RequestOptions): Invoice =
+    override fun issue(params: InvoiceIssueParams, requestOptions: RequestOptions): InvoiceModel =
         // post /invoices/{invoice_id}/issue
         withRawResponse().issue(params, requestOptions).parse()
 
-    override fun markPaid(params: InvoiceMarkPaidParams, requestOptions: RequestOptions): Invoice =
+    override fun markPaid(
+        params: InvoiceMarkPaidParams,
+        requestOptions: RequestOptions,
+    ): InvoiceModel =
         // post /invoices/{invoice_id}/mark_paid
         withRawResponse().markPaid(params, requestOptions).parse()
 
-    override fun pay(params: InvoicePayParams, requestOptions: RequestOptions): Invoice =
+    override fun pay(params: InvoicePayParams, requestOptions: RequestOptions): InvoiceModel =
         // post /invoices/{invoice_id}/pay
         withRawResponse().pay(params, requestOptions).parse()
 
-    override fun void(params: InvoiceVoidParams, requestOptions: RequestOptions): Invoice =
+    override fun void(params: InvoiceVoidParams, requestOptions: RequestOptions): InvoiceModel =
         // post /invoices/{invoice_id}/void
         withRawResponse().void(params, requestOptions).parse()
 
@@ -81,13 +84,13 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<InvoiceModel> =
+            jsonHandler<InvoiceModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: InvoiceCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Invoice> {
+        ): HttpResponseFor<InvoiceModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -108,13 +111,13 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val updateHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<InvoiceModel> =
+            jsonHandler<InvoiceModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: InvoiceUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Invoice> {
+        ): HttpResponseFor<InvoiceModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -163,13 +166,13 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val fetchHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<InvoiceModel> =
+            jsonHandler<InvoiceModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun fetch(
             params: InvoiceFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Invoice> {
+        ): HttpResponseFor<InvoiceModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -216,13 +219,13 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val issueHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val issueHandler: Handler<InvoiceModel> =
+            jsonHandler<InvoiceModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun issue(
             params: InvoiceIssueParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Invoice> {
+        ): HttpResponseFor<InvoiceModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -243,13 +246,13 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val markPaidHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val markPaidHandler: Handler<InvoiceModel> =
+            jsonHandler<InvoiceModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun markPaid(
             params: InvoiceMarkPaidParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Invoice> {
+        ): HttpResponseFor<InvoiceModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -270,13 +273,13 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val payHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val payHandler: Handler<InvoiceModel> =
+            jsonHandler<InvoiceModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun pay(
             params: InvoicePayParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Invoice> {
+        ): HttpResponseFor<InvoiceModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -297,13 +300,13 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val voidHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val voidHandler: Handler<InvoiceModel> =
+            jsonHandler<InvoiceModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun void(
             params: InvoiceVoidParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Invoice> {
+        ): HttpResponseFor<InvoiceModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

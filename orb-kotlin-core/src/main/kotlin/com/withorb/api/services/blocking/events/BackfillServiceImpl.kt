@@ -15,16 +15,13 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
+import com.withorb.api.models.BackfillModel
 import com.withorb.api.models.EventBackfillCloseParams
-import com.withorb.api.models.EventBackfillCloseResponse
 import com.withorb.api.models.EventBackfillCreateParams
-import com.withorb.api.models.EventBackfillCreateResponse
 import com.withorb.api.models.EventBackfillFetchParams
-import com.withorb.api.models.EventBackfillFetchResponse
 import com.withorb.api.models.EventBackfillListPage
 import com.withorb.api.models.EventBackfillListParams
 import com.withorb.api.models.EventBackfillRevertParams
-import com.withorb.api.models.EventBackfillRevertResponse
 
 class BackfillServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     BackfillService {
@@ -38,7 +35,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
     override fun create(
         params: EventBackfillCreateParams,
         requestOptions: RequestOptions,
-    ): EventBackfillCreateResponse =
+    ): BackfillModel =
         // post /events/backfills
         withRawResponse().create(params, requestOptions).parse()
 
@@ -52,21 +49,21 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
     override fun close(
         params: EventBackfillCloseParams,
         requestOptions: RequestOptions,
-    ): EventBackfillCloseResponse =
+    ): BackfillModel =
         // post /events/backfills/{backfill_id}/close
         withRawResponse().close(params, requestOptions).parse()
 
     override fun fetch(
         params: EventBackfillFetchParams,
         requestOptions: RequestOptions,
-    ): EventBackfillFetchResponse =
+    ): BackfillModel =
         // get /events/backfills/{backfill_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
     override fun revert(
         params: EventBackfillRevertParams,
         requestOptions: RequestOptions,
-    ): EventBackfillRevertResponse =
+    ): BackfillModel =
         // post /events/backfills/{backfill_id}/revert
         withRawResponse().revert(params, requestOptions).parse()
 
@@ -75,14 +72,13 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<EventBackfillCreateResponse> =
-            jsonHandler<EventBackfillCreateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val createHandler: Handler<BackfillModel> =
+            jsonHandler<BackfillModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: EventBackfillCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<EventBackfillCreateResponse> {
+        ): HttpResponseFor<BackfillModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -133,14 +129,13 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val closeHandler: Handler<EventBackfillCloseResponse> =
-            jsonHandler<EventBackfillCloseResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val closeHandler: Handler<BackfillModel> =
+            jsonHandler<BackfillModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun close(
             params: EventBackfillCloseParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<EventBackfillCloseResponse> {
+        ): HttpResponseFor<BackfillModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -161,14 +156,13 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val fetchHandler: Handler<EventBackfillFetchResponse> =
-            jsonHandler<EventBackfillFetchResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<BackfillModel> =
+            jsonHandler<BackfillModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun fetch(
             params: EventBackfillFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<EventBackfillFetchResponse> {
+        ): HttpResponseFor<BackfillModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -188,14 +182,13 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val revertHandler: Handler<EventBackfillRevertResponse> =
-            jsonHandler<EventBackfillRevertResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val revertHandler: Handler<BackfillModel> =
+            jsonHandler<BackfillModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun revert(
             params: EventBackfillRevertParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<EventBackfillRevertResponse> {
+        ): HttpResponseFor<BackfillModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

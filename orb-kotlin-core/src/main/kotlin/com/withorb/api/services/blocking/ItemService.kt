@@ -5,11 +5,11 @@ package com.withorb.api.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
-import com.withorb.api.models.Item
 import com.withorb.api.models.ItemCreateParams
 import com.withorb.api.models.ItemFetchParams
 import com.withorb.api.models.ItemListPage
 import com.withorb.api.models.ItemListParams
+import com.withorb.api.models.ItemModel
 import com.withorb.api.models.ItemUpdateParams
 
 interface ItemService {
@@ -23,13 +23,13 @@ interface ItemService {
     fun create(
         params: ItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Item
+    ): ItemModel
 
     /** This endpoint can be used to update properties on the Item. */
     fun update(
         params: ItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Item
+    ): ItemModel
 
     /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
     fun list(
@@ -42,7 +42,10 @@ interface ItemService {
         list(ItemListParams.none(), requestOptions)
 
     /** This endpoint returns an item identified by its item_id. */
-    fun fetch(params: ItemFetchParams, requestOptions: RequestOptions = RequestOptions.none()): Item
+    fun fetch(
+        params: ItemFetchParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ItemModel
 
     /** A view of [ItemService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -55,7 +58,7 @@ interface ItemService {
         fun create(
             params: ItemCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Item>
+        ): HttpResponseFor<ItemModel>
 
         /**
          * Returns a raw HTTP response for `put /items/{item_id}`, but is otherwise the same as
@@ -65,7 +68,7 @@ interface ItemService {
         fun update(
             params: ItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Item>
+        ): HttpResponseFor<ItemModel>
 
         /**
          * Returns a raw HTTP response for `get /items`, but is otherwise the same as
@@ -93,6 +96,6 @@ interface ItemService {
         fun fetch(
             params: ItemFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Item>
+        ): HttpResponseFor<ItemModel>
     }
 }

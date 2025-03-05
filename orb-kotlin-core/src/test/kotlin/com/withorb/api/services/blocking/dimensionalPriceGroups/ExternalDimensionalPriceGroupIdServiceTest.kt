@@ -21,13 +21,13 @@ class ExternalDimensionalPriceGroupIdServiceTest {
         val externalDimensionalPriceGroupIdService =
             client.dimensionalPriceGroups().externalDimensionalPriceGroupId()
 
-        val dimensionalPriceGroup =
+        val dimensionalPriceGroupModel =
             externalDimensionalPriceGroupIdService.retrieve(
                 DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.builder()
                     .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                     .build()
             )
 
-        dimensionalPriceGroup.validate()
+        dimensionalPriceGroupModel.validate()
     }
 }
