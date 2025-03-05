@@ -5,10 +5,10 @@ package com.withorb.api.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
-import com.withorb.api.models.DimensionalPriceGroup
 import com.withorb.api.models.DimensionalPriceGroupCreateParams
 import com.withorb.api.models.DimensionalPriceGroupListPage
 import com.withorb.api.models.DimensionalPriceGroupListParams
+import com.withorb.api.models.DimensionalPriceGroupModel
 import com.withorb.api.models.DimensionalPriceGroupRetrieveParams
 import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdService
 
@@ -33,13 +33,13 @@ interface DimensionalPriceGroupService {
     fun create(
         params: DimensionalPriceGroupCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DimensionalPriceGroup
+    ): DimensionalPriceGroupModel
 
     /** Fetch dimensional price group */
     fun retrieve(
         params: DimensionalPriceGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DimensionalPriceGroup
+    ): DimensionalPriceGroupModel
 
     /** List dimensional price groups */
     fun list(
@@ -68,7 +68,7 @@ interface DimensionalPriceGroupService {
         fun create(
             params: DimensionalPriceGroupCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DimensionalPriceGroup>
+        ): HttpResponseFor<DimensionalPriceGroupModel>
 
         /**
          * Returns a raw HTTP response for `get
@@ -79,7 +79,7 @@ interface DimensionalPriceGroupService {
         fun retrieve(
             params: DimensionalPriceGroupRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DimensionalPriceGroup>
+        ): HttpResponseFor<DimensionalPriceGroupModel>
 
         /**
          * Returns a raw HTTP response for `get /dimensional_price_groups`, but is otherwise the

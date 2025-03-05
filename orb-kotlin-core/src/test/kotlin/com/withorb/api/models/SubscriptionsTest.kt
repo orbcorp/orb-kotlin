@@ -14,20 +14,17 @@ class SubscriptionsTest {
         val subscriptions =
             Subscriptions.builder()
                 .addData(
-                    Subscription.builder()
+                    SubscriptionModel.builder()
                         .id("id")
                         .activePlanPhaseOrder(0L)
                         .addAdjustmentInterval(
-                            Subscription.AdjustmentInterval.builder()
+                            AdjustmentIntervalModel.builder()
                                 .id("id")
                                 .adjustment(
-                                    Subscription.AdjustmentInterval.Adjustment
-                                        .PlanPhaseUsageDiscountAdjustment
-                                        .builder()
+                                    AdjustmentModel.PlanPhaseUsageDiscountAdjustment.builder()
                                         .id("id")
                                         .adjustmentType(
-                                            Subscription.AdjustmentInterval.Adjustment
-                                                .PlanPhaseUsageDiscountAdjustment
+                                            AdjustmentModel.PlanPhaseUsageDiscountAdjustment
                                                 .AdjustmentType
                                                 .USAGE_DISCOUNT
                                         )
@@ -45,7 +42,7 @@ class SubscriptionsTest {
                         )
                         .autoCollection(true)
                         .billingCycleAnchorConfiguration(
-                            Subscription.BillingCycleAnchorConfiguration.builder()
+                            BillingCycleAnchorConfigurationModel.builder()
                                 .day(1L)
                                 .month(1L)
                                 .year(0L)
@@ -60,13 +57,13 @@ class SubscriptionsTest {
                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                         )
                         .customer(
-                            Customer.builder()
+                            CustomerModel.builder()
                                 .id("id")
                                 .addAdditionalEmail("string")
                                 .autoCollection(true)
                                 .balance("balance")
                                 .billingAddress(
-                                    Customer.BillingAddress.builder()
+                                    AddressModel.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -82,15 +79,15 @@ class SubscriptionsTest {
                                 .exemptFromAutomatedTax(true)
                                 .externalCustomerId("external_customer_id")
                                 .hierarchy(
-                                    Customer.Hierarchy.builder()
+                                    CustomerModel.Hierarchy.builder()
                                         .addChild(
-                                            Customer.Hierarchy.Child.builder()
+                                            CustomerMinifiedModel.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
                                         )
                                         .parent(
-                                            Customer.Hierarchy.Parent.builder()
+                                            CustomerMinifiedModel.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
@@ -98,16 +95,16 @@ class SubscriptionsTest {
                                         .build()
                                 )
                                 .metadata(
-                                    Customer.Metadata.builder()
+                                    CustomerModel.Metadata.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
                                 .name("name")
-                                .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
+                                .paymentProvider(CustomerModel.PaymentProvider.QUICKBOOKS)
                                 .paymentProviderId("payment_provider_id")
                                 .portalUrl("portal_url")
                                 .shippingAddress(
-                                    Customer.ShippingAddress.builder()
+                                    AddressModel.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -117,21 +114,22 @@ class SubscriptionsTest {
                                         .build()
                                 )
                                 .taxId(
-                                    Customer.TaxId.builder()
-                                        .country(Customer.TaxId.Country.AD)
-                                        .type(Customer.TaxId.Type.AD_NRT)
+                                    CustomerTaxIdModel.builder()
+                                        .country(CustomerTaxIdModel.Country.AD)
+                                        .type(CustomerTaxIdModel.Type.AD_NRT)
                                         .value("value")
                                         .build()
                                 )
                                 .timezone("timezone")
                                 .accountingSyncConfiguration(
-                                    Customer.AccountingSyncConfiguration.builder()
+                                    CustomerModel.AccountingSyncConfiguration.builder()
                                         .addAccountingProvider(
-                                            Customer.AccountingSyncConfiguration.AccountingProvider
+                                            CustomerModel.AccountingSyncConfiguration
+                                                .AccountingProvider
                                                 .builder()
                                                 .externalProviderId("external_provider_id")
                                                 .providerType(
-                                                    Customer.AccountingSyncConfiguration
+                                                    CustomerModel.AccountingSyncConfiguration
                                                         .AccountingProvider
                                                         .ProviderType
                                                         .QUICKBOOKS
@@ -142,28 +140,26 @@ class SubscriptionsTest {
                                         .build()
                                 )
                                 .reportingConfiguration(
-                                    Customer.ReportingConfiguration.builder().exempt(true).build()
+                                    CustomerModel.ReportingConfiguration.builder()
+                                        .exempt(true)
+                                        .build()
                                 )
                                 .build()
                         )
                         .defaultInvoiceMemo("default_invoice_memo")
                         .addDiscountInterval(
-                            Subscription.DiscountInterval.AmountDiscountInterval.builder()
+                            AmountDiscountIntervalModel.builder()
                                 .amountDiscount("amount_discount")
                                 .addAppliesToPriceId("string")
                                 .addAppliesToPriceIntervalId("string")
-                                .discountType(
-                                    Subscription.DiscountInterval.AmountDiscountInterval
-                                        .DiscountType
-                                        .AMOUNT
-                                )
+                                .discountType(AmountDiscountIntervalModel.DiscountType.AMOUNT)
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
                         )
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFixedFeeQuantitySchedule(
-                            Subscription.FixedFeeQuantitySchedule.builder()
+                            FixedFeeQuantityScheduleEntryModel.builder()
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .priceId("price_id")
                                 .quantity(0.0)
@@ -172,7 +168,7 @@ class SubscriptionsTest {
                         )
                         .invoicingThreshold("invoicing_threshold")
                         .addMaximumInterval(
-                            Subscription.MaximumInterval.builder()
+                            MaximumIntervalModel.builder()
                                 .addAppliesToPriceId("string")
                                 .addAppliesToPriceIntervalId("string")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -181,12 +177,12 @@ class SubscriptionsTest {
                                 .build()
                         )
                         .metadata(
-                            Subscription.Metadata.builder()
+                            SubscriptionModel.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
                         .addMinimumInterval(
-                            Subscription.MinimumInterval.builder()
+                            MinimumIntervalModel.builder()
                                 .addAppliesToPriceId("string")
                                 .addAppliesToPriceIntervalId("string")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -196,13 +192,13 @@ class SubscriptionsTest {
                         )
                         .netTerms(0L)
                         .plan(
-                            Plan.builder()
+                            PlanModel.builder()
                                 .id("id")
                                 .addAdjustment(
-                                    Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
+                                    AdjustmentModel.PlanPhaseUsageDiscountAdjustment.builder()
                                         .id("id")
                                         .adjustmentType(
-                                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment
+                                            AdjustmentModel.PlanPhaseUsageDiscountAdjustment
                                                 .AdjustmentType
                                                 .USAGE_DISCOUNT
                                         )
@@ -214,7 +210,7 @@ class SubscriptionsTest {
                                         .build()
                                 )
                                 .basePlan(
-                                    Plan.BasePlan.builder()
+                                    PlanMinifiedModel.builder()
                                         .id("m2t5akQeh2obwxeU")
                                         .externalPlanId("m2t5akQeh2obwxeU")
                                         .name("Example plan")
@@ -237,19 +233,19 @@ class SubscriptionsTest {
                                 .externalPlanId("external_plan_id")
                                 .invoicingCurrency("invoicing_currency")
                                 .maximum(
-                                    Plan.Maximum.builder()
+                                    MaximumModel.builder()
                                         .addAppliesToPriceId("string")
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
                                 .maximumAmount("maximum_amount")
                                 .metadata(
-                                    Plan.Metadata.builder()
+                                    PlanModel.Metadata.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
                                 .minimum(
-                                    Plan.Minimum.builder()
+                                    MinimumModel.builder()
                                         .addAppliesToPriceId("string")
                                         .minimumAmount("minimum_amount")
                                         .build()
@@ -258,7 +254,7 @@ class SubscriptionsTest {
                                 .name("name")
                                 .netTerms(0L)
                                 .addPlanPhase(
-                                    Plan.PlanPhase.builder()
+                                    PlanModel.PlanPhase.builder()
                                         .id("id")
                                         .description("description")
                                         .discount(
@@ -273,16 +269,16 @@ class SubscriptionsTest {
                                                 .build()
                                         )
                                         .duration(0L)
-                                        .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
+                                        .durationUnit(PlanModel.PlanPhase.DurationUnit.DAILY)
                                         .maximum(
-                                            Plan.PlanPhase.Maximum.builder()
+                                            MaximumModel.builder()
                                                 .addAppliesToPriceId("string")
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
                                         .minimum(
-                                            Plan.PlanPhase.Minimum.builder()
+                                            MinimumModel.builder()
                                                 .addAppliesToPriceId("string")
                                                 .minimumAmount("minimum_amount")
                                                 .build()
@@ -293,28 +289,24 @@ class SubscriptionsTest {
                                         .build()
                                 )
                                 .addPrice(
-                                    Price.UnitPrice.builder()
+                                    PriceModel.UnitPrice.builder()
                                         .id("id")
                                         .billableMetric(
-                                            Price.UnitPrice.BillableMetric.builder()
-                                                .id("id")
-                                                .build()
+                                            BillableMetricTinyModel.builder().id("id").build()
                                         )
                                         .billingCycleConfiguration(
-                                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                                            BillingCycleConfigurationModel.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.BillingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfigurationModel.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
-                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                        .cadence(PriceModel.UnitPrice.Cadence.ONE_TIME)
                                         .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
-                                            Price.UnitPrice.CreditAllocation.builder()
+                                            AllocationModel.builder()
                                                 .allowsRollover(true)
                                                 .currency("currency")
                                                 .build()
@@ -334,30 +326,23 @@ class SubscriptionsTest {
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                            BillingCycleConfigurationModel.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfigurationModel.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
-                                        .item(
-                                            Price.UnitPrice.Item.builder()
-                                                .id("id")
-                                                .name("name")
-                                                .build()
-                                        )
+                                        .item(ItemSlimModel.builder().id("id").name("name").build())
                                         .maximum(
-                                            Price.UnitPrice.Maximum.builder()
+                                            MaximumModel.builder()
                                                 .addAppliesToPriceId("string")
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
                                         .metadata(
-                                            Price.UnitPrice.Metadata.builder()
+                                            PriceModel.UnitPrice.Metadata.builder()
                                                 .putAdditionalProperty(
                                                     "foo",
                                                     JsonValue.from("string"),
@@ -365,23 +350,23 @@ class SubscriptionsTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Price.UnitPrice.Minimum.builder()
+                                            MinimumModel.builder()
                                                 .addAppliesToPriceId("string")
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
+                                        .modelType(PriceModel.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
-                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                        .priceType(PriceModel.UnitPrice.PriceType.USAGE_PRICE)
                                         .unitConfig(
-                                            Price.UnitPrice.UnitConfig.builder()
+                                            UnitConfigModel.builder()
                                                 .unitAmount("unit_amount")
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
-                                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                            DimensionalPriceConfigurationModel.builder()
                                                 .addDimensionValue("string")
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
@@ -391,24 +376,24 @@ class SubscriptionsTest {
                                         .build()
                                 )
                                 .product(
-                                    Plan.Product.builder()
+                                    PlanModel.Product.builder()
                                         .id("id")
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .name("name")
                                         .build()
                                 )
-                                .status(Plan.Status.ACTIVE)
+                                .status(PlanModel.Status.ACTIVE)
                                 .trialConfig(
-                                    Plan.TrialConfig.builder()
+                                    PlanModel.TrialConfig.builder()
                                         .trialPeriod(0L)
-                                        .trialPeriodUnit(Plan.TrialConfig.TrialPeriodUnit.DAYS)
+                                        .trialPeriodUnit(PlanModel.TrialConfig.TrialPeriodUnit.DAYS)
                                         .build()
                                 )
                                 .version(0L)
                                 .build()
                         )
                         .addPriceInterval(
-                            Subscription.PriceInterval.builder()
+                            PriceIntervalModel.builder()
                                 .id("id")
                                 .billingCycleDay(0L)
                                 .currentBillingPeriodEndDate(
@@ -420,7 +405,7 @@ class SubscriptionsTest {
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .filter("filter")
                                 .addFixedFeeQuantityTransition(
-                                    Subscription.PriceInterval.FixedFeeQuantityTransition.builder()
+                                    PriceIntervalModel.FixedFeeQuantityTransition.builder()
                                         .effectiveDate(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
@@ -429,28 +414,24 @@ class SubscriptionsTest {
                                         .build()
                                 )
                                 .price(
-                                    Price.UnitPrice.builder()
+                                    PriceModel.UnitPrice.builder()
                                         .id("id")
                                         .billableMetric(
-                                            Price.UnitPrice.BillableMetric.builder()
-                                                .id("id")
-                                                .build()
+                                            BillableMetricTinyModel.builder().id("id").build()
                                         )
                                         .billingCycleConfiguration(
-                                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                                            BillingCycleConfigurationModel.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.BillingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfigurationModel.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
-                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                        .cadence(PriceModel.UnitPrice.Cadence.ONE_TIME)
                                         .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
-                                            Price.UnitPrice.CreditAllocation.builder()
+                                            AllocationModel.builder()
                                                 .allowsRollover(true)
                                                 .currency("currency")
                                                 .build()
@@ -470,30 +451,23 @@ class SubscriptionsTest {
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                            BillingCycleConfigurationModel.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfigurationModel.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
-                                        .item(
-                                            Price.UnitPrice.Item.builder()
-                                                .id("id")
-                                                .name("name")
-                                                .build()
-                                        )
+                                        .item(ItemSlimModel.builder().id("id").name("name").build())
                                         .maximum(
-                                            Price.UnitPrice.Maximum.builder()
+                                            MaximumModel.builder()
                                                 .addAppliesToPriceId("string")
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
                                         .metadata(
-                                            Price.UnitPrice.Metadata.builder()
+                                            PriceModel.UnitPrice.Metadata.builder()
                                                 .putAdditionalProperty(
                                                     "foo",
                                                     JsonValue.from("string"),
@@ -501,23 +475,23 @@ class SubscriptionsTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Price.UnitPrice.Minimum.builder()
+                                            MinimumModel.builder()
                                                 .addAppliesToPriceId("string")
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
+                                        .modelType(PriceModel.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
-                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                        .priceType(PriceModel.UnitPrice.PriceType.USAGE_PRICE)
                                         .unitConfig(
-                                            Price.UnitPrice.UnitConfig.builder()
+                                            UnitConfigModel.builder()
                                                 .unitAmount("unit_amount")
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
-                                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                            DimensionalPriceConfigurationModel.builder()
                                                 .addDimensionValue("string")
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
@@ -531,16 +505,16 @@ class SubscriptionsTest {
                                 .build()
                         )
                         .redeemedCoupon(
-                            Subscription.RedeemedCoupon.builder()
+                            CouponRedemptionModel.builder()
                                 .couponId("coupon_id")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
                         )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .status(Subscription.Status.ACTIVE)
+                        .status(SubscriptionModel.Status.ACTIVE)
                         .trialInfo(
-                            Subscription.TrialInfo.builder()
+                            SubscriptionTrialInfoModel.builder()
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
                         )
@@ -553,20 +527,17 @@ class SubscriptionsTest {
         assertThat(subscriptions).isNotNull
         assertThat(subscriptions.data())
             .containsExactly(
-                Subscription.builder()
+                SubscriptionModel.builder()
                     .id("id")
                     .activePlanPhaseOrder(0L)
                     .addAdjustmentInterval(
-                        Subscription.AdjustmentInterval.builder()
+                        AdjustmentIntervalModel.builder()
                             .id("id")
                             .adjustment(
-                                Subscription.AdjustmentInterval.Adjustment
-                                    .PlanPhaseUsageDiscountAdjustment
-                                    .builder()
+                                AdjustmentModel.PlanPhaseUsageDiscountAdjustment.builder()
                                     .id("id")
                                     .adjustmentType(
-                                        Subscription.AdjustmentInterval.Adjustment
-                                            .PlanPhaseUsageDiscountAdjustment
+                                        AdjustmentModel.PlanPhaseUsageDiscountAdjustment
                                             .AdjustmentType
                                             .USAGE_DISCOUNT
                                     )
@@ -584,7 +555,7 @@ class SubscriptionsTest {
                     )
                     .autoCollection(true)
                     .billingCycleAnchorConfiguration(
-                        Subscription.BillingCycleAnchorConfiguration.builder()
+                        BillingCycleAnchorConfigurationModel.builder()
                             .day(1L)
                             .month(1L)
                             .year(0L)
@@ -595,13 +566,13 @@ class SubscriptionsTest {
                     .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .customer(
-                        Customer.builder()
+                        CustomerModel.builder()
                             .id("id")
                             .addAdditionalEmail("string")
                             .autoCollection(true)
                             .balance("balance")
                             .billingAddress(
-                                Customer.BillingAddress.builder()
+                                AddressModel.builder()
                                     .city("city")
                                     .country("country")
                                     .line1("line1")
@@ -617,15 +588,15 @@ class SubscriptionsTest {
                             .exemptFromAutomatedTax(true)
                             .externalCustomerId("external_customer_id")
                             .hierarchy(
-                                Customer.Hierarchy.builder()
+                                CustomerModel.Hierarchy.builder()
                                     .addChild(
-                                        Customer.Hierarchy.Child.builder()
+                                        CustomerMinifiedModel.builder()
                                             .id("id")
                                             .externalCustomerId("external_customer_id")
                                             .build()
                                     )
                                     .parent(
-                                        Customer.Hierarchy.Parent.builder()
+                                        CustomerMinifiedModel.builder()
                                             .id("id")
                                             .externalCustomerId("external_customer_id")
                                             .build()
@@ -633,16 +604,16 @@ class SubscriptionsTest {
                                     .build()
                             )
                             .metadata(
-                                Customer.Metadata.builder()
+                                CustomerModel.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
                             .name("name")
-                            .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
+                            .paymentProvider(CustomerModel.PaymentProvider.QUICKBOOKS)
                             .paymentProviderId("payment_provider_id")
                             .portalUrl("portal_url")
                             .shippingAddress(
-                                Customer.ShippingAddress.builder()
+                                AddressModel.builder()
                                     .city("city")
                                     .country("country")
                                     .line1("line1")
@@ -652,21 +623,21 @@ class SubscriptionsTest {
                                     .build()
                             )
                             .taxId(
-                                Customer.TaxId.builder()
-                                    .country(Customer.TaxId.Country.AD)
-                                    .type(Customer.TaxId.Type.AD_NRT)
+                                CustomerTaxIdModel.builder()
+                                    .country(CustomerTaxIdModel.Country.AD)
+                                    .type(CustomerTaxIdModel.Type.AD_NRT)
                                     .value("value")
                                     .build()
                             )
                             .timezone("timezone")
                             .accountingSyncConfiguration(
-                                Customer.AccountingSyncConfiguration.builder()
+                                CustomerModel.AccountingSyncConfiguration.builder()
                                     .addAccountingProvider(
-                                        Customer.AccountingSyncConfiguration.AccountingProvider
+                                        CustomerModel.AccountingSyncConfiguration.AccountingProvider
                                             .builder()
                                             .externalProviderId("external_provider_id")
                                             .providerType(
-                                                Customer.AccountingSyncConfiguration
+                                                CustomerModel.AccountingSyncConfiguration
                                                     .AccountingProvider
                                                     .ProviderType
                                                     .QUICKBOOKS
@@ -677,27 +648,24 @@ class SubscriptionsTest {
                                     .build()
                             )
                             .reportingConfiguration(
-                                Customer.ReportingConfiguration.builder().exempt(true).build()
+                                CustomerModel.ReportingConfiguration.builder().exempt(true).build()
                             )
                             .build()
                     )
                     .defaultInvoiceMemo("default_invoice_memo")
                     .addDiscountInterval(
-                        Subscription.DiscountInterval.AmountDiscountInterval.builder()
+                        AmountDiscountIntervalModel.builder()
                             .amountDiscount("amount_discount")
                             .addAppliesToPriceId("string")
                             .addAppliesToPriceIntervalId("string")
-                            .discountType(
-                                Subscription.DiscountInterval.AmountDiscountInterval.DiscountType
-                                    .AMOUNT
-                            )
+                            .discountType(AmountDiscountIntervalModel.DiscountType.AMOUNT)
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addFixedFeeQuantitySchedule(
-                        Subscription.FixedFeeQuantitySchedule.builder()
+                        FixedFeeQuantityScheduleEntryModel.builder()
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .priceId("price_id")
                             .quantity(0.0)
@@ -706,7 +674,7 @@ class SubscriptionsTest {
                     )
                     .invoicingThreshold("invoicing_threshold")
                     .addMaximumInterval(
-                        Subscription.MaximumInterval.builder()
+                        MaximumIntervalModel.builder()
                             .addAppliesToPriceId("string")
                             .addAppliesToPriceIntervalId("string")
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -715,12 +683,12 @@ class SubscriptionsTest {
                             .build()
                     )
                     .metadata(
-                        Subscription.Metadata.builder()
+                        SubscriptionModel.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .addMinimumInterval(
-                        Subscription.MinimumInterval.builder()
+                        MinimumIntervalModel.builder()
                             .addAppliesToPriceId("string")
                             .addAppliesToPriceIntervalId("string")
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -730,13 +698,13 @@ class SubscriptionsTest {
                     )
                     .netTerms(0L)
                     .plan(
-                        Plan.builder()
+                        PlanModel.builder()
                             .id("id")
                             .addAdjustment(
-                                Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
+                                AdjustmentModel.PlanPhaseUsageDiscountAdjustment.builder()
                                     .id("id")
                                     .adjustmentType(
-                                        Plan.Adjustment.PlanPhaseUsageDiscountAdjustment
+                                        AdjustmentModel.PlanPhaseUsageDiscountAdjustment
                                             .AdjustmentType
                                             .USAGE_DISCOUNT
                                     )
@@ -748,7 +716,7 @@ class SubscriptionsTest {
                                     .build()
                             )
                             .basePlan(
-                                Plan.BasePlan.builder()
+                                PlanMinifiedModel.builder()
                                     .id("m2t5akQeh2obwxeU")
                                     .externalPlanId("m2t5akQeh2obwxeU")
                                     .name("Example plan")
@@ -771,19 +739,19 @@ class SubscriptionsTest {
                             .externalPlanId("external_plan_id")
                             .invoicingCurrency("invoicing_currency")
                             .maximum(
-                                Plan.Maximum.builder()
+                                MaximumModel.builder()
                                     .addAppliesToPriceId("string")
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
                             .maximumAmount("maximum_amount")
                             .metadata(
-                                Plan.Metadata.builder()
+                                PlanModel.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
                             .minimum(
-                                Plan.Minimum.builder()
+                                MinimumModel.builder()
                                     .addAppliesToPriceId("string")
                                     .minimumAmount("minimum_amount")
                                     .build()
@@ -792,7 +760,7 @@ class SubscriptionsTest {
                             .name("name")
                             .netTerms(0L)
                             .addPlanPhase(
-                                Plan.PlanPhase.builder()
+                                PlanModel.PlanPhase.builder()
                                     .id("id")
                                     .description("description")
                                     .discount(
@@ -807,16 +775,16 @@ class SubscriptionsTest {
                                             .build()
                                     )
                                     .duration(0L)
-                                    .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
+                                    .durationUnit(PlanModel.PlanPhase.DurationUnit.DAILY)
                                     .maximum(
-                                        Plan.PlanPhase.Maximum.builder()
+                                        MaximumModel.builder()
                                             .addAppliesToPriceId("string")
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
                                     .maximumAmount("maximum_amount")
                                     .minimum(
-                                        Plan.PlanPhase.Minimum.builder()
+                                        MinimumModel.builder()
                                             .addAppliesToPriceId("string")
                                             .minimumAmount("minimum_amount")
                                             .build()
@@ -827,26 +795,24 @@ class SubscriptionsTest {
                                     .build()
                             )
                             .addPrice(
-                                Price.UnitPrice.builder()
+                                PriceModel.UnitPrice.builder()
                                     .id("id")
                                     .billableMetric(
-                                        Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                        BillableMetricTinyModel.builder().id("id").build()
                                     )
                                     .billingCycleConfiguration(
-                                        Price.UnitPrice.BillingCycleConfiguration.builder()
+                                        BillingCycleConfigurationModel.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.UnitPrice.BillingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
+                                                BillingCycleConfigurationModel.DurationUnit.DAY
                                             )
                                             .build()
                                     )
-                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                    .cadence(PriceModel.UnitPrice.Cadence.ONE_TIME)
                                     .conversionRate(0.0)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditAllocation(
-                                        Price.UnitPrice.CreditAllocation.builder()
+                                        AllocationModel.builder()
                                             .allowsRollover(true)
                                             .currency("currency")
                                             .build()
@@ -866,48 +832,42 @@ class SubscriptionsTest {
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(0.0)
                                     .invoicingCycleConfiguration(
-                                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                        BillingCycleConfigurationModel.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.UnitPrice.InvoicingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
+                                                BillingCycleConfigurationModel.DurationUnit.DAY
                                             )
                                             .build()
                                     )
-                                    .item(
-                                        Price.UnitPrice.Item.builder().id("id").name("name").build()
-                                    )
+                                    .item(ItemSlimModel.builder().id("id").name("name").build())
                                     .maximum(
-                                        Price.UnitPrice.Maximum.builder()
+                                        MaximumModel.builder()
                                             .addAppliesToPriceId("string")
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
                                     .maximumAmount("maximum_amount")
                                     .metadata(
-                                        Price.UnitPrice.Metadata.builder()
+                                        PriceModel.UnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
                                             .build()
                                     )
                                     .minimum(
-                                        Price.UnitPrice.Minimum.builder()
+                                        MinimumModel.builder()
                                             .addAppliesToPriceId("string")
                                             .minimumAmount("minimum_amount")
                                             .build()
                                     )
                                     .minimumAmount("minimum_amount")
-                                    .modelType(Price.UnitPrice.ModelType.UNIT)
+                                    .modelType(PriceModel.UnitPrice.ModelType.UNIT)
                                     .name("name")
                                     .planPhaseOrder(0L)
-                                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                    .priceType(PriceModel.UnitPrice.PriceType.USAGE_PRICE)
                                     .unitConfig(
-                                        Price.UnitPrice.UnitConfig.builder()
-                                            .unitAmount("unit_amount")
-                                            .build()
+                                        UnitConfigModel.builder().unitAmount("unit_amount").build()
                                     )
                                     .dimensionalPriceConfiguration(
-                                        Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                        DimensionalPriceConfigurationModel.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
                                             .build()
@@ -915,24 +875,24 @@ class SubscriptionsTest {
                                     .build()
                             )
                             .product(
-                                Plan.Product.builder()
+                                PlanModel.Product.builder()
                                     .id("id")
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .name("name")
                                     .build()
                             )
-                            .status(Plan.Status.ACTIVE)
+                            .status(PlanModel.Status.ACTIVE)
                             .trialConfig(
-                                Plan.TrialConfig.builder()
+                                PlanModel.TrialConfig.builder()
                                     .trialPeriod(0L)
-                                    .trialPeriodUnit(Plan.TrialConfig.TrialPeriodUnit.DAYS)
+                                    .trialPeriodUnit(PlanModel.TrialConfig.TrialPeriodUnit.DAYS)
                                     .build()
                             )
                             .version(0L)
                             .build()
                     )
                     .addPriceInterval(
-                        Subscription.PriceInterval.builder()
+                        PriceIntervalModel.builder()
                             .id("id")
                             .billingCycleDay(0L)
                             .currentBillingPeriodEndDate(
@@ -944,33 +904,31 @@ class SubscriptionsTest {
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .filter("filter")
                             .addFixedFeeQuantityTransition(
-                                Subscription.PriceInterval.FixedFeeQuantityTransition.builder()
+                                PriceIntervalModel.FixedFeeQuantityTransition.builder()
                                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .priceId("price_id")
                                     .quantity(0L)
                                     .build()
                             )
                             .price(
-                                Price.UnitPrice.builder()
+                                PriceModel.UnitPrice.builder()
                                     .id("id")
                                     .billableMetric(
-                                        Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                        BillableMetricTinyModel.builder().id("id").build()
                                     )
                                     .billingCycleConfiguration(
-                                        Price.UnitPrice.BillingCycleConfiguration.builder()
+                                        BillingCycleConfigurationModel.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.UnitPrice.BillingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
+                                                BillingCycleConfigurationModel.DurationUnit.DAY
                                             )
                                             .build()
                                     )
-                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                    .cadence(PriceModel.UnitPrice.Cadence.ONE_TIME)
                                     .conversionRate(0.0)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditAllocation(
-                                        Price.UnitPrice.CreditAllocation.builder()
+                                        AllocationModel.builder()
                                             .allowsRollover(true)
                                             .currency("currency")
                                             .build()
@@ -990,48 +948,42 @@ class SubscriptionsTest {
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(0.0)
                                     .invoicingCycleConfiguration(
-                                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                        BillingCycleConfigurationModel.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.UnitPrice.InvoicingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
+                                                BillingCycleConfigurationModel.DurationUnit.DAY
                                             )
                                             .build()
                                     )
-                                    .item(
-                                        Price.UnitPrice.Item.builder().id("id").name("name").build()
-                                    )
+                                    .item(ItemSlimModel.builder().id("id").name("name").build())
                                     .maximum(
-                                        Price.UnitPrice.Maximum.builder()
+                                        MaximumModel.builder()
                                             .addAppliesToPriceId("string")
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
                                     .maximumAmount("maximum_amount")
                                     .metadata(
-                                        Price.UnitPrice.Metadata.builder()
+                                        PriceModel.UnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
                                             .build()
                                     )
                                     .minimum(
-                                        Price.UnitPrice.Minimum.builder()
+                                        MinimumModel.builder()
                                             .addAppliesToPriceId("string")
                                             .minimumAmount("minimum_amount")
                                             .build()
                                     )
                                     .minimumAmount("minimum_amount")
-                                    .modelType(Price.UnitPrice.ModelType.UNIT)
+                                    .modelType(PriceModel.UnitPrice.ModelType.UNIT)
                                     .name("name")
                                     .planPhaseOrder(0L)
-                                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                    .priceType(PriceModel.UnitPrice.PriceType.USAGE_PRICE)
                                     .unitConfig(
-                                        Price.UnitPrice.UnitConfig.builder()
-                                            .unitAmount("unit_amount")
-                                            .build()
+                                        UnitConfigModel.builder().unitAmount("unit_amount").build()
                                     )
                                     .dimensionalPriceConfiguration(
-                                        Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                        DimensionalPriceConfigurationModel.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
                                             .build()
@@ -1043,16 +995,16 @@ class SubscriptionsTest {
                             .build()
                     )
                     .redeemedCoupon(
-                        Subscription.RedeemedCoupon.builder()
+                        CouponRedemptionModel.builder()
                             .couponId("coupon_id")
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .status(Subscription.Status.ACTIVE)
+                    .status(SubscriptionModel.Status.ACTIVE)
                     .trialInfo(
-                        Subscription.TrialInfo.builder()
+                        SubscriptionTrialInfoModel.builder()
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )

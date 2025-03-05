@@ -15,9 +15,9 @@ class ItemTest {
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addExternalConnection(
-                    Item.ExternalConnection.builder()
+                    ItemExternalConnectionModel.builder()
                         .externalConnectionName(
-                            Item.ExternalConnection.ExternalConnectionName.STRIPE
+                            ItemExternalConnectionModel.ExternalConnectionName.STRIPE
                         )
                         .externalEntityId("external_entity_id")
                         .build()
@@ -29,8 +29,10 @@ class ItemTest {
         assertThat(item.createdAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(item.externalConnections())
             .containsExactly(
-                Item.ExternalConnection.builder()
-                    .externalConnectionName(Item.ExternalConnection.ExternalConnectionName.STRIPE)
+                ItemExternalConnectionModel.builder()
+                    .externalConnectionName(
+                        ItemExternalConnectionModel.ExternalConnectionName.STRIPE
+                    )
                     .externalEntityId("external_entity_id")
                     .build()
             )

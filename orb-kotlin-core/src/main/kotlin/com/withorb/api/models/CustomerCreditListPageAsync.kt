@@ -36,7 +36,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<CustomerCreditListResponse> = response().data()
+    fun data(): List<CustomerCreditBalancesModel.Data> = response().data()
 
     fun paginationMetadata(): PaginationMetadata = response().paginationMetadata()
 
@@ -92,19 +92,19 @@ private constructor(
     @JsonCreator
     constructor(
         @JsonProperty("data")
-        private val data: JsonField<List<CustomerCreditListResponse>> = JsonMissing.of(),
+        private val data: JsonField<List<CustomerCreditBalancesModel.Data>> = JsonMissing.of(),
         @JsonProperty("pagination_metadata")
         private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<CustomerCreditListResponse> = data.getNullable("data") ?: listOf()
+        fun data(): List<CustomerCreditBalancesModel.Data> = data.getNullable("data") ?: listOf()
 
         fun paginationMetadata(): PaginationMetadata =
             paginationMetadata.getRequired("pagination_metadata")
 
-        @JsonProperty("data") fun _data(): JsonField<List<CustomerCreditListResponse>>? = data
+        @JsonProperty("data") fun _data(): JsonField<List<CustomerCreditBalancesModel.Data>>? = data
 
         @JsonProperty("pagination_metadata")
         fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
@@ -151,7 +151,7 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<CustomerCreditListResponse>> = JsonMissing.of()
+            private var data: JsonField<List<CustomerCreditBalancesModel.Data>> = JsonMissing.of()
             private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -161,9 +161,11 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<CustomerCreditListResponse>) = data(JsonField.of(data))
+            fun data(data: List<CustomerCreditBalancesModel.Data>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<CustomerCreditListResponse>>) = apply { this.data = data }
+            fun data(data: JsonField<List<CustomerCreditBalancesModel.Data>>) = apply {
+                this.data = data
+            }
 
             fun paginationMetadata(paginationMetadata: PaginationMetadata) =
                 paginationMetadata(JsonField.of(paginationMetadata))
@@ -181,9 +183,9 @@ private constructor(
     }
 
     class AutoPager(private val firstPage: CustomerCreditListPageAsync) :
-        Flow<CustomerCreditListResponse> {
+        Flow<CustomerCreditBalancesModel.Data> {
 
-        override suspend fun collect(collector: FlowCollector<CustomerCreditListResponse>) {
+        override suspend fun collect(collector: FlowCollector<CustomerCreditBalancesModel.Data>) {
             var page = firstPage
             var index = 0
             while (true) {

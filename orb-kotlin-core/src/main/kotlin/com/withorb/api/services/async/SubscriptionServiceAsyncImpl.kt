@@ -15,11 +15,9 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
-import com.withorb.api.models.Subscription
+import com.withorb.api.models.MutatedSubscriptionModel
 import com.withorb.api.models.SubscriptionCancelParams
-import com.withorb.api.models.SubscriptionCancelResponse
 import com.withorb.api.models.SubscriptionCreateParams
-import com.withorb.api.models.SubscriptionCreateResponse
 import com.withorb.api.models.SubscriptionFetchCostsParams
 import com.withorb.api.models.SubscriptionFetchCostsResponse
 import com.withorb.api.models.SubscriptionFetchParams
@@ -28,23 +26,16 @@ import com.withorb.api.models.SubscriptionFetchScheduleParams
 import com.withorb.api.models.SubscriptionFetchUsageParams
 import com.withorb.api.models.SubscriptionListPageAsync
 import com.withorb.api.models.SubscriptionListParams
+import com.withorb.api.models.SubscriptionModel
 import com.withorb.api.models.SubscriptionPriceIntervalsParams
-import com.withorb.api.models.SubscriptionPriceIntervalsResponse
 import com.withorb.api.models.SubscriptionSchedulePlanChangeParams
-import com.withorb.api.models.SubscriptionSchedulePlanChangeResponse
 import com.withorb.api.models.SubscriptionTriggerPhaseParams
-import com.withorb.api.models.SubscriptionTriggerPhaseResponse
 import com.withorb.api.models.SubscriptionUnscheduleCancellationParams
-import com.withorb.api.models.SubscriptionUnscheduleCancellationResponse
 import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
-import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse
 import com.withorb.api.models.SubscriptionUnschedulePendingPlanChangesParams
-import com.withorb.api.models.SubscriptionUnschedulePendingPlanChangesResponse
 import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityParams
-import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityResponse
 import com.withorb.api.models.SubscriptionUpdateParams
 import com.withorb.api.models.SubscriptionUpdateTrialParams
-import com.withorb.api.models.SubscriptionUpdateTrialResponse
 import com.withorb.api.models.SubscriptionUsage
 
 class SubscriptionServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -59,14 +50,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
     override suspend fun create(
         params: SubscriptionCreateParams,
         requestOptions: RequestOptions,
-    ): SubscriptionCreateResponse =
+    ): MutatedSubscriptionModel =
         // post /subscriptions
         withRawResponse().create(params, requestOptions).parse()
 
     override suspend fun update(
         params: SubscriptionUpdateParams,
         requestOptions: RequestOptions,
-    ): Subscription =
+    ): SubscriptionModel =
         // put /subscriptions/{subscription_id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -80,14 +71,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
     override suspend fun cancel(
         params: SubscriptionCancelParams,
         requestOptions: RequestOptions,
-    ): SubscriptionCancelResponse =
+    ): MutatedSubscriptionModel =
         // post /subscriptions/{subscription_id}/cancel
         withRawResponse().cancel(params, requestOptions).parse()
 
     override suspend fun fetch(
         params: SubscriptionFetchParams,
         requestOptions: RequestOptions,
-    ): Subscription =
+    ): SubscriptionModel =
         // get /subscriptions/{subscription_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
@@ -115,56 +106,56 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
     override suspend fun priceIntervals(
         params: SubscriptionPriceIntervalsParams,
         requestOptions: RequestOptions,
-    ): SubscriptionPriceIntervalsResponse =
+    ): MutatedSubscriptionModel =
         // post /subscriptions/{subscription_id}/price_intervals
         withRawResponse().priceIntervals(params, requestOptions).parse()
 
     override suspend fun schedulePlanChange(
         params: SubscriptionSchedulePlanChangeParams,
         requestOptions: RequestOptions,
-    ): SubscriptionSchedulePlanChangeResponse =
+    ): MutatedSubscriptionModel =
         // post /subscriptions/{subscription_id}/schedule_plan_change
         withRawResponse().schedulePlanChange(params, requestOptions).parse()
 
     override suspend fun triggerPhase(
         params: SubscriptionTriggerPhaseParams,
         requestOptions: RequestOptions,
-    ): SubscriptionTriggerPhaseResponse =
+    ): MutatedSubscriptionModel =
         // post /subscriptions/{subscription_id}/trigger_phase
         withRawResponse().triggerPhase(params, requestOptions).parse()
 
     override suspend fun unscheduleCancellation(
         params: SubscriptionUnscheduleCancellationParams,
         requestOptions: RequestOptions,
-    ): SubscriptionUnscheduleCancellationResponse =
+    ): MutatedSubscriptionModel =
         // post /subscriptions/{subscription_id}/unschedule_cancellation
         withRawResponse().unscheduleCancellation(params, requestOptions).parse()
 
     override suspend fun unscheduleFixedFeeQuantityUpdates(
         params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
         requestOptions: RequestOptions,
-    ): SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse =
+    ): MutatedSubscriptionModel =
         // post /subscriptions/{subscription_id}/unschedule_fixed_fee_quantity_updates
         withRawResponse().unscheduleFixedFeeQuantityUpdates(params, requestOptions).parse()
 
     override suspend fun unschedulePendingPlanChanges(
         params: SubscriptionUnschedulePendingPlanChangesParams,
         requestOptions: RequestOptions,
-    ): SubscriptionUnschedulePendingPlanChangesResponse =
+    ): MutatedSubscriptionModel =
         // post /subscriptions/{subscription_id}/unschedule_pending_plan_changes
         withRawResponse().unschedulePendingPlanChanges(params, requestOptions).parse()
 
     override suspend fun updateFixedFeeQuantity(
         params: SubscriptionUpdateFixedFeeQuantityParams,
         requestOptions: RequestOptions,
-    ): SubscriptionUpdateFixedFeeQuantityResponse =
+    ): MutatedSubscriptionModel =
         // post /subscriptions/{subscription_id}/update_fixed_fee_quantity
         withRawResponse().updateFixedFeeQuantity(params, requestOptions).parse()
 
     override suspend fun updateTrial(
         params: SubscriptionUpdateTrialParams,
         requestOptions: RequestOptions,
-    ): SubscriptionUpdateTrialResponse =
+    ): MutatedSubscriptionModel =
         // post /subscriptions/{subscription_id}/update_trial
         withRawResponse().updateTrial(params, requestOptions).parse()
 
@@ -173,14 +164,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<SubscriptionCreateResponse> =
-            jsonHandler<SubscriptionCreateResponse>(clientOptions.jsonMapper)
+        private val createHandler: Handler<MutatedSubscriptionModel> =
+            jsonHandler<MutatedSubscriptionModel>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun create(
             params: SubscriptionCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<SubscriptionCreateResponse> {
+        ): HttpResponseFor<MutatedSubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -201,13 +192,13 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val updateHandler: Handler<Subscription> =
-            jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<SubscriptionModel> =
+            jsonHandler<SubscriptionModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun update(
             params: SubscriptionUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Subscription> {
+        ): HttpResponseFor<SubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -262,14 +253,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val cancelHandler: Handler<SubscriptionCancelResponse> =
-            jsonHandler<SubscriptionCancelResponse>(clientOptions.jsonMapper)
+        private val cancelHandler: Handler<MutatedSubscriptionModel> =
+            jsonHandler<MutatedSubscriptionModel>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun cancel(
             params: SubscriptionCancelParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<SubscriptionCancelResponse> {
+        ): HttpResponseFor<MutatedSubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -290,13 +281,13 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val fetchHandler: Handler<Subscription> =
-            jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<SubscriptionModel> =
+            jsonHandler<SubscriptionModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun fetch(
             params: SubscriptionFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Subscription> {
+        ): HttpResponseFor<SubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -403,14 +394,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val priceIntervalsHandler: Handler<SubscriptionPriceIntervalsResponse> =
-            jsonHandler<SubscriptionPriceIntervalsResponse>(clientOptions.jsonMapper)
+        private val priceIntervalsHandler: Handler<MutatedSubscriptionModel> =
+            jsonHandler<MutatedSubscriptionModel>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun priceIntervals(
             params: SubscriptionPriceIntervalsParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<SubscriptionPriceIntervalsResponse> {
+        ): HttpResponseFor<MutatedSubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -431,14 +422,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val schedulePlanChangeHandler: Handler<SubscriptionSchedulePlanChangeResponse> =
-            jsonHandler<SubscriptionSchedulePlanChangeResponse>(clientOptions.jsonMapper)
+        private val schedulePlanChangeHandler: Handler<MutatedSubscriptionModel> =
+            jsonHandler<MutatedSubscriptionModel>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun schedulePlanChange(
             params: SubscriptionSchedulePlanChangeParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<SubscriptionSchedulePlanChangeResponse> {
+        ): HttpResponseFor<MutatedSubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -463,14 +454,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val triggerPhaseHandler: Handler<SubscriptionTriggerPhaseResponse> =
-            jsonHandler<SubscriptionTriggerPhaseResponse>(clientOptions.jsonMapper)
+        private val triggerPhaseHandler: Handler<MutatedSubscriptionModel> =
+            jsonHandler<MutatedSubscriptionModel>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun triggerPhase(
             params: SubscriptionTriggerPhaseParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<SubscriptionTriggerPhaseResponse> {
+        ): HttpResponseFor<MutatedSubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -491,15 +482,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val unscheduleCancellationHandler:
-            Handler<SubscriptionUnscheduleCancellationResponse> =
-            jsonHandler<SubscriptionUnscheduleCancellationResponse>(clientOptions.jsonMapper)
+        private val unscheduleCancellationHandler: Handler<MutatedSubscriptionModel> =
+            jsonHandler<MutatedSubscriptionModel>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun unscheduleCancellation(
             params: SubscriptionUnscheduleCancellationParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<SubscriptionUnscheduleCancellationResponse> {
+        ): HttpResponseFor<MutatedSubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -524,17 +514,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val unscheduleFixedFeeQuantityUpdatesHandler:
-            Handler<SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse> =
-            jsonHandler<SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse>(
-                    clientOptions.jsonMapper
-                )
+        private val unscheduleFixedFeeQuantityUpdatesHandler: Handler<MutatedSubscriptionModel> =
+            jsonHandler<MutatedSubscriptionModel>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun unscheduleFixedFeeQuantityUpdates(
             params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse> {
+        ): HttpResponseFor<MutatedSubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -559,15 +546,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val unschedulePendingPlanChangesHandler:
-            Handler<SubscriptionUnschedulePendingPlanChangesResponse> =
-            jsonHandler<SubscriptionUnschedulePendingPlanChangesResponse>(clientOptions.jsonMapper)
+        private val unschedulePendingPlanChangesHandler: Handler<MutatedSubscriptionModel> =
+            jsonHandler<MutatedSubscriptionModel>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun unschedulePendingPlanChanges(
             params: SubscriptionUnschedulePendingPlanChangesParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<SubscriptionUnschedulePendingPlanChangesResponse> {
+        ): HttpResponseFor<MutatedSubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -592,15 +578,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val updateFixedFeeQuantityHandler:
-            Handler<SubscriptionUpdateFixedFeeQuantityResponse> =
-            jsonHandler<SubscriptionUpdateFixedFeeQuantityResponse>(clientOptions.jsonMapper)
+        private val updateFixedFeeQuantityHandler: Handler<MutatedSubscriptionModel> =
+            jsonHandler<MutatedSubscriptionModel>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun updateFixedFeeQuantity(
             params: SubscriptionUpdateFixedFeeQuantityParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<SubscriptionUpdateFixedFeeQuantityResponse> {
+        ): HttpResponseFor<MutatedSubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -625,14 +610,14 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val updateTrialHandler: Handler<SubscriptionUpdateTrialResponse> =
-            jsonHandler<SubscriptionUpdateTrialResponse>(clientOptions.jsonMapper)
+        private val updateTrialHandler: Handler<MutatedSubscriptionModel> =
+            jsonHandler<MutatedSubscriptionModel>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun updateTrial(
             params: SubscriptionUpdateTrialParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<SubscriptionUpdateTrialResponse> {
+        ): HttpResponseFor<MutatedSubscriptionModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

@@ -15,7 +15,6 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
-import com.withorb.api.models.Alert
 import com.withorb.api.models.AlertCreateForCustomerParams
 import com.withorb.api.models.AlertCreateForExternalCustomerParams
 import com.withorb.api.models.AlertCreateForSubscriptionParams
@@ -23,6 +22,7 @@ import com.withorb.api.models.AlertDisableParams
 import com.withorb.api.models.AlertEnableParams
 import com.withorb.api.models.AlertListPage
 import com.withorb.api.models.AlertListParams
+import com.withorb.api.models.AlertModel
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 
@@ -35,11 +35,11 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): AlertService.WithRawResponse = withRawResponse
 
-    override fun retrieve(params: AlertRetrieveParams, requestOptions: RequestOptions): Alert =
+    override fun retrieve(params: AlertRetrieveParams, requestOptions: RequestOptions): AlertModel =
         // get /alerts/{alert_id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(params: AlertUpdateParams, requestOptions: RequestOptions): Alert =
+    override fun update(params: AlertUpdateParams, requestOptions: RequestOptions): AlertModel =
         // put /alerts/{alert_configuration_id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -50,29 +50,29 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
     override fun createForCustomer(
         params: AlertCreateForCustomerParams,
         requestOptions: RequestOptions,
-    ): Alert =
+    ): AlertModel =
         // post /alerts/customer_id/{customer_id}
         withRawResponse().createForCustomer(params, requestOptions).parse()
 
     override fun createForExternalCustomer(
         params: AlertCreateForExternalCustomerParams,
         requestOptions: RequestOptions,
-    ): Alert =
+    ): AlertModel =
         // post /alerts/external_customer_id/{external_customer_id}
         withRawResponse().createForExternalCustomer(params, requestOptions).parse()
 
     override fun createForSubscription(
         params: AlertCreateForSubscriptionParams,
         requestOptions: RequestOptions,
-    ): Alert =
+    ): AlertModel =
         // post /alerts/subscription_id/{subscription_id}
         withRawResponse().createForSubscription(params, requestOptions).parse()
 
-    override fun disable(params: AlertDisableParams, requestOptions: RequestOptions): Alert =
+    override fun disable(params: AlertDisableParams, requestOptions: RequestOptions): AlertModel =
         // post /alerts/{alert_configuration_id}/disable
         withRawResponse().disable(params, requestOptions).parse()
 
-    override fun enable(params: AlertEnableParams, requestOptions: RequestOptions): Alert =
+    override fun enable(params: AlertEnableParams, requestOptions: RequestOptions): AlertModel =
         // post /alerts/{alert_configuration_id}/enable
         withRawResponse().enable(params, requestOptions).parse()
 
@@ -81,13 +81,13 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<AlertModel> =
+            jsonHandler<AlertModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: AlertRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Alert> {
+        ): HttpResponseFor<AlertModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -107,13 +107,13 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val updateHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<AlertModel> =
+            jsonHandler<AlertModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: AlertUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Alert> {
+        ): HttpResponseFor<AlertModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -162,13 +162,13 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val createForCustomerHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createForCustomerHandler: Handler<AlertModel> =
+            jsonHandler<AlertModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun createForCustomer(
             params: AlertCreateForCustomerParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Alert> {
+        ): HttpResponseFor<AlertModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -189,13 +189,13 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val createForExternalCustomerHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createForExternalCustomerHandler: Handler<AlertModel> =
+            jsonHandler<AlertModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun createForExternalCustomer(
             params: AlertCreateForExternalCustomerParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Alert> {
+        ): HttpResponseFor<AlertModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -216,13 +216,13 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val createForSubscriptionHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createForSubscriptionHandler: Handler<AlertModel> =
+            jsonHandler<AlertModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun createForSubscription(
             params: AlertCreateForSubscriptionParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Alert> {
+        ): HttpResponseFor<AlertModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -243,13 +243,13 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val disableHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val disableHandler: Handler<AlertModel> =
+            jsonHandler<AlertModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun disable(
             params: AlertDisableParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Alert> {
+        ): HttpResponseFor<AlertModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -270,13 +270,13 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val enableHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val enableHandler: Handler<AlertModel> =
+            jsonHandler<AlertModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun enable(
             params: AlertEnableParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Alert> {
+        ): HttpResponseFor<AlertModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

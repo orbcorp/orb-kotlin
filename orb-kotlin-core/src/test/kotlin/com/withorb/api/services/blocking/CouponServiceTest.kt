@@ -22,7 +22,7 @@ class CouponServiceTest {
                 .build()
         val couponService = client.coupons()
 
-        val coupon =
+        val couponModel =
             couponService.create(
                 CouponCreateParams.builder()
                     .newCouponPercentageDiscount(0.0)
@@ -32,7 +32,7 @@ class CouponServiceTest {
                     .build()
             )
 
-        coupon.validate()
+        couponModel.validate()
     }
 
     @Test
@@ -58,10 +58,10 @@ class CouponServiceTest {
                 .build()
         val couponService = client.coupons()
 
-        val coupon =
+        val couponModel =
             couponService.archive(CouponArchiveParams.builder().couponId("coupon_id").build())
 
-        coupon.validate()
+        couponModel.validate()
     }
 
     @Test
@@ -73,8 +73,9 @@ class CouponServiceTest {
                 .build()
         val couponService = client.coupons()
 
-        val coupon = couponService.fetch(CouponFetchParams.builder().couponId("coupon_id").build())
+        val couponModel =
+            couponService.fetch(CouponFetchParams.builder().couponId("coupon_id").build())
 
-        coupon.validate()
+        couponModel.validate()
     }
 }

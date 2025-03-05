@@ -870,7 +870,7 @@ private constructor(
         private val startDate: JsonField<LocalDate> = JsonMissing.of(),
         @JsonProperty("unit_config")
         @ExcludeMissing
-        private val unitConfig: JsonField<UnitConfig> = JsonMissing.of(),
+        private val unitConfig: JsonField<UnitConfigModel> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -891,7 +891,7 @@ private constructor(
         /** A date string to specify the line item's start date in the customer's timezone. */
         fun startDate(): LocalDate = startDate.getRequired("start_date")
 
-        fun unitConfig(): UnitConfig = unitConfig.getRequired("unit_config")
+        fun unitConfig(): UnitConfigModel = unitConfig.getRequired("unit_config")
 
         /** A date string to specify the line item's end date in the customer's timezone. */
         @JsonProperty("end_date") @ExcludeMissing fun _endDate(): JsonField<LocalDate> = endDate
@@ -915,7 +915,7 @@ private constructor(
 
         @JsonProperty("unit_config")
         @ExcludeMissing
-        fun _unitConfig(): JsonField<UnitConfig> = unitConfig
+        fun _unitConfig(): JsonField<UnitConfigModel> = unitConfig
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -968,7 +968,7 @@ private constructor(
             private var name: JsonField<String>? = null
             private var quantity: JsonField<Double>? = null
             private var startDate: JsonField<LocalDate>? = null
-            private var unitConfig: JsonField<UnitConfig>? = null
+            private var unitConfig: JsonField<UnitConfigModel>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(lineItem: LineItem) = apply {
@@ -1014,9 +1014,9 @@ private constructor(
             /** A date string to specify the line item's start date in the customer's timezone. */
             fun startDate(startDate: JsonField<LocalDate>) = apply { this.startDate = startDate }
 
-            fun unitConfig(unitConfig: UnitConfig) = unitConfig(JsonField.of(unitConfig))
+            fun unitConfig(unitConfig: UnitConfigModel) = unitConfig(JsonField.of(unitConfig))
 
-            fun unitConfig(unitConfig: JsonField<UnitConfig>) = apply {
+            fun unitConfig(unitConfig: JsonField<UnitConfigModel>) = apply {
                 this.unitConfig = unitConfig
             }
 
@@ -1146,121 +1146,6 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
-        }
-
-        @NoAutoDetect
-        class UnitConfig
-        @JsonCreator
-        private constructor(
-            @JsonProperty("unit_amount")
-            @ExcludeMissing
-            private val unitAmount: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-        ) {
-
-            /** Rate per unit of usage */
-            fun unitAmount(): String = unitAmount.getRequired("unit_amount")
-
-            /** Rate per unit of usage */
-            @JsonProperty("unit_amount")
-            @ExcludeMissing
-            fun _unitAmount(): JsonField<String> = unitAmount
-
-            @JsonAnyGetter
-            @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): UnitConfig = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                unitAmount()
-                validated = true
-            }
-
-            fun toBuilder() = Builder().from(this)
-
-            companion object {
-
-                /**
-                 * Returns a mutable builder for constructing an instance of [UnitConfig].
-                 *
-                 * The following fields are required:
-                 * ```kotlin
-                 * .unitAmount()
-                 * ```
-                 */
-                fun builder() = Builder()
-            }
-
-            /** A builder for [UnitConfig]. */
-            class Builder internal constructor() {
-
-                private var unitAmount: JsonField<String>? = null
-                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                internal fun from(unitConfig: UnitConfig) = apply {
-                    unitAmount = unitConfig.unitAmount
-                    additionalProperties = unitConfig.additionalProperties.toMutableMap()
-                }
-
-                /** Rate per unit of usage */
-                fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
-
-                /** Rate per unit of usage */
-                fun unitAmount(unitAmount: JsonField<String>) = apply {
-                    this.unitAmount = unitAmount
-                }
-
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
-
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    additionalProperties.put(key, value)
-                }
-
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
-
-                fun removeAdditionalProperty(key: String) = apply {
-                    additionalProperties.remove(key)
-                }
-
-                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
-
-                fun build(): UnitConfig =
-                    UnitConfig(
-                        checkRequired("unitAmount", unitAmount),
-                        additionalProperties.toImmutable(),
-                    )
-            }
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is UnitConfig && unitAmount == other.unitAmount && additionalProperties == other.additionalProperties /* spotless:on */
-            }
-
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(unitAmount, additionalProperties) }
-            /* spotless:on */
-
-            override fun hashCode(): Int = hashCode
-
-            override fun toString() =
-                "UnitConfig{unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {

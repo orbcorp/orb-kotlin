@@ -39,7 +39,7 @@ private constructor(
     private val currency: JsonField<String> = JsonMissing.of(),
     @JsonProperty("customer")
     @ExcludeMissing
-    private val customer: JsonField<Customer> = JsonMissing.of(),
+    private val customer: JsonField<CustomerMinifiedModel> = JsonMissing.of(),
     @JsonProperty("enabled")
     @ExcludeMissing
     private val enabled: JsonField<Boolean> = JsonMissing.of(),
@@ -49,10 +49,10 @@ private constructor(
     @JsonProperty("plan") @ExcludeMissing private val plan: JsonField<Plan> = JsonMissing.of(),
     @JsonProperty("subscription")
     @ExcludeMissing
-    private val subscription: JsonField<Subscription> = JsonMissing.of(),
+    private val subscription: JsonField<SubscriptionMinifiedModel> = JsonMissing.of(),
     @JsonProperty("thresholds")
     @ExcludeMissing
-    private val thresholds: JsonField<List<Threshold>> = JsonMissing.of(),
+    private val thresholds: JsonField<List<ThresholdModel>> = JsonMissing.of(),
     @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
@@ -67,7 +67,7 @@ private constructor(
     fun currency(): String? = currency.getNullable("currency")
 
     /** The customer the alert applies to. */
-    fun customer(): Customer? = customer.getNullable("customer")
+    fun customer(): CustomerMinifiedModel? = customer.getNullable("customer")
 
     /** Whether the alert is enabled or disabled. */
     fun enabled(): Boolean = enabled.getRequired("enabled")
@@ -79,10 +79,10 @@ private constructor(
     fun plan(): Plan? = plan.getNullable("plan")
 
     /** The subscription the alert applies to. */
-    fun subscription(): Subscription? = subscription.getNullable("subscription")
+    fun subscription(): SubscriptionMinifiedModel? = subscription.getNullable("subscription")
 
     /** The thresholds that define the conditions under which the alert will be triggered. */
-    fun thresholds(): List<Threshold>? = thresholds.getNullable("thresholds")
+    fun thresholds(): List<ThresholdModel>? = thresholds.getNullable("thresholds")
 
     /** The type of alert. This must be a valid alert type. */
     fun type(): Type = type.getRequired("type")
@@ -99,7 +99,9 @@ private constructor(
     @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
     /** The customer the alert applies to. */
-    @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
+    @JsonProperty("customer")
+    @ExcludeMissing
+    fun _customer(): JsonField<CustomerMinifiedModel> = customer
 
     /** Whether the alert is enabled or disabled. */
     @JsonProperty("enabled") @ExcludeMissing fun _enabled(): JsonField<Boolean> = enabled
@@ -113,12 +115,12 @@ private constructor(
     /** The subscription the alert applies to. */
     @JsonProperty("subscription")
     @ExcludeMissing
-    fun _subscription(): JsonField<Subscription> = subscription
+    fun _subscription(): JsonField<SubscriptionMinifiedModel> = subscription
 
     /** The thresholds that define the conditions under which the alert will be triggered. */
     @JsonProperty("thresholds")
     @ExcludeMissing
-    fun _thresholds(): JsonField<List<Threshold>> = thresholds
+    fun _thresholds(): JsonField<List<ThresholdModel>> = thresholds
 
     /** The type of alert. This must be a valid alert type. */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
@@ -177,12 +179,12 @@ private constructor(
         private var id: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var currency: JsonField<String>? = null
-        private var customer: JsonField<Customer>? = null
+        private var customer: JsonField<CustomerMinifiedModel>? = null
         private var enabled: JsonField<Boolean>? = null
         private var metric: JsonField<Metric>? = null
         private var plan: JsonField<Plan>? = null
-        private var subscription: JsonField<Subscription>? = null
-        private var thresholds: JsonField<MutableList<Threshold>>? = null
+        private var subscription: JsonField<SubscriptionMinifiedModel>? = null
+        private var thresholds: JsonField<MutableList<ThresholdModel>>? = null
         private var type: JsonField<Type>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -219,10 +221,12 @@ private constructor(
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /** The customer the alert applies to. */
-        fun customer(customer: Customer?) = customer(JsonField.ofNullable(customer))
+        fun customer(customer: CustomerMinifiedModel?) = customer(JsonField.ofNullable(customer))
 
         /** The customer the alert applies to. */
-        fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+        fun customer(customer: JsonField<CustomerMinifiedModel>) = apply {
+            this.customer = customer
+        }
 
         /** Whether the alert is enabled or disabled. */
         fun enabled(enabled: Boolean) = enabled(JsonField.of(enabled))
@@ -243,24 +247,25 @@ private constructor(
         fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
         /** The subscription the alert applies to. */
-        fun subscription(subscription: Subscription?) =
+        fun subscription(subscription: SubscriptionMinifiedModel?) =
             subscription(JsonField.ofNullable(subscription))
 
         /** The subscription the alert applies to. */
-        fun subscription(subscription: JsonField<Subscription>) = apply {
+        fun subscription(subscription: JsonField<SubscriptionMinifiedModel>) = apply {
             this.subscription = subscription
         }
 
         /** The thresholds that define the conditions under which the alert will be triggered. */
-        fun thresholds(thresholds: List<Threshold>?) = thresholds(JsonField.ofNullable(thresholds))
+        fun thresholds(thresholds: List<ThresholdModel>?) =
+            thresholds(JsonField.ofNullable(thresholds))
 
         /** The thresholds that define the conditions under which the alert will be triggered. */
-        fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
+        fun thresholds(thresholds: JsonField<List<ThresholdModel>>) = apply {
             this.thresholds = thresholds.map { it.toMutableList() }
         }
 
         /** The thresholds that define the conditions under which the alert will be triggered. */
-        fun addThreshold(threshold: Threshold) = apply {
+        fun addThreshold(threshold: ThresholdModel) = apply {
             thresholds =
                 (thresholds ?: JsonField.of(mutableListOf())).also {
                     checkKnown("thresholds", it).add(threshold)
@@ -306,130 +311,6 @@ private constructor(
                 checkRequired("type", type),
                 additionalProperties.toImmutable(),
             )
-    }
-
-    /** The customer the alert applies to. */
-    @NoAutoDetect
-    class Customer
-    @JsonCreator
-    private constructor(
-        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
-        private val externalCustomerId: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        fun id(): String = id.getRequired("id")
-
-        fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
-
-        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
-        fun _externalCustomerId(): JsonField<String> = externalCustomerId
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Customer = apply {
-            if (validated) {
-                return@apply
-            }
-
-            id()
-            externalCustomerId()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Customer].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .id()
-             * .externalCustomerId()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Customer]. */
-        class Builder internal constructor() {
-
-            private var id: JsonField<String>? = null
-            private var externalCustomerId: JsonField<String>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(customer: Customer) = apply {
-                id = customer.id
-                externalCustomerId = customer.externalCustomerId
-                additionalProperties = customer.additionalProperties.toMutableMap()
-            }
-
-            fun id(id: String) = id(JsonField.of(id))
-
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            fun externalCustomerId(externalCustomerId: String?) =
-                externalCustomerId(JsonField.ofNullable(externalCustomerId))
-
-            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
-                this.externalCustomerId = externalCustomerId
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            fun build(): Customer =
-                Customer(
-                    checkRequired("id", id),
-                    checkRequired("externalCustomerId", externalCustomerId),
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Customer && id == other.id && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, externalCustomerId, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
     }
 
     /** The metric the alert applies to. */
@@ -709,227 +590,6 @@ private constructor(
 
         override fun toString() =
             "Plan{id=$id, externalPlanId=$externalPlanId, name=$name, planVersion=$planVersion, additionalProperties=$additionalProperties}"
-    }
-
-    /** The subscription the alert applies to. */
-    @NoAutoDetect
-    class Subscription
-    @JsonCreator
-    private constructor(
-        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        fun id(): String = id.getRequired("id")
-
-        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Subscription = apply {
-            if (validated) {
-                return@apply
-            }
-
-            id()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Subscription].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .id()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Subscription]. */
-        class Builder internal constructor() {
-
-            private var id: JsonField<String>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(subscription: Subscription) = apply {
-                id = subscription.id
-                additionalProperties = subscription.additionalProperties.toMutableMap()
-            }
-
-            fun id(id: String) = id(JsonField.of(id))
-
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            fun build(): Subscription =
-                Subscription(checkRequired("id", id), additionalProperties.toImmutable())
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Subscription && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() = "Subscription{id=$id, additionalProperties=$additionalProperties}"
-    }
-
-    /** Thresholds are used to define the conditions under which an alert will be triggered. */
-    @NoAutoDetect
-    class Threshold
-    @JsonCreator
-    private constructor(
-        @JsonProperty("value")
-        @ExcludeMissing
-        private val value: JsonField<Double> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
-         * or below this value. For usage and cost alerts, the alert will fire at or above this
-         * value.
-         */
-        fun value(): Double = value.getRequired("value")
-
-        /**
-         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
-         * or below this value. For usage and cost alerts, the alert will fire at or above this
-         * value.
-         */
-        @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Double> = value
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Threshold = apply {
-            if (validated) {
-                return@apply
-            }
-
-            value()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Threshold].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .value()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Threshold]. */
-        class Builder internal constructor() {
-
-            private var value: JsonField<Double>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(threshold: Threshold) = apply {
-                value = threshold.value
-                additionalProperties = threshold.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * The value at which an alert will fire. For credit balance alerts, the alert will fire
-             * at or below this value. For usage and cost alerts, the alert will fire at or above
-             * this value.
-             */
-            fun value(value: Double) = value(JsonField.of(value))
-
-            /**
-             * The value at which an alert will fire. For credit balance alerts, the alert will fire
-             * at or below this value. For usage and cost alerts, the alert will fire at or above
-             * this value.
-             */
-            fun value(value: JsonField<Double>) = apply { this.value = value }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            fun build(): Threshold =
-                Threshold(checkRequired("value", value), additionalProperties.toImmutable())
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Threshold && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(value, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Threshold{value=$value, additionalProperties=$additionalProperties}"
     }
 
     /** The type of alert. This must be a valid alert type. */

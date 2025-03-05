@@ -7,6 +7,7 @@ import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.PriceExternalPriceIdFetchParams
 import com.withorb.api.models.PriceExternalPriceIdUpdateParams
+import com.withorb.api.models.UpdatePriceRequestParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -22,19 +23,23 @@ class ExternalPriceIdServiceAsyncTest {
                 .build()
         val externalPriceIdServiceAsync = client.prices().externalPriceId()
 
-        val price =
+        val priceModel =
             externalPriceIdServiceAsync.update(
                 PriceExternalPriceIdUpdateParams.builder()
                     .externalPriceId("external_price_id")
-                    .metadata(
-                        PriceExternalPriceIdUpdateParams.Metadata.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .updatePriceRequestParams(
+                        UpdatePriceRequestParams.builder()
+                            .metadata(
+                                UpdatePriceRequestParams.Metadata.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
+                            )
                             .build()
                     )
                     .build()
             )
 
-        price.validate()
+        priceModel.validate()
     }
 
     @Test
@@ -46,13 +51,13 @@ class ExternalPriceIdServiceAsyncTest {
                 .build()
         val externalPriceIdServiceAsync = client.prices().externalPriceId()
 
-        val price =
+        val priceModel =
             externalPriceIdServiceAsync.fetch(
                 PriceExternalPriceIdFetchParams.builder()
                     .externalPriceId("external_price_id")
                     .build()
             )
 
-        price.validate()
+        priceModel.validate()
     }
 }
