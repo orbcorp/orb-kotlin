@@ -5,6 +5,7 @@ package com.withorb.api.services.async
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.ItemCreateParams
+import com.withorb.api.models.ItemExternalConnectionModel
 import com.withorb.api.models.ItemFetchParams
 import com.withorb.api.models.ItemUpdateParams
 import org.junit.jupiter.api.Test
@@ -22,9 +23,10 @@ class ItemServiceAsyncTest {
                 .build()
         val itemServiceAsync = client.items()
 
-        val item = itemServiceAsync.create(ItemCreateParams.builder().name("API requests").build())
+        val itemModel =
+            itemServiceAsync.create(ItemCreateParams.builder().name("API requests").build())
 
-        item.validate()
+        itemModel.validate()
     }
 
     @Test
@@ -36,14 +38,14 @@ class ItemServiceAsyncTest {
                 .build()
         val itemServiceAsync = client.items()
 
-        val item =
+        val itemModel =
             itemServiceAsync.update(
                 ItemUpdateParams.builder()
                     .itemId("item_id")
                     .addExternalConnection(
-                        ItemUpdateParams.ExternalConnection.builder()
+                        ItemExternalConnectionModel.builder()
                             .externalConnectionName(
-                                ItemUpdateParams.ExternalConnection.ExternalConnectionName.STRIPE
+                                ItemExternalConnectionModel.ExternalConnectionName.STRIPE
                             )
                             .externalEntityId("external_entity_id")
                             .build()
@@ -52,7 +54,7 @@ class ItemServiceAsyncTest {
                     .build()
             )
 
-        item.validate()
+        itemModel.validate()
     }
 
     @Test
@@ -78,8 +80,8 @@ class ItemServiceAsyncTest {
                 .build()
         val itemServiceAsync = client.items()
 
-        val item = itemServiceAsync.fetch(ItemFetchParams.builder().itemId("item_id").build())
+        val itemModel = itemServiceAsync.fetch(ItemFetchParams.builder().itemId("item_id").build())
 
-        item.validate()
+        itemModel.validate()
     }
 }

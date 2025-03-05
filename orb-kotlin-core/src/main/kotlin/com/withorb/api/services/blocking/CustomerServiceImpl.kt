@@ -17,13 +17,13 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
-import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
 import com.withorb.api.models.CustomerDeleteParams
 import com.withorb.api.models.CustomerFetchByExternalIdParams
 import com.withorb.api.models.CustomerFetchParams
 import com.withorb.api.models.CustomerListPage
 import com.withorb.api.models.CustomerListParams
+import com.withorb.api.models.CustomerModel
 import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams
 import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayParams
 import com.withorb.api.models.CustomerUpdateByExternalIdParams
@@ -58,11 +58,17 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
 
     override fun balanceTransactions(): BalanceTransactionService = balanceTransactions
 
-    override fun create(params: CustomerCreateParams, requestOptions: RequestOptions): Customer =
+    override fun create(
+        params: CustomerCreateParams,
+        requestOptions: RequestOptions,
+    ): CustomerModel =
         // post /customers
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun update(params: CustomerUpdateParams, requestOptions: RequestOptions): Customer =
+    override fun update(
+        params: CustomerUpdateParams,
+        requestOptions: RequestOptions,
+    ): CustomerModel =
         // put /customers/{customer_id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -78,14 +84,14 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
         withRawResponse().delete(params, requestOptions)
     }
 
-    override fun fetch(params: CustomerFetchParams, requestOptions: RequestOptions): Customer =
+    override fun fetch(params: CustomerFetchParams, requestOptions: RequestOptions): CustomerModel =
         // get /customers/{customer_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
     override fun fetchByExternalId(
         params: CustomerFetchByExternalIdParams,
         requestOptions: RequestOptions,
-    ): Customer =
+    ): CustomerModel =
         // get /customers/external_customer_id/{external_customer_id}
         withRawResponse().fetchByExternalId(params, requestOptions).parse()
 
@@ -109,7 +115,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
     override fun updateByExternalId(
         params: CustomerUpdateByExternalIdParams,
         requestOptions: RequestOptions,
-    ): Customer =
+    ): CustomerModel =
         // put /customers/external_customer_id/{external_customer_id}
         withRawResponse().updateByExternalId(params, requestOptions).parse()
 
@@ -137,13 +143,13 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
         override fun balanceTransactions(): BalanceTransactionService.WithRawResponse =
             balanceTransactions
 
-        private val createHandler: Handler<Customer> =
-            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CustomerModel> =
+            jsonHandler<CustomerModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: CustomerCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Customer> {
+        ): HttpResponseFor<CustomerModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -164,13 +170,13 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val updateHandler: Handler<Customer> =
-            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CustomerModel> =
+            jsonHandler<CustomerModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: CustomerUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Customer> {
+        ): HttpResponseFor<CustomerModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -237,13 +243,13 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             return response.parseable { response.use { deleteHandler.handle(it) } }
         }
 
-        private val fetchHandler: Handler<Customer> =
-            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<CustomerModel> =
+            jsonHandler<CustomerModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun fetch(
             params: CustomerFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Customer> {
+        ): HttpResponseFor<CustomerModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -263,13 +269,13 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val fetchByExternalIdHandler: Handler<Customer> =
-            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchByExternalIdHandler: Handler<CustomerModel> =
+            jsonHandler<CustomerModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun fetchByExternalId(
             params: CustomerFetchByExternalIdParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Customer> {
+        ): HttpResponseFor<CustomerModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -340,13 +346,13 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val updateByExternalIdHandler: Handler<Customer> =
-            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateByExternalIdHandler: Handler<CustomerModel> =
+            jsonHandler<CustomerModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun updateByExternalId(
             params: CustomerUpdateByExternalIdParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Customer> {
+        ): HttpResponseFor<CustomerModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

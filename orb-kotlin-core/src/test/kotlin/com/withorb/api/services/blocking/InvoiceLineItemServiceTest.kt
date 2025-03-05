@@ -21,7 +21,7 @@ class InvoiceLineItemServiceTest {
                 .build()
         val invoiceLineItemService = client.invoiceLineItems()
 
-        val invoiceLineItem =
+        val invoiceLineItemModel =
             invoiceLineItemService.create(
                 InvoiceLineItemCreateParams.builder()
                     .amount("12.00")
@@ -33,6 +33,6 @@ class InvoiceLineItemServiceTest {
                     .build()
             )
 
-        invoiceLineItem.validate()
+        invoiceLineItemModel.validate()
     }
 }

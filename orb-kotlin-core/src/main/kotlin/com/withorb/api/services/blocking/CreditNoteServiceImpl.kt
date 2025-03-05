@@ -15,11 +15,11 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
-import com.withorb.api.models.CreditNote
 import com.withorb.api.models.CreditNoteCreateParams
 import com.withorb.api.models.CreditNoteFetchParams
 import com.withorb.api.models.CreditNoteListPage
 import com.withorb.api.models.CreditNoteListParams
+import com.withorb.api.models.CreditNoteModel
 
 class CreditNoteServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     CreditNoteService {
@@ -33,7 +33,7 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
     override fun create(
         params: CreditNoteCreateParams,
         requestOptions: RequestOptions,
-    ): CreditNote =
+    ): CreditNoteModel =
         // post /credit_notes
         withRawResponse().create(params, requestOptions).parse()
 
@@ -44,7 +44,10 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
         // get /credit_notes
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun fetch(params: CreditNoteFetchParams, requestOptions: RequestOptions): CreditNote =
+    override fun fetch(
+        params: CreditNoteFetchParams,
+        requestOptions: RequestOptions,
+    ): CreditNoteModel =
         // get /credit_notes/{credit_note_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
@@ -53,13 +56,13 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<CreditNote> =
-            jsonHandler<CreditNote>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CreditNoteModel> =
+            jsonHandler<CreditNoteModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: CreditNoteCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditNote> {
+        ): HttpResponseFor<CreditNoteModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -108,13 +111,13 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val fetchHandler: Handler<CreditNote> =
-            jsonHandler<CreditNote>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<CreditNoteModel> =
+            jsonHandler<CreditNoteModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun fetch(
             params: CreditNoteFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditNote> {
+        ): HttpResponseFor<CreditNoteModel> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

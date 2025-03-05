@@ -30,7 +30,7 @@ private constructor(
     @JsonProperty("description")
     @ExcludeMissing
     private val description: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+    @JsonProperty("item") @ExcludeMissing private val item: JsonField<ItemModel> = JsonMissing.of(),
     @JsonProperty("metadata")
     @ExcludeMissing
     private val metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -50,7 +50,7 @@ private constructor(
      * items, billable metrics, and prices and are used for defining external sync behavior for
      * invoices and tax calculation purposes.
      */
-    fun item(): Item = item.getRequired("item")
+    fun item(): ItemModel = item.getRequired("item")
 
     /**
      * User specified key-value pairs for the resource. If not present, this defaults to an empty
@@ -72,7 +72,7 @@ private constructor(
      * items, billable metrics, and prices and are used for defining external sync behavior for
      * invoices and tax calculation purposes.
      */
-    @JsonProperty("item") @ExcludeMissing fun _item(): JsonField<Item> = item
+    @JsonProperty("item") @ExcludeMissing fun _item(): JsonField<ItemModel> = item
 
     /**
      * User specified key-value pairs for the resource. If not present, this defaults to an empty
@@ -130,7 +130,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var description: JsonField<String>? = null
-        private var item: JsonField<Item>? = null
+        private var item: JsonField<ItemModel>? = null
         private var metadata: JsonField<Metadata>? = null
         private var name: JsonField<String>? = null
         private var status: JsonField<Status>? = null
@@ -159,14 +159,14 @@ private constructor(
          * line items, billable metrics, and prices and are used for defining external sync behavior
          * for invoices and tax calculation purposes.
          */
-        fun item(item: Item) = item(JsonField.of(item))
+        fun item(item: ItemModel) = item(JsonField.of(item))
 
         /**
          * The Item resource represents a sellable product or good. Items are associated with all
          * line items, billable metrics, and prices and are used for defining external sync behavior
          * for invoices and tax calculation purposes.
          */
-        fun item(item: JsonField<Item>) = apply { this.item = item }
+        fun item(item: JsonField<ItemModel>) = apply { this.item = item }
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an

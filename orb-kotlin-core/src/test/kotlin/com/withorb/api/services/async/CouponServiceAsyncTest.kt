@@ -22,7 +22,7 @@ class CouponServiceAsyncTest {
                 .build()
         val couponServiceAsync = client.coupons()
 
-        val coupon =
+        val couponModel =
             couponServiceAsync.create(
                 CouponCreateParams.builder()
                     .newCouponPercentageDiscount(0.0)
@@ -32,7 +32,7 @@ class CouponServiceAsyncTest {
                     .build()
             )
 
-        coupon.validate()
+        couponModel.validate()
     }
 
     @Test
@@ -58,10 +58,10 @@ class CouponServiceAsyncTest {
                 .build()
         val couponServiceAsync = client.coupons()
 
-        val coupon =
+        val couponModel =
             couponServiceAsync.archive(CouponArchiveParams.builder().couponId("coupon_id").build())
 
-        coupon.validate()
+        couponModel.validate()
     }
 
     @Test
@@ -73,9 +73,9 @@ class CouponServiceAsyncTest {
                 .build()
         val couponServiceAsync = client.coupons()
 
-        val coupon =
+        val couponModel =
             couponServiceAsync.fetch(CouponFetchParams.builder().couponId("coupon_id").build())
 
-        coupon.validate()
+        couponModel.validate()
     }
 }

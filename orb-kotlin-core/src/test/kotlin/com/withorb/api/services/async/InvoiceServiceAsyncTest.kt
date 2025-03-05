@@ -14,6 +14,7 @@ import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
 import com.withorb.api.models.InvoiceVoidParams
 import com.withorb.api.models.PercentageDiscount
+import com.withorb.api.models.UnitConfigModel
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -31,7 +32,7 @@ class InvoiceServiceAsyncTest {
                 .build()
         val invoiceServiceAsync = client.invoices()
 
-        val invoice =
+        val invoiceModel =
             invoiceServiceAsync.create(
                 InvoiceCreateParams.builder()
                     .currency("USD")
@@ -44,11 +45,7 @@ class InvoiceServiceAsyncTest {
                             .name("Line Item Name")
                             .quantity(1.0)
                             .startDate(LocalDate.parse("2023-09-22"))
-                            .unitConfig(
-                                InvoiceCreateParams.LineItem.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
+                            .unitConfig(UnitConfigModel.builder().unitAmount("unit_amount").build())
                             .build()
                     )
                     .netTerms(0L)
@@ -73,7 +70,7 @@ class InvoiceServiceAsyncTest {
                     .build()
             )
 
-        invoice.validate()
+        invoiceModel.validate()
     }
 
     @Test
@@ -85,7 +82,7 @@ class InvoiceServiceAsyncTest {
                 .build()
         val invoiceServiceAsync = client.invoices()
 
-        val invoice =
+        val invoiceModel =
             invoiceServiceAsync.update(
                 InvoiceUpdateParams.builder()
                     .invoiceId("invoice_id")
@@ -97,7 +94,7 @@ class InvoiceServiceAsyncTest {
                     .build()
             )
 
-        invoice.validate()
+        invoiceModel.validate()
     }
 
     @Test
@@ -123,10 +120,10 @@ class InvoiceServiceAsyncTest {
                 .build()
         val invoiceServiceAsync = client.invoices()
 
-        val invoice =
+        val invoiceModel =
             invoiceServiceAsync.fetch(InvoiceFetchParams.builder().invoiceId("invoice_id").build())
 
-        invoice.validate()
+        invoiceModel.validate()
     }
 
     @Test
@@ -155,12 +152,12 @@ class InvoiceServiceAsyncTest {
                 .build()
         val invoiceServiceAsync = client.invoices()
 
-        val invoice =
+        val invoiceModel =
             invoiceServiceAsync.issue(
                 InvoiceIssueParams.builder().invoiceId("invoice_id").synchronous(true).build()
             )
 
-        invoice.validate()
+        invoiceModel.validate()
     }
 
     @Test
@@ -172,7 +169,7 @@ class InvoiceServiceAsyncTest {
                 .build()
         val invoiceServiceAsync = client.invoices()
 
-        val invoice =
+        val invoiceModel =
             invoiceServiceAsync.markPaid(
                 InvoiceMarkPaidParams.builder()
                     .invoiceId("invoice_id")
@@ -182,7 +179,7 @@ class InvoiceServiceAsyncTest {
                     .build()
             )
 
-        invoice.validate()
+        invoiceModel.validate()
     }
 
     @Test
@@ -194,10 +191,10 @@ class InvoiceServiceAsyncTest {
                 .build()
         val invoiceServiceAsync = client.invoices()
 
-        val invoice =
+        val invoiceModel =
             invoiceServiceAsync.pay(InvoicePayParams.builder().invoiceId("invoice_id").build())
 
-        invoice.validate()
+        invoiceModel.validate()
     }
 
     @Test
@@ -209,9 +206,9 @@ class InvoiceServiceAsyncTest {
                 .build()
         val invoiceServiceAsync = client.invoices()
 
-        val invoice =
+        val invoiceModel =
             invoiceServiceAsync.void(InvoiceVoidParams.builder().invoiceId("invoice_id").build())
 
-        invoice.validate()
+        invoiceModel.validate()
     }
 }

@@ -5,6 +5,7 @@ package com.withorb.api.services.async.plans
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
+import com.withorb.api.models.EditPlanModel
 import com.withorb.api.models.PlanExternalPlanIdFetchParams
 import com.withorb.api.models.PlanExternalPlanIdUpdateParams
 import org.junit.jupiter.api.Test
@@ -22,20 +23,24 @@ class ExternalPlanIdServiceAsyncTest {
                 .build()
         val externalPlanIdServiceAsync = client.plans().externalPlanId()
 
-        val plan =
+        val planModel =
             externalPlanIdServiceAsync.update(
                 PlanExternalPlanIdUpdateParams.builder()
                     .otherExternalPlanId("external_plan_id")
-                    .externalPlanId("external_plan_id")
-                    .metadata(
-                        PlanExternalPlanIdUpdateParams.Metadata.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .editPlanModel(
+                        EditPlanModel.builder()
+                            .externalPlanId("external_plan_id")
+                            .metadata(
+                                EditPlanModel.Metadata.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
+                            )
                             .build()
                     )
                     .build()
             )
 
-        plan.validate()
+        planModel.validate()
     }
 
     @Test
@@ -47,11 +52,11 @@ class ExternalPlanIdServiceAsyncTest {
                 .build()
         val externalPlanIdServiceAsync = client.plans().externalPlanId()
 
-        val plan =
+        val planModel =
             externalPlanIdServiceAsync.fetch(
                 PlanExternalPlanIdFetchParams.builder().externalPlanId("external_plan_id").build()
             )
 
-        plan.validate()
+        planModel.validate()
     }
 }
