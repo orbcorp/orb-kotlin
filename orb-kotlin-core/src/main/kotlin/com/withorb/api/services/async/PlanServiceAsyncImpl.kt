@@ -15,11 +15,11 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
+import com.withorb.api.models.Plan
 import com.withorb.api.models.PlanCreateParams
 import com.withorb.api.models.PlanFetchParams
 import com.withorb.api.models.PlanListPageAsync
 import com.withorb.api.models.PlanListParams
-import com.withorb.api.models.PlanModel
 import com.withorb.api.models.PlanUpdateParams
 import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsync
 import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsyncImpl
@@ -39,17 +39,11 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun externalPlanId(): ExternalPlanIdServiceAsync = externalPlanId
 
-    override suspend fun create(
-        params: PlanCreateParams,
-        requestOptions: RequestOptions,
-    ): PlanModel =
+    override suspend fun create(params: PlanCreateParams, requestOptions: RequestOptions): Plan =
         // post /plans
         withRawResponse().create(params, requestOptions).parse()
 
-    override suspend fun update(
-        params: PlanUpdateParams,
-        requestOptions: RequestOptions,
-    ): PlanModel =
+    override suspend fun update(params: PlanUpdateParams, requestOptions: RequestOptions): Plan =
         // put /plans/{plan_id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -60,7 +54,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
         // get /plans
         withRawResponse().list(params, requestOptions).parse()
 
-    override suspend fun fetch(params: PlanFetchParams, requestOptions: RequestOptions): PlanModel =
+    override suspend fun fetch(params: PlanFetchParams, requestOptions: RequestOptions): Plan =
         // get /plans/{plan_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
@@ -75,13 +69,13 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
         override fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse = externalPlanId
 
-        private val createHandler: Handler<PlanModel> =
-            jsonHandler<PlanModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<Plan> =
+            jsonHandler<Plan>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun create(
             params: PlanCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanModel> {
+        ): HttpResponseFor<Plan> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -102,13 +96,13 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val updateHandler: Handler<PlanModel> =
-            jsonHandler<PlanModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Plan> =
+            jsonHandler<Plan>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun update(
             params: PlanUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanModel> {
+        ): HttpResponseFor<Plan> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -157,13 +151,13 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val fetchHandler: Handler<PlanModel> =
-            jsonHandler<PlanModel>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<Plan> =
+            jsonHandler<Plan>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun fetch(
             params: PlanFetchParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanModel> {
+        ): HttpResponseFor<Plan> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

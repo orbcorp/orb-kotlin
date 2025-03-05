@@ -5,7 +5,6 @@ package com.withorb.api.services.blocking
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.models.ItemCreateParams
-import com.withorb.api.models.ItemExternalConnectionModel
 import com.withorb.api.models.ItemFetchParams
 import com.withorb.api.models.ItemUpdateParams
 import org.junit.jupiter.api.Test
@@ -23,9 +22,9 @@ class ItemServiceTest {
                 .build()
         val itemService = client.items()
 
-        val itemModel = itemService.create(ItemCreateParams.builder().name("API requests").build())
+        val item = itemService.create(ItemCreateParams.builder().name("API requests").build())
 
-        itemModel.validate()
+        item.validate()
     }
 
     @Test
@@ -37,14 +36,14 @@ class ItemServiceTest {
                 .build()
         val itemService = client.items()
 
-        val itemModel =
+        val item =
             itemService.update(
                 ItemUpdateParams.builder()
                     .itemId("item_id")
                     .addExternalConnection(
-                        ItemExternalConnectionModel.builder()
+                        ItemUpdateParams.ExternalConnection.builder()
                             .externalConnectionName(
-                                ItemExternalConnectionModel.ExternalConnectionName.STRIPE
+                                ItemUpdateParams.ExternalConnection.ExternalConnectionName.STRIPE
                             )
                             .externalEntityId("external_entity_id")
                             .build()
@@ -53,7 +52,7 @@ class ItemServiceTest {
                     .build()
             )
 
-        itemModel.validate()
+        item.validate()
     }
 
     @Test
@@ -79,8 +78,8 @@ class ItemServiceTest {
                 .build()
         val itemService = client.items()
 
-        val itemModel = itemService.fetch(ItemFetchParams.builder().itemId("item_id").build())
+        val item = itemService.fetch(ItemFetchParams.builder().itemId("item_id").build())
 
-        itemModel.validate()
+        item.validate()
     }
 }

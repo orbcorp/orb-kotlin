@@ -15,9 +15,10 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
-import com.withorb.api.models.CreditLedgerEntryModel
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryByExternalIdParams
+import com.withorb.api.models.CustomerCreditLedgerCreateEntryByExternalIdResponse
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryParams
+import com.withorb.api.models.CustomerCreditLedgerCreateEntryResponse
 import com.withorb.api.models.CustomerCreditLedgerListByExternalIdPage
 import com.withorb.api.models.CustomerCreditLedgerListByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerListPage
@@ -42,14 +43,14 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
     override fun createEntry(
         params: CustomerCreditLedgerCreateEntryParams,
         requestOptions: RequestOptions,
-    ): CreditLedgerEntryModel =
+    ): CustomerCreditLedgerCreateEntryResponse =
         // post /customers/{customer_id}/credits/ledger_entry
         withRawResponse().createEntry(params, requestOptions).parse()
 
     override fun createEntryByExternalId(
         params: CustomerCreditLedgerCreateEntryByExternalIdParams,
         requestOptions: RequestOptions,
-    ): CreditLedgerEntryModel =
+    ): CustomerCreditLedgerCreateEntryByExternalIdResponse =
         // post /customers/external_customer_id/{external_customer_id}/credits/ledger_entry
         withRawResponse().createEntryByExternalId(params, requestOptions).parse()
 
@@ -99,14 +100,14 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
             }
         }
 
-        private val createEntryHandler: Handler<CreditLedgerEntryModel> =
-            jsonHandler<CreditLedgerEntryModel>(clientOptions.jsonMapper)
+        private val createEntryHandler: Handler<CustomerCreditLedgerCreateEntryResponse> =
+            jsonHandler<CustomerCreditLedgerCreateEntryResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun createEntry(
             params: CustomerCreditLedgerCreateEntryParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditLedgerEntryModel> {
+        ): HttpResponseFor<CustomerCreditLedgerCreateEntryResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -127,14 +128,17 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
             }
         }
 
-        private val createEntryByExternalIdHandler: Handler<CreditLedgerEntryModel> =
-            jsonHandler<CreditLedgerEntryModel>(clientOptions.jsonMapper)
+        private val createEntryByExternalIdHandler:
+            Handler<CustomerCreditLedgerCreateEntryByExternalIdResponse> =
+            jsonHandler<CustomerCreditLedgerCreateEntryByExternalIdResponse>(
+                    clientOptions.jsonMapper
+                )
                 .withErrorHandler(errorHandler)
 
         override fun createEntryByExternalId(
             params: CustomerCreditLedgerCreateEntryByExternalIdParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditLedgerEntryModel> {
+        ): HttpResponseFor<CustomerCreditLedgerCreateEntryByExternalIdResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

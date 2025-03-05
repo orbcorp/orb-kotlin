@@ -43,8 +43,8 @@ This library requires Java 8 or later.
 ```kotlin
 import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
-import com.withorb.api.models.CustomerModel
 
 // Configures using the `ORB_API_KEY` and `ORB_WEBHOOK_SECRET` environment variables
 val client: OrbClient = OrbOkHttpClient.fromEnv()
@@ -53,7 +53,7 @@ val params: CustomerCreateParams = CustomerCreateParams.builder()
     .email("example-customer@withorb.com")
     .name("My Customer")
     .build()
-val customerModel: CustomerModel = client.customers().create(params)
+val customer: Customer = client.customers().create(params)
 ```
 
 ## Client configuration
@@ -107,7 +107,7 @@ See this table for the available options:
 
 To send a request to the Orb API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a Kotlin class.
 
-For example, `client.customers().create(...)` should be called with an instance of `CustomerCreateParams`, and it will return an instance of `CustomerModel`.
+For example, `client.customers().create(...)` should be called with an instance of `CustomerCreateParams`, and it will return an instance of `Customer`.
 
 ## Immutability
 
@@ -124,8 +124,8 @@ The default client is synchronous. To switch to asynchronous execution, call the
 ```kotlin
 import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
-import com.withorb.api.models.CustomerModel
 
 // Configures using the `ORB_API_KEY` and `ORB_WEBHOOK_SECRET` environment variables
 val client: OrbClient = OrbOkHttpClient.fromEnv()
@@ -134,7 +134,7 @@ val params: CustomerCreateParams = CustomerCreateParams.builder()
     .email("example-customer@withorb.com")
     .name("My Customer")
     .build()
-val customerModel: CustomerModel = client.async().customers().create(params)
+val customer: Customer = client.async().customers().create(params)
 ```
 
 Or create an asynchronous client from the beginning:
@@ -142,8 +142,8 @@ Or create an asynchronous client from the beginning:
 ```kotlin
 import com.withorb.api.client.OrbClientAsync
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
+import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
-import com.withorb.api.models.CustomerModel
 
 // Configures using the `ORB_API_KEY` and `ORB_WEBHOOK_SECRET` environment variables
 val client: OrbClientAsync = OrbOkHttpClientAsync.fromEnv()
@@ -152,7 +152,7 @@ val params: CustomerCreateParams = CustomerCreateParams.builder()
     .email("example-customer@withorb.com")
     .name("My Customer")
     .build()
-val customerModel: CustomerModel = client.customers().create(params)
+val customer: Customer = client.customers().create(params)
 ```
 
 The asynchronous client supports the same options as the synchronous one, except most methods are [suspending](https://kotlinlang.org/docs/coroutines-guide.html).
@@ -166,25 +166,25 @@ To access this data, prefix any HTTP method call on a client or service with `wi
 ```kotlin
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
-import com.withorb.api.models.CustomerModel
 
 val params: CustomerCreateParams = CustomerCreateParams.builder()
     .email("example-customer@withorb.com")
     .name("My Customer")
     .build()
-val customerModel: HttpResponseFor<CustomerModel> = client.customers().withRawResponse().create(params)
+val customer: HttpResponseFor<Customer> = client.customers().withRawResponse().create(params)
 
-val statusCode: Int = customerModel.statusCode()
-val headers: Headers = customerModel.headers()
+val statusCode: Int = customer.statusCode()
+val headers: Headers = customer.headers()
 ```
 
 You can still deserialize the response into an instance of a Kotlin class if needed:
 
 ```kotlin
-import com.withorb.api.models.CustomerModel
+import com.withorb.api.models.Customer
 
-val parsedCustomerModel: CustomerModel = customerModel.parse()
+val parsedCustomer: Customer = customer.parse()
 ```
 
 ## Error handling
@@ -221,8 +221,8 @@ To iterate through all results across all pages, you can use `autoPager`, which 
 ### Synchronous
 
 ```kotlin
+import com.withorb.api.models.Coupon
 import com.withorb.api.models.CouponListPage
-import com.withorb.api.models.CouponModel
 
 // As a Sequence:
 client.coupons().list(params).autoPager()
@@ -244,8 +244,8 @@ asyncClient.coupons().list(params).autoPager()
 If none of the above helpers meet your needs, you can also manually request pages one-by-one. A page of results has a `data()` method to fetch the list of objects, as well as top-level `response` and other methods to fetch top-level data about the page. It also has methods `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
 
 ```kotlin
+import com.withorb.api.models.Coupon
 import com.withorb.api.models.CouponListPage
-import com.withorb.api.models.CouponModel
 
 val page = client.coupons().list(params)
 while (page != null) {
@@ -308,10 +308,10 @@ Requests time out after 1 minute by default.
 To set a custom timeout, configure the method call using the `timeout` method:
 
 ```kotlin
+import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
-import com.withorb.api.models.CustomerModel
 
-val customerModel: CustomerModel = client.customers().create(
+val customer: Customer = client.customers().create(
   params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
 )
 ```
@@ -434,18 +434,18 @@ By default, the SDK will not throw an exception in this case. It will throw [`Or
 If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
 
 ```kotlin
-import com.withorb.api.models.CustomerModel
+import com.withorb.api.models.Customer
 
-val customerModel: CustomerModel = client.customers().create(params).validate()
+val customer: Customer = client.customers().create(params).validate()
 ```
 
 Or configure the method call to validate the response using the `responseValidation` method:
 
 ```kotlin
+import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
-import com.withorb.api.models.CustomerModel
 
-val customerModel: CustomerModel = client.customers().create(
+val customer: Customer = client.customers().create(
   params, RequestOptions.builder().responseValidation(true).build()
 )
 ```

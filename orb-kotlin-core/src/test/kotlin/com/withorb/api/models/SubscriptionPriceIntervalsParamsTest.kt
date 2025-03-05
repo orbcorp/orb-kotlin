@@ -18,9 +18,12 @@ class SubscriptionPriceIntervalsParamsTest {
                 SubscriptionPriceIntervalsParams.Add.builder()
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .allocationPrice(
-                        NewAllocationPriceModel.builder()
+                        SubscriptionPriceIntervalsParams.Add.AllocationPrice.builder()
                             .amount("10.00")
-                            .cadence(NewAllocationPriceModel.Cadence.ONE_TIME)
+                            .cadence(
+                                SubscriptionPriceIntervalsParams.Add.AllocationPrice.Cadence
+                                    .ONE_TIME
+                            )
                             .currency("USD")
                             .expiresAtEndOfCadence(true)
                             .build()
@@ -30,7 +33,7 @@ class SubscriptionPriceIntervalsParamsTest {
                     .externalPriceId("external_price_id")
                     .filter("my_property > 100 AND my_other_property = 'bar'")
                     .addFixedFeeQuantityTransition(
-                        PriceIntervalFixedFeeQuantityTransitionModel.builder()
+                        SubscriptionPriceIntervalsParams.Add.FixedFeeQuantityTransition.builder()
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .quantity(5L)
                             .build()
@@ -38,20 +41,40 @@ class SubscriptionPriceIntervalsParamsTest {
                     .maximumAmount(0.0)
                     .minimumAmount(0.0)
                     .price(
-                        NewFloatingPriceModel.NewFloatingUnitPrice.builder()
-                            .cadence(NewFloatingPriceModel.NewFloatingUnitPrice.Cadence.ANNUAL)
+                        SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice.builder()
+                            .cadence(
+                                SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                    .Cadence
+                                    .ANNUAL
+                            )
                             .currency("currency")
                             .itemId("item_id")
-                            .modelType(NewFloatingPriceModel.NewFloatingUnitPrice.ModelType.UNIT)
+                            .modelType(
+                                SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                    .ModelType
+                                    .UNIT
+                            )
                             .name("Annual fee")
-                            .unitConfig(UnitConfigModel.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                    .UnitConfig
+                                    .builder()
+                                    .unitAmount("unit_amount")
+                                    .build()
+                            )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                NewBillingCycleConfigurationModel.builder()
+                                SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                    .BillingCycleConfiguration
+                                    .builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        NewBillingCycleConfigurationModel.DurationUnit.DAY
+                                        SubscriptionPriceIntervalsParams.Add.Price
+                                            .NewFloatingUnitPrice
+                                            .BillingCycleConfiguration
+                                            .DurationUnit
+                                            .DAY
                                     )
                                     .build()
                             )
@@ -60,15 +83,23 @@ class SubscriptionPriceIntervalsParamsTest {
                             .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
-                                NewBillingCycleConfigurationModel.builder()
+                                SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                    .InvoicingCycleConfiguration
+                                    .builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        NewBillingCycleConfigurationModel.DurationUnit.DAY
+                                        SubscriptionPriceIntervalsParams.Add.Price
+                                            .NewFloatingUnitPrice
+                                            .InvoicingCycleConfiguration
+                                            .DurationUnit
+                                            .DAY
                                     )
                                     .build()
                             )
                             .metadata(
-                                NewFloatingPriceModel.NewFloatingUnitPrice.Metadata.builder()
+                                SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                    .Metadata
+                                    .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
@@ -81,9 +112,13 @@ class SubscriptionPriceIntervalsParamsTest {
             .addAddAdjustment(
                 SubscriptionPriceIntervalsParams.AddAdjustment.builder()
                     .adjustment(
-                        NewAdjustmentModel.NewPercentageDiscount.builder()
+                        SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                            .NewPercentageDiscount
+                            .builder()
                             .adjustmentType(
-                                NewAdjustmentModel.NewPercentageDiscount.AdjustmentType
+                                SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                    .NewPercentageDiscount
+                                    .AdjustmentType
                                     .PERCENTAGE_DISCOUNT
                             )
                             .addAppliesToPriceId("price_1")
@@ -104,7 +139,7 @@ class SubscriptionPriceIntervalsParamsTest {
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .filter("my_property > 100 AND my_other_property = 'bar'")
                     .addFixedFeeQuantityTransition(
-                        PriceIntervalFixedFeeQuantityTransitionModel.builder()
+                        SubscriptionPriceIntervalsParams.Edit.FixedFeeQuantityTransition.builder()
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .quantity(5L)
                             .build()
@@ -132,9 +167,12 @@ class SubscriptionPriceIntervalsParamsTest {
                     SubscriptionPriceIntervalsParams.Add.builder()
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .allocationPrice(
-                            NewAllocationPriceModel.builder()
+                            SubscriptionPriceIntervalsParams.Add.AllocationPrice.builder()
                                 .amount("10.00")
-                                .cadence(NewAllocationPriceModel.Cadence.ONE_TIME)
+                                .cadence(
+                                    SubscriptionPriceIntervalsParams.Add.AllocationPrice.Cadence
+                                        .ONE_TIME
+                                )
                                 .currency("USD")
                                 .expiresAtEndOfCadence(true)
                                 .build()
@@ -144,7 +182,8 @@ class SubscriptionPriceIntervalsParamsTest {
                         .externalPriceId("external_price_id")
                         .filter("my_property > 100 AND my_other_property = 'bar'")
                         .addFixedFeeQuantityTransition(
-                            PriceIntervalFixedFeeQuantityTransitionModel.builder()
+                            SubscriptionPriceIntervalsParams.Add.FixedFeeQuantityTransition
+                                .builder()
                                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .quantity(5L)
                                 .build()
@@ -152,24 +191,41 @@ class SubscriptionPriceIntervalsParamsTest {
                         .maximumAmount(0.0)
                         .minimumAmount(0.0)
                         .price(
-                            NewFloatingPriceModel.NewFloatingUnitPrice.builder()
-                                .cadence(NewFloatingPriceModel.NewFloatingUnitPrice.Cadence.ANNUAL)
+                            SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                .builder()
+                                .cadence(
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .Cadence
+                                        .ANNUAL
+                                )
                                 .currency("currency")
                                 .itemId("item_id")
                                 .modelType(
-                                    NewFloatingPriceModel.NewFloatingUnitPrice.ModelType.UNIT
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .ModelType
+                                        .UNIT
                                 )
                                 .name("Annual fee")
                                 .unitConfig(
-                                    UnitConfigModel.builder().unitAmount("unit_amount").build()
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .UnitConfig
+                                        .builder()
+                                        .unitAmount("unit_amount")
+                                        .build()
                                 )
                                 .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .billingCycleConfiguration(
-                                    NewBillingCycleConfigurationModel.builder()
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .BillingCycleConfiguration
+                                        .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            NewBillingCycleConfigurationModel.DurationUnit.DAY
+                                            SubscriptionPriceIntervalsParams.Add.Price
+                                                .NewFloatingUnitPrice
+                                                .BillingCycleConfiguration
+                                                .DurationUnit
+                                                .DAY
                                         )
                                         .build()
                                 )
@@ -178,15 +234,23 @@ class SubscriptionPriceIntervalsParamsTest {
                                 .fixedPriceQuantity(0.0)
                                 .invoiceGroupingKey("invoice_grouping_key")
                                 .invoicingCycleConfiguration(
-                                    NewBillingCycleConfigurationModel.builder()
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .InvoicingCycleConfiguration
+                                        .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            NewBillingCycleConfigurationModel.DurationUnit.DAY
+                                            SubscriptionPriceIntervalsParams.Add.Price
+                                                .NewFloatingUnitPrice
+                                                .InvoicingCycleConfiguration
+                                                .DurationUnit
+                                                .DAY
                                         )
                                         .build()
                                 )
                                 .metadata(
-                                    NewFloatingPriceModel.NewFloatingUnitPrice.Metadata.builder()
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .Metadata
+                                        .builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
@@ -199,9 +263,13 @@ class SubscriptionPriceIntervalsParamsTest {
                 .addAddAdjustment(
                     SubscriptionPriceIntervalsParams.AddAdjustment.builder()
                         .adjustment(
-                            NewAdjustmentModel.NewPercentageDiscount.builder()
+                            SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                .NewPercentageDiscount
+                                .builder()
                                 .adjustmentType(
-                                    NewAdjustmentModel.NewPercentageDiscount.AdjustmentType
+                                    SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                        .NewPercentageDiscount
+                                        .AdjustmentType
                                         .PERCENTAGE_DISCOUNT
                                 )
                                 .addAppliesToPriceId("price_1")
@@ -222,7 +290,8 @@ class SubscriptionPriceIntervalsParamsTest {
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .filter("my_property > 100 AND my_other_property = 'bar'")
                         .addFixedFeeQuantityTransition(
-                            PriceIntervalFixedFeeQuantityTransitionModel.builder()
+                            SubscriptionPriceIntervalsParams.Edit.FixedFeeQuantityTransition
+                                .builder()
                                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .quantity(5L)
                                 .build()
@@ -249,9 +318,12 @@ class SubscriptionPriceIntervalsParamsTest {
                     SubscriptionPriceIntervalsParams.Add.builder()
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .allocationPrice(
-                            NewAllocationPriceModel.builder()
+                            SubscriptionPriceIntervalsParams.Add.AllocationPrice.builder()
                                 .amount("10.00")
-                                .cadence(NewAllocationPriceModel.Cadence.ONE_TIME)
+                                .cadence(
+                                    SubscriptionPriceIntervalsParams.Add.AllocationPrice.Cadence
+                                        .ONE_TIME
+                                )
                                 .currency("USD")
                                 .expiresAtEndOfCadence(true)
                                 .build()
@@ -261,7 +333,8 @@ class SubscriptionPriceIntervalsParamsTest {
                         .externalPriceId("external_price_id")
                         .filter("my_property > 100 AND my_other_property = 'bar'")
                         .addFixedFeeQuantityTransition(
-                            PriceIntervalFixedFeeQuantityTransitionModel.builder()
+                            SubscriptionPriceIntervalsParams.Add.FixedFeeQuantityTransition
+                                .builder()
                                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .quantity(5L)
                                 .build()
@@ -269,24 +342,41 @@ class SubscriptionPriceIntervalsParamsTest {
                         .maximumAmount(0.0)
                         .minimumAmount(0.0)
                         .price(
-                            NewFloatingPriceModel.NewFloatingUnitPrice.builder()
-                                .cadence(NewFloatingPriceModel.NewFloatingUnitPrice.Cadence.ANNUAL)
+                            SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                .builder()
+                                .cadence(
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .Cadence
+                                        .ANNUAL
+                                )
                                 .currency("currency")
                                 .itemId("item_id")
                                 .modelType(
-                                    NewFloatingPriceModel.NewFloatingUnitPrice.ModelType.UNIT
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .ModelType
+                                        .UNIT
                                 )
                                 .name("Annual fee")
                                 .unitConfig(
-                                    UnitConfigModel.builder().unitAmount("unit_amount").build()
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .UnitConfig
+                                        .builder()
+                                        .unitAmount("unit_amount")
+                                        .build()
                                 )
                                 .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .billingCycleConfiguration(
-                                    NewBillingCycleConfigurationModel.builder()
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .BillingCycleConfiguration
+                                        .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            NewBillingCycleConfigurationModel.DurationUnit.DAY
+                                            SubscriptionPriceIntervalsParams.Add.Price
+                                                .NewFloatingUnitPrice
+                                                .BillingCycleConfiguration
+                                                .DurationUnit
+                                                .DAY
                                         )
                                         .build()
                                 )
@@ -295,15 +385,23 @@ class SubscriptionPriceIntervalsParamsTest {
                                 .fixedPriceQuantity(0.0)
                                 .invoiceGroupingKey("invoice_grouping_key")
                                 .invoicingCycleConfiguration(
-                                    NewBillingCycleConfigurationModel.builder()
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .InvoicingCycleConfiguration
+                                        .builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            NewBillingCycleConfigurationModel.DurationUnit.DAY
+                                            SubscriptionPriceIntervalsParams.Add.Price
+                                                .NewFloatingUnitPrice
+                                                .InvoicingCycleConfiguration
+                                                .DurationUnit
+                                                .DAY
                                         )
                                         .build()
                                 )
                                 .metadata(
-                                    NewFloatingPriceModel.NewFloatingUnitPrice.Metadata.builder()
+                                    SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
+                                        .Metadata
+                                        .builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
@@ -319,9 +417,13 @@ class SubscriptionPriceIntervalsParamsTest {
                 listOf(
                     SubscriptionPriceIntervalsParams.AddAdjustment.builder()
                         .adjustment(
-                            NewAdjustmentModel.NewPercentageDiscount.builder()
+                            SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                .NewPercentageDiscount
+                                .builder()
                                 .adjustmentType(
-                                    NewAdjustmentModel.NewPercentageDiscount.AdjustmentType
+                                    SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                        .NewPercentageDiscount
+                                        .AdjustmentType
                                         .PERCENTAGE_DISCOUNT
                                 )
                                 .addAppliesToPriceId("price_1")
@@ -345,7 +447,8 @@ class SubscriptionPriceIntervalsParamsTest {
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .filter("my_property > 100 AND my_other_property = 'bar'")
                         .addFixedFeeQuantityTransition(
-                            PriceIntervalFixedFeeQuantityTransitionModel.builder()
+                            SubscriptionPriceIntervalsParams.Edit.FixedFeeQuantityTransition
+                                .builder()
                                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .quantity(5L)
                                 .build()

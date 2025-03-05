@@ -23,19 +23,19 @@ class Subscriptions
 private constructor(
     @JsonProperty("data")
     @ExcludeMissing
-    private val data: JsonField<List<SubscriptionModel>> = JsonMissing.of(),
+    private val data: JsonField<List<Subscription>> = JsonMissing.of(),
     @JsonProperty("pagination_metadata")
     @ExcludeMissing
     private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    fun data(): List<SubscriptionModel> = data.getRequired("data")
+    fun data(): List<Subscription> = data.getRequired("data")
 
     fun paginationMetadata(): PaginationMetadata =
         paginationMetadata.getRequired("pagination_metadata")
 
-    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<SubscriptionModel>> = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Subscription>> = data
 
     @JsonProperty("pagination_metadata")
     @ExcludeMissing
@@ -76,7 +76,7 @@ private constructor(
     /** A builder for [Subscriptions]. */
     class Builder internal constructor() {
 
-        private var data: JsonField<MutableList<SubscriptionModel>>? = null
+        private var data: JsonField<MutableList<Subscription>>? = null
         private var paginationMetadata: JsonField<PaginationMetadata>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -86,13 +86,13 @@ private constructor(
             additionalProperties = subscriptions.additionalProperties.toMutableMap()
         }
 
-        fun data(data: List<SubscriptionModel>) = data(JsonField.of(data))
+        fun data(data: List<Subscription>) = data(JsonField.of(data))
 
-        fun data(data: JsonField<List<SubscriptionModel>>) = apply {
+        fun data(data: JsonField<List<Subscription>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
-        fun addData(data: SubscriptionModel) = apply {
+        fun addData(data: Subscription) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
                     checkKnown("data", it).add(data)

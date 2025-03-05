@@ -5,10 +5,10 @@ package com.withorb.api.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.models.DimensionalPriceGroup
 import com.withorb.api.models.DimensionalPriceGroupCreateParams
 import com.withorb.api.models.DimensionalPriceGroupListPageAsync
 import com.withorb.api.models.DimensionalPriceGroupListParams
-import com.withorb.api.models.DimensionalPriceGroupModel
 import com.withorb.api.models.DimensionalPriceGroupRetrieveParams
 import com.withorb.api.services.async.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdServiceAsync
 
@@ -33,13 +33,13 @@ interface DimensionalPriceGroupServiceAsync {
     suspend fun create(
         params: DimensionalPriceGroupCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DimensionalPriceGroupModel
+    ): DimensionalPriceGroup
 
     /** Fetch dimensional price group */
     suspend fun retrieve(
         params: DimensionalPriceGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DimensionalPriceGroupModel
+    ): DimensionalPriceGroup
 
     /** List dimensional price groups */
     suspend fun list(
@@ -68,7 +68,7 @@ interface DimensionalPriceGroupServiceAsync {
         suspend fun create(
             params: DimensionalPriceGroupCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DimensionalPriceGroupModel>
+        ): HttpResponseFor<DimensionalPriceGroup>
 
         /**
          * Returns a raw HTTP response for `get
@@ -79,7 +79,7 @@ interface DimensionalPriceGroupServiceAsync {
         suspend fun retrieve(
             params: DimensionalPriceGroupRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DimensionalPriceGroupModel>
+        ): HttpResponseFor<DimensionalPriceGroup>
 
         /**
          * Returns a raw HTTP response for `get /dimensional_price_groups`, but is otherwise the

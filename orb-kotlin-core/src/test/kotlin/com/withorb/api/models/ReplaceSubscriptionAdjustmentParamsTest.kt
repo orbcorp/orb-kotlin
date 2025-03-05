@@ -12,9 +12,10 @@ class ReplaceSubscriptionAdjustmentParamsTest {
         val replaceSubscriptionAdjustmentParams =
             ReplaceSubscriptionAdjustmentParams.builder()
                 .adjustment(
-                    NewAdjustmentModel.NewPercentageDiscount.builder()
+                    ReplaceSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount.builder()
                         .adjustmentType(
-                            NewAdjustmentModel.NewPercentageDiscount.AdjustmentType
+                            ReplaceSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount
+                                .AdjustmentType
                                 .PERCENTAGE_DISCOUNT
                         )
                         .addAppliesToPriceId("price_1")
@@ -28,10 +29,11 @@ class ReplaceSubscriptionAdjustmentParamsTest {
         assertThat(replaceSubscriptionAdjustmentParams).isNotNull
         assertThat(replaceSubscriptionAdjustmentParams.adjustment())
             .isEqualTo(
-                NewAdjustmentModel.ofPercentageDiscount(
-                    NewAdjustmentModel.NewPercentageDiscount.builder()
+                ReplaceSubscriptionAdjustmentParams.Adjustment.ofNewPercentageDiscount(
+                    ReplaceSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount.builder()
                         .adjustmentType(
-                            NewAdjustmentModel.NewPercentageDiscount.AdjustmentType
+                            ReplaceSubscriptionAdjustmentParams.Adjustment.NewPercentageDiscount
+                                .AdjustmentType
                                 .PERCENTAGE_DISCOUNT
                         )
                         .addAppliesToPriceId("price_1")

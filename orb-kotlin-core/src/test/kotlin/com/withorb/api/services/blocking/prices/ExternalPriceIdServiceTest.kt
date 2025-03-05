@@ -23,7 +23,7 @@ class ExternalPriceIdServiceTest {
                 .build()
         val externalPriceIdService = client.prices().externalPriceId()
 
-        val priceModel =
+        val price =
             externalPriceIdService.update(
                 PriceExternalPriceIdUpdateParams.builder()
                     .externalPriceId("external_price_id")
@@ -39,7 +39,7 @@ class ExternalPriceIdServiceTest {
                     .build()
             )
 
-        priceModel.validate()
+        price.validate()
     }
 
     @Test
@@ -51,13 +51,13 @@ class ExternalPriceIdServiceTest {
                 .build()
         val externalPriceIdService = client.prices().externalPriceId()
 
-        val priceModel =
+        val price =
             externalPriceIdService.fetch(
                 PriceExternalPriceIdFetchParams.builder()
                     .externalPriceId("external_price_id")
                     .build()
             )
 
-        priceModel.validate()
+        price.validate()
     }
 }

@@ -21,7 +21,7 @@ class BalanceTransactionServiceAsyncTest {
                 .build()
         val balanceTransactionServiceAsync = client.customers().balanceTransactions()
 
-        val customerBalanceTransactionModel =
+        val balanceTransaction =
             balanceTransactionServiceAsync.create(
                 CustomerBalanceTransactionCreateParams.builder()
                     .customerId("customer_id")
@@ -31,7 +31,7 @@ class BalanceTransactionServiceAsyncTest {
                     .build()
             )
 
-        customerBalanceTransactionModel.validate()
+        balanceTransaction.validate()
     }
 
     @Test

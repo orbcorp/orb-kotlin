@@ -33,7 +33,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<SubscriptionModel> = response().data()
+    fun data(): List<Subscription> = response().data()
 
     fun paginationMetadata(): PaginationMetadata = response().paginationMetadata()
 
@@ -88,20 +88,19 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data")
-        private val data: JsonField<List<SubscriptionModel>> = JsonMissing.of(),
+        @JsonProperty("data") private val data: JsonField<List<Subscription>> = JsonMissing.of(),
         @JsonProperty("pagination_metadata")
         private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<SubscriptionModel> = data.getNullable("data") ?: listOf()
+        fun data(): List<Subscription> = data.getNullable("data") ?: listOf()
 
         fun paginationMetadata(): PaginationMetadata =
             paginationMetadata.getRequired("pagination_metadata")
 
-        @JsonProperty("data") fun _data(): JsonField<List<SubscriptionModel>>? = data
+        @JsonProperty("data") fun _data(): JsonField<List<Subscription>>? = data
 
         @JsonProperty("pagination_metadata")
         fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
@@ -148,7 +147,7 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<SubscriptionModel>> = JsonMissing.of()
+            private var data: JsonField<List<Subscription>> = JsonMissing.of()
             private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -158,9 +157,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<SubscriptionModel>) = data(JsonField.of(data))
+            fun data(data: List<Subscription>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<SubscriptionModel>>) = apply { this.data = data }
+            fun data(data: JsonField<List<Subscription>>) = apply { this.data = data }
 
             fun paginationMetadata(paginationMetadata: PaginationMetadata) =
                 paginationMetadata(JsonField.of(paginationMetadata))
@@ -177,10 +176,9 @@ private constructor(
         }
     }
 
-    class AutoPager(private val firstPage: CouponSubscriptionListPageAsync) :
-        Flow<SubscriptionModel> {
+    class AutoPager(private val firstPage: CouponSubscriptionListPageAsync) : Flow<Subscription> {
 
-        override suspend fun collect(collector: FlowCollector<SubscriptionModel>) {
+        override suspend fun collect(collector: FlowCollector<Subscription>) {
             var page = firstPage
             var index = 0
             while (true) {

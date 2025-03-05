@@ -16,9 +16,9 @@ import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CustomerBalanceTransactionCreateParams
+import com.withorb.api.models.CustomerBalanceTransactionCreateResponse
 import com.withorb.api.models.CustomerBalanceTransactionListPage
 import com.withorb.api.models.CustomerBalanceTransactionListParams
-import com.withorb.api.models.CustomerBalanceTransactionModel
 
 class BalanceTransactionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     BalanceTransactionService {
@@ -32,7 +32,7 @@ class BalanceTransactionServiceImpl internal constructor(private val clientOptio
     override fun create(
         params: CustomerBalanceTransactionCreateParams,
         requestOptions: RequestOptions,
-    ): CustomerBalanceTransactionModel =
+    ): CustomerBalanceTransactionCreateResponse =
         // post /customers/{customer_id}/balance_transactions
         withRawResponse().create(params, requestOptions).parse()
 
@@ -48,14 +48,14 @@ class BalanceTransactionServiceImpl internal constructor(private val clientOptio
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<CustomerBalanceTransactionModel> =
-            jsonHandler<CustomerBalanceTransactionModel>(clientOptions.jsonMapper)
+        private val createHandler: Handler<CustomerBalanceTransactionCreateResponse> =
+            jsonHandler<CustomerBalanceTransactionCreateResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun create(
             params: CustomerBalanceTransactionCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CustomerBalanceTransactionModel> {
+        ): HttpResponseFor<CustomerBalanceTransactionCreateResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

@@ -23,7 +23,7 @@ class MetricServiceAsyncTest {
                 .build()
         val metricServiceAsync = client.metrics()
 
-        val billableMetricModel =
+        val billableMetric =
             metricServiceAsync.create(
                 MetricCreateParams.builder()
                     .description("Sum of bytes downloaded in fast mode")
@@ -38,7 +38,7 @@ class MetricServiceAsyncTest {
                     .build()
             )
 
-        billableMetricModel.validate()
+        billableMetric.validate()
     }
 
     @Test
@@ -50,7 +50,7 @@ class MetricServiceAsyncTest {
                 .build()
         val metricServiceAsync = client.metrics()
 
-        val billableMetricModel =
+        val billableMetric =
             metricServiceAsync.update(
                 MetricUpdateParams.builder()
                     .metricId("metric_id")
@@ -62,7 +62,7 @@ class MetricServiceAsyncTest {
                     .build()
             )
 
-        billableMetricModel.validate()
+        billableMetric.validate()
     }
 
     @Test
@@ -88,9 +88,9 @@ class MetricServiceAsyncTest {
                 .build()
         val metricServiceAsync = client.metrics()
 
-        val billableMetricModel =
+        val billableMetric =
             metricServiceAsync.fetch(MetricFetchParams.builder().metricId("metric_id").build())
 
-        billableMetricModel.validate()
+        billableMetric.validate()
     }
 }

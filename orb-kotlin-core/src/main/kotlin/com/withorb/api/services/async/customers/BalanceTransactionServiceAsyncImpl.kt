@@ -16,9 +16,9 @@ import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CustomerBalanceTransactionCreateParams
+import com.withorb.api.models.CustomerBalanceTransactionCreateResponse
 import com.withorb.api.models.CustomerBalanceTransactionListPageAsync
 import com.withorb.api.models.CustomerBalanceTransactionListParams
-import com.withorb.api.models.CustomerBalanceTransactionModel
 
 class BalanceTransactionServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : BalanceTransactionServiceAsync {
@@ -32,7 +32,7 @@ internal constructor(private val clientOptions: ClientOptions) : BalanceTransact
     override suspend fun create(
         params: CustomerBalanceTransactionCreateParams,
         requestOptions: RequestOptions,
-    ): CustomerBalanceTransactionModel =
+    ): CustomerBalanceTransactionCreateResponse =
         // post /customers/{customer_id}/balance_transactions
         withRawResponse().create(params, requestOptions).parse()
 
@@ -48,14 +48,14 @@ internal constructor(private val clientOptions: ClientOptions) : BalanceTransact
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<CustomerBalanceTransactionModel> =
-            jsonHandler<CustomerBalanceTransactionModel>(clientOptions.jsonMapper)
+        private val createHandler: Handler<CustomerBalanceTransactionCreateResponse> =
+            jsonHandler<CustomerBalanceTransactionCreateResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun create(
             params: CustomerBalanceTransactionCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CustomerBalanceTransactionModel> {
+        ): HttpResponseFor<CustomerBalanceTransactionCreateResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

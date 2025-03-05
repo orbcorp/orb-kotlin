@@ -23,21 +23,19 @@ class DimensionalPriceGroups
 private constructor(
     @JsonProperty("data")
     @ExcludeMissing
-    private val data: JsonField<List<DimensionalPriceGroupModel>> = JsonMissing.of(),
+    private val data: JsonField<List<DimensionalPriceGroup>> = JsonMissing.of(),
     @JsonProperty("pagination_metadata")
     @ExcludeMissing
     private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    fun data(): List<DimensionalPriceGroupModel> = data.getRequired("data")
+    fun data(): List<DimensionalPriceGroup> = data.getRequired("data")
 
     fun paginationMetadata(): PaginationMetadata =
         paginationMetadata.getRequired("pagination_metadata")
 
-    @JsonProperty("data")
-    @ExcludeMissing
-    fun _data(): JsonField<List<DimensionalPriceGroupModel>> = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<DimensionalPriceGroup>> = data
 
     @JsonProperty("pagination_metadata")
     @ExcludeMissing
@@ -78,7 +76,7 @@ private constructor(
     /** A builder for [DimensionalPriceGroups]. */
     class Builder internal constructor() {
 
-        private var data: JsonField<MutableList<DimensionalPriceGroupModel>>? = null
+        private var data: JsonField<MutableList<DimensionalPriceGroup>>? = null
         private var paginationMetadata: JsonField<PaginationMetadata>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -88,13 +86,13 @@ private constructor(
             additionalProperties = dimensionalPriceGroups.additionalProperties.toMutableMap()
         }
 
-        fun data(data: List<DimensionalPriceGroupModel>) = data(JsonField.of(data))
+        fun data(data: List<DimensionalPriceGroup>) = data(JsonField.of(data))
 
-        fun data(data: JsonField<List<DimensionalPriceGroupModel>>) = apply {
+        fun data(data: JsonField<List<DimensionalPriceGroup>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
-        fun addData(data: DimensionalPriceGroupModel) = apply {
+        fun addData(data: DimensionalPriceGroup) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
                     checkKnown("data", it).add(data)
