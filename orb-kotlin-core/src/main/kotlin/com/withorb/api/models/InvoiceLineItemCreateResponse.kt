@@ -106,7 +106,11 @@ private constructor(
      */
     fun adjustedSubtotal(): String = adjustedSubtotal.getRequired("adjusted_subtotal")
 
-    /** All adjustments (ie. maximums, minimums, discounts) applied to the line item. */
+    /**
+     * All adjustments applied to the line item in the order they were applied based on invoice
+     * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums ->
+     * maximums).
+     */
     fun adjustments(): List<Adjustment> = adjustments.getRequired("adjustments")
 
     /**
@@ -202,7 +206,11 @@ private constructor(
     @ExcludeMissing
     fun _adjustedSubtotal(): JsonField<String> = adjustedSubtotal
 
-    /** All adjustments (ie. maximums, minimums, discounts) applied to the line item. */
+    /**
+     * All adjustments applied to the line item in the order they were applied based on invoice
+     * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums ->
+     * maximums).
+     */
     @JsonProperty("adjustments")
     @ExcludeMissing
     fun _adjustments(): JsonField<List<Adjustment>> = adjustments
@@ -458,15 +466,27 @@ private constructor(
             this.adjustedSubtotal = adjustedSubtotal
         }
 
-        /** All adjustments (ie. maximums, minimums, discounts) applied to the line item. */
+        /**
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
+         */
         fun adjustments(adjustments: List<Adjustment>) = adjustments(JsonField.of(adjustments))
 
-        /** All adjustments (ie. maximums, minimums, discounts) applied to the line item. */
+        /**
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
+         */
         fun adjustments(adjustments: JsonField<List<Adjustment>>) = apply {
             this.adjustments = adjustments.map { it.toMutableList() }
         }
 
-        /** All adjustments (ie. maximums, minimums, discounts) applied to the line item. */
+        /**
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
+         */
         fun addAdjustment(adjustment: Adjustment) = apply {
             adjustments =
                 (adjustments ?: JsonField.of(mutableListOf())).also {
@@ -474,24 +494,44 @@ private constructor(
                 }
         }
 
-        /** All adjustments (ie. maximums, minimums, discounts) applied to the line item. */
+        /**
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
+         */
         fun addAdjustment(monetaryUsageDiscount: Adjustment.MonetaryUsageDiscountAdjustment) =
             addAdjustment(Adjustment.ofMonetaryUsageDiscount(monetaryUsageDiscount))
 
-        /** All adjustments (ie. maximums, minimums, discounts) applied to the line item. */
+        /**
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
+         */
         fun addAdjustment(monetaryAmountDiscount: Adjustment.MonetaryAmountDiscountAdjustment) =
             addAdjustment(Adjustment.ofMonetaryAmountDiscount(monetaryAmountDiscount))
 
-        /** All adjustments (ie. maximums, minimums, discounts) applied to the line item. */
+        /**
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
+         */
         fun addAdjustment(
             monetaryPercentageDiscount: Adjustment.MonetaryPercentageDiscountAdjustment
         ) = addAdjustment(Adjustment.ofMonetaryPercentageDiscount(monetaryPercentageDiscount))
 
-        /** All adjustments (ie. maximums, minimums, discounts) applied to the line item. */
+        /**
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
+         */
         fun addAdjustment(monetaryMinimum: Adjustment.MonetaryMinimumAdjustment) =
             addAdjustment(Adjustment.ofMonetaryMinimum(monetaryMinimum))
 
-        /** All adjustments (ie. maximums, minimums, discounts) applied to the line item. */
+        /**
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
+         */
         fun addAdjustment(monetaryMaximum: Adjustment.MonetaryMaximumAdjustment) =
             addAdjustment(Adjustment.ofMonetaryMaximum(monetaryMaximum))
 
