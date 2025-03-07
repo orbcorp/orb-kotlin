@@ -311,16 +311,7 @@ interface SubscriptionService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionListPage
 
-    /**
-     * This endpoint returns a list of all subscriptions for an account as a
-     * [paginated](/api-reference/pagination) list, ordered starting from the most recently created
-     * subscription. For a full discussion of the subscription resource, see
-     * [Subscription](/core-concepts##subscription).
-     *
-     * Subscriptions can be filtered for a specific customer by using either the customer_id or
-     * external_customer_id query parameters. To filter subscriptions for multiple customers, use
-     * the customer_id[] or external_customer_id[] query parameters.
-     */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): SubscriptionListPage =
         list(SubscriptionListParams.none(), requestOptions)
 
@@ -958,10 +949,7 @@ interface SubscriptionService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /subscriptions`, but is otherwise the same as
-         * [SubscriptionService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<SubscriptionListPage> =
             list(SubscriptionListParams.none(), requestOptions)

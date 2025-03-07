@@ -47,7 +47,7 @@ interface DimensionalPriceGroupServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroupListPageAsync
 
-    /** List dimensional price groups */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): DimensionalPriceGroupListPageAsync =
         list(DimensionalPriceGroupListParams.none(), requestOptions)
 
@@ -91,10 +91,7 @@ interface DimensionalPriceGroupServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DimensionalPriceGroupListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /dimensional_price_groups`, but is otherwise the
-         * same as [DimensionalPriceGroupServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
