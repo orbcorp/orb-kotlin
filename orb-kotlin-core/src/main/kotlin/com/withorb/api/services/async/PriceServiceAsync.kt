@@ -59,10 +59,7 @@ interface PriceServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PriceListPageAsync
 
-    /**
-     * This endpoint is used to list all add-on prices created using the
-     * [price creation endpoint](/api-reference/price/create-price).
-     */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): PriceListPageAsync =
         list(PriceListParams.none(), requestOptions)
 
@@ -131,10 +128,7 @@ interface PriceServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PriceListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /prices`, but is otherwise the same as
-         * [PriceServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<PriceListPageAsync> =
             list(PriceListParams.none(), requestOptions)
