@@ -50,12 +50,7 @@ interface PlanService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanListPage
 
-    /**
-     * This endpoint returns a list of all [plans](/core-concepts#plan-and-price) for an account in
-     * a list format. The list of plans is ordered starting from the most recently created plan. The
-     * response also includes [`pagination_metadata`](/api-reference/pagination), which lets the
-     * caller retrieve the next page of results if they exist.
-     */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): PlanListPage =
         list(PlanListParams.none(), requestOptions)
 
@@ -114,10 +109,7 @@ interface PlanService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /plans`, but is otherwise the same as
-         * [PlanService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PlanListPage> =
             list(PlanListParams.none(), requestOptions)

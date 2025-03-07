@@ -75,13 +75,7 @@ interface CustomerServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerListPageAsync
 
-    /**
-     * This endpoint returns a list of all customers for an account. The list of customers is
-     * ordered starting from the most recently created customer. This endpoint follows Orb's
-     * [standardized pagination format](/api-reference/pagination).
-     *
-     * See [Customer](/core-concepts##customer) for an overview of the customer model.
-     */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): CustomerListPageAsync =
         list(CustomerListParams.none(), requestOptions)
 
@@ -206,10 +200,7 @@ interface CustomerServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /customers`, but is otherwise the same as
-         * [CustomerServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<CustomerListPageAsync> =
             list(CustomerListParams.none(), requestOptions)

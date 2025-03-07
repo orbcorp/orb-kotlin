@@ -28,14 +28,7 @@ interface TopLevelServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TopLevelPingResponse
 
-    /**
-     * This endpoint allows you to test your connection to the Orb API and check the validity of
-     * your API key, passed in the Authorization header. This is particularly useful for checking
-     * that your environment is set up properly, and is a great choice for connectors and
-     * integrations.
-     *
-     * This API does not have any side-effects or return any Orb resources.
-     */
+    /** @see [ping] */
     suspend fun ping(requestOptions: RequestOptions): TopLevelPingResponse =
         ping(TopLevelPingParams.none(), requestOptions)
 
@@ -54,10 +47,7 @@ interface TopLevelServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TopLevelPingResponse>
 
-        /**
-         * Returns a raw HTTP response for `get /ping`, but is otherwise the same as
-         * [TopLevelServiceAsync.ping].
-         */
+        /** @see [ping] */
         @MustBeClosed
         suspend fun ping(requestOptions: RequestOptions): HttpResponseFor<TopLevelPingResponse> =
             ping(TopLevelPingParams.none(), requestOptions)
