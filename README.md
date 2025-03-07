@@ -3,7 +3,6 @@
 <!-- x-release-please-start-version -->
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/0.1.0-alpha.34)
-[![javadoc](https://javadoc.io/badge2/com.withorb.api/orb-kotlin/0.1.0-alpha.34/javadoc.svg)](https://javadoc.io/doc/com.withorb.api/orb-kotlin/0.1.0-alpha.34)
 
 <!-- x-release-please-end -->
 
@@ -11,7 +10,7 @@ The Orb Kotlin SDK provides convenient access to the Orb REST API from applicati
 
 The Orb Kotlin SDK is similar to the Orb Java SDK but with minor differences that make it more ergonomic for use in Kotlin, such as nullable values instead of `Optional`, `Sequence` instead of `Stream`, and suspend functions instead of `CompletableFuture`.
 
-The REST API documentation can be found on [docs.withorb.com](https://docs.withorb.com/reference/api-reference). KDocs are also available on [javadoc.io](https://javadoc.io/doc/com.withorb.api/orb-kotlin/0.1.0-alpha.34).
+The REST API documentation can be found on [docs.withorb.com](https://docs.withorb.com/reference/api-reference).
 
 ## Installation
 
