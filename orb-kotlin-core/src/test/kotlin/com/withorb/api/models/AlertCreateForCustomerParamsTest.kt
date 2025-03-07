@@ -13,7 +13,7 @@ class AlertCreateForCustomerParamsTest {
         AlertCreateForCustomerParams.builder()
             .customerId("customer_id")
             .currency("currency")
-            .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
+            .type(AlertCreateForCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
             .addThreshold(AlertCreateForCustomerParams.Threshold.builder().value(0.0).build())
             .build()
     }
@@ -24,7 +24,7 @@ class AlertCreateForCustomerParamsTest {
             AlertCreateForCustomerParams.builder()
                 .customerId("customer_id")
                 .currency("currency")
-                .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
+                .type(AlertCreateForCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
                 .addThreshold(AlertCreateForCustomerParams.Threshold.builder().value(0.0).build())
                 .build()
 
@@ -32,7 +32,7 @@ class AlertCreateForCustomerParamsTest {
 
         assertNotNull(body)
         assertThat(body.currency()).isEqualTo("currency")
-        assertThat(body.type()).isEqualTo(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
+        assertThat(body.type()).isEqualTo(AlertCreateForCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
         assertThat(body.thresholds())
             .isEqualTo(listOf(AlertCreateForCustomerParams.Threshold.builder().value(0.0).build()))
     }
@@ -43,14 +43,14 @@ class AlertCreateForCustomerParamsTest {
             AlertCreateForCustomerParams.builder()
                 .customerId("customer_id")
                 .currency("currency")
-                .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
+                .type(AlertCreateForCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
                 .build()
 
         val body = params._body()
 
         assertNotNull(body)
         assertThat(body.currency()).isEqualTo("currency")
-        assertThat(body.type()).isEqualTo(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
+        assertThat(body.type()).isEqualTo(AlertCreateForCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
     }
 
     @Test
@@ -59,7 +59,7 @@ class AlertCreateForCustomerParamsTest {
             AlertCreateForCustomerParams.builder()
                 .customerId("customer_id")
                 .currency("currency")
-                .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
+                .type(AlertCreateForCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
                 .build()
         assertThat(params).isNotNull
         // path param "customerId"
