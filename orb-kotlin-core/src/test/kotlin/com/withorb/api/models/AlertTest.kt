@@ -33,7 +33,7 @@ class AlertTest {
                 )
                 .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
                 .addThreshold(Alert.Threshold.builder().value(0.0).build())
-                .type(Alert.Type.USAGE_EXCEEDED)
+                .type(Alert.Type.CREDIT_BALANCE_DEPLETED)
                 .build()
         assertThat(alert).isNotNull
         assertThat(alert.id()).isEqualTo("XuxCbt7x9L82yyeF")
@@ -57,6 +57,6 @@ class AlertTest {
         assertThat(alert.subscription())
             .isEqualTo(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
         assertThat(alert.thresholds()).containsExactly(Alert.Threshold.builder().value(0.0).build())
-        assertThat(alert.type()).isEqualTo(Alert.Type.USAGE_EXCEEDED)
+        assertThat(alert.type()).isEqualTo(Alert.Type.CREDIT_BALANCE_DEPLETED)
     }
 }
