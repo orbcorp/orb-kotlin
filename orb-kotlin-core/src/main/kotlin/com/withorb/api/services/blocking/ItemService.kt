@@ -37,7 +37,7 @@ interface ItemService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ItemListPage
 
-    /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): ItemListPage =
         list(ItemListParams.none(), requestOptions)
 
@@ -77,10 +77,7 @@ interface ItemService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ItemListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /items`, but is otherwise the same as
-         * [ItemService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ItemListPage> =
             list(ItemListParams.none(), requestOptions)

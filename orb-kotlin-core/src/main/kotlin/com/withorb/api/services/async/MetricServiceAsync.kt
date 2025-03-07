@@ -48,11 +48,7 @@ interface MetricServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MetricListPageAsync
 
-    /**
-     * This endpoint is used to fetch [metric](/core-concepts##metric) details given a metric
-     * identifier. It returns information about the metrics including its name, description, and
-     * item.
-     */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): MetricListPageAsync =
         list(MetricListParams.none(), requestOptions)
 
@@ -100,10 +96,7 @@ interface MetricServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<MetricListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /metrics`, but is otherwise the same as
-         * [MetricServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<MetricListPageAsync> =
             list(MetricListParams.none(), requestOptions)

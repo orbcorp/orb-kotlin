@@ -44,14 +44,7 @@ interface CouponServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CouponListPageAsync
 
-    /**
-     * This endpoint returns a list of all coupons for an account in a list format.
-     *
-     * The list of coupons is ordered starting from the most recently created coupon. The response
-     * also includes `pagination_metadata`, which lets the caller retrieve the next page of results
-     * if they exist. More information about pagination can be found in the Pagination-metadata
-     * schema.
-     */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): CouponListPageAsync =
         list(CouponListParams.none(), requestOptions)
 
@@ -101,10 +94,7 @@ interface CouponServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CouponListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /coupons`, but is otherwise the same as
-         * [CouponServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<CouponListPageAsync> =
             list(CouponListParams.none(), requestOptions)
