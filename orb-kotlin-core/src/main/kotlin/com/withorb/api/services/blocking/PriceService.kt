@@ -59,10 +59,7 @@ interface PriceService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PriceListPage
 
-    /**
-     * This endpoint is used to list all add-on prices created using the
-     * [price creation endpoint](/api-reference/price/create-price).
-     */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): PriceListPage =
         list(PriceListParams.none(), requestOptions)
 
@@ -131,10 +128,7 @@ interface PriceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PriceListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /prices`, but is otherwise the same as
-         * [PriceService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PriceListPage> =
             list(PriceListParams.none(), requestOptions)
