@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.34 (2025-03-07)
+
+Full Changelog: [v0.1.0-alpha.33...v0.1.0-alpha.34](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.33...v0.1.0-alpha.34)
+
+### Features
+
+* **api:** api update ([#277](https://github.com/orbcorp/orb-kotlin/issues/277)) ([228ffbc](https://github.com/orbcorp/orb-kotlin/commit/228ffbc2e145d4243767a4db346bf104b761b029))
+* **client:** detect binary incompatible jackson versions ([#275](https://github.com/orbcorp/orb-kotlin/issues/275)) ([36e8ce5](https://github.com/orbcorp/orb-kotlin/commit/36e8ce5b6efece8b917b8ec453f1624f233baafc))
+
 ## 0.1.0-alpha.33 (2025-03-06)
 
 Full Changelog: [v0.1.0-alpha.32...v0.1.0-alpha.33](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.32...v0.1.0-alpha.33)
