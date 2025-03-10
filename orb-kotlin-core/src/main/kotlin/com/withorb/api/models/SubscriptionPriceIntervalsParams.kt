@@ -47313,13 +47313,17 @@ private constructor(
 
         /**
          * The start date of the adjustment interval. This is the date that the adjustment will
-         * start affecting prices on the subscription.
+         * start affecting prices on the subscription. The adjustment will apply to invoice dates
+         * that overlap with this `start_date`. This `start_date` is treated as inclusive for
+         * in-advance prices, and exclusive for in-arrears prices.
          */
         fun startDate(): StartDate = startDate.getRequired("start_date")
 
         /**
          * The end date of the adjustment interval. This is the date that the adjustment will stop
-         * affecting prices on the subscription.
+         * affecting prices on the subscription. The adjustment will apply to invoice dates that
+         * overlap with this `end_date`.This `end_date` is treated as exclusive for in-advance
+         * prices, and inclusive for in-arrears prices.
          */
         fun endDate(): EndDate? = endDate.getNullable("end_date")
 
@@ -47330,7 +47334,9 @@ private constructor(
 
         /**
          * The start date of the adjustment interval. This is the date that the adjustment will
-         * start affecting prices on the subscription.
+         * start affecting prices on the subscription. The adjustment will apply to invoice dates
+         * that overlap with this `start_date`. This `start_date` is treated as inclusive for
+         * in-advance prices, and exclusive for in-arrears prices.
          */
         @JsonProperty("start_date")
         @ExcludeMissing
@@ -47338,7 +47344,9 @@ private constructor(
 
         /**
          * The end date of the adjustment interval. This is the date that the adjustment will stop
-         * affecting prices on the subscription.
+         * affecting prices on the subscription. The adjustment will apply to invoice dates that
+         * overlap with this `end_date`.This `end_date` is treated as exclusive for in-advance
+         * prices, and inclusive for in-arrears prices.
          */
         @JsonProperty("end_date") @ExcludeMissing fun _endDate(): JsonField<EndDate> = endDate
 
@@ -47420,50 +47428,66 @@ private constructor(
 
             /**
              * The start date of the adjustment interval. This is the date that the adjustment will
-             * start affecting prices on the subscription.
+             * start affecting prices on the subscription. The adjustment will apply to invoice
+             * dates that overlap with this `start_date`. This `start_date` is treated as inclusive
+             * for in-advance prices, and exclusive for in-arrears prices.
              */
             fun startDate(startDate: StartDate) = startDate(JsonField.of(startDate))
 
             /**
              * The start date of the adjustment interval. This is the date that the adjustment will
-             * start affecting prices on the subscription.
+             * start affecting prices on the subscription. The adjustment will apply to invoice
+             * dates that overlap with this `start_date`. This `start_date` is treated as inclusive
+             * for in-advance prices, and exclusive for in-arrears prices.
              */
             fun startDate(startDate: JsonField<StartDate>) = apply { this.startDate = startDate }
 
             /**
              * The start date of the adjustment interval. This is the date that the adjustment will
-             * start affecting prices on the subscription.
+             * start affecting prices on the subscription. The adjustment will apply to invoice
+             * dates that overlap with this `start_date`. This `start_date` is treated as inclusive
+             * for in-advance prices, and exclusive for in-arrears prices.
              */
             fun startDate(dateTime: OffsetDateTime) = startDate(StartDate.ofDateTime(dateTime))
 
             /**
              * The start date of the adjustment interval. This is the date that the adjustment will
-             * start affecting prices on the subscription.
+             * start affecting prices on the subscription. The adjustment will apply to invoice
+             * dates that overlap with this `start_date`. This `start_date` is treated as inclusive
+             * for in-advance prices, and exclusive for in-arrears prices.
              */
             fun startDate(billingCycleRelative: BillingCycleRelativeDate) =
                 startDate(StartDate.ofBillingCycleRelative(billingCycleRelative))
 
             /**
              * The end date of the adjustment interval. This is the date that the adjustment will
-             * stop affecting prices on the subscription.
+             * stop affecting prices on the subscription. The adjustment will apply to invoice dates
+             * that overlap with this `end_date`.This `end_date` is treated as exclusive for
+             * in-advance prices, and inclusive for in-arrears prices.
              */
             fun endDate(endDate: EndDate?) = endDate(JsonField.ofNullable(endDate))
 
             /**
              * The end date of the adjustment interval. This is the date that the adjustment will
-             * stop affecting prices on the subscription.
+             * stop affecting prices on the subscription. The adjustment will apply to invoice dates
+             * that overlap with this `end_date`.This `end_date` is treated as exclusive for
+             * in-advance prices, and inclusive for in-arrears prices.
              */
             fun endDate(endDate: JsonField<EndDate>) = apply { this.endDate = endDate }
 
             /**
              * The end date of the adjustment interval. This is the date that the adjustment will
-             * stop affecting prices on the subscription.
+             * stop affecting prices on the subscription. The adjustment will apply to invoice dates
+             * that overlap with this `end_date`.This `end_date` is treated as exclusive for
+             * in-advance prices, and inclusive for in-arrears prices.
              */
             fun endDate(dateTime: OffsetDateTime) = endDate(EndDate.ofDateTime(dateTime))
 
             /**
              * The end date of the adjustment interval. This is the date that the adjustment will
-             * stop affecting prices on the subscription.
+             * stop affecting prices on the subscription. The adjustment will apply to invoice dates
+             * that overlap with this `end_date`.This `end_date` is treated as exclusive for
+             * in-advance prices, and inclusive for in-arrears prices.
              */
             fun endDate(billingCycleRelative: BillingCycleRelativeDate) =
                 endDate(EndDate.ofBillingCycleRelative(billingCycleRelative))
@@ -49291,7 +49315,9 @@ private constructor(
 
         /**
          * The start date of the adjustment interval. This is the date that the adjustment will
-         * start affecting prices on the subscription.
+         * start affecting prices on the subscription. The adjustment will apply to invoice dates
+         * that overlap with this `start_date`. This `start_date` is treated as inclusive for
+         * in-advance prices, and exclusive for in-arrears prices.
          */
         @JsonDeserialize(using = StartDate.Deserializer::class)
         @JsonSerialize(using = StartDate.Serializer::class)
@@ -49433,7 +49459,9 @@ private constructor(
 
         /**
          * The end date of the adjustment interval. This is the date that the adjustment will stop
-         * affecting prices on the subscription.
+         * affecting prices on the subscription. The adjustment will apply to invoice dates that
+         * overlap with this `end_date`.This `end_date` is treated as exclusive for in-advance
+         * prices, and inclusive for in-arrears prices.
          */
         @JsonDeserialize(using = EndDate.Deserializer::class)
         @JsonSerialize(using = EndDate.Serializer::class)

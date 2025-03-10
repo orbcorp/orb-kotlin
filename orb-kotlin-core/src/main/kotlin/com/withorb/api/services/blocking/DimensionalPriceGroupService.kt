@@ -47,7 +47,7 @@ interface DimensionalPriceGroupService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroupListPage
 
-    /** List dimensional price groups */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): DimensionalPriceGroupListPage =
         list(DimensionalPriceGroupListParams.none(), requestOptions)
 
@@ -91,10 +91,7 @@ interface DimensionalPriceGroupService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DimensionalPriceGroupListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /dimensional_price_groups`, but is otherwise the
-         * same as [DimensionalPriceGroupService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<DimensionalPriceGroupListPage> =
             list(DimensionalPriceGroupListParams.none(), requestOptions)

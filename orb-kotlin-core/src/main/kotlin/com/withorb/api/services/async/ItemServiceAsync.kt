@@ -37,7 +37,7 @@ interface ItemServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ItemListPageAsync
 
-    /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): ItemListPageAsync =
         list(ItemListParams.none(), requestOptions)
 
@@ -80,10 +80,7 @@ interface ItemServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ItemListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /items`, but is otherwise the same as
-         * [ItemServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<ItemListPageAsync> =
             list(ItemListParams.none(), requestOptions)

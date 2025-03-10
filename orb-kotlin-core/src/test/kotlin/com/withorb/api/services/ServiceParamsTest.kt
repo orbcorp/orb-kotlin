@@ -54,7 +54,7 @@ internal class ServiceParamsTest {
                         .excluded(true)
                         .build()
                 )
-                .addAdditionalEmail("string")
+                .addAdditionalEmail("dev@stainless.com")
                 .autoCollection(true)
                 .billingAddress(
                     CustomerCreateParams.BillingAddress.builder()

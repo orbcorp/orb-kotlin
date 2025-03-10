@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/0.1.0-alpha.34)
+[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/0.1.0-alpha.35)
 
 <!-- x-release-please-end -->
 
@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.withorb.com](https://docs.witho
 ### Gradle
 
 ```kotlin
-implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.34")
+implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.35")
 ```
 
 ### Maven
@@ -28,7 +28,7 @@ implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.34")
 <dependency>
     <groupId>com.withorb.api</groupId>
     <artifactId>orb-kotlin</artifactId>
-    <version>0.1.0-alpha.34</version>
+    <version>0.1.0-alpha.35</version>
 </dependency>
 ```
 
@@ -378,9 +378,24 @@ val params: CustomerCreateParams = CustomerCreateParams.builder()
     .build()
 ```
 
-These can be accessed on the built object later using the `_additionalHeaders()`, `_additionalQueryParams()`, and `_additionalBodyProperties()` methods. You can also set undocumented parameters on nested headers, query params, or body classes using the `putAdditionalProperty` method. These properties can be accessed on the built object later using the `_additionalProperties()` method.
+These can be accessed on the built object later using the `_additionalHeaders()`, `_additionalQueryParams()`, and `_additionalBodyProperties()` methods.
 
-To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](orb-kotlin-core/src/main/kotlin/com/withorb/api/core/JsonValue.kt) object to its setter:
+To set undocumented parameters on _nested_ headers, query params, or body classes, call the `putAdditionalProperty` method on the nested class:
+
+```kotlin
+import com.withorb.api.core.JsonValue
+import com.withorb.api.models.CustomerCreateParams
+
+val params: CustomerCreateParams = CustomerCreateParams.builder()
+    .billingAddress(CustomerCreateParams.BillingAddress.builder()
+        .putAdditionalProperty("secretProperty", JsonValue.from("42"))
+        .build())
+    .build()
+```
+
+These properties can be accessed on the nested built object later using the `_additionalProperties()` method.
+
+To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](orb-kotlin-core/src/main/kotlin/com/withorb/api/core/Values.kt) object to its setter:
 
 ```kotlin
 import com.withorb.api.core.JsonValue
@@ -390,6 +405,41 @@ val params: CustomerCreateParams = CustomerCreateParams.builder()
     .email(JsonValue.from(42))
     .name("My Customer")
     .build()
+```
+
+The most straightforward way to create a [`JsonValue`](orb-kotlin-core/src/main/kotlin/com/withorb/api/core/Values.kt) is using its `from(...)` method:
+
+```kotlin
+import com.withorb.api.core.JsonValue
+
+// Create primitive JSON values
+val nullValue: JsonValue = JsonValue.from(null)
+val booleanValue: JsonValue = JsonValue.from(true)
+val numberValue: JsonValue = JsonValue.from(42)
+val stringValue: JsonValue = JsonValue.from("Hello World!")
+
+// Create a JSON array value equivalent to `["Hello", "World"]`
+val arrayValue: JsonValue = JsonValue.from(listOf(
+  "Hello", "World"
+))
+
+// Create a JSON object value equivalent to `{ "a": 1, "b": 2 }`
+val objectValue: JsonValue = JsonValue.from(mapOf(
+  "a" to 1, "b" to 2
+))
+
+// Create an arbitrarily nested JSON equivalent to:
+// {
+//   "a": [1, 2],
+//   "b": [3, 4]
+// }
+val complexValue: JsonValue = JsonValue.from(mapOf(
+  "a" to listOf(
+    1, 2
+  ), "b" to listOf(
+    3, 4
+  )
+))
 ```
 
 ### Response properties
