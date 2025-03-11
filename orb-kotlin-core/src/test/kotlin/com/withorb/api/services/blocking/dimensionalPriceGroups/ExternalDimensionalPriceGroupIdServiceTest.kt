@@ -13,16 +13,21 @@ class ExternalDimensionalPriceGroupIdServiceTest {
 
     @Test
     fun retrieve() {
-      val client = OrbOkHttpClient.builder()
-          .baseUrl(TestServerExtension.BASE_URL)
-          .apiKey("My API Key")
-          .build()
-      val externalDimensionalPriceGroupIdService = client.dimensionalPriceGroups().externalDimensionalPriceGroupId()
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val externalDimensionalPriceGroupIdService =
+            client.dimensionalPriceGroups().externalDimensionalPriceGroupId()
 
-      val dimensionalPriceGroup = externalDimensionalPriceGroupIdService.retrieve(DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.builder()
-          .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
-          .build())
+        val dimensionalPriceGroup =
+            externalDimensionalPriceGroupIdService.retrieve(
+                DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.builder()
+                    .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
+                    .build()
+            )
 
-      dimensionalPriceGroup.validate()
+        dimensionalPriceGroup.validate()
     }
 }

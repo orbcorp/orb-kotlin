@@ -9,20 +9,16 @@ class MetricFetchParamsTest {
 
     @Test
     fun create() {
-      MetricFetchParams.builder()
-          .metricId("metric_id")
-          .build()
+        MetricFetchParams.builder().metricId("metric_id").build()
     }
 
     @Test
     fun getPathParam() {
-      val params = MetricFetchParams.builder()
-          .metricId("metric_id")
-          .build()
-      assertThat(params).isNotNull
-      // path param "metricId"
-      assertThat(params.getPathParam(0)).isEqualTo("metric_id")
-      // out-of-bound path param
-      assertThat(params.getPathParam(1)).isEqualTo("")
+        val params = MetricFetchParams.builder().metricId("metric_id").build()
+        assertThat(params).isNotNull
+        // path param "metricId"
+        assertThat(params.getPathParam(0)).isEqualTo("metric_id")
+        // out-of-bound path param
+        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }
