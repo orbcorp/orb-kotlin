@@ -15,35 +15,43 @@ class ExternalPlanIdServiceTest {
 
     @Test
     fun update() {
-      val client = OrbOkHttpClient.builder()
-          .baseUrl(TestServerExtension.BASE_URL)
-          .apiKey("My API Key")
-          .build()
-      val externalPlanIdService = client.plans().externalPlanId()
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val externalPlanIdService = client.plans().externalPlanId()
 
-      val plan = externalPlanIdService.update(PlanExternalPlanIdUpdateParams.builder()
-          .otherExternalPlanId("external_plan_id")
-          .externalPlanId("external_plan_id")
-          .metadata(PlanExternalPlanIdUpdateParams.Metadata.builder()
-              .putAdditionalProperty("foo", JsonValue.from("string"))
-              .build())
-          .build())
+        val plan =
+            externalPlanIdService.update(
+                PlanExternalPlanIdUpdateParams.builder()
+                    .otherExternalPlanId("external_plan_id")
+                    .externalPlanId("external_plan_id")
+                    .metadata(
+                        PlanExternalPlanIdUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .build()
+            )
 
-      plan.validate()
+        plan.validate()
     }
 
     @Test
     fun fetch() {
-      val client = OrbOkHttpClient.builder()
-          .baseUrl(TestServerExtension.BASE_URL)
-          .apiKey("My API Key")
-          .build()
-      val externalPlanIdService = client.plans().externalPlanId()
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val externalPlanIdService = client.plans().externalPlanId()
 
-      val plan = externalPlanIdService.fetch(PlanExternalPlanIdFetchParams.builder()
-          .externalPlanId("external_plan_id")
-          .build())
+        val plan =
+            externalPlanIdService.fetch(
+                PlanExternalPlanIdFetchParams.builder().externalPlanId("external_plan_id").build()
+            )
 
-      plan.validate()
+        plan.validate()
     }
 }

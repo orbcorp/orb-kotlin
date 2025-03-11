@@ -14,21 +14,25 @@ class InvoiceLineItemServiceTest {
 
     @Test
     fun create() {
-      val client = OrbOkHttpClient.builder()
-          .baseUrl(TestServerExtension.BASE_URL)
-          .apiKey("My API Key")
-          .build()
-      val invoiceLineItemService = client.invoiceLineItems()
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val invoiceLineItemService = client.invoiceLineItems()
 
-      val invoiceLineItem = invoiceLineItemService.create(InvoiceLineItemCreateParams.builder()
-          .amount("12.00")
-          .endDate(LocalDate.parse("2023-09-22"))
-          .invoiceId("4khy3nwzktxv7")
-          .name("Item Name")
-          .quantity(1.0)
-          .startDate(LocalDate.parse("2023-09-22"))
-          .build())
+        val invoiceLineItem =
+            invoiceLineItemService.create(
+                InvoiceLineItemCreateParams.builder()
+                    .amount("12.00")
+                    .endDate(LocalDate.parse("2023-09-22"))
+                    .invoiceId("4khy3nwzktxv7")
+                    .name("Item Name")
+                    .quantity(1.0)
+                    .startDate(LocalDate.parse("2023-09-22"))
+                    .build()
+            )
 
-      invoiceLineItem.validate()
+        invoiceLineItem.validate()
     }
 }

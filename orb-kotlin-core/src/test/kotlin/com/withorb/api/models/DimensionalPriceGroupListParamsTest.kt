@@ -10,28 +10,22 @@ class DimensionalPriceGroupListParamsTest {
 
     @Test
     fun create() {
-      DimensionalPriceGroupListParams.builder()
-          .cursor("cursor")
-          .limit(1L)
-          .build()
+        DimensionalPriceGroupListParams.builder().cursor("cursor").limit(1L).build()
     }
 
     @Test
     fun queryParams() {
-      val params = DimensionalPriceGroupListParams.builder()
-          .cursor("cursor")
-          .limit(1L)
-          .build()
-      val expected = QueryParams.builder()
-      expected.put("cursor", "cursor")
-      expected.put("limit", "1")
-      assertThat(params._queryParams()).isEqualTo(expected.build())
+        val params = DimensionalPriceGroupListParams.builder().cursor("cursor").limit(1L).build()
+        val expected = QueryParams.builder()
+        expected.put("cursor", "cursor")
+        expected.put("limit", "1")
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-      val params = DimensionalPriceGroupListParams.builder().build()
-      val expected = QueryParams.builder()
-      assertThat(params._queryParams()).isEqualTo(expected.build())
+        val params = DimensionalPriceGroupListParams.builder().build()
+        val expected = QueryParams.builder()
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 }

@@ -13,17 +13,16 @@ import java.util.Objects
 /**
  * This endpoint returns a list of alerts within Orb.
  *
- * The request must specify one of `customer_id`, `external_customer_id`, or
- * `subscription_id`.
+ * The request must specify one of `customer_id`, `external_customer_id`, or `subscription_id`.
  *
- * If querying by subscripion_id, the endpoint will return the subscription level
- * alerts as well as the plan level alerts associated with the subscription.
+ * If querying by subscripion_id, the endpoint will return the subscription level alerts as well as
+ * the plan level alerts associated with the subscription.
  *
- * The list of alerts is ordered starting from the most recently created alert.
- * This endpoint follows Orb's
- * [standardized pagination format](/api-reference/pagination).
+ * The list of alerts is ordered starting from the most recently created alert. This endpoint
+ * follows Orb's [standardized pagination format](/api-reference/pagination).
  */
-class AlertListParams private constructor(
+class AlertListParams
+private constructor(
     private val createdAtGt: OffsetDateTime?,
     private val createdAtGte: OffsetDateTime?,
     private val createdAtLt: OffsetDateTime?,
@@ -35,7 +34,6 @@ class AlertListParams private constructor(
     private val subscriptionId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-
 ) : Params {
 
     fun createdAtGt(): OffsetDateTime? = createdAtGt
@@ -47,8 +45,8 @@ class AlertListParams private constructor(
     fun createdAtLte(): OffsetDateTime? = createdAtLte
 
     /**
-     * Cursor for pagination. This can be populated by the `next_cursor` value returned
-     * from the initial request.
+     * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+     * initial request.
      */
     fun cursor(): String? = cursor
 
@@ -71,54 +69,40 @@ class AlertListParams private constructor(
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams {
-      val queryParams = QueryParams.builder()
-      this.createdAtGt?.let {
-          queryParams.put(
-            "created_at[gt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-          )
-      }
-      this.createdAtGte?.let {
-          queryParams.put(
-            "created_at[gte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-          )
-      }
-      this.createdAtLt?.let {
-          queryParams.put(
-            "created_at[lt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-          )
-      }
-      this.createdAtLte?.let {
-          queryParams.put(
-            "created_at[lte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-          )
-      }
-      this.cursor?.let {
-          queryParams.put(
-            "cursor", listOf(it.toString())
-          )
-      }
-      this.customerId?.let {
-          queryParams.put(
-            "customer_id", listOf(it.toString())
-          )
-      }
-      this.externalCustomerId?.let {
-          queryParams.put(
-            "external_customer_id", listOf(it.toString())
-          )
-      }
-      this.limit?.let {
-          queryParams.put(
-            "limit", listOf(it.toString())
-          )
-      }
-      this.subscriptionId?.let {
-          queryParams.put(
-            "subscription_id", listOf(it.toString())
-          )
-      }
-      queryParams.putAll(additionalQueryParams)
-      return queryParams.build()
+        val queryParams = QueryParams.builder()
+        this.createdAtGt?.let {
+            queryParams.put(
+                "created_at[gt]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
+        this.createdAtGte?.let {
+            queryParams.put(
+                "created_at[gte]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
+        this.createdAtLt?.let {
+            queryParams.put(
+                "created_at[lt]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
+        this.createdAtLte?.let {
+            queryParams.put(
+                "created_at[lte]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
+        this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
+        this.customerId?.let { queryParams.put("customer_id", listOf(it.toString())) }
+        this.externalCustomerId?.let {
+            queryParams.put("external_customer_id", listOf(it.toString()))
+        }
+        this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
+        this.subscriptionId?.let { queryParams.put("subscription_id", listOf(it.toString())) }
+        queryParams.putAll(additionalQueryParams)
+        return queryParams.build()
     }
 
     fun toBuilder() = Builder().from(this)
@@ -147,226 +131,175 @@ class AlertListParams private constructor(
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
-        internal fun from(alertListParams: AlertListParams) =
-            apply {
-                createdAtGt = alertListParams.createdAtGt
-                createdAtGte = alertListParams.createdAtGte
-                createdAtLt = alertListParams.createdAtLt
-                createdAtLte = alertListParams.createdAtLte
-                cursor = alertListParams.cursor
-                customerId = alertListParams.customerId
-                externalCustomerId = alertListParams.externalCustomerId
-                limit = alertListParams.limit
-                subscriptionId = alertListParams.subscriptionId
-                additionalHeaders = alertListParams.additionalHeaders.toBuilder()
-                additionalQueryParams = alertListParams.additionalQueryParams.toBuilder()
-            }
+        internal fun from(alertListParams: AlertListParams) = apply {
+            createdAtGt = alertListParams.createdAtGt
+            createdAtGte = alertListParams.createdAtGte
+            createdAtLt = alertListParams.createdAtLt
+            createdAtLte = alertListParams.createdAtLte
+            cursor = alertListParams.cursor
+            customerId = alertListParams.customerId
+            externalCustomerId = alertListParams.externalCustomerId
+            limit = alertListParams.limit
+            subscriptionId = alertListParams.subscriptionId
+            additionalHeaders = alertListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = alertListParams.additionalQueryParams.toBuilder()
+        }
 
-        fun createdAtGt(createdAtGt: OffsetDateTime?) =
-            apply {
-                this.createdAtGt = createdAtGt
-            }
+        fun createdAtGt(createdAtGt: OffsetDateTime?) = apply { this.createdAtGt = createdAtGt }
 
-        fun createdAtGte(createdAtGte: OffsetDateTime?) =
-            apply {
-                this.createdAtGte = createdAtGte
-            }
+        fun createdAtGte(createdAtGte: OffsetDateTime?) = apply { this.createdAtGte = createdAtGte }
 
-        fun createdAtLt(createdAtLt: OffsetDateTime?) =
-            apply {
-                this.createdAtLt = createdAtLt
-            }
+        fun createdAtLt(createdAtLt: OffsetDateTime?) = apply { this.createdAtLt = createdAtLt }
 
-        fun createdAtLte(createdAtLte: OffsetDateTime?) =
-            apply {
-                this.createdAtLte = createdAtLte
-            }
+        fun createdAtLte(createdAtLte: OffsetDateTime?) = apply { this.createdAtLte = createdAtLte }
 
         /**
-         * Cursor for pagination. This can be populated by the `next_cursor` value returned
-         * from the initial request.
+         * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+         * initial request.
          */
-        fun cursor(cursor: String?) =
-            apply {
-                this.cursor = cursor
-            }
+        fun cursor(cursor: String?) = apply { this.cursor = cursor }
 
         /** Fetch alerts scoped to this customer_id */
-        fun customerId(customerId: String?) =
-            apply {
-                this.customerId = customerId
-            }
+        fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
         /** Fetch alerts scoped to this external_customer_id */
-        fun externalCustomerId(externalCustomerId: String?) =
-            apply {
-                this.externalCustomerId = externalCustomerId
-            }
+        fun externalCustomerId(externalCustomerId: String?) = apply {
+            this.externalCustomerId = externalCustomerId
+        }
 
         /** The number of items to fetch. Defaults to 20. */
-        fun limit(limit: Long?) =
-            apply {
-                this.limit = limit
-            }
+        fun limit(limit: Long?) = apply { this.limit = limit }
 
         /** The number of items to fetch. Defaults to 20. */
         fun limit(limit: Long) = limit(limit as Long?)
 
         /** Fetch alerts scoped to this subscription_id */
-        fun subscriptionId(subscriptionId: String?) =
-            apply {
-                this.subscriptionId = subscriptionId
-            }
+        fun subscriptionId(subscriptionId: String?) = apply { this.subscriptionId = subscriptionId }
 
-        fun additionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun putAdditionalHeader(name: String, value: String) =
-            apply {
-                additionalHeaders.put(name, value)
-            }
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
+        }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.put(name, values)
-            }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun replaceAdditionalHeaders(name: String, value: String) =
-            apply {
-                additionalHeaders.replace(name, value)
-            }
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.replace(name, values)
-            }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun removeAdditionalHeaders(name: String) =
-            apply {
-                additionalHeaders.remove(name)
-            }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) =
-            apply {
-                additionalHeaders.removeAll(names)
-            }
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun putAdditionalQueryParam(key: String, value: String) =
-            apply {
-                additionalQueryParams.put(key, value)
-            }
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.put(key, values)
-            }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.putAll(additionalQueryParams)
-            }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) =
-            apply {
-                additionalQueryParams.replace(key, value)
-            }
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.replace(key, values)
-            }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.replaceAll(additionalQueryParams)
-            }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) =
-            apply {
-                additionalQueryParams.remove(key)
-            }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) =
-            apply {
-                additionalQueryParams.removeAll(keys)
-            }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
 
         fun build(): AlertListParams =
             AlertListParams(
-              createdAtGt,
-              createdAtGte,
-              createdAtLt,
-              createdAtLte,
-              cursor,
-              customerId,
-              externalCustomerId,
-              limit,
-              subscriptionId,
-              additionalHeaders.build(),
-              additionalQueryParams.build(),
+                createdAtGt,
+                createdAtGte,
+                createdAtLt,
+                createdAtLte,
+                cursor,
+                customerId,
+                externalCustomerId,
+                limit,
+                subscriptionId,
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is AlertListParams && createdAtGt == other.createdAtGt && createdAtGte == other.createdAtGte && createdAtLt == other.createdAtLt && createdAtLte == other.createdAtLte && cursor == other.cursor && customerId == other.customerId && externalCustomerId == other.externalCustomerId && limit == other.limit && subscriptionId == other.subscriptionId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is AlertListParams && createdAtGt == other.createdAtGt && createdAtGte == other.createdAtGte && createdAtLt == other.createdAtLt && createdAtLte == other.createdAtLte && cursor == other.cursor && customerId == other.customerId && externalCustomerId == other.externalCustomerId && limit == other.limit && subscriptionId == other.subscriptionId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(createdAtGt, createdAtGte, createdAtLt, createdAtLte, cursor, customerId, externalCustomerId, limit, subscriptionId, additionalHeaders, additionalQueryParams) /* spotless:on */
 
-    override fun toString() = "AlertListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, customerId=$customerId, externalCustomerId=$externalCustomerId, limit=$limit, subscriptionId=$subscriptionId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() =
+        "AlertListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, customerId=$customerId, externalCustomerId=$externalCustomerId, limit=$limit, subscriptionId=$subscriptionId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
