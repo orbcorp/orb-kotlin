@@ -1,7 +1,7 @@
 package com.withorb.api.core.http
 
-import com.withorb.api.core.RequestOptions
 import java.lang.AutoCloseable
+import com.withorb.api.core.RequestOptions
 
 interface HttpClient : AutoCloseable {
 

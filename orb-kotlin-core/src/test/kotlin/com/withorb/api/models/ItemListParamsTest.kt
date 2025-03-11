@@ -10,22 +10,28 @@ class ItemListParamsTest {
 
     @Test
     fun create() {
-        ItemListParams.builder().cursor("cursor").limit(1L).build()
+      ItemListParams.builder()
+          .cursor("cursor")
+          .limit(1L)
+          .build()
     }
 
     @Test
     fun queryParams() {
-        val params = ItemListParams.builder().cursor("cursor").limit(1L).build()
-        val expected = QueryParams.builder()
-        expected.put("cursor", "cursor")
-        expected.put("limit", "1")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+      val params = ItemListParams.builder()
+          .cursor("cursor")
+          .limit(1L)
+          .build()
+      val expected = QueryParams.builder()
+      expected.put("cursor", "cursor")
+      expected.put("limit", "1")
+      assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = ItemListParams.builder().build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+      val params = ItemListParams.builder().build()
+      val expected = QueryParams.builder()
+      assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 }

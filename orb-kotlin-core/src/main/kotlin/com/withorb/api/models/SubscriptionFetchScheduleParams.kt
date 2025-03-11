@@ -12,12 +12,12 @@ import java.time.format.DateTimeFormatter
 import java.util.Objects
 
 /**
- * This endpoint returns a [paginated](/api-reference/pagination) list of all plans associated with
- * a subscription along with their start and end dates. This list contains the subscription's
- * initial plan along with past and future plan changes.
+ * This endpoint returns a [paginated](/api-reference/pagination) list of all plans
+ * associated with a subscription along with their start and end dates. This list
+ * contains the subscription's initial plan along with past and future plan
+ * changes.
  */
-class SubscriptionFetchScheduleParams
-private constructor(
+class SubscriptionFetchScheduleParams private constructor(
     private val subscriptionId: String,
     private val cursor: String?,
     private val limit: Long?,
@@ -27,13 +27,14 @@ private constructor(
     private val startDateLte: OffsetDateTime?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
+
 ) : Params {
 
     fun subscriptionId(): String = subscriptionId
 
     /**
-     * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
-     * initial request.
+     * Cursor for pagination. This can be populated by the `next_cursor` value returned
+     * from the initial request.
      */
     fun cursor(): String? = cursor
 
@@ -55,42 +56,46 @@ private constructor(
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
-        this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
-        this.startDateGt?.let {
-            queryParams.put(
-                "start_date[gt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.startDateGte?.let {
-            queryParams.put(
-                "start_date[gte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.startDateLt?.let {
-            queryParams.put(
-                "start_date[lt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.startDateLte?.let {
-            queryParams.put(
-                "start_date[lte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
+      val queryParams = QueryParams.builder()
+      this.cursor?.let {
+          queryParams.put(
+            "cursor", listOf(it.toString())
+          )
+      }
+      this.limit?.let {
+          queryParams.put(
+            "limit", listOf(it.toString())
+          )
+      }
+      this.startDateGt?.let {
+          queryParams.put(
+            "start_date[gt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+          )
+      }
+      this.startDateGte?.let {
+          queryParams.put(
+            "start_date[gte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+          )
+      }
+      this.startDateLt?.let {
+          queryParams.put(
+            "start_date[lt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+          )
+      }
+      this.startDateLte?.let {
+          queryParams.put(
+            "start_date[lte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+          )
+      }
+      queryParams.putAll(additionalQueryParams)
+      return queryParams.build()
     }
 
     fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> subscriptionId
-            else -> ""
-        }
+      return when (index) {
+          0 -> subscriptionId
+          else -> ""
+      }
     }
 
     fun toBuilder() = Builder().from(this)
@@ -102,6 +107,7 @@ private constructor(
          * [SubscriptionFetchScheduleParams].
          *
          * The following fields are required:
+         *
          * ```kotlin
          * .subscriptionId()
          * ```
@@ -133,154 +139,201 @@ private constructor(
                 startDateLt = subscriptionFetchScheduleParams.startDateLt
                 startDateLte = subscriptionFetchScheduleParams.startDateLte
                 additionalHeaders = subscriptionFetchScheduleParams.additionalHeaders.toBuilder()
-                additionalQueryParams =
-                    subscriptionFetchScheduleParams.additionalQueryParams.toBuilder()
+                additionalQueryParams = subscriptionFetchScheduleParams.additionalQueryParams.toBuilder()
             }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String) =
+            apply {
+                this.subscriptionId = subscriptionId
+            }
 
         /**
-         * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
-         * initial request.
+         * Cursor for pagination. This can be populated by the `next_cursor` value returned
+         * from the initial request.
          */
-        fun cursor(cursor: String?) = apply { this.cursor = cursor }
+        fun cursor(cursor: String?) =
+            apply {
+                this.cursor = cursor
+            }
 
         /** The number of items to fetch. Defaults to 20. */
-        fun limit(limit: Long?) = apply { this.limit = limit }
+        fun limit(limit: Long?) =
+            apply {
+                this.limit = limit
+            }
 
         /** The number of items to fetch. Defaults to 20. */
         fun limit(limit: Long) = limit(limit as Long?)
 
-        fun startDateGt(startDateGt: OffsetDateTime?) = apply { this.startDateGt = startDateGt }
+        fun startDateGt(startDateGt: OffsetDateTime?) =
+            apply {
+                this.startDateGt = startDateGt
+            }
 
-        fun startDateGte(startDateGte: OffsetDateTime?) = apply { this.startDateGte = startDateGte }
+        fun startDateGte(startDateGte: OffsetDateTime?) =
+            apply {
+                this.startDateGte = startDateGte
+            }
 
-        fun startDateLt(startDateLt: OffsetDateTime?) = apply { this.startDateLt = startDateLt }
+        fun startDateLt(startDateLt: OffsetDateTime?) =
+            apply {
+                this.startDateLt = startDateLt
+            }
 
-        fun startDateLte(startDateLte: OffsetDateTime?) = apply { this.startDateLte = startDateLte }
+        fun startDateLte(startDateLte: OffsetDateTime?) =
+            apply {
+                this.startDateLte = startDateLte
+            }
 
-        fun additionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun putAdditionalHeader(name: String, value: String) = apply {
-            additionalHeaders.put(name, value)
-        }
+        fun putAdditionalHeader(name: String, value: String) =
+            apply {
+                additionalHeaders.put(name, value)
+            }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.put(name, values)
-        }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.put(name, values)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun replaceAdditionalHeaders(name: String, value: String) = apply {
-            additionalHeaders.replace(name, value)
-        }
+        fun replaceAdditionalHeaders(name: String, value: String) =
+            apply {
+                additionalHeaders.replace(name, value)
+            }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.replace(name, values)
-        }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.replace(name, values)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) =
+            apply {
+                additionalHeaders.remove(name)
+            }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
-            additionalHeaders.removeAll(names)
-        }
+        fun removeAllAdditionalHeaders(names: Set<String>) =
+            apply {
+                additionalHeaders.removeAll(names)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun putAdditionalQueryParam(key: String, value: String) = apply {
-            additionalQueryParams.put(key, value)
-        }
+        fun putAdditionalQueryParam(key: String, value: String) =
+            apply {
+                additionalQueryParams.put(key, value)
+            }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.put(key, values)
-        }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.put(key, values)
+            }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.putAll(additionalQueryParams)
-        }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
-            additionalQueryParams.replace(key, value)
-        }
+        fun replaceAdditionalQueryParams(key: String, value: String) =
+            apply {
+                additionalQueryParams.replace(key, value)
+            }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.replace(key, values)
-        }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.replace(key, values)
+            }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.replaceAll(additionalQueryParams)
-        }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) =
+            apply {
+                additionalQueryParams.remove(key)
+            }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
-            additionalQueryParams.removeAll(keys)
-        }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) =
+            apply {
+                additionalQueryParams.removeAll(keys)
+            }
 
         fun build(): SubscriptionFetchScheduleParams =
             SubscriptionFetchScheduleParams(
-                checkRequired("subscriptionId", subscriptionId),
-                cursor,
-                limit,
-                startDateGt,
-                startDateGte,
-                startDateLt,
-                startDateLte,
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
+              checkRequired(
+                "subscriptionId", subscriptionId
+              ),
+              cursor,
+              limit,
+              startDateGt,
+              startDateGte,
+              startDateLt,
+              startDateLte,
+              additionalHeaders.build(),
+              additionalQueryParams.build(),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return /* spotless:off */ other is SubscriptionFetchScheduleParams && subscriptionId == other.subscriptionId && cursor == other.cursor && limit == other.limit && startDateGt == other.startDateGt && startDateGte == other.startDateGte && startDateLt == other.startDateLt && startDateLte == other.startDateLte && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+      return /* spotless:off */ other is SubscriptionFetchScheduleParams && subscriptionId == other.subscriptionId && cursor == other.cursor && limit == other.limit && startDateGt == other.startDateGt && startDateGte == other.startDateGte && startDateLt == other.startDateLt && startDateLte == other.startDateLte && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, cursor, limit, startDateGt, startDateGte, startDateLt, startDateLte, additionalHeaders, additionalQueryParams) /* spotless:on */
 
-    override fun toString() =
-        "SubscriptionFetchScheduleParams{subscriptionId=$subscriptionId, cursor=$cursor, limit=$limit, startDateGt=$startDateGt, startDateGte=$startDateGte, startDateLt=$startDateLt, startDateLte=$startDateLte, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() = "SubscriptionFetchScheduleParams{subscriptionId=$subscriptionId, cursor=$cursor, limit=$limit, startDateGt=$startDateGt, startDateGte=$startDateGte, startDateLt=$startDateLt, startDateLte=$startDateLte, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
