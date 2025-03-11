@@ -23,143 +23,119 @@ import com.withorb.api.models.DimensionalPriceGroupRetrieveParams
 import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdService
 import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdServiceImpl
 
-class DimensionalPriceGroupServiceImpl
-internal constructor(private val clientOptions: ClientOptions) : DimensionalPriceGroupService {
+class DimensionalPriceGroupServiceImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: DimensionalPriceGroupService.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : DimensionalPriceGroupService {
 
-    private val externalDimensionalPriceGroupId: ExternalDimensionalPriceGroupIdService by lazy {
-        ExternalDimensionalPriceGroupIdServiceImpl(clientOptions)
-    }
+    private val withRawResponse: DimensionalPriceGroupService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
+
+    private val externalDimensionalPriceGroupId: ExternalDimensionalPriceGroupIdService by lazy { ExternalDimensionalPriceGroupIdServiceImpl(clientOptions) }
 
     override fun withRawResponse(): DimensionalPriceGroupService.WithRawResponse = withRawResponse
 
-    override fun externalDimensionalPriceGroupId(): ExternalDimensionalPriceGroupIdService =
-        externalDimensionalPriceGroupId
+    override fun externalDimensionalPriceGroupId(): ExternalDimensionalPriceGroupIdService = externalDimensionalPriceGroupId
 
-    override fun create(
-        params: DimensionalPriceGroupCreateParams,
-        requestOptions: RequestOptions,
-    ): DimensionalPriceGroup =
+    override fun create(params: DimensionalPriceGroupCreateParams, requestOptions: RequestOptions): DimensionalPriceGroup =
         // post /dimensional_price_groups
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun retrieve(
-        params: DimensionalPriceGroupRetrieveParams,
-        requestOptions: RequestOptions,
-    ): DimensionalPriceGroup =
+    override fun retrieve(params: DimensionalPriceGroupRetrieveParams, requestOptions: RequestOptions): DimensionalPriceGroup =
         // get /dimensional_price_groups/{dimensional_price_group_id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun list(
-        params: DimensionalPriceGroupListParams,
-        requestOptions: RequestOptions,
-    ): DimensionalPriceGroupListPage =
+    override fun list(params: DimensionalPriceGroupListParams, requestOptions: RequestOptions): DimensionalPriceGroupListPage =
         // get /dimensional_price_groups
         withRawResponse().list(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        DimensionalPriceGroupService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
+
+    ) : DimensionalPriceGroupService.WithRawResponse {
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val externalDimensionalPriceGroupId:
-            ExternalDimensionalPriceGroupIdService.WithRawResponse by lazy {
-            ExternalDimensionalPriceGroupIdServiceImpl.WithRawResponseImpl(clientOptions)
+        private val externalDimensionalPriceGroupId: ExternalDimensionalPriceGroupIdService.WithRawResponse by lazy { ExternalDimensionalPriceGroupIdServiceImpl.WithRawResponseImpl(clientOptions) }
+
+        override fun externalDimensionalPriceGroupId(): ExternalDimensionalPriceGroupIdService.WithRawResponse = externalDimensionalPriceGroupId
+
+        private val createHandler: Handler<DimensionalPriceGroup> = jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun create(params: DimensionalPriceGroupCreateParams, requestOptions: RequestOptions): HttpResponseFor<DimensionalPriceGroup> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .addPathSegments("dimensional_price_groups")
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  createHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        override fun externalDimensionalPriceGroupId():
-            ExternalDimensionalPriceGroupIdService.WithRawResponse = externalDimensionalPriceGroupId
+        private val retrieveHandler: Handler<DimensionalPriceGroup> = jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        private val createHandler: Handler<DimensionalPriceGroup> =
-            jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
-
-        override fun create(
-            params: DimensionalPriceGroupCreateParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<DimensionalPriceGroup> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .addPathSegments("dimensional_price_groups")
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { createHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun retrieve(params: DimensionalPriceGroupRetrieveParams, requestOptions: RequestOptions): HttpResponseFor<DimensionalPriceGroup> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .addPathSegments("dimensional_price_groups", params.getPathParam(0))
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  retrieveHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val retrieveHandler: Handler<DimensionalPriceGroup> =
-            jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val listHandler: Handler<DimensionalPriceGroupListPage.Response> = jsonHandler<DimensionalPriceGroupListPage.Response>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun retrieve(
-            params: DimensionalPriceGroupRetrieveParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<DimensionalPriceGroup> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .addPathSegments("dimensional_price_groups", params.getPathParam(0))
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { retrieveHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
-        }
-
-        private val listHandler: Handler<DimensionalPriceGroupListPage.Response> =
-            jsonHandler<DimensionalPriceGroupListPage.Response>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
-
-        override fun list(
-            params: DimensionalPriceGroupListParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<DimensionalPriceGroupListPage> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .addPathSegments("dimensional_price_groups")
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { listHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-                    .let {
-                        DimensionalPriceGroupListPage.of(
-                            DimensionalPriceGroupServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
-                    }
-            }
+        override fun list(params: DimensionalPriceGroupListParams, requestOptions: RequestOptions): HttpResponseFor<DimensionalPriceGroupListPage> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .addPathSegments("dimensional_price_groups")
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  listHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+              .let {
+                  DimensionalPriceGroupListPage.of(DimensionalPriceGroupServiceImpl(clientOptions), params, it)
+              }
+          }
         }
     }
 }
