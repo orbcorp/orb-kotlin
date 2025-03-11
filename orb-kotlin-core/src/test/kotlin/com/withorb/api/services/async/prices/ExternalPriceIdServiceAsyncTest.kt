@@ -15,44 +15,34 @@ class ExternalPriceIdServiceAsyncTest {
 
     @Test
     suspend fun update() {
-        val client =
-            OrbOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val externalPriceIdServiceAsync = client.prices().externalPriceId()
+      val client = OrbOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val externalPriceIdServiceAsync = client.prices().externalPriceId()
 
-        val price =
-            externalPriceIdServiceAsync.update(
-                PriceExternalPriceIdUpdateParams.builder()
-                    .externalPriceId("external_price_id")
-                    .metadata(
-                        PriceExternalPriceIdUpdateParams.Metadata.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("string"))
-                            .build()
-                    )
-                    .build()
-            )
+      val price = externalPriceIdServiceAsync.update(PriceExternalPriceIdUpdateParams.builder()
+          .externalPriceId("external_price_id")
+          .metadata(PriceExternalPriceIdUpdateParams.Metadata.builder()
+              .putAdditionalProperty("foo", JsonValue.from("string"))
+              .build())
+          .build())
 
-        price.validate()
+      price.validate()
     }
 
     @Test
     suspend fun fetch() {
-        val client =
-            OrbOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val externalPriceIdServiceAsync = client.prices().externalPriceId()
+      val client = OrbOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val externalPriceIdServiceAsync = client.prices().externalPriceId()
 
-        val price =
-            externalPriceIdServiceAsync.fetch(
-                PriceExternalPriceIdFetchParams.builder()
-                    .externalPriceId("external_price_id")
-                    .build()
-            )
+      val price = externalPriceIdServiceAsync.fetch(PriceExternalPriceIdFetchParams.builder()
+          .externalPriceId("external_price_id")
+          .build())
 
-        price.validate()
+      price.validate()
     }
 }

@@ -9,6 +9,7 @@ import com.withorb.api.models.InvoiceCreateParams
 import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceIssueParams
+import com.withorb.api.models.InvoiceListParams
 import com.withorb.api.models.InvoiceMarkPaidParams
 import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
@@ -24,193 +25,168 @@ class InvoiceServiceTest {
 
     @Test
     fun create() {
-        val client =
-            OrbOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val invoiceService = client.invoices()
+      val client = OrbOkHttpClient.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val invoiceService = client.invoices()
 
-        val invoice =
-            invoiceService.create(
-                InvoiceCreateParams.builder()
-                    .currency("USD")
-                    .invoiceDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .addLineItem(
-                        InvoiceCreateParams.LineItem.builder()
-                            .endDate(LocalDate.parse("2023-09-22"))
-                            .itemId("4khy3nwzktxv7")
-                            .modelType(InvoiceCreateParams.LineItem.ModelType.UNIT)
-                            .name("Line Item Name")
-                            .quantity(1.0)
-                            .startDate(LocalDate.parse("2023-09-22"))
-                            .unitConfig(
-                                InvoiceCreateParams.LineItem.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
-                            .build()
-                    )
-                    .netTerms(0L)
-                    .customerId("4khy3nwzktxv7")
-                    .discount(
-                        PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                            .percentageDiscount(0.15)
-                            .reason("reason")
-                            .build()
-                    )
-                    .externalCustomerId("external-customer-id")
-                    .memo("An optional memo for my invoice.")
-                    .metadata(
-                        InvoiceCreateParams.Metadata.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("string"))
-                            .build()
-                    )
-                    .willAutoIssue(false)
-                    .build()
-            )
+      val invoice = invoiceService.create(InvoiceCreateParams.builder()
+          .currency("USD")
+          .invoiceDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+          .addLineItem(InvoiceCreateParams.LineItem.builder()
+              .endDate(LocalDate.parse("2023-09-22"))
+              .itemId("4khy3nwzktxv7")
+              .modelType(InvoiceCreateParams.LineItem.ModelType.UNIT)
+              .name("Line Item Name")
+              .quantity(1.0)
+              .startDate(LocalDate.parse("2023-09-22"))
+              .unitConfig(InvoiceCreateParams.LineItem.UnitConfig.builder()
+                  .unitAmount("unit_amount")
+                  .build())
+              .build())
+          .netTerms(0L)
+          .customerId("4khy3nwzktxv7")
+          .discount(PercentageDiscount.builder()
+              .addAppliesToPriceId("h74gfhdjvn7ujokd")
+              .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+              .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+              .percentageDiscount(0.15)
+              .reason("reason")
+              .build())
+          .externalCustomerId("external-customer-id")
+          .memo("An optional memo for my invoice.")
+          .metadata(InvoiceCreateParams.Metadata.builder()
+              .putAdditionalProperty("foo", JsonValue.from("string"))
+              .build())
+          .willAutoIssue(false)
+          .build())
 
-        invoice.validate()
+      invoice.validate()
     }
 
     @Test
     fun update() {
-        val client =
-            OrbOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val invoiceService = client.invoices()
+      val client = OrbOkHttpClient.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val invoiceService = client.invoices()
 
-        val invoice =
-            invoiceService.update(
-                InvoiceUpdateParams.builder()
-                    .invoiceId("invoice_id")
-                    .metadata(
-                        InvoiceUpdateParams.Metadata.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("string"))
-                            .build()
-                    )
-                    .build()
-            )
+      val invoice = invoiceService.update(InvoiceUpdateParams.builder()
+          .invoiceId("invoice_id")
+          .metadata(InvoiceUpdateParams.Metadata.builder()
+              .putAdditionalProperty("foo", JsonValue.from("string"))
+              .build())
+          .build())
 
-        invoice.validate()
+      invoice.validate()
     }
 
     @Test
     fun list() {
-        val client =
-            OrbOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val invoiceService = client.invoices()
+      val client = OrbOkHttpClient.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val invoiceService = client.invoices()
 
-        val page = invoiceService.list()
+      val page = invoiceService.list()
 
-        page.response().validate()
+      page.response().validate()
     }
 
     @Test
     fun fetch() {
-        val client =
-            OrbOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val invoiceService = client.invoices()
+      val client = OrbOkHttpClient.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val invoiceService = client.invoices()
 
-        val invoice =
-            invoiceService.fetch(InvoiceFetchParams.builder().invoiceId("invoice_id").build())
+      val invoice = invoiceService.fetch(InvoiceFetchParams.builder()
+          .invoiceId("invoice_id")
+          .build())
 
-        invoice.validate()
+      invoice.validate()
     }
 
     @Test
     fun fetchUpcoming() {
-        val client =
-            OrbOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val invoiceService = client.invoices()
+      val client = OrbOkHttpClient.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val invoiceService = client.invoices()
 
-        val response =
-            invoiceService.fetchUpcoming(
-                InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
-            )
+      val response = invoiceService.fetchUpcoming(InvoiceFetchUpcomingParams.builder()
+          .subscriptionId("subscription_id")
+          .build())
 
-        response.validate()
+      response.validate()
     }
 
     @Test
     fun issue() {
-        val client =
-            OrbOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val invoiceService = client.invoices()
+      val client = OrbOkHttpClient.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val invoiceService = client.invoices()
 
-        val invoice =
-            invoiceService.issue(
-                InvoiceIssueParams.builder().invoiceId("invoice_id").synchronous(true).build()
-            )
+      val invoice = invoiceService.issue(InvoiceIssueParams.builder()
+          .invoiceId("invoice_id")
+          .synchronous(true)
+          .build())
 
-        invoice.validate()
+      invoice.validate()
     }
 
     @Test
     fun markPaid() {
-        val client =
-            OrbOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val invoiceService = client.invoices()
+      val client = OrbOkHttpClient.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val invoiceService = client.invoices()
 
-        val invoice =
-            invoiceService.markPaid(
-                InvoiceMarkPaidParams.builder()
-                    .invoiceId("invoice_id")
-                    .paymentReceivedDate(LocalDate.parse("2023-09-22"))
-                    .externalId("external_payment_id_123")
-                    .notes("notes")
-                    .build()
-            )
+      val invoice = invoiceService.markPaid(InvoiceMarkPaidParams.builder()
+          .invoiceId("invoice_id")
+          .paymentReceivedDate(LocalDate.parse("2023-09-22"))
+          .externalId("external_payment_id_123")
+          .notes("notes")
+          .build())
 
-        invoice.validate()
+      invoice.validate()
     }
 
     @Test
     fun pay() {
-        val client =
-            OrbOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val invoiceService = client.invoices()
+      val client = OrbOkHttpClient.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val invoiceService = client.invoices()
 
-        val invoice = invoiceService.pay(InvoicePayParams.builder().invoiceId("invoice_id").build())
+      val invoice = invoiceService.pay(InvoicePayParams.builder()
+          .invoiceId("invoice_id")
+          .build())
 
-        invoice.validate()
+      invoice.validate()
     }
 
     @Test
     fun void() {
-        val client =
-            OrbOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val invoiceService = client.invoices()
+      val client = OrbOkHttpClient.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val invoiceService = client.invoices()
 
-        val invoice =
-            invoiceService.void(InvoiceVoidParams.builder().invoiceId("invoice_id").build())
+      val invoice = invoiceService.void(InvoiceVoidParams.builder()
+          .invoiceId("invoice_id")
+          .build())
 
-        invoice.validate()
+      invoice.validate()
     }
 }
