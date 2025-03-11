@@ -25,22 +25,21 @@ import java.util.Objects
 /**
  * This endpoint is used to create alerts at the subscription level.
  *
- * Subscription level alerts can be one of two types: `usage_exceeded` or
- * `cost_exceeded`. A `usage_exceeded` alert is scoped to a particular metric and
- * is triggered when the usage of that metric exceeds predefined thresholds during
- * the current billing cycle. A `cost_exceeded` alert is triggered when the total
- * amount due during the current billing cycle surpasses predefined thresholds.
- * `cost_exceeded` alerts do not include burndown of pre-purchase credits. Each
- * subscription can have one `cost_exceeded` alert and one `usage_exceeded` alert
- * per metric that is a part of the subscription. Alerts are triggered based on
- * usage or cost conditions met during the current billing cycle.
+ * Subscription level alerts can be one of two types: `usage_exceeded` or `cost_exceeded`. A
+ * `usage_exceeded` alert is scoped to a particular metric and is triggered when the usage of that
+ * metric exceeds predefined thresholds during the current billing cycle. A `cost_exceeded` alert is
+ * triggered when the total amount due during the current billing cycle surpasses predefined
+ * thresholds. `cost_exceeded` alerts do not include burndown of pre-purchase credits. Each
+ * subscription can have one `cost_exceeded` alert and one `usage_exceeded` alert per metric that is
+ * a part of the subscription. Alerts are triggered based on usage or cost conditions met during the
+ * current billing cycle.
  */
-class AlertCreateForSubscriptionParams private constructor(
+class AlertCreateForSubscriptionParams
+private constructor(
     private val subscriptionId: String,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-
 ) : Params {
 
     fun subscriptionId(): String = subscriptionId
@@ -76,19 +75,25 @@ class AlertCreateForSubscriptionParams private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     fun getPathParam(index: Int): String {
-      return when (index) {
-          0 -> subscriptionId
-          else -> ""
-      }
+        return when (index) {
+            0 -> subscriptionId
+            else -> ""
+        }
     }
 
     @NoAutoDetect
-    class Body @JsonCreator private constructor(
-        @JsonProperty("thresholds") @ExcludeMissing private val thresholds: JsonField<List<Threshold>> = JsonMissing.of(),
+    class Body
+    @JsonCreator
+    private constructor(
+        @JsonProperty("thresholds")
+        @ExcludeMissing
+        private val thresholds: JsonField<List<Threshold>> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
-        @JsonProperty("metric_id") @ExcludeMissing private val metricId: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        @JsonProperty("metric_id")
+        @ExcludeMissing
+        private val metricId: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The thresholds that define the values at which the alert will be triggered. */
@@ -106,14 +111,10 @@ class AlertCreateForSubscriptionParams private constructor(
         fun _thresholds(): JsonField<List<Threshold>> = thresholds
 
         /** The type of alert to create. This must be a valid alert type. */
-        @JsonProperty("type")
-        @ExcludeMissing
-        fun _type(): JsonField<Type> = type
+        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
         /** The metric to track usage for. */
-        @JsonProperty("metric_id")
-        @ExcludeMissing
-        fun _metricId(): JsonField<String> = metricId
+        @JsonProperty("metric_id") @ExcludeMissing fun _metricId(): JsonField<String> = metricId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -121,17 +122,16 @@ class AlertCreateForSubscriptionParams private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Body =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                thresholds().forEach { it.validate() }
-                type()
-                metricId()
-                validated = true
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
             }
+
+            thresholds().forEach { it.validate() }
+            type()
+            metricId()
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -141,7 +141,6 @@ class AlertCreateForSubscriptionParams private constructor(
              * Returns a mutable builder for constructing an instance of [Body].
              *
              * The following fields are required:
-             *
              * ```kotlin
              * .thresholds()
              * .type()
@@ -158,94 +157,75 @@ class AlertCreateForSubscriptionParams private constructor(
             private var metricId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(body: Body) =
-                apply {
-                    thresholds = body.thresholds.map { it.toMutableList() }
-                    type = body.type
-                    metricId = body.metricId
-                    additionalProperties = body.additionalProperties.toMutableMap()
-                }
+            internal fun from(body: Body) = apply {
+                thresholds = body.thresholds.map { it.toMutableList() }
+                type = body.type
+                metricId = body.metricId
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
 
             /** The thresholds that define the values at which the alert will be triggered. */
             fun thresholds(thresholds: List<Threshold>) = thresholds(JsonField.of(thresholds))
 
             /** The thresholds that define the values at which the alert will be triggered. */
-            fun thresholds(thresholds: JsonField<List<Threshold>>) =
-                apply {
-                    this.thresholds = thresholds.map { it.toMutableList() }
-                }
+            fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
+                this.thresholds = thresholds.map { it.toMutableList() }
+            }
 
             /** The thresholds that define the values at which the alert will be triggered. */
-            fun addThreshold(threshold: Threshold) =
-                apply {
-                    thresholds = (thresholds ?: JsonField.of(mutableListOf())).also {
+            fun addThreshold(threshold: Threshold) = apply {
+                thresholds =
+                    (thresholds ?: JsonField.of(mutableListOf())).also {
                         checkKnown("thresholds", it).add(threshold)
                     }
-                }
+            }
 
             /** The type of alert to create. This must be a valid alert type. */
             fun type(type: Type) = type(JsonField.of(type))
 
             /** The type of alert to create. This must be a valid alert type. */
-            fun type(type: JsonField<Type>) =
-                apply {
-                    this.type = type
-                }
+            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /** The metric to track usage for. */
             fun metricId(metricId: String?) = metricId(JsonField.ofNullable(metricId))
 
             /** The metric to track usage for. */
-            fun metricId(metricId: JsonField<String>) =
-                apply {
-                    this.metricId = metricId
-                }
+            fun metricId(metricId: JsonField<String>) = apply { this.metricId = metricId }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-            fun removeAdditionalProperty(key: String) =
-                apply {
-                    additionalProperties.remove(key)
-                }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) =
-                apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
             fun build(): Body =
                 Body(
-                  checkRequired(
-                    "thresholds", thresholds
-                  ).map { it.toImmutable() },
-                  checkRequired(
-                    "type", type
-                  ),
-                  metricId,
-                  additionalProperties.toImmutable(),
+                    checkRequired("thresholds", thresholds).map { it.toImmutable() },
+                    checkRequired("type", type),
+                    metricId,
+                    additionalProperties.toImmutable(),
                 )
         }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Body && thresholds == other.thresholds && type == other.type && metricId == other.metricId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && thresholds == other.thresholds && type == other.type && metricId == other.metricId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -254,7 +234,8 @@ class AlertCreateForSubscriptionParams private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() = "Body{thresholds=$thresholds, type=$type, metricId=$metricId, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "Body{thresholds=$thresholds, type=$type, metricId=$metricId, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -266,7 +247,6 @@ class AlertCreateForSubscriptionParams private constructor(
          * [AlertCreateForSubscriptionParams].
          *
          * The following fields are required:
-         *
          * ```kotlin
          * .subscriptionId()
          * .thresholds()
@@ -290,244 +270,186 @@ class AlertCreateForSubscriptionParams private constructor(
                 subscriptionId = alertCreateForSubscriptionParams.subscriptionId
                 body = alertCreateForSubscriptionParams.body.toBuilder()
                 additionalHeaders = alertCreateForSubscriptionParams.additionalHeaders.toBuilder()
-                additionalQueryParams = alertCreateForSubscriptionParams.additionalQueryParams.toBuilder()
+                additionalQueryParams =
+                    alertCreateForSubscriptionParams.additionalQueryParams.toBuilder()
             }
 
-        fun subscriptionId(subscriptionId: String) =
-            apply {
-                this.subscriptionId = subscriptionId
-            }
+        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        fun thresholds(thresholds: List<Threshold>) =
-            apply {
-                body.thresholds(thresholds)
-            }
+        fun thresholds(thresholds: List<Threshold>) = apply { body.thresholds(thresholds) }
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        fun thresholds(thresholds: JsonField<List<Threshold>>) =
-            apply {
-                body.thresholds(thresholds)
-            }
+        fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
+            body.thresholds(thresholds)
+        }
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        fun addThreshold(threshold: Threshold) =
-            apply {
-                body.addThreshold(threshold)
-            }
+        fun addThreshold(threshold: Threshold) = apply { body.addThreshold(threshold) }
 
         /** The type of alert to create. This must be a valid alert type. */
-        fun type(type: Type) =
-            apply {
-                body.type(type)
-            }
+        fun type(type: Type) = apply { body.type(type) }
 
         /** The type of alert to create. This must be a valid alert type. */
-        fun type(type: JsonField<Type>) =
-            apply {
-                body.type(type)
-            }
+        fun type(type: JsonField<Type>) = apply { body.type(type) }
 
         /** The metric to track usage for. */
-        fun metricId(metricId: String?) =
-            apply {
-                body.metricId(metricId)
-            }
+        fun metricId(metricId: String?) = apply { body.metricId(metricId) }
 
         /** The metric to track usage for. */
-        fun metricId(metricId: JsonField<String>) =
-            apply {
-                body.metricId(metricId)
-            }
+        fun metricId(metricId: JsonField<String>) = apply { body.metricId(metricId) }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.additionalProperties(additionalBodyProperties)
-            }
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
 
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) =
-            apply {
-                body.putAdditionalProperty(
-                  key, value
-                )
-            }
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) =
-            apply {
-                body.removeAdditionalProperty(key)
-            }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) =
-            apply {
-                body.removeAllAdditionalProperties(keys)
-            }
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
-        fun additionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun putAdditionalHeader(name: String, value: String) =
-            apply {
-                additionalHeaders.put(name, value)
-            }
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
+        }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.put(name, values)
-            }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun replaceAdditionalHeaders(name: String, value: String) =
-            apply {
-                additionalHeaders.replace(name, value)
-            }
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.replace(name, values)
-            }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun removeAdditionalHeaders(name: String) =
-            apply {
-                additionalHeaders.remove(name)
-            }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) =
-            apply {
-                additionalHeaders.removeAll(names)
-            }
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun putAdditionalQueryParam(key: String, value: String) =
-            apply {
-                additionalQueryParams.put(key, value)
-            }
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.put(key, values)
-            }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.putAll(additionalQueryParams)
-            }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) =
-            apply {
-                additionalQueryParams.replace(key, value)
-            }
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.replace(key, values)
-            }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.replaceAll(additionalQueryParams)
-            }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) =
-            apply {
-                additionalQueryParams.remove(key)
-            }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) =
-            apply {
-                additionalQueryParams.removeAll(keys)
-            }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
 
         fun build(): AlertCreateForSubscriptionParams =
             AlertCreateForSubscriptionParams(
-              checkRequired(
-                "subscriptionId", subscriptionId
-              ),
-              body.build(),
-              additionalHeaders.build(),
-              additionalQueryParams.build(),
+                checkRequired("subscriptionId", subscriptionId),
+                body.build(),
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
             )
     }
 
-    /**
-     * Thresholds are used to define the conditions under which an alert will be
-     * triggered.
-     */
+    /** Thresholds are used to define the conditions under which an alert will be triggered. */
     @NoAutoDetect
-    class Threshold @JsonCreator private constructor(
-        @JsonProperty("value") @ExcludeMissing private val value: JsonField<Double> = JsonMissing.of(),
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+    class Threshold
+    @JsonCreator
+    private constructor(
+        @JsonProperty("value")
+        @ExcludeMissing
+        private val value: JsonField<Double> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
-         * The value at which an alert will fire. For credit balance alerts, the alert will
-         * fire at or below this value. For usage and cost alerts, the alert will fire at
-         * or above this value.
+         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
+         * or below this value. For usage and cost alerts, the alert will fire at or above this
+         * value.
          */
         fun value(): Double = value.getRequired("value")
 
         /**
-         * The value at which an alert will fire. For credit balance alerts, the alert will
-         * fire at or below this value. For usage and cost alerts, the alert will fire at
-         * or above this value.
+         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
+         * or below this value. For usage and cost alerts, the alert will fire at or above this
+         * value.
          */
-        @JsonProperty("value")
-        @ExcludeMissing
-        fun _value(): JsonField<Double> = value
+        @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Double> = value
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -535,15 +457,14 @@ class AlertCreateForSubscriptionParams private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Threshold =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                value()
-                validated = true
+        fun validate(): Threshold = apply {
+            if (validated) {
+                return@apply
             }
+
+            value()
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -553,7 +474,6 @@ class AlertCreateForSubscriptionParams private constructor(
              * Returns a mutable builder for constructing an instance of [Threshold].
              *
              * The following fields are required:
-             *
              * ```kotlin
              * .value()
              * ```
@@ -567,69 +487,54 @@ class AlertCreateForSubscriptionParams private constructor(
             private var value: JsonField<Double>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(threshold: Threshold) =
-                apply {
-                    value = threshold.value
-                    additionalProperties = threshold.additionalProperties.toMutableMap()
-                }
+            internal fun from(threshold: Threshold) = apply {
+                value = threshold.value
+                additionalProperties = threshold.additionalProperties.toMutableMap()
+            }
 
             /**
-             * The value at which an alert will fire. For credit balance alerts, the alert will
-             * fire at or below this value. For usage and cost alerts, the alert will fire at
-             * or above this value.
+             * The value at which an alert will fire. For credit balance alerts, the alert will fire
+             * at or below this value. For usage and cost alerts, the alert will fire at or above
+             * this value.
              */
             fun value(value: Double) = value(JsonField.of(value))
 
             /**
-             * The value at which an alert will fire. For credit balance alerts, the alert will
-             * fire at or below this value. For usage and cost alerts, the alert will fire at
-             * or above this value.
+             * The value at which an alert will fire. For credit balance alerts, the alert will fire
+             * at or below this value. For usage and cost alerts, the alert will fire at or above
+             * this value.
              */
-            fun value(value: JsonField<Double>) =
-                apply {
-                    this.value = value
-                }
+            fun value(value: JsonField<Double>) = apply { this.value = value }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-            fun removeAdditionalProperty(key: String) =
-                apply {
-                    additionalProperties.remove(key)
-                }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) =
-                apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
             fun build(): Threshold =
-                Threshold(
-                  checkRequired(
-                    "value", value
-                  ), additionalProperties.toImmutable()
-                )
+                Threshold(checkRequired("value", value), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Threshold && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Threshold && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -638,25 +543,22 @@ class AlertCreateForSubscriptionParams private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() = "Threshold{value=$value, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "Threshold{value=$value, additionalProperties=$additionalProperties}"
     }
 
     /** The type of alert to create. This must be a valid alert type. */
-    class Type @JsonCreator private constructor(
-        private val value: JsonField<String>,
-
-    ) : Enum {
+    class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that
-         * doesn't match any known member, and you want to know that value. For example, if
-         * the SDK is on an older version than the API, then the API may respond with new
-         * members that the SDK is unaware of.
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -677,11 +579,9 @@ class AlertCreateForSubscriptionParams private constructor(
          * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Type] can contain an unknown value in a couple of cases:
-         *
-         * - It was deserialized from data that doesn't match any known member. For
-         *   example, if the SDK is on an older version than the API, then the API may
-         *   respond with new members that the SDK is unaware of.
-         *
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -692,11 +592,11 @@ class AlertCreateForSubscriptionParams private constructor(
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or
-         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if
-         * you want to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -708,11 +608,10 @@ class AlertCreateForSubscriptionParams private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and
-         * don't want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
          *
-         * @throws OrbInvalidDataException if this class instance's value is a not a known
-         * member.
+         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
          */
         fun known(): Known =
             when (this) {
@@ -724,20 +623,21 @@ class AlertCreateForSubscriptionParams private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for
-         * debugging and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
          *
-         * @throws OrbInvalidDataException if this class instance's value does not have the
-         * expected primitive type.
+         * @throws OrbInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
          */
-        fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+        fun asString(): String =
+            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -746,14 +646,15 @@ class AlertCreateForSubscriptionParams private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is AlertCreateForSubscriptionParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is AlertCreateForSubscriptionParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
-    override fun toString() = "AlertCreateForSubscriptionParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() =
+        "AlertCreateForSubscriptionParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

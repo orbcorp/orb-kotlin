@@ -11,28 +11,28 @@ import com.withorb.api.models.TopLevelPingResponse
 interface TopLevelService {
 
     /**
-     * Returns a view of this service that provides access to raw HTTP responses for
-     * each method.
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
 
     /**
-     * This endpoint allows you to test your connection to the Orb API and check the
-     * validity of your API key, passed in the Authorization header. This is
-     * particularly useful for checking that your environment is set up properly, and
-     * is a great choice for connectors and integrations.
+     * This endpoint allows you to test your connection to the Orb API and check the validity of
+     * your API key, passed in the Authorization header. This is particularly useful for checking
+     * that your environment is set up properly, and is a great choice for connectors and
+     * integrations.
      *
      * This API does not have any side-effects or return any Orb resources.
      */
-    fun ping(params: TopLevelPingParams = TopLevelPingParams.none(), requestOptions: RequestOptions = RequestOptions.none()): TopLevelPingResponse
+    fun ping(
+        params: TopLevelPingParams = TopLevelPingParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): TopLevelPingResponse
 
     /** @see [ping] */
-    fun ping(requestOptions: RequestOptions): TopLevelPingResponse = ping(TopLevelPingParams.none(), requestOptions)
+    fun ping(requestOptions: RequestOptions): TopLevelPingResponse =
+        ping(TopLevelPingParams.none(), requestOptions)
 
-    /**
-     * A view of [TopLevelService] that provides access to raw HTTP responses for each
-     * method.
-     */
+    /** A view of [TopLevelService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -40,10 +40,14 @@ interface TopLevelService {
          * [TopLevelService.ping].
          */
         @MustBeClosed
-        fun ping(params: TopLevelPingParams = TopLevelPingParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<TopLevelPingResponse>
+        fun ping(
+            params: TopLevelPingParams = TopLevelPingParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TopLevelPingResponse>
 
         /** @see [ping] */
         @MustBeClosed
-        fun ping(requestOptions: RequestOptions): HttpResponseFor<TopLevelPingResponse> = ping(TopLevelPingParams.none(), requestOptions)
+        fun ping(requestOptions: RequestOptions): HttpResponseFor<TopLevelPingResponse> =
+            ping(TopLevelPingParams.none(), requestOptions)
     }
 }

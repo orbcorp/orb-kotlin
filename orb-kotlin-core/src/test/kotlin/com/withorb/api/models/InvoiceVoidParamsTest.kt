@@ -9,20 +9,16 @@ class InvoiceVoidParamsTest {
 
     @Test
     fun create() {
-      InvoiceVoidParams.builder()
-          .invoiceId("invoice_id")
-          .build()
+        InvoiceVoidParams.builder().invoiceId("invoice_id").build()
     }
 
     @Test
     fun getPathParam() {
-      val params = InvoiceVoidParams.builder()
-          .invoiceId("invoice_id")
-          .build()
-      assertThat(params).isNotNull
-      // path param "invoiceId"
-      assertThat(params.getPathParam(0)).isEqualTo("invoice_id")
-      // out-of-bound path param
-      assertThat(params.getPathParam(1)).isEqualTo("")
+        val params = InvoiceVoidParams.builder().invoiceId("invoice_id").build()
+        assertThat(params).isNotNull
+        // path param "invoiceId"
+        assertThat(params.getPathParam(0)).isEqualTo("invoice_id")
+        // out-of-bound path param
+        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }
