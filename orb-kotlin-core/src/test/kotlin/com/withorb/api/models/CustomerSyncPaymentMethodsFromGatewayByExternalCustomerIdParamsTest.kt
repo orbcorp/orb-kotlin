@@ -9,20 +9,21 @@ class CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParamsTest {
 
     @Test
     fun create() {
-      CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams.builder()
-          .customerId("customer_id")
-          .build()
+        CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams.builder()
+            .customerId("customer_id")
+            .build()
     }
 
     @Test
     fun getPathParam() {
-      val params = CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams.builder()
-          .customerId("customer_id")
-          .build()
-      assertThat(params).isNotNull
-      // path param "customerId"
-      assertThat(params.getPathParam(0)).isEqualTo("customer_id")
-      // out-of-bound path param
-      assertThat(params.getPathParam(1)).isEqualTo("")
+        val params =
+            CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams.builder()
+                .customerId("customer_id")
+                .build()
+        assertThat(params).isNotNull
+        // path param "customerId"
+        assertThat(params.getPathParam(0)).isEqualTo("customer_id")
+        // out-of-bound path param
+        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }
