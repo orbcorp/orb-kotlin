@@ -22,11 +22,12 @@ import com.withorb.api.models.ItemListPage
 import com.withorb.api.models.ItemListParams
 import com.withorb.api.models.ItemUpdateParams
 
-class ItemServiceImpl internal constructor(private val clientOptions: ClientOptions) : ItemService {
+class ItemServiceImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: ItemService.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : ItemService {
+
+    private val withRawResponse: ItemService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     override fun withRawResponse(): ItemService.WithRawResponse = withRawResponse
 
@@ -46,117 +47,116 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
         // get /items/{item_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        ItemService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
+
+    ) : ItemService.WithRawResponse {
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Item> =
-            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<Item> = jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun create(
-            params: ItemCreateParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<Item> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .addPathSegments("items")
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { createHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun create(params: ItemCreateParams, requestOptions: RequestOptions): HttpResponseFor<Item> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .addPathSegments("items")
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  createHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val updateHandler: Handler<Item> =
-            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Item> = jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun update(
-            params: ItemUpdateParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<Item> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.PUT)
-                    .addPathSegments("items", params.getPathParam(0))
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { updateHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun update(params: ItemUpdateParams, requestOptions: RequestOptions): HttpResponseFor<Item> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.PUT)
+            .addPathSegments("items", params.getPathParam(0))
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  updateHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val listHandler: Handler<ItemListPage.Response> =
-            jsonHandler<ItemListPage.Response>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val listHandler: Handler<ItemListPage.Response> = jsonHandler<ItemListPage.Response>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun list(
-            params: ItemListParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<ItemListPage> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .addPathSegments("items")
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { listHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-                    .let { ItemListPage.of(ItemServiceImpl(clientOptions), params, it) }
-            }
+        override fun list(params: ItemListParams, requestOptions: RequestOptions): HttpResponseFor<ItemListPage> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .addPathSegments("items")
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  listHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+              .let {
+                  ItemListPage.of(ItemServiceImpl(clientOptions), params, it)
+              }
+          }
         }
 
-        private val fetchHandler: Handler<Item> =
-            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<Item> = jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun fetch(
-            params: ItemFetchParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<Item> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .addPathSegments("items", params.getPathParam(0))
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { fetchHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun fetch(params: ItemFetchParams, requestOptions: RequestOptions): HttpResponseFor<Item> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .addPathSegments("items", params.getPathParam(0))
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  fetchHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
     }
 }

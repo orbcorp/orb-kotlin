@@ -13,18 +13,22 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.models
 import com.withorb.api.services.blocking.PriceService
 import java.util.Objects
+import java.util.Optional
+import java.util.stream.Stream
+import java.util.stream.StreamSupport
 
 /**
  * This endpoint is used to list all add-on prices created using the
  * [price creation endpoint](/api-reference/price/create-price).
  */
-class PriceListPage
-private constructor(
+class PriceListPage private constructor(
     private val pricesService: PriceService,
     private val params: PriceListParams,
     private val response: Response,
+
 ) {
 
     fun response(): Response = response
@@ -34,39 +38,37 @@ private constructor(
     fun paginationMetadata(): PaginationMetadata = response().paginationMetadata()
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return /* spotless:off */ other is PriceListPage && pricesService == other.pricesService && params == other.params && response == other.response /* spotless:on */
+      return /* spotless:off */ other is PriceListPage && pricesService == other.pricesService && params == other.params && response == other.response /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(pricesService, params, response) /* spotless:on */
 
-    override fun toString() =
-        "PriceListPage{pricesService=$pricesService, params=$params, response=$response}"
+    override fun toString() = "PriceListPage{pricesService=$pricesService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean {
-        if (data().isEmpty()) {
-            return false
-        }
+      if (data().isEmpty()) {
+        return false;
+      }
 
-        return paginationMetadata().nextCursor() != null
+      return paginationMetadata().nextCursor() != null
     }
 
     fun getNextPageParams(): PriceListParams? {
-        if (!hasNextPage()) {
-            return null
-        }
+      if (!hasNextPage()) {
+        return null
+      }
 
-        return PriceListParams.builder()
-            .from(params)
-            .apply { paginationMetadata().nextCursor()?.let { this.cursor(it) } }
-            .build()
+      return PriceListParams.builder().from(params).apply {paginationMetadata().nextCursor()?.let{ this.cursor(it) } }.build()
     }
 
     fun getNextPage(): PriceListPage? {
-        return getNextPageParams()?.let { pricesService.list(it) }
+      return getNextPageParams()?.let {
+          pricesService.list(it)
+      }
     }
 
     fun autoPager(): AutoPager = AutoPager(this)
@@ -74,26 +76,27 @@ private constructor(
     companion object {
 
         fun of(pricesService: PriceService, params: PriceListParams, response: Response) =
-            PriceListPage(pricesService, params, response)
+            PriceListPage(
+              pricesService,
+              params,
+              response,
+            )
     }
 
     @NoAutoDetect
-    class Response
-    @JsonCreator
-    constructor(
+    class Response @JsonCreator constructor(
         @JsonProperty("data") private val data: JsonField<List<Price>> = JsonMissing.of(),
-        @JsonProperty("pagination_metadata")
-        private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        @JsonProperty("pagination_metadata") private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
+        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
     ) {
 
         fun data(): List<Price> = data.getNullable("data") ?: listOf()
 
-        fun paginationMetadata(): PaginationMetadata =
-            paginationMetadata.getRequired("pagination_metadata")
+        fun paginationMetadata(): PaginationMetadata = paginationMetadata.getRequired("pagination_metadata")
 
-        @JsonProperty("data") fun _data(): JsonField<List<Price>>? = data
+        @JsonProperty("data")
+        fun _data(): JsonField<List<Price>>? = data
 
         @JsonProperty("pagination_metadata")
         fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
@@ -104,30 +107,30 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Response = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): Response =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            data().map { it.validate() }
-            paginationMetadata().validate()
-            validated = true
-        }
+                data().map { it.validate() }
+                paginationMetadata().validate()
+                validated = true
+            }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return /* spotless:off */ other is Response && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
+          return /* spotless:off */ other is Response && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         override fun hashCode(): Int = /* spotless:off */ Objects.hash(data, paginationMetadata, additionalProperties) /* spotless:on */
 
-        override fun toString() =
-            "Response{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
+        override fun toString() = "Response{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -141,43 +144,51 @@ private constructor(
             private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(page: Response) = apply {
-                this.data = page.data
-                this.paginationMetadata = page.paginationMetadata
-                this.additionalProperties.putAll(page.additionalProperties)
-            }
+            internal fun from(page: Response) =
+                apply {
+                    this.data = page.data
+                    this.paginationMetadata = page.paginationMetadata
+                    this.additionalProperties.putAll(page.additionalProperties)
+                }
 
             fun data(data: List<Price>) = data(JsonField.of(data))
 
             fun data(data: JsonField<List<Price>>) = apply { this.data = data }
 
-            fun paginationMetadata(paginationMetadata: PaginationMetadata) =
-                paginationMetadata(JsonField.of(paginationMetadata))
+            fun paginationMetadata(paginationMetadata: PaginationMetadata) = paginationMetadata(JsonField.of(paginationMetadata))
 
-            fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply {
-                this.paginationMetadata = paginationMetadata
-            }
+            fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply { this.paginationMetadata = paginationMetadata }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: JsonValue) =
+                apply {
+                    this.additionalProperties.put(key, value)
+                }
 
-            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
+            fun build() =
+                Response(
+                  data,
+                  paginationMetadata,
+                  additionalProperties.toImmutable(),
+                )
         }
     }
 
-    class AutoPager(private val firstPage: PriceListPage) : Sequence<Price> {
+    class AutoPager(
+        private val firstPage: PriceListPage,
 
-        override fun iterator(): Iterator<Price> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
+    ) : Sequence<Price> {
+
+        override fun iterator(): Iterator<Price> =
+            iterator {
+                var page = firstPage
+                var index = 0
+                while (true) {
+                  while (index < page.data().size) {
                     yield(page.data()[index++])
+                  }
+                  page = page.getNextPage() ?: break
+                  index = 0
                 }
-                page = page.getNextPage() ?: break
-                index = 0
             }
-        }
     }
 }
