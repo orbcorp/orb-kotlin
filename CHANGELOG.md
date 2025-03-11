@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.0-alpha.36 (2025-03-11)
+
+Full Changelog: [v0.1.0-alpha.35...v0.1.0-alpha.36](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.35...v0.1.0-alpha.36)
+
+### Bug Fixes
+
+* fix casing in tests ([#292](https://github.com/orbcorp/orb-kotlin/issues/292)) ([cd60492](https://github.com/orbcorp/orb-kotlin/commit/cd60492004321fc2440d06b2a3dc6fe81ddae6aa))
+
+
+### Chores
+
+* **internal:** codegen related update ([#290](https://github.com/orbcorp/orb-kotlin/issues/290)) ([368d30d](https://github.com/orbcorp/orb-kotlin/commit/368d30d86349070b3255d3255a63318988366125))
+* **internal:** codegen related update ([#291](https://github.com/orbcorp/orb-kotlin/issues/291)) ([b9785c4](https://github.com/orbcorp/orb-kotlin/commit/b9785c41067abc2d49a3e616be364a1eefe00538))
+* **internal:** version bump ([#288](https://github.com/orbcorp/orb-kotlin/issues/288)) ([af560a7](https://github.com/orbcorp/orb-kotlin/commit/af560a71bfd3c1b33758d9e3f9c5cfab8b1c2dbf))
+
 ## 0.1.0-alpha.35 (2025-03-11)
 
 Full Changelog: [v0.1.0-alpha.34...v0.1.0-alpha.35](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.34...v0.1.0-alpha.35)
