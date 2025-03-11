@@ -26,194 +26,171 @@ import com.withorb.api.models.EventBackfillListParams
 import com.withorb.api.models.EventBackfillRevertParams
 import com.withorb.api.models.EventBackfillRevertResponse
 
-class BackfillServiceImpl internal constructor(private val clientOptions: ClientOptions) :
-    BackfillService {
+class BackfillServiceImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: BackfillService.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : BackfillService {
+
+    private val withRawResponse: BackfillService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     override fun withRawResponse(): BackfillService.WithRawResponse = withRawResponse
 
-    override fun create(
-        params: EventBackfillCreateParams,
-        requestOptions: RequestOptions,
-    ): EventBackfillCreateResponse =
+    override fun create(params: EventBackfillCreateParams, requestOptions: RequestOptions): EventBackfillCreateResponse =
         // post /events/backfills
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun list(
-        params: EventBackfillListParams,
-        requestOptions: RequestOptions,
-    ): EventBackfillListPage =
+    override fun list(params: EventBackfillListParams, requestOptions: RequestOptions): EventBackfillListPage =
         // get /events/backfills
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun close(
-        params: EventBackfillCloseParams,
-        requestOptions: RequestOptions,
-    ): EventBackfillCloseResponse =
+    override fun close(params: EventBackfillCloseParams, requestOptions: RequestOptions): EventBackfillCloseResponse =
         // post /events/backfills/{backfill_id}/close
         withRawResponse().close(params, requestOptions).parse()
 
-    override fun fetch(
-        params: EventBackfillFetchParams,
-        requestOptions: RequestOptions,
-    ): EventBackfillFetchResponse =
+    override fun fetch(params: EventBackfillFetchParams, requestOptions: RequestOptions): EventBackfillFetchResponse =
         // get /events/backfills/{backfill_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
-    override fun revert(
-        params: EventBackfillRevertParams,
-        requestOptions: RequestOptions,
-    ): EventBackfillRevertResponse =
+    override fun revert(params: EventBackfillRevertParams, requestOptions: RequestOptions): EventBackfillRevertResponse =
         // post /events/backfills/{backfill_id}/revert
         withRawResponse().revert(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        BackfillService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
+
+    ) : BackfillService.WithRawResponse {
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<EventBackfillCreateResponse> =
-            jsonHandler<EventBackfillCreateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val createHandler: Handler<EventBackfillCreateResponse> = jsonHandler<EventBackfillCreateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun create(
-            params: EventBackfillCreateParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<EventBackfillCreateResponse> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .addPathSegments("events", "backfills")
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { createHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun create(params: EventBackfillCreateParams, requestOptions: RequestOptions): HttpResponseFor<EventBackfillCreateResponse> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .addPathSegments("events", "backfills")
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  createHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val listHandler: Handler<EventBackfillListPage.Response> =
-            jsonHandler<EventBackfillListPage.Response>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val listHandler: Handler<EventBackfillListPage.Response> = jsonHandler<EventBackfillListPage.Response>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun list(
-            params: EventBackfillListParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<EventBackfillListPage> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .addPathSegments("events", "backfills")
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { listHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-                    .let {
-                        EventBackfillListPage.of(BackfillServiceImpl(clientOptions), params, it)
-                    }
-            }
+        override fun list(params: EventBackfillListParams, requestOptions: RequestOptions): HttpResponseFor<EventBackfillListPage> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .addPathSegments("events", "backfills")
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  listHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+              .let {
+                  EventBackfillListPage.of(BackfillServiceImpl(clientOptions), params, it)
+              }
+          }
         }
 
-        private val closeHandler: Handler<EventBackfillCloseResponse> =
-            jsonHandler<EventBackfillCloseResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val closeHandler: Handler<EventBackfillCloseResponse> = jsonHandler<EventBackfillCloseResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun close(
-            params: EventBackfillCloseParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<EventBackfillCloseResponse> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .addPathSegments("events", "backfills", params.getPathParam(0), "close")
-                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { closeHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun close(params: EventBackfillCloseParams, requestOptions: RequestOptions): HttpResponseFor<EventBackfillCloseResponse> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .addPathSegments("events", "backfills", params.getPathParam(0), "close")
+            .apply { params._body()?.let{ body(json(clientOptions.jsonMapper, it)) } }
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  closeHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val fetchHandler: Handler<EventBackfillFetchResponse> =
-            jsonHandler<EventBackfillFetchResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<EventBackfillFetchResponse> = jsonHandler<EventBackfillFetchResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun fetch(
-            params: EventBackfillFetchParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<EventBackfillFetchResponse> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .addPathSegments("events", "backfills", params.getPathParam(0))
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { fetchHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun fetch(params: EventBackfillFetchParams, requestOptions: RequestOptions): HttpResponseFor<EventBackfillFetchResponse> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .addPathSegments("events", "backfills", params.getPathParam(0))
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  fetchHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val revertHandler: Handler<EventBackfillRevertResponse> =
-            jsonHandler<EventBackfillRevertResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val revertHandler: Handler<EventBackfillRevertResponse> = jsonHandler<EventBackfillRevertResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun revert(
-            params: EventBackfillRevertParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<EventBackfillRevertResponse> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .addPathSegments("events", "backfills", params.getPathParam(0), "revert")
-                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { revertHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun revert(params: EventBackfillRevertParams, requestOptions: RequestOptions): HttpResponseFor<EventBackfillRevertResponse> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .addPathSegments("events", "backfills", params.getPathParam(0), "revert")
+            .apply { params._body()?.let{ body(json(clientOptions.jsonMapper, it)) } }
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  revertHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
     }
 }
