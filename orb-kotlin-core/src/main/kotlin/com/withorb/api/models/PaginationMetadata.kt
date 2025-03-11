@@ -17,25 +17,24 @@ import com.withorb.api.core.toImmutable
 import java.util.Objects
 
 @NoAutoDetect
-class PaginationMetadata
-@JsonCreator
-private constructor(
-    @JsonProperty("has_more")
-    @ExcludeMissing
-    private val hasMore: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("next_cursor")
-    @ExcludeMissing
-    private val nextCursor: JsonField<String> = JsonMissing.of(),
+class PaginationMetadata @JsonCreator private constructor(
+    @JsonProperty("has_more") @ExcludeMissing private val hasMore: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("next_cursor") @ExcludeMissing private val nextCursor: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
 ) {
 
     fun hasMore(): Boolean = hasMore.getRequired("has_more")
 
     fun nextCursor(): String? = nextCursor.getNullable("next_cursor")
 
-    @JsonProperty("has_more") @ExcludeMissing fun _hasMore(): JsonField<Boolean> = hasMore
+    @JsonProperty("has_more")
+    @ExcludeMissing
+    fun _hasMore(): JsonField<Boolean> = hasMore
 
-    @JsonProperty("next_cursor") @ExcludeMissing fun _nextCursor(): JsonField<String> = nextCursor
+    @JsonProperty("next_cursor")
+    @ExcludeMissing
+    fun _nextCursor(): JsonField<String> = nextCursor
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -43,15 +42,16 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): PaginationMetadata = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): PaginationMetadata =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        hasMore()
-        nextCursor()
-        validated = true
-    }
+            hasMore()
+            nextCursor()
+            validated = true
+        }
 
     fun toBuilder() = Builder().from(this)
 
@@ -61,6 +61,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [PaginationMetadata].
          *
          * The following fields are required:
+         *
          * ```kotlin
          * .hasMore()
          * .nextCursor()
@@ -76,53 +77,71 @@ private constructor(
         private var nextCursor: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(paginationMetadata: PaginationMetadata) = apply {
-            hasMore = paginationMetadata.hasMore
-            nextCursor = paginationMetadata.nextCursor
-            additionalProperties = paginationMetadata.additionalProperties.toMutableMap()
-        }
+        internal fun from(paginationMetadata: PaginationMetadata) =
+            apply {
+                hasMore = paginationMetadata.hasMore
+                nextCursor = paginationMetadata.nextCursor
+                additionalProperties = paginationMetadata.additionalProperties.toMutableMap()
+            }
 
         fun hasMore(hasMore: Boolean) = hasMore(JsonField.of(hasMore))
 
-        fun hasMore(hasMore: JsonField<Boolean>) = apply { this.hasMore = hasMore }
+        fun hasMore(hasMore: JsonField<Boolean>) =
+            apply {
+                this.hasMore = hasMore
+            }
 
         fun nextCursor(nextCursor: String?) = nextCursor(JsonField.ofNullable(nextCursor))
 
-        fun nextCursor(nextCursor: JsonField<String>) = apply { this.nextCursor = nextCursor }
+        fun nextCursor(nextCursor: JsonField<String>) =
+            apply {
+                this.nextCursor = nextCursor
+            }
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
-        }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
-        }
+        fun putAdditionalProperty(key: String, value: JsonValue) =
+            apply {
+                additionalProperties.put(key, value)
+            }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.putAll(additionalProperties)
-        }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) =
+            apply {
+                additionalProperties.remove(key)
+            }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
-        }
+        fun removeAllAdditionalProperties(keys: Set<String>) =
+            apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
         fun build(): PaginationMetadata =
             PaginationMetadata(
-                checkRequired("hasMore", hasMore),
-                checkRequired("nextCursor", nextCursor),
-                additionalProperties.toImmutable(),
+              checkRequired(
+                "hasMore", hasMore
+              ),
+              checkRequired(
+                "nextCursor", nextCursor
+              ),
+              additionalProperties.toImmutable(),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return /* spotless:off */ other is PaginationMetadata && hasMore == other.hasMore && nextCursor == other.nextCursor && additionalProperties == other.additionalProperties /* spotless:on */
+      return /* spotless:off */ other is PaginationMetadata && hasMore == other.hasMore && nextCursor == other.nextCursor && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
@@ -131,6 +150,5 @@ private constructor(
 
     override fun hashCode(): Int = hashCode
 
-    override fun toString() =
-        "PaginationMetadata{hasMore=$hasMore, nextCursor=$nextCursor, additionalProperties=$additionalProperties}"
+    override fun toString() = "PaginationMetadata{hasMore=$hasMore, nextCursor=$nextCursor, additionalProperties=$additionalProperties}"
 }
