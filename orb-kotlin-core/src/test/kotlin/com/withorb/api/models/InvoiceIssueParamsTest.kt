@@ -10,35 +10,45 @@ class InvoiceIssueParamsTest {
 
     @Test
     fun create() {
-        InvoiceIssueParams.builder().invoiceId("invoice_id").synchronous(true).build()
+      InvoiceIssueParams.builder()
+          .invoiceId("invoice_id")
+          .synchronous(true)
+          .build()
     }
 
     @Test
     fun body() {
-        val params = InvoiceIssueParams.builder().invoiceId("invoice_id").synchronous(true).build()
+      val params = InvoiceIssueParams.builder()
+          .invoiceId("invoice_id")
+          .synchronous(true)
+          .build()
 
-        val body = params._body()
+      val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.synchronous()).isEqualTo(true)
+      assertNotNull(body)
+      assertThat(body.synchronous()).isEqualTo(true)
     }
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = InvoiceIssueParams.builder().invoiceId("invoice_id").build()
+      val params = InvoiceIssueParams.builder()
+          .invoiceId("invoice_id")
+          .build()
 
-        val body = params._body()
+      val body = params._body()
 
-        assertNotNull(body)
+      assertNotNull(body)
     }
 
     @Test
     fun getPathParam() {
-        val params = InvoiceIssueParams.builder().invoiceId("invoice_id").build()
-        assertThat(params).isNotNull
-        // path param "invoiceId"
-        assertThat(params.getPathParam(0)).isEqualTo("invoice_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+      val params = InvoiceIssueParams.builder()
+          .invoiceId("invoice_id")
+          .build()
+      assertThat(params).isNotNull
+      // path param "invoiceId"
+      assertThat(params.getPathParam(0)).isEqualTo("invoice_id")
+      // out-of-bound path param
+      assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

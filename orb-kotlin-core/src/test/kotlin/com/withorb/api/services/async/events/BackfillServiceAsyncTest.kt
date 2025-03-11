@@ -7,6 +7,7 @@ import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.EventBackfillCloseParams
 import com.withorb.api.models.EventBackfillCreateParams
 import com.withorb.api.models.EventBackfillFetchParams
+import com.withorb.api.models.EventBackfillListParams
 import com.withorb.api.models.EventBackfillRevertParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -17,91 +18,80 @@ class BackfillServiceAsyncTest {
 
     @Test
     suspend fun create() {
-        val client =
-            OrbOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val backfillServiceAsync = client.events().backfills()
+      val client = OrbOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val backfillServiceAsync = client.events().backfills()
 
-        val backfill =
-            backfillServiceAsync.create(
-                EventBackfillCreateParams.builder()
-                    .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .closeTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .customerId("customer_id")
-                    .deprecationFilter("my_numeric_property > 100 AND my_other_property = 'bar'")
-                    .externalCustomerId("external_customer_id")
-                    .replaceExistingEvents(true)
-                    .build()
-            )
+      val backfill = backfillServiceAsync.create(EventBackfillCreateParams.builder()
+          .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+          .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+          .closeTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+          .customerId("customer_id")
+          .deprecationFilter("my_numeric_property > 100 AND my_other_property = 'bar'")
+          .externalCustomerId("external_customer_id")
+          .replaceExistingEvents(true)
+          .build())
 
-        backfill.validate()
+      backfill.validate()
     }
 
     @Test
     suspend fun list() {
-        val client =
-            OrbOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val backfillServiceAsync = client.events().backfills()
+      val client = OrbOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val backfillServiceAsync = client.events().backfills()
 
-        val page = backfillServiceAsync.list()
+      val page = backfillServiceAsync.list()
 
-        page.response().validate()
+      page.response().validate()
     }
 
     @Test
     suspend fun close() {
-        val client =
-            OrbOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val backfillServiceAsync = client.events().backfills()
+      val client = OrbOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val backfillServiceAsync = client.events().backfills()
 
-        val response =
-            backfillServiceAsync.close(
-                EventBackfillCloseParams.builder().backfillId("backfill_id").build()
-            )
+      val response = backfillServiceAsync.close(EventBackfillCloseParams.builder()
+          .backfillId("backfill_id")
+          .build())
 
-        response.validate()
+      response.validate()
     }
 
     @Test
     suspend fun fetch() {
-        val client =
-            OrbOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val backfillServiceAsync = client.events().backfills()
+      val client = OrbOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val backfillServiceAsync = client.events().backfills()
 
-        val response =
-            backfillServiceAsync.fetch(
-                EventBackfillFetchParams.builder().backfillId("backfill_id").build()
-            )
+      val response = backfillServiceAsync.fetch(EventBackfillFetchParams.builder()
+          .backfillId("backfill_id")
+          .build())
 
-        response.validate()
+      response.validate()
     }
 
     @Test
     suspend fun revert() {
-        val client =
-            OrbOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val backfillServiceAsync = client.events().backfills()
+      val client = OrbOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val backfillServiceAsync = client.events().backfills()
 
-        val response =
-            backfillServiceAsync.revert(
-                EventBackfillRevertParams.builder().backfillId("backfill_id").build()
-            )
+      val response = backfillServiceAsync.revert(EventBackfillRevertParams.builder()
+          .backfillId("backfill_id")
+          .build())
 
-        response.validate()
+      response.validate()
     }
 }
