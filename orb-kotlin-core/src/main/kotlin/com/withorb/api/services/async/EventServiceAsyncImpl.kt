@@ -28,12 +28,12 @@ import com.withorb.api.services.async.events.BackfillServiceAsyncImpl
 import com.withorb.api.services.async.events.VolumeServiceAsync
 import com.withorb.api.services.async.events.VolumeServiceAsyncImpl
 
-class EventServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
-    EventServiceAsync {
+class EventServiceAsyncImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: EventServiceAsync.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : EventServiceAsync {
+
+    private val withRawResponse: EventServiceAsync.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     private val backfills: BackfillServiceAsync by lazy { BackfillServiceAsyncImpl(clientOptions) }
 
@@ -45,161 +45,139 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
     override fun volume(): VolumeServiceAsync = volume
 
-    override suspend fun update(
-        params: EventUpdateParams,
-        requestOptions: RequestOptions,
-    ): EventUpdateResponse =
+    override suspend fun update(params: EventUpdateParams, requestOptions: RequestOptions): EventUpdateResponse =
         // put /events/{event_id}
         withRawResponse().update(params, requestOptions).parse()
 
-    override suspend fun deprecate(
-        params: EventDeprecateParams,
-        requestOptions: RequestOptions,
-    ): EventDeprecateResponse =
+    override suspend fun deprecate(params: EventDeprecateParams, requestOptions: RequestOptions): EventDeprecateResponse =
         // put /events/{event_id}/deprecate
         withRawResponse().deprecate(params, requestOptions).parse()
 
-    override suspend fun ingest(
-        params: EventIngestParams,
-        requestOptions: RequestOptions,
-    ): EventIngestResponse =
+    override suspend fun ingest(params: EventIngestParams, requestOptions: RequestOptions): EventIngestResponse =
         // post /ingest
         withRawResponse().ingest(params, requestOptions).parse()
 
-    override suspend fun search(
-        params: EventSearchParams,
-        requestOptions: RequestOptions,
-    ): EventSearchResponse =
+    override suspend fun search(params: EventSearchParams, requestOptions: RequestOptions): EventSearchResponse =
         // post /events/search
         withRawResponse().search(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        EventServiceAsync.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
+
+    ) : EventServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val backfills: BackfillServiceAsync.WithRawResponse by lazy {
-            BackfillServiceAsyncImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val backfills: BackfillServiceAsync.WithRawResponse by lazy { BackfillServiceAsyncImpl.WithRawResponseImpl(clientOptions) }
 
-        private val volume: VolumeServiceAsync.WithRawResponse by lazy {
-            VolumeServiceAsyncImpl.WithRawResponseImpl(clientOptions)
-        }
+        private val volume: VolumeServiceAsync.WithRawResponse by lazy { VolumeServiceAsyncImpl.WithRawResponseImpl(clientOptions) }
 
         override fun backfills(): BackfillServiceAsync.WithRawResponse = backfills
 
         override fun volume(): VolumeServiceAsync.WithRawResponse = volume
 
-        private val updateHandler: Handler<EventUpdateResponse> =
-            jsonHandler<EventUpdateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val updateHandler: Handler<EventUpdateResponse> = jsonHandler<EventUpdateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override suspend fun update(
-            params: EventUpdateParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<EventUpdateResponse> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.PUT)
-                    .addPathSegments("events", params.getPathParam(0))
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { updateHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override suspend fun update(params: EventUpdateParams, requestOptions: RequestOptions): HttpResponseFor<EventUpdateResponse> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.PUT)
+            .addPathSegments("events", params.getPathParam(0))
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepareAsync(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.executeAsync(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  updateHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val deprecateHandler: Handler<EventDeprecateResponse> =
-            jsonHandler<EventDeprecateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val deprecateHandler: Handler<EventDeprecateResponse> = jsonHandler<EventDeprecateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override suspend fun deprecate(
-            params: EventDeprecateParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<EventDeprecateResponse> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.PUT)
-                    .addPathSegments("events", params.getPathParam(0), "deprecate")
-                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { deprecateHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override suspend fun deprecate(params: EventDeprecateParams, requestOptions: RequestOptions): HttpResponseFor<EventDeprecateResponse> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.PUT)
+            .addPathSegments("events", params.getPathParam(0), "deprecate")
+            .apply { params._body()?.let{ body(json(clientOptions.jsonMapper, it)) } }
+            .build()
+            .prepareAsync(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.executeAsync(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  deprecateHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val ingestHandler: Handler<EventIngestResponse> =
-            jsonHandler<EventIngestResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val ingestHandler: Handler<EventIngestResponse> = jsonHandler<EventIngestResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override suspend fun ingest(
-            params: EventIngestParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<EventIngestResponse> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .addPathSegments("ingest")
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { ingestHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override suspend fun ingest(params: EventIngestParams, requestOptions: RequestOptions): HttpResponseFor<EventIngestResponse> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .addPathSegments("ingest")
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepareAsync(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.executeAsync(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  ingestHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val searchHandler: Handler<EventSearchResponse> =
-            jsonHandler<EventSearchResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val searchHandler: Handler<EventSearchResponse> = jsonHandler<EventSearchResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override suspend fun search(
-            params: EventSearchParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<EventSearchResponse> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .addPathSegments("events", "search")
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { searchHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override suspend fun search(params: EventSearchParams, requestOptions: RequestOptions): HttpResponseFor<EventSearchResponse> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .addPathSegments("events", "search")
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepareAsync(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.executeAsync(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  searchHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
     }
 }
