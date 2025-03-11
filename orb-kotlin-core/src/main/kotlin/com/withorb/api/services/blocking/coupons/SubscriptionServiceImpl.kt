@@ -17,52 +17,59 @@ import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CouponSubscriptionListPage
 import com.withorb.api.models.CouponSubscriptionListParams
 
-class SubscriptionServiceImpl internal constructor(
-    private val clientOptions: ClientOptions,
+class SubscriptionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    SubscriptionService {
 
-) : SubscriptionService {
-
-    private val withRawResponse: SubscriptionService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
+    private val withRawResponse: SubscriptionService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     override fun withRawResponse(): SubscriptionService.WithRawResponse = withRawResponse
 
-    override fun list(params: CouponSubscriptionListParams, requestOptions: RequestOptions): CouponSubscriptionListPage =
+    override fun list(
+        params: CouponSubscriptionListParams,
+        requestOptions: RequestOptions,
+    ): CouponSubscriptionListPage =
         // get /coupons/{coupon_id}/subscriptions
         withRawResponse().list(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(
-        private val clientOptions: ClientOptions,
-
-    ) : SubscriptionService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        SubscriptionService.WithRawResponse {
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val listHandler: Handler<CouponSubscriptionListPage.Response> = jsonHandler<CouponSubscriptionListPage.Response>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val listHandler: Handler<CouponSubscriptionListPage.Response> =
+            jsonHandler<CouponSubscriptionListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
-        override fun list(params: CouponSubscriptionListParams, requestOptions: RequestOptions): HttpResponseFor<CouponSubscriptionListPage> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.GET)
-            .addPathSegments("coupons", params.getPathParam(0), "subscriptions")
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  listHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-              .let {
-                  CouponSubscriptionListPage.of(SubscriptionServiceImpl(clientOptions), params, it)
-              }
-          }
+        override fun list(
+            params: CouponSubscriptionListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CouponSubscriptionListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("coupons", params.getPathParam(0), "subscriptions")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        CouponSubscriptionListPage.of(
+                            SubscriptionServiceImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
+            }
         }
     }
 }

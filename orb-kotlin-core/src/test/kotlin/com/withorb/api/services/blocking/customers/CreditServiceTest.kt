@@ -14,31 +14,35 @@ class CreditServiceTest {
 
     @Test
     fun list() {
-      val client = OrbOkHttpClient.builder()
-          .baseUrl(TestServerExtension.BASE_URL)
-          .apiKey("My API Key")
-          .build()
-      val creditService = client.customers().credits()
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val creditService = client.customers().credits()
 
-      val page = creditService.list(CustomerCreditListParams.builder()
-          .customerId("customer_id")
-          .build())
+        val page =
+            creditService.list(CustomerCreditListParams.builder().customerId("customer_id").build())
 
-      page.response().validate()
+        page.response().validate()
     }
 
     @Test
     fun listByExternalId() {
-      val client = OrbOkHttpClient.builder()
-          .baseUrl(TestServerExtension.BASE_URL)
-          .apiKey("My API Key")
-          .build()
-      val creditService = client.customers().credits()
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val creditService = client.customers().credits()
 
-      val page = creditService.listByExternalId(CustomerCreditListByExternalIdParams.builder()
-          .externalCustomerId("external_customer_id")
-          .build())
+        val page =
+            creditService.listByExternalId(
+                CustomerCreditListByExternalIdParams.builder()
+                    .externalCustomerId("external_customer_id")
+                    .build()
+            )
 
-      page.response().validate()
+        page.response().validate()
     }
 }
