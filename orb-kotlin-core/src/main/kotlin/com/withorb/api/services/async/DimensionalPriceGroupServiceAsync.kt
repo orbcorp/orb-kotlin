@@ -15,66 +15,87 @@ import com.withorb.api.services.async.dimensionalPriceGroups.ExternalDimensional
 interface DimensionalPriceGroupServiceAsync {
 
     /**
-     * Returns a view of this service that provides access to raw HTTP responses for
-     * each method.
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
 
     fun externalDimensionalPriceGroupId(): ExternalDimensionalPriceGroupIdServiceAsync
 
     /**
-     * A dimensional price group is used to partition the result of a billable metric
-     * by a set of dimensions. Prices in a price group must specify the parition used
-     * to derive their usage.
+     * A dimensional price group is used to partition the result of a billable metric by a set of
+     * dimensions. Prices in a price group must specify the parition used to derive their usage.
      *
-     * For example, suppose we have a billable metric that measures the number of
-     * widgets used and we want to charge differently depending on the color of the
-     * widget. We can create a price group with a dimension "color" and two prices: one
-     * that charges $10 per red widget and one that charges $20 per blue widget.
+     * For example, suppose we have a billable metric that measures the number of widgets used and
+     * we want to charge differently depending on the color of the widget. We can create a price
+     * group with a dimension "color" and two prices: one that charges $10 per red widget and one
+     * that charges $20 per blue widget.
      */
-    suspend fun create(params: DimensionalPriceGroupCreateParams, requestOptions: RequestOptions = RequestOptions.none()): DimensionalPriceGroup
+    suspend fun create(
+        params: DimensionalPriceGroupCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DimensionalPriceGroup
 
     /** Fetch dimensional price group */
-    suspend fun retrieve(params: DimensionalPriceGroupRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): DimensionalPriceGroup
+    suspend fun retrieve(
+        params: DimensionalPriceGroupRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DimensionalPriceGroup
 
     /** List dimensional price groups */
-    suspend fun list(params: DimensionalPriceGroupListParams = DimensionalPriceGroupListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): DimensionalPriceGroupListPageAsync
+    suspend fun list(
+        params: DimensionalPriceGroupListParams = DimensionalPriceGroupListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DimensionalPriceGroupListPageAsync
 
     /** @see [list] */
-    suspend fun list(requestOptions: RequestOptions): DimensionalPriceGroupListPageAsync = list(DimensionalPriceGroupListParams.none(), requestOptions)
+    suspend fun list(requestOptions: RequestOptions): DimensionalPriceGroupListPageAsync =
+        list(DimensionalPriceGroupListParams.none(), requestOptions)
 
     /**
-     * A view of [DimensionalPriceGroupServiceAsync] that provides access to raw HTTP
-     * responses for each method.
+     * A view of [DimensionalPriceGroupServiceAsync] that provides access to raw HTTP responses for
+     * each method.
      */
     interface WithRawResponse {
 
-        fun externalDimensionalPriceGroupId(): ExternalDimensionalPriceGroupIdServiceAsync.WithRawResponse
+        fun externalDimensionalPriceGroupId():
+            ExternalDimensionalPriceGroupIdServiceAsync.WithRawResponse
 
         /**
-         * Returns a raw HTTP response for `post /dimensional_price_groups`, but is
-         * otherwise the same as [DimensionalPriceGroupServiceAsync.create].
+         * Returns a raw HTTP response for `post /dimensional_price_groups`, but is otherwise the
+         * same as [DimensionalPriceGroupServiceAsync.create].
          */
         @MustBeClosed
-        suspend fun create(params: DimensionalPriceGroupCreateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<DimensionalPriceGroup>
+        suspend fun create(
+            params: DimensionalPriceGroupCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroup>
 
         /**
-         * Returns a raw HTTP response for
-         * `get /dimensional_price_groups/{dimensional_price_group_id}`, but is otherwise
-         * the same as [DimensionalPriceGroupServiceAsync.retrieve].
+         * Returns a raw HTTP response for `get
+         * /dimensional_price_groups/{dimensional_price_group_id}`, but is otherwise the same as
+         * [DimensionalPriceGroupServiceAsync.retrieve].
          */
         @MustBeClosed
-        suspend fun retrieve(params: DimensionalPriceGroupRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<DimensionalPriceGroup>
+        suspend fun retrieve(
+            params: DimensionalPriceGroupRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroup>
 
         /**
-         * Returns a raw HTTP response for `get /dimensional_price_groups`, but is
-         * otherwise the same as [DimensionalPriceGroupServiceAsync.list].
+         * Returns a raw HTTP response for `get /dimensional_price_groups`, but is otherwise the
+         * same as [DimensionalPriceGroupServiceAsync.list].
          */
         @MustBeClosed
-        suspend fun list(params: DimensionalPriceGroupListParams = DimensionalPriceGroupListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<DimensionalPriceGroupListPageAsync>
+        suspend fun list(
+            params: DimensionalPriceGroupListParams = DimensionalPriceGroupListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroupListPageAsync>
 
         /** @see [list] */
         @MustBeClosed
-        suspend fun list(requestOptions: RequestOptions): HttpResponseFor<DimensionalPriceGroupListPageAsync> = list(DimensionalPriceGroupListParams.none(), requestOptions)
+        suspend fun list(
+            requestOptions: RequestOptions
+        ): HttpResponseFor<DimensionalPriceGroupListPageAsync> =
+            list(DimensionalPriceGroupListParams.none(), requestOptions)
     }
 }

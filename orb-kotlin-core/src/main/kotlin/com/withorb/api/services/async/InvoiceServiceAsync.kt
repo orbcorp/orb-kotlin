@@ -21,96 +21,116 @@ import com.withorb.api.models.InvoiceVoidParams
 interface InvoiceServiceAsync {
 
     /**
-     * Returns a view of this service that provides access to raw HTTP responses for
-     * each method.
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
 
     /** This endpoint is used to create a one-off invoice for a customer. */
-    suspend fun create(params: InvoiceCreateParams, requestOptions: RequestOptions = RequestOptions.none()): Invoice
+    suspend fun create(
+        params: InvoiceCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice
 
     /**
-     * This endpoint allows you to update the `metadata` property on an invoice. If you
-     * pass null for the metadata value, it will clear any existing metadata for that
-     * invoice.
+     * This endpoint allows you to update the `metadata` property on an invoice. If you pass null
+     * for the metadata value, it will clear any existing metadata for that invoice.
      *
      * `metadata` can be modified regardless of invoice state.
      */
-    suspend fun update(params: InvoiceUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): Invoice
+    suspend fun update(
+        params: InvoiceUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice
 
     /**
-     * This endpoint returns a list of all [`Invoice`](/core-concepts#invoice)s for an
-     * account in a list format.
+     * This endpoint returns a list of all [`Invoice`](/core-concepts#invoice)s for an account in a
+     * list format.
      *
-     * The list of invoices is ordered starting from the most recently issued invoice
-     * date. The response also includes
-     * [`pagination_metadata`](/api-reference/pagination), which lets the caller
-     * retrieve the next page of results if they exist.
+     * The list of invoices is ordered starting from the most recently issued invoice date. The
+     * response also includes [`pagination_metadata`](/api-reference/pagination), which lets the
+     * caller retrieve the next page of results if they exist.
      *
      * By default, this only returns invoices that are `issued`, `paid`, or `synced`.
      *
-     * When fetching any `draft` invoices, this returns the last-computed invoice
-     * values for each draft invoice, which may not always be up-to-date since Orb
-     * regularly refreshes invoices asynchronously.
+     * When fetching any `draft` invoices, this returns the last-computed invoice values for each
+     * draft invoice, which may not always be up-to-date since Orb regularly refreshes invoices
+     * asynchronously.
      */
-    suspend fun list(params: InvoiceListParams = InvoiceListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): InvoiceListPageAsync
+    suspend fun list(
+        params: InvoiceListParams = InvoiceListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): InvoiceListPageAsync
 
     /** @see [list] */
-    suspend fun list(requestOptions: RequestOptions): InvoiceListPageAsync = list(InvoiceListParams.none(), requestOptions)
+    suspend fun list(requestOptions: RequestOptions): InvoiceListPageAsync =
+        list(InvoiceListParams.none(), requestOptions)
 
     /**
-     * This endpoint is used to fetch an [`Invoice`](/core-concepts#invoice) given an
-     * identifier.
+     * This endpoint is used to fetch an [`Invoice`](/core-concepts#invoice) given an identifier.
      */
-    suspend fun fetch(params: InvoiceFetchParams, requestOptions: RequestOptions = RequestOptions.none()): Invoice
+    suspend fun fetch(
+        params: InvoiceFetchParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice
 
     /**
-     * This endpoint can be used to fetch the upcoming
-     * [invoice](/core-concepts#invoice) for the current billing period given a
-     * subscription.
+     * This endpoint can be used to fetch the upcoming [invoice](/core-concepts#invoice) for the
+     * current billing period given a subscription.
      */
-    suspend fun fetchUpcoming(params: InvoiceFetchUpcomingParams, requestOptions: RequestOptions = RequestOptions.none()): InvoiceFetchUpcomingResponse
+    suspend fun fetchUpcoming(
+        params: InvoiceFetchUpcomingParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): InvoiceFetchUpcomingResponse
 
     /**
-     * This endpoint allows an eligible invoice to be issued manually. This is only
-     * possible with invoices where status is `draft`, `will_auto_issue` is false, and
-     * an `eligible_to_issue_at` is a time in the past. Issuing an invoice could
-     * possibly trigger side effects, some of which could be customer-visible (e.g.
-     * sending emails, auto-collecting payment, syncing the invoice to external
-     * providers, etc).
+     * This endpoint allows an eligible invoice to be issued manually. This is only possible with
+     * invoices where status is `draft`, `will_auto_issue` is false, and an `eligible_to_issue_at`
+     * is a time in the past. Issuing an invoice could possibly trigger side effects, some of which
+     * could be customer-visible (e.g. sending emails, auto-collecting payment, syncing the invoice
+     * to external providers, etc).
      */
-    suspend fun issue(params: InvoiceIssueParams, requestOptions: RequestOptions = RequestOptions.none()): Invoice
+    suspend fun issue(
+        params: InvoiceIssueParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice
 
     /**
-     * This endpoint allows an invoice's status to be set the `paid` status. This can
-     * only be done to invoices that are in the `issued` status.
+     * This endpoint allows an invoice's status to be set the `paid` status. This can only be done
+     * to invoices that are in the `issued` status.
      */
-    suspend fun markPaid(params: InvoiceMarkPaidParams, requestOptions: RequestOptions = RequestOptions.none()): Invoice
+    suspend fun markPaid(
+        params: InvoiceMarkPaidParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice
 
     /**
-     * This endpoint collects payment for an invoice using the customer's default
-     * payment method. This action can only be taken on invoices with status "issued".
+     * This endpoint collects payment for an invoice using the customer's default payment method.
+     * This action can only be taken on invoices with status "issued".
      */
-    suspend fun pay(params: InvoicePayParams, requestOptions: RequestOptions = RequestOptions.none()): Invoice
+    suspend fun pay(
+        params: InvoicePayParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice
 
     /**
-     * This endpoint allows an invoice's status to be set the `void` status. This can
-     * only be done to invoices that are in the `issued` status.
+     * This endpoint allows an invoice's status to be set the `void` status. This can only be done
+     * to invoices that are in the `issued` status.
      *
-     * If the associated invoice has used the customer balance to change the amount
-     * due, the customer balance operation will be reverted. For example, if the
-     * invoice used $10 of customer balance, that amount will be added back to the
-     * customer balance upon voiding.
+     * If the associated invoice has used the customer balance to change the amount due, the
+     * customer balance operation will be reverted. For example, if the invoice used $10 of customer
+     * balance, that amount will be added back to the customer balance upon voiding.
      *
-     * If the invoice was used to purchase a credit block, but the invoice is not yet
-     * paid, the credit block will be voided. If the invoice was created due to a
-     * top-up, the top-up will be disabled.
+     * If the invoice was used to purchase a credit block, but the invoice is not yet paid, the
+     * credit block will be voided. If the invoice was created due to a top-up, the top-up will be
+     * disabled.
      */
-    suspend fun void(params: InvoiceVoidParams, requestOptions: RequestOptions = RequestOptions.none()): Invoice
+    suspend fun void(
+        params: InvoiceVoidParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice
 
     /**
-     * A view of [InvoiceServiceAsync] that provides access to raw HTTP responses for
-     * each method.
+     * A view of [InvoiceServiceAsync] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
 
@@ -119,66 +139,94 @@ interface InvoiceServiceAsync {
          * [InvoiceServiceAsync.create].
          */
         @MustBeClosed
-        suspend fun create(params: InvoiceCreateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Invoice>
+        suspend fun create(
+            params: InvoiceCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
 
         /**
-         * Returns a raw HTTP response for `put /invoices/{invoice_id}`, but is otherwise
-         * the same as [InvoiceServiceAsync.update].
+         * Returns a raw HTTP response for `put /invoices/{invoice_id}`, but is otherwise the same
+         * as [InvoiceServiceAsync.update].
          */
         @MustBeClosed
-        suspend fun update(params: InvoiceUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Invoice>
+        suspend fun update(
+            params: InvoiceUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
 
         /**
          * Returns a raw HTTP response for `get /invoices`, but is otherwise the same as
          * [InvoiceServiceAsync.list].
          */
         @MustBeClosed
-        suspend fun list(params: InvoiceListParams = InvoiceListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<InvoiceListPageAsync>
+        suspend fun list(
+            params: InvoiceListParams = InvoiceListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InvoiceListPageAsync>
 
         /** @see [list] */
         @MustBeClosed
-        suspend fun list(requestOptions: RequestOptions): HttpResponseFor<InvoiceListPageAsync> = list(InvoiceListParams.none(), requestOptions)
+        suspend fun list(requestOptions: RequestOptions): HttpResponseFor<InvoiceListPageAsync> =
+            list(InvoiceListParams.none(), requestOptions)
 
         /**
-         * Returns a raw HTTP response for `get /invoices/{invoice_id}`, but is otherwise
-         * the same as [InvoiceServiceAsync.fetch].
+         * Returns a raw HTTP response for `get /invoices/{invoice_id}`, but is otherwise the same
+         * as [InvoiceServiceAsync.fetch].
          */
         @MustBeClosed
-        suspend fun fetch(params: InvoiceFetchParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Invoice>
+        suspend fun fetch(
+            params: InvoiceFetchParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
 
         /**
-         * Returns a raw HTTP response for `get /invoices/upcoming`, but is otherwise the
-         * same as [InvoiceServiceAsync.fetchUpcoming].
+         * Returns a raw HTTP response for `get /invoices/upcoming`, but is otherwise the same as
+         * [InvoiceServiceAsync.fetchUpcoming].
          */
         @MustBeClosed
-        suspend fun fetchUpcoming(params: InvoiceFetchUpcomingParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<InvoiceFetchUpcomingResponse>
+        suspend fun fetchUpcoming(
+            params: InvoiceFetchUpcomingParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InvoiceFetchUpcomingResponse>
 
         /**
-         * Returns a raw HTTP response for `post /invoices/{invoice_id}/issue`, but is
-         * otherwise the same as [InvoiceServiceAsync.issue].
+         * Returns a raw HTTP response for `post /invoices/{invoice_id}/issue`, but is otherwise the
+         * same as [InvoiceServiceAsync.issue].
          */
         @MustBeClosed
-        suspend fun issue(params: InvoiceIssueParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Invoice>
+        suspend fun issue(
+            params: InvoiceIssueParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
 
         /**
-         * Returns a raw HTTP response for `post /invoices/{invoice_id}/mark_paid`, but is
-         * otherwise the same as [InvoiceServiceAsync.markPaid].
+         * Returns a raw HTTP response for `post /invoices/{invoice_id}/mark_paid`, but is otherwise
+         * the same as [InvoiceServiceAsync.markPaid].
          */
         @MustBeClosed
-        suspend fun markPaid(params: InvoiceMarkPaidParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Invoice>
+        suspend fun markPaid(
+            params: InvoiceMarkPaidParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
 
         /**
-         * Returns a raw HTTP response for `post /invoices/{invoice_id}/pay`, but is
-         * otherwise the same as [InvoiceServiceAsync.pay].
+         * Returns a raw HTTP response for `post /invoices/{invoice_id}/pay`, but is otherwise the
+         * same as [InvoiceServiceAsync.pay].
          */
         @MustBeClosed
-        suspend fun pay(params: InvoicePayParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Invoice>
+        suspend fun pay(
+            params: InvoicePayParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
 
         /**
-         * Returns a raw HTTP response for `post /invoices/{invoice_id}/void`, but is
-         * otherwise the same as [InvoiceServiceAsync.void].
+         * Returns a raw HTTP response for `post /invoices/{invoice_id}/void`, but is otherwise the
+         * same as [InvoiceServiceAsync.void].
          */
         @MustBeClosed
-        suspend fun void(params: InvoiceVoidParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Invoice>
+        suspend fun void(
+            params: InvoiceVoidParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
     }
 }

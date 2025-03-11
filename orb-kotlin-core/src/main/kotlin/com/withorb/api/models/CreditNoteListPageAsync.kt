@@ -13,26 +13,21 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
-import com.withorb.api.models
 import com.withorb.api.services.async.CreditNoteServiceAsync
 import java.util.Objects
-import java.util.Optional
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.Executor
-import java.util.function.Predicate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
 /**
- * Get a paginated list of CreditNotes. Users can also filter by customer_id,
- * subscription_id, or external_customer_id. The credit notes will be returned in
- * reverse chronological order by `creation_time`.
+ * Get a paginated list of CreditNotes. Users can also filter by customer_id, subscription_id, or
+ * external_customer_id. The credit notes will be returned in reverse chronological order by
+ * `creation_time`.
  */
-class CreditNoteListPageAsync private constructor(
+class CreditNoteListPageAsync
+private constructor(
     private val creditNotesService: CreditNoteServiceAsync,
     private val params: CreditNoteListParams,
     private val response: Response,
-
 ) {
 
     fun response(): Response = response
@@ -42,65 +37,69 @@ class CreditNoteListPageAsync private constructor(
     fun paginationMetadata(): PaginationMetadata = response().paginationMetadata()
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is CreditNoteListPageAsync && creditNotesService == other.creditNotesService && params == other.params && response == other.response /* spotless:on */
+        return /* spotless:off */ other is CreditNoteListPageAsync && creditNotesService == other.creditNotesService && params == other.params && response == other.response /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(creditNotesService, params, response) /* spotless:on */
 
-    override fun toString() = "CreditNoteListPageAsync{creditNotesService=$creditNotesService, params=$params, response=$response}"
+    override fun toString() =
+        "CreditNoteListPageAsync{creditNotesService=$creditNotesService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean {
-      if (data().isEmpty()) {
-        return false;
-      }
+        if (data().isEmpty()) {
+            return false
+        }
 
-      return paginationMetadata().nextCursor() != null
+        return paginationMetadata().nextCursor() != null
     }
 
     fun getNextPageParams(): CreditNoteListParams? {
-      if (!hasNextPage()) {
-        return null
-      }
+        if (!hasNextPage()) {
+            return null
+        }
 
-      return CreditNoteListParams.builder().from(params).apply {paginationMetadata().nextCursor()?.let{ this.cursor(it) } }.build()
+        return CreditNoteListParams.builder()
+            .from(params)
+            .apply { paginationMetadata().nextCursor()?.let { this.cursor(it) } }
+            .build()
     }
 
     suspend fun getNextPage(): CreditNoteListPageAsync? {
-      return getNextPageParams()?.let {
-          creditNotesService.list(it)
-      }
+        return getNextPageParams()?.let { creditNotesService.list(it) }
     }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
     companion object {
 
-        fun of(creditNotesService: CreditNoteServiceAsync, params: CreditNoteListParams, response: Response) =
-            CreditNoteListPageAsync(
-              creditNotesService,
-              params,
-              response,
-            )
+        fun of(
+            creditNotesService: CreditNoteServiceAsync,
+            params: CreditNoteListParams,
+            response: Response,
+        ) = CreditNoteListPageAsync(creditNotesService, params, response)
     }
 
     @NoAutoDetect
-    class Response @JsonCreator constructor(
+    class Response
+    @JsonCreator
+    constructor(
         @JsonProperty("data") private val data: JsonField<List<CreditNote>> = JsonMissing.of(),
-        @JsonProperty("pagination_metadata") private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        @JsonProperty("pagination_metadata")
+        private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun data(): List<CreditNote> = data.getNullable("data") ?: listOf()
 
-        fun paginationMetadata(): PaginationMetadata = paginationMetadata.getRequired("pagination_metadata")
+        fun paginationMetadata(): PaginationMetadata =
+            paginationMetadata.getRequired("pagination_metadata")
 
-        @JsonProperty("data")
-        fun _data(): JsonField<List<CreditNote>>? = data
+        @JsonProperty("data") fun _data(): JsonField<List<CreditNote>>? = data
 
         @JsonProperty("pagination_metadata")
         fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
@@ -111,36 +110,35 @@ class CreditNoteListPageAsync private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Response =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                data().map { it.validate() }
-                paginationMetadata().validate()
-                validated = true
+        fun validate(): Response = apply {
+            if (validated) {
+                return@apply
             }
+
+            data().map { it.validate() }
+            paginationMetadata().validate()
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Response && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Response && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         override fun hashCode(): Int = /* spotless:off */ Objects.hash(data, paginationMetadata, additionalProperties) /* spotless:on */
 
-        override fun toString() = "Response{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "Response{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
 
         companion object {
 
             /**
-             * Returns a mutable builder for constructing an instance of
-             * [CreditNoteListPageAsync].
+             * Returns a mutable builder for constructing an instance of [CreditNoteListPageAsync].
              */
             fun builder() = Builder()
         }
@@ -151,50 +149,43 @@ class CreditNoteListPageAsync private constructor(
             private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(page: Response) =
-                apply {
-                    this.data = page.data
-                    this.paginationMetadata = page.paginationMetadata
-                    this.additionalProperties.putAll(page.additionalProperties)
-                }
+            internal fun from(page: Response) = apply {
+                this.data = page.data
+                this.paginationMetadata = page.paginationMetadata
+                this.additionalProperties.putAll(page.additionalProperties)
+            }
 
             fun data(data: List<CreditNote>) = data(JsonField.of(data))
 
             fun data(data: JsonField<List<CreditNote>>) = apply { this.data = data }
 
-            fun paginationMetadata(paginationMetadata: PaginationMetadata) = paginationMetadata(JsonField.of(paginationMetadata))
+            fun paginationMetadata(paginationMetadata: PaginationMetadata) =
+                paginationMetadata(JsonField.of(paginationMetadata))
 
-            fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply { this.paginationMetadata = paginationMetadata }
+            fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply {
+                this.paginationMetadata = paginationMetadata
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    this.additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
 
-            fun build() =
-                Response(
-                  data,
-                  paginationMetadata,
-                  additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CreditNoteListPageAsync,
-
-    ) : Flow<CreditNote> {
+    class AutoPager(private val firstPage: CreditNoteListPageAsync) : Flow<CreditNote> {
 
         override suspend fun collect(collector: FlowCollector<CreditNote>) {
-          var page = firstPage
-          var index = 0
-          while (true) {
-            while (index < page.data().size) {
-              collector.emit(page.data()[index++])
+            var page = firstPage
+            var index = 0
+            while (true) {
+                while (index < page.data().size) {
+                    collector.emit(page.data()[index++])
+                }
+                page = page.getNextPage() ?: break
+                index = 0
             }
-            page = page.getNextPage() ?: break
-            index = 0
-          }
         }
     }
 }

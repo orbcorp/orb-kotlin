@@ -26,12 +26,12 @@ import com.withorb.api.models.AlertListParams
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 
-class AlertServiceImpl internal constructor(
-    private val clientOptions: ClientOptions,
+class AlertServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    AlertService {
 
-) : AlertService {
-
-    private val withRawResponse: AlertService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
+    private val withRawResponse: AlertService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     override fun withRawResponse(): AlertService.WithRawResponse = withRawResponse
 
@@ -47,15 +47,24 @@ class AlertServiceImpl internal constructor(
         // get /alerts
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun createForCustomer(params: AlertCreateForCustomerParams, requestOptions: RequestOptions): Alert =
+    override fun createForCustomer(
+        params: AlertCreateForCustomerParams,
+        requestOptions: RequestOptions,
+    ): Alert =
         // post /alerts/customer_id/{customer_id}
         withRawResponse().createForCustomer(params, requestOptions).parse()
 
-    override fun createForExternalCustomer(params: AlertCreateForExternalCustomerParams, requestOptions: RequestOptions): Alert =
+    override fun createForExternalCustomer(
+        params: AlertCreateForExternalCustomerParams,
+        requestOptions: RequestOptions,
+    ): Alert =
         // post /alerts/external_customer_id/{external_customer_id}
         withRawResponse().createForExternalCustomer(params, requestOptions).parse()
 
-    override fun createForSubscription(params: AlertCreateForSubscriptionParams, requestOptions: RequestOptions): Alert =
+    override fun createForSubscription(
+        params: AlertCreateForSubscriptionParams,
+        requestOptions: RequestOptions,
+    ): Alert =
         // post /alerts/subscription_id/{subscription_id}
         withRawResponse().createForSubscription(params, requestOptions).parse()
 
@@ -67,220 +76,225 @@ class AlertServiceImpl internal constructor(
         // post /alerts/{alert_configuration_id}/enable
         withRawResponse().enable(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(
-        private val clientOptions: ClientOptions,
-
-    ) : AlertService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        AlertService.WithRawResponse {
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<Alert> = jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<Alert> =
+            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun retrieve(params: AlertRetrieveParams, requestOptions: RequestOptions): HttpResponseFor<Alert> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.GET)
-            .addPathSegments("alerts", params.getPathParam(0))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  retrieveHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun retrieve(
+            params: AlertRetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Alert> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("alerts", params.getPathParam(0))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val updateHandler: Handler<Alert> = jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Alert> =
+            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun update(params: AlertUpdateParams, requestOptions: RequestOptions): HttpResponseFor<Alert> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.PUT)
-            .addPathSegments("alerts", params.getPathParam(0))
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  updateHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun update(
+            params: AlertUpdateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Alert> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments("alerts", params.getPathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { updateHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val listHandler: Handler<AlertListPage.Response> = jsonHandler<AlertListPage.Response>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val listHandler: Handler<AlertListPage.Response> =
+            jsonHandler<AlertListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
-        override fun list(params: AlertListParams, requestOptions: RequestOptions): HttpResponseFor<AlertListPage> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.GET)
-            .addPathSegments("alerts")
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  listHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-              .let {
-                  AlertListPage.of(AlertServiceImpl(clientOptions), params, it)
-              }
-          }
+        override fun list(
+            params: AlertListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<AlertListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("alerts")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let { AlertListPage.of(AlertServiceImpl(clientOptions), params, it) }
+            }
         }
 
-        private val createForCustomerHandler: Handler<Alert> = jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createForCustomerHandler: Handler<Alert> =
+            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun createForCustomer(params: AlertCreateForCustomerParams, requestOptions: RequestOptions): HttpResponseFor<Alert> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("alerts", "customer_id", params.getPathParam(0))
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  createForCustomerHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun createForCustomer(
+            params: AlertCreateForCustomerParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Alert> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("alerts", "customer_id", params.getPathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createForCustomerHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val createForExternalCustomerHandler: Handler<Alert> = jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createForExternalCustomerHandler: Handler<Alert> =
+            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun createForExternalCustomer(params: AlertCreateForExternalCustomerParams, requestOptions: RequestOptions): HttpResponseFor<Alert> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("alerts", "external_customer_id", params.getPathParam(0))
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  createForExternalCustomerHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun createForExternalCustomer(
+            params: AlertCreateForExternalCustomerParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Alert> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("alerts", "external_customer_id", params.getPathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createForExternalCustomerHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val createForSubscriptionHandler: Handler<Alert> = jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createForSubscriptionHandler: Handler<Alert> =
+            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun createForSubscription(params: AlertCreateForSubscriptionParams, requestOptions: RequestOptions): HttpResponseFor<Alert> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("alerts", "subscription_id", params.getPathParam(0))
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  createForSubscriptionHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun createForSubscription(
+            params: AlertCreateForSubscriptionParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Alert> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("alerts", "subscription_id", params.getPathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createForSubscriptionHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val disableHandler: Handler<Alert> = jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val disableHandler: Handler<Alert> =
+            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun disable(params: AlertDisableParams, requestOptions: RequestOptions): HttpResponseFor<Alert> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("alerts", params.getPathParam(0), "disable")
-            .apply { params._body()?.let{ body(json(clientOptions.jsonMapper, it)) } }
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  disableHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun disable(
+            params: AlertDisableParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Alert> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("alerts", params.getPathParam(0), "disable")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { disableHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val enableHandler: Handler<Alert> = jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val enableHandler: Handler<Alert> =
+            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun enable(params: AlertEnableParams, requestOptions: RequestOptions): HttpResponseFor<Alert> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("alerts", params.getPathParam(0), "enable")
-            .apply { params._body()?.let{ body(json(clientOptions.jsonMapper, it)) } }
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  enableHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun enable(
+            params: AlertEnableParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Alert> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("alerts", params.getPathParam(0), "enable")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { enableHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
     }
 }
