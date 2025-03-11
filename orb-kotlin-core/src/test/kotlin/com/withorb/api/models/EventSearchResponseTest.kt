@@ -11,32 +11,26 @@ class EventSearchResponseTest {
 
     @Test
     fun createEventSearchResponse() {
-        val eventSearchResponse =
-            EventSearchResponse.builder()
-                .addData(
-                    EventSearchResponse.Data.builder()
-                        .id("id")
-                        .customerId("customer_id")
-                        .deprecated(true)
-                        .eventName("event_name")
-                        .externalCustomerId("external_customer_id")
-                        .properties(JsonValue.from(mapOf<String, Any>()))
-                        .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                        .build()
-                )
-                .build()
-        assertThat(eventSearchResponse).isNotNull
-        assertThat(eventSearchResponse.data())
-            .containsExactly(
-                EventSearchResponse.Data.builder()
-                    .id("id")
-                    .customerId("customer_id")
-                    .deprecated(true)
-                    .eventName("event_name")
-                    .externalCustomerId("external_customer_id")
-                    .properties(JsonValue.from(mapOf<String, Any>()))
-                    .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                    .build()
-            )
+      val eventSearchResponse = EventSearchResponse.builder()
+          .addData(EventSearchResponse.Data.builder()
+              .id("id")
+              .customerId("customer_id")
+              .deprecated(true)
+              .eventName("event_name")
+              .externalCustomerId("external_customer_id")
+              .properties(JsonValue.from(mapOf<String, Any>()))
+              .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
+              .build())
+          .build()
+      assertThat(eventSearchResponse).isNotNull
+      assertThat(eventSearchResponse.data()).containsExactly(EventSearchResponse.Data.builder()
+          .id("id")
+          .customerId("customer_id")
+          .deprecated(true)
+          .eventName("event_name")
+          .externalCustomerId("external_customer_id")
+          .properties(JsonValue.from(mapOf<String, Any>()))
+          .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
+          .build())
     }
 }
