@@ -11,33 +11,28 @@ import com.withorb.api.models.InvoiceLineItemCreateResponse
 interface InvoiceLineItemServiceAsync {
 
     /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     * Returns a view of this service that provides access to raw HTTP responses for
+     * each method.
      */
     fun withRawResponse(): WithRawResponse
 
     /**
-     * This creates a one-off fixed fee invoice line item on an Invoice. This can only be done for
-     * invoices that are in a `draft` status.
+     * This creates a one-off fixed fee invoice line item on an Invoice. This can only
+     * be done for invoices that are in a `draft` status.
      */
-    suspend fun create(
-        params: InvoiceLineItemCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): InvoiceLineItemCreateResponse
+    suspend fun create(params: InvoiceLineItemCreateParams, requestOptions: RequestOptions = RequestOptions.none()): InvoiceLineItemCreateResponse
 
     /**
-     * A view of [InvoiceLineItemServiceAsync] that provides access to raw HTTP responses for each
-     * method.
+     * A view of [InvoiceLineItemServiceAsync] that provides access to raw HTTP
+     * responses for each method.
      */
     interface WithRawResponse {
 
         /**
-         * Returns a raw HTTP response for `post /invoice_line_items`, but is otherwise the same as
-         * [InvoiceLineItemServiceAsync.create].
+         * Returns a raw HTTP response for `post /invoice_line_items`, but is otherwise the
+         * same as [InvoiceLineItemServiceAsync.create].
          */
         @MustBeClosed
-        suspend fun create(
-            params: InvoiceLineItemCreateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<InvoiceLineItemCreateResponse>
+        suspend fun create(params: InvoiceLineItemCreateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<InvoiceLineItemCreateResponse>
     }
 }

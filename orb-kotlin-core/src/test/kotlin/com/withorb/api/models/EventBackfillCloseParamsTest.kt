@@ -9,16 +9,20 @@ class EventBackfillCloseParamsTest {
 
     @Test
     fun create() {
-        EventBackfillCloseParams.builder().backfillId("backfill_id").build()
+      EventBackfillCloseParams.builder()
+          .backfillId("backfill_id")
+          .build()
     }
 
     @Test
     fun getPathParam() {
-        val params = EventBackfillCloseParams.builder().backfillId("backfill_id").build()
-        assertThat(params).isNotNull
-        // path param "backfillId"
-        assertThat(params.getPathParam(0)).isEqualTo("backfill_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+      val params = EventBackfillCloseParams.builder()
+          .backfillId("backfill_id")
+          .build()
+      assertThat(params).isNotNull
+      // path param "backfillId"
+      assertThat(params.getPathParam(0)).isEqualTo("backfill_id")
+      // out-of-bound path param
+      assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }
