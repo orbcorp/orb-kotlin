@@ -11,58 +11,54 @@ class PlanUpdateParamsTest {
 
     @Test
     fun create() {
-        PlanUpdateParams.builder()
-            .planId("plan_id")
-            .externalPlanId("external_plan_id")
-            .metadata(
-                PlanUpdateParams.Metadata.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                    .build()
-            )
-            .build()
+      PlanUpdateParams.builder()
+          .planId("plan_id")
+          .externalPlanId("external_plan_id")
+          .metadata(PlanUpdateParams.Metadata.builder()
+              .putAdditionalProperty("foo", JsonValue.from("string"))
+              .build())
+          .build()
     }
 
     @Test
     fun body() {
-        val params =
-            PlanUpdateParams.builder()
-                .planId("plan_id")
-                .externalPlanId("external_plan_id")
-                .metadata(
-                    PlanUpdateParams.Metadata.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("string"))
-                        .build()
-                )
-                .build()
+      val params = PlanUpdateParams.builder()
+          .planId("plan_id")
+          .externalPlanId("external_plan_id")
+          .metadata(PlanUpdateParams.Metadata.builder()
+              .putAdditionalProperty("foo", JsonValue.from("string"))
+              .build())
+          .build()
 
-        val body = params._body()
+      val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
-        assertThat(body.metadata())
-            .isEqualTo(
-                PlanUpdateParams.Metadata.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                    .build()
-            )
+      assertNotNull(body)
+      assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
+      assertThat(body.metadata()).isEqualTo(PlanUpdateParams.Metadata.builder()
+          .putAdditionalProperty("foo", JsonValue.from("string"))
+          .build())
     }
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = PlanUpdateParams.builder().planId("plan_id").build()
+      val params = PlanUpdateParams.builder()
+          .planId("plan_id")
+          .build()
 
-        val body = params._body()
+      val body = params._body()
 
-        assertNotNull(body)
+      assertNotNull(body)
     }
 
     @Test
     fun getPathParam() {
-        val params = PlanUpdateParams.builder().planId("plan_id").build()
-        assertThat(params).isNotNull
-        // path param "planId"
-        assertThat(params.getPathParam(0)).isEqualTo("plan_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+      val params = PlanUpdateParams.builder()
+          .planId("plan_id")
+          .build()
+      assertThat(params).isNotNull
+      // path param "planId"
+      assertThat(params.getPathParam(0)).isEqualTo("plan_id")
+      // out-of-bound path param
+      assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }
