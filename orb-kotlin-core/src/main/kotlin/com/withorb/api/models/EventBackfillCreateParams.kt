@@ -57,10 +57,18 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    /** The (exclusive) end of the usage timeframe affected by this backfill. */
+    /**
+     * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb allows
+     * backfills up to 10 days in duration at a time. Reach out to discuss extending this limit and
+     * your use case.
+     */
     fun timeframeEnd(): OffsetDateTime = body.timeframeEnd()
 
-    /** The (inclusive) start of the usage timeframe affected by this backfill. */
+    /**
+     * The (inclusive) start of the usage timeframe affected by this backfill. By default, Orb
+     * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+     * limit and your use case.
+     */
     fun timeframeStart(): OffsetDateTime = body.timeframeStart()
 
     /**
@@ -94,10 +102,18 @@ private constructor(
      */
     fun replaceExistingEvents(): Boolean? = body.replaceExistingEvents()
 
-    /** The (exclusive) end of the usage timeframe affected by this backfill. */
+    /**
+     * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb allows
+     * backfills up to 10 days in duration at a time. Reach out to discuss extending this limit and
+     * your use case.
+     */
     fun _timeframeEnd(): JsonField<OffsetDateTime> = body._timeframeEnd()
 
-    /** The (inclusive) start of the usage timeframe affected by this backfill. */
+    /**
+     * The (inclusive) start of the usage timeframe affected by this backfill. By default, Orb
+     * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+     * limit and your use case.
+     */
     fun _timeframeStart(): JsonField<OffsetDateTime> = body._timeframeStart()
 
     /**
@@ -172,10 +188,18 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The (exclusive) end of the usage timeframe affected by this backfill. */
+        /**
+         * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb
+         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+         * limit and your use case.
+         */
         fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
 
-        /** The (inclusive) start of the usage timeframe affected by this backfill. */
+        /**
+         * The (inclusive) start of the usage timeframe affected by this backfill. By default, Orb
+         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+         * limit and your use case.
+         */
         fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
         /**
@@ -210,12 +234,20 @@ private constructor(
         fun replaceExistingEvents(): Boolean? =
             replaceExistingEvents.getNullable("replace_existing_events")
 
-        /** The (exclusive) end of the usage timeframe affected by this backfill. */
+        /**
+         * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb
+         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+         * limit and your use case.
+         */
         @JsonProperty("timeframe_end")
         @ExcludeMissing
         fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
 
-        /** The (inclusive) start of the usage timeframe affected by this backfill. */
+        /**
+         * The (inclusive) start of the usage timeframe affected by this backfill. By default, Orb
+         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+         * limit and your use case.
+         */
         @JsonProperty("timeframe_start")
         @ExcludeMissing
         fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
@@ -321,20 +353,36 @@ private constructor(
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
 
-            /** The (exclusive) end of the usage timeframe affected by this backfill. */
+            /**
+             * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb
+             * allows backfills up to 10 days in duration at a time. Reach out to discuss extending
+             * this limit and your use case.
+             */
             fun timeframeEnd(timeframeEnd: OffsetDateTime) =
                 timeframeEnd(JsonField.of(timeframeEnd))
 
-            /** The (exclusive) end of the usage timeframe affected by this backfill. */
+            /**
+             * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb
+             * allows backfills up to 10 days in duration at a time. Reach out to discuss extending
+             * this limit and your use case.
+             */
             fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
                 this.timeframeEnd = timeframeEnd
             }
 
-            /** The (inclusive) start of the usage timeframe affected by this backfill. */
+            /**
+             * The (inclusive) start of the usage timeframe affected by this backfill. By default,
+             * Orb allows backfills up to 10 days in duration at a time. Reach out to discuss
+             * extending this limit and your use case.
+             */
             fun timeframeStart(timeframeStart: OffsetDateTime) =
                 timeframeStart(JsonField.of(timeframeStart))
 
-            /** The (inclusive) start of the usage timeframe affected by this backfill. */
+            /**
+             * The (inclusive) start of the usage timeframe affected by this backfill. By default,
+             * Orb allows backfills up to 10 days in duration at a time. Reach out to discuss
+             * extending this limit and your use case.
+             */
             fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
                 this.timeframeStart = timeframeStart
             }
@@ -492,20 +540,36 @@ private constructor(
             additionalQueryParams = eventBackfillCreateParams.additionalQueryParams.toBuilder()
         }
 
-        /** The (exclusive) end of the usage timeframe affected by this backfill. */
+        /**
+         * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb
+         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+         * limit and your use case.
+         */
         fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { body.timeframeEnd(timeframeEnd) }
 
-        /** The (exclusive) end of the usage timeframe affected by this backfill. */
+        /**
+         * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb
+         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+         * limit and your use case.
+         */
         fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
             body.timeframeEnd(timeframeEnd)
         }
 
-        /** The (inclusive) start of the usage timeframe affected by this backfill. */
+        /**
+         * The (inclusive) start of the usage timeframe affected by this backfill. By default, Orb
+         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+         * limit and your use case.
+         */
         fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
             body.timeframeStart(timeframeStart)
         }
 
-        /** The (inclusive) start of the usage timeframe affected by this backfill. */
+        /**
+         * The (inclusive) start of the usage timeframe affected by this backfill. By default, Orb
+         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+         * limit and your use case.
+         */
         fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
             body.timeframeStart(timeframeStart)
         }
