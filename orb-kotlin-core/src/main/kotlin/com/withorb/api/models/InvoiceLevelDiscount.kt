@@ -15,16 +15,15 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
-import java.util.Optional
 
 @JsonDeserialize(using = InvoiceLevelDiscount.Deserializer::class)
 @JsonSerialize(using = InvoiceLevelDiscount.Serializer::class)
-class InvoiceLevelDiscount private constructor(
+class InvoiceLevelDiscount
+private constructor(
     private val percentage: PercentageDiscount? = null,
     private val amount: AmountDiscount? = null,
     private val trial: TrialDiscount? = null,
     private val _json: JsonValue? = null,
-
 ) {
 
     fun percentage(): PercentageDiscount? = percentage
@@ -48,44 +47,45 @@ class InvoiceLevelDiscount private constructor(
     fun _json(): JsonValue? = _json
 
     fun <T> accept(visitor: Visitor<T>): T {
-      return when {
-          percentage != null -> visitor.visitPercentage(percentage)
-          amount != null -> visitor.visitAmount(amount)
-          trial != null -> visitor.visitTrial(trial)
-          else -> visitor.unknown(_json)
-      }
+        return when {
+            percentage != null -> visitor.visitPercentage(percentage)
+            amount != null -> visitor.visitAmount(amount)
+            trial != null -> visitor.visitTrial(trial)
+            else -> visitor.unknown(_json)
+        }
     }
 
     private var validated: Boolean = false
 
-    fun validate(): InvoiceLevelDiscount =
-        apply {
-            if (validated) {
-              return@apply
-            }
+    fun validate(): InvoiceLevelDiscount = apply {
+        if (validated) {
+            return@apply
+        }
 
-            accept(object : Visitor<Unit> {
+        accept(
+            object : Visitor<Unit> {
                 override fun visitPercentage(percentage: PercentageDiscount) {
-                  percentage.validate()
+                    percentage.validate()
                 }
 
                 override fun visitAmount(amount: AmountDiscount) {
-                  amount.validate()
+                    amount.validate()
                 }
 
                 override fun visitTrial(trial: TrialDiscount) {
-                  trial.validate()
+                    trial.validate()
                 }
-            })
-            validated = true
-        }
+            }
+        )
+        validated = true
+    }
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is InvoiceLevelDiscount && percentage == other.percentage && amount == other.amount && trial == other.trial /* spotless:on */
+        return /* spotless:off */ other is InvoiceLevelDiscount && percentage == other.percentage && amount == other.amount && trial == other.trial /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentage, amount, trial) /* spotless:on */
@@ -101,7 +101,8 @@ class InvoiceLevelDiscount private constructor(
 
     companion object {
 
-        fun ofPercentage(percentage: PercentageDiscount) = InvoiceLevelDiscount(percentage = percentage)
+        fun ofPercentage(percentage: PercentageDiscount) =
+            InvoiceLevelDiscount(percentage = percentage)
 
         fun ofAmount(amount: AmountDiscount) = InvoiceLevelDiscount(amount = amount)
 
@@ -109,8 +110,8 @@ class InvoiceLevelDiscount private constructor(
     }
 
     /**
-     * An interface that defines how to map each variant of [InvoiceLevelDiscount] to a
-     * value of type [T].
+     * An interface that defines how to map each variant of [InvoiceLevelDiscount] to a value of
+     * type [T].
      */
     interface Visitor<out T> {
 
@@ -124,55 +125,63 @@ class InvoiceLevelDiscount private constructor(
          * Maps an unknown variant of [InvoiceLevelDiscount] to a value of type [T].
          *
          * An instance of [InvoiceLevelDiscount] can contain an unknown variant if it was
-         * deserialized from data that doesn't match any known variant. For example, if the
-         * SDK is on an older version than the API, then the API may respond with new
-         * variants that the SDK is unaware of.
+         * deserialized from data that doesn't match any known variant. For example, if the SDK is
+         * on an older version than the API, then the API may respond with new variants that the SDK
+         * is unaware of.
          *
          * @throws OrbInvalidDataException in the default implementation.
          */
         fun unknown(json: JsonValue?): T {
-          throw OrbInvalidDataException("Unknown InvoiceLevelDiscount: $json")
+            throw OrbInvalidDataException("Unknown InvoiceLevelDiscount: $json")
         }
     }
 
-    internal class Deserializer : BaseDeserializer<InvoiceLevelDiscount>(InvoiceLevelDiscount::class) {
+    internal class Deserializer :
+        BaseDeserializer<InvoiceLevelDiscount>(InvoiceLevelDiscount::class) {
 
         override fun ObjectCodec.deserialize(node: JsonNode): InvoiceLevelDiscount {
-          val json = JsonValue.fromJsonNode(node)
-          val discountType = json.asObject()?.get("discount_type")?.asString()
+            val json = JsonValue.fromJsonNode(node)
+            val discountType = json.asObject()?.get("discount_type")?.asString()
 
-          when (discountType) {
-              "percentage" -> {
-                  tryDeserialize(node, jacksonTypeRef<PercentageDiscount>()){ it.validate() }?.let {
-                      return InvoiceLevelDiscount(percentage = it, _json = json)
-                  }
-              }
-              "amount" -> {
-                  tryDeserialize(node, jacksonTypeRef<AmountDiscount>()){ it.validate() }?.let {
-                      return InvoiceLevelDiscount(amount = it, _json = json)
-                  }
-              }
-              "trial" -> {
-                  tryDeserialize(node, jacksonTypeRef<TrialDiscount>()){ it.validate() }?.let {
-                      return InvoiceLevelDiscount(trial = it, _json = json)
-                  }
-              }
-          }
+            when (discountType) {
+                "percentage" -> {
+                    tryDeserialize(node, jacksonTypeRef<PercentageDiscount>()) { it.validate() }
+                        ?.let {
+                            return InvoiceLevelDiscount(percentage = it, _json = json)
+                        }
+                }
+                "amount" -> {
+                    tryDeserialize(node, jacksonTypeRef<AmountDiscount>()) { it.validate() }
+                        ?.let {
+                            return InvoiceLevelDiscount(amount = it, _json = json)
+                        }
+                }
+                "trial" -> {
+                    tryDeserialize(node, jacksonTypeRef<TrialDiscount>()) { it.validate() }
+                        ?.let {
+                            return InvoiceLevelDiscount(trial = it, _json = json)
+                        }
+                }
+            }
 
-          return InvoiceLevelDiscount(_json = json)
+            return InvoiceLevelDiscount(_json = json)
         }
     }
 
     internal class Serializer : BaseSerializer<InvoiceLevelDiscount>(InvoiceLevelDiscount::class) {
 
-        override fun serialize(value: InvoiceLevelDiscount, generator: JsonGenerator, provider: SerializerProvider) {
-          when {
-              value.percentage != null -> generator.writeObject(value.percentage)
-              value.amount != null -> generator.writeObject(value.amount)
-              value.trial != null -> generator.writeObject(value.trial)
-              value._json != null -> generator.writeObject(value._json)
-              else -> throw IllegalStateException("Invalid InvoiceLevelDiscount")
-          }
+        override fun serialize(
+            value: InvoiceLevelDiscount,
+            generator: JsonGenerator,
+            provider: SerializerProvider,
+        ) {
+            when {
+                value.percentage != null -> generator.writeObject(value.percentage)
+                value.amount != null -> generator.writeObject(value.amount)
+                value.trial != null -> generator.writeObject(value.trial)
+                value._json != null -> generator.writeObject(value._json)
+                else -> throw IllegalStateException("Invalid InvoiceLevelDiscount")
+            }
         }
     }
 }

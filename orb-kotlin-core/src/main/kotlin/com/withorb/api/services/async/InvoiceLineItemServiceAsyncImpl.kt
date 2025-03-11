@@ -18,50 +18,53 @@ import com.withorb.api.errors.OrbError
 import com.withorb.api.models.InvoiceLineItemCreateParams
 import com.withorb.api.models.InvoiceLineItemCreateResponse
 
-class InvoiceLineItemServiceAsyncImpl internal constructor(
-    private val clientOptions: ClientOptions,
+class InvoiceLineItemServiceAsyncImpl
+internal constructor(private val clientOptions: ClientOptions) : InvoiceLineItemServiceAsync {
 
-) : InvoiceLineItemServiceAsync {
-
-    private val withRawResponse: InvoiceLineItemServiceAsync.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
+    private val withRawResponse: InvoiceLineItemServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     override fun withRawResponse(): InvoiceLineItemServiceAsync.WithRawResponse = withRawResponse
 
-    override suspend fun create(params: InvoiceLineItemCreateParams, requestOptions: RequestOptions): InvoiceLineItemCreateResponse =
+    override suspend fun create(
+        params: InvoiceLineItemCreateParams,
+        requestOptions: RequestOptions,
+    ): InvoiceLineItemCreateResponse =
         // post /invoice_line_items
         withRawResponse().create(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(
-        private val clientOptions: ClientOptions,
-
-    ) : InvoiceLineItemServiceAsync.WithRawResponse {
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        InvoiceLineItemServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<InvoiceLineItemCreateResponse> = jsonHandler<InvoiceLineItemCreateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<InvoiceLineItemCreateResponse> =
+            jsonHandler<InvoiceLineItemCreateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
-        override suspend fun create(params: InvoiceLineItemCreateParams, requestOptions: RequestOptions): HttpResponseFor<InvoiceLineItemCreateResponse> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("invoice_line_items")
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepareAsync(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.executeAsync(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  createHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override suspend fun create(
+            params: InvoiceLineItemCreateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<InvoiceLineItemCreateResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("invoice_line_items")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
     }
 }

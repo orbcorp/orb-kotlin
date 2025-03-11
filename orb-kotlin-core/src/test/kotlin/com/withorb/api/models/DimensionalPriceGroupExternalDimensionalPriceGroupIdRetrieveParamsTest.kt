@@ -9,20 +9,21 @@ class DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParamsTest {
 
     @Test
     fun create() {
-      DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.builder()
-          .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
-          .build()
+        DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.builder()
+            .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
+            .build()
     }
 
     @Test
     fun getPathParam() {
-      val params = DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.builder()
-          .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
-          .build()
-      assertThat(params).isNotNull
-      // path param "externalDimensionalPriceGroupId"
-      assertThat(params.getPathParam(0)).isEqualTo("external_dimensional_price_group_id")
-      // out-of-bound path param
-      assertThat(params.getPathParam(1)).isEqualTo("")
+        val params =
+            DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.builder()
+                .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
+                .build()
+        assertThat(params).isNotNull
+        // path param "externalDimensionalPriceGroupId"
+        assertThat(params.getPathParam(0)).isEqualTo("external_dimensional_price_group_id")
+        // out-of-bound path param
+        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

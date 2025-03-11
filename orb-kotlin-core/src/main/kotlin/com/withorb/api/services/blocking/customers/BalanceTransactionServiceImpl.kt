@@ -20,82 +20,94 @@ import com.withorb.api.models.CustomerBalanceTransactionCreateResponse
 import com.withorb.api.models.CustomerBalanceTransactionListPage
 import com.withorb.api.models.CustomerBalanceTransactionListParams
 
-class BalanceTransactionServiceImpl internal constructor(
-    private val clientOptions: ClientOptions,
+class BalanceTransactionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    BalanceTransactionService {
 
-) : BalanceTransactionService {
-
-    private val withRawResponse: BalanceTransactionService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
+    private val withRawResponse: BalanceTransactionService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     override fun withRawResponse(): BalanceTransactionService.WithRawResponse = withRawResponse
 
-    override fun create(params: CustomerBalanceTransactionCreateParams, requestOptions: RequestOptions): CustomerBalanceTransactionCreateResponse =
+    override fun create(
+        params: CustomerBalanceTransactionCreateParams,
+        requestOptions: RequestOptions,
+    ): CustomerBalanceTransactionCreateResponse =
         // post /customers/{customer_id}/balance_transactions
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun list(params: CustomerBalanceTransactionListParams, requestOptions: RequestOptions): CustomerBalanceTransactionListPage =
+    override fun list(
+        params: CustomerBalanceTransactionListParams,
+        requestOptions: RequestOptions,
+    ): CustomerBalanceTransactionListPage =
         // get /customers/{customer_id}/balance_transactions
         withRawResponse().list(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(
-        private val clientOptions: ClientOptions,
-
-    ) : BalanceTransactionService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        BalanceTransactionService.WithRawResponse {
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<CustomerBalanceTransactionCreateResponse> = jsonHandler<CustomerBalanceTransactionCreateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CustomerBalanceTransactionCreateResponse> =
+            jsonHandler<CustomerBalanceTransactionCreateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
-        override fun create(params: CustomerBalanceTransactionCreateParams, requestOptions: RequestOptions): HttpResponseFor<CustomerBalanceTransactionCreateResponse> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("customers", params.getPathParam(0), "balance_transactions")
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  createHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun create(
+            params: CustomerBalanceTransactionCreateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerBalanceTransactionCreateResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("customers", params.getPathParam(0), "balance_transactions")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val listHandler: Handler<CustomerBalanceTransactionListPage.Response> = jsonHandler<CustomerBalanceTransactionListPage.Response>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val listHandler: Handler<CustomerBalanceTransactionListPage.Response> =
+            jsonHandler<CustomerBalanceTransactionListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
-        override fun list(params: CustomerBalanceTransactionListParams, requestOptions: RequestOptions): HttpResponseFor<CustomerBalanceTransactionListPage> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.GET)
-            .addPathSegments("customers", params.getPathParam(0), "balance_transactions")
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  listHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-              .let {
-                  CustomerBalanceTransactionListPage.of(BalanceTransactionServiceImpl(clientOptions), params, it)
-              }
-          }
+        override fun list(
+            params: CustomerBalanceTransactionListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerBalanceTransactionListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("customers", params.getPathParam(0), "balance_transactions")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        CustomerBalanceTransactionListPage.of(
+                            BalanceTransactionServiceImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
+            }
         }
     }
 }
