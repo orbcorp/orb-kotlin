@@ -11,43 +11,44 @@ class PlanListParamsTest {
 
     @Test
     fun create() {
-      PlanListParams.builder()
-          .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-          .createdAtGte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-          .createdAtLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-          .createdAtLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-          .cursor("cursor")
-          .limit(1L)
-          .status(PlanListParams.Status.ACTIVE)
-          .build()
+        PlanListParams.builder()
+            .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+            .createdAtGte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+            .createdAtLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+            .createdAtLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+            .cursor("cursor")
+            .limit(1L)
+            .status(PlanListParams.Status.ACTIVE)
+            .build()
     }
 
     @Test
     fun queryParams() {
-      val params = PlanListParams.builder()
-          .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-          .createdAtGte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-          .createdAtLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-          .createdAtLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-          .cursor("cursor")
-          .limit(1L)
-          .status(PlanListParams.Status.ACTIVE)
-          .build()
-      val expected = QueryParams.builder()
-      expected.put("created_at[gt]", "2019-12-27T18:11:19.117Z")
-      expected.put("created_at[gte]", "2019-12-27T18:11:19.117Z")
-      expected.put("created_at[lt]", "2019-12-27T18:11:19.117Z")
-      expected.put("created_at[lte]", "2019-12-27T18:11:19.117Z")
-      expected.put("cursor", "cursor")
-      expected.put("limit", "1")
-      expected.put("status", PlanListParams.Status.ACTIVE.toString())
-      assertThat(params._queryParams()).isEqualTo(expected.build())
+        val params =
+            PlanListParams.builder()
+                .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .createdAtGte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .createdAtLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .createdAtLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .cursor("cursor")
+                .limit(1L)
+                .status(PlanListParams.Status.ACTIVE)
+                .build()
+        val expected = QueryParams.builder()
+        expected.put("created_at[gt]", "2019-12-27T18:11:19.117Z")
+        expected.put("created_at[gte]", "2019-12-27T18:11:19.117Z")
+        expected.put("created_at[lt]", "2019-12-27T18:11:19.117Z")
+        expected.put("created_at[lte]", "2019-12-27T18:11:19.117Z")
+        expected.put("cursor", "cursor")
+        expected.put("limit", "1")
+        expected.put("status", PlanListParams.Status.ACTIVE.toString())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-      val params = PlanListParams.builder().build()
-      val expected = QueryParams.builder()
-      assertThat(params._queryParams()).isEqualTo(expected.build())
+        val params = PlanListParams.builder().build()
+        val expected = QueryParams.builder()
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 }

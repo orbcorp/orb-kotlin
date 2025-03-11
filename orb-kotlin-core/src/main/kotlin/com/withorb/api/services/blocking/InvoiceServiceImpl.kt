@@ -28,12 +28,12 @@ import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
 import com.withorb.api.models.InvoiceVoidParams
 
-class InvoiceServiceImpl internal constructor(
-    private val clientOptions: ClientOptions,
+class InvoiceServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    InvoiceService {
 
-) : InvoiceService {
-
-    private val withRawResponse: InvoiceService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
+    private val withRawResponse: InvoiceService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     override fun withRawResponse(): InvoiceService.WithRawResponse = withRawResponse
 
@@ -53,7 +53,10 @@ class InvoiceServiceImpl internal constructor(
         // get /invoices/{invoice_id}
         withRawResponse().fetch(params, requestOptions).parse()
 
-    override fun fetchUpcoming(params: InvoiceFetchUpcomingParams, requestOptions: RequestOptions): InvoiceFetchUpcomingResponse =
+    override fun fetchUpcoming(
+        params: InvoiceFetchUpcomingParams,
+        requestOptions: RequestOptions,
+    ): InvoiceFetchUpcomingResponse =
         // get /invoices/upcoming
         withRawResponse().fetchUpcoming(params, requestOptions).parse()
 
@@ -73,245 +76,252 @@ class InvoiceServiceImpl internal constructor(
         // post /invoices/{invoice_id}/void
         withRawResponse().void(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(
-        private val clientOptions: ClientOptions,
-
-    ) : InvoiceService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        InvoiceService.WithRawResponse {
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<Invoice> =
+            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun create(params: InvoiceCreateParams, requestOptions: RequestOptions): HttpResponseFor<Invoice> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("invoices")
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  createHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun create(
+            params: InvoiceCreateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Invoice> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("invoices")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val updateHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Invoice> =
+            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun update(params: InvoiceUpdateParams, requestOptions: RequestOptions): HttpResponseFor<Invoice> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.PUT)
-            .addPathSegments("invoices", params.getPathParam(0))
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  updateHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun update(
+            params: InvoiceUpdateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Invoice> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments("invoices", params.getPathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { updateHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val listHandler: Handler<InvoiceListPage.Response> = jsonHandler<InvoiceListPage.Response>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val listHandler: Handler<InvoiceListPage.Response> =
+            jsonHandler<InvoiceListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
-        override fun list(params: InvoiceListParams, requestOptions: RequestOptions): HttpResponseFor<InvoiceListPage> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.GET)
-            .addPathSegments("invoices")
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  listHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-              .let {
-                  InvoiceListPage.of(InvoiceServiceImpl(clientOptions), params, it)
-              }
-          }
+        override fun list(
+            params: InvoiceListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<InvoiceListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("invoices")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let { InvoiceListPage.of(InvoiceServiceImpl(clientOptions), params, it) }
+            }
         }
 
-        private val fetchHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<Invoice> =
+            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun fetch(params: InvoiceFetchParams, requestOptions: RequestOptions): HttpResponseFor<Invoice> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.GET)
-            .addPathSegments("invoices", params.getPathParam(0))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  fetchHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun fetch(
+            params: InvoiceFetchParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Invoice> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("invoices", params.getPathParam(0))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { fetchHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val fetchUpcomingHandler: Handler<InvoiceFetchUpcomingResponse> = jsonHandler<InvoiceFetchUpcomingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchUpcomingHandler: Handler<InvoiceFetchUpcomingResponse> =
+            jsonHandler<InvoiceFetchUpcomingResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
-        override fun fetchUpcoming(params: InvoiceFetchUpcomingParams, requestOptions: RequestOptions): HttpResponseFor<InvoiceFetchUpcomingResponse> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.GET)
-            .addPathSegments("invoices", "upcoming")
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  fetchUpcomingHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun fetchUpcoming(
+            params: InvoiceFetchUpcomingParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<InvoiceFetchUpcomingResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("invoices", "upcoming")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { fetchUpcomingHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val issueHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val issueHandler: Handler<Invoice> =
+            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun issue(params: InvoiceIssueParams, requestOptions: RequestOptions): HttpResponseFor<Invoice> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("invoices", params.getPathParam(0), "issue")
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  issueHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun issue(
+            params: InvoiceIssueParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Invoice> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("invoices", params.getPathParam(0), "issue")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { issueHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val markPaidHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val markPaidHandler: Handler<Invoice> =
+            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun markPaid(params: InvoiceMarkPaidParams, requestOptions: RequestOptions): HttpResponseFor<Invoice> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("invoices", params.getPathParam(0), "mark_paid")
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  markPaidHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun markPaid(
+            params: InvoiceMarkPaidParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Invoice> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("invoices", params.getPathParam(0), "mark_paid")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { markPaidHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val payHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val payHandler: Handler<Invoice> =
+            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun pay(params: InvoicePayParams, requestOptions: RequestOptions): HttpResponseFor<Invoice> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("invoices", params.getPathParam(0), "pay")
-            .apply { params._body()?.let{ body(json(clientOptions.jsonMapper, it)) } }
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  payHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun pay(
+            params: InvoicePayParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Invoice> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("invoices", params.getPathParam(0), "pay")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { payHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val voidHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val voidHandler: Handler<Invoice> =
+            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun void(params: InvoiceVoidParams, requestOptions: RequestOptions): HttpResponseFor<Invoice> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("invoices", params.getPathParam(0), "void")
-            .apply { params._body()?.let{ body(json(clientOptions.jsonMapper, it)) } }
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  voidHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun void(
+            params: InvoiceVoidParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Invoice> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("invoices", params.getPathParam(0), "void")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { voidHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
     }
 }
