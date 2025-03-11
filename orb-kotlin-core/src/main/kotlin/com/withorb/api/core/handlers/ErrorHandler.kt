@@ -9,10 +9,9 @@ import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.errors.BadRequestException
 import com.withorb.api.errors.InternalServerException
 import com.withorb.api.errors.NotFoundException
+import com.withorb.api.errors.OrbError
 import com.withorb.api.errors.PermissionDeniedException
 import com.withorb.api.errors.RateLimitException
-import com.withorb.api.errors.OrbError
-import com.withorb.api.errors.OrbException
 import com.withorb.api.errors.UnauthorizedException
 import com.withorb.api.errors.UnexpectedStatusCodeException
 import com.withorb.api.errors.UnprocessableEntityException

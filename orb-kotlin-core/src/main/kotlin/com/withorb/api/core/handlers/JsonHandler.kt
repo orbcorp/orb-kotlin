@@ -7,7 +7,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.withorb.api.core.enhanceJacksonException
 import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
-import com.withorb.api.errors.OrbException
 
 internal inline fun <reified T> jsonHandler(jsonMapper: JsonMapper): Handler<T> =
     object : Handler<T> {

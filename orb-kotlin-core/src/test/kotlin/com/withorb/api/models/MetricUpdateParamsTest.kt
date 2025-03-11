@@ -11,51 +11,55 @@ class MetricUpdateParamsTest {
 
     @Test
     fun create() {
-      MetricUpdateParams.builder()
-          .metricId("metric_id")
-          .metadata(MetricUpdateParams.Metadata.builder()
-              .putAdditionalProperty("foo", JsonValue.from("string"))
-              .build())
-          .build()
+        MetricUpdateParams.builder()
+            .metricId("metric_id")
+            .metadata(
+                MetricUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
+            .build()
     }
 
     @Test
     fun body() {
-      val params = MetricUpdateParams.builder()
-          .metricId("metric_id")
-          .metadata(MetricUpdateParams.Metadata.builder()
-              .putAdditionalProperty("foo", JsonValue.from("string"))
-              .build())
-          .build()
+        val params =
+            MetricUpdateParams.builder()
+                .metricId("metric_id")
+                .metadata(
+                    MetricUpdateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .build()
 
-      val body = params._body()
+        val body = params._body()
 
-      assertNotNull(body)
-      assertThat(body.metadata()).isEqualTo(MetricUpdateParams.Metadata.builder()
-          .putAdditionalProperty("foo", JsonValue.from("string"))
-          .build())
+        assertNotNull(body)
+        assertThat(body.metadata())
+            .isEqualTo(
+                MetricUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
     }
 
     @Test
     fun bodyWithoutOptionalFields() {
-      val params = MetricUpdateParams.builder()
-          .metricId("metric_id")
-          .build()
+        val params = MetricUpdateParams.builder().metricId("metric_id").build()
 
-      val body = params._body()
+        val body = params._body()
 
-      assertNotNull(body)
+        assertNotNull(body)
     }
 
     @Test
     fun getPathParam() {
-      val params = MetricUpdateParams.builder()
-          .metricId("metric_id")
-          .build()
-      assertThat(params).isNotNull
-      // path param "metricId"
-      assertThat(params.getPathParam(0)).isEqualTo("metric_id")
-      // out-of-bound path param
-      assertThat(params.getPathParam(1)).isEqualTo("")
+        val params = MetricUpdateParams.builder().metricId("metric_id").build()
+        assertThat(params).isNotNull
+        // path param "metricId"
+        assertThat(params.getPathParam(0)).isEqualTo("metric_id")
+        // out-of-bound path param
+        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

@@ -29,55 +29,93 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
-import java.util.Optional
 
 @NoAutoDetect
-class InvoiceLineItemCreateResponse @JsonCreator private constructor(
+class InvoiceLineItemCreateResponse
+@JsonCreator
+private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("adjusted_subtotal") @ExcludeMissing private val adjustedSubtotal: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("adjustments") @ExcludeMissing private val adjustments: JsonField<List<Adjustment>> = JsonMissing.of(),
-    @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("credits_applied") @ExcludeMissing private val creditsApplied: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("discount") @ExcludeMissing private val discount: JsonField<Discount> = JsonMissing.of(),
-    @JsonProperty("end_date") @ExcludeMissing private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("filter") @ExcludeMissing private val filter: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("grouping") @ExcludeMissing private val grouping: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("maximum") @ExcludeMissing private val maximum: JsonField<Maximum> = JsonMissing.of(),
-    @JsonProperty("maximum_amount") @ExcludeMissing private val maximumAmount: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("minimum") @ExcludeMissing private val minimum: JsonField<Minimum> = JsonMissing.of(),
-    @JsonProperty("minimum_amount") @ExcludeMissing private val minimumAmount: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("adjusted_subtotal")
+    @ExcludeMissing
+    private val adjustedSubtotal: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("adjustments")
+    @ExcludeMissing
+    private val adjustments: JsonField<List<Adjustment>> = JsonMissing.of(),
+    @JsonProperty("amount")
+    @ExcludeMissing
+    private val amount: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("credits_applied")
+    @ExcludeMissing
+    private val creditsApplied: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("discount")
+    @ExcludeMissing
+    private val discount: JsonField<Discount> = JsonMissing.of(),
+    @JsonProperty("end_date")
+    @ExcludeMissing
+    private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("filter")
+    @ExcludeMissing
+    private val filter: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("grouping")
+    @ExcludeMissing
+    private val grouping: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("maximum")
+    @ExcludeMissing
+    private val maximum: JsonField<Maximum> = JsonMissing.of(),
+    @JsonProperty("maximum_amount")
+    @ExcludeMissing
+    private val maximumAmount: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("minimum")
+    @ExcludeMissing
+    private val minimum: JsonField<Minimum> = JsonMissing.of(),
+    @JsonProperty("minimum_amount")
+    @ExcludeMissing
+    private val minimumAmount: JsonField<String> = JsonMissing.of(),
     @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("partially_invoiced_amount") @ExcludeMissing private val partiallyInvoicedAmount: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("partially_invoiced_amount")
+    @ExcludeMissing
+    private val partiallyInvoicedAmount: JsonField<String> = JsonMissing.of(),
     @JsonProperty("price") @ExcludeMissing private val price: JsonField<Price> = JsonMissing.of(),
-    @JsonProperty("quantity") @ExcludeMissing private val quantity: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("start_date") @ExcludeMissing private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("sub_line_items") @ExcludeMissing private val subLineItems: JsonField<List<SubLineItem>> = JsonMissing.of(),
-    @JsonProperty("subtotal") @ExcludeMissing private val subtotal: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("tax_amounts") @ExcludeMissing private val taxAmounts: JsonField<List<TaxAmount>> = JsonMissing.of(),
-    @JsonProperty("usage_customer_ids") @ExcludeMissing private val usageCustomerIds: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("quantity")
+    @ExcludeMissing
+    private val quantity: JsonField<Double> = JsonMissing.of(),
+    @JsonProperty("start_date")
+    @ExcludeMissing
+    private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("sub_line_items")
+    @ExcludeMissing
+    private val subLineItems: JsonField<List<SubLineItem>> = JsonMissing.of(),
+    @JsonProperty("subtotal")
+    @ExcludeMissing
+    private val subtotal: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("tax_amounts")
+    @ExcludeMissing
+    private val taxAmounts: JsonField<List<TaxAmount>> = JsonMissing.of(),
+    @JsonProperty("usage_customer_ids")
+    @ExcludeMissing
+    private val usageCustomerIds: JsonField<List<String>> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
 ) {
 
     /** A unique ID for this line item. */
     fun id(): String = id.getRequired("id")
 
     /**
-     * The line amount after any adjustments and before overage conversion, credits and
-     * partial invoicing.
+     * The line amount after any adjustments and before overage conversion, credits and partial
+     * invoicing.
      */
     fun adjustedSubtotal(): String = adjustedSubtotal.getRequired("adjusted_subtotal")
 
     /**
-     * All adjustments applied to the line item in the order they were applied based on
-     * invoice calculations (ie. usage discounts -> amount discounts -> percentage
-     * discounts -> minimums -> maximums).
+     * All adjustments applied to the line item in the order they were applied based on invoice
+     * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums ->
+     * maximums).
      */
     fun adjustments(): List<Adjustment> = adjustments.getRequired("adjustments")
 
     /**
-     * The final amount for a line item after all adjustments and pre paid credits have
-     * been applied.
+     * The final amount for a line item after all adjustments and pre paid credits have been
+     * applied.
      */
     fun amount(): String = amount.getRequired("amount")
 
@@ -93,23 +131,21 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
     fun filter(): String? = filter.getNullable("filter")
 
     /**
-     * [DEPRECATED] For configured prices that are split by a grouping key, this will
-     * be populated with the key and a value. The `amount` and `subtotal` will be the
-     * values for this particular grouping.
+     * [DEPRECATED] For configured prices that are split by a grouping key, this will be populated
+     * with the key and a value. The `amount` and `subtotal` will be the values for this particular
+     * grouping.
      */
     fun grouping(): String? = grouping.getNullable("grouping")
 
     /** This field is deprecated in favor of `adjustments`. */
-    @Deprecated("deprecated")
-    fun maximum(): Maximum? = maximum.getNullable("maximum")
+    @Deprecated("deprecated") fun maximum(): Maximum? = maximum.getNullable("maximum")
 
     /** This field is deprecated in favor of `adjustments`. */
     @Deprecated("deprecated")
     fun maximumAmount(): String? = maximumAmount.getNullable("maximum_amount")
 
     /** This field is deprecated in favor of `adjustments`. */
-    @Deprecated("deprecated")
-    fun minimum(): Minimum? = minimum.getNullable("minimum")
+    @Deprecated("deprecated") fun minimum(): Minimum? = minimum.getNullable("minimum")
 
     /** This field is deprecated in favor of `adjustments`. */
     @Deprecated("deprecated")
@@ -119,16 +155,17 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
     fun name(): String = name.getRequired("name")
 
     /** Any amount applied from a partial invoice */
-    fun partiallyInvoicedAmount(): String = partiallyInvoicedAmount.getRequired("partially_invoiced_amount")
+    fun partiallyInvoicedAmount(): String =
+        partiallyInvoicedAmount.getRequired("partially_invoiced_amount")
 
     /**
-     * The Price resource represents a price that can be billed on a subscription,
-     * resulting in a charge on an invoice in the form of an invoice line item. Prices
-     * take a quantity and determine an amount to bill.
+     * The Price resource represents a price that can be billed on a subscription, resulting in a
+     * charge on an invoice in the form of an invoice line item. Prices take a quantity and
+     * determine an amount to bill.
      *
-     * Orb supports a few different pricing models out of the box. Each of these models
-     * is serialized differently in a given Price object. The model_type field
-     * determines the key for the configuration object that is present.
+     * Orb supports a few different pricing models out of the box. Each of these models is
+     * serialized differently in a given Price object. The model_type field determines the key for
+     * the configuration object that is present.
      *
      * For more on the types of prices, see
      * [the core concepts documentation](/core-concepts#plan-and-price)
@@ -142,8 +179,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
     fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
     /**
-     * For complex pricing structures, the line item can be broken down further in
-     * `sub_line_items`.
+     * For complex pricing structures, the line item can be broken down further in `sub_line_items`.
      */
     fun subLineItems(): List<SubLineItem> = subLineItems.getRequired("sub_line_items")
 
@@ -151,8 +187,8 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
     fun subtotal(): String = subtotal.getRequired("subtotal")
 
     /**
-     * An array of tax rates and their incurred tax amounts. Empty if no tax
-     * integration is configured.
+     * An array of tax rates and their incurred tax amounts. Empty if no tax integration is
+     * configured.
      */
     fun taxAmounts(): List<TaxAmount> = taxAmounts.getRequired("tax_amounts")
 
@@ -160,62 +196,50 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
     fun usageCustomerIds(): List<String>? = usageCustomerIds.getNullable("usage_customer_ids")
 
     /** A unique ID for this line item. */
-    @JsonProperty("id")
-    @ExcludeMissing
-    fun _id(): JsonField<String> = id
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The line amount after any adjustments and before overage conversion, credits and
-     * partial invoicing.
+     * The line amount after any adjustments and before overage conversion, credits and partial
+     * invoicing.
      */
     @JsonProperty("adjusted_subtotal")
     @ExcludeMissing
     fun _adjustedSubtotal(): JsonField<String> = adjustedSubtotal
 
     /**
-     * All adjustments applied to the line item in the order they were applied based on
-     * invoice calculations (ie. usage discounts -> amount discounts -> percentage
-     * discounts -> minimums -> maximums).
+     * All adjustments applied to the line item in the order they were applied based on invoice
+     * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums ->
+     * maximums).
      */
     @JsonProperty("adjustments")
     @ExcludeMissing
     fun _adjustments(): JsonField<List<Adjustment>> = adjustments
 
     /**
-     * The final amount for a line item after all adjustments and pre paid credits have
-     * been applied.
+     * The final amount for a line item after all adjustments and pre paid credits have been
+     * applied.
      */
-    @JsonProperty("amount")
-    @ExcludeMissing
-    fun _amount(): JsonField<String> = amount
+    @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
     /** The number of prepaid credits applied. */
     @JsonProperty("credits_applied")
     @ExcludeMissing
     fun _creditsApplied(): JsonField<String> = creditsApplied
 
-    @JsonProperty("discount")
-    @ExcludeMissing
-    fun _discount(): JsonField<Discount> = discount
+    @JsonProperty("discount") @ExcludeMissing fun _discount(): JsonField<Discount> = discount
 
     /** The end date of the range of time applied for this line item's price. */
-    @JsonProperty("end_date")
-    @ExcludeMissing
-    fun _endDate(): JsonField<OffsetDateTime> = endDate
+    @JsonProperty("end_date") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
 
     /** An additional filter that was used to calculate the usage for this line item. */
-    @JsonProperty("filter")
-    @ExcludeMissing
-    fun _filter(): JsonField<String> = filter
+    @JsonProperty("filter") @ExcludeMissing fun _filter(): JsonField<String> = filter
 
     /**
-     * [DEPRECATED] For configured prices that are split by a grouping key, this will
-     * be populated with the key and a value. The `amount` and `subtotal` will be the
-     * values for this particular grouping.
+     * [DEPRECATED] For configured prices that are split by a grouping key, this will be populated
+     * with the key and a value. The `amount` and `subtotal` will be the values for this particular
+     * grouping.
      */
-    @JsonProperty("grouping")
-    @ExcludeMissing
-    fun _grouping(): JsonField<String> = grouping
+    @JsonProperty("grouping") @ExcludeMissing fun _grouping(): JsonField<String> = grouping
 
     /** This field is deprecated in favor of `adjustments`. */
     @Deprecated("deprecated")
@@ -242,9 +266,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
     fun _minimumAmount(): JsonField<String> = minimumAmount
 
     /** The name of the price associated with this line item. */
-    @JsonProperty("name")
-    @ExcludeMissing
-    fun _name(): JsonField<String> = name
+    @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     /** Any amount applied from a partial invoice */
     @JsonProperty("partially_invoiced_amount")
@@ -252,25 +274,21 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
     fun _partiallyInvoicedAmount(): JsonField<String> = partiallyInvoicedAmount
 
     /**
-     * The Price resource represents a price that can be billed on a subscription,
-     * resulting in a charge on an invoice in the form of an invoice line item. Prices
-     * take a quantity and determine an amount to bill.
+     * The Price resource represents a price that can be billed on a subscription, resulting in a
+     * charge on an invoice in the form of an invoice line item. Prices take a quantity and
+     * determine an amount to bill.
      *
-     * Orb supports a few different pricing models out of the box. Each of these models
-     * is serialized differently in a given Price object. The model_type field
-     * determines the key for the configuration object that is present.
+     * Orb supports a few different pricing models out of the box. Each of these models is
+     * serialized differently in a given Price object. The model_type field determines the key for
+     * the configuration object that is present.
      *
      * For more on the types of prices, see
      * [the core concepts documentation](/core-concepts#plan-and-price)
      */
-    @JsonProperty("price")
-    @ExcludeMissing
-    fun _price(): JsonField<Price> = price
+    @JsonProperty("price") @ExcludeMissing fun _price(): JsonField<Price> = price
 
     /** Either the fixed fee quantity or the usage during the service period. */
-    @JsonProperty("quantity")
-    @ExcludeMissing
-    fun _quantity(): JsonField<Double> = quantity
+    @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
     /** The start date of the range of time applied for this line item's price. */
     @JsonProperty("start_date")
@@ -278,21 +296,18 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
     fun _startDate(): JsonField<OffsetDateTime> = startDate
 
     /**
-     * For complex pricing structures, the line item can be broken down further in
-     * `sub_line_items`.
+     * For complex pricing structures, the line item can be broken down further in `sub_line_items`.
      */
     @JsonProperty("sub_line_items")
     @ExcludeMissing
     fun _subLineItems(): JsonField<List<SubLineItem>> = subLineItems
 
     /** The line amount before before any adjustments. */
-    @JsonProperty("subtotal")
-    @ExcludeMissing
-    fun _subtotal(): JsonField<String> = subtotal
+    @JsonProperty("subtotal") @ExcludeMissing fun _subtotal(): JsonField<String> = subtotal
 
     /**
-     * An array of tax rates and their incurred tax amounts. Empty if no tax
-     * integration is configured.
+     * An array of tax rates and their incurred tax amounts. Empty if no tax integration is
+     * configured.
      */
     @JsonProperty("tax_amounts")
     @ExcludeMissing
@@ -309,36 +324,35 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): InvoiceLineItemCreateResponse =
-        apply {
-            if (validated) {
-              return@apply
-            }
-
-            id()
-            adjustedSubtotal()
-            adjustments().forEach { it.validate() }
-            amount()
-            creditsApplied()
-            discount()?.validate()
-            endDate()
-            filter()
-            grouping()
-            maximum()?.validate()
-            maximumAmount()
-            minimum()?.validate()
-            minimumAmount()
-            name()
-            partiallyInvoicedAmount()
-            price()?.validate()
-            quantity()
-            startDate()
-            subLineItems().forEach { it.validate() }
-            subtotal()
-            taxAmounts().forEach { it.validate() }
-            usageCustomerIds()
-            validated = true
+    fun validate(): InvoiceLineItemCreateResponse = apply {
+        if (validated) {
+            return@apply
         }
+
+        id()
+        adjustedSubtotal()
+        adjustments().forEach { it.validate() }
+        amount()
+        creditsApplied()
+        discount()?.validate()
+        endDate()
+        filter()
+        grouping()
+        maximum()?.validate()
+        maximumAmount()
+        minimum()?.validate()
+        minimumAmount()
+        name()
+        partiallyInvoicedAmount()
+        price()?.validate()
+        quantity()
+        startDate()
+        subLineItems().forEach { it.validate() }
+        subtotal()
+        taxAmounts().forEach { it.validate() }
+        usageCustomerIds()
+        validated = true
+    }
 
     fun toBuilder() = Builder().from(this)
 
@@ -349,7 +363,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
          * [InvoiceLineItemCreateResponse].
          *
          * The following fields are required:
-         *
          * ```kotlin
          * .id()
          * .adjustedSubtotal()
@@ -405,161 +418,158 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         private var usageCustomerIds: JsonField<MutableList<String>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(invoiceLineItemCreateResponse: InvoiceLineItemCreateResponse) =
-            apply {
-                id = invoiceLineItemCreateResponse.id
-                adjustedSubtotal = invoiceLineItemCreateResponse.adjustedSubtotal
-                adjustments = invoiceLineItemCreateResponse.adjustments.map { it.toMutableList() }
-                amount = invoiceLineItemCreateResponse.amount
-                creditsApplied = invoiceLineItemCreateResponse.creditsApplied
-                discount = invoiceLineItemCreateResponse.discount
-                endDate = invoiceLineItemCreateResponse.endDate
-                filter = invoiceLineItemCreateResponse.filter
-                grouping = invoiceLineItemCreateResponse.grouping
-                maximum = invoiceLineItemCreateResponse.maximum
-                maximumAmount = invoiceLineItemCreateResponse.maximumAmount
-                minimum = invoiceLineItemCreateResponse.minimum
-                minimumAmount = invoiceLineItemCreateResponse.minimumAmount
-                name = invoiceLineItemCreateResponse.name
-                partiallyInvoicedAmount = invoiceLineItemCreateResponse.partiallyInvoicedAmount
-                price = invoiceLineItemCreateResponse.price
-                quantity = invoiceLineItemCreateResponse.quantity
-                startDate = invoiceLineItemCreateResponse.startDate
-                subLineItems = invoiceLineItemCreateResponse.subLineItems.map { it.toMutableList() }
-                subtotal = invoiceLineItemCreateResponse.subtotal
-                taxAmounts = invoiceLineItemCreateResponse.taxAmounts.map { it.toMutableList() }
-                usageCustomerIds = invoiceLineItemCreateResponse.usageCustomerIds.map { it.toMutableList() }
-                additionalProperties = invoiceLineItemCreateResponse.additionalProperties.toMutableMap()
-            }
+        internal fun from(invoiceLineItemCreateResponse: InvoiceLineItemCreateResponse) = apply {
+            id = invoiceLineItemCreateResponse.id
+            adjustedSubtotal = invoiceLineItemCreateResponse.adjustedSubtotal
+            adjustments = invoiceLineItemCreateResponse.adjustments.map { it.toMutableList() }
+            amount = invoiceLineItemCreateResponse.amount
+            creditsApplied = invoiceLineItemCreateResponse.creditsApplied
+            discount = invoiceLineItemCreateResponse.discount
+            endDate = invoiceLineItemCreateResponse.endDate
+            filter = invoiceLineItemCreateResponse.filter
+            grouping = invoiceLineItemCreateResponse.grouping
+            maximum = invoiceLineItemCreateResponse.maximum
+            maximumAmount = invoiceLineItemCreateResponse.maximumAmount
+            minimum = invoiceLineItemCreateResponse.minimum
+            minimumAmount = invoiceLineItemCreateResponse.minimumAmount
+            name = invoiceLineItemCreateResponse.name
+            partiallyInvoicedAmount = invoiceLineItemCreateResponse.partiallyInvoicedAmount
+            price = invoiceLineItemCreateResponse.price
+            quantity = invoiceLineItemCreateResponse.quantity
+            startDate = invoiceLineItemCreateResponse.startDate
+            subLineItems = invoiceLineItemCreateResponse.subLineItems.map { it.toMutableList() }
+            subtotal = invoiceLineItemCreateResponse.subtotal
+            taxAmounts = invoiceLineItemCreateResponse.taxAmounts.map { it.toMutableList() }
+            usageCustomerIds =
+                invoiceLineItemCreateResponse.usageCustomerIds.map { it.toMutableList() }
+            additionalProperties = invoiceLineItemCreateResponse.additionalProperties.toMutableMap()
+        }
 
         /** A unique ID for this line item. */
         fun id(id: String) = id(JsonField.of(id))
 
         /** A unique ID for this line item. */
-        fun id(id: JsonField<String>) =
-            apply {
-                this.id = id
-            }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
-         * The line amount after any adjustments and before overage conversion, credits and
-         * partial invoicing.
+         * The line amount after any adjustments and before overage conversion, credits and partial
+         * invoicing.
          */
-        fun adjustedSubtotal(adjustedSubtotal: String) = adjustedSubtotal(JsonField.of(adjustedSubtotal))
+        fun adjustedSubtotal(adjustedSubtotal: String) =
+            adjustedSubtotal(JsonField.of(adjustedSubtotal))
 
         /**
-         * The line amount after any adjustments and before overage conversion, credits and
-         * partial invoicing.
+         * The line amount after any adjustments and before overage conversion, credits and partial
+         * invoicing.
          */
-        fun adjustedSubtotal(adjustedSubtotal: JsonField<String>) =
-            apply {
-                this.adjustedSubtotal = adjustedSubtotal
-            }
+        fun adjustedSubtotal(adjustedSubtotal: JsonField<String>) = apply {
+            this.adjustedSubtotal = adjustedSubtotal
+        }
 
         /**
-         * All adjustments applied to the line item in the order they were applied based on
-         * invoice calculations (ie. usage discounts -> amount discounts -> percentage
-         * discounts -> minimums -> maximums).
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
          */
         fun adjustments(adjustments: List<Adjustment>) = adjustments(JsonField.of(adjustments))
 
         /**
-         * All adjustments applied to the line item in the order they were applied based on
-         * invoice calculations (ie. usage discounts -> amount discounts -> percentage
-         * discounts -> minimums -> maximums).
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
          */
-        fun adjustments(adjustments: JsonField<List<Adjustment>>) =
-            apply {
-                this.adjustments = adjustments.map { it.toMutableList() }
-            }
+        fun adjustments(adjustments: JsonField<List<Adjustment>>) = apply {
+            this.adjustments = adjustments.map { it.toMutableList() }
+        }
 
         /**
-         * All adjustments applied to the line item in the order they were applied based on
-         * invoice calculations (ie. usage discounts -> amount discounts -> percentage
-         * discounts -> minimums -> maximums).
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
          */
-        fun addAdjustment(adjustment: Adjustment) =
-            apply {
-                adjustments = (adjustments ?: JsonField.of(mutableListOf())).also {
+        fun addAdjustment(adjustment: Adjustment) = apply {
+            adjustments =
+                (adjustments ?: JsonField.of(mutableListOf())).also {
                     checkKnown("adjustments", it).add(adjustment)
                 }
-            }
+        }
 
         /**
-         * All adjustments applied to the line item in the order they were applied based on
-         * invoice calculations (ie. usage discounts -> amount discounts -> percentage
-         * discounts -> minimums -> maximums).
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
          */
-        fun addAdjustment(monetaryUsageDiscount: Adjustment.MonetaryUsageDiscountAdjustment) = addAdjustment(Adjustment.ofMonetaryUsageDiscount(monetaryUsageDiscount))
+        fun addAdjustment(monetaryUsageDiscount: Adjustment.MonetaryUsageDiscountAdjustment) =
+            addAdjustment(Adjustment.ofMonetaryUsageDiscount(monetaryUsageDiscount))
 
         /**
-         * All adjustments applied to the line item in the order they were applied based on
-         * invoice calculations (ie. usage discounts -> amount discounts -> percentage
-         * discounts -> minimums -> maximums).
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
          */
-        fun addAdjustment(monetaryAmountDiscount: Adjustment.MonetaryAmountDiscountAdjustment) = addAdjustment(Adjustment.ofMonetaryAmountDiscount(monetaryAmountDiscount))
+        fun addAdjustment(monetaryAmountDiscount: Adjustment.MonetaryAmountDiscountAdjustment) =
+            addAdjustment(Adjustment.ofMonetaryAmountDiscount(monetaryAmountDiscount))
 
         /**
-         * All adjustments applied to the line item in the order they were applied based on
-         * invoice calculations (ie. usage discounts -> amount discounts -> percentage
-         * discounts -> minimums -> maximums).
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
          */
-        fun addAdjustment(monetaryPercentageDiscount: Adjustment.MonetaryPercentageDiscountAdjustment) = addAdjustment(Adjustment.ofMonetaryPercentageDiscount(monetaryPercentageDiscount))
+        fun addAdjustment(
+            monetaryPercentageDiscount: Adjustment.MonetaryPercentageDiscountAdjustment
+        ) = addAdjustment(Adjustment.ofMonetaryPercentageDiscount(monetaryPercentageDiscount))
 
         /**
-         * All adjustments applied to the line item in the order they were applied based on
-         * invoice calculations (ie. usage discounts -> amount discounts -> percentage
-         * discounts -> minimums -> maximums).
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
          */
-        fun addAdjustment(monetaryMinimum: Adjustment.MonetaryMinimumAdjustment) = addAdjustment(Adjustment.ofMonetaryMinimum(monetaryMinimum))
+        fun addAdjustment(monetaryMinimum: Adjustment.MonetaryMinimumAdjustment) =
+            addAdjustment(Adjustment.ofMonetaryMinimum(monetaryMinimum))
 
         /**
-         * All adjustments applied to the line item in the order they were applied based on
-         * invoice calculations (ie. usage discounts -> amount discounts -> percentage
-         * discounts -> minimums -> maximums).
+         * All adjustments applied to the line item in the order they were applied based on invoice
+         * calculations (ie. usage discounts -> amount discounts -> percentage discounts -> minimums
+         * -> maximums).
          */
-        fun addAdjustment(monetaryMaximum: Adjustment.MonetaryMaximumAdjustment) = addAdjustment(Adjustment.ofMonetaryMaximum(monetaryMaximum))
+        fun addAdjustment(monetaryMaximum: Adjustment.MonetaryMaximumAdjustment) =
+            addAdjustment(Adjustment.ofMonetaryMaximum(monetaryMaximum))
 
         /**
-         * The final amount for a line item after all adjustments and pre paid credits have
-         * been applied.
+         * The final amount for a line item after all adjustments and pre paid credits have been
+         * applied.
          */
         fun amount(amount: String) = amount(JsonField.of(amount))
 
         /**
-         * The final amount for a line item after all adjustments and pre paid credits have
-         * been applied.
+         * The final amount for a line item after all adjustments and pre paid credits have been
+         * applied.
          */
-        fun amount(amount: JsonField<String>) =
-            apply {
-                this.amount = amount
-            }
+        fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
         /** The number of prepaid credits applied. */
         fun creditsApplied(creditsApplied: String) = creditsApplied(JsonField.of(creditsApplied))
 
         /** The number of prepaid credits applied. */
-        fun creditsApplied(creditsApplied: JsonField<String>) =
-            apply {
-                this.creditsApplied = creditsApplied
-            }
+        fun creditsApplied(creditsApplied: JsonField<String>) = apply {
+            this.creditsApplied = creditsApplied
+        }
 
         fun discount(discount: Discount?) = discount(JsonField.ofNullable(discount))
 
-        fun discount(discount: JsonField<Discount>) =
-            apply {
-                this.discount = discount
-            }
+        fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
         fun discount(percentage: PercentageDiscount) = discount(Discount.ofPercentage(percentage))
 
         fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
         fun trialDiscount(appliesToPriceIds: List<String>) =
-            discount(TrialDiscount.builder()
-                .discountType(TrialDiscount.DiscountType.TRIAL)
-                .appliesToPriceIds(appliesToPriceIds)
-                .build())
+            discount(
+                TrialDiscount.builder()
+                    .discountType(TrialDiscount.DiscountType.TRIAL)
+                    .appliesToPriceIds(appliesToPriceIds)
+                    .build()
+            )
 
         fun discount(usage: UsageDiscount) = discount(Discount.ofUsage(usage))
 
@@ -569,36 +579,27 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
         /** The end date of the range of time applied for this line item's price. */
-        fun endDate(endDate: JsonField<OffsetDateTime>) =
-            apply {
-                this.endDate = endDate
-            }
+        fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
         /** An additional filter that was used to calculate the usage for this line item. */
         fun filter(filter: String?) = filter(JsonField.ofNullable(filter))
 
         /** An additional filter that was used to calculate the usage for this line item. */
-        fun filter(filter: JsonField<String>) =
-            apply {
-                this.filter = filter
-            }
+        fun filter(filter: JsonField<String>) = apply { this.filter = filter }
 
         /**
-         * [DEPRECATED] For configured prices that are split by a grouping key, this will
-         * be populated with the key and a value. The `amount` and `subtotal` will be the
-         * values for this particular grouping.
+         * [DEPRECATED] For configured prices that are split by a grouping key, this will be
+         * populated with the key and a value. The `amount` and `subtotal` will be the values for
+         * this particular grouping.
          */
         fun grouping(grouping: String?) = grouping(JsonField.ofNullable(grouping))
 
         /**
-         * [DEPRECATED] For configured prices that are split by a grouping key, this will
-         * be populated with the key and a value. The `amount` and `subtotal` will be the
-         * values for this particular grouping.
+         * [DEPRECATED] For configured prices that are split by a grouping key, this will be
+         * populated with the key and a value. The `amount` and `subtotal` will be the values for
+         * this particular grouping.
          */
-        fun grouping(grouping: JsonField<String>) =
-            apply {
-                this.grouping = grouping
-            }
+        fun grouping(grouping: JsonField<String>) = apply { this.grouping = grouping }
 
         /** This field is deprecated in favor of `adjustments`. */
         @Deprecated("deprecated")
@@ -606,21 +607,18 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
         /** This field is deprecated in favor of `adjustments`. */
         @Deprecated("deprecated")
-        fun maximum(maximum: JsonField<Maximum>) =
-            apply {
-                this.maximum = maximum
-            }
+        fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
         /** This field is deprecated in favor of `adjustments`. */
         @Deprecated("deprecated")
-        fun maximumAmount(maximumAmount: String?) = maximumAmount(JsonField.ofNullable(maximumAmount))
+        fun maximumAmount(maximumAmount: String?) =
+            maximumAmount(JsonField.ofNullable(maximumAmount))
 
         /** This field is deprecated in favor of `adjustments`. */
         @Deprecated("deprecated")
-        fun maximumAmount(maximumAmount: JsonField<String>) =
-            apply {
-                this.maximumAmount = maximumAmount
-            }
+        fun maximumAmount(maximumAmount: JsonField<String>) = apply {
+            this.maximumAmount = maximumAmount
+        }
 
         /** This field is deprecated in favor of `adjustments`. */
         @Deprecated("deprecated")
@@ -628,48 +626,42 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
         /** This field is deprecated in favor of `adjustments`. */
         @Deprecated("deprecated")
-        fun minimum(minimum: JsonField<Minimum>) =
-            apply {
-                this.minimum = minimum
-            }
+        fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
         /** This field is deprecated in favor of `adjustments`. */
         @Deprecated("deprecated")
-        fun minimumAmount(minimumAmount: String?) = minimumAmount(JsonField.ofNullable(minimumAmount))
+        fun minimumAmount(minimumAmount: String?) =
+            minimumAmount(JsonField.ofNullable(minimumAmount))
 
         /** This field is deprecated in favor of `adjustments`. */
         @Deprecated("deprecated")
-        fun minimumAmount(minimumAmount: JsonField<String>) =
-            apply {
-                this.minimumAmount = minimumAmount
-            }
+        fun minimumAmount(minimumAmount: JsonField<String>) = apply {
+            this.minimumAmount = minimumAmount
+        }
 
         /** The name of the price associated with this line item. */
         fun name(name: String) = name(JsonField.of(name))
 
         /** The name of the price associated with this line item. */
-        fun name(name: JsonField<String>) =
-            apply {
-                this.name = name
-            }
+        fun name(name: JsonField<String>) = apply { this.name = name }
 
         /** Any amount applied from a partial invoice */
-        fun partiallyInvoicedAmount(partiallyInvoicedAmount: String) = partiallyInvoicedAmount(JsonField.of(partiallyInvoicedAmount))
+        fun partiallyInvoicedAmount(partiallyInvoicedAmount: String) =
+            partiallyInvoicedAmount(JsonField.of(partiallyInvoicedAmount))
 
         /** Any amount applied from a partial invoice */
-        fun partiallyInvoicedAmount(partiallyInvoicedAmount: JsonField<String>) =
-            apply {
-                this.partiallyInvoicedAmount = partiallyInvoicedAmount
-            }
+        fun partiallyInvoicedAmount(partiallyInvoicedAmount: JsonField<String>) = apply {
+            this.partiallyInvoicedAmount = partiallyInvoicedAmount
+        }
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
@@ -677,30 +669,27 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun price(price: Price?) = price(JsonField.ofNullable(price))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(price: JsonField<Price>) =
-            apply {
-                this.price = price
-            }
+        fun price(price: JsonField<Price>) = apply { this.price = price }
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
@@ -708,13 +697,13 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun price(unit: Price.UnitPrice) = price(Price.ofUnit(unit))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
@@ -722,13 +711,13 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun price(packagePrice: Price.PackagePrice) = price(Price.ofPackagePrice(packagePrice))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
@@ -736,13 +725,13 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun price(matrix: Price.MatrixPrice) = price(Price.ofMatrix(matrix))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
@@ -750,13 +739,13 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun price(tiered: Price.TieredPrice) = price(Price.ofTiered(tiered))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
@@ -764,13 +753,13 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun price(tieredBps: Price.TieredBpsPrice) = price(Price.ofTieredBps(tieredBps))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
@@ -778,13 +767,13 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun price(bps: Price.BpsPrice) = price(Price.ofBps(bps))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
@@ -792,13 +781,13 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun price(bulkBps: Price.BulkBpsPrice) = price(Price.ofBulkBps(bulkBps))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
@@ -806,302 +795,316 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun price(bulk: Price.BulkPrice) = price(Price.ofBulk(bulk))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(thresholdTotalAmount: Price.ThresholdTotalAmountPrice) = price(Price.ofThresholdTotalAmount(thresholdTotalAmount))
+        fun price(thresholdTotalAmount: Price.ThresholdTotalAmountPrice) =
+            price(Price.ofThresholdTotalAmount(thresholdTotalAmount))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(tieredPackage: Price.TieredPackagePrice) = price(Price.ofTieredPackage(tieredPackage))
+        fun price(tieredPackage: Price.TieredPackagePrice) =
+            price(Price.ofTieredPackage(tieredPackage))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(groupedTiered: Price.GroupedTieredPrice) = price(Price.ofGroupedTiered(groupedTiered))
+        fun price(groupedTiered: Price.GroupedTieredPrice) =
+            price(Price.ofGroupedTiered(groupedTiered))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(tieredWithMinimum: Price.TieredWithMinimumPrice) = price(Price.ofTieredWithMinimum(tieredWithMinimum))
+        fun price(tieredWithMinimum: Price.TieredWithMinimumPrice) =
+            price(Price.ofTieredWithMinimum(tieredWithMinimum))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimumPrice) = price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
+        fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimumPrice) =
+            price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(packageWithAllocation: Price.PackageWithAllocationPrice) = price(Price.ofPackageWithAllocation(packageWithAllocation))
+        fun price(packageWithAllocation: Price.PackageWithAllocationPrice) =
+            price(Price.ofPackageWithAllocation(packageWithAllocation))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(unitWithPercent: Price.UnitWithPercentPrice) = price(Price.ofUnitWithPercent(unitWithPercent))
+        fun price(unitWithPercent: Price.UnitWithPercentPrice) =
+            price(Price.ofUnitWithPercent(unitWithPercent))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(matrixWithAllocation: Price.MatrixWithAllocationPrice) = price(Price.ofMatrixWithAllocation(matrixWithAllocation))
+        fun price(matrixWithAllocation: Price.MatrixWithAllocationPrice) =
+            price(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(tieredWithProration: Price.TieredWithProrationPrice) = price(Price.ofTieredWithProration(tieredWithProration))
+        fun price(tieredWithProration: Price.TieredWithProrationPrice) =
+            price(Price.ofTieredWithProration(tieredWithProration))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(unitWithProration: Price.UnitWithProrationPrice) = price(Price.ofUnitWithProration(unitWithProration))
+        fun price(unitWithProration: Price.UnitWithProrationPrice) =
+            price(Price.ofUnitWithProration(unitWithProration))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(groupedAllocation: Price.GroupedAllocationPrice) = price(Price.ofGroupedAllocation(groupedAllocation))
+        fun price(groupedAllocation: Price.GroupedAllocationPrice) =
+            price(Price.ofGroupedAllocation(groupedAllocation))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimumPrice) = price(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
+        fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimumPrice) =
+            price(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimumPrice) = price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
+        fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimumPrice) =
+            price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(matrixWithDisplayName: Price.MatrixWithDisplayNamePrice) = price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
+        fun price(matrixWithDisplayName: Price.MatrixWithDisplayNamePrice) =
+            price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(bulkWithProration: Price.BulkWithProrationPrice) = price(Price.ofBulkWithProration(bulkWithProration))
+        fun price(bulkWithProration: Price.BulkWithProrationPrice) =
+            price(Price.ofBulkWithProration(bulkWithProration))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(groupedTieredPackage: Price.GroupedTieredPackagePrice) = price(Price.ofGroupedTieredPackage(groupedTieredPackage))
+        fun price(groupedTieredPackage: Price.GroupedTieredPackagePrice) =
+            price(Price.ofGroupedTieredPackage(groupedTieredPackage))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) = price(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
+        fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) =
+            price(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricingPrice) = price(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
+        fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricingPrice) =
+            price(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice) = price(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
+        fun price(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice) =
+            price(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
 
         /**
-         * The Price resource represents a price that can be billed on a subscription,
-         * resulting in a charge on an invoice in the form of an invoice line item. Prices
-         * take a quantity and determine an amount to bill.
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
          *
-         * Orb supports a few different pricing models out of the box. Each of these models
-         * is serialized differently in a given Price object. The model_type field
-         * determines the key for the configuration object that is present.
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulkPrice) = price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
+        fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulkPrice) =
+            price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
         /** Either the fixed fee quantity or the usage during the service period. */
         fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
         /** Either the fixed fee quantity or the usage during the service period. */
-        fun quantity(quantity: JsonField<Double>) =
-            apply {
-                this.quantity = quantity
-            }
+        fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
         /** The start date of the range of time applied for this line item's price. */
         fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
         /** The start date of the range of time applied for this line item's price. */
-        fun startDate(startDate: JsonField<OffsetDateTime>) =
-            apply {
-                this.startDate = startDate
-            }
+        fun startDate(startDate: JsonField<OffsetDateTime>) = apply { this.startDate = startDate }
 
         /**
          * For complex pricing structures, the line item can be broken down further in
@@ -1113,207 +1116,155 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
          * For complex pricing structures, the line item can be broken down further in
          * `sub_line_items`.
          */
-        fun subLineItems(subLineItems: JsonField<List<SubLineItem>>) =
-            apply {
-                this.subLineItems = subLineItems.map { it.toMutableList() }
-            }
+        fun subLineItems(subLineItems: JsonField<List<SubLineItem>>) = apply {
+            this.subLineItems = subLineItems.map { it.toMutableList() }
+        }
 
         /**
          * For complex pricing structures, the line item can be broken down further in
          * `sub_line_items`.
          */
-        fun addSubLineItem(subLineItem: SubLineItem) =
-            apply {
-                subLineItems = (subLineItems ?: JsonField.of(mutableListOf())).also {
+        fun addSubLineItem(subLineItem: SubLineItem) = apply {
+            subLineItems =
+                (subLineItems ?: JsonField.of(mutableListOf())).also {
                     checkKnown("subLineItems", it).add(subLineItem)
                 }
-            }
+        }
 
         /**
          * For complex pricing structures, the line item can be broken down further in
          * `sub_line_items`.
          */
-        fun addSubLineItem(matrix: SubLineItem.MatrixSubLineItem) = addSubLineItem(SubLineItem.ofMatrix(matrix))
+        fun addSubLineItem(matrix: SubLineItem.MatrixSubLineItem) =
+            addSubLineItem(SubLineItem.ofMatrix(matrix))
 
         /**
          * For complex pricing structures, the line item can be broken down further in
          * `sub_line_items`.
          */
-        fun addSubLineItem(tier: SubLineItem.TierSubLineItem) = addSubLineItem(SubLineItem.ofTier(tier))
+        fun addSubLineItem(tier: SubLineItem.TierSubLineItem) =
+            addSubLineItem(SubLineItem.ofTier(tier))
 
         /**
          * For complex pricing structures, the line item can be broken down further in
          * `sub_line_items`.
          */
-        fun addSubLineItem(other: SubLineItem.OtherSubLineItem) = addSubLineItem(SubLineItem.ofOther(other))
+        fun addSubLineItem(other: SubLineItem.OtherSubLineItem) =
+            addSubLineItem(SubLineItem.ofOther(other))
 
         /** The line amount before before any adjustments. */
         fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
 
         /** The line amount before before any adjustments. */
-        fun subtotal(subtotal: JsonField<String>) =
-            apply {
-                this.subtotal = subtotal
-            }
+        fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
 
         /**
-         * An array of tax rates and their incurred tax amounts. Empty if no tax
-         * integration is configured.
+         * An array of tax rates and their incurred tax amounts. Empty if no tax integration is
+         * configured.
          */
         fun taxAmounts(taxAmounts: List<TaxAmount>) = taxAmounts(JsonField.of(taxAmounts))
 
         /**
-         * An array of tax rates and their incurred tax amounts. Empty if no tax
-         * integration is configured.
+         * An array of tax rates and their incurred tax amounts. Empty if no tax integration is
+         * configured.
          */
-        fun taxAmounts(taxAmounts: JsonField<List<TaxAmount>>) =
-            apply {
-                this.taxAmounts = taxAmounts.map { it.toMutableList() }
-            }
+        fun taxAmounts(taxAmounts: JsonField<List<TaxAmount>>) = apply {
+            this.taxAmounts = taxAmounts.map { it.toMutableList() }
+        }
 
         /**
-         * An array of tax rates and their incurred tax amounts. Empty if no tax
-         * integration is configured.
+         * An array of tax rates and their incurred tax amounts. Empty if no tax integration is
+         * configured.
          */
-        fun addTaxAmount(taxAmount: TaxAmount) =
-            apply {
-                taxAmounts = (taxAmounts ?: JsonField.of(mutableListOf())).also {
+        fun addTaxAmount(taxAmount: TaxAmount) = apply {
+            taxAmounts =
+                (taxAmounts ?: JsonField.of(mutableListOf())).also {
                     checkKnown("taxAmounts", it).add(taxAmount)
                 }
-            }
+        }
 
         /** A list of customer ids that were used to calculate the usage for this line item. */
-        fun usageCustomerIds(usageCustomerIds: List<String>?) = usageCustomerIds(JsonField.ofNullable(usageCustomerIds))
+        fun usageCustomerIds(usageCustomerIds: List<String>?) =
+            usageCustomerIds(JsonField.ofNullable(usageCustomerIds))
 
         /** A list of customer ids that were used to calculate the usage for this line item. */
-        fun usageCustomerIds(usageCustomerIds: JsonField<List<String>>) =
-            apply {
-                this.usageCustomerIds = usageCustomerIds.map { it.toMutableList() }
-            }
+        fun usageCustomerIds(usageCustomerIds: JsonField<List<String>>) = apply {
+            this.usageCustomerIds = usageCustomerIds.map { it.toMutableList() }
+        }
 
         /** A list of customer ids that were used to calculate the usage for this line item. */
-        fun addUsageCustomerId(usageCustomerId: String) =
-            apply {
-                usageCustomerIds = (usageCustomerIds ?: JsonField.of(mutableListOf())).also {
+        fun addUsageCustomerId(usageCustomerId: String) = apply {
+            usageCustomerIds =
+                (usageCustomerIds ?: JsonField.of(mutableListOf())).also {
                     checkKnown("usageCustomerIds", it).add(usageCustomerId)
                 }
-            }
+        }
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.clear()
+            putAllAdditionalProperties(additionalProperties)
+        }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) =
-            apply {
-                additionalProperties.put(key, value)
-            }
+        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+            additionalProperties.put(key, value)
+        }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.putAll(additionalProperties)
+        }
 
-        fun removeAdditionalProperty(key: String) =
-            apply {
-                additionalProperties.remove(key)
-            }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) =
-            apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
+        }
 
         fun build(): InvoiceLineItemCreateResponse =
             InvoiceLineItemCreateResponse(
-              checkRequired(
-                "id", id
-              ),
-              checkRequired(
-                "adjustedSubtotal", adjustedSubtotal
-              ),
-              checkRequired(
-                "adjustments", adjustments
-              ).map { it.toImmutable() },
-              checkRequired(
-                "amount", amount
-              ),
-              checkRequired(
-                "creditsApplied", creditsApplied
-              ),
-              checkRequired(
-                "discount", discount
-              ),
-              checkRequired(
-                "endDate", endDate
-              ),
-              checkRequired(
-                "filter", filter
-              ),
-              checkRequired(
-                "grouping", grouping
-              ),
-              checkRequired(
-                "maximum", maximum
-              ),
-              checkRequired(
-                "maximumAmount", maximumAmount
-              ),
-              checkRequired(
-                "minimum", minimum
-              ),
-              checkRequired(
-                "minimumAmount", minimumAmount
-              ),
-              checkRequired(
-                "name", name
-              ),
-              checkRequired(
-                "partiallyInvoicedAmount", partiallyInvoicedAmount
-              ),
-              checkRequired(
-                "price", price
-              ),
-              checkRequired(
-                "quantity", quantity
-              ),
-              checkRequired(
-                "startDate", startDate
-              ),
-              checkRequired(
-                "subLineItems", subLineItems
-              ).map { it.toImmutable() },
-              checkRequired(
-                "subtotal", subtotal
-              ),
-              checkRequired(
-                "taxAmounts", taxAmounts
-              ).map { it.toImmutable() },
-              checkRequired(
-                "usageCustomerIds", usageCustomerIds
-              ).map { it.toImmutable() },
-              additionalProperties.toImmutable(),
+                checkRequired("id", id),
+                checkRequired("adjustedSubtotal", adjustedSubtotal),
+                checkRequired("adjustments", adjustments).map { it.toImmutable() },
+                checkRequired("amount", amount),
+                checkRequired("creditsApplied", creditsApplied),
+                checkRequired("discount", discount),
+                checkRequired("endDate", endDate),
+                checkRequired("filter", filter),
+                checkRequired("grouping", grouping),
+                checkRequired("maximum", maximum),
+                checkRequired("maximumAmount", maximumAmount),
+                checkRequired("minimum", minimum),
+                checkRequired("minimumAmount", minimumAmount),
+                checkRequired("name", name),
+                checkRequired("partiallyInvoicedAmount", partiallyInvoicedAmount),
+                checkRequired("price", price),
+                checkRequired("quantity", quantity),
+                checkRequired("startDate", startDate),
+                checkRequired("subLineItems", subLineItems).map { it.toImmutable() },
+                checkRequired("subtotal", subtotal),
+                checkRequired("taxAmounts", taxAmounts).map { it.toImmutable() },
+                checkRequired("usageCustomerIds", usageCustomerIds).map { it.toImmutable() },
+                additionalProperties.toImmutable(),
             )
     }
 
     @JsonDeserialize(using = Adjustment.Deserializer::class)
     @JsonSerialize(using = Adjustment.Serializer::class)
-    class Adjustment private constructor(
+    class Adjustment
+    private constructor(
         private val monetaryUsageDiscount: MonetaryUsageDiscountAdjustment? = null,
         private val monetaryAmountDiscount: MonetaryAmountDiscountAdjustment? = null,
         private val monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment? = null,
         private val monetaryMinimum: MonetaryMinimumAdjustment? = null,
         private val monetaryMaximum: MonetaryMaximumAdjustment? = null,
         private val _json: JsonValue? = null,
-
     ) {
 
         fun monetaryUsageDiscount(): MonetaryUsageDiscountAdjustment? = monetaryUsageDiscount
 
         fun monetaryAmountDiscount(): MonetaryAmountDiscountAdjustment? = monetaryAmountDiscount
 
-        fun monetaryPercentageDiscount(): MonetaryPercentageDiscountAdjustment? = monetaryPercentageDiscount
+        fun monetaryPercentageDiscount(): MonetaryPercentageDiscountAdjustment? =
+            monetaryPercentageDiscount
 
         fun monetaryMinimum(): MonetaryMinimumAdjustment? = monetaryMinimum
 
@@ -1329,76 +1280,94 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
         fun isMonetaryMaximum(): Boolean = monetaryMaximum != null
 
-        fun asMonetaryUsageDiscount(): MonetaryUsageDiscountAdjustment = monetaryUsageDiscount.getOrThrow("monetaryUsageDiscount")
+        fun asMonetaryUsageDiscount(): MonetaryUsageDiscountAdjustment =
+            monetaryUsageDiscount.getOrThrow("monetaryUsageDiscount")
 
-        fun asMonetaryAmountDiscount(): MonetaryAmountDiscountAdjustment = monetaryAmountDiscount.getOrThrow("monetaryAmountDiscount")
+        fun asMonetaryAmountDiscount(): MonetaryAmountDiscountAdjustment =
+            monetaryAmountDiscount.getOrThrow("monetaryAmountDiscount")
 
-        fun asMonetaryPercentageDiscount(): MonetaryPercentageDiscountAdjustment = monetaryPercentageDiscount.getOrThrow("monetaryPercentageDiscount")
+        fun asMonetaryPercentageDiscount(): MonetaryPercentageDiscountAdjustment =
+            monetaryPercentageDiscount.getOrThrow("monetaryPercentageDiscount")
 
-        fun asMonetaryMinimum(): MonetaryMinimumAdjustment = monetaryMinimum.getOrThrow("monetaryMinimum")
+        fun asMonetaryMinimum(): MonetaryMinimumAdjustment =
+            monetaryMinimum.getOrThrow("monetaryMinimum")
 
-        fun asMonetaryMaximum(): MonetaryMaximumAdjustment = monetaryMaximum.getOrThrow("monetaryMaximum")
+        fun asMonetaryMaximum(): MonetaryMaximumAdjustment =
+            monetaryMaximum.getOrThrow("monetaryMaximum")
 
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T {
-          return when {
-              monetaryUsageDiscount != null -> visitor.visitMonetaryUsageDiscount(monetaryUsageDiscount)
-              monetaryAmountDiscount != null -> visitor.visitMonetaryAmountDiscount(monetaryAmountDiscount)
-              monetaryPercentageDiscount != null -> visitor.visitMonetaryPercentageDiscount(monetaryPercentageDiscount)
-              monetaryMinimum != null -> visitor.visitMonetaryMinimum(monetaryMinimum)
-              monetaryMaximum != null -> visitor.visitMonetaryMaximum(monetaryMaximum)
-              else -> visitor.unknown(_json)
-          }
+            return when {
+                monetaryUsageDiscount != null ->
+                    visitor.visitMonetaryUsageDiscount(monetaryUsageDiscount)
+                monetaryAmountDiscount != null ->
+                    visitor.visitMonetaryAmountDiscount(monetaryAmountDiscount)
+                monetaryPercentageDiscount != null ->
+                    visitor.visitMonetaryPercentageDiscount(monetaryPercentageDiscount)
+                monetaryMinimum != null -> visitor.visitMonetaryMinimum(monetaryMinimum)
+                monetaryMaximum != null -> visitor.visitMonetaryMaximum(monetaryMaximum)
+                else -> visitor.unknown(_json)
+            }
         }
 
         private var validated: Boolean = false
 
-        fun validate(): Adjustment =
-            apply {
-                if (validated) {
-                  return@apply
-                }
+        fun validate(): Adjustment = apply {
+            if (validated) {
+                return@apply
+            }
 
-                accept(object : Visitor<Unit> {
-                    override fun visitMonetaryUsageDiscount(monetaryUsageDiscount: MonetaryUsageDiscountAdjustment) {
-                      monetaryUsageDiscount.validate()
+            accept(
+                object : Visitor<Unit> {
+                    override fun visitMonetaryUsageDiscount(
+                        monetaryUsageDiscount: MonetaryUsageDiscountAdjustment
+                    ) {
+                        monetaryUsageDiscount.validate()
                     }
 
-                    override fun visitMonetaryAmountDiscount(monetaryAmountDiscount: MonetaryAmountDiscountAdjustment) {
-                      monetaryAmountDiscount.validate()
+                    override fun visitMonetaryAmountDiscount(
+                        monetaryAmountDiscount: MonetaryAmountDiscountAdjustment
+                    ) {
+                        monetaryAmountDiscount.validate()
                     }
 
-                    override fun visitMonetaryPercentageDiscount(monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment) {
-                      monetaryPercentageDiscount.validate()
+                    override fun visitMonetaryPercentageDiscount(
+                        monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment
+                    ) {
+                        monetaryPercentageDiscount.validate()
                     }
 
                     override fun visitMonetaryMinimum(monetaryMinimum: MonetaryMinimumAdjustment) {
-                      monetaryMinimum.validate()
+                        monetaryMinimum.validate()
                     }
 
                     override fun visitMonetaryMaximum(monetaryMaximum: MonetaryMaximumAdjustment) {
-                      monetaryMaximum.validate()
+                        monetaryMaximum.validate()
                     }
-                })
-                validated = true
-            }
+                }
+            )
+            validated = true
+        }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Adjustment && monetaryUsageDiscount == other.monetaryUsageDiscount && monetaryAmountDiscount == other.monetaryAmountDiscount && monetaryPercentageDiscount == other.monetaryPercentageDiscount && monetaryMinimum == other.monetaryMinimum && monetaryMaximum == other.monetaryMaximum /* spotless:on */
+            return /* spotless:off */ other is Adjustment && monetaryUsageDiscount == other.monetaryUsageDiscount && monetaryAmountDiscount == other.monetaryAmountDiscount && monetaryPercentageDiscount == other.monetaryPercentageDiscount && monetaryMinimum == other.monetaryMinimum && monetaryMaximum == other.monetaryMaximum /* spotless:on */
         }
 
         override fun hashCode(): Int = /* spotless:off */ Objects.hash(monetaryUsageDiscount, monetaryAmountDiscount, monetaryPercentageDiscount, monetaryMinimum, monetaryMaximum) /* spotless:on */
 
         override fun toString(): String =
             when {
-                monetaryUsageDiscount != null -> "Adjustment{monetaryUsageDiscount=$monetaryUsageDiscount}"
-                monetaryAmountDiscount != null -> "Adjustment{monetaryAmountDiscount=$monetaryAmountDiscount}"
-                monetaryPercentageDiscount != null -> "Adjustment{monetaryPercentageDiscount=$monetaryPercentageDiscount}"
+                monetaryUsageDiscount != null ->
+                    "Adjustment{monetaryUsageDiscount=$monetaryUsageDiscount}"
+                monetaryAmountDiscount != null ->
+                    "Adjustment{monetaryAmountDiscount=$monetaryAmountDiscount}"
+                monetaryPercentageDiscount != null ->
+                    "Adjustment{monetaryPercentageDiscount=$monetaryPercentageDiscount}"
                 monetaryMinimum != null -> "Adjustment{monetaryMinimum=$monetaryMinimum}"
                 monetaryMaximum != null -> "Adjustment{monetaryMaximum=$monetaryMaximum}"
                 _json != null -> "Adjustment{_unknown=$_json}"
@@ -1407,28 +1376,39 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
         companion object {
 
-            fun ofMonetaryUsageDiscount(monetaryUsageDiscount: MonetaryUsageDiscountAdjustment) = Adjustment(monetaryUsageDiscount = monetaryUsageDiscount)
+            fun ofMonetaryUsageDiscount(monetaryUsageDiscount: MonetaryUsageDiscountAdjustment) =
+                Adjustment(monetaryUsageDiscount = monetaryUsageDiscount)
 
-            fun ofMonetaryAmountDiscount(monetaryAmountDiscount: MonetaryAmountDiscountAdjustment) = Adjustment(monetaryAmountDiscount = monetaryAmountDiscount)
+            fun ofMonetaryAmountDiscount(monetaryAmountDiscount: MonetaryAmountDiscountAdjustment) =
+                Adjustment(monetaryAmountDiscount = monetaryAmountDiscount)
 
-            fun ofMonetaryPercentageDiscount(monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment) = Adjustment(monetaryPercentageDiscount = monetaryPercentageDiscount)
+            fun ofMonetaryPercentageDiscount(
+                monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment
+            ) = Adjustment(monetaryPercentageDiscount = monetaryPercentageDiscount)
 
-            fun ofMonetaryMinimum(monetaryMinimum: MonetaryMinimumAdjustment) = Adjustment(monetaryMinimum = monetaryMinimum)
+            fun ofMonetaryMinimum(monetaryMinimum: MonetaryMinimumAdjustment) =
+                Adjustment(monetaryMinimum = monetaryMinimum)
 
-            fun ofMonetaryMaximum(monetaryMaximum: MonetaryMaximumAdjustment) = Adjustment(monetaryMaximum = monetaryMaximum)
+            fun ofMonetaryMaximum(monetaryMaximum: MonetaryMaximumAdjustment) =
+                Adjustment(monetaryMaximum = monetaryMaximum)
         }
 
         /**
-         * An interface that defines how to map each variant of [Adjustment] to a value of
-         * type [T].
+         * An interface that defines how to map each variant of [Adjustment] to a value of type [T].
          */
         interface Visitor<out T> {
 
-            fun visitMonetaryUsageDiscount(monetaryUsageDiscount: MonetaryUsageDiscountAdjustment): T
+            fun visitMonetaryUsageDiscount(
+                monetaryUsageDiscount: MonetaryUsageDiscountAdjustment
+            ): T
 
-            fun visitMonetaryAmountDiscount(monetaryAmountDiscount: MonetaryAmountDiscountAdjustment): T
+            fun visitMonetaryAmountDiscount(
+                monetaryAmountDiscount: MonetaryAmountDiscountAdjustment
+            ): T
 
-            fun visitMonetaryPercentageDiscount(monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment): T
+            fun visitMonetaryPercentageDiscount(
+                monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment
+            ): T
 
             fun visitMonetaryMinimum(monetaryMinimum: MonetaryMinimumAdjustment): T
 
@@ -1437,82 +1417,123 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             /**
              * Maps an unknown variant of [Adjustment] to a value of type [T].
              *
-             * An instance of [Adjustment] can contain an unknown variant if it was
-             * deserialized from data that doesn't match any known variant. For example, if the
-             * SDK is on an older version than the API, then the API may respond with new
-             * variants that the SDK is unaware of.
+             * An instance of [Adjustment] can contain an unknown variant if it was deserialized
+             * from data that doesn't match any known variant. For example, if the SDK is on an
+             * older version than the API, then the API may respond with new variants that the SDK
+             * is unaware of.
              *
              * @throws OrbInvalidDataException in the default implementation.
              */
             fun unknown(json: JsonValue?): T {
-              throw OrbInvalidDataException("Unknown Adjustment: $json")
+                throw OrbInvalidDataException("Unknown Adjustment: $json")
             }
         }
 
         internal class Deserializer : BaseDeserializer<Adjustment>(Adjustment::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): Adjustment {
-              val json = JsonValue.fromJsonNode(node)
-              val adjustmentType = json.asObject()?.get("adjustment_type")?.asString()
+                val json = JsonValue.fromJsonNode(node)
+                val adjustmentType = json.asObject()?.get("adjustment_type")?.asString()
 
-              when (adjustmentType) {
-                  "usage_discount" -> {
-                      tryDeserialize(node, jacksonTypeRef<MonetaryUsageDiscountAdjustment>()){ it.validate() }?.let {
-                          return Adjustment(monetaryUsageDiscount = it, _json = json)
-                      }
-                  }
-                  "amount_discount" -> {
-                      tryDeserialize(node, jacksonTypeRef<MonetaryAmountDiscountAdjustment>()){ it.validate() }?.let {
-                          return Adjustment(monetaryAmountDiscount = it, _json = json)
-                      }
-                  }
-                  "percentage_discount" -> {
-                      tryDeserialize(node, jacksonTypeRef<MonetaryPercentageDiscountAdjustment>()){ it.validate() }?.let {
-                          return Adjustment(monetaryPercentageDiscount = it, _json = json)
-                      }
-                  }
-                  "minimum" -> {
-                      tryDeserialize(node, jacksonTypeRef<MonetaryMinimumAdjustment>()){ it.validate() }?.let {
-                          return Adjustment(monetaryMinimum = it, _json = json)
-                      }
-                  }
-                  "maximum" -> {
-                      tryDeserialize(node, jacksonTypeRef<MonetaryMaximumAdjustment>()){ it.validate() }?.let {
-                          return Adjustment(monetaryMaximum = it, _json = json)
-                      }
-                  }
-              }
+                when (adjustmentType) {
+                    "usage_discount" -> {
+                        tryDeserialize(node, jacksonTypeRef<MonetaryUsageDiscountAdjustment>()) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return Adjustment(monetaryUsageDiscount = it, _json = json)
+                            }
+                    }
+                    "amount_discount" -> {
+                        tryDeserialize(node, jacksonTypeRef<MonetaryAmountDiscountAdjustment>()) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return Adjustment(monetaryAmountDiscount = it, _json = json)
+                            }
+                    }
+                    "percentage_discount" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<MonetaryPercentageDiscountAdjustment>(),
+                            ) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return Adjustment(monetaryPercentageDiscount = it, _json = json)
+                            }
+                    }
+                    "minimum" -> {
+                        tryDeserialize(node, jacksonTypeRef<MonetaryMinimumAdjustment>()) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return Adjustment(monetaryMinimum = it, _json = json)
+                            }
+                    }
+                    "maximum" -> {
+                        tryDeserialize(node, jacksonTypeRef<MonetaryMaximumAdjustment>()) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return Adjustment(monetaryMaximum = it, _json = json)
+                            }
+                    }
+                }
 
-              return Adjustment(_json = json)
+                return Adjustment(_json = json)
             }
         }
 
         internal class Serializer : BaseSerializer<Adjustment>(Adjustment::class) {
 
-            override fun serialize(value: Adjustment, generator: JsonGenerator, provider: SerializerProvider) {
-              when {
-                  value.monetaryUsageDiscount != null -> generator.writeObject(value.monetaryUsageDiscount)
-                  value.monetaryAmountDiscount != null -> generator.writeObject(value.monetaryAmountDiscount)
-                  value.monetaryPercentageDiscount != null -> generator.writeObject(value.monetaryPercentageDiscount)
-                  value.monetaryMinimum != null -> generator.writeObject(value.monetaryMinimum)
-                  value.monetaryMaximum != null -> generator.writeObject(value.monetaryMaximum)
-                  value._json != null -> generator.writeObject(value._json)
-                  else -> throw IllegalStateException("Invalid Adjustment")
-              }
+            override fun serialize(
+                value: Adjustment,
+                generator: JsonGenerator,
+                provider: SerializerProvider,
+            ) {
+                when {
+                    value.monetaryUsageDiscount != null ->
+                        generator.writeObject(value.monetaryUsageDiscount)
+                    value.monetaryAmountDiscount != null ->
+                        generator.writeObject(value.monetaryAmountDiscount)
+                    value.monetaryPercentageDiscount != null ->
+                        generator.writeObject(value.monetaryPercentageDiscount)
+                    value.monetaryMinimum != null -> generator.writeObject(value.monetaryMinimum)
+                    value.monetaryMaximum != null -> generator.writeObject(value.monetaryMaximum)
+                    value._json != null -> generator.writeObject(value._json)
+                    else -> throw IllegalStateException("Invalid Adjustment")
+                }
             }
         }
 
         @NoAutoDetect
-        class MonetaryUsageDiscountAdjustment @JsonCreator private constructor(
-            @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("adjustment_type") @ExcludeMissing private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
-            @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("applies_to_price_ids") @ExcludeMissing private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("is_invoice_level") @ExcludeMissing private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("reason") @ExcludeMissing private val reason: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("usage_discount") @ExcludeMissing private val usageDiscount: JsonField<Double> = JsonMissing.of(),
-            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        class MonetaryUsageDiscountAdjustment
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("adjustment_type")
+            @ExcludeMissing
+            private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+            @JsonProperty("amount")
+            @ExcludeMissing
+            private val amount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("is_invoice_level")
+            @ExcludeMissing
+            private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("reason")
+            @ExcludeMissing
+            private val reason: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("usage_discount")
+            @ExcludeMissing
+            private val usageDiscount: JsonField<Double> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -1523,11 +1544,12 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun amount(): String = amount.getRequired("amount")
 
             /** The price IDs that this adjustment applies to. */
-            fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
+            fun appliesToPriceIds(): List<String> =
+                appliesToPriceIds.getRequired("applies_to_price_ids")
 
             /**
-             * True for adjustments that apply to an entire invocice, false for adjustments
-             * that apply to only one price.
+             * True for adjustments that apply to an entire invocice, false for adjustments that
+             * apply to only one price.
              */
             fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
@@ -1535,23 +1557,19 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun reason(): String? = reason.getNullable("reason")
 
             /**
-             * The number of usage units by which to discount the price this adjustment applies
-             * to in a given billing period.
+             * The number of usage units by which to discount the price this adjustment applies to
+             * in a given billing period.
              */
             fun usageDiscount(): Double = usageDiscount.getRequired("usage_discount")
 
-            @JsonProperty("id")
-            @ExcludeMissing
-            fun _id(): JsonField<String> = id
+            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
             @JsonProperty("adjustment_type")
             @ExcludeMissing
             fun _adjustmentType(): JsonField<AdjustmentType> = adjustmentType
 
             /** The value applied by an adjustment. */
-            @JsonProperty("amount")
-            @ExcludeMissing
-            fun _amount(): JsonField<String> = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
             /** The price IDs that this adjustment applies to. */
             @JsonProperty("applies_to_price_ids")
@@ -1559,21 +1577,19 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
             /**
-             * True for adjustments that apply to an entire invocice, false for adjustments
-             * that apply to only one price.
+             * True for adjustments that apply to an entire invocice, false for adjustments that
+             * apply to only one price.
              */
             @JsonProperty("is_invoice_level")
             @ExcludeMissing
             fun _isInvoiceLevel(): JsonField<Boolean> = isInvoiceLevel
 
             /** The reason for the adjustment. */
-            @JsonProperty("reason")
-            @ExcludeMissing
-            fun _reason(): JsonField<String> = reason
+            @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
             /**
-             * The number of usage units by which to discount the price this adjustment applies
-             * to in a given billing period.
+             * The number of usage units by which to discount the price this adjustment applies to
+             * in a given billing period.
              */
             @JsonProperty("usage_discount")
             @ExcludeMissing
@@ -1585,21 +1601,20 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): MonetaryUsageDiscountAdjustment =
-                apply {
-                    if (validated) {
-                      return@apply
-                    }
-
-                    id()
-                    adjustmentType()
-                    amount()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    reason()
-                    usageDiscount()
-                    validated = true
+            fun validate(): MonetaryUsageDiscountAdjustment = apply {
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                adjustmentType()
+                amount()
+                appliesToPriceIds()
+                isInvoiceLevel()
+                reason()
+                usageDiscount()
+                validated = true
+            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1610,7 +1625,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * [MonetaryUsageDiscountAdjustment].
                  *
                  * The following fields are required:
-                 *
                  * ```kotlin
                  * .id()
                  * .adjustmentType()
@@ -1636,154 +1650,131 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                 private var usageDiscount: JsonField<Double>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(monetaryUsageDiscountAdjustment: MonetaryUsageDiscountAdjustment) =
-                    apply {
-                        id = monetaryUsageDiscountAdjustment.id
-                        adjustmentType = monetaryUsageDiscountAdjustment.adjustmentType
-                        amount = monetaryUsageDiscountAdjustment.amount
-                        appliesToPriceIds = monetaryUsageDiscountAdjustment.appliesToPriceIds.map { it.toMutableList() }
-                        isInvoiceLevel = monetaryUsageDiscountAdjustment.isInvoiceLevel
-                        reason = monetaryUsageDiscountAdjustment.reason
-                        usageDiscount = monetaryUsageDiscountAdjustment.usageDiscount
-                        additionalProperties = monetaryUsageDiscountAdjustment.additionalProperties.toMutableMap()
-                    }
+                internal fun from(
+                    monetaryUsageDiscountAdjustment: MonetaryUsageDiscountAdjustment
+                ) = apply {
+                    id = monetaryUsageDiscountAdjustment.id
+                    adjustmentType = monetaryUsageDiscountAdjustment.adjustmentType
+                    amount = monetaryUsageDiscountAdjustment.amount
+                    appliesToPriceIds =
+                        monetaryUsageDiscountAdjustment.appliesToPriceIds.map { it.toMutableList() }
+                    isInvoiceLevel = monetaryUsageDiscountAdjustment.isInvoiceLevel
+                    reason = monetaryUsageDiscountAdjustment.reason
+                    usageDiscount = monetaryUsageDiscountAdjustment.usageDiscount
+                    additionalProperties =
+                        monetaryUsageDiscountAdjustment.additionalProperties.toMutableMap()
+                }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                fun id(id: JsonField<String>) =
-                    apply {
-                        this.id = id
-                    }
+                fun id(id: JsonField<String>) = apply { this.id = id }
 
-                fun adjustmentType(adjustmentType: AdjustmentType) = adjustmentType(JsonField.of(adjustmentType))
+                fun adjustmentType(adjustmentType: AdjustmentType) =
+                    adjustmentType(JsonField.of(adjustmentType))
 
-                fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) =
-                    apply {
-                        this.adjustmentType = adjustmentType
-                    }
+                fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                    this.adjustmentType = adjustmentType
+                }
 
                 /** The value applied by an adjustment. */
                 fun amount(amount: String) = amount(JsonField.of(amount))
 
                 /** The value applied by an adjustment. */
-                fun amount(amount: JsonField<String>) =
-                    apply {
-                        this.amount = amount
-                    }
+                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                 /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: List<String>) = appliesToPriceIds(JsonField.of(appliesToPriceIds))
+                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
                 /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) =
-                    apply {
-                        this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
-                    }
+                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                    this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+                }
 
                 /** The price IDs that this adjustment applies to. */
-                fun addAppliesToPriceId(appliesToPriceId: String) =
-                    apply {
-                        appliesToPriceIds = (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                fun addAppliesToPriceId(appliesToPriceId: String) = apply {
+                    appliesToPriceIds =
+                        (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                             checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                         }
-                    }
+                }
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments
-                 * that apply to only one price.
+                 * True for adjustments that apply to an entire invocice, false for adjustments that
+                 * apply to only one price.
                  */
-                fun isInvoiceLevel(isInvoiceLevel: Boolean) = isInvoiceLevel(JsonField.of(isInvoiceLevel))
+                fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                    isInvoiceLevel(JsonField.of(isInvoiceLevel))
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments
-                 * that apply to only one price.
+                 * True for adjustments that apply to an entire invocice, false for adjustments that
+                 * apply to only one price.
                  */
-                fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) =
-                    apply {
-                        this.isInvoiceLevel = isInvoiceLevel
-                    }
+                fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                    this.isInvoiceLevel = isInvoiceLevel
+                }
 
                 /** The reason for the adjustment. */
                 fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
                 /** The reason for the adjustment. */
-                fun reason(reason: JsonField<String>) =
-                    apply {
-                        this.reason = reason
-                    }
+                fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
                 /**
                  * The number of usage units by which to discount the price this adjustment applies
                  * to in a given billing period.
                  */
-                fun usageDiscount(usageDiscount: Double) = usageDiscount(JsonField.of(usageDiscount))
+                fun usageDiscount(usageDiscount: Double) =
+                    usageDiscount(JsonField.of(usageDiscount))
 
                 /**
                  * The number of usage units by which to discount the price this adjustment applies
                  * to in a given billing period.
                  */
-                fun usageDiscount(usageDiscount: JsonField<Double>) =
-                    apply {
-                        this.usageDiscount = usageDiscount
-                    }
+                fun usageDiscount(usageDiscount: JsonField<Double>) = apply {
+                    this.usageDiscount = usageDiscount
+                }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.clear()
-                        putAllAdditionalProperties(additionalProperties)
-                    }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) =
-                    apply {
-                        additionalProperties.put(key, value)
-                    }
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) =
-                    apply {
-                        additionalProperties.remove(key)
-                    }
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) =
-                    apply {
-                        keys.forEach(::removeAdditionalProperty)
-                    }
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): MonetaryUsageDiscountAdjustment =
                     MonetaryUsageDiscountAdjustment(
-                      checkRequired(
-                        "id", id
-                      ),
-                      checkRequired(
-                        "adjustmentType", adjustmentType
-                      ),
-                      checkRequired(
-                        "amount", amount
-                      ),
-                      checkRequired(
-                        "appliesToPriceIds", appliesToPriceIds
-                      ).map { it.toImmutable() },
-                      checkRequired(
-                        "isInvoiceLevel", isInvoiceLevel
-                      ),
-                      checkRequired(
-                        "reason", reason
-                      ),
-                      checkRequired(
-                        "usageDiscount", usageDiscount
-                      ),
-                      additionalProperties.toImmutable(),
+                        checkRequired("id", id),
+                        checkRequired("adjustmentType", adjustmentType),
+                        checkRequired("amount", amount),
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
+                        },
+                        checkRequired("isInvoiceLevel", isInvoiceLevel),
+                        checkRequired("reason", reason),
+                        checkRequired("usageDiscount", usageDiscount),
+                        additionalProperties.toImmutable(),
                     )
             }
 
-            class AdjustmentType @JsonCreator private constructor(
-                private val value: JsonField<String>,
-
-            ) : Enum {
+            class AdjustmentType
+            @JsonCreator
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -1793,8 +1784,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * the SDK is on an older version than the API, then the API may respond with new
                  * members that the SDK is unaware of.
                  */
-                @com.fasterxml.jackson.annotation.JsonValue
-                fun _value(): JsonField<String> = value
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
                 companion object {
 
@@ -1805,7 +1795,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 /** An enum containing [AdjustmentType]'s known values. */
                 enum class Known {
-                    USAGE_DISCOUNT,
+                    USAGE_DISCOUNT
                 }
 
                 /**
@@ -1814,18 +1804,16 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  *
                  * An instance of [AdjustmentType] can contain an unknown value in a couple of
                  * cases:
-                 *
-                 * - It was deserialized from data that doesn't match any known member. For
-                 *   example, if the SDK is on an older version than the API, then the API may
-                 *   respond with new members that the SDK is unaware of.
-                 *
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
                     USAGE_DISCOUNT,
                     /**
-                     * An enum member indicating that [AdjustmentType] was instantiated with an unknown
-                     * value.
+                     * An enum member indicating that [AdjustmentType] was instantiated with an
+                     * unknown value.
                      */
                     _UNKNOWN,
                 }
@@ -1850,7 +1838,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * don't want to throw for the unknown case.
                  *
                  * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 * member.
+                 *   member.
                  */
                 fun known(): Known =
                     when (this) {
@@ -1865,16 +1853,17 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * debugging and generally doesn't throw.
                  *
                  * @throws OrbInvalidDataException if this class instance's value does not have the
-                 * expected primitive type.
+                 *   expected primitive type.
                  */
-                fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
+                    return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -1883,11 +1872,11 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             }
 
             override fun equals(other: Any?): Boolean {
-              if (this === other) {
-                  return true
-              }
+                if (this === other) {
+                    return true
+                }
 
-              return /* spotless:off */ other is MonetaryUsageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is MonetaryUsageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -1896,20 +1885,37 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() = "MonetaryUsageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
+            override fun toString() =
+                "MonetaryUsageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
         }
 
         @NoAutoDetect
-        class MonetaryAmountDiscountAdjustment @JsonCreator private constructor(
-            @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("adjustment_type") @ExcludeMissing private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
-            @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("amount_discount") @ExcludeMissing private val amountDiscount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("applies_to_price_ids") @ExcludeMissing private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("is_invoice_level") @ExcludeMissing private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("reason") @ExcludeMissing private val reason: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        class MonetaryAmountDiscountAdjustment
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("adjustment_type")
+            @ExcludeMissing
+            private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+            @JsonProperty("amount")
+            @ExcludeMissing
+            private val amount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("amount_discount")
+            @ExcludeMissing
+            private val amountDiscount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("is_invoice_level")
+            @ExcludeMissing
+            private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("reason")
+            @ExcludeMissing
+            private val reason: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -1926,29 +1932,26 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
 
             /** The price IDs that this adjustment applies to. */
-            fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
+            fun appliesToPriceIds(): List<String> =
+                appliesToPriceIds.getRequired("applies_to_price_ids")
 
             /**
-             * True for adjustments that apply to an entire invocice, false for adjustments
-             * that apply to only one price.
+             * True for adjustments that apply to an entire invocice, false for adjustments that
+             * apply to only one price.
              */
             fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
             /** The reason for the adjustment. */
             fun reason(): String? = reason.getNullable("reason")
 
-            @JsonProperty("id")
-            @ExcludeMissing
-            fun _id(): JsonField<String> = id
+            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
             @JsonProperty("adjustment_type")
             @ExcludeMissing
             fun _adjustmentType(): JsonField<AdjustmentType> = adjustmentType
 
             /** The value applied by an adjustment. */
-            @JsonProperty("amount")
-            @ExcludeMissing
-            fun _amount(): JsonField<String> = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
             /**
              * The amount by which to discount the prices this adjustment applies to in a given
@@ -1964,17 +1967,15 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
             /**
-             * True for adjustments that apply to an entire invocice, false for adjustments
-             * that apply to only one price.
+             * True for adjustments that apply to an entire invocice, false for adjustments that
+             * apply to only one price.
              */
             @JsonProperty("is_invoice_level")
             @ExcludeMissing
             fun _isInvoiceLevel(): JsonField<Boolean> = isInvoiceLevel
 
             /** The reason for the adjustment. */
-            @JsonProperty("reason")
-            @ExcludeMissing
-            fun _reason(): JsonField<String> = reason
+            @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -1982,21 +1983,20 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): MonetaryAmountDiscountAdjustment =
-                apply {
-                    if (validated) {
-                      return@apply
-                    }
-
-                    id()
-                    adjustmentType()
-                    amount()
-                    amountDiscount()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    reason()
-                    validated = true
+            fun validate(): MonetaryAmountDiscountAdjustment = apply {
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                adjustmentType()
+                amount()
+                amountDiscount()
+                appliesToPriceIds()
+                isInvoiceLevel()
+                reason()
+                validated = true
+            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -2007,7 +2007,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * [MonetaryAmountDiscountAdjustment].
                  *
                  * The following fields are required:
-                 *
                  * ```kotlin
                  * .id()
                  * .adjustmentType()
@@ -2033,154 +2032,133 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                 private var reason: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(monetaryAmountDiscountAdjustment: MonetaryAmountDiscountAdjustment) =
-                    apply {
-                        id = monetaryAmountDiscountAdjustment.id
-                        adjustmentType = monetaryAmountDiscountAdjustment.adjustmentType
-                        amount = monetaryAmountDiscountAdjustment.amount
-                        amountDiscount = monetaryAmountDiscountAdjustment.amountDiscount
-                        appliesToPriceIds = monetaryAmountDiscountAdjustment.appliesToPriceIds.map { it.toMutableList() }
-                        isInvoiceLevel = monetaryAmountDiscountAdjustment.isInvoiceLevel
-                        reason = monetaryAmountDiscountAdjustment.reason
-                        additionalProperties = monetaryAmountDiscountAdjustment.additionalProperties.toMutableMap()
-                    }
+                internal fun from(
+                    monetaryAmountDiscountAdjustment: MonetaryAmountDiscountAdjustment
+                ) = apply {
+                    id = monetaryAmountDiscountAdjustment.id
+                    adjustmentType = monetaryAmountDiscountAdjustment.adjustmentType
+                    amount = monetaryAmountDiscountAdjustment.amount
+                    amountDiscount = monetaryAmountDiscountAdjustment.amountDiscount
+                    appliesToPriceIds =
+                        monetaryAmountDiscountAdjustment.appliesToPriceIds.map {
+                            it.toMutableList()
+                        }
+                    isInvoiceLevel = monetaryAmountDiscountAdjustment.isInvoiceLevel
+                    reason = monetaryAmountDiscountAdjustment.reason
+                    additionalProperties =
+                        monetaryAmountDiscountAdjustment.additionalProperties.toMutableMap()
+                }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                fun id(id: JsonField<String>) =
-                    apply {
-                        this.id = id
-                    }
+                fun id(id: JsonField<String>) = apply { this.id = id }
 
-                fun adjustmentType(adjustmentType: AdjustmentType) = adjustmentType(JsonField.of(adjustmentType))
+                fun adjustmentType(adjustmentType: AdjustmentType) =
+                    adjustmentType(JsonField.of(adjustmentType))
 
-                fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) =
-                    apply {
-                        this.adjustmentType = adjustmentType
-                    }
+                fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                    this.adjustmentType = adjustmentType
+                }
 
                 /** The value applied by an adjustment. */
                 fun amount(amount: String) = amount(JsonField.of(amount))
 
                 /** The value applied by an adjustment. */
-                fun amount(amount: JsonField<String>) =
-                    apply {
-                        this.amount = amount
-                    }
+                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                 /**
                  * The amount by which to discount the prices this adjustment applies to in a given
                  * billing period.
                  */
-                fun amountDiscount(amountDiscount: String) = amountDiscount(JsonField.of(amountDiscount))
+                fun amountDiscount(amountDiscount: String) =
+                    amountDiscount(JsonField.of(amountDiscount))
 
                 /**
                  * The amount by which to discount the prices this adjustment applies to in a given
                  * billing period.
                  */
-                fun amountDiscount(amountDiscount: JsonField<String>) =
-                    apply {
-                        this.amountDiscount = amountDiscount
-                    }
+                fun amountDiscount(amountDiscount: JsonField<String>) = apply {
+                    this.amountDiscount = amountDiscount
+                }
 
                 /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: List<String>) = appliesToPriceIds(JsonField.of(appliesToPriceIds))
+                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
                 /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) =
-                    apply {
-                        this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
-                    }
+                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                    this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+                }
 
                 /** The price IDs that this adjustment applies to. */
-                fun addAppliesToPriceId(appliesToPriceId: String) =
-                    apply {
-                        appliesToPriceIds = (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                fun addAppliesToPriceId(appliesToPriceId: String) = apply {
+                    appliesToPriceIds =
+                        (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                             checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                         }
-                    }
+                }
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments
-                 * that apply to only one price.
+                 * True for adjustments that apply to an entire invocice, false for adjustments that
+                 * apply to only one price.
                  */
-                fun isInvoiceLevel(isInvoiceLevel: Boolean) = isInvoiceLevel(JsonField.of(isInvoiceLevel))
+                fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                    isInvoiceLevel(JsonField.of(isInvoiceLevel))
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments
-                 * that apply to only one price.
+                 * True for adjustments that apply to an entire invocice, false for adjustments that
+                 * apply to only one price.
                  */
-                fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) =
-                    apply {
-                        this.isInvoiceLevel = isInvoiceLevel
-                    }
+                fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                    this.isInvoiceLevel = isInvoiceLevel
+                }
 
                 /** The reason for the adjustment. */
                 fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
                 /** The reason for the adjustment. */
-                fun reason(reason: JsonField<String>) =
-                    apply {
-                        this.reason = reason
-                    }
+                fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.clear()
-                        putAllAdditionalProperties(additionalProperties)
-                    }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) =
-                    apply {
-                        additionalProperties.put(key, value)
-                    }
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) =
-                    apply {
-                        additionalProperties.remove(key)
-                    }
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) =
-                    apply {
-                        keys.forEach(::removeAdditionalProperty)
-                    }
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): MonetaryAmountDiscountAdjustment =
                     MonetaryAmountDiscountAdjustment(
-                      checkRequired(
-                        "id", id
-                      ),
-                      checkRequired(
-                        "adjustmentType", adjustmentType
-                      ),
-                      checkRequired(
-                        "amount", amount
-                      ),
-                      checkRequired(
-                        "amountDiscount", amountDiscount
-                      ),
-                      checkRequired(
-                        "appliesToPriceIds", appliesToPriceIds
-                      ).map { it.toImmutable() },
-                      checkRequired(
-                        "isInvoiceLevel", isInvoiceLevel
-                      ),
-                      checkRequired(
-                        "reason", reason
-                      ),
-                      additionalProperties.toImmutable(),
+                        checkRequired("id", id),
+                        checkRequired("adjustmentType", adjustmentType),
+                        checkRequired("amount", amount),
+                        checkRequired("amountDiscount", amountDiscount),
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
+                        },
+                        checkRequired("isInvoiceLevel", isInvoiceLevel),
+                        checkRequired("reason", reason),
+                        additionalProperties.toImmutable(),
                     )
             }
 
-            class AdjustmentType @JsonCreator private constructor(
-                private val value: JsonField<String>,
-
-            ) : Enum {
+            class AdjustmentType
+            @JsonCreator
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2190,8 +2168,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * the SDK is on an older version than the API, then the API may respond with new
                  * members that the SDK is unaware of.
                  */
-                @com.fasterxml.jackson.annotation.JsonValue
-                fun _value(): JsonField<String> = value
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
                 companion object {
 
@@ -2202,7 +2179,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 /** An enum containing [AdjustmentType]'s known values. */
                 enum class Known {
-                    AMOUNT_DISCOUNT,
+                    AMOUNT_DISCOUNT
                 }
 
                 /**
@@ -2211,18 +2188,16 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  *
                  * An instance of [AdjustmentType] can contain an unknown value in a couple of
                  * cases:
-                 *
-                 * - It was deserialized from data that doesn't match any known member. For
-                 *   example, if the SDK is on an older version than the API, then the API may
-                 *   respond with new members that the SDK is unaware of.
-                 *
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
                     AMOUNT_DISCOUNT,
                     /**
-                     * An enum member indicating that [AdjustmentType] was instantiated with an unknown
-                     * value.
+                     * An enum member indicating that [AdjustmentType] was instantiated with an
+                     * unknown value.
                      */
                     _UNKNOWN,
                 }
@@ -2247,7 +2222,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * don't want to throw for the unknown case.
                  *
                  * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 * member.
+                 *   member.
                  */
                 fun known(): Known =
                     when (this) {
@@ -2262,16 +2237,17 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * debugging and generally doesn't throw.
                  *
                  * @throws OrbInvalidDataException if this class instance's value does not have the
-                 * expected primitive type.
+                 *   expected primitive type.
                  */
-                fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
+                    return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -2280,11 +2256,11 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             }
 
             override fun equals(other: Any?): Boolean {
-              if (this === other) {
-                  return true
-              }
+                if (this === other) {
+                    return true
+                }
 
-              return /* spotless:off */ other is MonetaryAmountDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is MonetaryAmountDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -2293,20 +2269,37 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() = "MonetaryAmountDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, reason=$reason, additionalProperties=$additionalProperties}"
+            override fun toString() =
+                "MonetaryAmountDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, reason=$reason, additionalProperties=$additionalProperties}"
         }
 
         @NoAutoDetect
-        class MonetaryPercentageDiscountAdjustment @JsonCreator private constructor(
-            @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("adjustment_type") @ExcludeMissing private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
-            @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("applies_to_price_ids") @ExcludeMissing private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("is_invoice_level") @ExcludeMissing private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("percentage_discount") @ExcludeMissing private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("reason") @ExcludeMissing private val reason: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        class MonetaryPercentageDiscountAdjustment
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("adjustment_type")
+            @ExcludeMissing
+            private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+            @JsonProperty("amount")
+            @ExcludeMissing
+            private val amount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("is_invoice_level")
+            @ExcludeMissing
+            private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("percentage_discount")
+            @ExcludeMissing
+            private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("reason")
+            @ExcludeMissing
+            private val reason: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -2317,35 +2310,32 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun amount(): String = amount.getRequired("amount")
 
             /** The price IDs that this adjustment applies to. */
-            fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
+            fun appliesToPriceIds(): List<String> =
+                appliesToPriceIds.getRequired("applies_to_price_ids")
 
             /**
-             * True for adjustments that apply to an entire invocice, false for adjustments
-             * that apply to only one price.
+             * True for adjustments that apply to an entire invocice, false for adjustments that
+             * apply to only one price.
              */
             fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
             /**
-             * The percentage (as a value between 0 and 1) by which to discount the price
-             * intervals this adjustment applies to in a given billing period.
+             * The percentage (as a value between 0 and 1) by which to discount the price intervals
+             * this adjustment applies to in a given billing period.
              */
             fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
 
             /** The reason for the adjustment. */
             fun reason(): String? = reason.getNullable("reason")
 
-            @JsonProperty("id")
-            @ExcludeMissing
-            fun _id(): JsonField<String> = id
+            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
             @JsonProperty("adjustment_type")
             @ExcludeMissing
             fun _adjustmentType(): JsonField<AdjustmentType> = adjustmentType
 
             /** The value applied by an adjustment. */
-            @JsonProperty("amount")
-            @ExcludeMissing
-            fun _amount(): JsonField<String> = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
             /** The price IDs that this adjustment applies to. */
             @JsonProperty("applies_to_price_ids")
@@ -2353,25 +2343,23 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
             /**
-             * True for adjustments that apply to an entire invocice, false for adjustments
-             * that apply to only one price.
+             * True for adjustments that apply to an entire invocice, false for adjustments that
+             * apply to only one price.
              */
             @JsonProperty("is_invoice_level")
             @ExcludeMissing
             fun _isInvoiceLevel(): JsonField<Boolean> = isInvoiceLevel
 
             /**
-             * The percentage (as a value between 0 and 1) by which to discount the price
-             * intervals this adjustment applies to in a given billing period.
+             * The percentage (as a value between 0 and 1) by which to discount the price intervals
+             * this adjustment applies to in a given billing period.
              */
             @JsonProperty("percentage_discount")
             @ExcludeMissing
             fun _percentageDiscount(): JsonField<Double> = percentageDiscount
 
             /** The reason for the adjustment. */
-            @JsonProperty("reason")
-            @ExcludeMissing
-            fun _reason(): JsonField<String> = reason
+            @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -2379,21 +2367,20 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): MonetaryPercentageDiscountAdjustment =
-                apply {
-                    if (validated) {
-                      return@apply
-                    }
-
-                    id()
-                    adjustmentType()
-                    amount()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    percentageDiscount()
-                    reason()
-                    validated = true
+            fun validate(): MonetaryPercentageDiscountAdjustment = apply {
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                adjustmentType()
+                amount()
+                appliesToPriceIds()
+                isInvoiceLevel()
+                percentageDiscount()
+                reason()
+                validated = true
+            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -2404,7 +2391,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * [MonetaryPercentageDiscountAdjustment].
                  *
                  * The following fields are required:
-                 *
                  * ```kotlin
                  * .id()
                  * .adjustmentType()
@@ -2430,154 +2416,133 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                 private var reason: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(monetaryPercentageDiscountAdjustment: MonetaryPercentageDiscountAdjustment) =
-                    apply {
-                        id = monetaryPercentageDiscountAdjustment.id
-                        adjustmentType = monetaryPercentageDiscountAdjustment.adjustmentType
-                        amount = monetaryPercentageDiscountAdjustment.amount
-                        appliesToPriceIds = monetaryPercentageDiscountAdjustment.appliesToPriceIds.map { it.toMutableList() }
-                        isInvoiceLevel = monetaryPercentageDiscountAdjustment.isInvoiceLevel
-                        percentageDiscount = monetaryPercentageDiscountAdjustment.percentageDiscount
-                        reason = monetaryPercentageDiscountAdjustment.reason
-                        additionalProperties = monetaryPercentageDiscountAdjustment.additionalProperties.toMutableMap()
-                    }
+                internal fun from(
+                    monetaryPercentageDiscountAdjustment: MonetaryPercentageDiscountAdjustment
+                ) = apply {
+                    id = monetaryPercentageDiscountAdjustment.id
+                    adjustmentType = monetaryPercentageDiscountAdjustment.adjustmentType
+                    amount = monetaryPercentageDiscountAdjustment.amount
+                    appliesToPriceIds =
+                        monetaryPercentageDiscountAdjustment.appliesToPriceIds.map {
+                            it.toMutableList()
+                        }
+                    isInvoiceLevel = monetaryPercentageDiscountAdjustment.isInvoiceLevel
+                    percentageDiscount = monetaryPercentageDiscountAdjustment.percentageDiscount
+                    reason = monetaryPercentageDiscountAdjustment.reason
+                    additionalProperties =
+                        monetaryPercentageDiscountAdjustment.additionalProperties.toMutableMap()
+                }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                fun id(id: JsonField<String>) =
-                    apply {
-                        this.id = id
-                    }
+                fun id(id: JsonField<String>) = apply { this.id = id }
 
-                fun adjustmentType(adjustmentType: AdjustmentType) = adjustmentType(JsonField.of(adjustmentType))
+                fun adjustmentType(adjustmentType: AdjustmentType) =
+                    adjustmentType(JsonField.of(adjustmentType))
 
-                fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) =
-                    apply {
-                        this.adjustmentType = adjustmentType
-                    }
+                fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                    this.adjustmentType = adjustmentType
+                }
 
                 /** The value applied by an adjustment. */
                 fun amount(amount: String) = amount(JsonField.of(amount))
 
                 /** The value applied by an adjustment. */
-                fun amount(amount: JsonField<String>) =
-                    apply {
-                        this.amount = amount
-                    }
+                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                 /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: List<String>) = appliesToPriceIds(JsonField.of(appliesToPriceIds))
+                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
                 /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) =
-                    apply {
-                        this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
-                    }
+                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                    this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+                }
 
                 /** The price IDs that this adjustment applies to. */
-                fun addAppliesToPriceId(appliesToPriceId: String) =
-                    apply {
-                        appliesToPriceIds = (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                fun addAppliesToPriceId(appliesToPriceId: String) = apply {
+                    appliesToPriceIds =
+                        (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                             checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                         }
-                    }
+                }
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments
-                 * that apply to only one price.
+                 * True for adjustments that apply to an entire invocice, false for adjustments that
+                 * apply to only one price.
                  */
-                fun isInvoiceLevel(isInvoiceLevel: Boolean) = isInvoiceLevel(JsonField.of(isInvoiceLevel))
+                fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                    isInvoiceLevel(JsonField.of(isInvoiceLevel))
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments
-                 * that apply to only one price.
+                 * True for adjustments that apply to an entire invocice, false for adjustments that
+                 * apply to only one price.
                  */
-                fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) =
-                    apply {
-                        this.isInvoiceLevel = isInvoiceLevel
-                    }
-
-                /**
-                 * The percentage (as a value between 0 and 1) by which to discount the price
-                 * intervals this adjustment applies to in a given billing period.
-                 */
-                fun percentageDiscount(percentageDiscount: Double) = percentageDiscount(JsonField.of(percentageDiscount))
+                fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                    this.isInvoiceLevel = isInvoiceLevel
+                }
 
                 /**
                  * The percentage (as a value between 0 and 1) by which to discount the price
                  * intervals this adjustment applies to in a given billing period.
                  */
-                fun percentageDiscount(percentageDiscount: JsonField<Double>) =
-                    apply {
-                        this.percentageDiscount = percentageDiscount
-                    }
+                fun percentageDiscount(percentageDiscount: Double) =
+                    percentageDiscount(JsonField.of(percentageDiscount))
+
+                /**
+                 * The percentage (as a value between 0 and 1) by which to discount the price
+                 * intervals this adjustment applies to in a given billing period.
+                 */
+                fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
+                    this.percentageDiscount = percentageDiscount
+                }
 
                 /** The reason for the adjustment. */
                 fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
                 /** The reason for the adjustment. */
-                fun reason(reason: JsonField<String>) =
-                    apply {
-                        this.reason = reason
-                    }
+                fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.clear()
-                        putAllAdditionalProperties(additionalProperties)
-                    }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) =
-                    apply {
-                        additionalProperties.put(key, value)
-                    }
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) =
-                    apply {
-                        additionalProperties.remove(key)
-                    }
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) =
-                    apply {
-                        keys.forEach(::removeAdditionalProperty)
-                    }
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): MonetaryPercentageDiscountAdjustment =
                     MonetaryPercentageDiscountAdjustment(
-                      checkRequired(
-                        "id", id
-                      ),
-                      checkRequired(
-                        "adjustmentType", adjustmentType
-                      ),
-                      checkRequired(
-                        "amount", amount
-                      ),
-                      checkRequired(
-                        "appliesToPriceIds", appliesToPriceIds
-                      ).map { it.toImmutable() },
-                      checkRequired(
-                        "isInvoiceLevel", isInvoiceLevel
-                      ),
-                      checkRequired(
-                        "percentageDiscount", percentageDiscount
-                      ),
-                      checkRequired(
-                        "reason", reason
-                      ),
-                      additionalProperties.toImmutable(),
+                        checkRequired("id", id),
+                        checkRequired("adjustmentType", adjustmentType),
+                        checkRequired("amount", amount),
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
+                        },
+                        checkRequired("isInvoiceLevel", isInvoiceLevel),
+                        checkRequired("percentageDiscount", percentageDiscount),
+                        checkRequired("reason", reason),
+                        additionalProperties.toImmutable(),
                     )
             }
 
-            class AdjustmentType @JsonCreator private constructor(
-                private val value: JsonField<String>,
-
-            ) : Enum {
+            class AdjustmentType
+            @JsonCreator
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2587,8 +2552,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * the SDK is on an older version than the API, then the API may respond with new
                  * members that the SDK is unaware of.
                  */
-                @com.fasterxml.jackson.annotation.JsonValue
-                fun _value(): JsonField<String> = value
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
                 companion object {
 
@@ -2599,7 +2563,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 /** An enum containing [AdjustmentType]'s known values. */
                 enum class Known {
-                    PERCENTAGE_DISCOUNT,
+                    PERCENTAGE_DISCOUNT
                 }
 
                 /**
@@ -2608,18 +2572,16 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  *
                  * An instance of [AdjustmentType] can contain an unknown value in a couple of
                  * cases:
-                 *
-                 * - It was deserialized from data that doesn't match any known member. For
-                 *   example, if the SDK is on an older version than the API, then the API may
-                 *   respond with new members that the SDK is unaware of.
-                 *
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
                     PERCENTAGE_DISCOUNT,
                     /**
-                     * An enum member indicating that [AdjustmentType] was instantiated with an unknown
-                     * value.
+                     * An enum member indicating that [AdjustmentType] was instantiated with an
+                     * unknown value.
                      */
                     _UNKNOWN,
                 }
@@ -2644,7 +2606,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * don't want to throw for the unknown case.
                  *
                  * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 * member.
+                 *   member.
                  */
                 fun known(): Known =
                     when (this) {
@@ -2659,16 +2621,17 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * debugging and generally doesn't throw.
                  *
                  * @throws OrbInvalidDataException if this class instance's value does not have the
-                 * expected primitive type.
+                 *   expected primitive type.
                  */
-                fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
+                    return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -2677,11 +2640,11 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             }
 
             override fun equals(other: Any?): Boolean {
-              if (this === other) {
-                  return true
-              }
+                if (this === other) {
+                    return true
+                }
 
-              return /* spotless:off */ other is MonetaryPercentageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && percentageDiscount == other.percentageDiscount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is MonetaryPercentageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && percentageDiscount == other.percentageDiscount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -2690,21 +2653,40 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() = "MonetaryPercentageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, reason=$reason, additionalProperties=$additionalProperties}"
+            override fun toString() =
+                "MonetaryPercentageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, reason=$reason, additionalProperties=$additionalProperties}"
         }
 
         @NoAutoDetect
-        class MonetaryMinimumAdjustment @JsonCreator private constructor(
-            @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("adjustment_type") @ExcludeMissing private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
-            @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("applies_to_price_ids") @ExcludeMissing private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("is_invoice_level") @ExcludeMissing private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("item_id") @ExcludeMissing private val itemId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("minimum_amount") @ExcludeMissing private val minimumAmount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("reason") @ExcludeMissing private val reason: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        class MonetaryMinimumAdjustment
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("adjustment_type")
+            @ExcludeMissing
+            private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+            @JsonProperty("amount")
+            @ExcludeMissing
+            private val amount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("is_invoice_level")
+            @ExcludeMissing
+            private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("item_id")
+            @ExcludeMissing
+            private val itemId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("reason")
+            @ExcludeMissing
+            private val reason: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -2715,11 +2697,12 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun amount(): String = amount.getRequired("amount")
 
             /** The price IDs that this adjustment applies to. */
-            fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
+            fun appliesToPriceIds(): List<String> =
+                appliesToPriceIds.getRequired("applies_to_price_ids")
 
             /**
-             * True for adjustments that apply to an entire invocice, false for adjustments
-             * that apply to only one price.
+             * True for adjustments that apply to an entire invocice, false for adjustments that
+             * apply to only one price.
              */
             fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
@@ -2727,26 +2710,22 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun itemId(): String = itemId.getRequired("item_id")
 
             /**
-             * The minimum amount to charge in a given billing period for the prices this
-             * adjustment applies to.
+             * The minimum amount to charge in a given billing period for the prices this adjustment
+             * applies to.
              */
             fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
 
             /** The reason for the adjustment. */
             fun reason(): String? = reason.getNullable("reason")
 
-            @JsonProperty("id")
-            @ExcludeMissing
-            fun _id(): JsonField<String> = id
+            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
             @JsonProperty("adjustment_type")
             @ExcludeMissing
             fun _adjustmentType(): JsonField<AdjustmentType> = adjustmentType
 
             /** The value applied by an adjustment. */
-            @JsonProperty("amount")
-            @ExcludeMissing
-            fun _amount(): JsonField<String> = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
             /** The price IDs that this adjustment applies to. */
             @JsonProperty("applies_to_price_ids")
@@ -2754,30 +2733,26 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
             /**
-             * True for adjustments that apply to an entire invocice, false for adjustments
-             * that apply to only one price.
+             * True for adjustments that apply to an entire invocice, false for adjustments that
+             * apply to only one price.
              */
             @JsonProperty("is_invoice_level")
             @ExcludeMissing
             fun _isInvoiceLevel(): JsonField<Boolean> = isInvoiceLevel
 
             /** The item ID that revenue from this minimum will be attributed to. */
-            @JsonProperty("item_id")
-            @ExcludeMissing
-            fun _itemId(): JsonField<String> = itemId
+            @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
             /**
-             * The minimum amount to charge in a given billing period for the prices this
-             * adjustment applies to.
+             * The minimum amount to charge in a given billing period for the prices this adjustment
+             * applies to.
              */
             @JsonProperty("minimum_amount")
             @ExcludeMissing
             fun _minimumAmount(): JsonField<String> = minimumAmount
 
             /** The reason for the adjustment. */
-            @JsonProperty("reason")
-            @ExcludeMissing
-            fun _reason(): JsonField<String> = reason
+            @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -2785,22 +2760,21 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): MonetaryMinimumAdjustment =
-                apply {
-                    if (validated) {
-                      return@apply
-                    }
-
-                    id()
-                    adjustmentType()
-                    amount()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    itemId()
-                    minimumAmount()
-                    reason()
-                    validated = true
+            fun validate(): MonetaryMinimumAdjustment = apply {
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                adjustmentType()
+                amount()
+                appliesToPriceIds()
+                isInvoiceLevel()
+                itemId()
+                minimumAmount()
+                reason()
+                validated = true
+            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -2811,7 +2785,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * [MonetaryMinimumAdjustment].
                  *
                  * The following fields are required:
-                 *
                  * ```kotlin
                  * .id()
                  * .adjustmentType()
@@ -2839,167 +2812,137 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                 private var reason: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(monetaryMinimumAdjustment: MonetaryMinimumAdjustment) =
-                    apply {
-                        id = monetaryMinimumAdjustment.id
-                        adjustmentType = monetaryMinimumAdjustment.adjustmentType
-                        amount = monetaryMinimumAdjustment.amount
-                        appliesToPriceIds = monetaryMinimumAdjustment.appliesToPriceIds.map { it.toMutableList() }
-                        isInvoiceLevel = monetaryMinimumAdjustment.isInvoiceLevel
-                        itemId = monetaryMinimumAdjustment.itemId
-                        minimumAmount = monetaryMinimumAdjustment.minimumAmount
-                        reason = monetaryMinimumAdjustment.reason
-                        additionalProperties = monetaryMinimumAdjustment.additionalProperties.toMutableMap()
-                    }
+                internal fun from(monetaryMinimumAdjustment: MonetaryMinimumAdjustment) = apply {
+                    id = monetaryMinimumAdjustment.id
+                    adjustmentType = monetaryMinimumAdjustment.adjustmentType
+                    amount = monetaryMinimumAdjustment.amount
+                    appliesToPriceIds =
+                        monetaryMinimumAdjustment.appliesToPriceIds.map { it.toMutableList() }
+                    isInvoiceLevel = monetaryMinimumAdjustment.isInvoiceLevel
+                    itemId = monetaryMinimumAdjustment.itemId
+                    minimumAmount = monetaryMinimumAdjustment.minimumAmount
+                    reason = monetaryMinimumAdjustment.reason
+                    additionalProperties =
+                        monetaryMinimumAdjustment.additionalProperties.toMutableMap()
+                }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                fun id(id: JsonField<String>) =
-                    apply {
-                        this.id = id
-                    }
+                fun id(id: JsonField<String>) = apply { this.id = id }
 
-                fun adjustmentType(adjustmentType: AdjustmentType) = adjustmentType(JsonField.of(adjustmentType))
+                fun adjustmentType(adjustmentType: AdjustmentType) =
+                    adjustmentType(JsonField.of(adjustmentType))
 
-                fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) =
-                    apply {
-                        this.adjustmentType = adjustmentType
-                    }
+                fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                    this.adjustmentType = adjustmentType
+                }
 
                 /** The value applied by an adjustment. */
                 fun amount(amount: String) = amount(JsonField.of(amount))
 
                 /** The value applied by an adjustment. */
-                fun amount(amount: JsonField<String>) =
-                    apply {
-                        this.amount = amount
-                    }
+                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                 /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: List<String>) = appliesToPriceIds(JsonField.of(appliesToPriceIds))
+                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
                 /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) =
-                    apply {
-                        this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
-                    }
+                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                    this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+                }
 
                 /** The price IDs that this adjustment applies to. */
-                fun addAppliesToPriceId(appliesToPriceId: String) =
-                    apply {
-                        appliesToPriceIds = (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                fun addAppliesToPriceId(appliesToPriceId: String) = apply {
+                    appliesToPriceIds =
+                        (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                             checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                         }
-                    }
+                }
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments
-                 * that apply to only one price.
+                 * True for adjustments that apply to an entire invocice, false for adjustments that
+                 * apply to only one price.
                  */
-                fun isInvoiceLevel(isInvoiceLevel: Boolean) = isInvoiceLevel(JsonField.of(isInvoiceLevel))
+                fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                    isInvoiceLevel(JsonField.of(isInvoiceLevel))
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments
-                 * that apply to only one price.
+                 * True for adjustments that apply to an entire invocice, false for adjustments that
+                 * apply to only one price.
                  */
-                fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) =
-                    apply {
-                        this.isInvoiceLevel = isInvoiceLevel
-                    }
+                fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                    this.isInvoiceLevel = isInvoiceLevel
+                }
 
                 /** The item ID that revenue from this minimum will be attributed to. */
                 fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
                 /** The item ID that revenue from this minimum will be attributed to. */
-                fun itemId(itemId: JsonField<String>) =
-                    apply {
-                        this.itemId = itemId
-                    }
+                fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                 /**
                  * The minimum amount to charge in a given billing period for the prices this
                  * adjustment applies to.
                  */
-                fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
+                fun minimumAmount(minimumAmount: String) =
+                    minimumAmount(JsonField.of(minimumAmount))
 
                 /**
                  * The minimum amount to charge in a given billing period for the prices this
                  * adjustment applies to.
                  */
-                fun minimumAmount(minimumAmount: JsonField<String>) =
-                    apply {
-                        this.minimumAmount = minimumAmount
-                    }
+                fun minimumAmount(minimumAmount: JsonField<String>) = apply {
+                    this.minimumAmount = minimumAmount
+                }
 
                 /** The reason for the adjustment. */
                 fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
                 /** The reason for the adjustment. */
-                fun reason(reason: JsonField<String>) =
-                    apply {
-                        this.reason = reason
-                    }
+                fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.clear()
-                        putAllAdditionalProperties(additionalProperties)
-                    }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) =
-                    apply {
-                        additionalProperties.put(key, value)
-                    }
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) =
-                    apply {
-                        additionalProperties.remove(key)
-                    }
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) =
-                    apply {
-                        keys.forEach(::removeAdditionalProperty)
-                    }
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): MonetaryMinimumAdjustment =
                     MonetaryMinimumAdjustment(
-                      checkRequired(
-                        "id", id
-                      ),
-                      checkRequired(
-                        "adjustmentType", adjustmentType
-                      ),
-                      checkRequired(
-                        "amount", amount
-                      ),
-                      checkRequired(
-                        "appliesToPriceIds", appliesToPriceIds
-                      ).map { it.toImmutable() },
-                      checkRequired(
-                        "isInvoiceLevel", isInvoiceLevel
-                      ),
-                      checkRequired(
-                        "itemId", itemId
-                      ),
-                      checkRequired(
-                        "minimumAmount", minimumAmount
-                      ),
-                      checkRequired(
-                        "reason", reason
-                      ),
-                      additionalProperties.toImmutable(),
+                        checkRequired("id", id),
+                        checkRequired("adjustmentType", adjustmentType),
+                        checkRequired("amount", amount),
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
+                        },
+                        checkRequired("isInvoiceLevel", isInvoiceLevel),
+                        checkRequired("itemId", itemId),
+                        checkRequired("minimumAmount", minimumAmount),
+                        checkRequired("reason", reason),
+                        additionalProperties.toImmutable(),
                     )
             }
 
-            class AdjustmentType @JsonCreator private constructor(
-                private val value: JsonField<String>,
-
-            ) : Enum {
+            class AdjustmentType
+            @JsonCreator
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -3009,8 +2952,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * the SDK is on an older version than the API, then the API may respond with new
                  * members that the SDK is unaware of.
                  */
-                @com.fasterxml.jackson.annotation.JsonValue
-                fun _value(): JsonField<String> = value
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
                 companion object {
 
@@ -3021,7 +2963,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 /** An enum containing [AdjustmentType]'s known values. */
                 enum class Known {
-                    MINIMUM,
+                    MINIMUM
                 }
 
                 /**
@@ -3030,18 +2972,16 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  *
                  * An instance of [AdjustmentType] can contain an unknown value in a couple of
                  * cases:
-                 *
-                 * - It was deserialized from data that doesn't match any known member. For
-                 *   example, if the SDK is on an older version than the API, then the API may
-                 *   respond with new members that the SDK is unaware of.
-                 *
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
                     MINIMUM,
                     /**
-                     * An enum member indicating that [AdjustmentType] was instantiated with an unknown
-                     * value.
+                     * An enum member indicating that [AdjustmentType] was instantiated with an
+                     * unknown value.
                      */
                     _UNKNOWN,
                 }
@@ -3066,7 +3006,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * don't want to throw for the unknown case.
                  *
                  * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 * member.
+                 *   member.
                  */
                 fun known(): Known =
                     when (this) {
@@ -3081,16 +3021,17 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * debugging and generally doesn't throw.
                  *
                  * @throws OrbInvalidDataException if this class instance's value does not have the
-                 * expected primitive type.
+                 *   expected primitive type.
                  */
-                fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
+                    return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -3099,11 +3040,11 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             }
 
             override fun equals(other: Any?): Boolean {
-              if (this === other) {
-                  return true
-              }
+                if (this === other) {
+                    return true
+                }
 
-              return /* spotless:off */ other is MonetaryMinimumAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is MonetaryMinimumAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -3112,20 +3053,37 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() = "MonetaryMinimumAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, reason=$reason, additionalProperties=$additionalProperties}"
+            override fun toString() =
+                "MonetaryMinimumAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, reason=$reason, additionalProperties=$additionalProperties}"
         }
 
         @NoAutoDetect
-        class MonetaryMaximumAdjustment @JsonCreator private constructor(
-            @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("adjustment_type") @ExcludeMissing private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
-            @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("applies_to_price_ids") @ExcludeMissing private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("is_invoice_level") @ExcludeMissing private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("maximum_amount") @ExcludeMissing private val maximumAmount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("reason") @ExcludeMissing private val reason: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        class MonetaryMaximumAdjustment
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("adjustment_type")
+            @ExcludeMissing
+            private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+            @JsonProperty("amount")
+            @ExcludeMissing
+            private val amount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("is_invoice_level")
+            @ExcludeMissing
+            private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("reason")
+            @ExcludeMissing
+            private val reason: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -3136,35 +3094,32 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun amount(): String = amount.getRequired("amount")
 
             /** The price IDs that this adjustment applies to. */
-            fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
+            fun appliesToPriceIds(): List<String> =
+                appliesToPriceIds.getRequired("applies_to_price_ids")
 
             /**
-             * True for adjustments that apply to an entire invocice, false for adjustments
-             * that apply to only one price.
+             * True for adjustments that apply to an entire invocice, false for adjustments that
+             * apply to only one price.
              */
             fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
             /**
-             * The maximum amount to charge in a given billing period for the prices this
-             * adjustment applies to.
+             * The maximum amount to charge in a given billing period for the prices this adjustment
+             * applies to.
              */
             fun maximumAmount(): String = maximumAmount.getRequired("maximum_amount")
 
             /** The reason for the adjustment. */
             fun reason(): String? = reason.getNullable("reason")
 
-            @JsonProperty("id")
-            @ExcludeMissing
-            fun _id(): JsonField<String> = id
+            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
             @JsonProperty("adjustment_type")
             @ExcludeMissing
             fun _adjustmentType(): JsonField<AdjustmentType> = adjustmentType
 
             /** The value applied by an adjustment. */
-            @JsonProperty("amount")
-            @ExcludeMissing
-            fun _amount(): JsonField<String> = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
             /** The price IDs that this adjustment applies to. */
             @JsonProperty("applies_to_price_ids")
@@ -3172,25 +3127,23 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
             /**
-             * True for adjustments that apply to an entire invocice, false for adjustments
-             * that apply to only one price.
+             * True for adjustments that apply to an entire invocice, false for adjustments that
+             * apply to only one price.
              */
             @JsonProperty("is_invoice_level")
             @ExcludeMissing
             fun _isInvoiceLevel(): JsonField<Boolean> = isInvoiceLevel
 
             /**
-             * The maximum amount to charge in a given billing period for the prices this
-             * adjustment applies to.
+             * The maximum amount to charge in a given billing period for the prices this adjustment
+             * applies to.
              */
             @JsonProperty("maximum_amount")
             @ExcludeMissing
             fun _maximumAmount(): JsonField<String> = maximumAmount
 
             /** The reason for the adjustment. */
-            @JsonProperty("reason")
-            @ExcludeMissing
-            fun _reason(): JsonField<String> = reason
+            @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -3198,21 +3151,20 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): MonetaryMaximumAdjustment =
-                apply {
-                    if (validated) {
-                      return@apply
-                    }
-
-                    id()
-                    adjustmentType()
-                    amount()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    maximumAmount()
-                    reason()
-                    validated = true
+            fun validate(): MonetaryMaximumAdjustment = apply {
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                adjustmentType()
+                amount()
+                appliesToPriceIds()
+                isInvoiceLevel()
+                maximumAmount()
+                reason()
+                validated = true
+            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -3223,7 +3175,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * [MonetaryMaximumAdjustment].
                  *
                  * The following fields are required:
-                 *
                  * ```kotlin
                  * .id()
                  * .adjustmentType()
@@ -3249,154 +3200,129 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                 private var reason: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(monetaryMaximumAdjustment: MonetaryMaximumAdjustment) =
-                    apply {
-                        id = monetaryMaximumAdjustment.id
-                        adjustmentType = monetaryMaximumAdjustment.adjustmentType
-                        amount = monetaryMaximumAdjustment.amount
-                        appliesToPriceIds = monetaryMaximumAdjustment.appliesToPriceIds.map { it.toMutableList() }
-                        isInvoiceLevel = monetaryMaximumAdjustment.isInvoiceLevel
-                        maximumAmount = monetaryMaximumAdjustment.maximumAmount
-                        reason = monetaryMaximumAdjustment.reason
-                        additionalProperties = monetaryMaximumAdjustment.additionalProperties.toMutableMap()
-                    }
+                internal fun from(monetaryMaximumAdjustment: MonetaryMaximumAdjustment) = apply {
+                    id = monetaryMaximumAdjustment.id
+                    adjustmentType = monetaryMaximumAdjustment.adjustmentType
+                    amount = monetaryMaximumAdjustment.amount
+                    appliesToPriceIds =
+                        monetaryMaximumAdjustment.appliesToPriceIds.map { it.toMutableList() }
+                    isInvoiceLevel = monetaryMaximumAdjustment.isInvoiceLevel
+                    maximumAmount = monetaryMaximumAdjustment.maximumAmount
+                    reason = monetaryMaximumAdjustment.reason
+                    additionalProperties =
+                        monetaryMaximumAdjustment.additionalProperties.toMutableMap()
+                }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                fun id(id: JsonField<String>) =
-                    apply {
-                        this.id = id
-                    }
+                fun id(id: JsonField<String>) = apply { this.id = id }
 
-                fun adjustmentType(adjustmentType: AdjustmentType) = adjustmentType(JsonField.of(adjustmentType))
+                fun adjustmentType(adjustmentType: AdjustmentType) =
+                    adjustmentType(JsonField.of(adjustmentType))
 
-                fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) =
-                    apply {
-                        this.adjustmentType = adjustmentType
-                    }
+                fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                    this.adjustmentType = adjustmentType
+                }
 
                 /** The value applied by an adjustment. */
                 fun amount(amount: String) = amount(JsonField.of(amount))
 
                 /** The value applied by an adjustment. */
-                fun amount(amount: JsonField<String>) =
-                    apply {
-                        this.amount = amount
-                    }
+                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                 /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: List<String>) = appliesToPriceIds(JsonField.of(appliesToPriceIds))
+                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
                 /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) =
-                    apply {
-                        this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
-                    }
+                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                    this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+                }
 
                 /** The price IDs that this adjustment applies to. */
-                fun addAppliesToPriceId(appliesToPriceId: String) =
-                    apply {
-                        appliesToPriceIds = (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                fun addAppliesToPriceId(appliesToPriceId: String) = apply {
+                    appliesToPriceIds =
+                        (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                             checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                         }
-                    }
+                }
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments
-                 * that apply to only one price.
+                 * True for adjustments that apply to an entire invocice, false for adjustments that
+                 * apply to only one price.
                  */
-                fun isInvoiceLevel(isInvoiceLevel: Boolean) = isInvoiceLevel(JsonField.of(isInvoiceLevel))
+                fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                    isInvoiceLevel(JsonField.of(isInvoiceLevel))
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments
-                 * that apply to only one price.
+                 * True for adjustments that apply to an entire invocice, false for adjustments that
+                 * apply to only one price.
                  */
-                fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) =
-                    apply {
-                        this.isInvoiceLevel = isInvoiceLevel
-                    }
-
-                /**
-                 * The maximum amount to charge in a given billing period for the prices this
-                 * adjustment applies to.
-                 */
-                fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
+                fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                    this.isInvoiceLevel = isInvoiceLevel
+                }
 
                 /**
                  * The maximum amount to charge in a given billing period for the prices this
                  * adjustment applies to.
                  */
-                fun maximumAmount(maximumAmount: JsonField<String>) =
-                    apply {
-                        this.maximumAmount = maximumAmount
-                    }
+                fun maximumAmount(maximumAmount: String) =
+                    maximumAmount(JsonField.of(maximumAmount))
+
+                /**
+                 * The maximum amount to charge in a given billing period for the prices this
+                 * adjustment applies to.
+                 */
+                fun maximumAmount(maximumAmount: JsonField<String>) = apply {
+                    this.maximumAmount = maximumAmount
+                }
 
                 /** The reason for the adjustment. */
                 fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
                 /** The reason for the adjustment. */
-                fun reason(reason: JsonField<String>) =
-                    apply {
-                        this.reason = reason
-                    }
+                fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.clear()
-                        putAllAdditionalProperties(additionalProperties)
-                    }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) =
-                    apply {
-                        additionalProperties.put(key, value)
-                    }
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) =
-                    apply {
-                        additionalProperties.remove(key)
-                    }
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) =
-                    apply {
-                        keys.forEach(::removeAdditionalProperty)
-                    }
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): MonetaryMaximumAdjustment =
                     MonetaryMaximumAdjustment(
-                      checkRequired(
-                        "id", id
-                      ),
-                      checkRequired(
-                        "adjustmentType", adjustmentType
-                      ),
-                      checkRequired(
-                        "amount", amount
-                      ),
-                      checkRequired(
-                        "appliesToPriceIds", appliesToPriceIds
-                      ).map { it.toImmutable() },
-                      checkRequired(
-                        "isInvoiceLevel", isInvoiceLevel
-                      ),
-                      checkRequired(
-                        "maximumAmount", maximumAmount
-                      ),
-                      checkRequired(
-                        "reason", reason
-                      ),
-                      additionalProperties.toImmutable(),
+                        checkRequired("id", id),
+                        checkRequired("adjustmentType", adjustmentType),
+                        checkRequired("amount", amount),
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
+                        },
+                        checkRequired("isInvoiceLevel", isInvoiceLevel),
+                        checkRequired("maximumAmount", maximumAmount),
+                        checkRequired("reason", reason),
+                        additionalProperties.toImmutable(),
                     )
             }
 
-            class AdjustmentType @JsonCreator private constructor(
-                private val value: JsonField<String>,
-
-            ) : Enum {
+            class AdjustmentType
+            @JsonCreator
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -3406,8 +3332,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * the SDK is on an older version than the API, then the API may respond with new
                  * members that the SDK is unaware of.
                  */
-                @com.fasterxml.jackson.annotation.JsonValue
-                fun _value(): JsonField<String> = value
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
                 companion object {
 
@@ -3418,7 +3343,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 /** An enum containing [AdjustmentType]'s known values. */
                 enum class Known {
-                    MAXIMUM,
+                    MAXIMUM
                 }
 
                 /**
@@ -3427,18 +3352,16 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  *
                  * An instance of [AdjustmentType] can contain an unknown value in a couple of
                  * cases:
-                 *
-                 * - It was deserialized from data that doesn't match any known member. For
-                 *   example, if the SDK is on an older version than the API, then the API may
-                 *   respond with new members that the SDK is unaware of.
-                 *
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
                     MAXIMUM,
                     /**
-                     * An enum member indicating that [AdjustmentType] was instantiated with an unknown
-                     * value.
+                     * An enum member indicating that [AdjustmentType] was instantiated with an
+                     * unknown value.
                      */
                     _UNKNOWN,
                 }
@@ -3463,7 +3386,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * don't want to throw for the unknown case.
                  *
                  * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 * member.
+                 *   member.
                  */
                 fun known(): Known =
                     when (this) {
@@ -3478,16 +3401,17 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * debugging and generally doesn't throw.
                  *
                  * @throws OrbInvalidDataException if this class instance's value does not have the
-                 * expected primitive type.
+                 *   expected primitive type.
                  */
-                fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
+                    return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -3496,11 +3420,11 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             }
 
             override fun equals(other: Any?): Boolean {
-              if (this === other) {
-                  return true
-              }
+                if (this === other) {
+                    return true
+                }
 
-              return /* spotless:off */ other is MonetaryMaximumAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && maximumAmount == other.maximumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is MonetaryMaximumAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && maximumAmount == other.maximumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -3509,32 +3433,40 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() = "MonetaryMaximumAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, maximumAmount=$maximumAmount, reason=$reason, additionalProperties=$additionalProperties}"
+            override fun toString() =
+                "MonetaryMaximumAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, maximumAmount=$maximumAmount, reason=$reason, additionalProperties=$additionalProperties}"
         }
     }
 
     /** This field is deprecated in favor of `adjustments`. */
     @Deprecated("deprecated")
     @NoAutoDetect
-    class Maximum @JsonCreator private constructor(
-        @JsonProperty("applies_to_price_ids") @ExcludeMissing private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("maximum_amount") @ExcludeMissing private val maximumAmount: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+    class Maximum
+    @JsonCreator
+    private constructor(
+        @JsonProperty("applies_to_price_ids")
+        @ExcludeMissing
+        private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
-         * List of price_ids that this maximum amount applies to. For plan/plan phase
-         * maximums, this can be a subset of prices.
+         * List of price_ids that this maximum amount applies to. For plan/plan phase maximums, this
+         * can be a subset of prices.
          */
-        fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
+        fun appliesToPriceIds(): List<String> =
+            appliesToPriceIds.getRequired("applies_to_price_ids")
 
         /** Maximum amount applied */
         fun maximumAmount(): String = maximumAmount.getRequired("maximum_amount")
 
         /**
-         * List of price_ids that this maximum amount applies to. For plan/plan phase
-         * maximums, this can be a subset of prices.
+         * List of price_ids that this maximum amount applies to. For plan/plan phase maximums, this
+         * can be a subset of prices.
          */
         @JsonProperty("applies_to_price_ids")
         @ExcludeMissing
@@ -3551,16 +3483,15 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Maximum =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                appliesToPriceIds()
-                maximumAmount()
-                validated = true
+        fun validate(): Maximum = apply {
+            if (validated) {
+                return@apply
             }
+
+            appliesToPriceIds()
+            maximumAmount()
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -3570,7 +3501,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
              * Returns a mutable builder for constructing an instance of [Maximum].
              *
              * The following fields are required:
-             *
              * ```kotlin
              * .appliesToPriceIds()
              * .maximumAmount()
@@ -3586,92 +3516,79 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             private var maximumAmount: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(maximum: Maximum) =
-                apply {
-                    appliesToPriceIds = maximum.appliesToPriceIds.map { it.toMutableList() }
-                    maximumAmount = maximum.maximumAmount
-                    additionalProperties = maximum.additionalProperties.toMutableMap()
-                }
+            internal fun from(maximum: Maximum) = apply {
+                appliesToPriceIds = maximum.appliesToPriceIds.map { it.toMutableList() }
+                maximumAmount = maximum.maximumAmount
+                additionalProperties = maximum.additionalProperties.toMutableMap()
+            }
 
             /**
-             * List of price_ids that this maximum amount applies to. For plan/plan phase
-             * maximums, this can be a subset of prices.
+             * List of price_ids that this maximum amount applies to. For plan/plan phase maximums,
+             * this can be a subset of prices.
              */
-            fun appliesToPriceIds(appliesToPriceIds: List<String>) = appliesToPriceIds(JsonField.of(appliesToPriceIds))
+            fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
             /**
-             * List of price_ids that this maximum amount applies to. For plan/plan phase
-             * maximums, this can be a subset of prices.
+             * List of price_ids that this maximum amount applies to. For plan/plan phase maximums,
+             * this can be a subset of prices.
              */
-            fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) =
-                apply {
-                    this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
-                }
+            fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+            }
 
             /**
-             * List of price_ids that this maximum amount applies to. For plan/plan phase
-             * maximums, this can be a subset of prices.
+             * List of price_ids that this maximum amount applies to. For plan/plan phase maximums,
+             * this can be a subset of prices.
              */
-            fun addAppliesToPriceId(appliesToPriceId: String) =
-                apply {
-                    appliesToPriceIds = (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+            fun addAppliesToPriceId(appliesToPriceId: String) = apply {
+                appliesToPriceIds =
+                    (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                         checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                     }
-                }
+            }
 
             /** Maximum amount applied */
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
             /** Maximum amount applied */
-            fun maximumAmount(maximumAmount: JsonField<String>) =
-                apply {
-                    this.maximumAmount = maximumAmount
-                }
+            fun maximumAmount(maximumAmount: JsonField<String>) = apply {
+                this.maximumAmount = maximumAmount
+            }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-            fun removeAdditionalProperty(key: String) =
-                apply {
-                    additionalProperties.remove(key)
-                }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) =
-                apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
             fun build(): Maximum =
                 Maximum(
-                  checkRequired(
-                    "appliesToPriceIds", appliesToPriceIds
-                  ).map { it.toImmutable() },
-                  checkRequired(
-                    "maximumAmount", maximumAmount
-                  ),
-                  additionalProperties.toImmutable(),
+                    checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
+                    checkRequired("maximumAmount", maximumAmount),
+                    additionalProperties.toImmutable(),
                 )
         }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Maximum && appliesToPriceIds == other.appliesToPriceIds && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Maximum && appliesToPriceIds == other.appliesToPriceIds && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -3680,31 +3597,39 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() = "Maximum{appliesToPriceIds=$appliesToPriceIds, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "Maximum{appliesToPriceIds=$appliesToPriceIds, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
     }
 
     /** This field is deprecated in favor of `adjustments`. */
     @Deprecated("deprecated")
     @NoAutoDetect
-    class Minimum @JsonCreator private constructor(
-        @JsonProperty("applies_to_price_ids") @ExcludeMissing private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("minimum_amount") @ExcludeMissing private val minimumAmount: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+    class Minimum
+    @JsonCreator
+    private constructor(
+        @JsonProperty("applies_to_price_ids")
+        @ExcludeMissing
+        private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
-         * List of price_ids that this minimum amount applies to. For plan/plan phase
-         * minimums, this can be a subset of prices.
+         * List of price_ids that this minimum amount applies to. For plan/plan phase minimums, this
+         * can be a subset of prices.
          */
-        fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
+        fun appliesToPriceIds(): List<String> =
+            appliesToPriceIds.getRequired("applies_to_price_ids")
 
         /** Minimum amount applied */
         fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
 
         /**
-         * List of price_ids that this minimum amount applies to. For plan/plan phase
-         * minimums, this can be a subset of prices.
+         * List of price_ids that this minimum amount applies to. For plan/plan phase minimums, this
+         * can be a subset of prices.
          */
         @JsonProperty("applies_to_price_ids")
         @ExcludeMissing
@@ -3721,16 +3646,15 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Minimum =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                appliesToPriceIds()
-                minimumAmount()
-                validated = true
+        fun validate(): Minimum = apply {
+            if (validated) {
+                return@apply
             }
+
+            appliesToPriceIds()
+            minimumAmount()
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -3740,7 +3664,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
              * Returns a mutable builder for constructing an instance of [Minimum].
              *
              * The following fields are required:
-             *
              * ```kotlin
              * .appliesToPriceIds()
              * .minimumAmount()
@@ -3756,92 +3679,79 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             private var minimumAmount: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(minimum: Minimum) =
-                apply {
-                    appliesToPriceIds = minimum.appliesToPriceIds.map { it.toMutableList() }
-                    minimumAmount = minimum.minimumAmount
-                    additionalProperties = minimum.additionalProperties.toMutableMap()
-                }
+            internal fun from(minimum: Minimum) = apply {
+                appliesToPriceIds = minimum.appliesToPriceIds.map { it.toMutableList() }
+                minimumAmount = minimum.minimumAmount
+                additionalProperties = minimum.additionalProperties.toMutableMap()
+            }
 
             /**
-             * List of price_ids that this minimum amount applies to. For plan/plan phase
-             * minimums, this can be a subset of prices.
+             * List of price_ids that this minimum amount applies to. For plan/plan phase minimums,
+             * this can be a subset of prices.
              */
-            fun appliesToPriceIds(appliesToPriceIds: List<String>) = appliesToPriceIds(JsonField.of(appliesToPriceIds))
+            fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
             /**
-             * List of price_ids that this minimum amount applies to. For plan/plan phase
-             * minimums, this can be a subset of prices.
+             * List of price_ids that this minimum amount applies to. For plan/plan phase minimums,
+             * this can be a subset of prices.
              */
-            fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) =
-                apply {
-                    this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
-                }
+            fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+            }
 
             /**
-             * List of price_ids that this minimum amount applies to. For plan/plan phase
-             * minimums, this can be a subset of prices.
+             * List of price_ids that this minimum amount applies to. For plan/plan phase minimums,
+             * this can be a subset of prices.
              */
-            fun addAppliesToPriceId(appliesToPriceId: String) =
-                apply {
-                    appliesToPriceIds = (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+            fun addAppliesToPriceId(appliesToPriceId: String) = apply {
+                appliesToPriceIds =
+                    (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                         checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                     }
-                }
+            }
 
             /** Minimum amount applied */
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
             /** Minimum amount applied */
-            fun minimumAmount(minimumAmount: JsonField<String>) =
-                apply {
-                    this.minimumAmount = minimumAmount
-                }
+            fun minimumAmount(minimumAmount: JsonField<String>) = apply {
+                this.minimumAmount = minimumAmount
+            }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-            fun removeAdditionalProperty(key: String) =
-                apply {
-                    additionalProperties.remove(key)
-                }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) =
-                apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
             fun build(): Minimum =
                 Minimum(
-                  checkRequired(
-                    "appliesToPriceIds", appliesToPriceIds
-                  ).map { it.toImmutable() },
-                  checkRequired(
-                    "minimumAmount", minimumAmount
-                  ),
-                  additionalProperties.toImmutable(),
+                    checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
+                    checkRequired("minimumAmount", minimumAmount),
+                    additionalProperties.toImmutable(),
                 )
         }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Minimum && appliesToPriceIds == other.appliesToPriceIds && minimumAmount == other.minimumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Minimum && appliesToPriceIds == other.appliesToPriceIds && minimumAmount == other.minimumAmount && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -3850,17 +3760,18 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() = "Minimum{appliesToPriceIds=$appliesToPriceIds, minimumAmount=$minimumAmount, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "Minimum{appliesToPriceIds=$appliesToPriceIds, minimumAmount=$minimumAmount, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(using = SubLineItem.Deserializer::class)
     @JsonSerialize(using = SubLineItem.Serializer::class)
-    class SubLineItem private constructor(
+    class SubLineItem
+    private constructor(
         private val matrix: MatrixSubLineItem? = null,
         private val tier: TierSubLineItem? = null,
         private val other: OtherSubLineItem? = null,
         private val _json: JsonValue? = null,
-
     ) {
 
         fun matrix(): MatrixSubLineItem? = matrix
@@ -3884,44 +3795,45 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T {
-          return when {
-              matrix != null -> visitor.visitMatrix(matrix)
-              tier != null -> visitor.visitTier(tier)
-              other != null -> visitor.visitOther(other)
-              else -> visitor.unknown(_json)
-          }
+            return when {
+                matrix != null -> visitor.visitMatrix(matrix)
+                tier != null -> visitor.visitTier(tier)
+                other != null -> visitor.visitOther(other)
+                else -> visitor.unknown(_json)
+            }
         }
 
         private var validated: Boolean = false
 
-        fun validate(): SubLineItem =
-            apply {
-                if (validated) {
-                  return@apply
-                }
+        fun validate(): SubLineItem = apply {
+            if (validated) {
+                return@apply
+            }
 
-                accept(object : Visitor<Unit> {
+            accept(
+                object : Visitor<Unit> {
                     override fun visitMatrix(matrix: MatrixSubLineItem) {
-                      matrix.validate()
+                        matrix.validate()
                     }
 
                     override fun visitTier(tier: TierSubLineItem) {
-                      tier.validate()
+                        tier.validate()
                     }
 
                     override fun visitOther(other: OtherSubLineItem) {
-                      other.validate()
+                        other.validate()
                     }
-                })
-                validated = true
-            }
+                }
+            )
+            validated = true
+        }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is SubLineItem && matrix == other.matrix && tier == other.tier && this.other == other.other /* spotless:on */
+            return /* spotless:off */ other is SubLineItem && matrix == other.matrix && tier == other.tier && this.other == other.other /* spotless:on */
         }
 
         override fun hashCode(): Int = /* spotless:off */ Objects.hash(matrix, tier, other) /* spotless:on */
@@ -3945,8 +3857,8 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         }
 
         /**
-         * An interface that defines how to map each variant of [SubLineItem] to a value of
-         * type [T].
+         * An interface that defines how to map each variant of [SubLineItem] to a value of type
+         * [T].
          */
         interface Visitor<out T> {
 
@@ -3959,69 +3871,90 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             /**
              * Maps an unknown variant of [SubLineItem] to a value of type [T].
              *
-             * An instance of [SubLineItem] can contain an unknown variant if it was
-             * deserialized from data that doesn't match any known variant. For example, if the
-             * SDK is on an older version than the API, then the API may respond with new
-             * variants that the SDK is unaware of.
+             * An instance of [SubLineItem] can contain an unknown variant if it was deserialized
+             * from data that doesn't match any known variant. For example, if the SDK is on an
+             * older version than the API, then the API may respond with new variants that the SDK
+             * is unaware of.
              *
              * @throws OrbInvalidDataException in the default implementation.
              */
             fun unknown(json: JsonValue?): T {
-              throw OrbInvalidDataException("Unknown SubLineItem: $json")
+                throw OrbInvalidDataException("Unknown SubLineItem: $json")
             }
         }
 
         internal class Deserializer : BaseDeserializer<SubLineItem>(SubLineItem::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): SubLineItem {
-              val json = JsonValue.fromJsonNode(node)
-              val type = json.asObject()?.get("type")?.asString()
+                val json = JsonValue.fromJsonNode(node)
+                val type = json.asObject()?.get("type")?.asString()
 
-              when (type) {
-                  "matrix" -> {
-                      tryDeserialize(node, jacksonTypeRef<MatrixSubLineItem>()){ it.validate() }?.let {
-                          return SubLineItem(matrix = it, _json = json)
-                      }
-                  }
-                  "tier" -> {
-                      tryDeserialize(node, jacksonTypeRef<TierSubLineItem>()){ it.validate() }?.let {
-                          return SubLineItem(tier = it, _json = json)
-                      }
-                  }
-                  "'null'" -> {
-                      tryDeserialize(node, jacksonTypeRef<OtherSubLineItem>()){ it.validate() }?.let {
-                          return SubLineItem(other = it, _json = json)
-                      }
-                  }
-              }
+                when (type) {
+                    "matrix" -> {
+                        tryDeserialize(node, jacksonTypeRef<MatrixSubLineItem>()) { it.validate() }
+                            ?.let {
+                                return SubLineItem(matrix = it, _json = json)
+                            }
+                    }
+                    "tier" -> {
+                        tryDeserialize(node, jacksonTypeRef<TierSubLineItem>()) { it.validate() }
+                            ?.let {
+                                return SubLineItem(tier = it, _json = json)
+                            }
+                    }
+                    "'null'" -> {
+                        tryDeserialize(node, jacksonTypeRef<OtherSubLineItem>()) { it.validate() }
+                            ?.let {
+                                return SubLineItem(other = it, _json = json)
+                            }
+                    }
+                }
 
-              return SubLineItem(_json = json)
+                return SubLineItem(_json = json)
             }
         }
 
         internal class Serializer : BaseSerializer<SubLineItem>(SubLineItem::class) {
 
-            override fun serialize(value: SubLineItem, generator: JsonGenerator, provider: SerializerProvider) {
-              when {
-                  value.matrix != null -> generator.writeObject(value.matrix)
-                  value.tier != null -> generator.writeObject(value.tier)
-                  value.other != null -> generator.writeObject(value.other)
-                  value._json != null -> generator.writeObject(value._json)
-                  else -> throw IllegalStateException("Invalid SubLineItem")
-              }
+            override fun serialize(
+                value: SubLineItem,
+                generator: JsonGenerator,
+                provider: SerializerProvider,
+            ) {
+                when {
+                    value.matrix != null -> generator.writeObject(value.matrix)
+                    value.tier != null -> generator.writeObject(value.tier)
+                    value.other != null -> generator.writeObject(value.other)
+                    value._json != null -> generator.writeObject(value._json)
+                    else -> throw IllegalStateException("Invalid SubLineItem")
+                }
             }
         }
 
         @NoAutoDetect
-        class MatrixSubLineItem @JsonCreator private constructor(
-            @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("grouping") @ExcludeMissing private val grouping: JsonField<Grouping> = JsonMissing.of(),
-            @JsonProperty("matrix_config") @ExcludeMissing private val matrixConfig: JsonField<MatrixConfig> = JsonMissing.of(),
-            @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("quantity") @ExcludeMissing private val quantity: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
-            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        class MatrixSubLineItem
+        @JsonCreator
+        private constructor(
+            @JsonProperty("amount")
+            @ExcludeMissing
+            private val amount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("grouping")
+            @ExcludeMissing
+            private val grouping: JsonField<Grouping> = JsonMissing.of(),
+            @JsonProperty("matrix_config")
+            @ExcludeMissing
+            private val matrixConfig: JsonField<MatrixConfig> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("quantity")
+            @ExcludeMissing
+            private val quantity: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("type")
+            @ExcludeMissing
+            private val type: JsonField<Type> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The total amount for this sub line item. */
@@ -4038,9 +3971,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun type(): Type = type.getRequired("type")
 
             /** The total amount for this sub line item. */
-            @JsonProperty("amount")
-            @ExcludeMissing
-            fun _amount(): JsonField<String> = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
             @JsonProperty("grouping")
             @ExcludeMissing
@@ -4050,17 +3981,11 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             @ExcludeMissing
             fun _matrixConfig(): JsonField<MatrixConfig> = matrixConfig
 
-            @JsonProperty("name")
-            @ExcludeMissing
-            fun _name(): JsonField<String> = name
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-            @JsonProperty("quantity")
-            @ExcludeMissing
-            fun _quantity(): JsonField<Double> = quantity
+            @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
-            @JsonProperty("type")
-            @ExcludeMissing
-            fun _type(): JsonField<Type> = type
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -4068,20 +3993,19 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): MatrixSubLineItem =
-                apply {
-                    if (validated) {
-                      return@apply
-                    }
-
-                    amount()
-                    grouping()?.validate()
-                    matrixConfig().validate()
-                    name()
-                    quantity()
-                    type()
-                    validated = true
+            fun validate(): MatrixSubLineItem = apply {
+                if (validated) {
+                    return@apply
                 }
+
+                amount()
+                grouping()?.validate()
+                matrixConfig().validate()
+                name()
+                quantity()
+                type()
+                validated = true
+            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -4091,7 +4015,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * Returns a mutable builder for constructing an instance of [MatrixSubLineItem].
                  *
                  * The following fields are required:
-                 *
                  * ```kotlin
                  * .amount()
                  * .grouping()
@@ -4115,117 +4038,91 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                 private var type: JsonField<Type>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(matrixSubLineItem: MatrixSubLineItem) =
-                    apply {
-                        amount = matrixSubLineItem.amount
-                        grouping = matrixSubLineItem.grouping
-                        matrixConfig = matrixSubLineItem.matrixConfig
-                        name = matrixSubLineItem.name
-                        quantity = matrixSubLineItem.quantity
-                        type = matrixSubLineItem.type
-                        additionalProperties = matrixSubLineItem.additionalProperties.toMutableMap()
-                    }
+                internal fun from(matrixSubLineItem: MatrixSubLineItem) = apply {
+                    amount = matrixSubLineItem.amount
+                    grouping = matrixSubLineItem.grouping
+                    matrixConfig = matrixSubLineItem.matrixConfig
+                    name = matrixSubLineItem.name
+                    quantity = matrixSubLineItem.quantity
+                    type = matrixSubLineItem.type
+                    additionalProperties = matrixSubLineItem.additionalProperties.toMutableMap()
+                }
 
                 /** The total amount for this sub line item. */
                 fun amount(amount: String) = amount(JsonField.of(amount))
 
                 /** The total amount for this sub line item. */
-                fun amount(amount: JsonField<String>) =
-                    apply {
-                        this.amount = amount
-                    }
+                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                 fun grouping(grouping: Grouping?) = grouping(JsonField.ofNullable(grouping))
 
-                fun grouping(grouping: JsonField<Grouping>) =
-                    apply {
-                        this.grouping = grouping
-                    }
+                fun grouping(grouping: JsonField<Grouping>) = apply { this.grouping = grouping }
 
-                fun matrixConfig(matrixConfig: MatrixConfig) = matrixConfig(JsonField.of(matrixConfig))
+                fun matrixConfig(matrixConfig: MatrixConfig) =
+                    matrixConfig(JsonField.of(matrixConfig))
 
-                fun matrixConfig(matrixConfig: JsonField<MatrixConfig>) =
-                    apply {
-                        this.matrixConfig = matrixConfig
-                    }
+                fun matrixConfig(matrixConfig: JsonField<MatrixConfig>) = apply {
+                    this.matrixConfig = matrixConfig
+                }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                fun name(name: JsonField<String>) =
-                    apply {
-                        this.name = name
-                    }
+                fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
-                fun quantity(quantity: JsonField<Double>) =
-                    apply {
-                        this.quantity = quantity
-                    }
+                fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
                 fun type(type: Type) = type(JsonField.of(type))
 
-                fun type(type: JsonField<Type>) =
-                    apply {
-                        this.type = type
-                    }
+                fun type(type: JsonField<Type>) = apply { this.type = type }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.clear()
-                        putAllAdditionalProperties(additionalProperties)
-                    }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) =
-                    apply {
-                        additionalProperties.put(key, value)
-                    }
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) =
-                    apply {
-                        additionalProperties.remove(key)
-                    }
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) =
-                    apply {
-                        keys.forEach(::removeAdditionalProperty)
-                    }
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): MatrixSubLineItem =
                     MatrixSubLineItem(
-                      checkRequired(
-                        "amount", amount
-                      ),
-                      checkRequired(
-                        "grouping", grouping
-                      ),
-                      checkRequired(
-                        "matrixConfig", matrixConfig
-                      ),
-                      checkRequired(
-                        "name", name
-                      ),
-                      checkRequired(
-                        "quantity", quantity
-                      ),
-                      checkRequired(
-                        "type", type
-                      ),
-                      additionalProperties.toImmutable(),
+                        checkRequired("amount", amount),
+                        checkRequired("grouping", grouping),
+                        checkRequired("matrixConfig", matrixConfig),
+                        checkRequired("name", name),
+                        checkRequired("quantity", quantity),
+                        checkRequired("type", type),
+                        additionalProperties.toImmutable(),
                     )
             }
 
             @NoAutoDetect
-            class Grouping @JsonCreator private constructor(
-                @JsonProperty("key") @ExcludeMissing private val key: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("value") @ExcludeMissing private val value: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+            class Grouping
+            @JsonCreator
+            private constructor(
+                @JsonProperty("key")
+                @ExcludeMissing
+                private val key: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("value")
+                @ExcludeMissing
+                private val value: JsonField<String> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 fun key(): String = key.getRequired("key")
@@ -4233,14 +4130,10 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                 /** No value indicates the default group */
                 fun value(): String? = value.getNullable("value")
 
-                @JsonProperty("key")
-                @ExcludeMissing
-                fun _key(): JsonField<String> = key
+                @JsonProperty("key") @ExcludeMissing fun _key(): JsonField<String> = key
 
                 /** No value indicates the default group */
-                @JsonProperty("value")
-                @ExcludeMissing
-                fun _value(): JsonField<String> = value
+                @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<String> = value
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -4248,16 +4141,15 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): Grouping =
-                    apply {
-                        if (validated) {
-                          return@apply
-                        }
-
-                        key()
-                        value()
-                        validated = true
+                fun validate(): Grouping = apply {
+                    if (validated) {
+                        return@apply
                     }
+
+                    key()
+                    value()
+                    validated = true
+                }
 
                 fun toBuilder() = Builder().from(this)
 
@@ -4267,7 +4159,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                      * Returns a mutable builder for constructing an instance of [Grouping].
                      *
                      * The following fields are required:
-                     *
                      * ```kotlin
                      * .key()
                      * .value()
@@ -4283,73 +4174,58 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                     private var value: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(grouping: Grouping) =
-                        apply {
-                            key = grouping.key
-                            value = grouping.value
-                            additionalProperties = grouping.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(grouping: Grouping) = apply {
+                        key = grouping.key
+                        value = grouping.value
+                        additionalProperties = grouping.additionalProperties.toMutableMap()
+                    }
 
                     fun key(key: String) = key(JsonField.of(key))
 
-                    fun key(key: JsonField<String>) =
-                        apply {
-                            this.key = key
-                        }
+                    fun key(key: JsonField<String>) = apply { this.key = key }
 
                     /** No value indicates the default group */
                     fun value(value: String?) = value(JsonField.ofNullable(value))
 
                     /** No value indicates the default group */
-                    fun value(value: JsonField<String>) =
-                        apply {
-                            this.value = value
-                        }
+                    fun value(value: JsonField<String>) = apply { this.value = value }
 
-                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                        apply {
-                            this.additionalProperties.clear()
-                            putAllAdditionalProperties(additionalProperties)
-                        }
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
 
-                    fun putAdditionalProperty(key: String, value: JsonValue) =
-                        apply {
-                            additionalProperties.put(key, value)
-                        }
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
 
-                    fun removeAdditionalProperty(key: String) =
-                        apply {
-                            additionalProperties.remove(key)
-                        }
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
 
-                    fun removeAllAdditionalProperties(keys: Set<String>) =
-                        apply {
-                            keys.forEach(::removeAdditionalProperty)
-                        }
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): Grouping =
                         Grouping(
-                          checkRequired(
-                            "key", key
-                          ),
-                          checkRequired(
-                            "value", value
-                          ),
-                          additionalProperties.toImmutable(),
+                            checkRequired("key", key),
+                            checkRequired("value", value),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is Grouping && key == other.key && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Grouping && key == other.key && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -4358,18 +4234,24 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 override fun hashCode(): Int = hashCode
 
-                override fun toString() = "Grouping{key=$key, value=$value, additionalProperties=$additionalProperties}"
+                override fun toString() =
+                    "Grouping{key=$key, value=$value, additionalProperties=$additionalProperties}"
             }
 
             @NoAutoDetect
-            class MatrixConfig @JsonCreator private constructor(
-                @JsonProperty("dimension_values") @ExcludeMissing private val dimensionValues: JsonField<List<String?>> = JsonMissing.of(),
-                @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+            class MatrixConfig
+            @JsonCreator
+            private constructor(
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                private val dimensionValues: JsonField<List<String?>> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** The ordered dimension values for this line item. */
-                fun dimensionValues(): List<String?> = dimensionValues.getRequired("dimension_values")
+                fun dimensionValues(): List<String?> =
+                    dimensionValues.getRequired("dimension_values")
 
                 /** The ordered dimension values for this line item. */
                 @JsonProperty("dimension_values")
@@ -4382,15 +4264,14 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): MatrixConfig =
-                    apply {
-                        if (validated) {
-                          return@apply
-                        }
-
-                        dimensionValues()
-                        validated = true
+                fun validate(): MatrixConfig = apply {
+                    if (validated) {
+                        return@apply
                     }
+
+                    dimensionValues()
+                    validated = true
+                }
 
                 fun toBuilder() = Builder().from(this)
 
@@ -4400,7 +4281,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                      * Returns a mutable builder for constructing an instance of [MatrixConfig].
                      *
                      * The following fields are required:
-                     *
                      * ```kotlin
                      * .dimensionValues()
                      * ```
@@ -4414,69 +4294,65 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                     private var dimensionValues: JsonField<MutableList<String?>>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(matrixConfig: MatrixConfig) =
-                        apply {
-                            dimensionValues = matrixConfig.dimensionValues.map { it.toMutableList() }
-                            additionalProperties = matrixConfig.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(matrixConfig: MatrixConfig) = apply {
+                        dimensionValues = matrixConfig.dimensionValues.map { it.toMutableList() }
+                        additionalProperties = matrixConfig.additionalProperties.toMutableMap()
+                    }
 
                     /** The ordered dimension values for this line item. */
-                    fun dimensionValues(dimensionValues: List<String?>) = dimensionValues(JsonField.of(dimensionValues))
+                    fun dimensionValues(dimensionValues: List<String?>) =
+                        dimensionValues(JsonField.of(dimensionValues))
 
                     /** The ordered dimension values for this line item. */
-                    fun dimensionValues(dimensionValues: JsonField<List<String?>>) =
-                        apply {
-                            this.dimensionValues = dimensionValues.map { it.toMutableList() }
-                        }
+                    fun dimensionValues(dimensionValues: JsonField<List<String?>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
 
                     /** The ordered dimension values for this line item. */
-                    fun addDimensionValue(dimensionValue: String) =
-                        apply {
-                            dimensionValues = (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
                                 checkKnown("dimensionValues", it).add(dimensionValue)
                             }
-                        }
+                    }
 
-                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                        apply {
-                            this.additionalProperties.clear()
-                            putAllAdditionalProperties(additionalProperties)
-                        }
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
 
-                    fun putAdditionalProperty(key: String, value: JsonValue) =
-                        apply {
-                            additionalProperties.put(key, value)
-                        }
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
 
-                    fun removeAdditionalProperty(key: String) =
-                        apply {
-                            additionalProperties.remove(key)
-                        }
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
 
-                    fun removeAllAdditionalProperties(keys: Set<String>) =
-                        apply {
-                            keys.forEach(::removeAdditionalProperty)
-                        }
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): MatrixConfig =
                         MatrixConfig(
-                          checkRequired(
-                            "dimensionValues", dimensionValues
-                          ).map { it.toImmutable() }, additionalProperties.toImmutable()
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            additionalProperties.toImmutable(),
                         )
                 }
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is MatrixConfig && dimensionValues == other.dimensionValues && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is MatrixConfig && dimensionValues == other.dimensionValues && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -4485,13 +4361,12 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 override fun hashCode(): Int = hashCode
 
-                override fun toString() = "MatrixConfig{dimensionValues=$dimensionValues, additionalProperties=$additionalProperties}"
+                override fun toString() =
+                    "MatrixConfig{dimensionValues=$dimensionValues, additionalProperties=$additionalProperties}"
             }
 
-            class Type @JsonCreator private constructor(
-                private val value: JsonField<String>,
-
-            ) : Enum {
+            class Type @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -4501,8 +4376,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * the SDK is on an older version than the API, then the API may respond with new
                  * members that the SDK is unaware of.
                  */
-                @com.fasterxml.jackson.annotation.JsonValue
-                fun _value(): JsonField<String> = value
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
                 companion object {
 
@@ -4513,23 +4387,23 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 /** An enum containing [Type]'s known values. */
                 enum class Known {
-                    MATRIX,
+                    MATRIX
                 }
 
                 /**
                  * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                  *
                  * An instance of [Type] can contain an unknown value in a couple of cases:
-                 *
-                 * - It was deserialized from data that doesn't match any known member. For
-                 *   example, if the SDK is on an older version than the API, then the API may
-                 *   respond with new members that the SDK is unaware of.
-                 *
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
                     MATRIX,
-                    /** An enum member indicating that [Type] was instantiated with an unknown value. */
+                    /**
+                     * An enum member indicating that [Type] was instantiated with an unknown value.
+                     */
                     _UNKNOWN,
                 }
 
@@ -4553,7 +4427,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * don't want to throw for the unknown case.
                  *
                  * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 * member.
+                 *   member.
                  */
                 fun known(): Known =
                     when (this) {
@@ -4568,16 +4442,17 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * debugging and generally doesn't throw.
                  *
                  * @throws OrbInvalidDataException if this class instance's value does not have the
-                 * expected primitive type.
+                 *   expected primitive type.
                  */
-                fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                    return /* spotless:off */ other is Type && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -4586,11 +4461,11 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             }
 
             override fun equals(other: Any?): Boolean {
-              if (this === other) {
-                  return true
-              }
+                if (this === other) {
+                    return true
+                }
 
-              return /* spotless:off */ other is MatrixSubLineItem && amount == other.amount && grouping == other.grouping && matrixConfig == other.matrixConfig && name == other.name && quantity == other.quantity && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is MatrixSubLineItem && amount == other.amount && grouping == other.grouping && matrixConfig == other.matrixConfig && name == other.name && quantity == other.quantity && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -4599,19 +4474,34 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() = "MatrixSubLineItem{amount=$amount, grouping=$grouping, matrixConfig=$matrixConfig, name=$name, quantity=$quantity, type=$type, additionalProperties=$additionalProperties}"
+            override fun toString() =
+                "MatrixSubLineItem{amount=$amount, grouping=$grouping, matrixConfig=$matrixConfig, name=$name, quantity=$quantity, type=$type, additionalProperties=$additionalProperties}"
         }
 
         @NoAutoDetect
-        class TierSubLineItem @JsonCreator private constructor(
-            @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("grouping") @ExcludeMissing private val grouping: JsonField<Grouping> = JsonMissing.of(),
-            @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("quantity") @ExcludeMissing private val quantity: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("tier_config") @ExcludeMissing private val tierConfig: JsonField<TierConfig> = JsonMissing.of(),
-            @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
-            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        class TierSubLineItem
+        @JsonCreator
+        private constructor(
+            @JsonProperty("amount")
+            @ExcludeMissing
+            private val amount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("grouping")
+            @ExcludeMissing
+            private val grouping: JsonField<Grouping> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("quantity")
+            @ExcludeMissing
+            private val quantity: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("tier_config")
+            @ExcludeMissing
+            private val tierConfig: JsonField<TierConfig> = JsonMissing.of(),
+            @JsonProperty("type")
+            @ExcludeMissing
+            private val type: JsonField<Type> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The total amount for this sub line item. */
@@ -4628,29 +4518,21 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun type(): Type = type.getRequired("type")
 
             /** The total amount for this sub line item. */
-            @JsonProperty("amount")
-            @ExcludeMissing
-            fun _amount(): JsonField<String> = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
             @JsonProperty("grouping")
             @ExcludeMissing
             fun _grouping(): JsonField<Grouping> = grouping
 
-            @JsonProperty("name")
-            @ExcludeMissing
-            fun _name(): JsonField<String> = name
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-            @JsonProperty("quantity")
-            @ExcludeMissing
-            fun _quantity(): JsonField<Double> = quantity
+            @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
             @JsonProperty("tier_config")
             @ExcludeMissing
             fun _tierConfig(): JsonField<TierConfig> = tierConfig
 
-            @JsonProperty("type")
-            @ExcludeMissing
-            fun _type(): JsonField<Type> = type
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -4658,20 +4540,19 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): TierSubLineItem =
-                apply {
-                    if (validated) {
-                      return@apply
-                    }
-
-                    amount()
-                    grouping()?.validate()
-                    name()
-                    quantity()
-                    tierConfig().validate()
-                    type()
-                    validated = true
+            fun validate(): TierSubLineItem = apply {
+                if (validated) {
+                    return@apply
                 }
+
+                amount()
+                grouping()?.validate()
+                name()
+                quantity()
+                tierConfig().validate()
+                type()
+                validated = true
+            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -4681,7 +4562,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * Returns a mutable builder for constructing an instance of [TierSubLineItem].
                  *
                  * The following fields are required:
-                 *
                  * ```kotlin
                  * .amount()
                  * .grouping()
@@ -4705,117 +4585,90 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                 private var type: JsonField<Type>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(tierSubLineItem: TierSubLineItem) =
-                    apply {
-                        amount = tierSubLineItem.amount
-                        grouping = tierSubLineItem.grouping
-                        name = tierSubLineItem.name
-                        quantity = tierSubLineItem.quantity
-                        tierConfig = tierSubLineItem.tierConfig
-                        type = tierSubLineItem.type
-                        additionalProperties = tierSubLineItem.additionalProperties.toMutableMap()
-                    }
+                internal fun from(tierSubLineItem: TierSubLineItem) = apply {
+                    amount = tierSubLineItem.amount
+                    grouping = tierSubLineItem.grouping
+                    name = tierSubLineItem.name
+                    quantity = tierSubLineItem.quantity
+                    tierConfig = tierSubLineItem.tierConfig
+                    type = tierSubLineItem.type
+                    additionalProperties = tierSubLineItem.additionalProperties.toMutableMap()
+                }
 
                 /** The total amount for this sub line item. */
                 fun amount(amount: String) = amount(JsonField.of(amount))
 
                 /** The total amount for this sub line item. */
-                fun amount(amount: JsonField<String>) =
-                    apply {
-                        this.amount = amount
-                    }
+                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                 fun grouping(grouping: Grouping?) = grouping(JsonField.ofNullable(grouping))
 
-                fun grouping(grouping: JsonField<Grouping>) =
-                    apply {
-                        this.grouping = grouping
-                    }
+                fun grouping(grouping: JsonField<Grouping>) = apply { this.grouping = grouping }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                fun name(name: JsonField<String>) =
-                    apply {
-                        this.name = name
-                    }
+                fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
-                fun quantity(quantity: JsonField<Double>) =
-                    apply {
-                        this.quantity = quantity
-                    }
+                fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
                 fun tierConfig(tierConfig: TierConfig) = tierConfig(JsonField.of(tierConfig))
 
-                fun tierConfig(tierConfig: JsonField<TierConfig>) =
-                    apply {
-                        this.tierConfig = tierConfig
-                    }
+                fun tierConfig(tierConfig: JsonField<TierConfig>) = apply {
+                    this.tierConfig = tierConfig
+                }
 
                 fun type(type: Type) = type(JsonField.of(type))
 
-                fun type(type: JsonField<Type>) =
-                    apply {
-                        this.type = type
-                    }
+                fun type(type: JsonField<Type>) = apply { this.type = type }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.clear()
-                        putAllAdditionalProperties(additionalProperties)
-                    }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) =
-                    apply {
-                        additionalProperties.put(key, value)
-                    }
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) =
-                    apply {
-                        additionalProperties.remove(key)
-                    }
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) =
-                    apply {
-                        keys.forEach(::removeAdditionalProperty)
-                    }
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): TierSubLineItem =
                     TierSubLineItem(
-                      checkRequired(
-                        "amount", amount
-                      ),
-                      checkRequired(
-                        "grouping", grouping
-                      ),
-                      checkRequired(
-                        "name", name
-                      ),
-                      checkRequired(
-                        "quantity", quantity
-                      ),
-                      checkRequired(
-                        "tierConfig", tierConfig
-                      ),
-                      checkRequired(
-                        "type", type
-                      ),
-                      additionalProperties.toImmutable(),
+                        checkRequired("amount", amount),
+                        checkRequired("grouping", grouping),
+                        checkRequired("name", name),
+                        checkRequired("quantity", quantity),
+                        checkRequired("tierConfig", tierConfig),
+                        checkRequired("type", type),
+                        additionalProperties.toImmutable(),
                     )
             }
 
             @NoAutoDetect
-            class Grouping @JsonCreator private constructor(
-                @JsonProperty("key") @ExcludeMissing private val key: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("value") @ExcludeMissing private val value: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+            class Grouping
+            @JsonCreator
+            private constructor(
+                @JsonProperty("key")
+                @ExcludeMissing
+                private val key: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("value")
+                @ExcludeMissing
+                private val value: JsonField<String> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 fun key(): String = key.getRequired("key")
@@ -4823,14 +4676,10 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                 /** No value indicates the default group */
                 fun value(): String? = value.getNullable("value")
 
-                @JsonProperty("key")
-                @ExcludeMissing
-                fun _key(): JsonField<String> = key
+                @JsonProperty("key") @ExcludeMissing fun _key(): JsonField<String> = key
 
                 /** No value indicates the default group */
-                @JsonProperty("value")
-                @ExcludeMissing
-                fun _value(): JsonField<String> = value
+                @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<String> = value
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -4838,16 +4687,15 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): Grouping =
-                    apply {
-                        if (validated) {
-                          return@apply
-                        }
-
-                        key()
-                        value()
-                        validated = true
+                fun validate(): Grouping = apply {
+                    if (validated) {
+                        return@apply
                     }
+
+                    key()
+                    value()
+                    validated = true
+                }
 
                 fun toBuilder() = Builder().from(this)
 
@@ -4857,7 +4705,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                      * Returns a mutable builder for constructing an instance of [Grouping].
                      *
                      * The following fields are required:
-                     *
                      * ```kotlin
                      * .key()
                      * .value()
@@ -4873,73 +4720,58 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                     private var value: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(grouping: Grouping) =
-                        apply {
-                            key = grouping.key
-                            value = grouping.value
-                            additionalProperties = grouping.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(grouping: Grouping) = apply {
+                        key = grouping.key
+                        value = grouping.value
+                        additionalProperties = grouping.additionalProperties.toMutableMap()
+                    }
 
                     fun key(key: String) = key(JsonField.of(key))
 
-                    fun key(key: JsonField<String>) =
-                        apply {
-                            this.key = key
-                        }
+                    fun key(key: JsonField<String>) = apply { this.key = key }
 
                     /** No value indicates the default group */
                     fun value(value: String?) = value(JsonField.ofNullable(value))
 
                     /** No value indicates the default group */
-                    fun value(value: JsonField<String>) =
-                        apply {
-                            this.value = value
-                        }
+                    fun value(value: JsonField<String>) = apply { this.value = value }
 
-                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                        apply {
-                            this.additionalProperties.clear()
-                            putAllAdditionalProperties(additionalProperties)
-                        }
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
 
-                    fun putAdditionalProperty(key: String, value: JsonValue) =
-                        apply {
-                            additionalProperties.put(key, value)
-                        }
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
 
-                    fun removeAdditionalProperty(key: String) =
-                        apply {
-                            additionalProperties.remove(key)
-                        }
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
 
-                    fun removeAllAdditionalProperties(keys: Set<String>) =
-                        apply {
-                            keys.forEach(::removeAdditionalProperty)
-                        }
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): Grouping =
                         Grouping(
-                          checkRequired(
-                            "key", key
-                          ),
-                          checkRequired(
-                            "value", value
-                          ),
-                          additionalProperties.toImmutable(),
+                            checkRequired("key", key),
+                            checkRequired("value", value),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is Grouping && key == other.key && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Grouping && key == other.key && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -4948,16 +4780,25 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 override fun hashCode(): Int = hashCode
 
-                override fun toString() = "Grouping{key=$key, value=$value, additionalProperties=$additionalProperties}"
+                override fun toString() =
+                    "Grouping{key=$key, value=$value, additionalProperties=$additionalProperties}"
             }
 
             @NoAutoDetect
-            class TierConfig @JsonCreator private constructor(
-                @JsonProperty("first_unit") @ExcludeMissing private val firstUnit: JsonField<Double> = JsonMissing.of(),
-                @JsonProperty("last_unit") @ExcludeMissing private val lastUnit: JsonField<Double> = JsonMissing.of(),
-                @JsonProperty("unit_amount") @ExcludeMissing private val unitAmount: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+            class TierConfig
+            @JsonCreator
+            private constructor(
+                @JsonProperty("first_unit")
+                @ExcludeMissing
+                private val firstUnit: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("last_unit")
+                @ExcludeMissing
+                private val lastUnit: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("unit_amount")
+                @ExcludeMissing
+                private val unitAmount: JsonField<String> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 fun firstUnit(): Double = firstUnit.getRequired("first_unit")
@@ -4984,17 +4825,16 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): TierConfig =
-                    apply {
-                        if (validated) {
-                          return@apply
-                        }
-
-                        firstUnit()
-                        lastUnit()
-                        unitAmount()
-                        validated = true
+                fun validate(): TierConfig = apply {
+                    if (validated) {
+                        return@apply
                     }
+
+                    firstUnit()
+                    lastUnit()
+                    unitAmount()
+                    validated = true
+                }
 
                 fun toBuilder() = Builder().from(this)
 
@@ -5004,7 +4844,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                      * Returns a mutable builder for constructing an instance of [TierConfig].
                      *
                      * The following fields are required:
-                     *
                      * ```kotlin
                      * .firstUnit()
                      * .lastUnit()
@@ -5022,84 +4861,68 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                     private var unitAmount: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(tierConfig: TierConfig) =
-                        apply {
-                            firstUnit = tierConfig.firstUnit
-                            lastUnit = tierConfig.lastUnit
-                            unitAmount = tierConfig.unitAmount
-                            additionalProperties = tierConfig.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(tierConfig: TierConfig) = apply {
+                        firstUnit = tierConfig.firstUnit
+                        lastUnit = tierConfig.lastUnit
+                        unitAmount = tierConfig.unitAmount
+                        additionalProperties = tierConfig.additionalProperties.toMutableMap()
+                    }
 
                     fun firstUnit(firstUnit: Double) = firstUnit(JsonField.of(firstUnit))
 
-                    fun firstUnit(firstUnit: JsonField<Double>) =
-                        apply {
-                            this.firstUnit = firstUnit
-                        }
+                    fun firstUnit(firstUnit: JsonField<Double>) = apply {
+                        this.firstUnit = firstUnit
+                    }
 
                     fun lastUnit(lastUnit: Double?) = lastUnit(JsonField.ofNullable(lastUnit))
 
                     fun lastUnit(lastUnit: Double) = lastUnit(lastUnit as Double?)
 
-                    fun lastUnit(lastUnit: JsonField<Double>) =
-                        apply {
-                            this.lastUnit = lastUnit
-                        }
+                    fun lastUnit(lastUnit: JsonField<Double>) = apply { this.lastUnit = lastUnit }
 
                     fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
 
-                    fun unitAmount(unitAmount: JsonField<String>) =
-                        apply {
-                            this.unitAmount = unitAmount
-                        }
+                    fun unitAmount(unitAmount: JsonField<String>) = apply {
+                        this.unitAmount = unitAmount
+                    }
 
-                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                        apply {
-                            this.additionalProperties.clear()
-                            putAllAdditionalProperties(additionalProperties)
-                        }
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
 
-                    fun putAdditionalProperty(key: String, value: JsonValue) =
-                        apply {
-                            additionalProperties.put(key, value)
-                        }
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
 
-                    fun removeAdditionalProperty(key: String) =
-                        apply {
-                            additionalProperties.remove(key)
-                        }
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
 
-                    fun removeAllAdditionalProperties(keys: Set<String>) =
-                        apply {
-                            keys.forEach(::removeAdditionalProperty)
-                        }
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): TierConfig =
                         TierConfig(
-                          checkRequired(
-                            "firstUnit", firstUnit
-                          ),
-                          checkRequired(
-                            "lastUnit", lastUnit
-                          ),
-                          checkRequired(
-                            "unitAmount", unitAmount
-                          ),
-                          additionalProperties.toImmutable(),
+                            checkRequired("firstUnit", firstUnit),
+                            checkRequired("lastUnit", lastUnit),
+                            checkRequired("unitAmount", unitAmount),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is TierConfig && firstUnit == other.firstUnit && lastUnit == other.lastUnit && unitAmount == other.unitAmount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is TierConfig && firstUnit == other.firstUnit && lastUnit == other.lastUnit && unitAmount == other.unitAmount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -5108,13 +4931,12 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 override fun hashCode(): Int = hashCode
 
-                override fun toString() = "TierConfig{firstUnit=$firstUnit, lastUnit=$lastUnit, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
+                override fun toString() =
+                    "TierConfig{firstUnit=$firstUnit, lastUnit=$lastUnit, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
             }
 
-            class Type @JsonCreator private constructor(
-                private val value: JsonField<String>,
-
-            ) : Enum {
+            class Type @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -5124,8 +4946,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * the SDK is on an older version than the API, then the API may respond with new
                  * members that the SDK is unaware of.
                  */
-                @com.fasterxml.jackson.annotation.JsonValue
-                fun _value(): JsonField<String> = value
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
                 companion object {
 
@@ -5136,23 +4957,23 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 /** An enum containing [Type]'s known values. */
                 enum class Known {
-                    TIER,
+                    TIER
                 }
 
                 /**
                  * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                  *
                  * An instance of [Type] can contain an unknown value in a couple of cases:
-                 *
-                 * - It was deserialized from data that doesn't match any known member. For
-                 *   example, if the SDK is on an older version than the API, then the API may
-                 *   respond with new members that the SDK is unaware of.
-                 *
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
                     TIER,
-                    /** An enum member indicating that [Type] was instantiated with an unknown value. */
+                    /**
+                     * An enum member indicating that [Type] was instantiated with an unknown value.
+                     */
                     _UNKNOWN,
                 }
 
@@ -5176,7 +4997,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * don't want to throw for the unknown case.
                  *
                  * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 * member.
+                 *   member.
                  */
                 fun known(): Known =
                     when (this) {
@@ -5191,16 +5012,17 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * debugging and generally doesn't throw.
                  *
                  * @throws OrbInvalidDataException if this class instance's value does not have the
-                 * expected primitive type.
+                 *   expected primitive type.
                  */
-                fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                    return /* spotless:off */ other is Type && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -5209,11 +5031,11 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             }
 
             override fun equals(other: Any?): Boolean {
-              if (this === other) {
-                  return true
-              }
+                if (this === other) {
+                    return true
+                }
 
-              return /* spotless:off */ other is TierSubLineItem && amount == other.amount && grouping == other.grouping && name == other.name && quantity == other.quantity && tierConfig == other.tierConfig && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is TierSubLineItem && amount == other.amount && grouping == other.grouping && name == other.name && quantity == other.quantity && tierConfig == other.tierConfig && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -5222,18 +5044,31 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() = "TierSubLineItem{amount=$amount, grouping=$grouping, name=$name, quantity=$quantity, tierConfig=$tierConfig, type=$type, additionalProperties=$additionalProperties}"
+            override fun toString() =
+                "TierSubLineItem{amount=$amount, grouping=$grouping, name=$name, quantity=$quantity, tierConfig=$tierConfig, type=$type, additionalProperties=$additionalProperties}"
         }
 
         @NoAutoDetect
-        class OtherSubLineItem @JsonCreator private constructor(
-            @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("grouping") @ExcludeMissing private val grouping: JsonField<Grouping> = JsonMissing.of(),
-            @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("quantity") @ExcludeMissing private val quantity: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
-            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        class OtherSubLineItem
+        @JsonCreator
+        private constructor(
+            @JsonProperty("amount")
+            @ExcludeMissing
+            private val amount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("grouping")
+            @ExcludeMissing
+            private val grouping: JsonField<Grouping> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("quantity")
+            @ExcludeMissing
+            private val quantity: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("type")
+            @ExcludeMissing
+            private val type: JsonField<Type> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The total amount for this sub line item. */
@@ -5248,25 +5083,17 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             fun type(): Type = type.getRequired("type")
 
             /** The total amount for this sub line item. */
-            @JsonProperty("amount")
-            @ExcludeMissing
-            fun _amount(): JsonField<String> = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
             @JsonProperty("grouping")
             @ExcludeMissing
             fun _grouping(): JsonField<Grouping> = grouping
 
-            @JsonProperty("name")
-            @ExcludeMissing
-            fun _name(): JsonField<String> = name
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-            @JsonProperty("quantity")
-            @ExcludeMissing
-            fun _quantity(): JsonField<Double> = quantity
+            @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
-            @JsonProperty("type")
-            @ExcludeMissing
-            fun _type(): JsonField<Type> = type
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -5274,19 +5101,18 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): OtherSubLineItem =
-                apply {
-                    if (validated) {
-                      return@apply
-                    }
-
-                    amount()
-                    grouping()?.validate()
-                    name()
-                    quantity()
-                    type()
-                    validated = true
+            fun validate(): OtherSubLineItem = apply {
+                if (validated) {
+                    return@apply
                 }
+
+                amount()
+                grouping()?.validate()
+                name()
+                quantity()
+                type()
+                validated = true
+            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -5296,7 +5122,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * Returns a mutable builder for constructing an instance of [OtherSubLineItem].
                  *
                  * The following fields are required:
-                 *
                  * ```kotlin
                  * .amount()
                  * .grouping()
@@ -5318,106 +5143,82 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                 private var type: JsonField<Type>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(otherSubLineItem: OtherSubLineItem) =
-                    apply {
-                        amount = otherSubLineItem.amount
-                        grouping = otherSubLineItem.grouping
-                        name = otherSubLineItem.name
-                        quantity = otherSubLineItem.quantity
-                        type = otherSubLineItem.type
-                        additionalProperties = otherSubLineItem.additionalProperties.toMutableMap()
-                    }
+                internal fun from(otherSubLineItem: OtherSubLineItem) = apply {
+                    amount = otherSubLineItem.amount
+                    grouping = otherSubLineItem.grouping
+                    name = otherSubLineItem.name
+                    quantity = otherSubLineItem.quantity
+                    type = otherSubLineItem.type
+                    additionalProperties = otherSubLineItem.additionalProperties.toMutableMap()
+                }
 
                 /** The total amount for this sub line item. */
                 fun amount(amount: String) = amount(JsonField.of(amount))
 
                 /** The total amount for this sub line item. */
-                fun amount(amount: JsonField<String>) =
-                    apply {
-                        this.amount = amount
-                    }
+                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                 fun grouping(grouping: Grouping?) = grouping(JsonField.ofNullable(grouping))
 
-                fun grouping(grouping: JsonField<Grouping>) =
-                    apply {
-                        this.grouping = grouping
-                    }
+                fun grouping(grouping: JsonField<Grouping>) = apply { this.grouping = grouping }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                fun name(name: JsonField<String>) =
-                    apply {
-                        this.name = name
-                    }
+                fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
-                fun quantity(quantity: JsonField<Double>) =
-                    apply {
-                        this.quantity = quantity
-                    }
+                fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
                 fun type(type: Type) = type(JsonField.of(type))
 
-                fun type(type: JsonField<Type>) =
-                    apply {
-                        this.type = type
-                    }
+                fun type(type: JsonField<Type>) = apply { this.type = type }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.clear()
-                        putAllAdditionalProperties(additionalProperties)
-                    }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) =
-                    apply {
-                        additionalProperties.put(key, value)
-                    }
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) =
-                    apply {
-                        additionalProperties.remove(key)
-                    }
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) =
-                    apply {
-                        keys.forEach(::removeAdditionalProperty)
-                    }
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): OtherSubLineItem =
                     OtherSubLineItem(
-                      checkRequired(
-                        "amount", amount
-                      ),
-                      checkRequired(
-                        "grouping", grouping
-                      ),
-                      checkRequired(
-                        "name", name
-                      ),
-                      checkRequired(
-                        "quantity", quantity
-                      ),
-                      checkRequired(
-                        "type", type
-                      ),
-                      additionalProperties.toImmutable(),
+                        checkRequired("amount", amount),
+                        checkRequired("grouping", grouping),
+                        checkRequired("name", name),
+                        checkRequired("quantity", quantity),
+                        checkRequired("type", type),
+                        additionalProperties.toImmutable(),
                     )
             }
 
             @NoAutoDetect
-            class Grouping @JsonCreator private constructor(
-                @JsonProperty("key") @ExcludeMissing private val key: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("value") @ExcludeMissing private val value: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+            class Grouping
+            @JsonCreator
+            private constructor(
+                @JsonProperty("key")
+                @ExcludeMissing
+                private val key: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("value")
+                @ExcludeMissing
+                private val value: JsonField<String> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 fun key(): String = key.getRequired("key")
@@ -5425,14 +5226,10 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                 /** No value indicates the default group */
                 fun value(): String? = value.getNullable("value")
 
-                @JsonProperty("key")
-                @ExcludeMissing
-                fun _key(): JsonField<String> = key
+                @JsonProperty("key") @ExcludeMissing fun _key(): JsonField<String> = key
 
                 /** No value indicates the default group */
-                @JsonProperty("value")
-                @ExcludeMissing
-                fun _value(): JsonField<String> = value
+                @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<String> = value
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -5440,16 +5237,15 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): Grouping =
-                    apply {
-                        if (validated) {
-                          return@apply
-                        }
-
-                        key()
-                        value()
-                        validated = true
+                fun validate(): Grouping = apply {
+                    if (validated) {
+                        return@apply
                     }
+
+                    key()
+                    value()
+                    validated = true
+                }
 
                 fun toBuilder() = Builder().from(this)
 
@@ -5459,7 +5255,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                      * Returns a mutable builder for constructing an instance of [Grouping].
                      *
                      * The following fields are required:
-                     *
                      * ```kotlin
                      * .key()
                      * .value()
@@ -5475,73 +5270,58 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                     private var value: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(grouping: Grouping) =
-                        apply {
-                            key = grouping.key
-                            value = grouping.value
-                            additionalProperties = grouping.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(grouping: Grouping) = apply {
+                        key = grouping.key
+                        value = grouping.value
+                        additionalProperties = grouping.additionalProperties.toMutableMap()
+                    }
 
                     fun key(key: String) = key(JsonField.of(key))
 
-                    fun key(key: JsonField<String>) =
-                        apply {
-                            this.key = key
-                        }
+                    fun key(key: JsonField<String>) = apply { this.key = key }
 
                     /** No value indicates the default group */
                     fun value(value: String?) = value(JsonField.ofNullable(value))
 
                     /** No value indicates the default group */
-                    fun value(value: JsonField<String>) =
-                        apply {
-                            this.value = value
-                        }
+                    fun value(value: JsonField<String>) = apply { this.value = value }
 
-                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                        apply {
-                            this.additionalProperties.clear()
-                            putAllAdditionalProperties(additionalProperties)
-                        }
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
 
-                    fun putAdditionalProperty(key: String, value: JsonValue) =
-                        apply {
-                            additionalProperties.put(key, value)
-                        }
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
 
-                    fun removeAdditionalProperty(key: String) =
-                        apply {
-                            additionalProperties.remove(key)
-                        }
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
 
-                    fun removeAllAdditionalProperties(keys: Set<String>) =
-                        apply {
-                            keys.forEach(::removeAdditionalProperty)
-                        }
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): Grouping =
                         Grouping(
-                          checkRequired(
-                            "key", key
-                          ),
-                          checkRequired(
-                            "value", value
-                          ),
-                          additionalProperties.toImmutable(),
+                            checkRequired("key", key),
+                            checkRequired("value", value),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is Grouping && key == other.key && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Grouping && key == other.key && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -5550,13 +5330,12 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 override fun hashCode(): Int = hashCode
 
-                override fun toString() = "Grouping{key=$key, value=$value, additionalProperties=$additionalProperties}"
+                override fun toString() =
+                    "Grouping{key=$key, value=$value, additionalProperties=$additionalProperties}"
             }
 
-            class Type @JsonCreator private constructor(
-                private val value: JsonField<String>,
-
-            ) : Enum {
+            class Type @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -5566,8 +5345,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * the SDK is on an older version than the API, then the API may respond with new
                  * members that the SDK is unaware of.
                  */
-                @com.fasterxml.jackson.annotation.JsonValue
-                fun _value(): JsonField<String> = value
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
                 companion object {
 
@@ -5578,23 +5356,23 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
                 /** An enum containing [Type]'s known values. */
                 enum class Known {
-                    NULL,
+                    NULL
                 }
 
                 /**
                  * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                  *
                  * An instance of [Type] can contain an unknown value in a couple of cases:
-                 *
-                 * - It was deserialized from data that doesn't match any known member. For
-                 *   example, if the SDK is on an older version than the API, then the API may
-                 *   respond with new members that the SDK is unaware of.
-                 *
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
                     NULL,
-                    /** An enum member indicating that [Type] was instantiated with an unknown value. */
+                    /**
+                     * An enum member indicating that [Type] was instantiated with an unknown value.
+                     */
                     _UNKNOWN,
                 }
 
@@ -5618,7 +5396,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * don't want to throw for the unknown case.
                  *
                  * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 * member.
+                 *   member.
                  */
                 fun known(): Known =
                     when (this) {
@@ -5633,16 +5411,17 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
                  * debugging and generally doesn't throw.
                  *
                  * @throws OrbInvalidDataException if this class instance's value does not have the
-                 * expected primitive type.
+                 *   expected primitive type.
                  */
-                fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
                 override fun equals(other: Any?): Boolean {
-                  if (this === other) {
-                      return true
-                  }
+                    if (this === other) {
+                        return true
+                    }
 
-                  return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                    return /* spotless:off */ other is Type && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -5651,11 +5430,11 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             }
 
             override fun equals(other: Any?): Boolean {
-              if (this === other) {
-                  return true
-              }
+                if (this === other) {
+                    return true
+                }
 
-              return /* spotless:off */ other is OtherSubLineItem && amount == other.amount && grouping == other.grouping && name == other.name && quantity == other.quantity && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is OtherSubLineItem && amount == other.amount && grouping == other.grouping && name == other.name && quantity == other.quantity && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -5664,17 +5443,26 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() = "OtherSubLineItem{amount=$amount, grouping=$grouping, name=$name, quantity=$quantity, type=$type, additionalProperties=$additionalProperties}"
+            override fun toString() =
+                "OtherSubLineItem{amount=$amount, grouping=$grouping, name=$name, quantity=$quantity, type=$type, additionalProperties=$additionalProperties}"
         }
     }
 
     @NoAutoDetect
-    class TaxAmount @JsonCreator private constructor(
-        @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("tax_rate_description") @ExcludeMissing private val taxRateDescription: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("tax_rate_percentage") @ExcludeMissing private val taxRatePercentage: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+    class TaxAmount
+    @JsonCreator
+    private constructor(
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("tax_rate_description")
+        @ExcludeMissing
+        private val taxRateDescription: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("tax_rate_percentage")
+        @ExcludeMissing
+        private val taxRatePercentage: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The amount of additional tax incurred by this tax rate. */
@@ -5687,9 +5475,7 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
         fun taxRatePercentage(): String? = taxRatePercentage.getNullable("tax_rate_percentage")
 
         /** The amount of additional tax incurred by this tax rate. */
-        @JsonProperty("amount")
-        @ExcludeMissing
-        fun _amount(): JsonField<String> = amount
+        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
         /** The human-readable description of the applied tax rate. */
         @JsonProperty("tax_rate_description")
@@ -5707,17 +5493,16 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): TaxAmount =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                amount()
-                taxRateDescription()
-                taxRatePercentage()
-                validated = true
+        fun validate(): TaxAmount = apply {
+            if (validated) {
+                return@apply
             }
+
+            amount()
+            taxRateDescription()
+            taxRatePercentage()
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -5727,7 +5512,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
              * Returns a mutable builder for constructing an instance of [TaxAmount].
              *
              * The following fields are required:
-             *
              * ```kotlin
              * .amount()
              * .taxRateDescription()
@@ -5745,88 +5529,71 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
             private var taxRatePercentage: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(taxAmount: TaxAmount) =
-                apply {
-                    amount = taxAmount.amount
-                    taxRateDescription = taxAmount.taxRateDescription
-                    taxRatePercentage = taxAmount.taxRatePercentage
-                    additionalProperties = taxAmount.additionalProperties.toMutableMap()
-                }
+            internal fun from(taxAmount: TaxAmount) = apply {
+                amount = taxAmount.amount
+                taxRateDescription = taxAmount.taxRateDescription
+                taxRatePercentage = taxAmount.taxRatePercentage
+                additionalProperties = taxAmount.additionalProperties.toMutableMap()
+            }
 
             /** The amount of additional tax incurred by this tax rate. */
             fun amount(amount: String) = amount(JsonField.of(amount))
 
             /** The amount of additional tax incurred by this tax rate. */
-            fun amount(amount: JsonField<String>) =
-                apply {
-                    this.amount = amount
-                }
+            fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
             /** The human-readable description of the applied tax rate. */
-            fun taxRateDescription(taxRateDescription: String) = taxRateDescription(JsonField.of(taxRateDescription))
+            fun taxRateDescription(taxRateDescription: String) =
+                taxRateDescription(JsonField.of(taxRateDescription))
 
             /** The human-readable description of the applied tax rate. */
-            fun taxRateDescription(taxRateDescription: JsonField<String>) =
-                apply {
-                    this.taxRateDescription = taxRateDescription
-                }
+            fun taxRateDescription(taxRateDescription: JsonField<String>) = apply {
+                this.taxRateDescription = taxRateDescription
+            }
 
             /** The tax rate percentage, out of 100. */
-            fun taxRatePercentage(taxRatePercentage: String?) = taxRatePercentage(JsonField.ofNullable(taxRatePercentage))
+            fun taxRatePercentage(taxRatePercentage: String?) =
+                taxRatePercentage(JsonField.ofNullable(taxRatePercentage))
 
             /** The tax rate percentage, out of 100. */
-            fun taxRatePercentage(taxRatePercentage: JsonField<String>) =
-                apply {
-                    this.taxRatePercentage = taxRatePercentage
-                }
+            fun taxRatePercentage(taxRatePercentage: JsonField<String>) = apply {
+                this.taxRatePercentage = taxRatePercentage
+            }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-            fun removeAdditionalProperty(key: String) =
-                apply {
-                    additionalProperties.remove(key)
-                }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) =
-                apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
             fun build(): TaxAmount =
                 TaxAmount(
-                  checkRequired(
-                    "amount", amount
-                  ),
-                  checkRequired(
-                    "taxRateDescription", taxRateDescription
-                  ),
-                  checkRequired(
-                    "taxRatePercentage", taxRatePercentage
-                  ),
-                  additionalProperties.toImmutable(),
+                    checkRequired("amount", amount),
+                    checkRequired("taxRateDescription", taxRateDescription),
+                    checkRequired("taxRatePercentage", taxRatePercentage),
+                    additionalProperties.toImmutable(),
                 )
         }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is TaxAmount && amount == other.amount && taxRateDescription == other.taxRateDescription && taxRatePercentage == other.taxRatePercentage && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TaxAmount && amount == other.amount && taxRateDescription == other.taxRateDescription && taxRatePercentage == other.taxRatePercentage && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -5835,15 +5602,16 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() = "TaxAmount{amount=$amount, taxRateDescription=$taxRateDescription, taxRatePercentage=$taxRatePercentage, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "TaxAmount{amount=$amount, taxRateDescription=$taxRateDescription, taxRatePercentage=$taxRatePercentage, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is InvoiceLineItemCreateResponse && id == other.id && adjustedSubtotal == other.adjustedSubtotal && adjustments == other.adjustments && amount == other.amount && creditsApplied == other.creditsApplied && discount == other.discount && endDate == other.endDate && filter == other.filter && grouping == other.grouping && maximum == other.maximum && maximumAmount == other.maximumAmount && minimum == other.minimum && minimumAmount == other.minimumAmount && name == other.name && partiallyInvoicedAmount == other.partiallyInvoicedAmount && price == other.price && quantity == other.quantity && startDate == other.startDate && subLineItems == other.subLineItems && subtotal == other.subtotal && taxAmounts == other.taxAmounts && usageCustomerIds == other.usageCustomerIds && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is InvoiceLineItemCreateResponse && id == other.id && adjustedSubtotal == other.adjustedSubtotal && adjustments == other.adjustments && amount == other.amount && creditsApplied == other.creditsApplied && discount == other.discount && endDate == other.endDate && filter == other.filter && grouping == other.grouping && maximum == other.maximum && maximumAmount == other.maximumAmount && minimum == other.minimum && minimumAmount == other.minimumAmount && name == other.name && partiallyInvoicedAmount == other.partiallyInvoicedAmount && price == other.price && quantity == other.quantity && startDate == other.startDate && subLineItems == other.subLineItems && subtotal == other.subtotal && taxAmounts == other.taxAmounts && usageCustomerIds == other.usageCustomerIds && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
@@ -5852,5 +5620,6 @@ class InvoiceLineItemCreateResponse @JsonCreator private constructor(
 
     override fun hashCode(): Int = hashCode
 
-    override fun toString() = "InvoiceLineItemCreateResponse{id=$id, adjustedSubtotal=$adjustedSubtotal, adjustments=$adjustments, amount=$amount, creditsApplied=$creditsApplied, discount=$discount, endDate=$endDate, filter=$filter, grouping=$grouping, maximum=$maximum, maximumAmount=$maximumAmount, minimum=$minimum, minimumAmount=$minimumAmount, name=$name, partiallyInvoicedAmount=$partiallyInvoicedAmount, price=$price, quantity=$quantity, startDate=$startDate, subLineItems=$subLineItems, subtotal=$subtotal, taxAmounts=$taxAmounts, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
+    override fun toString() =
+        "InvoiceLineItemCreateResponse{id=$id, adjustedSubtotal=$adjustedSubtotal, adjustments=$adjustments, amount=$amount, creditsApplied=$creditsApplied, discount=$discount, endDate=$endDate, filter=$filter, grouping=$grouping, maximum=$maximum, maximumAmount=$maximumAmount, minimum=$minimum, minimumAmount=$minimumAmount, name=$name, partiallyInvoicedAmount=$partiallyInvoicedAmount, price=$price, quantity=$quantity, startDate=$startDate, subLineItems=$subLineItems, subtotal=$subtotal, taxAmounts=$taxAmounts, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
 }
