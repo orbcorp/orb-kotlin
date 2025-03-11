@@ -23,19 +23,16 @@ import java.util.Objects
 
 /**
  * Orb's event ingestion model and API is designed around two core principles:
- *
- * 1. **Data fidelity**: The accuracy of your billing model depends on a robust
- *    foundation of events. Orb's API protocol encourages usage patterns that
- *    ensure that your data is consistently complete and correct.
- * 2. **Fast integration**: Sending events into Orb requires no tedious setup steps
- *    or explicit field schema for your event shape, making it instant to start
- *    streaming in usage in real-time.
+ * 1. **Data fidelity**: The accuracy of your billing model depends on a robust foundation of
+ *    events. Orb's API protocol encourages usage patterns that ensure that your data is
+ *    consistently complete and correct.
+ * 2. **Fast integration**: Sending events into Orb requires no tedious setup steps or explicit
+ *    field schema for your event shape, making it instant to start streaming in usage in real-time.
  *
  * ## Event shape
  *
- * Events are the starting point for all usage calculations in the system, and are
- * simple at their core:
- *
+ * Events are the starting point for all usage calculations in the system, and are simple at their
+ * core:
  * ```ts
  * {
  *   // customer_id and external_customer_id are used to
@@ -82,130 +79,115 @@ import java.util.Objects
  *
  * ## Required fields
  *
- * Because events streamed to Orb are meant to be as flexible as possible, there
- * are only a few required fields in every event.
- *
- * - We recommend that `idempotency_key` are unique strings that you generated with
- *   V4 UUIDs, but only require that they uniquely identify an event (i.e. don’t
- *   collide).
- * - The `timestamp` field in the event body will be used to determine which
- *   billable period a given event falls into. For example, with a monthly billing
- *   cycle starting from the first of December, Orb will calculate metrics based on
- *   events that fall into the range
- *   `12-01 00:00:00 <= timestamp < 01-01 00:00:00`.
+ * Because events streamed to Orb are meant to be as flexible as possible, there are only a few
+ * required fields in every event.
+ * - We recommend that `idempotency_key` are unique strings that you generated with V4 UUIDs, but
+ *   only require that they uniquely identify an event (i.e. don’t collide).
+ * - The `timestamp` field in the event body will be used to determine which billable period a given
+ *   event falls into. For example, with a monthly billing cycle starting from the first of
+ *   December, Orb will calculate metrics based on events that fall into the range `12-01 00:00:00
+ *   <= timestamp < 01-01 00:00:00`.
  *
  * ## Logging metadata
  *
- * Orb allows tagging events with metadata using a flexible properties dictionary.
- * Since Orb does not enforce a rigid schema for this field-set, key-value pairs
- * can be added dynamically as your events evolve.
+ * Orb allows tagging events with metadata using a flexible properties dictionary. Since Orb does
+ * not enforce a rigid schema for this field-set, key-value pairs can be added dynamically as your
+ * events evolve.
  *
  * This dictionary can be helpful for a wide variety of use cases:
+ * - Numeric properties on events like `compute_time_ms` can later be inputs to our flexible query
+ *   engine to determine usage.
+ * - Logging a region or cluster with each event can help you provide customers more granular
+ *   visibility into their usage.
+ * - If you are using matrix pricing and matching a matrix price key with a property, you should
+ *   ensure the value for that property is sent as a string.
  *
- * - Numeric properties on events like `compute_time_ms` can later be inputs to our
- *   flexible query engine to determine usage.
- * - Logging a region or cluster with each event can help you provide customers
- *   more granular visibility into their usage.
- * - If you are using matrix pricing and matching a matrix price key with a
- *   property, you should ensure the value for that property is sent as a string.
- *
- * We encourage logging this metadata with an eye towards future use cases to
- * ensure full coverage for historical data. The datatype of the value in the
- * properties dictionary is important for metric creation from an event source.
- * Values that you wish to numerically aggregate should be of numeric type in the
- * event.
+ * We encourage logging this metadata with an eye towards future use cases to ensure full coverage
+ * for historical data. The datatype of the value in the properties dictionary is important for
+ * metric creation from an event source. Values that you wish to numerically aggregate should be of
+ * numeric type in the event.
  *
  * ## Determining event timestamp
  *
- * For cases where usage is being reported in real time as it is occurring,
- * timestamp should correspond to the time that usage occurred.
+ * For cases where usage is being reported in real time as it is occurring, timestamp should
+ * correspond to the time that usage occurred.
  *
- * In cases where usage is reported in aggregate for a historical timeframe at a
- * regular interval, we recommend setting the event `timestamp` to the midpoint of
- * the interval. As an example, if you have an hourly reporter that sends data once
- * an hour for the previous hour of usage, setting the `timestamp` to the half-hour
- * mark will ensure that the usage is counted within the correct period.
+ * In cases where usage is reported in aggregate for a historical timeframe at a regular interval,
+ * we recommend setting the event `timestamp` to the midpoint of the interval. As an example, if you
+ * have an hourly reporter that sends data once an hour for the previous hour of usage, setting the
+ * `timestamp` to the half-hour mark will ensure that the usage is counted within the correct
+ * period.
  *
- * Note that other time-related fields (e.g. time elapsed) can be added to the
- * properties dictionary as necessary.
+ * Note that other time-related fields (e.g. time elapsed) can be added to the properties dictionary
+ * as necessary.
  *
- * In cases where usage is reported in aggregate for a historical timeframe, the
- * timestamp must be within the grace period set for your account. Events with
- * `timestamp < current_time - grace_period` will not be accepted as a valid event,
- * and will throw validation errors. Enforcing the grace period enables Orb to
- * accurately map usage to the correct billing cycle and ensure that all usage is
- * billed for in the corresponding billing period.
+ * In cases where usage is reported in aggregate for a historical timeframe, the timestamp must be
+ * within the grace period set for your account. Events with `timestamp < current_time -
+ * grace_period` will not be accepted as a valid event, and will throw validation errors. Enforcing
+ * the grace period enables Orb to accurately map usage to the correct billing cycle and ensure that
+ * all usage is billed for in the corresponding billing period.
  *
- * In general, Orb does not expect events with future dated timestamps. In cases
- * where the timestamp is at least 24 hours ahead of the current time, the event
- * will not be accepted as a valid event, and will throw validation errors.
+ * In general, Orb does not expect events with future dated timestamps. In cases where the timestamp
+ * is at least 24 hours ahead of the current time, the event will not be accepted as a valid event,
+ * and will throw validation errors.
  *
  * ## Event validation
  *
- * Orb’s validation ensures that you recognize errors in your events as quickly as
- * possible, and the API provides informative error messages to help you fix
- * problems quickly.
+ * Orb’s validation ensures that you recognize errors in your events as quickly as possible, and the
+ * API provides informative error messages to help you fix problems quickly.
  *
  * We validate the following:
- *
  * - Exactly one of `customer_id` and `external_customer_id` should be specified.
  * - If the `customer_id` is specified, the customer in Orb must exist.
- * - If the `external_customer_id` is specified, the customer in Orb does not need
- *   to exist. Events will be attributed to any future customers with the
- *   `external_customer_id` on subscription creation.
- * - `timestamp` must conform to ISO 8601 and represent a timestamp at most 1 hour
- *   in the future. This timestamp should be sent in UTC timezone (no timezone
- *   offset).
+ * - If the `external_customer_id` is specified, the customer in Orb does not need to exist. Events
+ *   will be attributed to any future customers with the `external_customer_id` on subscription
+ *   creation.
+ * - `timestamp` must conform to ISO 8601 and represent a timestamp at most 1 hour in the future.
+ *   This timestamp should be sent in UTC timezone (no timezone offset).
  *
  * ## Idempotency and retry semantics
  *
- * Orb's idempotency guarantees allow you to implement safe retry logic in the
- * event of network or machine failures, ensuring data fidelity. Each event in the
- * request payload is associated with an idempotency key, and Orb guarantees that a
- * single idempotency key will be successfully ingested at most once. Note that
- * when Orb encounters events with duplicate idempotency keys and differing event
- * bodies in a batch of events, the entire batch will be rejected.
- *
- * - Successful responses return a 200 HTTP status code. The response contains
- *   information about previously processed events.
- * - Requests that return a `4xx` HTTP status code indicate a payload error and
- *   contain at least one event with a validation failure. An event with a
- *   validation failure can be re-sent to the ingestion endpoint (after the payload
- *   is fixed) with the original idempotency key since that key is not marked as
- *   processed.
- * - Requests that return a `5xx` HTTP status code indicate a server-side failure.
- *   These requests should be retried in their entirety.
+ * Orb's idempotency guarantees allow you to implement safe retry logic in the event of network or
+ * machine failures, ensuring data fidelity. Each event in the request payload is associated with an
+ * idempotency key, and Orb guarantees that a single idempotency key will be successfully ingested
+ * at most once. Note that when Orb encounters events with duplicate idempotency keys and differing
+ * event bodies in a batch of events, the entire batch will be rejected.
+ * - Successful responses return a 200 HTTP status code. The response contains information about
+ *   previously processed events.
+ * - Requests that return a `4xx` HTTP status code indicate a payload error and contain at least one
+ *   event with a validation failure. An event with a validation failure can be re-sent to the
+ *   ingestion endpoint (after the payload is fixed) with the original idempotency key since that
+ *   key is not marked as processed.
+ * - Requests that return a `5xx` HTTP status code indicate a server-side failure. These requests
+ *   should be retried in their entirety.
  *
  * ## API usage and limits
  *
- * The ingestion API is designed made for real-time streaming ingestion and
- * architected for high throughput. Even if events are later deemed unnecessary or
- * filtered out, we encourage you to log them to Orb if they may be relevant to
- * billing calculations in the future.
+ * The ingestion API is designed made for real-time streaming ingestion and architected for high
+ * throughput. Even if events are later deemed unnecessary or filtered out, we encourage you to log
+ * them to Orb if they may be relevant to billing calculations in the future.
  *
- * To take advantage of the real-time features of the Orb platform and avoid any
- * chance of dropped events by producers, we recommend reporting events to Orb
- * frequently. Optionally, events can also be briefly aggregated at the source, as
- * this API accepts an array of event bodies.
+ * To take advantage of the real-time features of the Orb platform and avoid any chance of dropped
+ * events by producers, we recommend reporting events to Orb frequently. Optionally, events can also
+ * be briefly aggregated at the source, as this API accepts an array of event bodies.
  *
- * Orb does not currently enforce a hard rate-limit for API usage or a maximum
- * request payload size, but please give us a heads up if you’re changing either of
- * these factors by an order of magnitude from initial setup.
+ * Orb does not currently enforce a hard rate-limit for API usage or a maximum request payload size,
+ * but please give us a heads up if you’re changing either of these factors by an order of magnitude
+ * from initial setup.
  *
  * ## Testing in debug mode
  *
- * The ingestion API supports a debug mode, which returns additional verbose output
- * to indicate which event idempotency keys were newly ingested or duplicates from
- * previous requests. To enable this mode, mark `debug=true` as a query parameter.
+ * The ingestion API supports a debug mode, which returns additional verbose output to indicate
+ * which event idempotency keys were newly ingested or duplicates from previous requests. To enable
+ * this mode, mark `debug=true` as a query parameter.
  *
- * If `debug=true` is not specified, the response will only contain
- * `validation_failed`. Orb will still honor the idempotency guarantees set
- * [here](/events-and-metrics/event-ingestion#event-volume-and-concurrency) in all
- * cases.
+ * If `debug=true` is not specified, the response will only contain `validation_failed`. Orb will
+ * still honor the idempotency guarantees set
+ * [here](/events-and-metrics/event-ingestion#event-volume-and-concurrency) in all cases.
  *
- * We strongly recommend that you only use debug mode as part of testing your
- * initial Orb integration. Once you're ready to switch to production, disable
- * debug mode to take advantage of improved performance and maximal throughput.
+ * We strongly recommend that you only use debug mode as part of testing your initial Orb
+ * integration. Once you're ready to switch to production, disable debug mode to take advantage of
+ * improved performance and maximal throughput.
  *
  * #### Example: ingestion response with `debug=true`
  *
@@ -227,18 +209,18 @@ import java.util.Objects
  * }
  * ```
  */
-class EventIngestParams private constructor(
+class EventIngestParams
+private constructor(
     private val backfillId: String?,
     private val debug: Boolean?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-
 ) : Params {
 
     /**
-     * If this ingestion request is part of a backfill, this parameter ties the
-     * ingested events to the backfill
+     * If this ingestion request is part of a backfill, this parameter ties the ingested events to
+     * the backfill
      */
     fun backfillId(): String? = backfillId
 
@@ -260,33 +242,27 @@ class EventIngestParams private constructor(
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams {
-      val queryParams = QueryParams.builder()
-      this.backfillId?.let {
-          queryParams.put(
-            "backfill_id", listOf(it.toString())
-          )
-      }
-      this.debug?.let {
-          queryParams.put(
-            "debug", listOf(it.toString())
-          )
-      }
-      queryParams.putAll(additionalQueryParams)
-      return queryParams.build()
+        val queryParams = QueryParams.builder()
+        this.backfillId?.let { queryParams.put("backfill_id", listOf(it.toString())) }
+        this.debug?.let { queryParams.put("debug", listOf(it.toString())) }
+        queryParams.putAll(additionalQueryParams)
+        return queryParams.build()
     }
 
     @NoAutoDetect
-    class Body @JsonCreator private constructor(
-        @JsonProperty("events") @ExcludeMissing private val events: JsonField<List<Event>> = JsonMissing.of(),
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+    class Body
+    @JsonCreator
+    private constructor(
+        @JsonProperty("events")
+        @ExcludeMissing
+        private val events: JsonField<List<Event>> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun events(): List<Event> = events.getRequired("events")
 
-        @JsonProperty("events")
-        @ExcludeMissing
-        fun _events(): JsonField<List<Event>> = events
+        @JsonProperty("events") @ExcludeMissing fun _events(): JsonField<List<Event>> = events
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -294,15 +270,14 @@ class EventIngestParams private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Body =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                events().forEach { it.validate() }
-                validated = true
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
             }
+
+            events().forEach { it.validate() }
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -312,7 +287,6 @@ class EventIngestParams private constructor(
              * Returns a mutable builder for constructing an instance of [Body].
              *
              * The following fields are required:
-             *
              * ```kotlin
              * .events()
              * ```
@@ -326,66 +300,56 @@ class EventIngestParams private constructor(
             private var events: JsonField<MutableList<Event>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(body: Body) =
-                apply {
-                    events = body.events.map { it.toMutableList() }
-                    additionalProperties = body.additionalProperties.toMutableMap()
-                }
+            internal fun from(body: Body) = apply {
+                events = body.events.map { it.toMutableList() }
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
 
             fun events(events: List<Event>) = events(JsonField.of(events))
 
-            fun events(events: JsonField<List<Event>>) =
-                apply {
-                    this.events = events.map { it.toMutableList() }
-                }
+            fun events(events: JsonField<List<Event>>) = apply {
+                this.events = events.map { it.toMutableList() }
+            }
 
-            fun addEvent(event: Event) =
-                apply {
-                    events = (events ?: JsonField.of(mutableListOf())).also {
+            fun addEvent(event: Event) = apply {
+                events =
+                    (events ?: JsonField.of(mutableListOf())).also {
                         checkKnown("events", it).add(event)
                     }
-                }
+            }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-            fun removeAdditionalProperty(key: String) =
-                apply {
-                    additionalProperties.remove(key)
-                }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) =
-                apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
             fun build(): Body =
                 Body(
-                  checkRequired(
-                    "events", events
-                  ).map { it.toImmutable() }, additionalProperties.toImmutable()
+                    checkRequired("events", events).map { it.toImmutable() },
+                    additionalProperties.toImmutable(),
                 )
         }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Body && events == other.events && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && events == other.events && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -405,7 +369,6 @@ class EventIngestParams private constructor(
          * Returns a mutable builder for constructing an instance of [EventIngestParams].
          *
          * The following fields are required:
-         *
          * ```kotlin
          * .events()
          * ```
@@ -423,273 +386,230 @@ class EventIngestParams private constructor(
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
-        internal fun from(eventIngestParams: EventIngestParams) =
-            apply {
-                backfillId = eventIngestParams.backfillId
-                debug = eventIngestParams.debug
-                body = eventIngestParams.body.toBuilder()
-                additionalHeaders = eventIngestParams.additionalHeaders.toBuilder()
-                additionalQueryParams = eventIngestParams.additionalQueryParams.toBuilder()
-            }
+        internal fun from(eventIngestParams: EventIngestParams) = apply {
+            backfillId = eventIngestParams.backfillId
+            debug = eventIngestParams.debug
+            body = eventIngestParams.body.toBuilder()
+            additionalHeaders = eventIngestParams.additionalHeaders.toBuilder()
+            additionalQueryParams = eventIngestParams.additionalQueryParams.toBuilder()
+        }
 
         /**
-         * If this ingestion request is part of a backfill, this parameter ties the
-         * ingested events to the backfill
+         * If this ingestion request is part of a backfill, this parameter ties the ingested events
+         * to the backfill
          */
-        fun backfillId(backfillId: String?) =
-            apply {
-                this.backfillId = backfillId
-            }
+        fun backfillId(backfillId: String?) = apply { this.backfillId = backfillId }
 
         /** Flag to enable additional debug information in the endpoint response */
-        fun debug(debug: Boolean?) =
-            apply {
-                this.debug = debug
-            }
+        fun debug(debug: Boolean?) = apply { this.debug = debug }
 
         /** Flag to enable additional debug information in the endpoint response */
         fun debug(debug: Boolean) = debug(debug as Boolean?)
 
-        fun events(events: List<Event>) =
-            apply {
-                body.events(events)
-            }
+        fun events(events: List<Event>) = apply { body.events(events) }
 
-        fun events(events: JsonField<List<Event>>) =
-            apply {
-                body.events(events)
-            }
+        fun events(events: JsonField<List<Event>>) = apply { body.events(events) }
 
-        fun addEvent(event: Event) =
-            apply {
-                body.addEvent(event)
-            }
+        fun addEvent(event: Event) = apply { body.addEvent(event) }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.additionalProperties(additionalBodyProperties)
-            }
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
 
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) =
-            apply {
-                body.putAdditionalProperty(
-                  key, value
-                )
-            }
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) =
-            apply {
-                body.removeAdditionalProperty(key)
-            }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) =
-            apply {
-                body.removeAllAdditionalProperties(keys)
-            }
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
-        fun additionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun putAdditionalHeader(name: String, value: String) =
-            apply {
-                additionalHeaders.put(name, value)
-            }
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
+        }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.put(name, values)
-            }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun replaceAdditionalHeaders(name: String, value: String) =
-            apply {
-                additionalHeaders.replace(name, value)
-            }
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.replace(name, values)
-            }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun removeAdditionalHeaders(name: String) =
-            apply {
-                additionalHeaders.remove(name)
-            }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) =
-            apply {
-                additionalHeaders.removeAll(names)
-            }
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun putAdditionalQueryParam(key: String, value: String) =
-            apply {
-                additionalQueryParams.put(key, value)
-            }
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.put(key, values)
-            }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.putAll(additionalQueryParams)
-            }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) =
-            apply {
-                additionalQueryParams.replace(key, value)
-            }
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.replace(key, values)
-            }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.replaceAll(additionalQueryParams)
-            }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) =
-            apply {
-                additionalQueryParams.remove(key)
-            }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) =
-            apply {
-                additionalQueryParams.removeAll(keys)
-            }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
 
         fun build(): EventIngestParams =
             EventIngestParams(
-              backfillId,
-              debug,
-              body.build(),
-              additionalHeaders.build(),
-              additionalQueryParams.build(),
+                backfillId,
+                debug,
+                body.build(),
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
             )
     }
 
     @NoAutoDetect
-    class Event @JsonCreator private constructor(
-        @JsonProperty("event_name") @ExcludeMissing private val eventName: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("idempotency_key") @ExcludeMissing private val idempotencyKey: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("properties") @ExcludeMissing private val properties: JsonValue = JsonMissing.of(),
-        @JsonProperty("timestamp") @ExcludeMissing private val timestamp: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("customer_id") @ExcludeMissing private val customerId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("external_customer_id") @ExcludeMissing private val externalCustomerId: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+    class Event
+    @JsonCreator
+    private constructor(
+        @JsonProperty("event_name")
+        @ExcludeMissing
+        private val eventName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("idempotency_key")
+        @ExcludeMissing
+        private val idempotencyKey: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("properties")
+        @ExcludeMissing
+        private val properties: JsonValue = JsonMissing.of(),
+        @JsonProperty("timestamp")
+        @ExcludeMissing
+        private val timestamp: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("customer_id")
+        @ExcludeMissing
+        private val customerId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_customer_id")
+        @ExcludeMissing
+        private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** A name to meaningfully identify the action or event type. */
         fun eventName(): String = eventName.getRequired("event_name")
 
         /**
-         * A unique value, generated by the client, that is used to de-duplicate events.
-         * Exactly one event with a given idempotency key will be ingested, which allows
-         * for safe request retries.
+         * A unique value, generated by the client, that is used to de-duplicate events. Exactly one
+         * event with a given idempotency key will be ingested, which allows for safe request
+         * retries.
          */
         fun idempotencyKey(): String = idempotencyKey.getRequired("idempotency_key")
 
         /**
-         * A dictionary of custom properties. Values in this dictionary must be numeric,
-         * boolean, or strings. Nested dictionaries are disallowed.
+         * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
+         * strings. Nested dictionaries are disallowed.
          */
-        @JsonProperty("properties")
-        @ExcludeMissing
-        fun _properties(): JsonValue = properties
+        @JsonProperty("properties") @ExcludeMissing fun _properties(): JsonValue = properties
 
         /**
-         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should
-         * represent the time that usage was recorded, and is particularly important to
-         * attribute usage to a given billing period.
+         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
+         * time that usage was recorded, and is particularly important to attribute usage to a given
+         * billing period.
          */
         fun timestamp(): OffsetDateTime = timestamp.getRequired("timestamp")
 
         /** The Orb Customer identifier */
         fun customerId(): String? = customerId.getNullable("customer_id")
 
-        /**
-         * An alias for the Orb customer, whose mapping is specified when creating the
-         * customer
-         */
+        /** An alias for the Orb customer, whose mapping is specified when creating the customer */
         fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
         /** A name to meaningfully identify the action or event type. */
-        @JsonProperty("event_name")
-        @ExcludeMissing
-        fun _eventName(): JsonField<String> = eventName
+        @JsonProperty("event_name") @ExcludeMissing fun _eventName(): JsonField<String> = eventName
 
         /**
-         * A unique value, generated by the client, that is used to de-duplicate events.
-         * Exactly one event with a given idempotency key will be ingested, which allows
-         * for safe request retries.
+         * A unique value, generated by the client, that is used to de-duplicate events. Exactly one
+         * event with a given idempotency key will be ingested, which allows for safe request
+         * retries.
          */
         @JsonProperty("idempotency_key")
         @ExcludeMissing
         fun _idempotencyKey(): JsonField<String> = idempotencyKey
 
         /**
-         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should
-         * represent the time that usage was recorded, and is particularly important to
-         * attribute usage to a given billing period.
+         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
+         * time that usage was recorded, and is particularly important to attribute usage to a given
+         * billing period.
          */
         @JsonProperty("timestamp")
         @ExcludeMissing
@@ -700,10 +620,7 @@ class EventIngestParams private constructor(
         @ExcludeMissing
         fun _customerId(): JsonField<String> = customerId
 
-        /**
-         * An alias for the Orb customer, whose mapping is specified when creating the
-         * customer
-         */
+        /** An alias for the Orb customer, whose mapping is specified when creating the customer */
         @JsonProperty("external_customer_id")
         @ExcludeMissing
         fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -714,19 +631,18 @@ class EventIngestParams private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Event =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                eventName()
-                idempotencyKey()
-                timestamp()
-                customerId()
-                externalCustomerId()
-                validated = true
+        fun validate(): Event = apply {
+            if (validated) {
+                return@apply
             }
+
+            eventName()
+            idempotencyKey()
+            timestamp()
+            customerId()
+            externalCustomerId()
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -736,7 +652,6 @@ class EventIngestParams private constructor(
              * Returns a mutable builder for constructing an instance of [Event].
              *
              * The following fields are required:
-             *
              * ```kotlin
              * .eventName()
              * .idempotencyKey()
@@ -758,145 +673,117 @@ class EventIngestParams private constructor(
             private var externalCustomerId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(event: Event) =
-                apply {
-                    eventName = event.eventName
-                    idempotencyKey = event.idempotencyKey
-                    properties = event.properties
-                    timestamp = event.timestamp
-                    customerId = event.customerId
-                    externalCustomerId = event.externalCustomerId
-                    additionalProperties = event.additionalProperties.toMutableMap()
-                }
+            internal fun from(event: Event) = apply {
+                eventName = event.eventName
+                idempotencyKey = event.idempotencyKey
+                properties = event.properties
+                timestamp = event.timestamp
+                customerId = event.customerId
+                externalCustomerId = event.externalCustomerId
+                additionalProperties = event.additionalProperties.toMutableMap()
+            }
 
             /** A name to meaningfully identify the action or event type. */
             fun eventName(eventName: String) = eventName(JsonField.of(eventName))
 
             /** A name to meaningfully identify the action or event type. */
-            fun eventName(eventName: JsonField<String>) =
-                apply {
-                    this.eventName = eventName
-                }
+            fun eventName(eventName: JsonField<String>) = apply { this.eventName = eventName }
 
             /**
-             * A unique value, generated by the client, that is used to de-duplicate events.
-             * Exactly one event with a given idempotency key will be ingested, which allows
-             * for safe request retries.
+             * A unique value, generated by the client, that is used to de-duplicate events. Exactly
+             * one event with a given idempotency key will be ingested, which allows for safe
+             * request retries.
              */
-            fun idempotencyKey(idempotencyKey: String) = idempotencyKey(JsonField.of(idempotencyKey))
+            fun idempotencyKey(idempotencyKey: String) =
+                idempotencyKey(JsonField.of(idempotencyKey))
 
             /**
-             * A unique value, generated by the client, that is used to de-duplicate events.
-             * Exactly one event with a given idempotency key will be ingested, which allows
-             * for safe request retries.
+             * A unique value, generated by the client, that is used to de-duplicate events. Exactly
+             * one event with a given idempotency key will be ingested, which allows for safe
+             * request retries.
              */
-            fun idempotencyKey(idempotencyKey: JsonField<String>) =
-                apply {
-                    this.idempotencyKey = idempotencyKey
-                }
+            fun idempotencyKey(idempotencyKey: JsonField<String>) = apply {
+                this.idempotencyKey = idempotencyKey
+            }
 
             /**
              * A dictionary of custom properties. Values in this dictionary must be numeric,
              * boolean, or strings. Nested dictionaries are disallowed.
              */
-            fun properties(properties: JsonValue) =
-                apply {
-                    this.properties = properties
-                }
+            fun properties(properties: JsonValue) = apply { this.properties = properties }
 
             /**
-             * An ISO 8601 format date with no timezone offset (i.e. UTC). This should
-             * represent the time that usage was recorded, and is particularly important to
-             * attribute usage to a given billing period.
+             * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
+             * time that usage was recorded, and is particularly important to attribute usage to a
+             * given billing period.
              */
             fun timestamp(timestamp: OffsetDateTime) = timestamp(JsonField.of(timestamp))
 
             /**
-             * An ISO 8601 format date with no timezone offset (i.e. UTC). This should
-             * represent the time that usage was recorded, and is particularly important to
-             * attribute usage to a given billing period.
+             * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
+             * time that usage was recorded, and is particularly important to attribute usage to a
+             * given billing period.
              */
-            fun timestamp(timestamp: JsonField<OffsetDateTime>) =
-                apply {
-                    this.timestamp = timestamp
-                }
+            fun timestamp(timestamp: JsonField<OffsetDateTime>) = apply {
+                this.timestamp = timestamp
+            }
 
             /** The Orb Customer identifier */
             fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
 
             /** The Orb Customer identifier */
-            fun customerId(customerId: JsonField<String>) =
-                apply {
-                    this.customerId = customerId
-                }
+            fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
 
             /**
-             * An alias for the Orb customer, whose mapping is specified when creating the
-             * customer
+             * An alias for the Orb customer, whose mapping is specified when creating the customer
              */
-            fun externalCustomerId(externalCustomerId: String?) = externalCustomerId(JsonField.ofNullable(externalCustomerId))
+            fun externalCustomerId(externalCustomerId: String?) =
+                externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
             /**
-             * An alias for the Orb customer, whose mapping is specified when creating the
-             * customer
+             * An alias for the Orb customer, whose mapping is specified when creating the customer
              */
-            fun externalCustomerId(externalCustomerId: JsonField<String>) =
-                apply {
-                    this.externalCustomerId = externalCustomerId
-                }
+            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
+                this.externalCustomerId = externalCustomerId
+            }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-            fun removeAdditionalProperty(key: String) =
-                apply {
-                    additionalProperties.remove(key)
-                }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) =
-                apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
             fun build(): Event =
                 Event(
-                  checkRequired(
-                    "eventName", eventName
-                  ),
-                  checkRequired(
-                    "idempotencyKey", idempotencyKey
-                  ),
-                  checkRequired(
-                    "properties", properties
-                  ),
-                  checkRequired(
-                    "timestamp", timestamp
-                  ),
-                  customerId,
-                  externalCustomerId,
-                  additionalProperties.toImmutable(),
+                    checkRequired("eventName", eventName),
+                    checkRequired("idempotencyKey", idempotencyKey),
+                    checkRequired("properties", properties),
+                    checkRequired("timestamp", timestamp),
+                    customerId,
+                    externalCustomerId,
+                    additionalProperties.toImmutable(),
                 )
         }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Event && eventName == other.eventName && idempotencyKey == other.idempotencyKey && properties == other.properties && timestamp == other.timestamp && customerId == other.customerId && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Event && eventName == other.eventName && idempotencyKey == other.idempotencyKey && properties == other.properties && timestamp == other.timestamp && customerId == other.customerId && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -905,18 +792,20 @@ class EventIngestParams private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() = "Event{eventName=$eventName, idempotencyKey=$idempotencyKey, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "Event{eventName=$eventName, idempotencyKey=$idempotencyKey, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is EventIngestParams && backfillId == other.backfillId && debug == other.debug && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is EventIngestParams && backfillId == other.backfillId && debug == other.debug && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(backfillId, debug, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
-    override fun toString() = "EventIngestParams{backfillId=$backfillId, debug=$debug, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() =
+        "EventIngestParams{backfillId=$backfillId, debug=$debug, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

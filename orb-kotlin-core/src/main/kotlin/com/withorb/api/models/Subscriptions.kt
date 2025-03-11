@@ -18,20 +18,24 @@ import com.withorb.api.core.toImmutable
 import java.util.Objects
 
 @NoAutoDetect
-class Subscriptions @JsonCreator private constructor(
-    @JsonProperty("data") @ExcludeMissing private val data: JsonField<List<Subscription>> = JsonMissing.of(),
-    @JsonProperty("pagination_metadata") @ExcludeMissing private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
+class Subscriptions
+@JsonCreator
+private constructor(
+    @JsonProperty("data")
+    @ExcludeMissing
+    private val data: JsonField<List<Subscription>> = JsonMissing.of(),
+    @JsonProperty("pagination_metadata")
+    @ExcludeMissing
+    private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
 ) {
 
     fun data(): List<Subscription> = data.getRequired("data")
 
-    fun paginationMetadata(): PaginationMetadata = paginationMetadata.getRequired("pagination_metadata")
+    fun paginationMetadata(): PaginationMetadata =
+        paginationMetadata.getRequired("pagination_metadata")
 
-    @JsonProperty("data")
-    @ExcludeMissing
-    fun _data(): JsonField<List<Subscription>> = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Subscription>> = data
 
     @JsonProperty("pagination_metadata")
     @ExcludeMissing
@@ -43,16 +47,15 @@ class Subscriptions @JsonCreator private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): Subscriptions =
-        apply {
-            if (validated) {
-              return@apply
-            }
-
-            data().forEach { it.validate() }
-            paginationMetadata().validate()
-            validated = true
+    fun validate(): Subscriptions = apply {
+        if (validated) {
+            return@apply
         }
+
+        data().forEach { it.validate() }
+        paginationMetadata().validate()
+        validated = true
+    }
 
     fun toBuilder() = Builder().from(this)
 
@@ -62,7 +65,6 @@ class Subscriptions @JsonCreator private constructor(
          * Returns a mutable builder for constructing an instance of [Subscriptions].
          *
          * The following fields are required:
-         *
          * ```kotlin
          * .data()
          * .paginationMetadata()
@@ -78,78 +80,65 @@ class Subscriptions @JsonCreator private constructor(
         private var paginationMetadata: JsonField<PaginationMetadata>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(subscriptions: Subscriptions) =
-            apply {
-                data = subscriptions.data.map { it.toMutableList() }
-                paginationMetadata = subscriptions.paginationMetadata
-                additionalProperties = subscriptions.additionalProperties.toMutableMap()
-            }
+        internal fun from(subscriptions: Subscriptions) = apply {
+            data = subscriptions.data.map { it.toMutableList() }
+            paginationMetadata = subscriptions.paginationMetadata
+            additionalProperties = subscriptions.additionalProperties.toMutableMap()
+        }
 
         fun data(data: List<Subscription>) = data(JsonField.of(data))
 
-        fun data(data: JsonField<List<Subscription>>) =
-            apply {
-                this.data = data.map { it.toMutableList() }
-            }
+        fun data(data: JsonField<List<Subscription>>) = apply {
+            this.data = data.map { it.toMutableList() }
+        }
 
-        fun addData(data: Subscription) =
-            apply {
-                this.data = (this.data ?: JsonField.of(mutableListOf())).also {
+        fun addData(data: Subscription) = apply {
+            this.data =
+                (this.data ?: JsonField.of(mutableListOf())).also {
                     checkKnown("data", it).add(data)
                 }
-            }
+        }
 
-        fun paginationMetadata(paginationMetadata: PaginationMetadata) = paginationMetadata(JsonField.of(paginationMetadata))
+        fun paginationMetadata(paginationMetadata: PaginationMetadata) =
+            paginationMetadata(JsonField.of(paginationMetadata))
 
-        fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) =
-            apply {
-                this.paginationMetadata = paginationMetadata
-            }
+        fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply {
+            this.paginationMetadata = paginationMetadata
+        }
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.clear()
+            putAllAdditionalProperties(additionalProperties)
+        }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) =
-            apply {
-                additionalProperties.put(key, value)
-            }
+        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+            additionalProperties.put(key, value)
+        }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.putAll(additionalProperties)
+        }
 
-        fun removeAdditionalProperty(key: String) =
-            apply {
-                additionalProperties.remove(key)
-            }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) =
-            apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
+        }
 
         fun build(): Subscriptions =
             Subscriptions(
-              checkRequired(
-                "data", data
-              ).map { it.toImmutable() },
-              checkRequired(
-                "paginationMetadata", paginationMetadata
-              ),
-              additionalProperties.toImmutable(),
+                checkRequired("data", data).map { it.toImmutable() },
+                checkRequired("paginationMetadata", paginationMetadata),
+                additionalProperties.toImmutable(),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is Subscriptions && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Subscriptions && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
@@ -158,5 +147,6 @@ class Subscriptions @JsonCreator private constructor(
 
     override fun hashCode(): Int = hashCode
 
-    override fun toString() = "Subscriptions{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
+    override fun toString() =
+        "Subscriptions{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
 }

@@ -24,144 +24,186 @@ import com.withorb.api.models.CustomerCreditLedgerListByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerListPage
 import com.withorb.api.models.CustomerCreditLedgerListParams
 
-class LedgerServiceImpl internal constructor(
-    private val clientOptions: ClientOptions,
+class LedgerServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    LedgerService {
 
-) : LedgerService {
-
-    private val withRawResponse: LedgerService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
+    private val withRawResponse: LedgerService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     override fun withRawResponse(): LedgerService.WithRawResponse = withRawResponse
 
-    override fun list(params: CustomerCreditLedgerListParams, requestOptions: RequestOptions): CustomerCreditLedgerListPage =
+    override fun list(
+        params: CustomerCreditLedgerListParams,
+        requestOptions: RequestOptions,
+    ): CustomerCreditLedgerListPage =
         // get /customers/{customer_id}/credits/ledger
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun createEntry(params: CustomerCreditLedgerCreateEntryParams, requestOptions: RequestOptions): CustomerCreditLedgerCreateEntryResponse =
+    override fun createEntry(
+        params: CustomerCreditLedgerCreateEntryParams,
+        requestOptions: RequestOptions,
+    ): CustomerCreditLedgerCreateEntryResponse =
         // post /customers/{customer_id}/credits/ledger_entry
         withRawResponse().createEntry(params, requestOptions).parse()
 
-    override fun createEntryByExternalId(params: CustomerCreditLedgerCreateEntryByExternalIdParams, requestOptions: RequestOptions): CustomerCreditLedgerCreateEntryByExternalIdResponse =
+    override fun createEntryByExternalId(
+        params: CustomerCreditLedgerCreateEntryByExternalIdParams,
+        requestOptions: RequestOptions,
+    ): CustomerCreditLedgerCreateEntryByExternalIdResponse =
         // post /customers/external_customer_id/{external_customer_id}/credits/ledger_entry
         withRawResponse().createEntryByExternalId(params, requestOptions).parse()
 
-    override fun listByExternalId(params: CustomerCreditLedgerListByExternalIdParams, requestOptions: RequestOptions): CustomerCreditLedgerListByExternalIdPage =
+    override fun listByExternalId(
+        params: CustomerCreditLedgerListByExternalIdParams,
+        requestOptions: RequestOptions,
+    ): CustomerCreditLedgerListByExternalIdPage =
         // get /customers/external_customer_id/{external_customer_id}/credits/ledger
         withRawResponse().listByExternalId(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(
-        private val clientOptions: ClientOptions,
-
-    ) : LedgerService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        LedgerService.WithRawResponse {
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val listHandler: Handler<CustomerCreditLedgerListPage.Response> = jsonHandler<CustomerCreditLedgerListPage.Response>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val listHandler: Handler<CustomerCreditLedgerListPage.Response> =
+            jsonHandler<CustomerCreditLedgerListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
-        override fun list(params: CustomerCreditLedgerListParams, requestOptions: RequestOptions): HttpResponseFor<CustomerCreditLedgerListPage> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.GET)
-            .addPathSegments("customers", params.getPathParam(0), "credits", "ledger")
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  listHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-              .let {
-                  CustomerCreditLedgerListPage.of(LedgerServiceImpl(clientOptions), params, it)
-              }
-          }
+        override fun list(
+            params: CustomerCreditLedgerListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditLedgerListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("customers", params.getPathParam(0), "credits", "ledger")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        CustomerCreditLedgerListPage.of(
+                            LedgerServiceImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
+            }
         }
 
-        private val createEntryHandler: Handler<CustomerCreditLedgerCreateEntryResponse> = jsonHandler<CustomerCreditLedgerCreateEntryResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createEntryHandler: Handler<CustomerCreditLedgerCreateEntryResponse> =
+            jsonHandler<CustomerCreditLedgerCreateEntryResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
-        override fun createEntry(params: CustomerCreditLedgerCreateEntryParams, requestOptions: RequestOptions): HttpResponseFor<CustomerCreditLedgerCreateEntryResponse> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("customers", params.getPathParam(0), "credits", "ledger_entry")
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  createEntryHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun createEntry(
+            params: CustomerCreditLedgerCreateEntryParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditLedgerCreateEntryResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("customers", params.getPathParam(0), "credits", "ledger_entry")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createEntryHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val createEntryByExternalIdHandler: Handler<CustomerCreditLedgerCreateEntryByExternalIdResponse> = jsonHandler<CustomerCreditLedgerCreateEntryByExternalIdResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createEntryByExternalIdHandler:
+            Handler<CustomerCreditLedgerCreateEntryByExternalIdResponse> =
+            jsonHandler<CustomerCreditLedgerCreateEntryByExternalIdResponse>(
+                    clientOptions.jsonMapper
+                )
+                .withErrorHandler(errorHandler)
 
-        override fun createEntryByExternalId(params: CustomerCreditLedgerCreateEntryByExternalIdParams, requestOptions: RequestOptions): HttpResponseFor<CustomerCreditLedgerCreateEntryByExternalIdResponse> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.POST)
-            .addPathSegments("customers", "external_customer_id", params.getPathParam(0), "credits", "ledger_entry")
-            .body(json(clientOptions.jsonMapper, params._body()))
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  createEntryByExternalIdHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-          }
+        override fun createEntryByExternalId(
+            params: CustomerCreditLedgerCreateEntryByExternalIdParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditLedgerCreateEntryByExternalIdResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments(
+                        "customers",
+                        "external_customer_id",
+                        params.getPathParam(0),
+                        "credits",
+                        "ledger_entry",
+                    )
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createEntryByExternalIdHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
         }
 
-        private val listByExternalIdHandler: Handler<CustomerCreditLedgerListByExternalIdPage.Response> = jsonHandler<CustomerCreditLedgerListByExternalIdPage.Response>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val listByExternalIdHandler:
+            Handler<CustomerCreditLedgerListByExternalIdPage.Response> =
+            jsonHandler<CustomerCreditLedgerListByExternalIdPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
-        override fun listByExternalId(params: CustomerCreditLedgerListByExternalIdParams, requestOptions: RequestOptions): HttpResponseFor<CustomerCreditLedgerListByExternalIdPage> {
-          val request = HttpRequest.builder()
-            .method(HttpMethod.GET)
-            .addPathSegments("customers", "external_customer_id", params.getPathParam(0), "credits", "ledger")
-            .build()
-            .prepare(clientOptions, params)
-          val requestOptions = requestOptions
-              .applyDefaults(RequestOptions.from(clientOptions))
-          val response = clientOptions.httpClient.execute(
-            request, requestOptions
-          )
-          return response.parseable {
-              response.use {
-                  listByExternalIdHandler.handle(it)
-              }
-              .also {
-                  if (requestOptions.responseValidation!!) {
-                    it.validate()
-                  }
-              }
-              .let {
-                  CustomerCreditLedgerListByExternalIdPage.of(LedgerServiceImpl(clientOptions), params, it)
-              }
-          }
+        override fun listByExternalId(
+            params: CustomerCreditLedgerListByExternalIdParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditLedgerListByExternalIdPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "customers",
+                        "external_customer_id",
+                        params.getPathParam(0),
+                        "credits",
+                        "ledger",
+                    )
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listByExternalIdHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        CustomerCreditLedgerListByExternalIdPage.of(
+                            LedgerServiceImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
+            }
         }
     }
 }
