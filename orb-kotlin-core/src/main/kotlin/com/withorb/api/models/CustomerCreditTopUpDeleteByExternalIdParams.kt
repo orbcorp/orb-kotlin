@@ -12,16 +12,16 @@ import com.withorb.api.core.toImmutable
 import java.util.Objects
 
 /**
- * This deactivates the top-up and voids any invoices associated with pending
- * credit blocks purchased through the top-up.
+ * This deactivates the top-up and voids any invoices associated with pending credit blocks
+ * purchased through the top-up.
  */
-class CustomerCreditTopUpDeleteByExternalIdParams private constructor(
+class CustomerCreditTopUpDeleteByExternalIdParams
+private constructor(
     private val externalCustomerId: String,
     private val topUpId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
-
 ) : Params {
 
     fun externalCustomerId(): String = externalCustomerId
@@ -41,11 +41,11 @@ class CustomerCreditTopUpDeleteByExternalIdParams private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     fun getPathParam(index: Int): String {
-      return when (index) {
-          0 -> externalCustomerId
-          1 -> topUpId
-          else -> ""
-      }
+        return when (index) {
+            0 -> externalCustomerId
+            1 -> topUpId
+            else -> ""
+        }
     }
 
     fun toBuilder() = Builder().from(this)
@@ -57,7 +57,6 @@ class CustomerCreditTopUpDeleteByExternalIdParams private constructor(
          * [CustomerCreditTopUpDeleteByExternalIdParams].
          *
          * The following fields are required:
-         *
          * ```kotlin
          * .externalCustomerId()
          * .topUpId()
@@ -76,198 +75,165 @@ class CustomerCreditTopUpDeleteByExternalIdParams private constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(customerCreditTopUpDeleteByExternalIdParams: CustomerCreditTopUpDeleteByExternalIdParams) =
-            apply {
-                externalCustomerId = customerCreditTopUpDeleteByExternalIdParams.externalCustomerId
-                topUpId = customerCreditTopUpDeleteByExternalIdParams.topUpId
-                additionalHeaders = customerCreditTopUpDeleteByExternalIdParams.additionalHeaders.toBuilder()
-                additionalQueryParams = customerCreditTopUpDeleteByExternalIdParams.additionalQueryParams.toBuilder()
-                additionalBodyProperties = customerCreditTopUpDeleteByExternalIdParams.additionalBodyProperties.toMutableMap()
-            }
+        internal fun from(
+            customerCreditTopUpDeleteByExternalIdParams: CustomerCreditTopUpDeleteByExternalIdParams
+        ) = apply {
+            externalCustomerId = customerCreditTopUpDeleteByExternalIdParams.externalCustomerId
+            topUpId = customerCreditTopUpDeleteByExternalIdParams.topUpId
+            additionalHeaders =
+                customerCreditTopUpDeleteByExternalIdParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                customerCreditTopUpDeleteByExternalIdParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                customerCreditTopUpDeleteByExternalIdParams.additionalBodyProperties.toMutableMap()
+        }
 
-        fun externalCustomerId(externalCustomerId: String) =
-            apply {
-                this.externalCustomerId = externalCustomerId
-            }
+        fun externalCustomerId(externalCustomerId: String) = apply {
+            this.externalCustomerId = externalCustomerId
+        }
 
-        fun topUpId(topUpId: String) =
-            apply {
-                this.topUpId = topUpId
-            }
+        fun topUpId(topUpId: String) = apply { this.topUpId = topUpId }
 
-        fun additionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun putAdditionalHeader(name: String, value: String) =
-            apply {
-                additionalHeaders.put(name, value)
-            }
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
+        }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.put(name, values)
-            }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun replaceAdditionalHeaders(name: String, value: String) =
-            apply {
-                additionalHeaders.replace(name, value)
-            }
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.replace(name, values)
-            }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun removeAdditionalHeaders(name: String) =
-            apply {
-                additionalHeaders.remove(name)
-            }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) =
-            apply {
-                additionalHeaders.removeAll(names)
-            }
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun putAdditionalQueryParam(key: String, value: String) =
-            apply {
-                additionalQueryParams.put(key, value)
-            }
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.put(key, values)
-            }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.putAll(additionalQueryParams)
-            }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) =
-            apply {
-                additionalQueryParams.replace(key, value)
-            }
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.replace(key, values)
-            }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.replaceAll(additionalQueryParams)
-            }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) =
-            apply {
-                additionalQueryParams.remove(key)
-            }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) =
-            apply {
-                additionalQueryParams.removeAll(keys)
-            }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.clear()
-                putAllAdditionalBodyProperties(additionalBodyProperties)
-            }
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.clear()
+            putAllAdditionalBodyProperties(additionalBodyProperties)
+        }
 
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) =
-            apply {
-                additionalBodyProperties.put(key, value)
-            }
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            additionalBodyProperties.put(key, value)
+        }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
                 this.additionalBodyProperties.putAll(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) =
-            apply {
-                additionalBodyProperties.remove(key)
-            }
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            additionalBodyProperties.remove(key)
+        }
 
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) =
-            apply {
-                keys.forEach(::removeAdditionalBodyProperty)
-            }
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalBodyProperty)
+        }
 
         fun build(): CustomerCreditTopUpDeleteByExternalIdParams =
             CustomerCreditTopUpDeleteByExternalIdParams(
-              checkRequired(
-                "externalCustomerId", externalCustomerId
-              ),
-              checkRequired(
-                "topUpId", topUpId
-              ),
-              additionalHeaders.build(),
-              additionalQueryParams.build(),
-              additionalBodyProperties.toImmutable(),
+                checkRequired("externalCustomerId", externalCustomerId),
+                checkRequired("topUpId", topUpId),
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is CustomerCreditTopUpDeleteByExternalIdParams && externalCustomerId == other.externalCustomerId && topUpId == other.topUpId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is CustomerCreditTopUpDeleteByExternalIdParams && externalCustomerId == other.externalCustomerId && topUpId == other.topUpId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, topUpId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
-    override fun toString() = "CustomerCreditTopUpDeleteByExternalIdParams{externalCustomerId=$externalCustomerId, topUpId=$topUpId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() =
+        "CustomerCreditTopUpDeleteByExternalIdParams{externalCustomerId=$externalCustomerId, topUpId=$topUpId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

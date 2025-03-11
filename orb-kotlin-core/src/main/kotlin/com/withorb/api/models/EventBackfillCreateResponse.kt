@@ -20,39 +20,60 @@ import java.time.OffsetDateTime
 import java.util.Objects
 
 /**
- * A backfill represents an update to historical usage data, adding or replacing
- * events in a timeframe.
+ * A backfill represents an update to historical usage data, adding or replacing events in a
+ * timeframe.
  */
 @NoAutoDetect
-class EventBackfillCreateResponse @JsonCreator private constructor(
+class EventBackfillCreateResponse
+@JsonCreator
+private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("close_time") @ExcludeMissing private val closeTime: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("created_at") @ExcludeMissing private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("customer_id") @ExcludeMissing private val customerId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("events_ingested") @ExcludeMissing private val eventsIngested: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("replace_existing_events") @ExcludeMissing private val replaceExistingEvents: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("reverted_at") @ExcludeMissing private val revertedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("status") @ExcludeMissing private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonProperty("timeframe_end") @ExcludeMissing private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("timeframe_start") @ExcludeMissing private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("deprecation_filter") @ExcludeMissing private val deprecationFilter: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("close_time")
+    @ExcludeMissing
+    private val closeTime: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("customer_id")
+    @ExcludeMissing
+    private val customerId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("events_ingested")
+    @ExcludeMissing
+    private val eventsIngested: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("replace_existing_events")
+    @ExcludeMissing
+    private val replaceExistingEvents: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("reverted_at")
+    @ExcludeMissing
+    private val revertedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("status")
+    @ExcludeMissing
+    private val status: JsonField<Status> = JsonMissing.of(),
+    @JsonProperty("timeframe_end")
+    @ExcludeMissing
+    private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("timeframe_start")
+    @ExcludeMissing
+    private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("deprecation_filter")
+    @ExcludeMissing
+    private val deprecationFilter: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
 ) {
 
     fun id(): String = id.getRequired("id")
 
     /**
-     * If in the future, the time at which the backfill will automatically close. If in
-     * the past, the time at which the backfill was closed.
+     * If in the future, the time at which the backfill will automatically close. If in the past,
+     * the time at which the backfill was closed.
      */
     fun closeTime(): OffsetDateTime? = closeTime.getNullable("close_time")
 
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
     /**
-     * The Orb-generated ID of the customer to which this backfill is scoped. If
-     * `null`, this backfill is scoped to all customers.
+     * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
+     * backfill is scoped to all customers.
      */
     fun customerId(): String? = customerId.getNullable("customer_id")
 
@@ -60,11 +81,12 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
     fun eventsIngested(): Long = eventsIngested.getRequired("events_ingested")
 
     /**
-     * If `true`, existing events in the backfill's timeframe will be replaced with the
-     * newly ingested events associated with the backfill. If `false`, newly ingested
-     * events will be added to the existing events.
+     * If `true`, existing events in the backfill's timeframe will be replaced with the newly
+     * ingested events associated with the backfill. If `false`, newly ingested events will be added
+     * to the existing events.
      */
-    fun replaceExistingEvents(): Boolean = replaceExistingEvents.getRequired("replace_existing_events")
+    fun replaceExistingEvents(): Boolean =
+        replaceExistingEvents.getRequired("replace_existing_events")
 
     /** The time at which this backfill was reverted. */
     fun revertedAt(): OffsetDateTime? = revertedAt.getNullable("reverted_at")
@@ -77,19 +99,16 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
     fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
     /**
-     * A boolean
-     * [computed property](/extensibility/advanced-metrics#computed-properties) used to
+     * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used to
      * filter the set of events to deprecate
      */
     fun deprecationFilter(): String? = deprecationFilter.getNullable("deprecation_filter")
 
-    @JsonProperty("id")
-    @ExcludeMissing
-    fun _id(): JsonField<String> = id
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * If in the future, the time at which the backfill will automatically close. If in
-     * the past, the time at which the backfill was closed.
+     * If in the future, the time at which the backfill will automatically close. If in the past,
+     * the time at which the backfill was closed.
      */
     @JsonProperty("close_time")
     @ExcludeMissing
@@ -100,12 +119,10 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
     /**
-     * The Orb-generated ID of the customer to which this backfill is scoped. If
-     * `null`, this backfill is scoped to all customers.
+     * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
+     * backfill is scoped to all customers.
      */
-    @JsonProperty("customer_id")
-    @ExcludeMissing
-    fun _customerId(): JsonField<String> = customerId
+    @JsonProperty("customer_id") @ExcludeMissing fun _customerId(): JsonField<String> = customerId
 
     /** The number of events ingested in this backfill. */
     @JsonProperty("events_ingested")
@@ -113,9 +130,9 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
     fun _eventsIngested(): JsonField<Long> = eventsIngested
 
     /**
-     * If `true`, existing events in the backfill's timeframe will be replaced with the
-     * newly ingested events associated with the backfill. If `false`, newly ingested
-     * events will be added to the existing events.
+     * If `true`, existing events in the backfill's timeframe will be replaced with the newly
+     * ingested events associated with the backfill. If `false`, newly ingested events will be added
+     * to the existing events.
      */
     @JsonProperty("replace_existing_events")
     @ExcludeMissing
@@ -127,9 +144,7 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
     fun _revertedAt(): JsonField<OffsetDateTime> = revertedAt
 
     /** The status of the backfill. */
-    @JsonProperty("status")
-    @ExcludeMissing
-    fun _status(): JsonField<Status> = status
+    @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
     @JsonProperty("timeframe_end")
     @ExcludeMissing
@@ -140,8 +155,7 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
     fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
 
     /**
-     * A boolean
-     * [computed property](/extensibility/advanced-metrics#computed-properties) used to
+     * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used to
      * filter the set of events to deprecate
      */
     @JsonProperty("deprecation_filter")
@@ -154,36 +168,33 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): EventBackfillCreateResponse =
-        apply {
-            if (validated) {
-              return@apply
-            }
-
-            id()
-            closeTime()
-            createdAt()
-            customerId()
-            eventsIngested()
-            replaceExistingEvents()
-            revertedAt()
-            status()
-            timeframeEnd()
-            timeframeStart()
-            deprecationFilter()
-            validated = true
+    fun validate(): EventBackfillCreateResponse = apply {
+        if (validated) {
+            return@apply
         }
+
+        id()
+        closeTime()
+        createdAt()
+        customerId()
+        eventsIngested()
+        replaceExistingEvents()
+        revertedAt()
+        status()
+        timeframeEnd()
+        timeframeStart()
+        deprecationFilter()
+        validated = true
+    }
 
     fun toBuilder() = Builder().from(this)
 
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of
-         * [EventBackfillCreateResponse].
+         * Returns a mutable builder for constructing an instance of [EventBackfillCreateResponse].
          *
          * The following fields are required:
-         *
          * ```kotlin
          * .id()
          * .closeTime()
@@ -216,220 +227,168 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
         private var deprecationFilter: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(eventBackfillCreateResponse: EventBackfillCreateResponse) =
-            apply {
-                id = eventBackfillCreateResponse.id
-                closeTime = eventBackfillCreateResponse.closeTime
-                createdAt = eventBackfillCreateResponse.createdAt
-                customerId = eventBackfillCreateResponse.customerId
-                eventsIngested = eventBackfillCreateResponse.eventsIngested
-                replaceExistingEvents = eventBackfillCreateResponse.replaceExistingEvents
-                revertedAt = eventBackfillCreateResponse.revertedAt
-                status = eventBackfillCreateResponse.status
-                timeframeEnd = eventBackfillCreateResponse.timeframeEnd
-                timeframeStart = eventBackfillCreateResponse.timeframeStart
-                deprecationFilter = eventBackfillCreateResponse.deprecationFilter
-                additionalProperties = eventBackfillCreateResponse.additionalProperties.toMutableMap()
-            }
+        internal fun from(eventBackfillCreateResponse: EventBackfillCreateResponse) = apply {
+            id = eventBackfillCreateResponse.id
+            closeTime = eventBackfillCreateResponse.closeTime
+            createdAt = eventBackfillCreateResponse.createdAt
+            customerId = eventBackfillCreateResponse.customerId
+            eventsIngested = eventBackfillCreateResponse.eventsIngested
+            replaceExistingEvents = eventBackfillCreateResponse.replaceExistingEvents
+            revertedAt = eventBackfillCreateResponse.revertedAt
+            status = eventBackfillCreateResponse.status
+            timeframeEnd = eventBackfillCreateResponse.timeframeEnd
+            timeframeStart = eventBackfillCreateResponse.timeframeStart
+            deprecationFilter = eventBackfillCreateResponse.deprecationFilter
+            additionalProperties = eventBackfillCreateResponse.additionalProperties.toMutableMap()
+        }
 
         fun id(id: String) = id(JsonField.of(id))
 
-        fun id(id: JsonField<String>) =
-            apply {
-                this.id = id
-            }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
-         * If in the future, the time at which the backfill will automatically close. If in
-         * the past, the time at which the backfill was closed.
+         * If in the future, the time at which the backfill will automatically close. If in the
+         * past, the time at which the backfill was closed.
          */
         fun closeTime(closeTime: OffsetDateTime?) = closeTime(JsonField.ofNullable(closeTime))
 
         /**
-         * If in the future, the time at which the backfill will automatically close. If in
-         * the past, the time at which the backfill was closed.
+         * If in the future, the time at which the backfill will automatically close. If in the
+         * past, the time at which the backfill was closed.
          */
-        fun closeTime(closeTime: JsonField<OffsetDateTime>) =
-            apply {
-                this.closeTime = closeTime
-            }
+        fun closeTime(closeTime: JsonField<OffsetDateTime>) = apply { this.closeTime = closeTime }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-        fun createdAt(createdAt: JsonField<OffsetDateTime>) =
-            apply {
-                this.createdAt = createdAt
-            }
+        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         /**
-         * The Orb-generated ID of the customer to which this backfill is scoped. If
-         * `null`, this backfill is scoped to all customers.
+         * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
+         * backfill is scoped to all customers.
          */
         fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
 
         /**
-         * The Orb-generated ID of the customer to which this backfill is scoped. If
-         * `null`, this backfill is scoped to all customers.
+         * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
+         * backfill is scoped to all customers.
          */
-        fun customerId(customerId: JsonField<String>) =
-            apply {
-                this.customerId = customerId
-            }
+        fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
 
         /** The number of events ingested in this backfill. */
         fun eventsIngested(eventsIngested: Long) = eventsIngested(JsonField.of(eventsIngested))
 
         /** The number of events ingested in this backfill. */
-        fun eventsIngested(eventsIngested: JsonField<Long>) =
-            apply {
-                this.eventsIngested = eventsIngested
-            }
+        fun eventsIngested(eventsIngested: JsonField<Long>) = apply {
+            this.eventsIngested = eventsIngested
+        }
 
         /**
-         * If `true`, existing events in the backfill's timeframe will be replaced with the
-         * newly ingested events associated with the backfill. If `false`, newly ingested
-         * events will be added to the existing events.
+         * If `true`, existing events in the backfill's timeframe will be replaced with the newly
+         * ingested events associated with the backfill. If `false`, newly ingested events will be
+         * added to the existing events.
          */
-        fun replaceExistingEvents(replaceExistingEvents: Boolean) = replaceExistingEvents(JsonField.of(replaceExistingEvents))
+        fun replaceExistingEvents(replaceExistingEvents: Boolean) =
+            replaceExistingEvents(JsonField.of(replaceExistingEvents))
 
         /**
-         * If `true`, existing events in the backfill's timeframe will be replaced with the
-         * newly ingested events associated with the backfill. If `false`, newly ingested
-         * events will be added to the existing events.
+         * If `true`, existing events in the backfill's timeframe will be replaced with the newly
+         * ingested events associated with the backfill. If `false`, newly ingested events will be
+         * added to the existing events.
          */
-        fun replaceExistingEvents(replaceExistingEvents: JsonField<Boolean>) =
-            apply {
-                this.replaceExistingEvents = replaceExistingEvents
-            }
+        fun replaceExistingEvents(replaceExistingEvents: JsonField<Boolean>) = apply {
+            this.replaceExistingEvents = replaceExistingEvents
+        }
 
         /** The time at which this backfill was reverted. */
         fun revertedAt(revertedAt: OffsetDateTime?) = revertedAt(JsonField.ofNullable(revertedAt))
 
         /** The time at which this backfill was reverted. */
-        fun revertedAt(revertedAt: JsonField<OffsetDateTime>) =
-            apply {
-                this.revertedAt = revertedAt
-            }
+        fun revertedAt(revertedAt: JsonField<OffsetDateTime>) = apply {
+            this.revertedAt = revertedAt
+        }
 
         /** The status of the backfill. */
         fun status(status: Status) = status(JsonField.of(status))
 
         /** The status of the backfill. */
-        fun status(status: JsonField<Status>) =
-            apply {
-                this.status = status
-            }
+        fun status(status: JsonField<Status>) = apply { this.status = status }
 
         fun timeframeEnd(timeframeEnd: OffsetDateTime) = timeframeEnd(JsonField.of(timeframeEnd))
 
-        fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) =
-            apply {
-                this.timeframeEnd = timeframeEnd
-            }
+        fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
+            this.timeframeEnd = timeframeEnd
+        }
 
-        fun timeframeStart(timeframeStart: OffsetDateTime) = timeframeStart(JsonField.of(timeframeStart))
+        fun timeframeStart(timeframeStart: OffsetDateTime) =
+            timeframeStart(JsonField.of(timeframeStart))
 
-        fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) =
-            apply {
-                this.timeframeStart = timeframeStart
-            }
-
-        /**
-         * A boolean
-         * [computed property](/extensibility/advanced-metrics#computed-properties) used to
-         * filter the set of events to deprecate
-         */
-        fun deprecationFilter(deprecationFilter: String?) = deprecationFilter(JsonField.ofNullable(deprecationFilter))
+        fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
+            this.timeframeStart = timeframeStart
+        }
 
         /**
-         * A boolean
-         * [computed property](/extensibility/advanced-metrics#computed-properties) used to
-         * filter the set of events to deprecate
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the set of events to deprecate
          */
-        fun deprecationFilter(deprecationFilter: JsonField<String>) =
-            apply {
-                this.deprecationFilter = deprecationFilter
-            }
+        fun deprecationFilter(deprecationFilter: String?) =
+            deprecationFilter(JsonField.ofNullable(deprecationFilter))
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+        /**
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the set of events to deprecate
+         */
+        fun deprecationFilter(deprecationFilter: JsonField<String>) = apply {
+            this.deprecationFilter = deprecationFilter
+        }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) =
-            apply {
-                additionalProperties.put(key, value)
-            }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.clear()
+            putAllAdditionalProperties(additionalProperties)
+        }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+            additionalProperties.put(key, value)
+        }
 
-        fun removeAdditionalProperty(key: String) =
-            apply {
-                additionalProperties.remove(key)
-            }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.putAll(additionalProperties)
+        }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) =
-            apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
+        }
 
         fun build(): EventBackfillCreateResponse =
             EventBackfillCreateResponse(
-              checkRequired(
-                "id", id
-              ),
-              checkRequired(
-                "closeTime", closeTime
-              ),
-              checkRequired(
-                "createdAt", createdAt
-              ),
-              checkRequired(
-                "customerId", customerId
-              ),
-              checkRequired(
-                "eventsIngested", eventsIngested
-              ),
-              checkRequired(
-                "replaceExistingEvents", replaceExistingEvents
-              ),
-              checkRequired(
-                "revertedAt", revertedAt
-              ),
-              checkRequired(
-                "status", status
-              ),
-              checkRequired(
-                "timeframeEnd", timeframeEnd
-              ),
-              checkRequired(
-                "timeframeStart", timeframeStart
-              ),
-              deprecationFilter,
-              additionalProperties.toImmutable(),
+                checkRequired("id", id),
+                checkRequired("closeTime", closeTime),
+                checkRequired("createdAt", createdAt),
+                checkRequired("customerId", customerId),
+                checkRequired("eventsIngested", eventsIngested),
+                checkRequired("replaceExistingEvents", replaceExistingEvents),
+                checkRequired("revertedAt", revertedAt),
+                checkRequired("status", status),
+                checkRequired("timeframeEnd", timeframeEnd),
+                checkRequired("timeframeStart", timeframeStart),
+                deprecationFilter,
+                additionalProperties.toImmutable(),
             )
     }
 
     /** The status of the backfill. */
-    class Status @JsonCreator private constructor(
-        private val value: JsonField<String>,
-
-    ) : Enum {
+    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that
-         * doesn't match any known member, and you want to know that value. For example, if
-         * the SDK is on an older version than the API, then the API may respond with new
-         * members that the SDK is unaware of.
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -456,11 +415,9 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
          * An enum containing [Status]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Status] can contain an unknown value in a couple of cases:
-         *
-         * - It was deserialized from data that doesn't match any known member. For
-         *   example, if the SDK is on an older version than the API, then the API may
-         *   respond with new members that the SDK is unaware of.
-         *
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -473,11 +430,11 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or
-         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if
-         * you want to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -491,11 +448,10 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and
-         * don't want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
          *
-         * @throws OrbInvalidDataException if this class instance's value is a not a known
-         * member.
+         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
          */
         fun known(): Known =
             when (this) {
@@ -509,20 +465,21 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for
-         * debugging and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
          *
-         * @throws OrbInvalidDataException if this class instance's value does not have the
-         * expected primitive type.
+         * @throws OrbInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
          */
-        fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+        fun asString(): String =
+            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -531,11 +488,11 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is EventBackfillCreateResponse && id == other.id && closeTime == other.closeTime && createdAt == other.createdAt && customerId == other.customerId && eventsIngested == other.eventsIngested && replaceExistingEvents == other.replaceExistingEvents && revertedAt == other.revertedAt && status == other.status && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && deprecationFilter == other.deprecationFilter && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is EventBackfillCreateResponse && id == other.id && closeTime == other.closeTime && createdAt == other.createdAt && customerId == other.customerId && eventsIngested == other.eventsIngested && replaceExistingEvents == other.replaceExistingEvents && revertedAt == other.revertedAt && status == other.status && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && deprecationFilter == other.deprecationFilter && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
@@ -544,5 +501,6 @@ class EventBackfillCreateResponse @JsonCreator private constructor(
 
     override fun hashCode(): Int = hashCode
 
-    override fun toString() = "EventBackfillCreateResponse{id=$id, closeTime=$closeTime, createdAt=$createdAt, customerId=$customerId, eventsIngested=$eventsIngested, replaceExistingEvents=$replaceExistingEvents, revertedAt=$revertedAt, status=$status, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, deprecationFilter=$deprecationFilter, additionalProperties=$additionalProperties}"
+    override fun toString() =
+        "EventBackfillCreateResponse{id=$id, closeTime=$closeTime, createdAt=$createdAt, customerId=$customerId, eventsIngested=$eventsIngested, replaceExistingEvents=$replaceExistingEvents, revertedAt=$revertedAt, status=$status, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, deprecationFilter=$deprecationFilter, additionalProperties=$additionalProperties}"
 }

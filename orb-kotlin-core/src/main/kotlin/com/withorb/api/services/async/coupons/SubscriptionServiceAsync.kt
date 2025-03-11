@@ -11,22 +11,24 @@ import com.withorb.api.models.CouponSubscriptionListParams
 interface SubscriptionServiceAsync {
 
     /**
-     * Returns a view of this service that provides access to raw HTTP responses for
-     * each method.
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
 
     /**
-     * This endpoint returns a list of all subscriptions that have redeemed a given
-     * coupon as a [paginated](/api-reference/pagination) list, ordered starting from
-     * the most recently created subscription. For a full discussion of the
-     * subscription resource, see [Subscription](/core-concepts#subscription).
+     * This endpoint returns a list of all subscriptions that have redeemed a given coupon as a
+     * [paginated](/api-reference/pagination) list, ordered starting from the most recently created
+     * subscription. For a full discussion of the subscription resource, see
+     * [Subscription](/core-concepts#subscription).
      */
-    suspend fun list(params: CouponSubscriptionListParams, requestOptions: RequestOptions = RequestOptions.none()): CouponSubscriptionListPageAsync
+    suspend fun list(
+        params: CouponSubscriptionListParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CouponSubscriptionListPageAsync
 
     /**
-     * A view of [SubscriptionServiceAsync] that provides access to raw HTTP responses
-     * for each method.
+     * A view of [SubscriptionServiceAsync] that provides access to raw HTTP responses for each
+     * method.
      */
     interface WithRawResponse {
 
@@ -35,6 +37,9 @@ interface SubscriptionServiceAsync {
          * otherwise the same as [SubscriptionServiceAsync.list].
          */
         @MustBeClosed
-        suspend fun list(params: CouponSubscriptionListParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<CouponSubscriptionListPageAsync>
+        suspend fun list(
+            params: CouponSubscriptionListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CouponSubscriptionListPageAsync>
     }
 }

@@ -20,19 +20,36 @@ import java.time.OffsetDateTime
 import java.util.Objects
 
 @NoAutoDetect
-class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
+class CustomerBalanceTransactionListResponse
+@JsonCreator
+private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("action") @ExcludeMissing private val action: JsonField<Action> = JsonMissing.of(),
-    @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("created_at") @ExcludeMissing private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("credit_note") @ExcludeMissing private val creditNote: JsonField<CreditNote> = JsonMissing.of(),
-    @JsonProperty("description") @ExcludeMissing private val description: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("ending_balance") @ExcludeMissing private val endingBalance: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("invoice") @ExcludeMissing private val invoice: JsonField<Invoice> = JsonMissing.of(),
-    @JsonProperty("starting_balance") @ExcludeMissing private val startingBalance: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("action")
+    @ExcludeMissing
+    private val action: JsonField<Action> = JsonMissing.of(),
+    @JsonProperty("amount")
+    @ExcludeMissing
+    private val amount: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("credit_note")
+    @ExcludeMissing
+    private val creditNote: JsonField<CreditNote> = JsonMissing.of(),
+    @JsonProperty("description")
+    @ExcludeMissing
+    private val description: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("ending_balance")
+    @ExcludeMissing
+    private val endingBalance: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("invoice")
+    @ExcludeMissing
+    private val invoice: JsonField<Invoice> = JsonMissing.of(),
+    @JsonProperty("starting_balance")
+    @ExcludeMissing
+    private val startingBalance: JsonField<String> = JsonMissing.of(),
     @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
 ) {
 
     /** A unique id for this transaction. */
@@ -52,34 +69,27 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
     fun description(): String? = description.getNullable("description")
 
     /**
-     * The new value of the customer's balance prior to the transaction, in the
-     * customer's currency.
+     * The new value of the customer's balance prior to the transaction, in the customer's currency.
      */
     fun endingBalance(): String = endingBalance.getRequired("ending_balance")
 
     fun invoice(): Invoice? = invoice.getNullable("invoice")
 
     /**
-     * The original value of the customer's balance prior to the transaction, in the
-     * customer's currency.
+     * The original value of the customer's balance prior to the transaction, in the customer's
+     * currency.
      */
     fun startingBalance(): String = startingBalance.getRequired("starting_balance")
 
     fun type(): Type = type.getRequired("type")
 
     /** A unique id for this transaction. */
-    @JsonProperty("id")
-    @ExcludeMissing
-    fun _id(): JsonField<String> = id
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    @JsonProperty("action")
-    @ExcludeMissing
-    fun _action(): JsonField<Action> = action
+    @JsonProperty("action") @ExcludeMissing fun _action(): JsonField<Action> = action
 
     /** The value of the amount changed in the transaction. */
-    @JsonProperty("amount")
-    @ExcludeMissing
-    fun _amount(): JsonField<String> = amount
+    @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
     /** The creation time of this transaction. */
     @JsonProperty("created_at")
@@ -91,33 +101,26 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
     fun _creditNote(): JsonField<CreditNote> = creditNote
 
     /** An optional description provided for manual customer balance adjustments. */
-    @JsonProperty("description")
-    @ExcludeMissing
-    fun _description(): JsonField<String> = description
+    @JsonProperty("description") @ExcludeMissing fun _description(): JsonField<String> = description
 
     /**
-     * The new value of the customer's balance prior to the transaction, in the
-     * customer's currency.
+     * The new value of the customer's balance prior to the transaction, in the customer's currency.
      */
     @JsonProperty("ending_balance")
     @ExcludeMissing
     fun _endingBalance(): JsonField<String> = endingBalance
 
-    @JsonProperty("invoice")
-    @ExcludeMissing
-    fun _invoice(): JsonField<Invoice> = invoice
+    @JsonProperty("invoice") @ExcludeMissing fun _invoice(): JsonField<Invoice> = invoice
 
     /**
-     * The original value of the customer's balance prior to the transaction, in the
-     * customer's currency.
+     * The original value of the customer's balance prior to the transaction, in the customer's
+     * currency.
      */
     @JsonProperty("starting_balance")
     @ExcludeMissing
     fun _startingBalance(): JsonField<String> = startingBalance
 
-    @JsonProperty("type")
-    @ExcludeMissing
-    fun _type(): JsonField<Type> = type
+    @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -125,24 +128,23 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): CustomerBalanceTransactionListResponse =
-        apply {
-            if (validated) {
-              return@apply
-            }
-
-            id()
-            action()
-            amount()
-            createdAt()
-            creditNote()?.validate()
-            description()
-            endingBalance()
-            invoice()?.validate()
-            startingBalance()
-            type()
-            validated = true
+    fun validate(): CustomerBalanceTransactionListResponse = apply {
+        if (validated) {
+            return@apply
         }
+
+        id()
+        action()
+        amount()
+        createdAt()
+        creditNote()?.validate()
+        description()
+        endingBalance()
+        invoice()?.validate()
+        startingBalance()
+        type()
+        validated = true
+    }
 
     fun toBuilder() = Builder().from(this)
 
@@ -153,7 +155,6 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
          * [CustomerBalanceTransactionListResponse].
          *
          * The following fields are required:
-         *
          * ```kotlin
          * .id()
          * .action()
@@ -185,192 +186,138 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
         private var type: JsonField<Type>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(customerBalanceTransactionListResponse: CustomerBalanceTransactionListResponse) =
-            apply {
-                id = customerBalanceTransactionListResponse.id
-                action = customerBalanceTransactionListResponse.action
-                amount = customerBalanceTransactionListResponse.amount
-                createdAt = customerBalanceTransactionListResponse.createdAt
-                creditNote = customerBalanceTransactionListResponse.creditNote
-                description = customerBalanceTransactionListResponse.description
-                endingBalance = customerBalanceTransactionListResponse.endingBalance
-                invoice = customerBalanceTransactionListResponse.invoice
-                startingBalance = customerBalanceTransactionListResponse.startingBalance
-                type = customerBalanceTransactionListResponse.type
-                additionalProperties = customerBalanceTransactionListResponse.additionalProperties.toMutableMap()
-            }
+        internal fun from(
+            customerBalanceTransactionListResponse: CustomerBalanceTransactionListResponse
+        ) = apply {
+            id = customerBalanceTransactionListResponse.id
+            action = customerBalanceTransactionListResponse.action
+            amount = customerBalanceTransactionListResponse.amount
+            createdAt = customerBalanceTransactionListResponse.createdAt
+            creditNote = customerBalanceTransactionListResponse.creditNote
+            description = customerBalanceTransactionListResponse.description
+            endingBalance = customerBalanceTransactionListResponse.endingBalance
+            invoice = customerBalanceTransactionListResponse.invoice
+            startingBalance = customerBalanceTransactionListResponse.startingBalance
+            type = customerBalanceTransactionListResponse.type
+            additionalProperties =
+                customerBalanceTransactionListResponse.additionalProperties.toMutableMap()
+        }
 
         /** A unique id for this transaction. */
         fun id(id: String) = id(JsonField.of(id))
 
         /** A unique id for this transaction. */
-        fun id(id: JsonField<String>) =
-            apply {
-                this.id = id
-            }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun action(action: Action) = action(JsonField.of(action))
 
-        fun action(action: JsonField<Action>) =
-            apply {
-                this.action = action
-            }
+        fun action(action: JsonField<Action>) = apply { this.action = action }
 
         /** The value of the amount changed in the transaction. */
         fun amount(amount: String) = amount(JsonField.of(amount))
 
         /** The value of the amount changed in the transaction. */
-        fun amount(amount: JsonField<String>) =
-            apply {
-                this.amount = amount
-            }
+        fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
         /** The creation time of this transaction. */
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         /** The creation time of this transaction. */
-        fun createdAt(createdAt: JsonField<OffsetDateTime>) =
-            apply {
-                this.createdAt = createdAt
-            }
+        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         fun creditNote(creditNote: CreditNote?) = creditNote(JsonField.ofNullable(creditNote))
 
-        fun creditNote(creditNote: JsonField<CreditNote>) =
-            apply {
-                this.creditNote = creditNote
-            }
+        fun creditNote(creditNote: JsonField<CreditNote>) = apply { this.creditNote = creditNote }
 
         /** An optional description provided for manual customer balance adjustments. */
         fun description(description: String?) = description(JsonField.ofNullable(description))
 
         /** An optional description provided for manual customer balance adjustments. */
-        fun description(description: JsonField<String>) =
-            apply {
-                this.description = description
-            }
+        fun description(description: JsonField<String>) = apply { this.description = description }
 
         /**
-         * The new value of the customer's balance prior to the transaction, in the
-         * customer's currency.
+         * The new value of the customer's balance prior to the transaction, in the customer's
+         * currency.
          */
         fun endingBalance(endingBalance: String) = endingBalance(JsonField.of(endingBalance))
 
         /**
-         * The new value of the customer's balance prior to the transaction, in the
-         * customer's currency.
+         * The new value of the customer's balance prior to the transaction, in the customer's
+         * currency.
          */
-        fun endingBalance(endingBalance: JsonField<String>) =
-            apply {
-                this.endingBalance = endingBalance
-            }
+        fun endingBalance(endingBalance: JsonField<String>) = apply {
+            this.endingBalance = endingBalance
+        }
 
         fun invoice(invoice: Invoice?) = invoice(JsonField.ofNullable(invoice))
 
-        fun invoice(invoice: JsonField<Invoice>) =
-            apply {
-                this.invoice = invoice
-            }
+        fun invoice(invoice: JsonField<Invoice>) = apply { this.invoice = invoice }
 
         /**
-         * The original value of the customer's balance prior to the transaction, in the
-         * customer's currency.
+         * The original value of the customer's balance prior to the transaction, in the customer's
+         * currency.
          */
-        fun startingBalance(startingBalance: String) = startingBalance(JsonField.of(startingBalance))
+        fun startingBalance(startingBalance: String) =
+            startingBalance(JsonField.of(startingBalance))
 
         /**
-         * The original value of the customer's balance prior to the transaction, in the
-         * customer's currency.
+         * The original value of the customer's balance prior to the transaction, in the customer's
+         * currency.
          */
-        fun startingBalance(startingBalance: JsonField<String>) =
-            apply {
-                this.startingBalance = startingBalance
-            }
+        fun startingBalance(startingBalance: JsonField<String>) = apply {
+            this.startingBalance = startingBalance
+        }
 
         fun type(type: Type) = type(JsonField.of(type))
 
-        fun type(type: JsonField<Type>) =
-            apply {
-                this.type = type
-            }
+        fun type(type: JsonField<Type>) = apply { this.type = type }
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.clear()
+            putAllAdditionalProperties(additionalProperties)
+        }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) =
-            apply {
-                additionalProperties.put(key, value)
-            }
+        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+            additionalProperties.put(key, value)
+        }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.putAll(additionalProperties)
+        }
 
-        fun removeAdditionalProperty(key: String) =
-            apply {
-                additionalProperties.remove(key)
-            }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) =
-            apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
+        }
 
         fun build(): CustomerBalanceTransactionListResponse =
             CustomerBalanceTransactionListResponse(
-              checkRequired(
-                "id", id
-              ),
-              checkRequired(
-                "action", action
-              ),
-              checkRequired(
-                "amount", amount
-              ),
-              checkRequired(
-                "createdAt", createdAt
-              ),
-              checkRequired(
-                "creditNote", creditNote
-              ),
-              checkRequired(
-                "description", description
-              ),
-              checkRequired(
-                "endingBalance", endingBalance
-              ),
-              checkRequired(
-                "invoice", invoice
-              ),
-              checkRequired(
-                "startingBalance", startingBalance
-              ),
-              checkRequired(
-                "type", type
-              ),
-              additionalProperties.toImmutable(),
+                checkRequired("id", id),
+                checkRequired("action", action),
+                checkRequired("amount", amount),
+                checkRequired("createdAt", createdAt),
+                checkRequired("creditNote", creditNote),
+                checkRequired("description", description),
+                checkRequired("endingBalance", endingBalance),
+                checkRequired("invoice", invoice),
+                checkRequired("startingBalance", startingBalance),
+                checkRequired("type", type),
+                additionalProperties.toImmutable(),
             )
     }
 
-    class Action @JsonCreator private constructor(
-        private val value: JsonField<String>,
-
-    ) : Enum {
+    class Action @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that
-         * doesn't match any known member, and you want to know that value. For example, if
-         * the SDK is on an older version than the API, then the API may respond with new
-         * members that the SDK is unaware of.
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -412,11 +359,9 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
          * An enum containing [Action]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Action] can contain an unknown value in a couple of cases:
-         *
-         * - It was deserialized from data that doesn't match any known member. For
-         *   example, if the SDK is on an older version than the API, then the API may
-         *   respond with new members that the SDK is unaware of.
-         *
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -434,11 +379,11 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or
-         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if
-         * you want to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -457,11 +402,10 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and
-         * don't want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
          *
-         * @throws OrbInvalidDataException if this class instance's value is a not a known
-         * member.
+         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
          */
         fun known(): Known =
             when (this) {
@@ -480,20 +424,21 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for
-         * debugging and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
          *
-         * @throws OrbInvalidDataException if this class instance's value does not have the
-         * expected primitive type.
+         * @throws OrbInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
          */
-        fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+        fun asString(): String =
+            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Action && value == other.value /* spotless:on */
+            return /* spotless:off */ other is Action && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -502,19 +447,19 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
     }
 
     @NoAutoDetect
-    class CreditNote @JsonCreator private constructor(
+    class CreditNote
+    @JsonCreator
+    private constructor(
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The id of the Credit note */
         fun id(): String = id.getRequired("id")
 
         /** The id of the Credit note */
-        @JsonProperty("id")
-        @ExcludeMissing
-        fun _id(): JsonField<String> = id
+        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -522,15 +467,14 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CreditNote =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                id()
-                validated = true
+        fun validate(): CreditNote = apply {
+            if (validated) {
+                return@apply
             }
+
+            id()
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -540,7 +484,6 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
              * Returns a mutable builder for constructing an instance of [CreditNote].
              *
              * The following fields are required:
-             *
              * ```kotlin
              * .id()
              * ```
@@ -554,61 +497,46 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
             private var id: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(creditNote: CreditNote) =
-                apply {
-                    id = creditNote.id
-                    additionalProperties = creditNote.additionalProperties.toMutableMap()
-                }
+            internal fun from(creditNote: CreditNote) = apply {
+                id = creditNote.id
+                additionalProperties = creditNote.additionalProperties.toMutableMap()
+            }
 
             /** The id of the Credit note */
             fun id(id: String) = id(JsonField.of(id))
 
             /** The id of the Credit note */
-            fun id(id: JsonField<String>) =
-                apply {
-                    this.id = id
-                }
+            fun id(id: JsonField<String>) = apply { this.id = id }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-            fun removeAdditionalProperty(key: String) =
-                apply {
-                    additionalProperties.remove(key)
-                }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) =
-                apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
             fun build(): CreditNote =
-                CreditNote(
-                  checkRequired(
-                    "id", id
-                  ), additionalProperties.toImmutable()
-                )
+                CreditNote(checkRequired("id", id), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is CreditNote && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CreditNote && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -621,19 +549,19 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
     }
 
     @NoAutoDetect
-    class Invoice @JsonCreator private constructor(
+    class Invoice
+    @JsonCreator
+    private constructor(
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The Invoice id */
         fun id(): String = id.getRequired("id")
 
         /** The Invoice id */
-        @JsonProperty("id")
-        @ExcludeMissing
-        fun _id(): JsonField<String> = id
+        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -641,15 +569,14 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Invoice =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                id()
-                validated = true
+        fun validate(): Invoice = apply {
+            if (validated) {
+                return@apply
             }
+
+            id()
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -659,7 +586,6 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
              * Returns a mutable builder for constructing an instance of [Invoice].
              *
              * The following fields are required:
-             *
              * ```kotlin
              * .id()
              * ```
@@ -673,61 +599,46 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
             private var id: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(invoice: Invoice) =
-                apply {
-                    id = invoice.id
-                    additionalProperties = invoice.additionalProperties.toMutableMap()
-                }
+            internal fun from(invoice: Invoice) = apply {
+                id = invoice.id
+                additionalProperties = invoice.additionalProperties.toMutableMap()
+            }
 
             /** The Invoice id */
             fun id(id: String) = id(JsonField.of(id))
 
             /** The Invoice id */
-            fun id(id: JsonField<String>) =
-                apply {
-                    this.id = id
-                }
+            fun id(id: JsonField<String>) = apply { this.id = id }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-            fun removeAdditionalProperty(key: String) =
-                apply {
-                    additionalProperties.remove(key)
-                }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) =
-                apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
             fun build(): Invoice =
-                Invoice(
-                  checkRequired(
-                    "id", id
-                  ), additionalProperties.toImmutable()
-                )
+                Invoice(checkRequired("id", id), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Invoice && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Invoice && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -739,21 +650,17 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
         override fun toString() = "Invoice{id=$id, additionalProperties=$additionalProperties}"
     }
 
-    class Type @JsonCreator private constructor(
-        private val value: JsonField<String>,
-
-    ) : Enum {
+    class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that
-         * doesn't match any known member, and you want to know that value. For example, if
-         * the SDK is on an older version than the API, then the API may respond with new
-         * members that the SDK is unaware of.
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -774,11 +681,9 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
          * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Type] can contain an unknown value in a couple of cases:
-         *
-         * - It was deserialized from data that doesn't match any known member. For
-         *   example, if the SDK is on an older version than the API, then the API may
-         *   respond with new members that the SDK is unaware of.
-         *
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -789,11 +694,11 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or
-         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if
-         * you want to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -805,11 +710,10 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and
-         * don't want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
          *
-         * @throws OrbInvalidDataException if this class instance's value is a not a known
-         * member.
+         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
          */
         fun known(): Known =
             when (this) {
@@ -821,20 +725,21 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for
-         * debugging and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
          *
-         * @throws OrbInvalidDataException if this class instance's value does not have the
-         * expected primitive type.
+         * @throws OrbInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
          */
-        fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+        fun asString(): String =
+            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -843,11 +748,11 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is CustomerBalanceTransactionListResponse && id == other.id && action == other.action && amount == other.amount && createdAt == other.createdAt && creditNote == other.creditNote && description == other.description && endingBalance == other.endingBalance && invoice == other.invoice && startingBalance == other.startingBalance && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CustomerBalanceTransactionListResponse && id == other.id && action == other.action && amount == other.amount && createdAt == other.createdAt && creditNote == other.creditNote && description == other.description && endingBalance == other.endingBalance && invoice == other.invoice && startingBalance == other.startingBalance && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
@@ -856,5 +761,6 @@ class CustomerBalanceTransactionListResponse @JsonCreator private constructor(
 
     override fun hashCode(): Int = hashCode
 
-    override fun toString() = "CustomerBalanceTransactionListResponse{id=$id, action=$action, amount=$amount, createdAt=$createdAt, creditNote=$creditNote, description=$description, endingBalance=$endingBalance, invoice=$invoice, startingBalance=$startingBalance, type=$type, additionalProperties=$additionalProperties}"
+    override fun toString() =
+        "CustomerBalanceTransactionListResponse{id=$id, action=$action, amount=$amount, createdAt=$createdAt, creditNote=$creditNote, description=$description, endingBalance=$endingBalance, invoice=$invoice, startingBalance=$startingBalance, type=$type, additionalProperties=$additionalProperties}"
 }
