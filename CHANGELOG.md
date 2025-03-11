@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.1.0-alpha.35 (2025-03-11)
+
+Full Changelog: [v0.1.0-alpha.34...v0.1.0-alpha.35](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.34...v0.1.0-alpha.35)
+
+### Features
+
+* **api:** api update ([#286](https://github.com/orbcorp/orb-kotlin/issues/286)) ([48e76e2](https://github.com/orbcorp/orb-kotlin/commit/48e76e2588f1898851ae60b8ff6516fdfc14961d))
+* generate and publish docs ([#279](https://github.com/orbcorp/orb-kotlin/issues/279)) ([91ab014](https://github.com/orbcorp/orb-kotlin/commit/91ab0141ea6056e905c16d945bb41789df9b80ef))
+
+
+### Chores
+
+* **internal:** add `.kotlin` to `.gitignore` ([#281](https://github.com/orbcorp/orb-kotlin/issues/281)) ([796de88](https://github.com/orbcorp/orb-kotlin/commit/796de883509a3216b77eb2b3f4df9d58e5f1ed01))
+* **internal:** codegen related update ([#287](https://github.com/orbcorp/orb-kotlin/issues/287)) ([e49bd3a](https://github.com/orbcorp/orb-kotlin/commit/e49bd3af0bead07c19b7388461b65b9b1f275d14))
+* **internal:** don't generate docs ([#282](https://github.com/orbcorp/orb-kotlin/issues/282)) ([a188e76](https://github.com/orbcorp/orb-kotlin/commit/a188e76034b67c771a336c4d770ea2833dc0afb2))
+* **internal:** reenable warnings as errors ([#283](https://github.com/orbcorp/orb-kotlin/issues/283)) ([b84bb54](https://github.com/orbcorp/orb-kotlin/commit/b84bb54e68a1e92907ea7107f151a8c5ac2b7f0f))
+
+
+### Documentation
+
+* document `JsonValue` construction in readme ([#285](https://github.com/orbcorp/orb-kotlin/issues/285)) ([1975c13](https://github.com/orbcorp/orb-kotlin/commit/1975c13945c1192560763af57aec673d505966d8))
+* revise readme docs about nested params ([#284](https://github.com/orbcorp/orb-kotlin/issues/284)) ([a08d6a2](https://github.com/orbcorp/orb-kotlin/commit/a08d6a2d2112aaaca989ef7955677c928377cc3e))
+
 ## 0.1.0-alpha.34 (2025-03-07)
 
 Full Changelog: [v0.1.0-alpha.33...v0.1.0-alpha.34](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.33...v0.1.0-alpha.34)
