@@ -20,87 +20,82 @@ import com.withorb.api.core.toImmutable
 import java.util.Objects
 
 /**
- * This endpoint can be used to update the `metadata`, `net terms`,
- * `auto_collection`, `invoicing_threshold`, and `default_invoice_memo` properties
- * on a subscription.
+ * This endpoint can be used to update the `metadata`, `net terms`, `auto_collection`,
+ * `invoicing_threshold`, and `default_invoice_memo` properties on a subscription.
  */
-class SubscriptionUpdateParams private constructor(
+class SubscriptionUpdateParams
+private constructor(
     private val subscriptionId: String,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-
 ) : Params {
 
     fun subscriptionId(): String = subscriptionId
 
     /**
-     * Determines whether issued invoices for this subscription will automatically be
-     * charged with the saved payment method on the due date. This property defaults to
-     * the plan's behavior.
+     * Determines whether issued invoices for this subscription will automatically be charged with
+     * the saved payment method on the due date. This property defaults to the plan's behavior.
      */
     fun autoCollection(): Boolean? = body.autoCollection()
 
     /**
-     * Determines the default memo on this subscription's invoices. Note that if this
-     * is not provided, it is determined by the plan configuration.
+     * Determines the default memo on this subscription's invoices. Note that if this is not
+     * provided, it is determined by the plan configuration.
      */
     fun defaultInvoiceMemo(): String? = body.defaultInvoiceMemo()
 
     /**
-     * When this subscription's accrued usage reaches this threshold, an invoice will
-     * be issued for the subscription. If not specified, invoices will only be issued
-     * at the end of the billing period.
+     * When this subscription's accrued usage reaches this threshold, an invoice will be issued for
+     * the subscription. If not specified, invoices will only be issued at the end of the billing
+     * period.
      */
     fun invoicingThreshold(): String? = body.invoicingThreshold()
 
     /**
-     * User-specified key/value pairs for the resource. Individual keys can be removed
-     * by setting the value to `null`, and the entire metadata mapping can be cleared
-     * by setting `metadata` to `null`.
+     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
+     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
+     * `null`.
      */
     fun metadata(): Metadata? = body.metadata()
 
     /**
-     * Determines the difference between the invoice issue date for subscription
-     * invoices as the date that they are due. A value of `0` here represents that the
-     * invoice is due on issue, whereas a value of `30` represents that the customer
-     * has a month to pay the invoice.
+     * Determines the difference between the invoice issue date for subscription invoices as the
+     * date that they are due. A value of `0` here represents that the invoice is due on issue,
+     * whereas a value of `30` represents that the customer has a month to pay the invoice.
      */
     fun netTerms(): Long? = body.netTerms()
 
     /**
-     * Determines whether issued invoices for this subscription will automatically be
-     * charged with the saved payment method on the due date. This property defaults to
-     * the plan's behavior.
+     * Determines whether issued invoices for this subscription will automatically be charged with
+     * the saved payment method on the due date. This property defaults to the plan's behavior.
      */
     fun _autoCollection(): JsonField<Boolean> = body._autoCollection()
 
     /**
-     * Determines the default memo on this subscription's invoices. Note that if this
-     * is not provided, it is determined by the plan configuration.
+     * Determines the default memo on this subscription's invoices. Note that if this is not
+     * provided, it is determined by the plan configuration.
      */
     fun _defaultInvoiceMemo(): JsonField<String> = body._defaultInvoiceMemo()
 
     /**
-     * When this subscription's accrued usage reaches this threshold, an invoice will
-     * be issued for the subscription. If not specified, invoices will only be issued
-     * at the end of the billing period.
+     * When this subscription's accrued usage reaches this threshold, an invoice will be issued for
+     * the subscription. If not specified, invoices will only be issued at the end of the billing
+     * period.
      */
     fun _invoicingThreshold(): JsonField<String> = body._invoicingThreshold()
 
     /**
-     * User-specified key/value pairs for the resource. Individual keys can be removed
-     * by setting the value to `null`, and the entire metadata mapping can be cleared
-     * by setting `metadata` to `null`.
+     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
+     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
+     * `null`.
      */
     fun _metadata(): JsonField<Metadata> = body._metadata()
 
     /**
-     * Determines the difference between the invoice issue date for subscription
-     * invoices as the date that they are due. A value of `0` here represents that the
-     * invoice is due on issue, whereas a value of `30` represents that the customer
-     * has a month to pay the invoice.
+     * Determines the difference between the invoice issue date for subscription invoices as the
+     * date that they are due. A value of `0` here represents that the invoice is due on issue,
+     * whereas a value of `30` represents that the customer has a month to pay the invoice.
      */
     fun _netTerms(): JsonField<Long> = body._netTerms()
 
@@ -117,102 +112,108 @@ class SubscriptionUpdateParams private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     fun getPathParam(index: Int): String {
-      return when (index) {
-          0 -> subscriptionId
-          else -> ""
-      }
+        return when (index) {
+            0 -> subscriptionId
+            else -> ""
+        }
     }
 
     @NoAutoDetect
-    class Body @JsonCreator private constructor(
-        @JsonProperty("auto_collection") @ExcludeMissing private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("default_invoice_memo") @ExcludeMissing private val defaultInvoiceMemo: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("invoicing_threshold") @ExcludeMissing private val invoicingThreshold: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("metadata") @ExcludeMissing private val metadata: JsonField<Metadata> = JsonMissing.of(),
-        @JsonProperty("net_terms") @ExcludeMissing private val netTerms: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+    class Body
+    @JsonCreator
+    private constructor(
+        @JsonProperty("auto_collection")
+        @ExcludeMissing
+        private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("default_invoice_memo")
+        @ExcludeMissing
+        private val defaultInvoiceMemo: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("invoicing_threshold")
+        @ExcludeMissing
+        private val invoicingThreshold: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("net_terms")
+        @ExcludeMissing
+        private val netTerms: JsonField<Long> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be
-         * charged with the saved payment method on the due date. This property defaults to
-         * the plan's behavior.
+         * Determines whether issued invoices for this subscription will automatically be charged
+         * with the saved payment method on the due date. This property defaults to the plan's
+         * behavior.
          */
         fun autoCollection(): Boolean? = autoCollection.getNullable("auto_collection")
 
         /**
-         * Determines the default memo on this subscription's invoices. Note that if this
-         * is not provided, it is determined by the plan configuration.
+         * Determines the default memo on this subscription's invoices. Note that if this is not
+         * provided, it is determined by the plan configuration.
          */
         fun defaultInvoiceMemo(): String? = defaultInvoiceMemo.getNullable("default_invoice_memo")
 
         /**
-         * When this subscription's accrued usage reaches this threshold, an invoice will
-         * be issued for the subscription. If not specified, invoices will only be issued
-         * at the end of the billing period.
+         * When this subscription's accrued usage reaches this threshold, an invoice will be issued
+         * for the subscription. If not specified, invoices will only be issued at the end of the
+         * billing period.
          */
         fun invoicingThreshold(): String? = invoicingThreshold.getNullable("invoicing_threshold")
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed
-         * by setting the value to `null`, and the entire metadata mapping can be cleared
-         * by setting `metadata` to `null`.
+         * User-specified key/value pairs for the resource. Individual keys can be removed by
+         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
+         * `metadata` to `null`.
          */
         fun metadata(): Metadata? = metadata.getNullable("metadata")
 
         /**
-         * Determines the difference between the invoice issue date for subscription
-         * invoices as the date that they are due. A value of `0` here represents that the
-         * invoice is due on issue, whereas a value of `30` represents that the customer
-         * has a month to pay the invoice.
+         * Determines the difference between the invoice issue date for subscription invoices as the
+         * date that they are due. A value of `0` here represents that the invoice is due on issue,
+         * whereas a value of `30` represents that the customer has a month to pay the invoice.
          */
         fun netTerms(): Long? = netTerms.getNullable("net_terms")
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be
-         * charged with the saved payment method on the due date. This property defaults to
-         * the plan's behavior.
+         * Determines whether issued invoices for this subscription will automatically be charged
+         * with the saved payment method on the due date. This property defaults to the plan's
+         * behavior.
          */
         @JsonProperty("auto_collection")
         @ExcludeMissing
         fun _autoCollection(): JsonField<Boolean> = autoCollection
 
         /**
-         * Determines the default memo on this subscription's invoices. Note that if this
-         * is not provided, it is determined by the plan configuration.
+         * Determines the default memo on this subscription's invoices. Note that if this is not
+         * provided, it is determined by the plan configuration.
          */
         @JsonProperty("default_invoice_memo")
         @ExcludeMissing
         fun _defaultInvoiceMemo(): JsonField<String> = defaultInvoiceMemo
 
         /**
-         * When this subscription's accrued usage reaches this threshold, an invoice will
-         * be issued for the subscription. If not specified, invoices will only be issued
-         * at the end of the billing period.
+         * When this subscription's accrued usage reaches this threshold, an invoice will be issued
+         * for the subscription. If not specified, invoices will only be issued at the end of the
+         * billing period.
          */
         @JsonProperty("invoicing_threshold")
         @ExcludeMissing
         fun _invoicingThreshold(): JsonField<String> = invoicingThreshold
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed
-         * by setting the value to `null`, and the entire metadata mapping can be cleared
-         * by setting `metadata` to `null`.
+         * User-specified key/value pairs for the resource. Individual keys can be removed by
+         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
+         * `metadata` to `null`.
          */
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        fun _metadata(): JsonField<Metadata> = metadata
+        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
         /**
-         * Determines the difference between the invoice issue date for subscription
-         * invoices as the date that they are due. A value of `0` here represents that the
-         * invoice is due on issue, whereas a value of `30` represents that the customer
-         * has a month to pay the invoice.
+         * Determines the difference between the invoice issue date for subscription invoices as the
+         * date that they are due. A value of `0` here represents that the invoice is due on issue,
+         * whereas a value of `30` represents that the customer has a month to pay the invoice.
          */
-        @JsonProperty("net_terms")
-        @ExcludeMissing
-        fun _netTerms(): JsonField<Long> = netTerms
+        @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -220,19 +221,18 @@ class SubscriptionUpdateParams private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Body =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                autoCollection()
-                defaultInvoiceMemo()
-                invoicingThreshold()
-                metadata()?.validate()
-                netTerms()
-                validated = true
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
             }
+
+            autoCollection()
+            defaultInvoiceMemo()
+            invoicingThreshold()
+            metadata()?.validate()
+            netTerms()
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -252,159 +252,145 @@ class SubscriptionUpdateParams private constructor(
             private var netTerms: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(body: Body) =
-                apply {
-                    autoCollection = body.autoCollection
-                    defaultInvoiceMemo = body.defaultInvoiceMemo
-                    invoicingThreshold = body.invoicingThreshold
-                    metadata = body.metadata
-                    netTerms = body.netTerms
-                    additionalProperties = body.additionalProperties.toMutableMap()
-                }
+            internal fun from(body: Body) = apply {
+                autoCollection = body.autoCollection
+                defaultInvoiceMemo = body.defaultInvoiceMemo
+                invoicingThreshold = body.invoicingThreshold
+                metadata = body.metadata
+                netTerms = body.netTerms
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
 
             /**
              * Determines whether issued invoices for this subscription will automatically be
-             * charged with the saved payment method on the due date. This property defaults to
-             * the plan's behavior.
+             * charged with the saved payment method on the due date. This property defaults to the
+             * plan's behavior.
              */
-            fun autoCollection(autoCollection: Boolean?) = autoCollection(JsonField.ofNullable(autoCollection))
+            fun autoCollection(autoCollection: Boolean?) =
+                autoCollection(JsonField.ofNullable(autoCollection))
 
             /**
              * Determines whether issued invoices for this subscription will automatically be
-             * charged with the saved payment method on the due date. This property defaults to
-             * the plan's behavior.
+             * charged with the saved payment method on the due date. This property defaults to the
+             * plan's behavior.
              */
             fun autoCollection(autoCollection: Boolean) = autoCollection(autoCollection as Boolean?)
 
             /**
              * Determines whether issued invoices for this subscription will automatically be
-             * charged with the saved payment method on the due date. This property defaults to
-             * the plan's behavior.
+             * charged with the saved payment method on the due date. This property defaults to the
+             * plan's behavior.
              */
-            fun autoCollection(autoCollection: JsonField<Boolean>) =
-                apply {
-                    this.autoCollection = autoCollection
-                }
+            fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
+                this.autoCollection = autoCollection
+            }
 
             /**
-             * Determines the default memo on this subscription's invoices. Note that if this
-             * is not provided, it is determined by the plan configuration.
+             * Determines the default memo on this subscription's invoices. Note that if this is not
+             * provided, it is determined by the plan configuration.
              */
-            fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = defaultInvoiceMemo(JsonField.ofNullable(defaultInvoiceMemo))
+            fun defaultInvoiceMemo(defaultInvoiceMemo: String?) =
+                defaultInvoiceMemo(JsonField.ofNullable(defaultInvoiceMemo))
 
             /**
-             * Determines the default memo on this subscription's invoices. Note that if this
-             * is not provided, it is determined by the plan configuration.
+             * Determines the default memo on this subscription's invoices. Note that if this is not
+             * provided, it is determined by the plan configuration.
              */
-            fun defaultInvoiceMemo(defaultInvoiceMemo: JsonField<String>) =
-                apply {
-                    this.defaultInvoiceMemo = defaultInvoiceMemo
-                }
+            fun defaultInvoiceMemo(defaultInvoiceMemo: JsonField<String>) = apply {
+                this.defaultInvoiceMemo = defaultInvoiceMemo
+            }
 
             /**
-             * When this subscription's accrued usage reaches this threshold, an invoice will
-             * be issued for the subscription. If not specified, invoices will only be issued
-             * at the end of the billing period.
+             * When this subscription's accrued usage reaches this threshold, an invoice will be
+             * issued for the subscription. If not specified, invoices will only be issued at the
+             * end of the billing period.
              */
-            fun invoicingThreshold(invoicingThreshold: String?) = invoicingThreshold(JsonField.ofNullable(invoicingThreshold))
+            fun invoicingThreshold(invoicingThreshold: String?) =
+                invoicingThreshold(JsonField.ofNullable(invoicingThreshold))
 
             /**
-             * When this subscription's accrued usage reaches this threshold, an invoice will
-             * be issued for the subscription. If not specified, invoices will only be issued
-             * at the end of the billing period.
+             * When this subscription's accrued usage reaches this threshold, an invoice will be
+             * issued for the subscription. If not specified, invoices will only be issued at the
+             * end of the billing period.
              */
-            fun invoicingThreshold(invoicingThreshold: JsonField<String>) =
-                apply {
-                    this.invoicingThreshold = invoicingThreshold
-                }
+            fun invoicingThreshold(invoicingThreshold: JsonField<String>) = apply {
+                this.invoicingThreshold = invoicingThreshold
+            }
 
             /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed
-             * by setting the value to `null`, and the entire metadata mapping can be cleared
-             * by setting `metadata` to `null`.
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
              */
             fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
 
             /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed
-             * by setting the value to `null`, and the entire metadata mapping can be cleared
-             * by setting `metadata` to `null`.
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
              */
-            fun metadata(metadata: JsonField<Metadata>) =
-                apply {
-                    this.metadata = metadata
-                }
+            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             /**
-             * Determines the difference between the invoice issue date for subscription
-             * invoices as the date that they are due. A value of `0` here represents that the
-             * invoice is due on issue, whereas a value of `30` represents that the customer
-             * has a month to pay the invoice.
+             * Determines the difference between the invoice issue date for subscription invoices as
+             * the date that they are due. A value of `0` here represents that the invoice is due on
+             * issue, whereas a value of `30` represents that the customer has a month to pay the
+             * invoice.
              */
             fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
 
             /**
-             * Determines the difference between the invoice issue date for subscription
-             * invoices as the date that they are due. A value of `0` here represents that the
-             * invoice is due on issue, whereas a value of `30` represents that the customer
-             * has a month to pay the invoice.
+             * Determines the difference between the invoice issue date for subscription invoices as
+             * the date that they are due. A value of `0` here represents that the invoice is due on
+             * issue, whereas a value of `30` represents that the customer has a month to pay the
+             * invoice.
              */
             fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
 
             /**
-             * Determines the difference between the invoice issue date for subscription
-             * invoices as the date that they are due. A value of `0` here represents that the
-             * invoice is due on issue, whereas a value of `30` represents that the customer
-             * has a month to pay the invoice.
+             * Determines the difference between the invoice issue date for subscription invoices as
+             * the date that they are due. A value of `0` here represents that the invoice is due on
+             * issue, whereas a value of `30` represents that the customer has a month to pay the
+             * invoice.
              */
-            fun netTerms(netTerms: JsonField<Long>) =
-                apply {
-                    this.netTerms = netTerms
-                }
+            fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-            fun removeAdditionalProperty(key: String) =
-                apply {
-                    additionalProperties.remove(key)
-                }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) =
-                apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
             fun build(): Body =
                 Body(
-                  autoCollection,
-                  defaultInvoiceMemo,
-                  invoicingThreshold,
-                  metadata,
-                  netTerms,
-                  additionalProperties.toImmutable(),
+                    autoCollection,
+                    defaultInvoiceMemo,
+                    invoicingThreshold,
+                    metadata,
+                    netTerms,
+                    additionalProperties.toImmutable(),
                 )
         }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Body && autoCollection == other.autoCollection && defaultInvoiceMemo == other.defaultInvoiceMemo && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && autoCollection == other.autoCollection && defaultInvoiceMemo == other.defaultInvoiceMemo && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -413,7 +399,8 @@ class SubscriptionUpdateParams private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() = "Body{autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "Body{autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -421,11 +408,9 @@ class SubscriptionUpdateParams private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of
-         * [SubscriptionUpdateParams].
+         * Returns a mutable builder for constructing an instance of [SubscriptionUpdateParams].
          *
          * The following fields are required:
-         *
          * ```kotlin
          * .subscriptionId()
          * ```
@@ -442,305 +427,244 @@ class SubscriptionUpdateParams private constructor(
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
-        internal fun from(subscriptionUpdateParams: SubscriptionUpdateParams) =
-            apply {
-                subscriptionId = subscriptionUpdateParams.subscriptionId
-                body = subscriptionUpdateParams.body.toBuilder()
-                additionalHeaders = subscriptionUpdateParams.additionalHeaders.toBuilder()
-                additionalQueryParams = subscriptionUpdateParams.additionalQueryParams.toBuilder()
-            }
+        internal fun from(subscriptionUpdateParams: SubscriptionUpdateParams) = apply {
+            subscriptionId = subscriptionUpdateParams.subscriptionId
+            body = subscriptionUpdateParams.body.toBuilder()
+            additionalHeaders = subscriptionUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = subscriptionUpdateParams.additionalQueryParams.toBuilder()
+        }
 
-        fun subscriptionId(subscriptionId: String) =
-            apply {
-                this.subscriptionId = subscriptionId
-            }
+        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be
-         * charged with the saved payment method on the due date. This property defaults to
-         * the plan's behavior.
+         * Determines whether issued invoices for this subscription will automatically be charged
+         * with the saved payment method on the due date. This property defaults to the plan's
+         * behavior.
          */
-        fun autoCollection(autoCollection: Boolean?) =
-            apply {
-                body.autoCollection(autoCollection)
-            }
+        fun autoCollection(autoCollection: Boolean?) = apply { body.autoCollection(autoCollection) }
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be
-         * charged with the saved payment method on the due date. This property defaults to
-         * the plan's behavior.
+         * Determines whether issued invoices for this subscription will automatically be charged
+         * with the saved payment method on the due date. This property defaults to the plan's
+         * behavior.
          */
         fun autoCollection(autoCollection: Boolean) = autoCollection(autoCollection as Boolean?)
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be
-         * charged with the saved payment method on the due date. This property defaults to
-         * the plan's behavior.
+         * Determines whether issued invoices for this subscription will automatically be charged
+         * with the saved payment method on the due date. This property defaults to the plan's
+         * behavior.
          */
-        fun autoCollection(autoCollection: JsonField<Boolean>) =
-            apply {
-                body.autoCollection(autoCollection)
-            }
+        fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
+            body.autoCollection(autoCollection)
+        }
 
         /**
-         * Determines the default memo on this subscription's invoices. Note that if this
-         * is not provided, it is determined by the plan configuration.
+         * Determines the default memo on this subscription's invoices. Note that if this is not
+         * provided, it is determined by the plan configuration.
          */
-        fun defaultInvoiceMemo(defaultInvoiceMemo: String?) =
-            apply {
-                body.defaultInvoiceMemo(defaultInvoiceMemo)
-            }
+        fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = apply {
+            body.defaultInvoiceMemo(defaultInvoiceMemo)
+        }
 
         /**
-         * Determines the default memo on this subscription's invoices. Note that if this
-         * is not provided, it is determined by the plan configuration.
+         * Determines the default memo on this subscription's invoices. Note that if this is not
+         * provided, it is determined by the plan configuration.
          */
-        fun defaultInvoiceMemo(defaultInvoiceMemo: JsonField<String>) =
-            apply {
-                body.defaultInvoiceMemo(defaultInvoiceMemo)
-            }
+        fun defaultInvoiceMemo(defaultInvoiceMemo: JsonField<String>) = apply {
+            body.defaultInvoiceMemo(defaultInvoiceMemo)
+        }
 
         /**
-         * When this subscription's accrued usage reaches this threshold, an invoice will
-         * be issued for the subscription. If not specified, invoices will only be issued
-         * at the end of the billing period.
+         * When this subscription's accrued usage reaches this threshold, an invoice will be issued
+         * for the subscription. If not specified, invoices will only be issued at the end of the
+         * billing period.
          */
-        fun invoicingThreshold(invoicingThreshold: String?) =
-            apply {
-                body.invoicingThreshold(invoicingThreshold)
-            }
+        fun invoicingThreshold(invoicingThreshold: String?) = apply {
+            body.invoicingThreshold(invoicingThreshold)
+        }
 
         /**
-         * When this subscription's accrued usage reaches this threshold, an invoice will
-         * be issued for the subscription. If not specified, invoices will only be issued
-         * at the end of the billing period.
+         * When this subscription's accrued usage reaches this threshold, an invoice will be issued
+         * for the subscription. If not specified, invoices will only be issued at the end of the
+         * billing period.
          */
-        fun invoicingThreshold(invoicingThreshold: JsonField<String>) =
-            apply {
-                body.invoicingThreshold(invoicingThreshold)
-            }
+        fun invoicingThreshold(invoicingThreshold: JsonField<String>) = apply {
+            body.invoicingThreshold(invoicingThreshold)
+        }
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed
-         * by setting the value to `null`, and the entire metadata mapping can be cleared
-         * by setting `metadata` to `null`.
+         * User-specified key/value pairs for the resource. Individual keys can be removed by
+         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
+         * `metadata` to `null`.
          */
-        fun metadata(metadata: Metadata?) =
-            apply {
-                body.metadata(metadata)
-            }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed
-         * by setting the value to `null`, and the entire metadata mapping can be cleared
-         * by setting `metadata` to `null`.
+         * User-specified key/value pairs for the resource. Individual keys can be removed by
+         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
+         * `metadata` to `null`.
          */
-        fun metadata(metadata: JsonField<Metadata>) =
-            apply {
-                body.metadata(metadata)
-            }
+        fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
 
         /**
-         * Determines the difference between the invoice issue date for subscription
-         * invoices as the date that they are due. A value of `0` here represents that the
-         * invoice is due on issue, whereas a value of `30` represents that the customer
-         * has a month to pay the invoice.
+         * Determines the difference between the invoice issue date for subscription invoices as the
+         * date that they are due. A value of `0` here represents that the invoice is due on issue,
+         * whereas a value of `30` represents that the customer has a month to pay the invoice.
          */
-        fun netTerms(netTerms: Long?) =
-            apply {
-                body.netTerms(netTerms)
-            }
+        fun netTerms(netTerms: Long?) = apply { body.netTerms(netTerms) }
 
         /**
-         * Determines the difference between the invoice issue date for subscription
-         * invoices as the date that they are due. A value of `0` here represents that the
-         * invoice is due on issue, whereas a value of `30` represents that the customer
-         * has a month to pay the invoice.
+         * Determines the difference between the invoice issue date for subscription invoices as the
+         * date that they are due. A value of `0` here represents that the invoice is due on issue,
+         * whereas a value of `30` represents that the customer has a month to pay the invoice.
          */
         fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
 
         /**
-         * Determines the difference between the invoice issue date for subscription
-         * invoices as the date that they are due. A value of `0` here represents that the
-         * invoice is due on issue, whereas a value of `30` represents that the customer
-         * has a month to pay the invoice.
+         * Determines the difference between the invoice issue date for subscription invoices as the
+         * date that they are due. A value of `0` here represents that the invoice is due on issue,
+         * whereas a value of `30` represents that the customer has a month to pay the invoice.
          */
-        fun netTerms(netTerms: JsonField<Long>) =
-            apply {
-                body.netTerms(netTerms)
-            }
+        fun netTerms(netTerms: JsonField<Long>) = apply { body.netTerms(netTerms) }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.additionalProperties(additionalBodyProperties)
-            }
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
 
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) =
-            apply {
-                body.putAdditionalProperty(
-                  key, value
-                )
-            }
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) =
-            apply {
-                body.removeAdditionalProperty(key)
-            }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) =
-            apply {
-                body.removeAllAdditionalProperties(keys)
-            }
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
-        fun additionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun putAdditionalHeader(name: String, value: String) =
-            apply {
-                additionalHeaders.put(name, value)
-            }
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
+        }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.put(name, values)
-            }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun replaceAdditionalHeaders(name: String, value: String) =
-            apply {
-                additionalHeaders.replace(name, value)
-            }
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.replace(name, values)
-            }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun removeAdditionalHeaders(name: String) =
-            apply {
-                additionalHeaders.remove(name)
-            }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) =
-            apply {
-                additionalHeaders.removeAll(names)
-            }
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun putAdditionalQueryParam(key: String, value: String) =
-            apply {
-                additionalQueryParams.put(key, value)
-            }
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.put(key, values)
-            }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.putAll(additionalQueryParams)
-            }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) =
-            apply {
-                additionalQueryParams.replace(key, value)
-            }
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.replace(key, values)
-            }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.replaceAll(additionalQueryParams)
-            }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) =
-            apply {
-                additionalQueryParams.remove(key)
-            }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) =
-            apply {
-                additionalQueryParams.removeAll(keys)
-            }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
 
         fun build(): SubscriptionUpdateParams =
             SubscriptionUpdateParams(
-              checkRequired(
-                "subscriptionId", subscriptionId
-              ),
-              body.build(),
-              additionalHeaders.build(),
-              additionalQueryParams.build(),
+                checkRequired("subscriptionId", subscriptionId),
+                body.build(),
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
             )
     }
 
     /**
-     * User-specified key/value pairs for the resource. Individual keys can be removed
-     * by setting the value to `null`, and the entire metadata mapping can be cleared
-     * by setting `metadata` to `null`.
+     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
+     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
+     * `null`.
      */
     @NoAutoDetect
-    class Metadata @JsonCreator private constructor(
-        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-
+    class Metadata
+    @JsonCreator
+    private constructor(
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
     ) {
 
         @JsonAnyGetter
@@ -749,14 +673,13 @@ class SubscriptionUpdateParams private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Metadata =
-            apply {
-                if (validated) {
-                  return@apply
-                }
-
-                validated = true
+        fun validate(): Metadata = apply {
+            if (validated) {
+                return@apply
             }
+
+            validated = true
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -771,46 +694,38 @@ class SubscriptionUpdateParams private constructor(
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(metadata: Metadata) =
-                apply {
-                    additionalProperties = metadata.additionalProperties.toMutableMap()
-                }
+            internal fun from(metadata: Metadata) = apply {
+                additionalProperties = metadata.additionalProperties.toMutableMap()
+            }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) =
-                apply {
-                    additionalProperties.put(key, value)
-                }
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-            fun removeAdditionalProperty(key: String) =
-                apply {
-                    additionalProperties.remove(key)
-                }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) =
-                apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -823,14 +738,15 @@ class SubscriptionUpdateParams private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is SubscriptionUpdateParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is SubscriptionUpdateParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
-    override fun toString() = "SubscriptionUpdateParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() =
+        "SubscriptionUpdateParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
