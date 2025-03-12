@@ -16,89 +16,84 @@ import java.time.format.DateTimeFormatter
 import java.util.Objects
 
 /**
- * The credits ledger provides _auditing_ functionality over Orb's credits system
- * with a list of actions that have taken place to modify a customer's credit
- * balance. This [paginated endpoint](/api-reference/pagination) lists these
- * entries, starting from the most recent ledger entry.
+ * The credits ledger provides _auditing_ functionality over Orb's credits system with a list of
+ * actions that have taken place to modify a customer's credit balance. This
+ * [paginated endpoint](/api-reference/pagination) lists these entries, starting from the most
+ * recent ledger entry.
  *
- * More details on using Orb's real-time credit feature are
- * [here](/product-catalog/prepurchase).
+ * More details on using Orb's real-time credit feature are [here](/product-catalog/prepurchase).
  *
  * There are four major types of modifications to credit balance, detailed below.
  *
  * ## Increment
  *
- * Credits (which optionally expire on a future date) can be added via the API
- * ([Add Ledger Entry](create-ledger-entry)). The ledger entry for such an action
- * will always contain the total eligible starting and ending balance for the
- * customer at the time the entry was added to the ledger.
+ * Credits (which optionally expire on a future date) can be added via the API ([Add Ledger
+ * Entry](create-ledger-entry)). The ledger entry for such an action will always contain the total
+ * eligible starting and ending balance for the customer at the time the entry was added to the
+ * ledger.
  *
  * ## Decrement
  *
  * Deductions can occur as a result of an API call to create a ledger entry (see
- * [Add Ledger Entry](create-ledger-entry)), or automatically as a result of
- * incurring usage. Both ledger entries present the `decrement` entry type.
+ * [Add Ledger Entry](create-ledger-entry)), or automatically as a result of incurring usage. Both
+ * ledger entries present the `decrement` entry type.
  *
- * As usage for a customer is reported into Orb, credits may be deducted according
- * to the customer's plan configuration. An automated deduction of this type will
- * result in a ledger entry, also with a starting and ending balance. In order to
- * provide better tracing capabilities for automatic deductions, Orb always
- * associates each automatic deduction with the `event_id` at the time of
- * ingestion, used to pinpoint _why_ credit deduction took place and to ensure that
- * credits are never deducted without an associated usage event.
+ * As usage for a customer is reported into Orb, credits may be deducted according to the customer's
+ * plan configuration. An automated deduction of this type will result in a ledger entry, also with
+ * a starting and ending balance. In order to provide better tracing capabilities for automatic
+ * deductions, Orb always associates each automatic deduction with the `event_id` at the time of
+ * ingestion, used to pinpoint _why_ credit deduction took place and to ensure that credits are
+ * never deducted without an associated usage event.
  *
- * By default, Orb uses an algorithm that automatically deducts from the _soonest
- * expiring credit block_ first in order to ensure that all credits are utilized
- * appropriately. As an example, if trial credits with an expiration date of 2
- * weeks from now are present for a customer, they will be used before any
- * deductions take place from a non-expiring credit block.
+ * By default, Orb uses an algorithm that automatically deducts from the _soonest expiring credit
+ * block_ first in order to ensure that all credits are utilized appropriately. As an example, if
+ * trial credits with an expiration date of 2 weeks from now are present for a customer, they will
+ * be used before any deductions take place from a non-expiring credit block.
  *
- * If there are multiple blocks with the same expiration date, Orb will deduct from
- * the block with the _lower cost basis_ first (e.g. trial credits with a $0 cost
- * basis before paid credits with a $5.00 cost basis).
+ * If there are multiple blocks with the same expiration date, Orb will deduct from the block with
+ * the _lower cost basis_ first (e.g. trial credits with a $0 cost basis before paid credits with a
+ * $5.00 cost basis).
  *
- * It's also possible for a single usage event's deduction to _span_ credit blocks.
- * In this case, Orb will deduct from the next block, ending at the credit block
- * which consists of unexpiring credits. Each of these deductions will lead to a
- * _separate_ ledger entry, one per credit block that is deducted from. By default,
- * the customer's total credit balance in Orb can be negative as a result of a
- * decrement.
+ * It's also possible for a single usage event's deduction to _span_ credit blocks. In this case,
+ * Orb will deduct from the next block, ending at the credit block which consists of unexpiring
+ * credits. Each of these deductions will lead to a _separate_ ledger entry, one per credit block
+ * that is deducted from. By default, the customer's total credit balance in Orb can be negative as
+ * a result of a decrement.
  *
  * ## Expiration change
  *
  * The expiry of credits can be changed as a result of the API (See
- * [Add Ledger Entry](create-ledger-entry)). This will create a ledger entry that
- * specifies the balance as well as the initial and target expiry dates.
+ * [Add Ledger Entry](create-ledger-entry)). This will create a ledger entry that specifies the
+ * balance as well as the initial and target expiry dates.
  *
- * Note that for this entry type, `starting_balance` will equal `ending_balance`,
- * and the `amount` represents the balance transferred. The credit block linked to
- * the ledger entry is the source credit block from which there was an expiration
- * change
+ * Note that for this entry type, `starting_balance` will equal `ending_balance`, and the `amount`
+ * represents the balance transferred. The credit block linked to the ledger entry is the source
+ * credit block from which there was an expiration change
  *
  * ## Credits expiry
  *
- * When a set of credits expire on pre-set expiration date, the customer's balance
- * automatically reflects this change and adds an entry to the ledger indicating
- * this event. Note that credit expiry should always happen close to a date
- * boundary in the customer's timezone.
+ * When a set of credits expire on pre-set expiration date, the customer's balance automatically
+ * reflects this change and adds an entry to the ledger indicating this event. Note that credit
+ * expiry should always happen close to a date boundary in the customer's timezone.
  *
  * ## Void initiated
  *
- * Credit blocks can be voided via the API. The `amount` on this entry corresponds
- * to the number of credits that were remaining in the block at time of void.
- * `void_reason` will be populated if the void is created with a reason.
+ * Credit blocks can be voided via the API. The `amount` on this entry corresponds to the number of
+ * credits that were remaining in the block at time of void. `void_reason` will be populated if the
+ * void is created with a reason.
  *
  * ## Void
  *
- * When a set of credits is voided, the customer's balance automatically reflects
- * this change and adds an entry to the ledger indicating this event.
+ * When a set of credits is voided, the customer's balance automatically reflects this change and
+ * adds an entry to the ledger indicating this event.
  *
  * ## Amendment
  *
- * When credits are added to a customer's balance as a result of a correction, this
- * entry will be added to the ledger to indicate the adjustment of credits.
+ * When credits are added to a customer's balance as a result of a correction, this entry will be
+ * added to the ledger to indicate the adjustment of credits.
  */
-class CustomerCreditLedgerListByExternalIdParams private constructor(
+class CustomerCreditLedgerListByExternalIdParams
+private constructor(
     private val externalCustomerId: String,
     private val createdAtGt: OffsetDateTime?,
     private val createdAtGte: OffsetDateTime?,
@@ -112,7 +107,6 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
     private val minimumAmount: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-
 ) : Params {
 
     fun externalCustomerId(): String = externalCustomerId
@@ -129,8 +123,8 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
     fun currency(): String? = currency
 
     /**
-     * Cursor for pagination. This can be populated by the `next_cursor` value returned
-     * from the initial request.
+     * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+     * initial request.
      */
     fun cursor(): String? = cursor
 
@@ -150,66 +144,46 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams {
-      val queryParams = QueryParams.builder()
-      this.createdAtGt?.let {
-          queryParams.put(
-            "created_at[gt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-          )
-      }
-      this.createdAtGte?.let {
-          queryParams.put(
-            "created_at[gte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-          )
-      }
-      this.createdAtLt?.let {
-          queryParams.put(
-            "created_at[lt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-          )
-      }
-      this.createdAtLte?.let {
-          queryParams.put(
-            "created_at[lte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-          )
-      }
-      this.currency?.let {
-          queryParams.put(
-            "currency", listOf(it.toString())
-          )
-      }
-      this.cursor?.let {
-          queryParams.put(
-            "cursor", listOf(it.toString())
-          )
-      }
-      this.entryStatus?.let {
-          queryParams.put(
-            "entry_status", listOf(it.toString())
-          )
-      }
-      this.entryType?.let {
-          queryParams.put(
-            "entry_type", listOf(it.toString())
-          )
-      }
-      this.limit?.let {
-          queryParams.put(
-            "limit", listOf(it.toString())
-          )
-      }
-      this.minimumAmount?.let {
-          queryParams.put(
-            "minimum_amount", listOf(it.toString())
-          )
-      }
-      queryParams.putAll(additionalQueryParams)
-      return queryParams.build()
+        val queryParams = QueryParams.builder()
+        this.createdAtGt?.let {
+            queryParams.put(
+                "created_at[gt]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
+        this.createdAtGte?.let {
+            queryParams.put(
+                "created_at[gte]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
+        this.createdAtLt?.let {
+            queryParams.put(
+                "created_at[lt]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
+        this.createdAtLte?.let {
+            queryParams.put(
+                "created_at[lte]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
+        this.currency?.let { queryParams.put("currency", listOf(it.toString())) }
+        this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
+        this.entryStatus?.let { queryParams.put("entry_status", listOf(it.toString())) }
+        this.entryType?.let { queryParams.put("entry_type", listOf(it.toString())) }
+        this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
+        this.minimumAmount?.let { queryParams.put("minimum_amount", listOf(it.toString())) }
+        queryParams.putAll(additionalQueryParams)
+        return queryParams.build()
     }
 
     fun getPathParam(index: Int): String {
-      return when (index) {
-          0 -> externalCustomerId
-          else -> ""
-      }
+        return when (index) {
+            0 -> externalCustomerId
+            else -> ""
+        }
     }
 
     fun toBuilder() = Builder().from(this)
@@ -221,7 +195,6 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
          * [CustomerCreditLedgerListByExternalIdParams].
          *
          * The following fields are required:
-         *
          * ```kotlin
          * .externalCustomerId()
          * ```
@@ -247,246 +220,187 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
-        internal fun from(customerCreditLedgerListByExternalIdParams: CustomerCreditLedgerListByExternalIdParams) =
-            apply {
-                externalCustomerId = customerCreditLedgerListByExternalIdParams.externalCustomerId
-                createdAtGt = customerCreditLedgerListByExternalIdParams.createdAtGt
-                createdAtGte = customerCreditLedgerListByExternalIdParams.createdAtGte
-                createdAtLt = customerCreditLedgerListByExternalIdParams.createdAtLt
-                createdAtLte = customerCreditLedgerListByExternalIdParams.createdAtLte
-                currency = customerCreditLedgerListByExternalIdParams.currency
-                cursor = customerCreditLedgerListByExternalIdParams.cursor
-                entryStatus = customerCreditLedgerListByExternalIdParams.entryStatus
-                entryType = customerCreditLedgerListByExternalIdParams.entryType
-                limit = customerCreditLedgerListByExternalIdParams.limit
-                minimumAmount = customerCreditLedgerListByExternalIdParams.minimumAmount
-                additionalHeaders = customerCreditLedgerListByExternalIdParams.additionalHeaders.toBuilder()
-                additionalQueryParams = customerCreditLedgerListByExternalIdParams.additionalQueryParams.toBuilder()
-            }
+        internal fun from(
+            customerCreditLedgerListByExternalIdParams: CustomerCreditLedgerListByExternalIdParams
+        ) = apply {
+            externalCustomerId = customerCreditLedgerListByExternalIdParams.externalCustomerId
+            createdAtGt = customerCreditLedgerListByExternalIdParams.createdAtGt
+            createdAtGte = customerCreditLedgerListByExternalIdParams.createdAtGte
+            createdAtLt = customerCreditLedgerListByExternalIdParams.createdAtLt
+            createdAtLte = customerCreditLedgerListByExternalIdParams.createdAtLte
+            currency = customerCreditLedgerListByExternalIdParams.currency
+            cursor = customerCreditLedgerListByExternalIdParams.cursor
+            entryStatus = customerCreditLedgerListByExternalIdParams.entryStatus
+            entryType = customerCreditLedgerListByExternalIdParams.entryType
+            limit = customerCreditLedgerListByExternalIdParams.limit
+            minimumAmount = customerCreditLedgerListByExternalIdParams.minimumAmount
+            additionalHeaders =
+                customerCreditLedgerListByExternalIdParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                customerCreditLedgerListByExternalIdParams.additionalQueryParams.toBuilder()
+        }
 
-        fun externalCustomerId(externalCustomerId: String) =
-            apply {
-                this.externalCustomerId = externalCustomerId
-            }
+        fun externalCustomerId(externalCustomerId: String) = apply {
+            this.externalCustomerId = externalCustomerId
+        }
 
-        fun createdAtGt(createdAtGt: OffsetDateTime?) =
-            apply {
-                this.createdAtGt = createdAtGt
-            }
+        fun createdAtGt(createdAtGt: OffsetDateTime?) = apply { this.createdAtGt = createdAtGt }
 
-        fun createdAtGte(createdAtGte: OffsetDateTime?) =
-            apply {
-                this.createdAtGte = createdAtGte
-            }
+        fun createdAtGte(createdAtGte: OffsetDateTime?) = apply { this.createdAtGte = createdAtGte }
 
-        fun createdAtLt(createdAtLt: OffsetDateTime?) =
-            apply {
-                this.createdAtLt = createdAtLt
-            }
+        fun createdAtLt(createdAtLt: OffsetDateTime?) = apply { this.createdAtLt = createdAtLt }
 
-        fun createdAtLte(createdAtLte: OffsetDateTime?) =
-            apply {
-                this.createdAtLte = createdAtLte
-            }
+        fun createdAtLte(createdAtLte: OffsetDateTime?) = apply { this.createdAtLte = createdAtLte }
 
         /** The ledger currency or custom pricing unit to use. */
-        fun currency(currency: String?) =
-            apply {
-                this.currency = currency
-            }
+        fun currency(currency: String?) = apply { this.currency = currency }
 
         /**
-         * Cursor for pagination. This can be populated by the `next_cursor` value returned
-         * from the initial request.
+         * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+         * initial request.
          */
-        fun cursor(cursor: String?) =
-            apply {
-                this.cursor = cursor
-            }
+        fun cursor(cursor: String?) = apply { this.cursor = cursor }
 
-        fun entryStatus(entryStatus: EntryStatus?) =
-            apply {
-                this.entryStatus = entryStatus
-            }
+        fun entryStatus(entryStatus: EntryStatus?) = apply { this.entryStatus = entryStatus }
 
-        fun entryType(entryType: EntryType?) =
-            apply {
-                this.entryType = entryType
-            }
+        fun entryType(entryType: EntryType?) = apply { this.entryType = entryType }
 
         /** The number of items to fetch. Defaults to 20. */
-        fun limit(limit: Long?) =
-            apply {
-                this.limit = limit
-            }
+        fun limit(limit: Long?) = apply { this.limit = limit }
 
         /** The number of items to fetch. Defaults to 20. */
         fun limit(limit: Long) = limit(limit as Long?)
 
-        fun minimumAmount(minimumAmount: String?) =
-            apply {
-                this.minimumAmount = minimumAmount
-            }
+        fun minimumAmount(minimumAmount: String?) = apply { this.minimumAmount = minimumAmount }
 
-        fun additionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.clear()
-                putAllAdditionalHeaders(additionalHeaders)
-            }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
 
-        fun putAdditionalHeader(name: String, value: String) =
-            apply {
-                additionalHeaders.put(name, value)
-            }
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
+        }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.put(name, values)
-            }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.putAll(additionalHeaders)
-            }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
 
-        fun replaceAdditionalHeaders(name: String, value: String) =
-            apply {
-                additionalHeaders.replace(name, value)
-            }
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
-            apply {
-                additionalHeaders.replace(name, values)
-            }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalHeaders.replaceAll(additionalHeaders)
-            }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
 
-        fun removeAdditionalHeaders(name: String) =
-            apply {
-                additionalHeaders.remove(name)
-            }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) =
-            apply {
-                additionalHeaders.removeAll(names)
-            }
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalQueryParams.clear()
-                putAllAdditionalQueryParams(additionalQueryParams)
-            }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
 
-        fun putAdditionalQueryParam(key: String, value: String) =
-            apply {
-                additionalQueryParams.put(key, value)
-            }
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.put(key, values)
-            }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.putAll(additionalQueryParams)
-            }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) =
-            apply {
-                additionalQueryParams.replace(key, value)
-            }
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
-            apply {
-                additionalQueryParams.replace(key, values)
-            }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
-            apply {
-                this.additionalQueryParams.replaceAll(additionalQueryParams)
-            }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) =
-            apply {
-                additionalQueryParams.remove(key)
-            }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) =
-            apply {
-                additionalQueryParams.removeAll(keys)
-            }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
 
         fun build(): CustomerCreditLedgerListByExternalIdParams =
             CustomerCreditLedgerListByExternalIdParams(
-              checkRequired(
-                "externalCustomerId", externalCustomerId
-              ),
-              createdAtGt,
-              createdAtGte,
-              createdAtLt,
-              createdAtLte,
-              currency,
-              cursor,
-              entryStatus,
-              entryType,
-              limit,
-              minimumAmount,
-              additionalHeaders.build(),
-              additionalQueryParams.build(),
+                checkRequired("externalCustomerId", externalCustomerId),
+                createdAtGt,
+                createdAtGte,
+                createdAtLt,
+                createdAtLte,
+                currency,
+                cursor,
+                entryStatus,
+                entryType,
+                limit,
+                minimumAmount,
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
             )
     }
 
-    class EntryStatus @JsonCreator private constructor(
-        private val value: JsonField<String>,
-
-    ) : Enum {
+    class EntryStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that
-         * doesn't match any known member, and you want to know that value. For example, if
-         * the SDK is on an older version than the API, then the API may respond with new
-         * members that the SDK is unaware of.
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -504,33 +418,29 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
         }
 
         /**
-         * An enum containing [EntryStatus]'s known values, as well as an [_UNKNOWN]
-         * member.
+         * An enum containing [EntryStatus]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EntryStatus] can contain an unknown value in a couple of cases:
-         *
-         * - It was deserialized from data that doesn't match any known member. For
-         *   example, if the SDK is on an older version than the API, then the API may
-         *   respond with new members that the SDK is unaware of.
-         *
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
             COMMITTED,
             PENDING,
             /**
-             * An enum member indicating that [EntryStatus] was instantiated with an unknown
-             * value.
+             * An enum member indicating that [EntryStatus] was instantiated with an unknown value.
              */
             _UNKNOWN,
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or
-         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if
-         * you want to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -542,11 +452,10 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and
-         * don't want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
          *
-         * @throws OrbInvalidDataException if this class instance's value is a not a known
-         * member.
+         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
          */
         fun known(): Known =
             when (this) {
@@ -558,20 +467,21 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for
-         * debugging and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
          *
-         * @throws OrbInvalidDataException if this class instance's value does not have the
-         * expected primitive type.
+         * @throws OrbInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
          */
-        fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+        fun asString(): String =
+            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
+            return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -579,21 +489,17 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
         override fun toString() = value.toString()
     }
 
-    class EntryType @JsonCreator private constructor(
-        private val value: JsonField<String>,
-
-    ) : Enum {
+    class EntryType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that
-         * doesn't match any known member, and you want to know that value. For example, if
-         * the SDK is on an older version than the API, then the API may respond with new
-         * members that the SDK is unaware of.
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -629,11 +535,9 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
          * An enum containing [EntryType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EntryType] can contain an unknown value in a couple of cases:
-         *
-         * - It was deserialized from data that doesn't match any known member. For
-         *   example, if the SDK is on an older version than the API, then the API may
-         *   respond with new members that the SDK is unaware of.
-         *
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -645,18 +549,17 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
             VOID_INITIATED,
             AMENDMENT,
             /**
-             * An enum member indicating that [EntryType] was instantiated with an unknown
-             * value.
+             * An enum member indicating that [EntryType] was instantiated with an unknown value.
              */
             _UNKNOWN,
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or
-         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if
-         * you want to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -673,11 +576,10 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and
-         * don't want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
          *
-         * @throws OrbInvalidDataException if this class instance's value is a not a known
-         * member.
+         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
          */
         fun known(): Known =
             when (this) {
@@ -694,20 +596,21 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for
-         * debugging and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
          *
-         * @throws OrbInvalidDataException if this class instance's value does not have the
-         * expected primitive type.
+         * @throws OrbInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
          */
-        fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+        fun asString(): String =
+            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
+            return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -716,14 +619,15 @@ class CustomerCreditLedgerListByExternalIdParams private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return /* spotless:off */ other is CustomerCreditLedgerListByExternalIdParams && externalCustomerId == other.externalCustomerId && createdAtGt == other.createdAtGt && createdAtGte == other.createdAtGte && createdAtLt == other.createdAtLt && createdAtLte == other.createdAtLte && currency == other.currency && cursor == other.cursor && entryStatus == other.entryStatus && entryType == other.entryType && limit == other.limit && minimumAmount == other.minimumAmount && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is CustomerCreditLedgerListByExternalIdParams && externalCustomerId == other.externalCustomerId && createdAtGt == other.createdAtGt && createdAtGte == other.createdAtGte && createdAtLt == other.createdAtLt && createdAtLte == other.createdAtLte && currency == other.currency && cursor == other.cursor && entryStatus == other.entryStatus && entryType == other.entryType && limit == other.limit && minimumAmount == other.minimumAmount && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, createdAtGt, createdAtGte, createdAtLt, createdAtLte, currency, cursor, entryStatus, entryType, limit, minimumAmount, additionalHeaders, additionalQueryParams) /* spotless:on */
 
-    override fun toString() = "CustomerCreditLedgerListByExternalIdParams{externalCustomerId=$externalCustomerId, createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, currency=$currency, cursor=$cursor, entryStatus=$entryStatus, entryType=$entryType, limit=$limit, minimumAmount=$minimumAmount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() =
+        "CustomerCreditLedgerListByExternalIdParams{externalCustomerId=$externalCustomerId, createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, currency=$currency, cursor=$cursor, entryStatus=$entryStatus, entryType=$entryType, limit=$limit, minimumAmount=$minimumAmount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -20,101 +20,131 @@ import com.withorb.api.models.CustomerCreditTopUpListParams
 interface TopUpServiceAsync {
 
     /**
-     * Returns a view of this service that provides access to raw HTTP responses for
-     * each method.
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
 
     /**
-     * This endpoint allows you to create a new top-up for a specified customer's
-     * balance. While this top-up is active, the customer's balance will added in
-     * increments of the specified amount whenever the balance reaches the specified
-     * threshold.
+     * This endpoint allows you to create a new top-up for a specified customer's balance. While
+     * this top-up is active, the customer's balance will added in increments of the specified
+     * amount whenever the balance reaches the specified threshold.
      *
-     * If a top-up already exists for this customer in the same currency, the existing
-     * top-up will be replaced.
+     * If a top-up already exists for this customer in the same currency, the existing top-up will
+     * be replaced.
      */
-    suspend fun create(params: CustomerCreditTopUpCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CustomerCreditTopUpCreateResponse
+    suspend fun create(
+        params: CustomerCreditTopUpCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreditTopUpCreateResponse
 
     /** List top-ups */
-    suspend fun list(params: CustomerCreditTopUpListParams, requestOptions: RequestOptions = RequestOptions.none()): CustomerCreditTopUpListPageAsync
+    suspend fun list(
+        params: CustomerCreditTopUpListParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreditTopUpListPageAsync
 
     /**
-     * This deactivates the top-up and voids any invoices associated with pending
-     * credit blocks purchased through the top-up.
+     * This deactivates the top-up and voids any invoices associated with pending credit blocks
+     * purchased through the top-up.
      */
-    suspend fun delete(params: CustomerCreditTopUpDeleteParams, requestOptions: RequestOptions = RequestOptions.none())
+    suspend fun delete(
+        params: CustomerCreditTopUpDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    )
 
     /**
-     * This endpoint allows you to create a new top-up for a specified customer's
-     * balance. While this top-up is active, the customer's balance will added in
-     * increments of the specified amount whenever the balance reaches the specified
-     * threshold.
+     * This endpoint allows you to create a new top-up for a specified customer's balance. While
+     * this top-up is active, the customer's balance will added in increments of the specified
+     * amount whenever the balance reaches the specified threshold.
      *
-     * If a top-up already exists for this customer in the same currency, the existing
-     * top-up will be replaced.
+     * If a top-up already exists for this customer in the same currency, the existing top-up will
+     * be replaced.
      */
-    suspend fun createByExternalId(params: CustomerCreditTopUpCreateByExternalIdParams, requestOptions: RequestOptions = RequestOptions.none()): CustomerCreditTopUpCreateByExternalIdResponse
+    suspend fun createByExternalId(
+        params: CustomerCreditTopUpCreateByExternalIdParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreditTopUpCreateByExternalIdResponse
 
     /**
-     * This deactivates the top-up and voids any invoices associated with pending
-     * credit blocks purchased through the top-up.
+     * This deactivates the top-up and voids any invoices associated with pending credit blocks
+     * purchased through the top-up.
      */
-    suspend fun deleteByExternalId(params: CustomerCreditTopUpDeleteByExternalIdParams, requestOptions: RequestOptions = RequestOptions.none())
+    suspend fun deleteByExternalId(
+        params: CustomerCreditTopUpDeleteByExternalIdParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    )
 
     /** List top-ups by external ID */
-    suspend fun listByExternalId(params: CustomerCreditTopUpListByExternalIdParams, requestOptions: RequestOptions = RequestOptions.none()): CustomerCreditTopUpListByExternalIdPageAsync
+    suspend fun listByExternalId(
+        params: CustomerCreditTopUpListByExternalIdParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreditTopUpListByExternalIdPageAsync
 
-    /**
-     * A view of [TopUpServiceAsync] that provides access to raw HTTP responses for
-     * each method.
-     */
+    /** A view of [TopUpServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
-         * Returns a raw HTTP response for `post /customers/{customer_id}/credits/top_ups`,
-         * but is otherwise the same as [TopUpServiceAsync.create].
+         * Returns a raw HTTP response for `post /customers/{customer_id}/credits/top_ups`, but is
+         * otherwise the same as [TopUpServiceAsync.create].
          */
         @MustBeClosed
-        suspend fun create(params: CustomerCreditTopUpCreateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<CustomerCreditTopUpCreateResponse>
+        suspend fun create(
+            params: CustomerCreditTopUpCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditTopUpCreateResponse>
 
         /**
-         * Returns a raw HTTP response for `get /customers/{customer_id}/credits/top_ups`,
-         * but is otherwise the same as [TopUpServiceAsync.list].
+         * Returns a raw HTTP response for `get /customers/{customer_id}/credits/top_ups`, but is
+         * otherwise the same as [TopUpServiceAsync.list].
          */
         @MustBeClosed
-        suspend fun list(params: CustomerCreditTopUpListParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<CustomerCreditTopUpListPageAsync>
+        suspend fun list(
+            params: CustomerCreditTopUpListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditTopUpListPageAsync>
 
         /**
-         * Returns a raw HTTP response for
-         * `delete /customers/{customer_id}/credits/top_ups/{top_up_id}`, but is otherwise
-         * the same as [TopUpServiceAsync.delete].
+         * Returns a raw HTTP response for `delete
+         * /customers/{customer_id}/credits/top_ups/{top_up_id}`, but is otherwise the same as
+         * [TopUpServiceAsync.delete].
          */
         @MustBeClosed
-        suspend fun delete(params: CustomerCreditTopUpDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponse
+        suspend fun delete(
+            params: CustomerCreditTopUpDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
 
         /**
-         * Returns a raw HTTP response for
-         * `post /customers/external_customer_id/{external_customer_id}/credits/top_ups`,
-         * but is otherwise the same as [TopUpServiceAsync.createByExternalId].
+         * Returns a raw HTTP response for `post
+         * /customers/external_customer_id/{external_customer_id}/credits/top_ups`, but is otherwise
+         * the same as [TopUpServiceAsync.createByExternalId].
          */
         @MustBeClosed
-        suspend fun createByExternalId(params: CustomerCreditTopUpCreateByExternalIdParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<CustomerCreditTopUpCreateByExternalIdResponse>
+        suspend fun createByExternalId(
+            params: CustomerCreditTopUpCreateByExternalIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditTopUpCreateByExternalIdResponse>
 
         /**
-         * Returns a raw HTTP response for
-         * `delete /customers/external_customer_id/{external_customer_id}/credits/top_ups/{top_up_id}`,
-         * but is otherwise the same as [TopUpServiceAsync.deleteByExternalId].
+         * Returns a raw HTTP response for `delete
+         * /customers/external_customer_id/{external_customer_id}/credits/top_ups/{top_up_id}`, but
+         * is otherwise the same as [TopUpServiceAsync.deleteByExternalId].
          */
         @MustBeClosed
-        suspend fun deleteByExternalId(params: CustomerCreditTopUpDeleteByExternalIdParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponse
+        suspend fun deleteByExternalId(
+            params: CustomerCreditTopUpDeleteByExternalIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
 
         /**
-         * Returns a raw HTTP response for
-         * `get /customers/external_customer_id/{external_customer_id}/credits/top_ups`,
-         * but is otherwise the same as [TopUpServiceAsync.listByExternalId].
+         * Returns a raw HTTP response for `get
+         * /customers/external_customer_id/{external_customer_id}/credits/top_ups`, but is otherwise
+         * the same as [TopUpServiceAsync.listByExternalId].
          */
         @MustBeClosed
-        suspend fun listByExternalId(params: CustomerCreditTopUpListByExternalIdParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<CustomerCreditTopUpListByExternalIdPageAsync>
+        suspend fun listByExternalId(
+            params: CustomerCreditTopUpListByExternalIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditTopUpListByExternalIdPageAsync>
     }
 }

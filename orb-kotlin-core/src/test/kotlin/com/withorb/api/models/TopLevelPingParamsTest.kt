@@ -8,6 +8,6 @@ class TopLevelPingParamsTest {
 
     @Test
     fun create() {
-      TopLevelPingParams.builder().build()
+        TopLevelPingParams.builder().build()
     }
 }
