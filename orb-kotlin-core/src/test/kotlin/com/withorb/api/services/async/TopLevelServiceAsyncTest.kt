@@ -4,7 +4,6 @@ package com.withorb.api.services.async
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
-import com.withorb.api.models.TopLevelPingParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -13,14 +12,15 @@ class TopLevelServiceAsyncTest {
 
     @Test
     suspend fun ping() {
-      val client = OrbOkHttpClientAsync.builder()
-          .baseUrl(TestServerExtension.BASE_URL)
-          .apiKey("My API Key")
-          .build()
-      val topLevelServiceAsync = client.topLevel()
+        val client =
+            OrbOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val topLevelServiceAsync = client.topLevel()
 
-      val response = topLevelServiceAsync.ping()
+        val response = topLevelServiceAsync.ping()
 
-      response.validate()
+        response.validate()
     }
 }

@@ -11,48 +11,47 @@ class SubscriptionTriggerPhaseParamsTest {
 
     @Test
     fun create() {
-      SubscriptionTriggerPhaseParams.builder()
-          .subscriptionId("subscription_id")
-          .allowInvoiceCreditOrVoid(true)
-          .effectiveDate(LocalDate.parse("2019-12-27"))
-          .build()
+        SubscriptionTriggerPhaseParams.builder()
+            .subscriptionId("subscription_id")
+            .allowInvoiceCreditOrVoid(true)
+            .effectiveDate(LocalDate.parse("2019-12-27"))
+            .build()
     }
 
     @Test
     fun body() {
-      val params = SubscriptionTriggerPhaseParams.builder()
-          .subscriptionId("subscription_id")
-          .allowInvoiceCreditOrVoid(true)
-          .effectiveDate(LocalDate.parse("2019-12-27"))
-          .build()
+        val params =
+            SubscriptionTriggerPhaseParams.builder()
+                .subscriptionId("subscription_id")
+                .allowInvoiceCreditOrVoid(true)
+                .effectiveDate(LocalDate.parse("2019-12-27"))
+                .build()
 
-      val body = params._body()
+        val body = params._body()
 
-      assertNotNull(body)
-      assertThat(body.allowInvoiceCreditOrVoid()).isEqualTo(true)
-      assertThat(body.effectiveDate()).isEqualTo(LocalDate.parse("2019-12-27"))
+        assertNotNull(body)
+        assertThat(body.allowInvoiceCreditOrVoid()).isEqualTo(true)
+        assertThat(body.effectiveDate()).isEqualTo(LocalDate.parse("2019-12-27"))
     }
 
     @Test
     fun bodyWithoutOptionalFields() {
-      val params = SubscriptionTriggerPhaseParams.builder()
-          .subscriptionId("subscription_id")
-          .build()
+        val params =
+            SubscriptionTriggerPhaseParams.builder().subscriptionId("subscription_id").build()
 
-      val body = params._body()
+        val body = params._body()
 
-      assertNotNull(body)
+        assertNotNull(body)
     }
 
     @Test
     fun getPathParam() {
-      val params = SubscriptionTriggerPhaseParams.builder()
-          .subscriptionId("subscription_id")
-          .build()
-      assertThat(params).isNotNull
-      // path param "subscriptionId"
-      assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
-      // out-of-bound path param
-      assertThat(params.getPathParam(1)).isEqualTo("")
+        val params =
+            SubscriptionTriggerPhaseParams.builder().subscriptionId("subscription_id").build()
+        assertThat(params).isNotNull
+        // path param "subscriptionId"
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
+        // out-of-bound path param
+        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }
