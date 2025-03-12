@@ -23,19 +23,20 @@ import java.time.OffsetDateTime
 import java.util.Objects
 
 /**
- * This endpoint allows you to create a new top-up for a specified customer's balance. While this
- * top-up is active, the customer's balance will added in increments of the specified amount
- * whenever the balance reaches the specified threshold.
+ * This endpoint allows you to create a new top-up for a specified customer's
+ * balance. While this top-up is active, the customer's balance will added in
+ * increments of the specified amount whenever the balance reaches the specified
+ * threshold.
  *
- * If a top-up already exists for this customer in the same currency, the existing top-up will be
- * replaced.
+ * If a top-up already exists for this customer in the same currency, the existing
+ * top-up will be replaced.
  */
-class CustomerCreditTopUpCreateParams
-private constructor(
+class CustomerCreditTopUpCreateParams private constructor(
     private val customerId: String,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
+
 ) : Params {
 
     fun customerId(): String = customerId
@@ -44,8 +45,8 @@ private constructor(
     fun amount(): String = body.amount()
 
     /**
-     * The currency or custom pricing unit to use for this top-up. If this is a real-world currency,
-     * it must match the customer's invoicing currency.
+     * The currency or custom pricing unit to use for this top-up. If this is a
+     * real-world currency, it must match the customer's invoicing currency.
      */
     fun currency(): String = body.currency()
 
@@ -56,19 +57,20 @@ private constructor(
     fun perUnitCostBasis(): String = body.perUnitCostBasis()
 
     /**
-     * The threshold at which to trigger the top-up. If the balance is at or below this threshold,
-     * the top-up will be triggered.
+     * The threshold at which to trigger the top-up. If the balance is at or below this
+     * threshold, the top-up will be triggered.
      */
     fun threshold(): String = body.threshold()
 
     /**
-     * The date from which the top-up is active. If unspecified, the top-up is active immediately.
+     * The date from which the top-up is active. If unspecified, the top-up is active
+     * immediately.
      */
     fun activeFrom(): OffsetDateTime? = body.activeFrom()
 
     /**
-     * The number of days or months after which the top-up expires. If unspecified, it does not
-     * expire.
+     * The number of days or months after which the top-up expires. If unspecified, it
+     * does not expire.
      */
     fun expiresAfter(): Long? = body.expiresAfter()
 
@@ -79,8 +81,8 @@ private constructor(
     fun _amount(): JsonField<String> = body._amount()
 
     /**
-     * The currency or custom pricing unit to use for this top-up. If this is a real-world currency,
-     * it must match the customer's invoicing currency.
+     * The currency or custom pricing unit to use for this top-up. If this is a
+     * real-world currency, it must match the customer's invoicing currency.
      */
     fun _currency(): JsonField<String> = body._currency()
 
@@ -91,19 +93,20 @@ private constructor(
     fun _perUnitCostBasis(): JsonField<String> = body._perUnitCostBasis()
 
     /**
-     * The threshold at which to trigger the top-up. If the balance is at or below this threshold,
-     * the top-up will be triggered.
+     * The threshold at which to trigger the top-up. If the balance is at or below this
+     * threshold, the top-up will be triggered.
      */
     fun _threshold(): JsonField<String> = body._threshold()
 
     /**
-     * The date from which the top-up is active. If unspecified, the top-up is active immediately.
+     * The date from which the top-up is active. If unspecified, the top-up is active
+     * immediately.
      */
     fun _activeFrom(): JsonField<OffsetDateTime> = body._activeFrom()
 
     /**
-     * The number of days or months after which the top-up expires. If unspecified, it does not
-     * expire.
+     * The number of days or months after which the top-up expires. If unspecified, it
+     * does not expire.
      */
     fun _expiresAfter(): JsonField<Long> = body._expiresAfter()
 
@@ -123,50 +126,32 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> customerId
-            else -> ""
-        }
+      return when (index) {
+          0 -> customerId
+          else -> ""
+      }
     }
 
     @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("amount")
-        @ExcludeMissing
-        private val amount: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("currency")
-        @ExcludeMissing
-        private val currency: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("invoice_settings")
-        @ExcludeMissing
-        private val invoiceSettings: JsonField<InvoiceSettings> = JsonMissing.of(),
-        @JsonProperty("per_unit_cost_basis")
-        @ExcludeMissing
-        private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("threshold")
-        @ExcludeMissing
-        private val threshold: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("active_from")
-        @ExcludeMissing
-        private val activeFrom: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("expires_after")
-        @ExcludeMissing
-        private val expiresAfter: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("expires_after_unit")
-        @ExcludeMissing
-        private val expiresAfterUnit: JsonField<ExpiresAfterUnit> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    class Body @JsonCreator private constructor(
+        @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("currency") @ExcludeMissing private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("invoice_settings") @ExcludeMissing private val invoiceSettings: JsonField<InvoiceSettings> = JsonMissing.of(),
+        @JsonProperty("per_unit_cost_basis") @ExcludeMissing private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("threshold") @ExcludeMissing private val threshold: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("active_from") @ExcludeMissing private val activeFrom: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("expires_after") @ExcludeMissing private val expiresAfter: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("expires_after_unit") @ExcludeMissing private val expiresAfterUnit: JsonField<ExpiresAfterUnit> = JsonMissing.of(),
+        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
     ) {
 
         /** The amount to increment when the threshold is reached. */
         fun amount(): String = amount.getRequired("amount")
 
         /**
-         * The currency or custom pricing unit to use for this top-up. If this is a real-world
-         * currency, it must match the customer's invoicing currency.
+         * The currency or custom pricing unit to use for this top-up. If this is a
+         * real-world currency, it must match the customer's invoicing currency.
          */
         fun currency(): String = currency.getRequired("currency")
 
@@ -189,23 +174,26 @@ private constructor(
         fun activeFrom(): OffsetDateTime? = activeFrom.getNullable("active_from")
 
         /**
-         * The number of days or months after which the top-up expires. If unspecified, it does not
-         * expire.
+         * The number of days or months after which the top-up expires. If unspecified, it
+         * does not expire.
          */
         fun expiresAfter(): Long? = expiresAfter.getNullable("expires_after")
 
         /** The unit of expires_after. */
-        fun expiresAfterUnit(): ExpiresAfterUnit? =
-            expiresAfterUnit.getNullable("expires_after_unit")
+        fun expiresAfterUnit(): ExpiresAfterUnit? = expiresAfterUnit.getNullable("expires_after_unit")
 
         /** The amount to increment when the threshold is reached. */
-        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
+        @JsonProperty("amount")
+        @ExcludeMissing
+        fun _amount(): JsonField<String> = amount
 
         /**
-         * The currency or custom pricing unit to use for this top-up. If this is a real-world
-         * currency, it must match the customer's invoicing currency.
+         * The currency or custom pricing unit to use for this top-up. If this is a
+         * real-world currency, it must match the customer's invoicing currency.
          */
-        @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+        @JsonProperty("currency")
+        @ExcludeMissing
+        fun _currency(): JsonField<String> = currency
 
         /** Settings for invoices generated by triggered top-ups. */
         @JsonProperty("invoice_settings")
@@ -221,7 +209,9 @@ private constructor(
          * The threshold at which to trigger the top-up. If the balance is at or below this
          * threshold, the top-up will be triggered.
          */
-        @JsonProperty("threshold") @ExcludeMissing fun _threshold(): JsonField<String> = threshold
+        @JsonProperty("threshold")
+        @ExcludeMissing
+        fun _threshold(): JsonField<String> = threshold
 
         /**
          * The date from which the top-up is active. If unspecified, the top-up is active
@@ -232,8 +222,8 @@ private constructor(
         fun _activeFrom(): JsonField<OffsetDateTime> = activeFrom
 
         /**
-         * The number of days or months after which the top-up expires. If unspecified, it does not
-         * expire.
+         * The number of days or months after which the top-up expires. If unspecified, it
+         * does not expire.
          */
         @JsonProperty("expires_after")
         @ExcludeMissing
@@ -250,21 +240,22 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): Body =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            amount()
-            currency()
-            invoiceSettings().validate()
-            perUnitCostBasis()
-            threshold()
-            activeFrom()
-            expiresAfter()
-            expiresAfterUnit()
-            validated = true
-        }
+                amount()
+                currency()
+                invoiceSettings().validate()
+                perUnitCostBasis()
+                threshold()
+                activeFrom()
+                expiresAfter()
+                expiresAfterUnit()
+                validated = true
+            }
 
         fun toBuilder() = Builder().from(this)
 
@@ -274,6 +265,7 @@ private constructor(
              * Returns a mutable builder for constructing an instance of [Body].
              *
              * The following fields are required:
+             *
              * ```kotlin
              * .amount()
              * .currency()
@@ -298,53 +290,60 @@ private constructor(
             private var expiresAfterUnit: JsonField<ExpiresAfterUnit> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(body: Body) = apply {
-                amount = body.amount
-                currency = body.currency
-                invoiceSettings = body.invoiceSettings
-                perUnitCostBasis = body.perUnitCostBasis
-                threshold = body.threshold
-                activeFrom = body.activeFrom
-                expiresAfter = body.expiresAfter
-                expiresAfterUnit = body.expiresAfterUnit
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
+            internal fun from(body: Body) =
+                apply {
+                    amount = body.amount
+                    currency = body.currency
+                    invoiceSettings = body.invoiceSettings
+                    perUnitCostBasis = body.perUnitCostBasis
+                    threshold = body.threshold
+                    activeFrom = body.activeFrom
+                    expiresAfter = body.expiresAfter
+                    expiresAfterUnit = body.expiresAfterUnit
+                    additionalProperties = body.additionalProperties.toMutableMap()
+                }
 
             /** The amount to increment when the threshold is reached. */
             fun amount(amount: String) = amount(JsonField.of(amount))
 
             /** The amount to increment when the threshold is reached. */
-            fun amount(amount: JsonField<String>) = apply { this.amount = amount }
+            fun amount(amount: JsonField<String>) =
+                apply {
+                    this.amount = amount
+                }
 
             /**
-             * The currency or custom pricing unit to use for this top-up. If this is a real-world
-             * currency, it must match the customer's invoicing currency.
+             * The currency or custom pricing unit to use for this top-up. If this is a
+             * real-world currency, it must match the customer's invoicing currency.
              */
             fun currency(currency: String) = currency(JsonField.of(currency))
 
             /**
-             * The currency or custom pricing unit to use for this top-up. If this is a real-world
-             * currency, it must match the customer's invoicing currency.
+             * The currency or custom pricing unit to use for this top-up. If this is a
+             * real-world currency, it must match the customer's invoicing currency.
              */
-            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+            fun currency(currency: JsonField<String>) =
+                apply {
+                    this.currency = currency
+                }
 
             /** Settings for invoices generated by triggered top-ups. */
-            fun invoiceSettings(invoiceSettings: InvoiceSettings) =
-                invoiceSettings(JsonField.of(invoiceSettings))
+            fun invoiceSettings(invoiceSettings: InvoiceSettings) = invoiceSettings(JsonField.of(invoiceSettings))
 
             /** Settings for invoices generated by triggered top-ups. */
-            fun invoiceSettings(invoiceSettings: JsonField<InvoiceSettings>) = apply {
-                this.invoiceSettings = invoiceSettings
-            }
+            fun invoiceSettings(invoiceSettings: JsonField<InvoiceSettings>) =
+                apply {
+                    this.invoiceSettings = invoiceSettings
+                }
 
             /** How much, in the customer's currency, to charge for each unit. */
-            fun perUnitCostBasis(perUnitCostBasis: String) =
-                perUnitCostBasis(JsonField.of(perUnitCostBasis))
+            fun perUnitCostBasis(perUnitCostBasis: String) = perUnitCostBasis(JsonField.of(perUnitCostBasis))
 
             /** How much, in the customer's currency, to charge for each unit. */
-            fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
-                this.perUnitCostBasis = perUnitCostBasis
-            }
+            fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) =
+                apply {
+                    this.perUnitCostBasis = perUnitCostBasis
+                }
 
             /**
              * The threshold at which to trigger the top-up. If the balance is at or below this
@@ -356,91 +355,112 @@ private constructor(
              * The threshold at which to trigger the top-up. If the balance is at or below this
              * threshold, the top-up will be triggered.
              */
-            fun threshold(threshold: JsonField<String>) = apply { this.threshold = threshold }
+            fun threshold(threshold: JsonField<String>) =
+                apply {
+                    this.threshold = threshold
+                }
 
             /**
              * The date from which the top-up is active. If unspecified, the top-up is active
              * immediately.
              */
-            fun activeFrom(activeFrom: OffsetDateTime?) =
-                activeFrom(JsonField.ofNullable(activeFrom))
+            fun activeFrom(activeFrom: OffsetDateTime?) = activeFrom(JsonField.ofNullable(activeFrom))
 
             /**
              * The date from which the top-up is active. If unspecified, the top-up is active
              * immediately.
              */
-            fun activeFrom(activeFrom: JsonField<OffsetDateTime>) = apply {
-                this.activeFrom = activeFrom
-            }
+            fun activeFrom(activeFrom: JsonField<OffsetDateTime>) =
+                apply {
+                    this.activeFrom = activeFrom
+                }
 
             /**
-             * The number of days or months after which the top-up expires. If unspecified, it does
-             * not expire.
+             * The number of days or months after which the top-up expires. If unspecified, it
+             * does not expire.
              */
             fun expiresAfter(expiresAfter: Long?) = expiresAfter(JsonField.ofNullable(expiresAfter))
 
             /**
-             * The number of days or months after which the top-up expires. If unspecified, it does
-             * not expire.
+             * The number of days or months after which the top-up expires. If unspecified, it
+             * does not expire.
              */
             fun expiresAfter(expiresAfter: Long) = expiresAfter(expiresAfter as Long?)
 
             /**
-             * The number of days or months after which the top-up expires. If unspecified, it does
-             * not expire.
+             * The number of days or months after which the top-up expires. If unspecified, it
+             * does not expire.
              */
-            fun expiresAfter(expiresAfter: JsonField<Long>) = apply {
-                this.expiresAfter = expiresAfter
-            }
+            fun expiresAfter(expiresAfter: JsonField<Long>) =
+                apply {
+                    this.expiresAfter = expiresAfter
+                }
 
             /** The unit of expires_after. */
-            fun expiresAfterUnit(expiresAfterUnit: ExpiresAfterUnit?) =
-                expiresAfterUnit(JsonField.ofNullable(expiresAfterUnit))
+            fun expiresAfterUnit(expiresAfterUnit: ExpiresAfterUnit?) = expiresAfterUnit(JsonField.ofNullable(expiresAfterUnit))
 
             /** The unit of expires_after. */
-            fun expiresAfterUnit(expiresAfterUnit: JsonField<ExpiresAfterUnit>) = apply {
-                this.expiresAfterUnit = expiresAfterUnit
-            }
+            fun expiresAfterUnit(expiresAfterUnit: JsonField<ExpiresAfterUnit>) =
+                apply {
+                    this.expiresAfterUnit = expiresAfterUnit
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: JsonValue) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
             fun build(): Body =
                 Body(
-                    checkRequired("amount", amount),
-                    checkRequired("currency", currency),
-                    checkRequired("invoiceSettings", invoiceSettings),
-                    checkRequired("perUnitCostBasis", perUnitCostBasis),
-                    checkRequired("threshold", threshold),
-                    activeFrom,
-                    expiresAfter,
-                    expiresAfterUnit,
-                    additionalProperties.toImmutable(),
+                  checkRequired(
+                    "amount", amount
+                  ),
+                  checkRequired(
+                    "currency", currency
+                  ),
+                  checkRequired(
+                    "invoiceSettings", invoiceSettings
+                  ),
+                  checkRequired(
+                    "perUnitCostBasis", perUnitCostBasis
+                  ),
+                  checkRequired(
+                    "threshold", threshold
+                  ),
+                  activeFrom,
+                  expiresAfter,
+                  expiresAfterUnit,
+                  additionalProperties.toImmutable(),
                 )
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return /* spotless:off */ other is Body && amount == other.amount && currency == other.currency && invoiceSettings == other.invoiceSettings && perUnitCostBasis == other.perUnitCostBasis && threshold == other.threshold && activeFrom == other.activeFrom && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalProperties == other.additionalProperties /* spotless:on */
+          return /* spotless:off */ other is Body && amount == other.amount && currency == other.currency && invoiceSettings == other.invoiceSettings && perUnitCostBasis == other.perUnitCostBasis && threshold == other.threshold && activeFrom == other.activeFrom && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -449,8 +469,7 @@ private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() =
-            "Body{amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, activeFrom=$activeFrom, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
+        override fun toString() = "Body{amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, activeFrom=$activeFrom, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -462,6 +481,7 @@ private constructor(
          * [CustomerCreditTopUpCreateParams].
          *
          * The following fields are required:
+         *
          * ```kotlin
          * .customerId()
          * .amount()
@@ -488,260 +508,323 @@ private constructor(
                 customerId = customerCreditTopUpCreateParams.customerId
                 body = customerCreditTopUpCreateParams.body.toBuilder()
                 additionalHeaders = customerCreditTopUpCreateParams.additionalHeaders.toBuilder()
-                additionalQueryParams =
-                    customerCreditTopUpCreateParams.additionalQueryParams.toBuilder()
+                additionalQueryParams = customerCreditTopUpCreateParams.additionalQueryParams.toBuilder()
             }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String) =
+            apply {
+                this.customerId = customerId
+            }
 
         /** The amount to increment when the threshold is reached. */
-        fun amount(amount: String) = apply { body.amount(amount) }
+        fun amount(amount: String) =
+            apply {
+                body.amount(amount)
+            }
 
         /** The amount to increment when the threshold is reached. */
-        fun amount(amount: JsonField<String>) = apply { body.amount(amount) }
+        fun amount(amount: JsonField<String>) =
+            apply {
+                body.amount(amount)
+            }
 
         /**
-         * The currency or custom pricing unit to use for this top-up. If this is a real-world
-         * currency, it must match the customer's invoicing currency.
+         * The currency or custom pricing unit to use for this top-up. If this is a
+         * real-world currency, it must match the customer's invoicing currency.
          */
-        fun currency(currency: String) = apply { body.currency(currency) }
+        fun currency(currency: String) =
+            apply {
+                body.currency(currency)
+            }
 
         /**
-         * The currency or custom pricing unit to use for this top-up. If this is a real-world
-         * currency, it must match the customer's invoicing currency.
+         * The currency or custom pricing unit to use for this top-up. If this is a
+         * real-world currency, it must match the customer's invoicing currency.
          */
-        fun currency(currency: JsonField<String>) = apply { body.currency(currency) }
+        fun currency(currency: JsonField<String>) =
+            apply {
+                body.currency(currency)
+            }
 
         /** Settings for invoices generated by triggered top-ups. */
-        fun invoiceSettings(invoiceSettings: InvoiceSettings) = apply {
-            body.invoiceSettings(invoiceSettings)
-        }
+        fun invoiceSettings(invoiceSettings: InvoiceSettings) =
+            apply {
+                body.invoiceSettings(invoiceSettings)
+            }
 
         /** Settings for invoices generated by triggered top-ups. */
-        fun invoiceSettings(invoiceSettings: JsonField<InvoiceSettings>) = apply {
-            body.invoiceSettings(invoiceSettings)
-        }
+        fun invoiceSettings(invoiceSettings: JsonField<InvoiceSettings>) =
+            apply {
+                body.invoiceSettings(invoiceSettings)
+            }
 
         /** How much, in the customer's currency, to charge for each unit. */
-        fun perUnitCostBasis(perUnitCostBasis: String) = apply {
-            body.perUnitCostBasis(perUnitCostBasis)
-        }
+        fun perUnitCostBasis(perUnitCostBasis: String) =
+            apply {
+                body.perUnitCostBasis(perUnitCostBasis)
+            }
 
         /** How much, in the customer's currency, to charge for each unit. */
-        fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
-            body.perUnitCostBasis(perUnitCostBasis)
-        }
+        fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) =
+            apply {
+                body.perUnitCostBasis(perUnitCostBasis)
+            }
 
         /**
          * The threshold at which to trigger the top-up. If the balance is at or below this
          * threshold, the top-up will be triggered.
          */
-        fun threshold(threshold: String) = apply { body.threshold(threshold) }
+        fun threshold(threshold: String) =
+            apply {
+                body.threshold(threshold)
+            }
 
         /**
          * The threshold at which to trigger the top-up. If the balance is at or below this
          * threshold, the top-up will be triggered.
          */
-        fun threshold(threshold: JsonField<String>) = apply { body.threshold(threshold) }
+        fun threshold(threshold: JsonField<String>) =
+            apply {
+                body.threshold(threshold)
+            }
 
         /**
          * The date from which the top-up is active. If unspecified, the top-up is active
          * immediately.
          */
-        fun activeFrom(activeFrom: OffsetDateTime?) = apply { body.activeFrom(activeFrom) }
+        fun activeFrom(activeFrom: OffsetDateTime?) =
+            apply {
+                body.activeFrom(activeFrom)
+            }
 
         /**
          * The date from which the top-up is active. If unspecified, the top-up is active
          * immediately.
          */
-        fun activeFrom(activeFrom: JsonField<OffsetDateTime>) = apply {
-            body.activeFrom(activeFrom)
-        }
+        fun activeFrom(activeFrom: JsonField<OffsetDateTime>) =
+            apply {
+                body.activeFrom(activeFrom)
+            }
 
         /**
-         * The number of days or months after which the top-up expires. If unspecified, it does not
-         * expire.
+         * The number of days or months after which the top-up expires. If unspecified, it
+         * does not expire.
          */
-        fun expiresAfter(expiresAfter: Long?) = apply { body.expiresAfter(expiresAfter) }
+        fun expiresAfter(expiresAfter: Long?) =
+            apply {
+                body.expiresAfter(expiresAfter)
+            }
 
         /**
-         * The number of days or months after which the top-up expires. If unspecified, it does not
-         * expire.
+         * The number of days or months after which the top-up expires. If unspecified, it
+         * does not expire.
          */
         fun expiresAfter(expiresAfter: Long) = expiresAfter(expiresAfter as Long?)
 
         /**
-         * The number of days or months after which the top-up expires. If unspecified, it does not
-         * expire.
+         * The number of days or months after which the top-up expires. If unspecified, it
+         * does not expire.
          */
-        fun expiresAfter(expiresAfter: JsonField<Long>) = apply { body.expiresAfter(expiresAfter) }
+        fun expiresAfter(expiresAfter: JsonField<Long>) =
+            apply {
+                body.expiresAfter(expiresAfter)
+            }
 
         /** The unit of expires_after. */
-        fun expiresAfterUnit(expiresAfterUnit: ExpiresAfterUnit?) = apply {
-            body.expiresAfterUnit(expiresAfterUnit)
-        }
+        fun expiresAfterUnit(expiresAfterUnit: ExpiresAfterUnit?) =
+            apply {
+                body.expiresAfterUnit(expiresAfterUnit)
+            }
 
         /** The unit of expires_after. */
-        fun expiresAfterUnit(expiresAfterUnit: JsonField<ExpiresAfterUnit>) = apply {
-            body.expiresAfterUnit(expiresAfterUnit)
-        }
+        fun expiresAfterUnit(expiresAfterUnit: JsonField<ExpiresAfterUnit>) =
+            apply {
+                body.expiresAfterUnit(expiresAfterUnit)
+            }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.additionalProperties(additionalBodyProperties)
+            }
 
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) =
+            apply {
+                body.putAdditionalProperty(
+                  key, value
+                )
+            }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+        fun removeAdditionalBodyProperty(key: String) =
+            apply {
+                body.removeAdditionalProperty(key)
+            }
 
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) =
+            apply {
+                body.removeAllAdditionalProperties(keys)
+            }
 
-        fun additionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun putAdditionalHeader(name: String, value: String) = apply {
-            additionalHeaders.put(name, value)
-        }
+        fun putAdditionalHeader(name: String, value: String) =
+            apply {
+                additionalHeaders.put(name, value)
+            }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.put(name, values)
-        }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.put(name, values)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun replaceAdditionalHeaders(name: String, value: String) = apply {
-            additionalHeaders.replace(name, value)
-        }
+        fun replaceAdditionalHeaders(name: String, value: String) =
+            apply {
+                additionalHeaders.replace(name, value)
+            }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.replace(name, values)
-        }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.replace(name, values)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) =
+            apply {
+                additionalHeaders.remove(name)
+            }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
-            additionalHeaders.removeAll(names)
-        }
+        fun removeAllAdditionalHeaders(names: Set<String>) =
+            apply {
+                additionalHeaders.removeAll(names)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun putAdditionalQueryParam(key: String, value: String) = apply {
-            additionalQueryParams.put(key, value)
-        }
+        fun putAdditionalQueryParam(key: String, value: String) =
+            apply {
+                additionalQueryParams.put(key, value)
+            }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.put(key, values)
-        }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.put(key, values)
+            }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.putAll(additionalQueryParams)
-        }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
-            additionalQueryParams.replace(key, value)
-        }
+        fun replaceAdditionalQueryParams(key: String, value: String) =
+            apply {
+                additionalQueryParams.replace(key, value)
+            }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.replace(key, values)
-        }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.replace(key, values)
+            }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.replaceAll(additionalQueryParams)
-        }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) =
+            apply {
+                additionalQueryParams.remove(key)
+            }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
-            additionalQueryParams.removeAll(keys)
-        }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) =
+            apply {
+                additionalQueryParams.removeAll(keys)
+            }
 
         fun build(): CustomerCreditTopUpCreateParams =
             CustomerCreditTopUpCreateParams(
-                checkRequired("customerId", customerId),
-                body.build(),
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
+              checkRequired(
+                "customerId", customerId
+              ),
+              body.build(),
+              additionalHeaders.build(),
+              additionalQueryParams.build(),
             )
     }
 
     /** Settings for invoices generated by triggered top-ups. */
     @NoAutoDetect
-    class InvoiceSettings
-    @JsonCreator
-    private constructor(
-        @JsonProperty("auto_collection")
-        @ExcludeMissing
-        private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("net_terms")
-        @ExcludeMissing
-        private val netTerms: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("memo")
-        @ExcludeMissing
-        private val memo: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("require_successful_payment")
-        @ExcludeMissing
-        private val requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    class InvoiceSettings @JsonCreator private constructor(
+        @JsonProperty("auto_collection") @ExcludeMissing private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("net_terms") @ExcludeMissing private val netTerms: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("memo") @ExcludeMissing private val memo: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("require_successful_payment") @ExcludeMissing private val requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of(),
+        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
     ) {
 
         /**
-         * Whether the credits purchase invoice should auto collect with the customer's saved
-         * payment method.
+         * Whether the credits purchase invoice should auto collect with the customer's
+         * saved payment method.
          */
         fun autoCollection(): Boolean = autoCollection.getRequired("auto_collection")
 
         /**
-         * The net terms determines the difference between the invoice date and the issue date for
-         * the invoice. If you intend the invoice to be due on issue, set this to 0.
+         * The net terms determines the difference between the invoice date and the issue
+         * date for the invoice. If you intend the invoice to be due on issue, set this
+         * to 0.
          */
         fun netTerms(): Long = netTerms.getRequired("net_terms")
 
@@ -749,32 +832,36 @@ private constructor(
         fun memo(): String? = memo.getNullable("memo")
 
         /**
-         * If true, new credit blocks created by this top-up will require that the corresponding
-         * invoice is paid before they can be drawn down from.
+         * If true, new credit blocks created by this top-up will require that the
+         * corresponding invoice is paid before they can be drawn down from.
          */
-        fun requireSuccessfulPayment(): Boolean? =
-            requireSuccessfulPayment.getNullable("require_successful_payment")
+        fun requireSuccessfulPayment(): Boolean? = requireSuccessfulPayment.getNullable("require_successful_payment")
 
         /**
-         * Whether the credits purchase invoice should auto collect with the customer's saved
-         * payment method.
+         * Whether the credits purchase invoice should auto collect with the customer's
+         * saved payment method.
          */
         @JsonProperty("auto_collection")
         @ExcludeMissing
         fun _autoCollection(): JsonField<Boolean> = autoCollection
 
         /**
-         * The net terms determines the difference between the invoice date and the issue date for
-         * the invoice. If you intend the invoice to be due on issue, set this to 0.
+         * The net terms determines the difference between the invoice date and the issue
+         * date for the invoice. If you intend the invoice to be due on issue, set this
+         * to 0.
          */
-        @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
+        @JsonProperty("net_terms")
+        @ExcludeMissing
+        fun _netTerms(): JsonField<Long> = netTerms
 
         /** An optional memo to display on the invoice. */
-        @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
+        @JsonProperty("memo")
+        @ExcludeMissing
+        fun _memo(): JsonField<String> = memo
 
         /**
-         * If true, new credit blocks created by this top-up will require that the corresponding
-         * invoice is paid before they can be drawn down from.
+         * If true, new credit blocks created by this top-up will require that the
+         * corresponding invoice is paid before they can be drawn down from.
          */
         @JsonProperty("require_successful_payment")
         @ExcludeMissing
@@ -786,17 +873,18 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): InvoiceSettings = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): InvoiceSettings =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            autoCollection()
-            netTerms()
-            memo()
-            requireSuccessfulPayment()
-            validated = true
-        }
+                autoCollection()
+                netTerms()
+                memo()
+                requireSuccessfulPayment()
+                validated = true
+            }
 
         fun toBuilder() = Builder().from(this)
 
@@ -806,6 +894,7 @@ private constructor(
              * Returns a mutable builder for constructing an instance of [InvoiceSettings].
              *
              * The following fields are required:
+             *
              * ```kotlin
              * .autoCollection()
              * .netTerms()
@@ -823,97 +912,117 @@ private constructor(
             private var requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(invoiceSettings: InvoiceSettings) = apply {
-                autoCollection = invoiceSettings.autoCollection
-                netTerms = invoiceSettings.netTerms
-                memo = invoiceSettings.memo
-                requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
-                additionalProperties = invoiceSettings.additionalProperties.toMutableMap()
-            }
+            internal fun from(invoiceSettings: InvoiceSettings) =
+                apply {
+                    autoCollection = invoiceSettings.autoCollection
+                    netTerms = invoiceSettings.netTerms
+                    memo = invoiceSettings.memo
+                    requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
+                    additionalProperties = invoiceSettings.additionalProperties.toMutableMap()
+                }
 
             /**
-             * Whether the credits purchase invoice should auto collect with the customer's saved
-             * payment method.
+             * Whether the credits purchase invoice should auto collect with the customer's
+             * saved payment method.
              */
-            fun autoCollection(autoCollection: Boolean) =
-                autoCollection(JsonField.of(autoCollection))
+            fun autoCollection(autoCollection: Boolean) = autoCollection(JsonField.of(autoCollection))
 
             /**
-             * Whether the credits purchase invoice should auto collect with the customer's saved
-             * payment method.
+             * Whether the credits purchase invoice should auto collect with the customer's
+             * saved payment method.
              */
-            fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
-                this.autoCollection = autoCollection
-            }
+            fun autoCollection(autoCollection: JsonField<Boolean>) =
+                apply {
+                    this.autoCollection = autoCollection
+                }
 
             /**
-             * The net terms determines the difference between the invoice date and the issue date
-             * for the invoice. If you intend the invoice to be due on issue, set this to 0.
+             * The net terms determines the difference between the invoice date and the issue
+             * date for the invoice. If you intend the invoice to be due on issue, set this
+             * to 0.
              */
             fun netTerms(netTerms: Long) = netTerms(JsonField.of(netTerms))
 
             /**
-             * The net terms determines the difference between the invoice date and the issue date
-             * for the invoice. If you intend the invoice to be due on issue, set this to 0.
+             * The net terms determines the difference between the invoice date and the issue
+             * date for the invoice. If you intend the invoice to be due on issue, set this
+             * to 0.
              */
-            fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
+            fun netTerms(netTerms: JsonField<Long>) =
+                apply {
+                    this.netTerms = netTerms
+                }
 
             /** An optional memo to display on the invoice. */
             fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
 
             /** An optional memo to display on the invoice. */
-            fun memo(memo: JsonField<String>) = apply { this.memo = memo }
+            fun memo(memo: JsonField<String>) =
+                apply {
+                    this.memo = memo
+                }
 
             /**
-             * If true, new credit blocks created by this top-up will require that the corresponding
-             * invoice is paid before they can be drawn down from.
+             * If true, new credit blocks created by this top-up will require that the
+             * corresponding invoice is paid before they can be drawn down from.
              */
-            fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean) =
-                requireSuccessfulPayment(JsonField.of(requireSuccessfulPayment))
+            fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean) = requireSuccessfulPayment(JsonField.of(requireSuccessfulPayment))
 
             /**
-             * If true, new credit blocks created by this top-up will require that the corresponding
-             * invoice is paid before they can be drawn down from.
+             * If true, new credit blocks created by this top-up will require that the
+             * corresponding invoice is paid before they can be drawn down from.
              */
-            fun requireSuccessfulPayment(requireSuccessfulPayment: JsonField<Boolean>) = apply {
-                this.requireSuccessfulPayment = requireSuccessfulPayment
-            }
+            fun requireSuccessfulPayment(requireSuccessfulPayment: JsonField<Boolean>) =
+                apply {
+                    this.requireSuccessfulPayment = requireSuccessfulPayment
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: JsonValue) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
             fun build(): InvoiceSettings =
                 InvoiceSettings(
-                    checkRequired("autoCollection", autoCollection),
-                    checkRequired("netTerms", netTerms),
-                    memo,
-                    requireSuccessfulPayment,
-                    additionalProperties.toImmutable(),
+                  checkRequired(
+                    "autoCollection", autoCollection
+                  ),
+                  checkRequired(
+                    "netTerms", netTerms
+                  ),
+                  memo,
+                  requireSuccessfulPayment,
+                  additionalProperties.toImmutable(),
                 )
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return /* spotless:off */ other is InvoiceSettings && autoCollection == other.autoCollection && netTerms == other.netTerms && memo == other.memo && requireSuccessfulPayment == other.requireSuccessfulPayment && additionalProperties == other.additionalProperties /* spotless:on */
+          return /* spotless:off */ other is InvoiceSettings && autoCollection == other.autoCollection && netTerms == other.netTerms && memo == other.memo && requireSuccessfulPayment == other.requireSuccessfulPayment && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -922,23 +1031,25 @@ private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() =
-            "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
+        override fun toString() = "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
     }
 
     /** The unit of expires_after. */
-    class ExpiresAfterUnit @JsonCreator private constructor(private val value: JsonField<String>) :
-        Enum {
+    class ExpiresAfterUnit @JsonCreator private constructor(
+        private val value: JsonField<String>,
+
+    ) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
+         * This is usually only useful if this instance was deserialized from data that
+         * doesn't match any known member, and you want to know that value. For example, if
+         * the SDK is on an older version than the API, then the API may respond with new
+         * members that the SDK is unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -956,30 +1067,34 @@ private constructor(
         }
 
         /**
-         * An enum containing [ExpiresAfterUnit]'s known values, as well as an [_UNKNOWN] member.
+         * An enum containing [ExpiresAfterUnit]'s known values, as well as an [_UNKNOWN]
+         * member.
          *
-         * An instance of [ExpiresAfterUnit] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
+         * An instance of [ExpiresAfterUnit] can contain an unknown value in a couple of
+         * cases:
+         *
+         * - It was deserialized from data that doesn't match any known member. For
+         *   example, if the SDK is on an older version than the API, then the API may
+         *   respond with new members that the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
             DAY,
             MONTH,
             /**
-             * An enum member indicating that [ExpiresAfterUnit] was instantiated with an unknown
-             * value.
+             * An enum member indicating that [ExpiresAfterUnit] was instantiated with an
+             * unknown value.
              */
             _UNKNOWN,
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or
+         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if
+         * you want to throw for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -991,10 +1106,11 @@ private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and
+         * don't want to throw for the unknown case.
          *
-         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
+         * @throws OrbInvalidDataException if this class instance's value is a not a known
+         * member.
          */
         fun known(): Known =
             when (this) {
@@ -1006,21 +1122,20 @@ private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for
+         * debugging and generally doesn't throw.
          *
-         * @throws OrbInvalidDataException if this class instance's value does not have the expected
-         *   primitive type.
+         * @throws OrbInvalidDataException if this class instance's value does not have the
+         * expected primitive type.
          */
-        fun asString(): String =
-            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+        fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return /* spotless:off */ other is ExpiresAfterUnit && value == other.value /* spotless:on */
+          return /* spotless:off */ other is ExpiresAfterUnit && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1029,15 +1144,14 @@ private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return /* spotless:off */ other is CustomerCreditTopUpCreateParams && customerId == other.customerId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+      return /* spotless:off */ other is CustomerCreditTopUpCreateParams && customerId == other.customerId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
-    override fun toString() =
-        "CustomerCreditTopUpCreateParams{customerId=$customerId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() = "CustomerCreditTopUpCreateParams{customerId=$customerId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

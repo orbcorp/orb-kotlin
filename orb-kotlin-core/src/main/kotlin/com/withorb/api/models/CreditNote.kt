@@ -21,54 +21,29 @@ import java.time.OffsetDateTime
 import java.util.Objects
 
 /**
- * The [Credit Note](/invoicing/credit-notes) resource represents a credit that has been applied to
- * a particular invoice.
+ * The [Credit Note](/invoicing/credit-notes) resource represents a credit that has
+ * been applied to a particular invoice.
  */
 @NoAutoDetect
-class CreditNote
-@JsonCreator
-private constructor(
+class CreditNote @JsonCreator private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("created_at")
-    @ExcludeMissing
-    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("credit_note_number")
-    @ExcludeMissing
-    private val creditNoteNumber: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("credit_note_pdf")
-    @ExcludeMissing
-    private val creditNotePdf: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("customer")
-    @ExcludeMissing
-    private val customer: JsonField<Customer> = JsonMissing.of(),
-    @JsonProperty("invoice_id")
-    @ExcludeMissing
-    private val invoiceId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("line_items")
-    @ExcludeMissing
-    private val lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
-    @JsonProperty("maximum_amount_adjustment")
-    @ExcludeMissing
-    private val maximumAmountAdjustment: JsonField<MaximumAmountAdjustment> = JsonMissing.of(),
+    @JsonProperty("created_at") @ExcludeMissing private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("credit_note_number") @ExcludeMissing private val creditNoteNumber: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("credit_note_pdf") @ExcludeMissing private val creditNotePdf: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("customer") @ExcludeMissing private val customer: JsonField<Customer> = JsonMissing.of(),
+    @JsonProperty("invoice_id") @ExcludeMissing private val invoiceId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("line_items") @ExcludeMissing private val lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
+    @JsonProperty("maximum_amount_adjustment") @ExcludeMissing private val maximumAmountAdjustment: JsonField<MaximumAmountAdjustment> = JsonMissing.of(),
     @JsonProperty("memo") @ExcludeMissing private val memo: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("minimum_amount_refunded")
-    @ExcludeMissing
-    private val minimumAmountRefunded: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("reason")
-    @ExcludeMissing
-    private val reason: JsonField<Reason> = JsonMissing.of(),
-    @JsonProperty("subtotal")
-    @ExcludeMissing
-    private val subtotal: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("minimum_amount_refunded") @ExcludeMissing private val minimumAmountRefunded: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("reason") @ExcludeMissing private val reason: JsonField<Reason> = JsonMissing.of(),
+    @JsonProperty("subtotal") @ExcludeMissing private val subtotal: JsonField<String> = JsonMissing.of(),
     @JsonProperty("total") @ExcludeMissing private val total: JsonField<String> = JsonMissing.of(),
     @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
-    @JsonProperty("voided_at")
-    @ExcludeMissing
-    private val voidedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("discounts")
-    @ExcludeMissing
-    private val discounts: JsonField<List<Discount>> = JsonMissing.of(),
+    @JsonProperty("voided_at") @ExcludeMissing private val voidedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("discounts") @ExcludeMissing private val discounts: JsonField<List<Discount>> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
 ) {
 
     /** The Orb id of this credit note. */
@@ -92,15 +67,13 @@ private constructor(
     fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
 
     /** The maximum amount applied on the original invoice */
-    fun maximumAmountAdjustment(): MaximumAmountAdjustment? =
-        maximumAmountAdjustment.getNullable("maximum_amount_adjustment")
+    fun maximumAmountAdjustment(): MaximumAmountAdjustment? = maximumAmountAdjustment.getNullable("maximum_amount_adjustment")
 
     /** An optional memo supplied on the credit note. */
     fun memo(): String? = memo.getNullable("memo")
 
     /** Any credited amount from the applied minimum on the invoice. */
-    fun minimumAmountRefunded(): String? =
-        minimumAmountRefunded.getNullable("minimum_amount_refunded")
+    fun minimumAmountRefunded(): String? = minimumAmountRefunded.getNullable("minimum_amount_refunded")
 
     fun reason(): Reason? = reason.getNullable("reason")
 
@@ -119,7 +92,9 @@ private constructor(
     fun discounts(): List<Discount>? = discounts.getNullable("discounts")
 
     /** The Orb id of this credit note. */
-    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+    @JsonProperty("id")
+    @ExcludeMissing
+    fun _id(): JsonField<String> = id
 
     /** The creation time of the resource in Orb. */
     @JsonProperty("created_at")
@@ -136,10 +111,14 @@ private constructor(
     @ExcludeMissing
     fun _creditNotePdf(): JsonField<String> = creditNotePdf
 
-    @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
+    @JsonProperty("customer")
+    @ExcludeMissing
+    fun _customer(): JsonField<Customer> = customer
 
     /** The id of the invoice resource that this credit note is applied to. */
-    @JsonProperty("invoice_id") @ExcludeMissing fun _invoiceId(): JsonField<String> = invoiceId
+    @JsonProperty("invoice_id")
+    @ExcludeMissing
+    fun _invoiceId(): JsonField<String> = invoiceId
 
     /** All of the line items associated with this credit note. */
     @JsonProperty("line_items")
@@ -152,25 +131,37 @@ private constructor(
     fun _maximumAmountAdjustment(): JsonField<MaximumAmountAdjustment> = maximumAmountAdjustment
 
     /** An optional memo supplied on the credit note. */
-    @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
+    @JsonProperty("memo")
+    @ExcludeMissing
+    fun _memo(): JsonField<String> = memo
 
     /** Any credited amount from the applied minimum on the invoice. */
     @JsonProperty("minimum_amount_refunded")
     @ExcludeMissing
     fun _minimumAmountRefunded(): JsonField<String> = minimumAmountRefunded
 
-    @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<Reason> = reason
+    @JsonProperty("reason")
+    @ExcludeMissing
+    fun _reason(): JsonField<Reason> = reason
 
     /** The total prior to any creditable invoice-level discounts or minimums. */
-    @JsonProperty("subtotal") @ExcludeMissing fun _subtotal(): JsonField<String> = subtotal
+    @JsonProperty("subtotal")
+    @ExcludeMissing
+    fun _subtotal(): JsonField<String> = subtotal
 
     /** The total including creditable invoice-level discounts or minimums, and tax. */
-    @JsonProperty("total") @ExcludeMissing fun _total(): JsonField<String> = total
+    @JsonProperty("total")
+    @ExcludeMissing
+    fun _total(): JsonField<String> = total
 
-    @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
+    @JsonProperty("type")
+    @ExcludeMissing
+    fun _type(): JsonField<Type> = type
 
     /** The time at which the credit note was voided in Orb, if applicable. */
-    @JsonProperty("voided_at") @ExcludeMissing fun _voidedAt(): JsonField<OffsetDateTime> = voidedAt
+    @JsonProperty("voided_at")
+    @ExcludeMissing
+    fun _voidedAt(): JsonField<OffsetDateTime> = voidedAt
 
     /** Any discounts applied on the original invoice. */
     @JsonProperty("discounts")
@@ -183,29 +174,30 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): CreditNote = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): CreditNote =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        id()
-        createdAt()
-        creditNoteNumber()
-        creditNotePdf()
-        customer().validate()
-        invoiceId()
-        lineItems().forEach { it.validate() }
-        maximumAmountAdjustment()?.validate()
-        memo()
-        minimumAmountRefunded()
-        reason()
-        subtotal()
-        total()
-        type()
-        voidedAt()
-        discounts()?.forEach { it.validate() }
-        validated = true
-    }
+            id()
+            createdAt()
+            creditNoteNumber()
+            creditNotePdf()
+            customer().validate()
+            invoiceId()
+            lineItems().forEach { it.validate() }
+            maximumAmountAdjustment()?.validate()
+            memo()
+            minimumAmountRefunded()
+            reason()
+            subtotal()
+            total()
+            type()
+            voidedAt()
+            discounts()?.forEach { it.validate() }
+            validated = true
+        }
 
     fun toBuilder() = Builder().from(this)
 
@@ -215,6 +207,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [CreditNote].
          *
          * The following fields are required:
+         *
          * ```kotlin
          * .id()
          * .createdAt()
@@ -257,85 +250,98 @@ private constructor(
         private var discounts: JsonField<MutableList<Discount>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(creditNote: CreditNote) = apply {
-            id = creditNote.id
-            createdAt = creditNote.createdAt
-            creditNoteNumber = creditNote.creditNoteNumber
-            creditNotePdf = creditNote.creditNotePdf
-            customer = creditNote.customer
-            invoiceId = creditNote.invoiceId
-            lineItems = creditNote.lineItems.map { it.toMutableList() }
-            maximumAmountAdjustment = creditNote.maximumAmountAdjustment
-            memo = creditNote.memo
-            minimumAmountRefunded = creditNote.minimumAmountRefunded
-            reason = creditNote.reason
-            subtotal = creditNote.subtotal
-            total = creditNote.total
-            type = creditNote.type
-            voidedAt = creditNote.voidedAt
-            discounts = creditNote.discounts.map { it.toMutableList() }
-            additionalProperties = creditNote.additionalProperties.toMutableMap()
-        }
+        internal fun from(creditNote: CreditNote) =
+            apply {
+                id = creditNote.id
+                createdAt = creditNote.createdAt
+                creditNoteNumber = creditNote.creditNoteNumber
+                creditNotePdf = creditNote.creditNotePdf
+                customer = creditNote.customer
+                invoiceId = creditNote.invoiceId
+                lineItems = creditNote.lineItems.map { it.toMutableList() }
+                maximumAmountAdjustment = creditNote.maximumAmountAdjustment
+                memo = creditNote.memo
+                minimumAmountRefunded = creditNote.minimumAmountRefunded
+                reason = creditNote.reason
+                subtotal = creditNote.subtotal
+                total = creditNote.total
+                type = creditNote.type
+                voidedAt = creditNote.voidedAt
+                discounts = creditNote.discounts.map { it.toMutableList() }
+                additionalProperties = creditNote.additionalProperties.toMutableMap()
+            }
 
         /** The Orb id of this credit note. */
         fun id(id: String) = id(JsonField.of(id))
 
         /** The Orb id of this credit note. */
-        fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) =
+            apply {
+                this.id = id
+            }
 
         /** The creation time of the resource in Orb. */
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         /** The creation time of the resource in Orb. */
-        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+        fun createdAt(createdAt: JsonField<OffsetDateTime>) =
+            apply {
+                this.createdAt = createdAt
+            }
 
         /** The unique identifier for credit notes. */
-        fun creditNoteNumber(creditNoteNumber: String) =
-            creditNoteNumber(JsonField.of(creditNoteNumber))
+        fun creditNoteNumber(creditNoteNumber: String) = creditNoteNumber(JsonField.of(creditNoteNumber))
 
         /** The unique identifier for credit notes. */
-        fun creditNoteNumber(creditNoteNumber: JsonField<String>) = apply {
-            this.creditNoteNumber = creditNoteNumber
-        }
+        fun creditNoteNumber(creditNoteNumber: JsonField<String>) =
+            apply {
+                this.creditNoteNumber = creditNoteNumber
+            }
 
         /** A URL to a PDF of the credit note. */
-        fun creditNotePdf(creditNotePdf: String?) =
-            creditNotePdf(JsonField.ofNullable(creditNotePdf))
+        fun creditNotePdf(creditNotePdf: String?) = creditNotePdf(JsonField.ofNullable(creditNotePdf))
 
         /** A URL to a PDF of the credit note. */
-        fun creditNotePdf(creditNotePdf: JsonField<String>) = apply {
-            this.creditNotePdf = creditNotePdf
-        }
+        fun creditNotePdf(creditNotePdf: JsonField<String>) =
+            apply {
+                this.creditNotePdf = creditNotePdf
+            }
 
         fun customer(customer: Customer) = customer(JsonField.of(customer))
 
-        fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+        fun customer(customer: JsonField<Customer>) =
+            apply {
+                this.customer = customer
+            }
 
         /** The id of the invoice resource that this credit note is applied to. */
         fun invoiceId(invoiceId: String) = invoiceId(JsonField.of(invoiceId))
 
         /** The id of the invoice resource that this credit note is applied to. */
-        fun invoiceId(invoiceId: JsonField<String>) = apply { this.invoiceId = invoiceId }
+        fun invoiceId(invoiceId: JsonField<String>) =
+            apply {
+                this.invoiceId = invoiceId
+            }
 
         /** All of the line items associated with this credit note. */
         fun lineItems(lineItems: List<LineItem>) = lineItems(JsonField.of(lineItems))
 
         /** All of the line items associated with this credit note. */
-        fun lineItems(lineItems: JsonField<List<LineItem>>) = apply {
-            this.lineItems = lineItems.map { it.toMutableList() }
-        }
+        fun lineItems(lineItems: JsonField<List<LineItem>>) =
+            apply {
+                this.lineItems = lineItems.map { it.toMutableList() }
+            }
 
         /** All of the line items associated with this credit note. */
-        fun addLineItem(lineItem: LineItem) = apply {
-            lineItems =
-                (lineItems ?: JsonField.of(mutableListOf())).also {
+        fun addLineItem(lineItem: LineItem) =
+            apply {
+                lineItems = (lineItems ?: JsonField.of(mutableListOf())).also {
                     checkKnown("lineItems", it).add(lineItem)
                 }
-        }
+            }
 
         /** The maximum amount applied on the original invoice */
-        fun maximumAmountAdjustment(maximumAmountAdjustment: MaximumAmountAdjustment?) =
-            maximumAmountAdjustment(JsonField.ofNullable(maximumAmountAdjustment))
+        fun maximumAmountAdjustment(maximumAmountAdjustment: MaximumAmountAdjustment?) = maximumAmountAdjustment(JsonField.ofNullable(maximumAmountAdjustment))
 
         /** The maximum amount applied on the original invoice */
         fun maximumAmountAdjustment(maximumAmountAdjustment: JsonField<MaximumAmountAdjustment>) =
@@ -347,117 +353,171 @@ private constructor(
         fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
 
         /** An optional memo supplied on the credit note. */
-        fun memo(memo: JsonField<String>) = apply { this.memo = memo }
+        fun memo(memo: JsonField<String>) =
+            apply {
+                this.memo = memo
+            }
 
         /** Any credited amount from the applied minimum on the invoice. */
-        fun minimumAmountRefunded(minimumAmountRefunded: String?) =
-            minimumAmountRefunded(JsonField.ofNullable(minimumAmountRefunded))
+        fun minimumAmountRefunded(minimumAmountRefunded: String?) = minimumAmountRefunded(JsonField.ofNullable(minimumAmountRefunded))
 
         /** Any credited amount from the applied minimum on the invoice. */
-        fun minimumAmountRefunded(minimumAmountRefunded: JsonField<String>) = apply {
-            this.minimumAmountRefunded = minimumAmountRefunded
-        }
+        fun minimumAmountRefunded(minimumAmountRefunded: JsonField<String>) =
+            apply {
+                this.minimumAmountRefunded = minimumAmountRefunded
+            }
 
         fun reason(reason: Reason?) = reason(JsonField.ofNullable(reason))
 
-        fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
+        fun reason(reason: JsonField<Reason>) =
+            apply {
+                this.reason = reason
+            }
 
         /** The total prior to any creditable invoice-level discounts or minimums. */
         fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
 
         /** The total prior to any creditable invoice-level discounts or minimums. */
-        fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
+        fun subtotal(subtotal: JsonField<String>) =
+            apply {
+                this.subtotal = subtotal
+            }
 
         /** The total including creditable invoice-level discounts or minimums, and tax. */
         fun total(total: String) = total(JsonField.of(total))
 
         /** The total including creditable invoice-level discounts or minimums, and tax. */
-        fun total(total: JsonField<String>) = apply { this.total = total }
+        fun total(total: JsonField<String>) =
+            apply {
+                this.total = total
+            }
 
         fun type(type: Type) = type(JsonField.of(type))
 
-        fun type(type: JsonField<Type>) = apply { this.type = type }
+        fun type(type: JsonField<Type>) =
+            apply {
+                this.type = type
+            }
 
         /** The time at which the credit note was voided in Orb, if applicable. */
         fun voidedAt(voidedAt: OffsetDateTime?) = voidedAt(JsonField.ofNullable(voidedAt))
 
         /** The time at which the credit note was voided in Orb, if applicable. */
-        fun voidedAt(voidedAt: JsonField<OffsetDateTime>) = apply { this.voidedAt = voidedAt }
+        fun voidedAt(voidedAt: JsonField<OffsetDateTime>) =
+            apply {
+                this.voidedAt = voidedAt
+            }
 
         /** Any discounts applied on the original invoice. */
         fun discounts(discounts: List<Discount>) = discounts(JsonField.of(discounts))
 
         /** Any discounts applied on the original invoice. */
-        fun discounts(discounts: JsonField<List<Discount>>) = apply {
-            this.discounts = discounts.map { it.toMutableList() }
-        }
+        fun discounts(discounts: JsonField<List<Discount>>) =
+            apply {
+                this.discounts = discounts.map { it.toMutableList() }
+            }
 
         /** Any discounts applied on the original invoice. */
-        fun addDiscount(discount: Discount) = apply {
-            discounts =
-                (discounts ?: JsonField.of(mutableListOf())).also {
+        fun addDiscount(discount: Discount) =
+            apply {
+                discounts = (discounts ?: JsonField.of(mutableListOf())).also {
                     checkKnown("discounts", it).add(discount)
                 }
-        }
+            }
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
-        }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
-        }
+        fun putAdditionalProperty(key: String, value: JsonValue) =
+            apply {
+                additionalProperties.put(key, value)
+            }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.putAll(additionalProperties)
-        }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) =
+            apply {
+                additionalProperties.remove(key)
+            }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
-        }
+        fun removeAllAdditionalProperties(keys: Set<String>) =
+            apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
         fun build(): CreditNote =
             CreditNote(
-                checkRequired("id", id),
-                checkRequired("createdAt", createdAt),
-                checkRequired("creditNoteNumber", creditNoteNumber),
-                checkRequired("creditNotePdf", creditNotePdf),
-                checkRequired("customer", customer),
-                checkRequired("invoiceId", invoiceId),
-                checkRequired("lineItems", lineItems).map { it.toImmutable() },
-                checkRequired("maximumAmountAdjustment", maximumAmountAdjustment),
-                checkRequired("memo", memo),
-                checkRequired("minimumAmountRefunded", minimumAmountRefunded),
-                checkRequired("reason", reason),
-                checkRequired("subtotal", subtotal),
-                checkRequired("total", total),
-                checkRequired("type", type),
-                checkRequired("voidedAt", voidedAt),
-                (discounts ?: JsonMissing.of()).map { it.toImmutable() },
-                additionalProperties.toImmutable(),
+              checkRequired(
+                "id", id
+              ),
+              checkRequired(
+                "createdAt", createdAt
+              ),
+              checkRequired(
+                "creditNoteNumber", creditNoteNumber
+              ),
+              checkRequired(
+                "creditNotePdf", creditNotePdf
+              ),
+              checkRequired(
+                "customer", customer
+              ),
+              checkRequired(
+                "invoiceId", invoiceId
+              ),
+              checkRequired(
+                "lineItems", lineItems
+              ).map { it.toImmutable() },
+              checkRequired(
+                "maximumAmountAdjustment", maximumAmountAdjustment
+              ),
+              checkRequired(
+                "memo", memo
+              ),
+              checkRequired(
+                "minimumAmountRefunded", minimumAmountRefunded
+              ),
+              checkRequired(
+                "reason", reason
+              ),
+              checkRequired(
+                "subtotal", subtotal
+              ),
+              checkRequired(
+                "total", total
+              ),
+              checkRequired(
+                "type", type
+              ),
+              checkRequired(
+                "voidedAt", voidedAt
+              ),
+              (discounts ?: JsonMissing.of()).map { it.toImmutable() },
+              additionalProperties.toImmutable(),
             )
     }
 
     @NoAutoDetect
-    class Customer
-    @JsonCreator
-    private constructor(
+    class Customer @JsonCreator private constructor(
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
-        private val externalCustomerId: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        @JsonProperty("external_customer_id") @ExcludeMissing private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
     ) {
 
         fun id(): String = id.getRequired("id")
 
         fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
-        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+        @JsonProperty("id")
+        @ExcludeMissing
+        fun _id(): JsonField<String> = id
 
         @JsonProperty("external_customer_id")
         @ExcludeMissing
@@ -469,15 +529,16 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Customer = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): Customer =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            id()
-            externalCustomerId()
-            validated = true
-        }
+                id()
+                externalCustomerId()
+                validated = true
+            }
 
         fun toBuilder() = Builder().from(this)
 
@@ -487,6 +548,7 @@ private constructor(
              * Returns a mutable builder for constructing an instance of [Customer].
              *
              * The following fields are required:
+             *
              * ```kotlin
              * .id()
              * .externalCustomerId()
@@ -502,56 +564,71 @@ private constructor(
             private var externalCustomerId: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(customer: Customer) = apply {
-                id = customer.id
-                externalCustomerId = customer.externalCustomerId
-                additionalProperties = customer.additionalProperties.toMutableMap()
-            }
+            internal fun from(customer: Customer) =
+                apply {
+                    id = customer.id
+                    externalCustomerId = customer.externalCustomerId
+                    additionalProperties = customer.additionalProperties.toMutableMap()
+                }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            fun id(id: JsonField<String>) = apply { this.id = id }
+            fun id(id: JsonField<String>) =
+                apply {
+                    this.id = id
+                }
 
-            fun externalCustomerId(externalCustomerId: String?) =
-                externalCustomerId(JsonField.ofNullable(externalCustomerId))
+            fun externalCustomerId(externalCustomerId: String?) = externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
-            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
-                this.externalCustomerId = externalCustomerId
-            }
+            fun externalCustomerId(externalCustomerId: JsonField<String>) =
+                apply {
+                    this.externalCustomerId = externalCustomerId
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: JsonValue) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
             fun build(): Customer =
                 Customer(
-                    checkRequired("id", id),
-                    checkRequired("externalCustomerId", externalCustomerId),
-                    additionalProperties.toImmutable(),
+                  checkRequired(
+                    "id", id
+                  ),
+                  checkRequired(
+                    "externalCustomerId", externalCustomerId
+                  ),
+                  additionalProperties.toImmutable(),
                 )
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return /* spotless:off */ other is Customer && id == other.id && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
+          return /* spotless:off */ other is Customer && id == other.id && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -560,38 +637,21 @@ private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() =
-            "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
+        override fun toString() = "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
-    class LineItem
-    @JsonCreator
-    private constructor(
+    class LineItem @JsonCreator private constructor(
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("amount")
-        @ExcludeMissing
-        private val amount: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("item_id")
-        @ExcludeMissing
-        private val itemId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("name")
-        @ExcludeMissing
-        private val name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("quantity")
-        @ExcludeMissing
-        private val quantity: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("subtotal")
-        @ExcludeMissing
-        private val subtotal: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("tax_amounts")
-        @ExcludeMissing
-        private val taxAmounts: JsonField<List<TaxAmount>> = JsonMissing.of(),
-        @JsonProperty("discounts")
-        @ExcludeMissing
-        private val discounts: JsonField<List<Discount>> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("item_id") @ExcludeMissing private val itemId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("quantity") @ExcludeMissing private val quantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("subtotal") @ExcludeMissing private val subtotal: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("tax_amounts") @ExcludeMissing private val taxAmounts: JsonField<List<TaxAmount>> = JsonMissing.of(),
+        @JsonProperty("discounts") @ExcludeMissing private val discounts: JsonField<List<Discount>> = JsonMissing.of(),
+        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
     ) {
 
         /** The Orb id of this resource. */
@@ -619,22 +679,34 @@ private constructor(
         fun discounts(): List<Discount>? = discounts.getNullable("discounts")
 
         /** The Orb id of this resource. */
-        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+        @JsonProperty("id")
+        @ExcludeMissing
+        fun _id(): JsonField<String> = id
 
         /** The amount of the line item, including any line item minimums and discounts. */
-        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
+        @JsonProperty("amount")
+        @ExcludeMissing
+        fun _amount(): JsonField<String> = amount
 
         /** The id of the item associated with this line item. */
-        @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+        @JsonProperty("item_id")
+        @ExcludeMissing
+        fun _itemId(): JsonField<String> = itemId
 
         /** The name of the corresponding invoice line item. */
-        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+        @JsonProperty("name")
+        @ExcludeMissing
+        fun _name(): JsonField<String> = name
 
         /** An optional quantity credited. */
-        @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
+        @JsonProperty("quantity")
+        @ExcludeMissing
+        fun _quantity(): JsonField<Double> = quantity
 
         /** The amount of the line item, excluding any line item minimums and discounts. */
-        @JsonProperty("subtotal") @ExcludeMissing fun _subtotal(): JsonField<String> = subtotal
+        @JsonProperty("subtotal")
+        @ExcludeMissing
+        fun _subtotal(): JsonField<String> = subtotal
 
         /** Any tax amounts applied onto the line item. */
         @JsonProperty("tax_amounts")
@@ -652,21 +724,22 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): LineItem = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): LineItem =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            id()
-            amount()
-            itemId()
-            name()
-            quantity()
-            subtotal()
-            taxAmounts().forEach { it.validate() }
-            discounts()?.forEach { it.validate() }
-            validated = true
-        }
+                id()
+                amount()
+                itemId()
+                name()
+                quantity()
+                subtotal()
+                taxAmounts().forEach { it.validate() }
+                discounts()?.forEach { it.validate() }
+                validated = true
+            }
 
         fun toBuilder() = Builder().from(this)
 
@@ -676,6 +749,7 @@ private constructor(
              * Returns a mutable builder for constructing an instance of [LineItem].
              *
              * The following fields are required:
+             *
              * ```kotlin
              * .id()
              * .amount()
@@ -702,41 +776,54 @@ private constructor(
             private var discounts: JsonField<MutableList<Discount>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(lineItem: LineItem) = apply {
-                id = lineItem.id
-                amount = lineItem.amount
-                itemId = lineItem.itemId
-                name = lineItem.name
-                quantity = lineItem.quantity
-                subtotal = lineItem.subtotal
-                taxAmounts = lineItem.taxAmounts.map { it.toMutableList() }
-                discounts = lineItem.discounts.map { it.toMutableList() }
-                additionalProperties = lineItem.additionalProperties.toMutableMap()
-            }
+            internal fun from(lineItem: LineItem) =
+                apply {
+                    id = lineItem.id
+                    amount = lineItem.amount
+                    itemId = lineItem.itemId
+                    name = lineItem.name
+                    quantity = lineItem.quantity
+                    subtotal = lineItem.subtotal
+                    taxAmounts = lineItem.taxAmounts.map { it.toMutableList() }
+                    discounts = lineItem.discounts.map { it.toMutableList() }
+                    additionalProperties = lineItem.additionalProperties.toMutableMap()
+                }
 
             /** The Orb id of this resource. */
             fun id(id: String) = id(JsonField.of(id))
 
             /** The Orb id of this resource. */
-            fun id(id: JsonField<String>) = apply { this.id = id }
+            fun id(id: JsonField<String>) =
+                apply {
+                    this.id = id
+                }
 
             /** The amount of the line item, including any line item minimums and discounts. */
             fun amount(amount: String) = amount(JsonField.of(amount))
 
             /** The amount of the line item, including any line item minimums and discounts. */
-            fun amount(amount: JsonField<String>) = apply { this.amount = amount }
+            fun amount(amount: JsonField<String>) =
+                apply {
+                    this.amount = amount
+                }
 
             /** The id of the item associated with this line item. */
             fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
             /** The id of the item associated with this line item. */
-            fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+            fun itemId(itemId: JsonField<String>) =
+                apply {
+                    this.itemId = itemId
+                }
 
             /** The name of the corresponding invoice line item. */
             fun name(name: String) = name(JsonField.of(name))
 
             /** The name of the corresponding invoice line item. */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) =
+                apply {
+                    this.name = name
+                }
 
             /** An optional quantity credited. */
             fun quantity(quantity: Double?) = quantity(JsonField.ofNullable(quantity))
@@ -745,108 +832,130 @@ private constructor(
             fun quantity(quantity: Double) = quantity(quantity as Double?)
 
             /** An optional quantity credited. */
-            fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
+            fun quantity(quantity: JsonField<Double>) =
+                apply {
+                    this.quantity = quantity
+                }
 
             /** The amount of the line item, excluding any line item minimums and discounts. */
             fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
 
             /** The amount of the line item, excluding any line item minimums and discounts. */
-            fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
+            fun subtotal(subtotal: JsonField<String>) =
+                apply {
+                    this.subtotal = subtotal
+                }
 
             /** Any tax amounts applied onto the line item. */
             fun taxAmounts(taxAmounts: List<TaxAmount>) = taxAmounts(JsonField.of(taxAmounts))
 
             /** Any tax amounts applied onto the line item. */
-            fun taxAmounts(taxAmounts: JsonField<List<TaxAmount>>) = apply {
-                this.taxAmounts = taxAmounts.map { it.toMutableList() }
-            }
+            fun taxAmounts(taxAmounts: JsonField<List<TaxAmount>>) =
+                apply {
+                    this.taxAmounts = taxAmounts.map { it.toMutableList() }
+                }
 
             /** Any tax amounts applied onto the line item. */
-            fun addTaxAmount(taxAmount: TaxAmount) = apply {
-                taxAmounts =
-                    (taxAmounts ?: JsonField.of(mutableListOf())).also {
+            fun addTaxAmount(taxAmount: TaxAmount) =
+                apply {
+                    taxAmounts = (taxAmounts ?: JsonField.of(mutableListOf())).also {
                         checkKnown("taxAmounts", it).add(taxAmount)
                     }
-            }
+                }
 
             /** Any line item discounts from the invoice's line item. */
             fun discounts(discounts: List<Discount>) = discounts(JsonField.of(discounts))
 
             /** Any line item discounts from the invoice's line item. */
-            fun discounts(discounts: JsonField<List<Discount>>) = apply {
-                this.discounts = discounts.map { it.toMutableList() }
-            }
+            fun discounts(discounts: JsonField<List<Discount>>) =
+                apply {
+                    this.discounts = discounts.map { it.toMutableList() }
+                }
 
             /** Any line item discounts from the invoice's line item. */
-            fun addDiscount(discount: Discount) = apply {
-                discounts =
-                    (discounts ?: JsonField.of(mutableListOf())).also {
+            fun addDiscount(discount: Discount) =
+                apply {
+                    discounts = (discounts ?: JsonField.of(mutableListOf())).also {
                         checkKnown("discounts", it).add(discount)
                     }
-            }
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: JsonValue) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
             fun build(): LineItem =
                 LineItem(
-                    checkRequired("id", id),
-                    checkRequired("amount", amount),
-                    checkRequired("itemId", itemId),
-                    checkRequired("name", name),
-                    checkRequired("quantity", quantity),
-                    checkRequired("subtotal", subtotal),
-                    checkRequired("taxAmounts", taxAmounts).map { it.toImmutable() },
-                    (discounts ?: JsonMissing.of()).map { it.toImmutable() },
-                    additionalProperties.toImmutable(),
+                  checkRequired(
+                    "id", id
+                  ),
+                  checkRequired(
+                    "amount", amount
+                  ),
+                  checkRequired(
+                    "itemId", itemId
+                  ),
+                  checkRequired(
+                    "name", name
+                  ),
+                  checkRequired(
+                    "quantity", quantity
+                  ),
+                  checkRequired(
+                    "subtotal", subtotal
+                  ),
+                  checkRequired(
+                    "taxAmounts", taxAmounts
+                  ).map { it.toImmutable() },
+                  (discounts ?: JsonMissing.of()).map { it.toImmutable() },
+                  additionalProperties.toImmutable(),
                 )
         }
 
         @NoAutoDetect
-        class TaxAmount
-        @JsonCreator
-        private constructor(
-            @JsonProperty("amount")
-            @ExcludeMissing
-            private val amount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("tax_rate_description")
-            @ExcludeMissing
-            private val taxRateDescription: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("tax_rate_percentage")
-            @ExcludeMissing
-            private val taxRatePercentage: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        class TaxAmount @JsonCreator private constructor(
+            @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("tax_rate_description") @ExcludeMissing private val taxRateDescription: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("tax_rate_percentage") @ExcludeMissing private val taxRatePercentage: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
         ) {
 
             /** The amount of additional tax incurred by this tax rate. */
             fun amount(): String = amount.getRequired("amount")
 
             /** The human-readable description of the applied tax rate. */
-            fun taxRateDescription(): String =
-                taxRateDescription.getRequired("tax_rate_description")
+            fun taxRateDescription(): String = taxRateDescription.getRequired("tax_rate_description")
 
             /** The tax rate percentage, out of 100. */
             fun taxRatePercentage(): String? = taxRatePercentage.getNullable("tax_rate_percentage")
 
             /** The amount of additional tax incurred by this tax rate. */
-            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
+            @JsonProperty("amount")
+            @ExcludeMissing
+            fun _amount(): JsonField<String> = amount
 
             /** The human-readable description of the applied tax rate. */
             @JsonProperty("tax_rate_description")
@@ -864,16 +973,17 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): TaxAmount = apply {
-                if (validated) {
-                    return@apply
-                }
+            fun validate(): TaxAmount =
+                apply {
+                    if (validated) {
+                      return@apply
+                    }
 
-                amount()
-                taxRateDescription()
-                taxRatePercentage()
-                validated = true
-            }
+                    amount()
+                    taxRateDescription()
+                    taxRatePercentage()
+                    validated = true
+                }
 
             fun toBuilder() = Builder().from(this)
 
@@ -883,6 +993,7 @@ private constructor(
                  * Returns a mutable builder for constructing an instance of [TaxAmount].
                  *
                  * The following fields are required:
+                 *
                  * ```kotlin
                  * .amount()
                  * .taxRateDescription()
@@ -900,74 +1011,88 @@ private constructor(
                 private var taxRatePercentage: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(taxAmount: TaxAmount) = apply {
-                    amount = taxAmount.amount
-                    taxRateDescription = taxAmount.taxRateDescription
-                    taxRatePercentage = taxAmount.taxRatePercentage
-                    additionalProperties = taxAmount.additionalProperties.toMutableMap()
-                }
+                internal fun from(taxAmount: TaxAmount) =
+                    apply {
+                        amount = taxAmount.amount
+                        taxRateDescription = taxAmount.taxRateDescription
+                        taxRatePercentage = taxAmount.taxRatePercentage
+                        additionalProperties = taxAmount.additionalProperties.toMutableMap()
+                    }
 
                 /** The amount of additional tax incurred by this tax rate. */
                 fun amount(amount: String) = amount(JsonField.of(amount))
 
                 /** The amount of additional tax incurred by this tax rate. */
-                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
+                fun amount(amount: JsonField<String>) =
+                    apply {
+                        this.amount = amount
+                    }
 
                 /** The human-readable description of the applied tax rate. */
-                fun taxRateDescription(taxRateDescription: String) =
-                    taxRateDescription(JsonField.of(taxRateDescription))
+                fun taxRateDescription(taxRateDescription: String) = taxRateDescription(JsonField.of(taxRateDescription))
 
                 /** The human-readable description of the applied tax rate. */
-                fun taxRateDescription(taxRateDescription: JsonField<String>) = apply {
-                    this.taxRateDescription = taxRateDescription
-                }
+                fun taxRateDescription(taxRateDescription: JsonField<String>) =
+                    apply {
+                        this.taxRateDescription = taxRateDescription
+                    }
 
                 /** The tax rate percentage, out of 100. */
-                fun taxRatePercentage(taxRatePercentage: String?) =
-                    taxRatePercentage(JsonField.ofNullable(taxRatePercentage))
+                fun taxRatePercentage(taxRatePercentage: String?) = taxRatePercentage(JsonField.ofNullable(taxRatePercentage))
 
                 /** The tax rate percentage, out of 100. */
-                fun taxRatePercentage(taxRatePercentage: JsonField<String>) = apply {
-                    this.taxRatePercentage = taxRatePercentage
-                }
+                fun taxRatePercentage(taxRatePercentage: JsonField<String>) =
+                    apply {
+                        this.taxRatePercentage = taxRatePercentage
+                    }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    additionalProperties.put(key, value)
-                }
+                fun putAdditionalProperty(key: String, value: JsonValue) =
+                    apply {
+                        additionalProperties.put(key, value)
+                    }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) = apply {
-                    additionalProperties.remove(key)
-                }
+                fun removeAdditionalProperty(key: String) =
+                    apply {
+                        additionalProperties.remove(key)
+                    }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+                fun removeAllAdditionalProperties(keys: Set<String>) =
+                    apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                 fun build(): TaxAmount =
                     TaxAmount(
-                        checkRequired("amount", amount),
-                        checkRequired("taxRateDescription", taxRateDescription),
-                        checkRequired("taxRatePercentage", taxRatePercentage),
-                        additionalProperties.toImmutable(),
+                      checkRequired(
+                        "amount", amount
+                      ),
+                      checkRequired(
+                        "taxRateDescription", taxRateDescription
+                      ),
+                      checkRequired(
+                        "taxRatePercentage", taxRatePercentage
+                      ),
+                      additionalProperties.toImmutable(),
                     )
             }
 
             override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
+              if (this === other) {
+                  return true
+              }
 
-                return /* spotless:off */ other is TaxAmount && amount == other.amount && taxRateDescription == other.taxRateDescription && taxRatePercentage == other.taxRatePercentage && additionalProperties == other.additionalProperties /* spotless:on */
+              return /* spotless:off */ other is TaxAmount && amount == other.amount && taxRateDescription == other.taxRateDescription && taxRatePercentage == other.taxRatePercentage && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -976,45 +1101,27 @@ private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() =
-                "TaxAmount{amount=$amount, taxRateDescription=$taxRateDescription, taxRatePercentage=$taxRatePercentage, additionalProperties=$additionalProperties}"
+            override fun toString() = "TaxAmount{amount=$amount, taxRateDescription=$taxRateDescription, taxRatePercentage=$taxRatePercentage, additionalProperties=$additionalProperties}"
         }
 
         @NoAutoDetect
-        class Discount
-        @JsonCreator
-        private constructor(
-            @JsonProperty("id")
-            @ExcludeMissing
-            private val id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("amount_applied")
-            @ExcludeMissing
-            private val amountApplied: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("applies_to_price_ids")
-            @ExcludeMissing
-            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("discount_type")
-            @ExcludeMissing
-            private val discountType: JsonField<DiscountType> = JsonMissing.of(),
-            @JsonProperty("percentage_discount")
-            @ExcludeMissing
-            private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("amount_discount")
-            @ExcludeMissing
-            private val amountDiscount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("reason")
-            @ExcludeMissing
-            private val reason: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        class Discount @JsonCreator private constructor(
+            @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("amount_applied") @ExcludeMissing private val amountApplied: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids") @ExcludeMissing private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("discount_type") @ExcludeMissing private val discountType: JsonField<DiscountType> = JsonMissing.of(),
+            @JsonProperty("percentage_discount") @ExcludeMissing private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("amount_discount") @ExcludeMissing private val amountDiscount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("reason") @ExcludeMissing private val reason: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
         ) {
 
             fun id(): String = id.getRequired("id")
 
             fun amountApplied(): String = amountApplied.getRequired("amount_applied")
 
-            fun appliesToPriceIds(): List<String> =
-                appliesToPriceIds.getRequired("applies_to_price_ids")
+            fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
 
             fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
@@ -1024,7 +1131,9 @@ private constructor(
 
             fun reason(): String? = reason.getNullable("reason")
 
-            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+            @JsonProperty("id")
+            @ExcludeMissing
+            fun _id(): JsonField<String> = id
 
             @JsonProperty("amount_applied")
             @ExcludeMissing
@@ -1046,7 +1155,9 @@ private constructor(
             @ExcludeMissing
             fun _amountDiscount(): JsonField<String> = amountDiscount
 
-            @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
+            @JsonProperty("reason")
+            @ExcludeMissing
+            fun _reason(): JsonField<String> = reason
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -1054,20 +1165,21 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): Discount = apply {
-                if (validated) {
-                    return@apply
-                }
+            fun validate(): Discount =
+                apply {
+                    if (validated) {
+                      return@apply
+                    }
 
-                id()
-                amountApplied()
-                appliesToPriceIds()
-                discountType()
-                percentageDiscount()
-                amountDiscount()
-                reason()
-                validated = true
-            }
+                    id()
+                    amountApplied()
+                    appliesToPriceIds()
+                    discountType()
+                    percentageDiscount()
+                    amountDiscount()
+                    reason()
+                    validated = true
+                }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1077,6 +1189,7 @@ private constructor(
                  * Returns a mutable builder for constructing an instance of [Discount].
                  *
                  * The following fields are required:
+                 *
                  * ```kotlin
                  * .id()
                  * .amountApplied()
@@ -1100,107 +1213,127 @@ private constructor(
                 private var reason: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(discount: Discount) = apply {
-                    id = discount.id
-                    amountApplied = discount.amountApplied
-                    appliesToPriceIds = discount.appliesToPriceIds.map { it.toMutableList() }
-                    discountType = discount.discountType
-                    percentageDiscount = discount.percentageDiscount
-                    amountDiscount = discount.amountDiscount
-                    reason = discount.reason
-                    additionalProperties = discount.additionalProperties.toMutableMap()
-                }
+                internal fun from(discount: Discount) =
+                    apply {
+                        id = discount.id
+                        amountApplied = discount.amountApplied
+                        appliesToPriceIds = discount.appliesToPriceIds.map { it.toMutableList() }
+                        discountType = discount.discountType
+                        percentageDiscount = discount.percentageDiscount
+                        amountDiscount = discount.amountDiscount
+                        reason = discount.reason
+                        additionalProperties = discount.additionalProperties.toMutableMap()
+                    }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                fun id(id: JsonField<String>) = apply { this.id = id }
+                fun id(id: JsonField<String>) =
+                    apply {
+                        this.id = id
+                    }
 
-                fun amountApplied(amountApplied: String) =
-                    amountApplied(JsonField.of(amountApplied))
+                fun amountApplied(amountApplied: String) = amountApplied(JsonField.of(amountApplied))
 
-                fun amountApplied(amountApplied: JsonField<String>) = apply {
-                    this.amountApplied = amountApplied
-                }
+                fun amountApplied(amountApplied: JsonField<String>) =
+                    apply {
+                        this.amountApplied = amountApplied
+                    }
 
-                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
-                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
+                fun appliesToPriceIds(appliesToPriceIds: List<String>) = appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
-                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                    this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
-                }
+                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) =
+                    apply {
+                        this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+                    }
 
-                fun addAppliesToPriceId(appliesToPriceId: String) = apply {
-                    appliesToPriceIds =
-                        (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
+                fun addAppliesToPriceId(appliesToPriceId: String) =
+                    apply {
+                        appliesToPriceIds = (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                             checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
                         }
-                }
+                    }
 
-                fun discountType(discountType: DiscountType) =
-                    discountType(JsonField.of(discountType))
+                fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
 
-                fun discountType(discountType: JsonField<DiscountType>) = apply {
-                    this.discountType = discountType
-                }
+                fun discountType(discountType: JsonField<DiscountType>) =
+                    apply {
+                        this.discountType = discountType
+                    }
 
-                fun percentageDiscount(percentageDiscount: Double) =
-                    percentageDiscount(JsonField.of(percentageDiscount))
+                fun percentageDiscount(percentageDiscount: Double) = percentageDiscount(JsonField.of(percentageDiscount))
 
-                fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
-                    this.percentageDiscount = percentageDiscount
-                }
+                fun percentageDiscount(percentageDiscount: JsonField<Double>) =
+                    apply {
+                        this.percentageDiscount = percentageDiscount
+                    }
 
-                fun amountDiscount(amountDiscount: String?) =
-                    amountDiscount(JsonField.ofNullable(amountDiscount))
+                fun amountDiscount(amountDiscount: String?) = amountDiscount(JsonField.ofNullable(amountDiscount))
 
-                fun amountDiscount(amountDiscount: JsonField<String>) = apply {
-                    this.amountDiscount = amountDiscount
-                }
+                fun amountDiscount(amountDiscount: JsonField<String>) =
+                    apply {
+                        this.amountDiscount = amountDiscount
+                    }
 
                 fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
-                fun reason(reason: JsonField<String>) = apply { this.reason = reason }
+                fun reason(reason: JsonField<String>) =
+                    apply {
+                        this.reason = reason
+                    }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    additionalProperties.put(key, value)
-                }
+                fun putAdditionalProperty(key: String, value: JsonValue) =
+                    apply {
+                        additionalProperties.put(key, value)
+                    }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) = apply {
-                    additionalProperties.remove(key)
-                }
+                fun removeAdditionalProperty(key: String) =
+                    apply {
+                        additionalProperties.remove(key)
+                    }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+                fun removeAllAdditionalProperties(keys: Set<String>) =
+                    apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                 fun build(): Discount =
                     Discount(
-                        checkRequired("id", id),
-                        checkRequired("amountApplied", amountApplied),
-                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
-                            it.toImmutable()
-                        },
-                        checkRequired("discountType", discountType),
-                        checkRequired("percentageDiscount", percentageDiscount),
-                        amountDiscount,
-                        reason,
-                        additionalProperties.toImmutable(),
+                      checkRequired(
+                        "id", id
+                      ),
+                      checkRequired(
+                        "amountApplied", amountApplied
+                      ),
+                      checkRequired(
+                        "appliesToPriceIds", appliesToPriceIds
+                      ).map { it.toImmutable() },
+                      checkRequired(
+                        "discountType", discountType
+                      ),
+                      checkRequired(
+                        "percentageDiscount", percentageDiscount
+                      ),
+                      amountDiscount,
+                      reason,
+                      additionalProperties.toImmutable(),
                     )
             }
 
-            class DiscountType
-            @JsonCreator
-            private constructor(private val value: JsonField<String>) : Enum {
+            class DiscountType @JsonCreator private constructor(
+                private val value: JsonField<String>,
+
+            ) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -1210,7 +1343,8 @@ private constructor(
                  * the SDK is on an older version than the API, then the API may respond with new
                  * members that the SDK is unaware of.
                  */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+                @com.fasterxml.jackson.annotation.JsonValue
+                fun _value(): JsonField<String> = value
 
                 companion object {
 
@@ -1232,17 +1366,19 @@ private constructor(
                  * member.
                  *
                  * An instance of [DiscountType] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
+                 *
+                 * - It was deserialized from data that doesn't match any known member. For
+                 *   example, if the SDK is on an older version than the API, then the API may
+                 *   respond with new members that the SDK is unaware of.
+                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
                     PERCENTAGE,
                     AMOUNT,
                     /**
-                     * An enum member indicating that [DiscountType] was instantiated with an
-                     * unknown value.
+                     * An enum member indicating that [DiscountType] was instantiated with an unknown
+                     * value.
                      */
                     _UNKNOWN,
                 }
@@ -1268,7 +1404,7 @@ private constructor(
                  * don't want to throw for the unknown case.
                  *
                  * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 *   member.
+                 * member.
                  */
                 fun known(): Known =
                     when (this) {
@@ -1284,17 +1420,16 @@ private constructor(
                  * debugging and generally doesn't throw.
                  *
                  * @throws OrbInvalidDataException if this class instance's value does not have the
-                 *   expected primitive type.
+                 * expected primitive type.
                  */
-                fun asString(): String =
-                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+                fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
                 override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
+                  if (this === other) {
+                      return true
+                  }
 
-                    return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
+                  return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -1303,11 +1438,11 @@ private constructor(
             }
 
             override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
+              if (this === other) {
+                  return true
+              }
 
-                return /* spotless:off */ other is Discount && id == other.id && amountApplied == other.amountApplied && appliesToPriceIds == other.appliesToPriceIds && discountType == other.discountType && percentageDiscount == other.percentageDiscount && amountDiscount == other.amountDiscount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+              return /* spotless:off */ other is Discount && id == other.id && amountApplied == other.amountApplied && appliesToPriceIds == other.appliesToPriceIds && discountType == other.discountType && percentageDiscount == other.percentageDiscount && amountDiscount == other.amountDiscount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -1316,16 +1451,15 @@ private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() =
-                "Discount{id=$id, amountApplied=$amountApplied, appliesToPriceIds=$appliesToPriceIds, discountType=$discountType, percentageDiscount=$percentageDiscount, amountDiscount=$amountDiscount, reason=$reason, additionalProperties=$additionalProperties}"
+            override fun toString() = "Discount{id=$id, amountApplied=$amountApplied, appliesToPriceIds=$appliesToPriceIds, discountType=$discountType, percentageDiscount=$percentageDiscount, amountDiscount=$amountDiscount, reason=$reason, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return /* spotless:off */ other is LineItem && id == other.id && amount == other.amount && itemId == other.itemId && name == other.name && quantity == other.quantity && subtotal == other.subtotal && taxAmounts == other.taxAmounts && discounts == other.discounts && additionalProperties == other.additionalProperties /* spotless:on */
+          return /* spotless:off */ other is LineItem && id == other.id && amount == other.amount && itemId == other.itemId && name == other.name && quantity == other.quantity && subtotal == other.subtotal && taxAmounts == other.taxAmounts && discounts == other.discounts && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -1334,32 +1468,19 @@ private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() =
-            "LineItem{id=$id, amount=$amount, itemId=$itemId, name=$name, quantity=$quantity, subtotal=$subtotal, taxAmounts=$taxAmounts, discounts=$discounts, additionalProperties=$additionalProperties}"
+        override fun toString() = "LineItem{id=$id, amount=$amount, itemId=$itemId, name=$name, quantity=$quantity, subtotal=$subtotal, taxAmounts=$taxAmounts, discounts=$discounts, additionalProperties=$additionalProperties}"
     }
 
     /** The maximum amount applied on the original invoice */
     @NoAutoDetect
-    class MaximumAmountAdjustment
-    @JsonCreator
-    private constructor(
-        @JsonProperty("amount_applied")
-        @ExcludeMissing
-        private val amountApplied: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("discount_type")
-        @ExcludeMissing
-        private val discountType: JsonField<DiscountType> = JsonMissing.of(),
-        @JsonProperty("percentage_discount")
-        @ExcludeMissing
-        private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("applies_to_prices")
-        @ExcludeMissing
-        private val appliesToPrices: JsonField<List<AppliesToPrice>> = JsonMissing.of(),
-        @JsonProperty("reason")
-        @ExcludeMissing
-        private val reason: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    class MaximumAmountAdjustment @JsonCreator private constructor(
+        @JsonProperty("amount_applied") @ExcludeMissing private val amountApplied: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("discount_type") @ExcludeMissing private val discountType: JsonField<DiscountType> = JsonMissing.of(),
+        @JsonProperty("percentage_discount") @ExcludeMissing private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("applies_to_prices") @ExcludeMissing private val appliesToPrices: JsonField<List<AppliesToPrice>> = JsonMissing.of(),
+        @JsonProperty("reason") @ExcludeMissing private val reason: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
     ) {
 
         fun amountApplied(): String = amountApplied.getRequired("amount_applied")
@@ -1368,8 +1489,7 @@ private constructor(
 
         fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
 
-        fun appliesToPrices(): List<AppliesToPrice>? =
-            appliesToPrices.getNullable("applies_to_prices")
+        fun appliesToPrices(): List<AppliesToPrice>? = appliesToPrices.getNullable("applies_to_prices")
 
         fun reason(): String? = reason.getNullable("reason")
 
@@ -1389,7 +1509,9 @@ private constructor(
         @ExcludeMissing
         fun _appliesToPrices(): JsonField<List<AppliesToPrice>> = appliesToPrices
 
-        @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
+        @JsonProperty("reason")
+        @ExcludeMissing
+        fun _reason(): JsonField<String> = reason
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1397,27 +1519,30 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): MaximumAmountAdjustment = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): MaximumAmountAdjustment =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            amountApplied()
-            discountType()
-            percentageDiscount()
-            appliesToPrices()?.forEach { it.validate() }
-            reason()
-            validated = true
-        }
+                amountApplied()
+                discountType()
+                percentageDiscount()
+                appliesToPrices()?.forEach { it.validate() }
+                reason()
+                validated = true
+            }
 
         fun toBuilder() = Builder().from(this)
 
         companion object {
 
             /**
-             * Returns a mutable builder for constructing an instance of [MaximumAmountAdjustment].
+             * Returns a mutable builder for constructing an instance of
+             * [MaximumAmountAdjustment].
              *
              * The following fields are required:
+             *
              * ```kotlin
              * .amountApplied()
              * .discountType()
@@ -1437,94 +1562,116 @@ private constructor(
             private var reason: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(maximumAmountAdjustment: MaximumAmountAdjustment) = apply {
-                amountApplied = maximumAmountAdjustment.amountApplied
-                discountType = maximumAmountAdjustment.discountType
-                percentageDiscount = maximumAmountAdjustment.percentageDiscount
-                appliesToPrices = maximumAmountAdjustment.appliesToPrices.map { it.toMutableList() }
-                reason = maximumAmountAdjustment.reason
-                additionalProperties = maximumAmountAdjustment.additionalProperties.toMutableMap()
-            }
+            internal fun from(maximumAmountAdjustment: MaximumAmountAdjustment) =
+                apply {
+                    amountApplied = maximumAmountAdjustment.amountApplied
+                    discountType = maximumAmountAdjustment.discountType
+                    percentageDiscount = maximumAmountAdjustment.percentageDiscount
+                    appliesToPrices = maximumAmountAdjustment.appliesToPrices.map { it.toMutableList() }
+                    reason = maximumAmountAdjustment.reason
+                    additionalProperties = maximumAmountAdjustment.additionalProperties.toMutableMap()
+                }
 
             fun amountApplied(amountApplied: String) = amountApplied(JsonField.of(amountApplied))
 
-            fun amountApplied(amountApplied: JsonField<String>) = apply {
-                this.amountApplied = amountApplied
-            }
+            fun amountApplied(amountApplied: JsonField<String>) =
+                apply {
+                    this.amountApplied = amountApplied
+                }
 
             fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
 
-            fun discountType(discountType: JsonField<DiscountType>) = apply {
-                this.discountType = discountType
-            }
+            fun discountType(discountType: JsonField<DiscountType>) =
+                apply {
+                    this.discountType = discountType
+                }
 
-            fun percentageDiscount(percentageDiscount: Double) =
-                percentageDiscount(JsonField.of(percentageDiscount))
+            fun percentageDiscount(percentageDiscount: Double) = percentageDiscount(JsonField.of(percentageDiscount))
 
-            fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
-                this.percentageDiscount = percentageDiscount
-            }
+            fun percentageDiscount(percentageDiscount: JsonField<Double>) =
+                apply {
+                    this.percentageDiscount = percentageDiscount
+                }
 
-            fun appliesToPrices(appliesToPrices: List<AppliesToPrice>?) =
-                appliesToPrices(JsonField.ofNullable(appliesToPrices))
+            fun appliesToPrices(appliesToPrices: List<AppliesToPrice>?) = appliesToPrices(JsonField.ofNullable(appliesToPrices))
 
-            fun appliesToPrices(appliesToPrices: JsonField<List<AppliesToPrice>>) = apply {
-                this.appliesToPrices = appliesToPrices.map { it.toMutableList() }
-            }
+            fun appliesToPrices(appliesToPrices: JsonField<List<AppliesToPrice>>) =
+                apply {
+                    this.appliesToPrices = appliesToPrices.map { it.toMutableList() }
+                }
 
-            fun addAppliesToPrice(appliesToPrice: AppliesToPrice) = apply {
-                appliesToPrices =
-                    (appliesToPrices ?: JsonField.of(mutableListOf())).also {
+            fun addAppliesToPrice(appliesToPrice: AppliesToPrice) =
+                apply {
+                    appliesToPrices = (appliesToPrices ?: JsonField.of(mutableListOf())).also {
                         checkKnown("appliesToPrices", it).add(appliesToPrice)
                     }
-            }
+                }
 
             fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
-            fun reason(reason: JsonField<String>) = apply { this.reason = reason }
+            fun reason(reason: JsonField<String>) =
+                apply {
+                    this.reason = reason
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: JsonValue) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
             fun build(): MaximumAmountAdjustment =
                 MaximumAmountAdjustment(
-                    checkRequired("amountApplied", amountApplied),
-                    checkRequired("discountType", discountType),
-                    checkRequired("percentageDiscount", percentageDiscount),
-                    (appliesToPrices ?: JsonMissing.of()).map { it.toImmutable() },
-                    reason,
-                    additionalProperties.toImmutable(),
+                  checkRequired(
+                    "amountApplied", amountApplied
+                  ),
+                  checkRequired(
+                    "discountType", discountType
+                  ),
+                  checkRequired(
+                    "percentageDiscount", percentageDiscount
+                  ),
+                  (appliesToPrices ?: JsonMissing.of()).map { it.toImmutable() },
+                  reason,
+                  additionalProperties.toImmutable(),
                 )
         }
 
-        class DiscountType @JsonCreator private constructor(private val value: JsonField<String>) :
-            Enum {
+        class DiscountType @JsonCreator private constructor(
+            private val value: JsonField<String>,
+
+        ) : Enum {
 
             /**
              * Returns this class instance's raw value.
              *
-             * This is usually only useful if this instance was deserialized from data that doesn't
-             * match any known member, and you want to know that value. For example, if the SDK is
-             * on an older version than the API, then the API may respond with new members that the
-             * SDK is unaware of.
+             * This is usually only useful if this instance was deserialized from data that
+             * doesn't match any known member, and you want to know that value. For example, if
+             * the SDK is on an older version than the API, then the API may respond with new
+             * members that the SDK is unaware of.
              */
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+            @com.fasterxml.jackson.annotation.JsonValue
+            fun _value(): JsonField<String> = value
 
             companion object {
 
@@ -1535,16 +1682,19 @@ private constructor(
 
             /** An enum containing [DiscountType]'s known values. */
             enum class Known {
-                PERCENTAGE
+                PERCENTAGE,
             }
 
             /**
-             * An enum containing [DiscountType]'s known values, as well as an [_UNKNOWN] member.
+             * An enum containing [DiscountType]'s known values, as well as an [_UNKNOWN]
+             * member.
              *
              * An instance of [DiscountType] can contain an unknown value in a couple of cases:
-             * - It was deserialized from data that doesn't match any known member. For example, if
-             *   the SDK is on an older version than the API, then the API may respond with new
-             *   members that the SDK is unaware of.
+             *
+             * - It was deserialized from data that doesn't match any known member. For
+             *   example, if the SDK is on an older version than the API, then the API may
+             *   respond with new members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -1560,8 +1710,8 @@ private constructor(
              * Returns an enum member corresponding to this class instance's value, or
              * [Value._UNKNOWN] if the class was instantiated with an unknown value.
              *
-             * Use the [known] method instead if you're certain the value is always known or if you
-             * want to throw for the unknown case.
+             * Use the [known] method instead if you're certain the value is always known or if
+             * you want to throw for the unknown case.
              */
             fun value(): Value =
                 when (this) {
@@ -1576,7 +1726,7 @@ private constructor(
              * don't want to throw for the unknown case.
              *
              * @throws OrbInvalidDataException if this class instance's value is a not a known
-             *   member.
+             * member.
              */
             fun known(): Known =
                 when (this) {
@@ -1591,17 +1741,16 @@ private constructor(
              * debugging and generally doesn't throw.
              *
              * @throws OrbInvalidDataException if this class instance's value does not have the
-             *   expected primitive type.
+             * expected primitive type.
              */
-            fun asString(): String =
-                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+            fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
             override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
+              if (this === other) {
+                  return true
+              }
 
-                return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
+              return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1610,26 +1759,24 @@ private constructor(
         }
 
         @NoAutoDetect
-        class AppliesToPrice
-        @JsonCreator
-        private constructor(
-            @JsonProperty("id")
-            @ExcludeMissing
-            private val id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("name")
-            @ExcludeMissing
-            private val name: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        class AppliesToPrice @JsonCreator private constructor(
+            @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
         ) {
 
             fun id(): String = id.getRequired("id")
 
             fun name(): String = name.getRequired("name")
 
-            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+            @JsonProperty("id")
+            @ExcludeMissing
+            fun _id(): JsonField<String> = id
 
-            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+            @JsonProperty("name")
+            @ExcludeMissing
+            fun _name(): JsonField<String> = name
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -1637,15 +1784,16 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): AppliesToPrice = apply {
-                if (validated) {
-                    return@apply
-                }
+            fun validate(): AppliesToPrice =
+                apply {
+                    if (validated) {
+                      return@apply
+                    }
 
-                id()
-                name()
-                validated = true
-            }
+                    id()
+                    name()
+                    validated = true
+                }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1655,6 +1803,7 @@ private constructor(
                  * Returns a mutable builder for constructing an instance of [AppliesToPrice].
                  *
                  * The following fields are required:
+                 *
                  * ```kotlin
                  * .id()
                  * .name()
@@ -1670,56 +1819,71 @@ private constructor(
                 private var name: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(appliesToPrice: AppliesToPrice) = apply {
-                    id = appliesToPrice.id
-                    name = appliesToPrice.name
-                    additionalProperties = appliesToPrice.additionalProperties.toMutableMap()
-                }
+                internal fun from(appliesToPrice: AppliesToPrice) =
+                    apply {
+                        id = appliesToPrice.id
+                        name = appliesToPrice.name
+                        additionalProperties = appliesToPrice.additionalProperties.toMutableMap()
+                    }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                fun id(id: JsonField<String>) = apply { this.id = id }
+                fun id(id: JsonField<String>) =
+                    apply {
+                        this.id = id
+                    }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                fun name(name: JsonField<String>) = apply { this.name = name }
+                fun name(name: JsonField<String>) =
+                    apply {
+                        this.name = name
+                    }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    additionalProperties.put(key, value)
-                }
+                fun putAdditionalProperty(key: String, value: JsonValue) =
+                    apply {
+                        additionalProperties.put(key, value)
+                    }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) = apply {
-                    additionalProperties.remove(key)
-                }
+                fun removeAdditionalProperty(key: String) =
+                    apply {
+                        additionalProperties.remove(key)
+                    }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+                fun removeAllAdditionalProperties(keys: Set<String>) =
+                    apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                 fun build(): AppliesToPrice =
                     AppliesToPrice(
-                        checkRequired("id", id),
-                        checkRequired("name", name),
-                        additionalProperties.toImmutable(),
+                      checkRequired(
+                        "id", id
+                      ),
+                      checkRequired(
+                        "name", name
+                      ),
+                      additionalProperties.toImmutable(),
                     )
             }
 
             override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
+              if (this === other) {
+                  return true
+              }
 
-                return /* spotless:off */ other is AppliesToPrice && id == other.id && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+              return /* spotless:off */ other is AppliesToPrice && id == other.id && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -1728,16 +1892,15 @@ private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() =
-                "AppliesToPrice{id=$id, name=$name, additionalProperties=$additionalProperties}"
+            override fun toString() = "AppliesToPrice{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return /* spotless:off */ other is MaximumAmountAdjustment && amountApplied == other.amountApplied && discountType == other.discountType && percentageDiscount == other.percentageDiscount && appliesToPrices == other.appliesToPrices && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+          return /* spotless:off */ other is MaximumAmountAdjustment && amountApplied == other.amountApplied && discountType == other.discountType && percentageDiscount == other.percentageDiscount && appliesToPrices == other.appliesToPrices && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -1746,21 +1909,24 @@ private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() =
-            "MaximumAmountAdjustment{amountApplied=$amountApplied, discountType=$discountType, percentageDiscount=$percentageDiscount, appliesToPrices=$appliesToPrices, reason=$reason, additionalProperties=$additionalProperties}"
+        override fun toString() = "MaximumAmountAdjustment{amountApplied=$amountApplied, discountType=$discountType, percentageDiscount=$percentageDiscount, appliesToPrices=$appliesToPrices, reason=$reason, additionalProperties=$additionalProperties}"
     }
 
-    class Reason @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+    class Reason @JsonCreator private constructor(
+        private val value: JsonField<String>,
+
+    ) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
+         * This is usually only useful if this instance was deserialized from data that
+         * doesn't match any known member, and you want to know that value. For example, if
+         * the SDK is on an older version than the API, then the API may respond with new
+         * members that the SDK is unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -1787,9 +1953,11 @@ private constructor(
          * An enum containing [Reason]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Reason] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
+         *
+         * - It was deserialized from data that doesn't match any known member. For
+         *   example, if the SDK is on an older version than the API, then the API may
+         *   respond with new members that the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1802,11 +1970,11 @@ private constructor(
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or
+         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if
+         * you want to throw for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -1820,10 +1988,11 @@ private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and
+         * don't want to throw for the unknown case.
          *
-         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
+         * @throws OrbInvalidDataException if this class instance's value is a not a known
+         * member.
          */
         fun known(): Known =
             when (this) {
@@ -1837,21 +2006,20 @@ private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for
+         * debugging and generally doesn't throw.
          *
-         * @throws OrbInvalidDataException if this class instance's value does not have the expected
-         *   primitive type.
+         * @throws OrbInvalidDataException if this class instance's value does not have the
+         * expected primitive type.
          */
-        fun asString(): String =
-            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+        fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return /* spotless:off */ other is Reason && value == other.value /* spotless:on */
+          return /* spotless:off */ other is Reason && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1859,17 +2027,21 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+    class Type @JsonCreator private constructor(
+        private val value: JsonField<String>,
+
+    ) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
+         * This is usually only useful if this instance was deserialized from data that
+         * doesn't match any known member, and you want to know that value. For example, if
+         * the SDK is on an older version than the API, then the API may respond with new
+         * members that the SDK is unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -1890,9 +2062,11 @@ private constructor(
          * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Type] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
+         *
+         * - It was deserialized from data that doesn't match any known member. For
+         *   example, if the SDK is on an older version than the API, then the API may
+         *   respond with new members that the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1903,11 +2077,11 @@ private constructor(
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or
+         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if
+         * you want to throw for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -1919,10 +2093,11 @@ private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and
+         * don't want to throw for the unknown case.
          *
-         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
+         * @throws OrbInvalidDataException if this class instance's value is a not a known
+         * member.
          */
         fun known(): Known =
             when (this) {
@@ -1934,21 +2109,20 @@ private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for
+         * debugging and generally doesn't throw.
          *
-         * @throws OrbInvalidDataException if this class instance's value does not have the expected
-         *   primitive type.
+         * @throws OrbInvalidDataException if this class instance's value does not have the
+         * expected primitive type.
          */
-        fun asString(): String =
-            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+        fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+          return /* spotless:off */ other is Type && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1957,26 +2131,14 @@ private constructor(
     }
 
     @NoAutoDetect
-    class Discount
-    @JsonCreator
-    private constructor(
-        @JsonProperty("amount_applied")
-        @ExcludeMissing
-        private val amountApplied: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("discount_type")
-        @ExcludeMissing
-        private val discountType: JsonField<DiscountType> = JsonMissing.of(),
-        @JsonProperty("percentage_discount")
-        @ExcludeMissing
-        private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("applies_to_prices")
-        @ExcludeMissing
-        private val appliesToPrices: JsonField<List<AppliesToPrice>> = JsonMissing.of(),
-        @JsonProperty("reason")
-        @ExcludeMissing
-        private val reason: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    class Discount @JsonCreator private constructor(
+        @JsonProperty("amount_applied") @ExcludeMissing private val amountApplied: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("discount_type") @ExcludeMissing private val discountType: JsonField<DiscountType> = JsonMissing.of(),
+        @JsonProperty("percentage_discount") @ExcludeMissing private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("applies_to_prices") @ExcludeMissing private val appliesToPrices: JsonField<List<AppliesToPrice>> = JsonMissing.of(),
+        @JsonProperty("reason") @ExcludeMissing private val reason: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
     ) {
 
         fun amountApplied(): String = amountApplied.getRequired("amount_applied")
@@ -1985,8 +2147,7 @@ private constructor(
 
         fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
 
-        fun appliesToPrices(): List<AppliesToPrice>? =
-            appliesToPrices.getNullable("applies_to_prices")
+        fun appliesToPrices(): List<AppliesToPrice>? = appliesToPrices.getNullable("applies_to_prices")
 
         fun reason(): String? = reason.getNullable("reason")
 
@@ -2006,7 +2167,9 @@ private constructor(
         @ExcludeMissing
         fun _appliesToPrices(): JsonField<List<AppliesToPrice>> = appliesToPrices
 
-        @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
+        @JsonProperty("reason")
+        @ExcludeMissing
+        fun _reason(): JsonField<String> = reason
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -2014,18 +2177,19 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Discount = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): Discount =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            amountApplied()
-            discountType()
-            percentageDiscount()
-            appliesToPrices()?.forEach { it.validate() }
-            reason()
-            validated = true
-        }
+                amountApplied()
+                discountType()
+                percentageDiscount()
+                appliesToPrices()?.forEach { it.validate() }
+                reason()
+                validated = true
+            }
 
         fun toBuilder() = Builder().from(this)
 
@@ -2035,6 +2199,7 @@ private constructor(
              * Returns a mutable builder for constructing an instance of [Discount].
              *
              * The following fields are required:
+             *
              * ```kotlin
              * .amountApplied()
              * .discountType()
@@ -2054,94 +2219,116 @@ private constructor(
             private var reason: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(discount: Discount) = apply {
-                amountApplied = discount.amountApplied
-                discountType = discount.discountType
-                percentageDiscount = discount.percentageDiscount
-                appliesToPrices = discount.appliesToPrices.map { it.toMutableList() }
-                reason = discount.reason
-                additionalProperties = discount.additionalProperties.toMutableMap()
-            }
+            internal fun from(discount: Discount) =
+                apply {
+                    amountApplied = discount.amountApplied
+                    discountType = discount.discountType
+                    percentageDiscount = discount.percentageDiscount
+                    appliesToPrices = discount.appliesToPrices.map { it.toMutableList() }
+                    reason = discount.reason
+                    additionalProperties = discount.additionalProperties.toMutableMap()
+                }
 
             fun amountApplied(amountApplied: String) = amountApplied(JsonField.of(amountApplied))
 
-            fun amountApplied(amountApplied: JsonField<String>) = apply {
-                this.amountApplied = amountApplied
-            }
+            fun amountApplied(amountApplied: JsonField<String>) =
+                apply {
+                    this.amountApplied = amountApplied
+                }
 
             fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
 
-            fun discountType(discountType: JsonField<DiscountType>) = apply {
-                this.discountType = discountType
-            }
+            fun discountType(discountType: JsonField<DiscountType>) =
+                apply {
+                    this.discountType = discountType
+                }
 
-            fun percentageDiscount(percentageDiscount: Double) =
-                percentageDiscount(JsonField.of(percentageDiscount))
+            fun percentageDiscount(percentageDiscount: Double) = percentageDiscount(JsonField.of(percentageDiscount))
 
-            fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
-                this.percentageDiscount = percentageDiscount
-            }
+            fun percentageDiscount(percentageDiscount: JsonField<Double>) =
+                apply {
+                    this.percentageDiscount = percentageDiscount
+                }
 
-            fun appliesToPrices(appliesToPrices: List<AppliesToPrice>?) =
-                appliesToPrices(JsonField.ofNullable(appliesToPrices))
+            fun appliesToPrices(appliesToPrices: List<AppliesToPrice>?) = appliesToPrices(JsonField.ofNullable(appliesToPrices))
 
-            fun appliesToPrices(appliesToPrices: JsonField<List<AppliesToPrice>>) = apply {
-                this.appliesToPrices = appliesToPrices.map { it.toMutableList() }
-            }
+            fun appliesToPrices(appliesToPrices: JsonField<List<AppliesToPrice>>) =
+                apply {
+                    this.appliesToPrices = appliesToPrices.map { it.toMutableList() }
+                }
 
-            fun addAppliesToPrice(appliesToPrice: AppliesToPrice) = apply {
-                appliesToPrices =
-                    (appliesToPrices ?: JsonField.of(mutableListOf())).also {
+            fun addAppliesToPrice(appliesToPrice: AppliesToPrice) =
+                apply {
+                    appliesToPrices = (appliesToPrices ?: JsonField.of(mutableListOf())).also {
                         checkKnown("appliesToPrices", it).add(appliesToPrice)
                     }
-            }
+                }
 
             fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
-            fun reason(reason: JsonField<String>) = apply { this.reason = reason }
+            fun reason(reason: JsonField<String>) =
+                apply {
+                    this.reason = reason
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: JsonValue) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
             fun build(): Discount =
                 Discount(
-                    checkRequired("amountApplied", amountApplied),
-                    checkRequired("discountType", discountType),
-                    checkRequired("percentageDiscount", percentageDiscount),
-                    (appliesToPrices ?: JsonMissing.of()).map { it.toImmutable() },
-                    reason,
-                    additionalProperties.toImmutable(),
+                  checkRequired(
+                    "amountApplied", amountApplied
+                  ),
+                  checkRequired(
+                    "discountType", discountType
+                  ),
+                  checkRequired(
+                    "percentageDiscount", percentageDiscount
+                  ),
+                  (appliesToPrices ?: JsonMissing.of()).map { it.toImmutable() },
+                  reason,
+                  additionalProperties.toImmutable(),
                 )
         }
 
-        class DiscountType @JsonCreator private constructor(private val value: JsonField<String>) :
-            Enum {
+        class DiscountType @JsonCreator private constructor(
+            private val value: JsonField<String>,
+
+        ) : Enum {
 
             /**
              * Returns this class instance's raw value.
              *
-             * This is usually only useful if this instance was deserialized from data that doesn't
-             * match any known member, and you want to know that value. For example, if the SDK is
-             * on an older version than the API, then the API may respond with new members that the
-             * SDK is unaware of.
+             * This is usually only useful if this instance was deserialized from data that
+             * doesn't match any known member, and you want to know that value. For example, if
+             * the SDK is on an older version than the API, then the API may respond with new
+             * members that the SDK is unaware of.
              */
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+            @com.fasterxml.jackson.annotation.JsonValue
+            fun _value(): JsonField<String> = value
 
             companion object {
 
@@ -2152,16 +2339,19 @@ private constructor(
 
             /** An enum containing [DiscountType]'s known values. */
             enum class Known {
-                PERCENTAGE
+                PERCENTAGE,
             }
 
             /**
-             * An enum containing [DiscountType]'s known values, as well as an [_UNKNOWN] member.
+             * An enum containing [DiscountType]'s known values, as well as an [_UNKNOWN]
+             * member.
              *
              * An instance of [DiscountType] can contain an unknown value in a couple of cases:
-             * - It was deserialized from data that doesn't match any known member. For example, if
-             *   the SDK is on an older version than the API, then the API may respond with new
-             *   members that the SDK is unaware of.
+             *
+             * - It was deserialized from data that doesn't match any known member. For
+             *   example, if the SDK is on an older version than the API, then the API may
+             *   respond with new members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -2177,8 +2367,8 @@ private constructor(
              * Returns an enum member corresponding to this class instance's value, or
              * [Value._UNKNOWN] if the class was instantiated with an unknown value.
              *
-             * Use the [known] method instead if you're certain the value is always known or if you
-             * want to throw for the unknown case.
+             * Use the [known] method instead if you're certain the value is always known or if
+             * you want to throw for the unknown case.
              */
             fun value(): Value =
                 when (this) {
@@ -2193,7 +2383,7 @@ private constructor(
              * don't want to throw for the unknown case.
              *
              * @throws OrbInvalidDataException if this class instance's value is a not a known
-             *   member.
+             * member.
              */
             fun known(): Known =
                 when (this) {
@@ -2208,17 +2398,16 @@ private constructor(
              * debugging and generally doesn't throw.
              *
              * @throws OrbInvalidDataException if this class instance's value does not have the
-             *   expected primitive type.
+             * expected primitive type.
              */
-            fun asString(): String =
-                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+            fun asString(): String = _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
             override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
+              if (this === other) {
+                  return true
+              }
 
-                return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
+              return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -2227,26 +2416,24 @@ private constructor(
         }
 
         @NoAutoDetect
-        class AppliesToPrice
-        @JsonCreator
-        private constructor(
-            @JsonProperty("id")
-            @ExcludeMissing
-            private val id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("name")
-            @ExcludeMissing
-            private val name: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        class AppliesToPrice @JsonCreator private constructor(
+            @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+
         ) {
 
             fun id(): String = id.getRequired("id")
 
             fun name(): String = name.getRequired("name")
 
-            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+            @JsonProperty("id")
+            @ExcludeMissing
+            fun _id(): JsonField<String> = id
 
-            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+            @JsonProperty("name")
+            @ExcludeMissing
+            fun _name(): JsonField<String> = name
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -2254,15 +2441,16 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): AppliesToPrice = apply {
-                if (validated) {
-                    return@apply
-                }
+            fun validate(): AppliesToPrice =
+                apply {
+                    if (validated) {
+                      return@apply
+                    }
 
-                id()
-                name()
-                validated = true
-            }
+                    id()
+                    name()
+                    validated = true
+                }
 
             fun toBuilder() = Builder().from(this)
 
@@ -2272,6 +2460,7 @@ private constructor(
                  * Returns a mutable builder for constructing an instance of [AppliesToPrice].
                  *
                  * The following fields are required:
+                 *
                  * ```kotlin
                  * .id()
                  * .name()
@@ -2287,56 +2476,71 @@ private constructor(
                 private var name: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(appliesToPrice: AppliesToPrice) = apply {
-                    id = appliesToPrice.id
-                    name = appliesToPrice.name
-                    additionalProperties = appliesToPrice.additionalProperties.toMutableMap()
-                }
+                internal fun from(appliesToPrice: AppliesToPrice) =
+                    apply {
+                        id = appliesToPrice.id
+                        name = appliesToPrice.name
+                        additionalProperties = appliesToPrice.additionalProperties.toMutableMap()
+                    }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                fun id(id: JsonField<String>) = apply { this.id = id }
+                fun id(id: JsonField<String>) =
+                    apply {
+                        this.id = id
+                    }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                fun name(name: JsonField<String>) = apply { this.name = name }
+                fun name(name: JsonField<String>) =
+                    apply {
+                        this.name = name
+                    }
 
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
 
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    additionalProperties.put(key, value)
-                }
+                fun putAdditionalProperty(key: String, value: JsonValue) =
+                    apply {
+                        additionalProperties.put(key, value)
+                    }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun removeAdditionalProperty(key: String) = apply {
-                    additionalProperties.remove(key)
-                }
+                fun removeAdditionalProperty(key: String) =
+                    apply {
+                        additionalProperties.remove(key)
+                    }
 
-                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
+                fun removeAllAdditionalProperties(keys: Set<String>) =
+                    apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                 fun build(): AppliesToPrice =
                     AppliesToPrice(
-                        checkRequired("id", id),
-                        checkRequired("name", name),
-                        additionalProperties.toImmutable(),
+                      checkRequired(
+                        "id", id
+                      ),
+                      checkRequired(
+                        "name", name
+                      ),
+                      additionalProperties.toImmutable(),
                     )
             }
 
             override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
+              if (this === other) {
+                  return true
+              }
 
-                return /* spotless:off */ other is AppliesToPrice && id == other.id && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+              return /* spotless:off */ other is AppliesToPrice && id == other.id && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -2345,16 +2549,15 @@ private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() =
-                "AppliesToPrice{id=$id, name=$name, additionalProperties=$additionalProperties}"
+            override fun toString() = "AppliesToPrice{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return /* spotless:off */ other is Discount && amountApplied == other.amountApplied && discountType == other.discountType && percentageDiscount == other.percentageDiscount && appliesToPrices == other.appliesToPrices && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+          return /* spotless:off */ other is Discount && amountApplied == other.amountApplied && discountType == other.discountType && percentageDiscount == other.percentageDiscount && appliesToPrices == other.appliesToPrices && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -2363,16 +2566,15 @@ private constructor(
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() =
-            "Discount{amountApplied=$amountApplied, discountType=$discountType, percentageDiscount=$percentageDiscount, appliesToPrices=$appliesToPrices, reason=$reason, additionalProperties=$additionalProperties}"
+        override fun toString() = "Discount{amountApplied=$amountApplied, discountType=$discountType, percentageDiscount=$percentageDiscount, appliesToPrices=$appliesToPrices, reason=$reason, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return /* spotless:off */ other is CreditNote && id == other.id && createdAt == other.createdAt && creditNoteNumber == other.creditNoteNumber && creditNotePdf == other.creditNotePdf && customer == other.customer && invoiceId == other.invoiceId && lineItems == other.lineItems && maximumAmountAdjustment == other.maximumAmountAdjustment && memo == other.memo && minimumAmountRefunded == other.minimumAmountRefunded && reason == other.reason && subtotal == other.subtotal && total == other.total && type == other.type && voidedAt == other.voidedAt && discounts == other.discounts && additionalProperties == other.additionalProperties /* spotless:on */
+      return /* spotless:off */ other is CreditNote && id == other.id && createdAt == other.createdAt && creditNoteNumber == other.creditNoteNumber && creditNotePdf == other.creditNotePdf && customer == other.customer && invoiceId == other.invoiceId && lineItems == other.lineItems && maximumAmountAdjustment == other.maximumAmountAdjustment && memo == other.memo && minimumAmountRefunded == other.minimumAmountRefunded && reason == other.reason && subtotal == other.subtotal && total == other.total && type == other.type && voidedAt == other.voidedAt && discounts == other.discounts && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
@@ -2381,6 +2583,5 @@ private constructor(
 
     override fun hashCode(): Int = hashCode
 
-    override fun toString() =
-        "CreditNote{id=$id, createdAt=$createdAt, creditNoteNumber=$creditNoteNumber, creditNotePdf=$creditNotePdf, customer=$customer, invoiceId=$invoiceId, lineItems=$lineItems, maximumAmountAdjustment=$maximumAmountAdjustment, memo=$memo, minimumAmountRefunded=$minimumAmountRefunded, reason=$reason, subtotal=$subtotal, total=$total, type=$type, voidedAt=$voidedAt, discounts=$discounts, additionalProperties=$additionalProperties}"
+    override fun toString() = "CreditNote{id=$id, createdAt=$createdAt, creditNoteNumber=$creditNoteNumber, creditNotePdf=$creditNotePdf, customer=$customer, invoiceId=$invoiceId, lineItems=$lineItems, maximumAmountAdjustment=$maximumAmountAdjustment, memo=$memo, minimumAmountRefunded=$minimumAmountRefunded, reason=$reason, subtotal=$subtotal, total=$total, type=$type, voidedAt=$voidedAt, discounts=$discounts, additionalProperties=$additionalProperties}"
 }
