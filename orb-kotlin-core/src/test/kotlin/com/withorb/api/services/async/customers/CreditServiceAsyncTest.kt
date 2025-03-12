@@ -14,37 +14,31 @@ class CreditServiceAsyncTest {
 
     @Test
     suspend fun list() {
-        val client =
-            OrbOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val creditServiceAsync = client.customers().credits()
+      val client = OrbOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val creditServiceAsync = client.customers().credits()
 
-        val page =
-            creditServiceAsync.list(
-                CustomerCreditListParams.builder().customerId("customer_id").build()
-            )
+      val page = creditServiceAsync.list(CustomerCreditListParams.builder()
+          .customerId("customer_id")
+          .build())
 
-        page.response().validate()
+      page.response().validate()
     }
 
     @Test
     suspend fun listByExternalId() {
-        val client =
-            OrbOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val creditServiceAsync = client.customers().credits()
+      val client = OrbOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val creditServiceAsync = client.customers().credits()
 
-        val page =
-            creditServiceAsync.listByExternalId(
-                CustomerCreditListByExternalIdParams.builder()
-                    .externalCustomerId("external_customer_id")
-                    .build()
-            )
+      val page = creditServiceAsync.listByExternalId(CustomerCreditListByExternalIdParams.builder()
+          .externalCustomerId("external_customer_id")
+          .build())
 
-        page.response().validate()
+      page.response().validate()
     }
 }

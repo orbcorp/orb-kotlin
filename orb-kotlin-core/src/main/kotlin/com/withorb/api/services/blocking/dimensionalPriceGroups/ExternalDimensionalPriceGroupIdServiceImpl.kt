@@ -17,59 +17,49 @@ import com.withorb.api.errors.OrbError
 import com.withorb.api.models.DimensionalPriceGroup
 import com.withorb.api.models.DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams
 
-class ExternalDimensionalPriceGroupIdServiceImpl
-internal constructor(private val clientOptions: ClientOptions) :
-    ExternalDimensionalPriceGroupIdService {
+class ExternalDimensionalPriceGroupIdServiceImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: ExternalDimensionalPriceGroupIdService.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : ExternalDimensionalPriceGroupIdService {
 
-    override fun withRawResponse(): ExternalDimensionalPriceGroupIdService.WithRawResponse =
-        withRawResponse
+    private val withRawResponse: ExternalDimensionalPriceGroupIdService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
-    override fun retrieve(
-        params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
-        requestOptions: RequestOptions,
-    ): DimensionalPriceGroup =
-        // get
-        // /dimensional_price_groups/external_dimensional_price_group_id/{external_dimensional_price_group_id}
+    override fun withRawResponse(): ExternalDimensionalPriceGroupIdService.WithRawResponse = withRawResponse
+
+    override fun retrieve(params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams, requestOptions: RequestOptions): DimensionalPriceGroup =
+        // get /dimensional_price_groups/external_dimensional_price_group_id/{external_dimensional_price_group_id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        ExternalDimensionalPriceGroupIdService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
+
+    ) : ExternalDimensionalPriceGroupIdService.WithRawResponse {
 
         private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<DimensionalPriceGroup> =
-            jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<DimensionalPriceGroup> = jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override fun retrieve(
-            params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<DimensionalPriceGroup> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .addPathSegments(
-                        "dimensional_price_groups",
-                        "external_dimensional_price_group_id",
-                        params.getPathParam(0),
-                    )
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
-                response
-                    .use { retrieveHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun retrieve(params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams, requestOptions: RequestOptions): HttpResponseFor<DimensionalPriceGroup> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .addPathSegments("dimensional_price_groups", "external_dimensional_price_group_id", params.getPathParam(0))
+            .build()
+            .prepare(clientOptions, params)
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return response.parseable {
+              response.use {
+                  retrieveHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
     }
 }

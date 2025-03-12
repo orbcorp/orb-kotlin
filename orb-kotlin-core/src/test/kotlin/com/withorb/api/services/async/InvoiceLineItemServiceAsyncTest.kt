@@ -14,25 +14,21 @@ class InvoiceLineItemServiceAsyncTest {
 
     @Test
     suspend fun create() {
-        val client =
-            OrbOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val invoiceLineItemServiceAsync = client.invoiceLineItems()
+      val client = OrbOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val invoiceLineItemServiceAsync = client.invoiceLineItems()
 
-        val invoiceLineItem =
-            invoiceLineItemServiceAsync.create(
-                InvoiceLineItemCreateParams.builder()
-                    .amount("12.00")
-                    .endDate(LocalDate.parse("2023-09-22"))
-                    .invoiceId("4khy3nwzktxv7")
-                    .name("Item Name")
-                    .quantity(1.0)
-                    .startDate(LocalDate.parse("2023-09-22"))
-                    .build()
-            )
+      val invoiceLineItem = invoiceLineItemServiceAsync.create(InvoiceLineItemCreateParams.builder()
+          .amount("12.00")
+          .endDate(LocalDate.parse("2023-09-22"))
+          .invoiceId("4khy3nwzktxv7")
+          .name("Item Name")
+          .quantity(1.0)
+          .startDate(LocalDate.parse("2023-09-22"))
+          .build())
 
-        invoiceLineItem.validate()
+      invoiceLineItem.validate()
     }
 }
