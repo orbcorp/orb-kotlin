@@ -14,23 +14,19 @@ class VolumeServiceTest {
 
     @Test
     fun list() {
-        val client =
-            OrbOkHttpClient.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .build()
-        val volumeService = client.events().volume()
+      val client = OrbOkHttpClient.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .build()
+      val volumeService = client.events().volume()
 
-        val eventVolumes =
-            volumeService.list(
-                EventVolumeListParams.builder()
-                    .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .cursor("cursor")
-                    .limit(1L)
-                    .timeframeEnd(OffsetDateTime.parse("2024-10-11T06:00:00Z"))
-                    .build()
-            )
+      val eventVolumes = volumeService.list(EventVolumeListParams.builder()
+          .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+          .cursor("cursor")
+          .limit(1L)
+          .timeframeEnd(OffsetDateTime.parse("2024-10-11T06:00:00Z"))
+          .build())
 
-        eventVolumes.validate()
+      eventVolumes.validate()
     }
 }

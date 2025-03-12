@@ -9,16 +9,14 @@ class EvaluatePriceGroupTest {
 
     @Test
     fun createEvaluatePriceGroup() {
-        val evaluatePriceGroup =
-            EvaluatePriceGroup.builder()
-                .amount("amount")
-                .addGroupingValue("string")
-                .quantity(0.0)
-                .build()
-        assertThat(evaluatePriceGroup).isNotNull
-        assertThat(evaluatePriceGroup.amount()).isEqualTo("amount")
-        assertThat(evaluatePriceGroup.groupingValues())
-            .containsExactly(EvaluatePriceGroup.GroupingValue.ofString("string"))
-        assertThat(evaluatePriceGroup.quantity()).isEqualTo(0.0)
+      val evaluatePriceGroup = EvaluatePriceGroup.builder()
+          .amount("amount")
+          .addGroupingValue("string")
+          .quantity(0.0)
+          .build()
+      assertThat(evaluatePriceGroup).isNotNull
+      assertThat(evaluatePriceGroup.amount()).isEqualTo("amount")
+      assertThat(evaluatePriceGroup.groupingValues()).containsExactly(EvaluatePriceGroup.GroupingValue.ofString("string"))
+      assertThat(evaluatePriceGroup.quantity()).isEqualTo(0.0)
     }
 }

@@ -62,10 +62,7 @@ internal fun multipartFormData(
                 .build()
         }
 
-        private fun serializePart(
-            name: String,
-            node: JsonNode,
-        ): Sequence<Pair<String, InputStream>> =
+        private fun serializePart(name: String, node: JsonNode): Sequence<Pair<String, InputStream>> =
             when (node.nodeType) {
                 JsonNodeType.MISSING,
                 JsonNodeType.NULL -> emptySequence()
