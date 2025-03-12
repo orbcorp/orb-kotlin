@@ -9,20 +9,19 @@ class CustomerFetchByExternalIdParamsTest {
 
     @Test
     fun create() {
-      CustomerFetchByExternalIdParams.builder()
-          .externalCustomerId("external_customer_id")
-          .build()
+        CustomerFetchByExternalIdParams.builder().externalCustomerId("external_customer_id").build()
     }
 
     @Test
     fun getPathParam() {
-      val params = CustomerFetchByExternalIdParams.builder()
-          .externalCustomerId("external_customer_id")
-          .build()
-      assertThat(params).isNotNull
-      // path param "externalCustomerId"
-      assertThat(params.getPathParam(0)).isEqualTo("external_customer_id")
-      // out-of-bound path param
-      assertThat(params.getPathParam(1)).isEqualTo("")
+        val params =
+            CustomerFetchByExternalIdParams.builder()
+                .externalCustomerId("external_customer_id")
+                .build()
+        assertThat(params).isNotNull
+        // path param "externalCustomerId"
+        assertThat(params.getPathParam(0)).isEqualTo("external_customer_id")
+        // out-of-bound path param
+        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

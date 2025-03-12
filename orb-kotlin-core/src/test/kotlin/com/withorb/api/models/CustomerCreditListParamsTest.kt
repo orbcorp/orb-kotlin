@@ -10,50 +10,47 @@ class CustomerCreditListParamsTest {
 
     @Test
     fun create() {
-      CustomerCreditListParams.builder()
-          .customerId("customer_id")
-          .currency("currency")
-          .cursor("cursor")
-          .includeAllBlocks(true)
-          .limit(1L)
-          .build()
+        CustomerCreditListParams.builder()
+            .customerId("customer_id")
+            .currency("currency")
+            .cursor("cursor")
+            .includeAllBlocks(true)
+            .limit(1L)
+            .build()
     }
 
     @Test
     fun queryParams() {
-      val params = CustomerCreditListParams.builder()
-          .customerId("customer_id")
-          .currency("currency")
-          .cursor("cursor")
-          .includeAllBlocks(true)
-          .limit(1L)
-          .build()
-      val expected = QueryParams.builder()
-      expected.put("currency", "currency")
-      expected.put("cursor", "cursor")
-      expected.put("include_all_blocks", "true")
-      expected.put("limit", "1")
-      assertThat(params._queryParams()).isEqualTo(expected.build())
+        val params =
+            CustomerCreditListParams.builder()
+                .customerId("customer_id")
+                .currency("currency")
+                .cursor("cursor")
+                .includeAllBlocks(true)
+                .limit(1L)
+                .build()
+        val expected = QueryParams.builder()
+        expected.put("currency", "currency")
+        expected.put("cursor", "cursor")
+        expected.put("include_all_blocks", "true")
+        expected.put("limit", "1")
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-      val params = CustomerCreditListParams.builder()
-          .customerId("customer_id")
-          .build()
-      val expected = QueryParams.builder()
-      assertThat(params._queryParams()).isEqualTo(expected.build())
+        val params = CustomerCreditListParams.builder().customerId("customer_id").build()
+        val expected = QueryParams.builder()
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
     fun getPathParam() {
-      val params = CustomerCreditListParams.builder()
-          .customerId("customer_id")
-          .build()
-      assertThat(params).isNotNull
-      // path param "customerId"
-      assertThat(params.getPathParam(0)).isEqualTo("customer_id")
-      // out-of-bound path param
-      assertThat(params.getPathParam(1)).isEqualTo("")
+        val params = CustomerCreditListParams.builder().customerId("customer_id").build()
+        assertThat(params).isNotNull
+        // path param "customerId"
+        assertThat(params.getPathParam(0)).isEqualTo("customer_id")
+        // out-of-bound path param
+        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }
