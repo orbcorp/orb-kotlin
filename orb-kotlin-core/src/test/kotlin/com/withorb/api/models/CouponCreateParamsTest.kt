@@ -10,67 +10,49 @@ class CouponCreateParamsTest {
 
     @Test
     fun create() {
-        CouponCreateParams.builder()
-            .newCouponPercentageDiscount(0.0)
-            .redemptionCode("HALFOFF")
-            .durationInMonths(12L)
-            .maxRedemptions(1L)
-            .build()
+      CouponCreateParams.builder()
+          .newCouponPercentageDiscount(0.0)
+          .redemptionCode("HALFOFF")
+          .durationInMonths(12L)
+          .maxRedemptions(1L)
+          .build()
     }
 
     @Test
     fun body() {
-        val params =
-            CouponCreateParams.builder()
-                .newCouponPercentageDiscount(0.0)
-                .redemptionCode("HALFOFF")
-                .durationInMonths(12L)
-                .maxRedemptions(1L)
-                .build()
+      val params = CouponCreateParams.builder()
+          .newCouponPercentageDiscount(0.0)
+          .redemptionCode("HALFOFF")
+          .durationInMonths(12L)
+          .maxRedemptions(1L)
+          .build()
 
-        val body = params._body()
+      val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.discount())
-            .isEqualTo(
-                CouponCreateParams.Discount.ofNewCouponPercentage(
-                    CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                        .discountType(
-                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                .PERCENTAGE
-                        )
-                        .percentageDiscount(0.0)
-                        .build()
-                )
-            )
-        assertThat(body.redemptionCode()).isEqualTo("HALFOFF")
-        assertThat(body.durationInMonths()).isEqualTo(12L)
-        assertThat(body.maxRedemptions()).isEqualTo(1L)
+      assertNotNull(body)
+      assertThat(body.discount()).isEqualTo(CouponCreateParams.Discount.ofNewCouponPercentage(CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
+          .discountType(CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType.PERCENTAGE)
+          .percentageDiscount(0.0)
+          .build()))
+      assertThat(body.redemptionCode()).isEqualTo("HALFOFF")
+      assertThat(body.durationInMonths()).isEqualTo(12L)
+      assertThat(body.maxRedemptions()).isEqualTo(1L)
     }
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params =
-            CouponCreateParams.builder()
-                .newCouponPercentageDiscount(0.0)
-                .redemptionCode("HALFOFF")
-                .build()
+      val params = CouponCreateParams.builder()
+          .newCouponPercentageDiscount(0.0)
+          .redemptionCode("HALFOFF")
+          .build()
 
-        val body = params._body()
+      val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.discount())
-            .isEqualTo(
-                CouponCreateParams.Discount.ofNewCouponPercentage(
-                    CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                        .discountType(
-                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                .PERCENTAGE
-                        )
-                        .percentageDiscount(0.0)
-                        .build()
-                )
-            )
-        assertThat(body.redemptionCode()).isEqualTo("HALFOFF")
+      assertNotNull(body)
+      assertThat(body.discount()).isEqualTo(CouponCreateParams.Discount.ofNewCouponPercentage(CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
+          .discountType(CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType.PERCENTAGE)
+          .percentageDiscount(0.0)
+          .build()))
+      assertThat(body.redemptionCode()).isEqualTo("HALFOFF")
     }
 }
