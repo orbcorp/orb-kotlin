@@ -33,7 +33,7 @@ private constructor(
     private val createdAtLte: OffsetDateTime?,
     private val cursor: String?,
     private val customerId: List<String>?,
-    private val externalCustomerId: String?,
+    private val externalCustomerId: List<String>?,
     private val limit: Long?,
     private val status: Status?,
     private val additionalHeaders: Headers,
@@ -56,7 +56,7 @@ private constructor(
 
     fun customerId(): List<String>? = customerId
 
-    fun externalCustomerId(): String? = externalCustomerId
+    fun externalCustomerId(): List<String>? = externalCustomerId
 
     /** The number of items to fetch. Defaults to 20. */
     fun limit(): Long? = limit
@@ -98,7 +98,7 @@ private constructor(
         this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
         this.customerId?.let { queryParams.put("customer_id[]", it.map(Any::toString)) }
         this.externalCustomerId?.let {
-            queryParams.put("external_customer_id", listOf(it.toString()))
+            queryParams.put("external_customer_id[]", it.map(Any::toString))
         }
         this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
         this.status?.let { queryParams.put("status", listOf(it.toString())) }
@@ -126,7 +126,7 @@ private constructor(
         private var createdAtLte: OffsetDateTime? = null
         private var cursor: String? = null
         private var customerId: MutableList<String>? = null
-        private var externalCustomerId: String? = null
+        private var externalCustomerId: MutableList<String>? = null
         private var limit: Long? = null
         private var status: Status? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -139,7 +139,7 @@ private constructor(
             createdAtLte = subscriptionListParams.createdAtLte
             cursor = subscriptionListParams.cursor
             customerId = subscriptionListParams.customerId?.toMutableList()
-            externalCustomerId = subscriptionListParams.externalCustomerId
+            externalCustomerId = subscriptionListParams.externalCustomerId?.toMutableList()
             limit = subscriptionListParams.limit
             status = subscriptionListParams.status
             additionalHeaders = subscriptionListParams.additionalHeaders.toBuilder()
@@ -168,8 +168,13 @@ private constructor(
             this.customerId = (this.customerId ?: mutableListOf()).apply { add(customerId) }
         }
 
-        fun externalCustomerId(externalCustomerId: String?) = apply {
-            this.externalCustomerId = externalCustomerId
+        fun externalCustomerId(externalCustomerId: List<String>?) = apply {
+            this.externalCustomerId = externalCustomerId?.toMutableList()
+        }
+
+        fun addExternalCustomerId(externalCustomerId: String) = apply {
+            this.externalCustomerId =
+                (this.externalCustomerId ?: mutableListOf()).apply { add(externalCustomerId) }
         }
 
         /** The number of items to fetch. Defaults to 20. */
@@ -286,7 +291,7 @@ private constructor(
                 createdAtLte,
                 cursor,
                 customerId?.toImmutable(),
-                externalCustomerId,
+                externalCustomerId?.toImmutable(),
                 limit,
                 status,
                 additionalHeaders.build(),
