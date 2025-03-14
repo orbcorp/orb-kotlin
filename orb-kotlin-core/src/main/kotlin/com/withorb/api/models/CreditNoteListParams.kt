@@ -6,6 +6,8 @@ import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
 
 /**
@@ -15,11 +17,23 @@ import java.util.Objects
  */
 class CreditNoteListParams
 private constructor(
+    private val createdAtGt: OffsetDateTime?,
+    private val createdAtGte: OffsetDateTime?,
+    private val createdAtLt: OffsetDateTime?,
+    private val createdAtLte: OffsetDateTime?,
     private val cursor: String?,
     private val limit: Long?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
+
+    fun createdAtGt(): OffsetDateTime? = createdAtGt
+
+    fun createdAtGte(): OffsetDateTime? = createdAtGte
+
+    fun createdAtLt(): OffsetDateTime? = createdAtLt
+
+    fun createdAtLte(): OffsetDateTime? = createdAtLte
 
     /**
      * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
@@ -38,6 +52,30 @@ private constructor(
 
     override fun _queryParams(): QueryParams {
         val queryParams = QueryParams.builder()
+        this.createdAtGt?.let {
+            queryParams.put(
+                "created_at[gt]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
+        this.createdAtGte?.let {
+            queryParams.put(
+                "created_at[gte]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
+        this.createdAtLt?.let {
+            queryParams.put(
+                "created_at[lt]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
+        this.createdAtLte?.let {
+            queryParams.put(
+                "created_at[lte]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
+            )
+        }
         this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
         this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
         queryParams.putAll(additionalQueryParams)
@@ -58,17 +96,33 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
+        private var createdAtGt: OffsetDateTime? = null
+        private var createdAtGte: OffsetDateTime? = null
+        private var createdAtLt: OffsetDateTime? = null
+        private var createdAtLte: OffsetDateTime? = null
         private var cursor: String? = null
         private var limit: Long? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(creditNoteListParams: CreditNoteListParams) = apply {
+            createdAtGt = creditNoteListParams.createdAtGt
+            createdAtGte = creditNoteListParams.createdAtGte
+            createdAtLt = creditNoteListParams.createdAtLt
+            createdAtLte = creditNoteListParams.createdAtLte
             cursor = creditNoteListParams.cursor
             limit = creditNoteListParams.limit
             additionalHeaders = creditNoteListParams.additionalHeaders.toBuilder()
             additionalQueryParams = creditNoteListParams.additionalQueryParams.toBuilder()
         }
+
+        fun createdAtGt(createdAtGt: OffsetDateTime?) = apply { this.createdAtGt = createdAtGt }
+
+        fun createdAtGte(createdAtGte: OffsetDateTime?) = apply { this.createdAtGte = createdAtGte }
+
+        fun createdAtLt(createdAtLt: OffsetDateTime?) = apply { this.createdAtLt = createdAtLt }
+
+        fun createdAtLte(createdAtLte: OffsetDateTime?) = apply { this.createdAtLte = createdAtLte }
 
         /**
          * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
@@ -182,6 +236,10 @@ private constructor(
 
         fun build(): CreditNoteListParams =
             CreditNoteListParams(
+                createdAtGt,
+                createdAtGte,
+                createdAtLt,
+                createdAtLte,
                 cursor,
                 limit,
                 additionalHeaders.build(),
@@ -194,11 +252,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CreditNoteListParams && cursor == other.cursor && limit == other.limit && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is CreditNoteListParams && createdAtGt == other.createdAtGt && createdAtGte == other.createdAtGte && createdAtLt == other.createdAtLt && createdAtLte == other.createdAtLte && cursor == other.cursor && limit == other.limit && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cursor, limit, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(createdAtGt, createdAtGte, createdAtLt, createdAtLte, cursor, limit, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "CreditNoteListParams{cursor=$cursor, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "CreditNoteListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
