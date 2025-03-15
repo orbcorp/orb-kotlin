@@ -15,6 +15,7 @@ import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
 @NoAutoDetect
@@ -30,13 +31,32 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun data(): List<DimensionalPriceGroup> = data.getRequired("data")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun paginationMetadata(): PaginationMetadata =
         paginationMetadata.getRequired("pagination_metadata")
 
+    /**
+     * Returns the raw JSON value of [data].
+     *
+     * Unlike [data], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<DimensionalPriceGroup>> = data
 
+    /**
+     * Returns the raw JSON value of [paginationMetadata].
+     *
+     * Unlike [paginationMetadata], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("pagination_metadata")
     @ExcludeMissing
     fun _paginationMetadata(): JsonField<PaginationMetadata> = paginationMetadata
@@ -88,10 +108,22 @@ private constructor(
 
         fun data(data: List<DimensionalPriceGroup>) = data(JsonField.of(data))
 
+        /**
+         * Sets [Builder.data] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.data] with a well-typed `List<DimensionalPriceGroup>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun data(data: JsonField<List<DimensionalPriceGroup>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
+        /**
+         * Adds a single [DimensionalPriceGroup] to [Builder.data].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addData(data: DimensionalPriceGroup) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
@@ -102,6 +134,13 @@ private constructor(
         fun paginationMetadata(paginationMetadata: PaginationMetadata) =
             paginationMetadata(JsonField.of(paginationMetadata))
 
+        /**
+         * Sets [Builder.paginationMetadata] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paginationMetadata] with a well-typed
+         * [PaginationMetadata] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
         fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply {
             this.paginationMetadata = paginationMetadata
         }

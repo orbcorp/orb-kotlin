@@ -14,6 +14,7 @@ import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
 @NoAutoDetect
@@ -26,10 +27,19 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** event_id of the amended event, if successfully ingested */
+    /**
+     * event_id of the amended event, if successfully ingested
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun amended(): String = amended.getRequired("amended")
 
-    /** event_id of the amended event, if successfully ingested */
+    /**
+     * Returns the raw JSON value of [amended].
+     *
+     * Unlike [amended], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("amended") @ExcludeMissing fun _amended(): JsonField<String> = amended
 
     @JsonAnyGetter
@@ -76,7 +86,12 @@ private constructor(
         /** event_id of the amended event, if successfully ingested */
         fun amended(amended: String) = amended(JsonField.of(amended))
 
-        /** event_id of the amended event, if successfully ingested */
+        /**
+         * Sets [Builder.amended] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amended] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun amended(amended: JsonField<String>) = apply { this.amended = amended }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

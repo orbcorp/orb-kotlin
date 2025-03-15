@@ -110,14 +110,26 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
-    /** The current plan phase that is active, only if the subscription's plan has phases. */
+    /**
+     * The current plan phase that is active, only if the subscription's plan has phases.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun activePlanPhaseOrder(): Long? = activePlanPhaseOrder.getNullable("active_plan_phase_order")
 
     /**
      * The adjustment intervals for this subscription sorted by the start_date of the adjustment
      * interval.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun adjustmentIntervals(): List<AdjustmentInterval> =
         adjustmentIntervals.getRequired("adjustment_intervals")
@@ -126,9 +138,16 @@ private constructor(
      * Determines whether issued invoices for this subscription will automatically be charged with
      * the saved payment method on the due date. This property defaults to the plan's behavior. If
      * null, defaults to the customer's setting.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun autoCollection(): Boolean? = autoCollection.getNullable("auto_collection")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun billingCycleAnchorConfiguration(): BillingCycleAnchorConfiguration =
         billingCycleAnchorConfiguration.getRequired("billing_cycle_anchor_configuration")
 
@@ -136,15 +155,25 @@ private constructor(
      * The day of the month on which the billing cycle is anchored. If the maximum number of days in
      * a month is greater than this value, the last day of the month is the billing cycle day (e.g.
      * billing_cycle_day=31 for April means the billing period begins on the 30th.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun billingCycleDay(): Long = billingCycleDay.getRequired("billing_cycle_day")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
     /**
      * The end of the current billing period. This is an exclusive timestamp, such that the instant
      * returned is not part of the billing period. Set to null for subscriptions that are not
      * currently active.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun currentBillingPeriodEndDate(): OffsetDateTime? =
         currentBillingPeriodEndDate.getNullable("current_billing_period_end_date")
@@ -153,6 +182,9 @@ private constructor(
      * The start date of the current billing period. This is an inclusive timestamp; the instant
      * returned is exactly the beginning of the billing period. Set to null if the subscription is
      * not currently active.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun currentBillingPeriodStartDate(): OffsetDateTime? =
         currentBillingPeriodStartDate.getNullable("current_billing_period_start_date")
@@ -174,28 +206,57 @@ private constructor(
      * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your account's
      * timezone. See [Timezone localization](/essentials/timezones) for information on what this
      * timezone parameter influences within Orb.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun customer(): Customer = customer.getRequired("customer")
 
     /**
      * Determines the default memo on this subscriptions' invoices. Note that if this is not
      * provided, it is determined by the plan configuration.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun defaultInvoiceMemo(): String? = defaultInvoiceMemo.getNullable("default_invoice_memo")
 
-    /** The discount intervals for this subscription sorted by the start_date. */
+    /**
+     * The discount intervals for this subscription sorted by the start_date.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun discountIntervals(): List<DiscountInterval> =
         discountIntervals.getRequired("discount_intervals")
 
-    /** The date Orb stops billing for this subscription. */
+    /**
+     * The date Orb stops billing for this subscription.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun fixedFeeQuantitySchedule(): List<FixedFeeQuantitySchedule> =
         fixedFeeQuantitySchedule.getRequired("fixed_fee_quantity_schedule")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun invoicingThreshold(): String? = invoicingThreshold.getNullable("invoicing_threshold")
 
-    /** The maximum intervals for this subscription sorted by the start_date. */
+    /**
+     * The maximum intervals for this subscription sorted by the start_date.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun maximumIntervals(): List<MaximumInterval> =
         maximumIntervals.getRequired("maximum_intervals")
 
@@ -203,10 +264,18 @@ private constructor(
      * User specified key-value pairs for the resource. If not present, this defaults to an empty
      * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
      * metadata mapping can be cleared by setting `metadata` to `null`.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun metadata(): Metadata = metadata.getRequired("metadata")
 
-    /** The minimum intervals for this subscription sorted by the start_date. */
+    /**
+     * The minimum intervals for this subscription sorted by the start_date.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun minimumIntervals(): List<MinimumInterval> =
         minimumIntervals.getRequired("minimum_intervals")
 
@@ -214,6 +283,9 @@ private constructor(
      * Determines the difference between the invoice issue date for subscription invoices as the
      * date that they are due. A value of `0` here represents that the invoice is due on issue,
      * whereas a value of `30` represents that the customer has a month to pay the invoice.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun netTerms(): Long = netTerms.getRequired("net_terms")
 
@@ -221,173 +293,266 @@ private constructor(
      * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
      * to by a customer. Plans define the billing behavior of the subscription. You can see more
      * about how to configure prices in the [Price resource](/reference/price).
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun plan(): Plan = plan.getRequired("plan")
 
-    /** The price intervals for this subscription. */
+    /**
+     * The price intervals for this subscription.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun priceIntervals(): List<PriceInterval> = priceIntervals.getRequired("price_intervals")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun redeemedCoupon(): RedeemedCoupon? = redeemedCoupon.getNullable("redeemed_coupon")
 
-    /** The date Orb starts billing for this subscription. */
+    /**
+     * The date Orb starts billing for this subscription.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun status(): Status = status.getRequired("status")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun trialInfo(): TrialInfo = trialInfo.getRequired("trial_info")
 
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    /** The current plan phase that is active, only if the subscription's plan has phases. */
+    /**
+     * Returns the raw JSON value of [activePlanPhaseOrder].
+     *
+     * Unlike [activePlanPhaseOrder], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("active_plan_phase_order")
     @ExcludeMissing
     fun _activePlanPhaseOrder(): JsonField<Long> = activePlanPhaseOrder
 
     /**
-     * The adjustment intervals for this subscription sorted by the start_date of the adjustment
-     * interval.
+     * Returns the raw JSON value of [adjustmentIntervals].
+     *
+     * Unlike [adjustmentIntervals], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("adjustment_intervals")
     @ExcludeMissing
     fun _adjustmentIntervals(): JsonField<List<AdjustmentInterval>> = adjustmentIntervals
 
     /**
-     * Determines whether issued invoices for this subscription will automatically be charged with
-     * the saved payment method on the due date. This property defaults to the plan's behavior. If
-     * null, defaults to the customer's setting.
+     * Returns the raw JSON value of [autoCollection].
+     *
+     * Unlike [autoCollection], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("auto_collection")
     @ExcludeMissing
     fun _autoCollection(): JsonField<Boolean> = autoCollection
 
+    /**
+     * Returns the raw JSON value of [billingCycleAnchorConfiguration].
+     *
+     * Unlike [billingCycleAnchorConfiguration], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("billing_cycle_anchor_configuration")
     @ExcludeMissing
     fun _billingCycleAnchorConfiguration(): JsonField<BillingCycleAnchorConfiguration> =
         billingCycleAnchorConfiguration
 
     /**
-     * The day of the month on which the billing cycle is anchored. If the maximum number of days in
-     * a month is greater than this value, the last day of the month is the billing cycle day (e.g.
-     * billing_cycle_day=31 for April means the billing period begins on the 30th.
+     * Returns the raw JSON value of [billingCycleDay].
+     *
+     * Unlike [billingCycleDay], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("billing_cycle_day")
     @ExcludeMissing
     fun _billingCycleDay(): JsonField<Long> = billingCycleDay
 
+    /**
+     * Returns the raw JSON value of [createdAt].
+     *
+     * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("created_at")
     @ExcludeMissing
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
     /**
-     * The end of the current billing period. This is an exclusive timestamp, such that the instant
-     * returned is not part of the billing period. Set to null for subscriptions that are not
-     * currently active.
+     * Returns the raw JSON value of [currentBillingPeriodEndDate].
+     *
+     * Unlike [currentBillingPeriodEndDate], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     @JsonProperty("current_billing_period_end_date")
     @ExcludeMissing
     fun _currentBillingPeriodEndDate(): JsonField<OffsetDateTime> = currentBillingPeriodEndDate
 
     /**
-     * The start date of the current billing period. This is an inclusive timestamp; the instant
-     * returned is exactly the beginning of the billing period. Set to null if the subscription is
-     * not currently active.
+     * Returns the raw JSON value of [currentBillingPeriodStartDate].
+     *
+     * Unlike [currentBillingPeriodStartDate], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     @JsonProperty("current_billing_period_start_date")
     @ExcludeMissing
     fun _currentBillingPeriodStartDate(): JsonField<OffsetDateTime> = currentBillingPeriodStartDate
 
     /**
-     * A customer is a buyer of your products, and the other party to the billing relationship.
+     * Returns the raw JSON value of [customer].
      *
-     * In Orb, customers are assigned system generated identifiers automatically, but it's often
-     * desirable to have these match existing identifiers in your system. To avoid having to
-     * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
-     * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
-     * information about how these aliases work in Orb.
-     *
-     * In addition to having an identifier in your system, a customer may exist in a payment
-     * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider` enum
-     * field to express this mapping.
-     *
-     * A customer also has a timezone (from the standard
-     * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your account's
-     * timezone. See [Timezone localization](/essentials/timezones) for information on what this
-     * timezone parameter influences within Orb.
+     * Unlike [customer], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
 
     /**
-     * Determines the default memo on this subscriptions' invoices. Note that if this is not
-     * provided, it is determined by the plan configuration.
+     * Returns the raw JSON value of [defaultInvoiceMemo].
+     *
+     * Unlike [defaultInvoiceMemo], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("default_invoice_memo")
     @ExcludeMissing
     fun _defaultInvoiceMemo(): JsonField<String> = defaultInvoiceMemo
 
-    /** The discount intervals for this subscription sorted by the start_date. */
+    /**
+     * Returns the raw JSON value of [discountIntervals].
+     *
+     * Unlike [discountIntervals], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("discount_intervals")
     @ExcludeMissing
     fun _discountIntervals(): JsonField<List<DiscountInterval>> = discountIntervals
 
-    /** The date Orb stops billing for this subscription. */
+    /**
+     * Returns the raw JSON value of [endDate].
+     *
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("end_date") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
 
+    /**
+     * Returns the raw JSON value of [fixedFeeQuantitySchedule].
+     *
+     * Unlike [fixedFeeQuantitySchedule], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("fixed_fee_quantity_schedule")
     @ExcludeMissing
     fun _fixedFeeQuantitySchedule(): JsonField<List<FixedFeeQuantitySchedule>> =
         fixedFeeQuantitySchedule
 
+    /**
+     * Returns the raw JSON value of [invoicingThreshold].
+     *
+     * Unlike [invoicingThreshold], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("invoicing_threshold")
     @ExcludeMissing
     fun _invoicingThreshold(): JsonField<String> = invoicingThreshold
 
-    /** The maximum intervals for this subscription sorted by the start_date. */
+    /**
+     * Returns the raw JSON value of [maximumIntervals].
+     *
+     * Unlike [maximumIntervals], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("maximum_intervals")
     @ExcludeMissing
     fun _maximumIntervals(): JsonField<List<MaximumInterval>> = maximumIntervals
 
     /**
-     * User specified key-value pairs for the resource. If not present, this defaults to an empty
-     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
-     * metadata mapping can be cleared by setting `metadata` to `null`.
+     * Returns the raw JSON value of [metadata].
+     *
+     * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
-    /** The minimum intervals for this subscription sorted by the start_date. */
+    /**
+     * Returns the raw JSON value of [minimumIntervals].
+     *
+     * Unlike [minimumIntervals], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("minimum_intervals")
     @ExcludeMissing
     fun _minimumIntervals(): JsonField<List<MinimumInterval>> = minimumIntervals
 
     /**
-     * Determines the difference between the invoice issue date for subscription invoices as the
-     * date that they are due. A value of `0` here represents that the invoice is due on issue,
-     * whereas a value of `30` represents that the customer has a month to pay the invoice.
+     * Returns the raw JSON value of [netTerms].
+     *
+     * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
 
     /**
-     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
-     * to by a customer. Plans define the billing behavior of the subscription. You can see more
-     * about how to configure prices in the [Price resource](/reference/price).
+     * Returns the raw JSON value of [plan].
+     *
+     * Unlike [plan], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("plan") @ExcludeMissing fun _plan(): JsonField<Plan> = plan
 
-    /** The price intervals for this subscription. */
+    /**
+     * Returns the raw JSON value of [priceIntervals].
+     *
+     * Unlike [priceIntervals], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("price_intervals")
     @ExcludeMissing
     fun _priceIntervals(): JsonField<List<PriceInterval>> = priceIntervals
 
+    /**
+     * Returns the raw JSON value of [redeemedCoupon].
+     *
+     * Unlike [redeemedCoupon], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("redeemed_coupon")
     @ExcludeMissing
     fun _redeemedCoupon(): JsonField<RedeemedCoupon> = redeemedCoupon
 
-    /** The date Orb starts billing for this subscription. */
+    /**
+     * Returns the raw JSON value of [startDate].
+     *
+     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("start_date")
     @ExcludeMissing
     fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+    /**
+     * Returns the raw JSON value of [status].
+     *
+     * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
+    /**
+     * Returns the raw JSON value of [trialInfo].
+     *
+     * Unlike [trialInfo], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("trial_info") @ExcludeMissing fun _trialInfo(): JsonField<TrialInfo> = trialInfo
 
     @JsonAnyGetter
@@ -547,17 +712,33 @@ private constructor(
 
         fun id(id: String) = id(JsonField.of(id))
 
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The current plan phase that is active, only if the subscription's plan has phases. */
         fun activePlanPhaseOrder(activePlanPhaseOrder: Long?) =
             activePlanPhaseOrder(JsonField.ofNullable(activePlanPhaseOrder))
 
-        /** The current plan phase that is active, only if the subscription's plan has phases. */
+        /**
+         * Alias for [Builder.activePlanPhaseOrder].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun activePlanPhaseOrder(activePlanPhaseOrder: Long) =
             activePlanPhaseOrder(activePlanPhaseOrder as Long?)
 
-        /** The current plan phase that is active, only if the subscription's plan has phases. */
+        /**
+         * Sets [Builder.activePlanPhaseOrder] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.activePlanPhaseOrder] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun activePlanPhaseOrder(activePlanPhaseOrder: JsonField<Long>) = apply {
             this.activePlanPhaseOrder = activePlanPhaseOrder
         }
@@ -570,16 +751,20 @@ private constructor(
             adjustmentIntervals(JsonField.of(adjustmentIntervals))
 
         /**
-         * The adjustment intervals for this subscription sorted by the start_date of the adjustment
-         * interval.
+         * Sets [Builder.adjustmentIntervals] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.adjustmentIntervals] with a well-typed
+         * `List<AdjustmentInterval>` value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
          */
         fun adjustmentIntervals(adjustmentIntervals: JsonField<List<AdjustmentInterval>>) = apply {
             this.adjustmentIntervals = adjustmentIntervals.map { it.toMutableList() }
         }
 
         /**
-         * The adjustment intervals for this subscription sorted by the start_date of the adjustment
-         * interval.
+         * Adds a single [AdjustmentInterval] to [adjustmentIntervals].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addAdjustmentInterval(adjustmentInterval: AdjustmentInterval) = apply {
             adjustmentIntervals =
@@ -597,16 +782,18 @@ private constructor(
             autoCollection(JsonField.ofNullable(autoCollection))
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be charged
-         * with the saved payment method on the due date. This property defaults to the plan's
-         * behavior. If null, defaults to the customer's setting.
+         * Alias for [Builder.autoCollection].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun autoCollection(autoCollection: Boolean) = autoCollection(autoCollection as Boolean?)
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be charged
-         * with the saved payment method on the due date. This property defaults to the plan's
-         * behavior. If null, defaults to the customer's setting.
+         * Sets [Builder.autoCollection] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.autoCollection] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
             this.autoCollection = autoCollection
@@ -616,6 +803,13 @@ private constructor(
             billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration
         ) = billingCycleAnchorConfiguration(JsonField.of(billingCycleAnchorConfiguration))
 
+        /**
+         * Sets [Builder.billingCycleAnchorConfiguration] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingCycleAnchorConfiguration] with a well-typed
+         * [BillingCycleAnchorConfiguration] value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
+         */
         fun billingCycleAnchorConfiguration(
             billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration>
         ) = apply { this.billingCycleAnchorConfiguration = billingCycleAnchorConfiguration }
@@ -629,10 +823,11 @@ private constructor(
         fun billingCycleDay(billingCycleDay: Long) = billingCycleDay(JsonField.of(billingCycleDay))
 
         /**
-         * The day of the month on which the billing cycle is anchored. If the maximum number of
-         * days in a month is greater than this value, the last day of the month is the billing
-         * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
-         * 30th.
+         * Sets [Builder.billingCycleDay] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingCycleDay] with a well-typed [Long] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun billingCycleDay(billingCycleDay: JsonField<Long>) = apply {
             this.billingCycleDay = billingCycleDay
@@ -640,6 +835,13 @@ private constructor(
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
+        /**
+         * Sets [Builder.createdAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         /**
@@ -651,9 +853,11 @@ private constructor(
             currentBillingPeriodEndDate(JsonField.ofNullable(currentBillingPeriodEndDate))
 
         /**
-         * The end of the current billing period. This is an exclusive timestamp, such that the
-         * instant returned is not part of the billing period. Set to null for subscriptions that
-         * are not currently active.
+         * Sets [Builder.currentBillingPeriodEndDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currentBillingPeriodEndDate] with a well-typed
+         * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
          */
         fun currentBillingPeriodEndDate(currentBillingPeriodEndDate: JsonField<OffsetDateTime>) =
             apply {
@@ -669,9 +873,11 @@ private constructor(
             currentBillingPeriodStartDate(JsonField.ofNullable(currentBillingPeriodStartDate))
 
         /**
-         * The start date of the current billing period. This is an inclusive timestamp; the instant
-         * returned is exactly the beginning of the billing period. Set to null if the subscription
-         * is not currently active.
+         * Sets [Builder.currentBillingPeriodStartDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currentBillingPeriodStartDate] with a well-typed
+         * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
          */
         fun currentBillingPeriodStartDate(
             currentBillingPeriodStartDate: JsonField<OffsetDateTime>
@@ -698,22 +904,11 @@ private constructor(
         fun customer(customer: Customer) = customer(JsonField.of(customer))
 
         /**
-         * A customer is a buyer of your products, and the other party to the billing relationship.
+         * Sets [Builder.customer] to an arbitrary JSON value.
          *
-         * In Orb, customers are assigned system generated identifiers automatically, but it's often
-         * desirable to have these match existing identifiers in your system. To avoid having to
-         * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
-         * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
-         * information about how these aliases work in Orb.
-         *
-         * In addition to having an identifier in your system, a customer may exist in a payment
-         * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider`
-         * enum field to express this mapping.
-         *
-         * A customer also has a timezone (from the standard
-         * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your
-         * account's timezone. See [Timezone localization](/essentials/timezones) for information on
-         * what this timezone parameter influences within Orb.
+         * You should usually call [Builder.customer] with a well-typed [Customer] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
@@ -725,8 +920,11 @@ private constructor(
             defaultInvoiceMemo(JsonField.ofNullable(defaultInvoiceMemo))
 
         /**
-         * Determines the default memo on this subscriptions' invoices. Note that if this is not
-         * provided, it is determined by the plan configuration.
+         * Sets [Builder.defaultInvoiceMemo] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.defaultInvoiceMemo] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun defaultInvoiceMemo(defaultInvoiceMemo: JsonField<String>) = apply {
             this.defaultInvoiceMemo = defaultInvoiceMemo
@@ -736,12 +934,22 @@ private constructor(
         fun discountIntervals(discountIntervals: List<DiscountInterval>) =
             discountIntervals(JsonField.of(discountIntervals))
 
-        /** The discount intervals for this subscription sorted by the start_date. */
+        /**
+         * Sets [Builder.discountIntervals] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.discountIntervals] with a well-typed
+         * `List<DiscountInterval>` value instead. This method is primarily for setting the field to
+         * an undocumented or not yet supported value.
+         */
         fun discountIntervals(discountIntervals: JsonField<List<DiscountInterval>>) = apply {
             this.discountIntervals = discountIntervals.map { it.toMutableList() }
         }
 
-        /** The discount intervals for this subscription sorted by the start_date. */
+        /**
+         * Adds a single [DiscountInterval] to [discountIntervals].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addDiscountInterval(discountInterval: DiscountInterval) = apply {
             discountIntervals =
                 (discountIntervals ?: JsonField.of(mutableListOf())).also {
@@ -749,33 +957,53 @@ private constructor(
                 }
         }
 
-        /** The discount intervals for this subscription sorted by the start_date. */
+        /** Alias for calling [addDiscountInterval] with `DiscountInterval.ofAmount(amount)`. */
         fun addDiscountInterval(amount: DiscountInterval.AmountDiscountInterval) =
             addDiscountInterval(DiscountInterval.ofAmount(amount))
 
-        /** The discount intervals for this subscription sorted by the start_date. */
+        /**
+         * Alias for calling [addDiscountInterval] with `DiscountInterval.ofPercentage(percentage)`.
+         */
         fun addDiscountInterval(percentage: DiscountInterval.PercentageDiscountInterval) =
             addDiscountInterval(DiscountInterval.ofPercentage(percentage))
 
-        /** The discount intervals for this subscription sorted by the start_date. */
+        /** Alias for calling [addDiscountInterval] with `DiscountInterval.ofUsage(usage)`. */
         fun addDiscountInterval(usage: DiscountInterval.UsageDiscountInterval) =
             addDiscountInterval(DiscountInterval.ofUsage(usage))
 
         /** The date Orb stops billing for this subscription. */
         fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
-        /** The date Orb stops billing for this subscription. */
+        /**
+         * Sets [Builder.endDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
         fun fixedFeeQuantitySchedule(fixedFeeQuantitySchedule: List<FixedFeeQuantitySchedule>) =
             fixedFeeQuantitySchedule(JsonField.of(fixedFeeQuantitySchedule))
 
+        /**
+         * Sets [Builder.fixedFeeQuantitySchedule] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.fixedFeeQuantitySchedule] with a well-typed
+         * `List<FixedFeeQuantitySchedule>` value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
+         */
         fun fixedFeeQuantitySchedule(
             fixedFeeQuantitySchedule: JsonField<List<FixedFeeQuantitySchedule>>
         ) = apply {
             this.fixedFeeQuantitySchedule = fixedFeeQuantitySchedule.map { it.toMutableList() }
         }
 
+        /**
+         * Adds a single [FixedFeeQuantitySchedule] to [Builder.fixedFeeQuantitySchedule].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addFixedFeeQuantitySchedule(fixedFeeQuantitySchedule: FixedFeeQuantitySchedule) =
             apply {
                 this.fixedFeeQuantitySchedule =
@@ -787,6 +1015,13 @@ private constructor(
         fun invoicingThreshold(invoicingThreshold: String?) =
             invoicingThreshold(JsonField.ofNullable(invoicingThreshold))
 
+        /**
+         * Sets [Builder.invoicingThreshold] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.invoicingThreshold] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun invoicingThreshold(invoicingThreshold: JsonField<String>) = apply {
             this.invoicingThreshold = invoicingThreshold
         }
@@ -795,12 +1030,22 @@ private constructor(
         fun maximumIntervals(maximumIntervals: List<MaximumInterval>) =
             maximumIntervals(JsonField.of(maximumIntervals))
 
-        /** The maximum intervals for this subscription sorted by the start_date. */
+        /**
+         * Sets [Builder.maximumIntervals] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.maximumIntervals] with a well-typed
+         * `List<MaximumInterval>` value instead. This method is primarily for setting the field to
+         * an undocumented or not yet supported value.
+         */
         fun maximumIntervals(maximumIntervals: JsonField<List<MaximumInterval>>) = apply {
             this.maximumIntervals = maximumIntervals.map { it.toMutableList() }
         }
 
-        /** The maximum intervals for this subscription sorted by the start_date. */
+        /**
+         * Adds a single [MaximumInterval] to [maximumIntervals].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addMaximumInterval(maximumInterval: MaximumInterval) = apply {
             maximumIntervals =
                 (maximumIntervals ?: JsonField.of(mutableListOf())).also {
@@ -816,9 +1061,11 @@ private constructor(
         fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         * Sets [Builder.metadata] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
@@ -826,12 +1073,22 @@ private constructor(
         fun minimumIntervals(minimumIntervals: List<MinimumInterval>) =
             minimumIntervals(JsonField.of(minimumIntervals))
 
-        /** The minimum intervals for this subscription sorted by the start_date. */
+        /**
+         * Sets [Builder.minimumIntervals] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.minimumIntervals] with a well-typed
+         * `List<MinimumInterval>` value instead. This method is primarily for setting the field to
+         * an undocumented or not yet supported value.
+         */
         fun minimumIntervals(minimumIntervals: JsonField<List<MinimumInterval>>) = apply {
             this.minimumIntervals = minimumIntervals.map { it.toMutableList() }
         }
 
-        /** The minimum intervals for this subscription sorted by the start_date. */
+        /**
+         * Adds a single [MinimumInterval] to [minimumIntervals].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addMinimumInterval(minimumInterval: MinimumInterval) = apply {
             minimumIntervals =
                 (minimumIntervals ?: JsonField.of(mutableListOf())).also {
@@ -847,9 +1104,10 @@ private constructor(
         fun netTerms(netTerms: Long) = netTerms(JsonField.of(netTerms))
 
         /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of `0` here represents that the invoice is due on issue,
-         * whereas a value of `30` represents that the customer has a month to pay the invoice.
+         * Sets [Builder.netTerms] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.netTerms] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
@@ -861,9 +1119,10 @@ private constructor(
         fun plan(plan: Plan) = plan(JsonField.of(plan))
 
         /**
-         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
-         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
-         * can see more about how to configure prices in the [Price resource](/reference/price).
+         * Sets [Builder.plan] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.plan] with a well-typed [Plan] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
@@ -871,12 +1130,22 @@ private constructor(
         fun priceIntervals(priceIntervals: List<PriceInterval>) =
             priceIntervals(JsonField.of(priceIntervals))
 
-        /** The price intervals for this subscription. */
+        /**
+         * Sets [Builder.priceIntervals] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.priceIntervals] with a well-typed `List<PriceInterval>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun priceIntervals(priceIntervals: JsonField<List<PriceInterval>>) = apply {
             this.priceIntervals = priceIntervals.map { it.toMutableList() }
         }
 
-        /** The price intervals for this subscription. */
+        /**
+         * Adds a single [PriceInterval] to [priceIntervals].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addPriceInterval(priceInterval: PriceInterval) = apply {
             priceIntervals =
                 (priceIntervals ?: JsonField.of(mutableListOf())).also {
@@ -887,6 +1156,13 @@ private constructor(
         fun redeemedCoupon(redeemedCoupon: RedeemedCoupon?) =
             redeemedCoupon(JsonField.ofNullable(redeemedCoupon))
 
+        /**
+         * Sets [Builder.redeemedCoupon] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.redeemedCoupon] with a well-typed [RedeemedCoupon] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun redeemedCoupon(redeemedCoupon: JsonField<RedeemedCoupon>) = apply {
             this.redeemedCoupon = redeemedCoupon
         }
@@ -894,15 +1170,34 @@ private constructor(
         /** The date Orb starts billing for this subscription. */
         fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-        /** The date Orb starts billing for this subscription. */
+        /**
+         * Sets [Builder.startDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { this.startDate = startDate }
 
         fun status(status: Status) = status(JsonField.of(status))
 
+        /**
+         * Sets [Builder.status] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.status] with a well-typed [Status] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         fun trialInfo(trialInfo: TrialInfo) = trialInfo(JsonField.of(trialInfo))
 
+        /**
+         * Sets [Builder.trialInfo] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.trialInfo] with a well-typed [TrialInfo] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun trialInfo(trialInfo: JsonField<TrialInfo>) = apply { this.trialInfo = trialInfo }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -978,37 +1273,83 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun adjustment(): Adjustment = adjustment.getRequired("adjustment")
 
-        /** The price interval IDs that this adjustment applies to. */
+        /**
+         * The price interval IDs that this adjustment applies to.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun appliesToPriceIntervalIds(): List<String> =
             appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
-        /** The end date of the adjustment interval. */
+        /**
+         * The end date of the adjustment interval.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
-        /** The start date of the adjustment interval. */
+        /**
+         * The start date of the adjustment interval.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+        /**
+         * Returns the raw JSON value of [adjustment].
+         *
+         * Unlike [adjustment], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("adjustment")
         @ExcludeMissing
         fun _adjustment(): JsonField<Adjustment> = adjustment
 
-        /** The price interval IDs that this adjustment applies to. */
+        /**
+         * Returns the raw JSON value of [appliesToPriceIntervalIds].
+         *
+         * Unlike [appliesToPriceIntervalIds], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("applies_to_price_interval_ids")
         @ExcludeMissing
         fun _appliesToPriceIntervalIds(): JsonField<List<String>> = appliesToPriceIntervalIds
 
-        /** The end date of the adjustment interval. */
+        /**
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("end_date")
         @ExcludeMissing
         fun _endDate(): JsonField<OffsetDateTime> = endDate
 
-        /** The start date of the adjustment interval. */
+        /**
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("start_date")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
@@ -1073,27 +1414,61 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun adjustment(adjustment: Adjustment) = adjustment(JsonField.of(adjustment))
 
+            /**
+             * Sets [Builder.adjustment] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.adjustment] with a well-typed [Adjustment] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun adjustment(adjustment: JsonField<Adjustment>) = apply {
                 this.adjustment = adjustment
             }
 
+            /**
+             * Alias for calling [adjustment] with
+             * `Adjustment.ofPlanPhaseUsageDiscount(planPhaseUsageDiscount)`.
+             */
             fun adjustment(planPhaseUsageDiscount: Adjustment.PlanPhaseUsageDiscountAdjustment) =
                 adjustment(Adjustment.ofPlanPhaseUsageDiscount(planPhaseUsageDiscount))
 
+            /**
+             * Alias for calling [adjustment] with
+             * `Adjustment.ofPlanPhaseAmountDiscount(planPhaseAmountDiscount)`.
+             */
             fun adjustment(planPhaseAmountDiscount: Adjustment.PlanPhaseAmountDiscountAdjustment) =
                 adjustment(Adjustment.ofPlanPhaseAmountDiscount(planPhaseAmountDiscount))
 
+            /**
+             * Alias for calling [adjustment] with
+             * `Adjustment.ofPlanPhasePercentageDiscount(planPhasePercentageDiscount)`.
+             */
             fun adjustment(
                 planPhasePercentageDiscount: Adjustment.PlanPhasePercentageDiscountAdjustment
             ) = adjustment(Adjustment.ofPlanPhasePercentageDiscount(planPhasePercentageDiscount))
 
+            /**
+             * Alias for calling [adjustment] with
+             * `Adjustment.ofPlanPhaseMinimum(planPhaseMinimum)`.
+             */
             fun adjustment(planPhaseMinimum: Adjustment.PlanPhaseMinimumAdjustment) =
                 adjustment(Adjustment.ofPlanPhaseMinimum(planPhaseMinimum))
 
+            /**
+             * Alias for calling [adjustment] with
+             * `Adjustment.ofPlanPhaseMaximum(planPhaseMaximum)`.
+             */
             fun adjustment(planPhaseMaximum: Adjustment.PlanPhaseMaximumAdjustment) =
                 adjustment(Adjustment.ofPlanPhaseMaximum(planPhaseMaximum))
 
@@ -1101,14 +1476,24 @@ private constructor(
             fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: List<String>) =
                 appliesToPriceIntervalIds(JsonField.of(appliesToPriceIntervalIds))
 
-            /** The price interval IDs that this adjustment applies to. */
+            /**
+             * Sets [Builder.appliesToPriceIntervalIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.appliesToPriceIntervalIds] with a well-typed
+             * `List<String>` value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
             fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: JsonField<List<String>>) =
                 apply {
                     this.appliesToPriceIntervalIds =
                         appliesToPriceIntervalIds.map { it.toMutableList() }
                 }
 
-            /** The price interval IDs that this adjustment applies to. */
+            /**
+             * Adds a single [String] to [appliesToPriceIntervalIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addAppliesToPriceIntervalId(appliesToPriceIntervalId: String) = apply {
                 appliesToPriceIntervalIds =
                     (appliesToPriceIntervalIds ?: JsonField.of(mutableListOf())).also {
@@ -1119,13 +1504,25 @@ private constructor(
             /** The end date of the adjustment interval. */
             fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
-            /** The end date of the adjustment interval. */
+            /**
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             /** The start date of the adjustment interval. */
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-            /** The start date of the adjustment interval. */
+            /**
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
             }
@@ -1470,62 +1867,126 @@ private constructor(
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
+                /**
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun id(): String = id.getRequired("id")
 
+                /**
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
-                /** The price IDs that this adjustment applies to. */
+                /**
+                 * The price IDs that this adjustment applies to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
                  * apply to only one price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
-                /** The plan phase in which this adjustment is active. */
+                /**
+                 * The plan phase in which this adjustment is active.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
                 fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
 
-                /** The reason for the adjustment. */
+                /**
+                 * The reason for the adjustment.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
                 fun reason(): String? = reason.getNullable("reason")
 
                 /**
                  * The number of usage units by which to discount the price this adjustment applies
                  * to in a given billing period.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun usageDiscount(): Double = usageDiscount.getRequired("usage_discount")
 
+                /**
+                 * Returns the raw JSON value of [id].
+                 *
+                 * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+                 */
                 @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+                /**
+                 * Returns the raw JSON value of [adjustmentType].
+                 *
+                 * Unlike [adjustmentType], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
                 fun _adjustmentType(): JsonField<AdjustmentType> = adjustmentType
 
-                /** The price IDs that this adjustment applies to. */
+                /**
+                 * Returns the raw JSON value of [appliesToPriceIds].
+                 *
+                 * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments that
-                 * apply to only one price.
+                 * Returns the raw JSON value of [isInvoiceLevel].
+                 *
+                 * Unlike [isInvoiceLevel], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
                 @JsonProperty("is_invoice_level")
                 @ExcludeMissing
                 fun _isInvoiceLevel(): JsonField<Boolean> = isInvoiceLevel
 
-                /** The plan phase in which this adjustment is active. */
+                /**
+                 * Returns the raw JSON value of [planPhaseOrder].
+                 *
+                 * Unlike [planPhaseOrder], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("plan_phase_order")
                 @ExcludeMissing
                 fun _planPhaseOrder(): JsonField<Long> = planPhaseOrder
 
-                /** The reason for the adjustment. */
+                /**
+                 * Returns the raw JSON value of [reason].
+                 *
+                 * Unlike [reason], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
                 @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
                 /**
-                 * The number of usage units by which to discount the price this adjustment applies
-                 * to in a given billing period.
+                 * Returns the raw JSON value of [usageDiscount].
+                 *
+                 * Unlike [usageDiscount], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
                 @JsonProperty("usage_discount")
                 @ExcludeMissing
@@ -1605,11 +2066,25 @@ private constructor(
 
                     fun id(id: String) = id(JsonField.of(id))
 
+                    /**
+                     * Sets [Builder.id] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.id] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun id(id: JsonField<String>) = apply { this.id = id }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
                         adjustmentType(JsonField.of(adjustmentType))
 
+                    /**
+                     * Sets [Builder.adjustmentType] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.adjustmentType] with a well-typed
+                     * [AdjustmentType] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
                     fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
                         this.adjustmentType = adjustmentType
                     }
@@ -1618,12 +2093,22 @@ private constructor(
                     fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                         appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
-                    /** The price IDs that this adjustment applies to. */
+                    /**
+                     * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.appliesToPriceIds] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                     }
 
-                    /** The price IDs that this adjustment applies to. */
+                    /**
+                     * Adds a single [String] to [appliesToPriceIds].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
                             (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
@@ -1639,8 +2124,11 @@ private constructor(
                         isInvoiceLevel(JsonField.of(isInvoiceLevel))
 
                     /**
-                     * True for adjustments that apply to an entire invocice, false for adjustments
-                     * that apply to only one price.
+                     * Sets [Builder.isInvoiceLevel] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.isInvoiceLevel] with a well-typed [Boolean]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
                         this.isInvoiceLevel = isInvoiceLevel
@@ -1650,11 +2138,21 @@ private constructor(
                     fun planPhaseOrder(planPhaseOrder: Long?) =
                         planPhaseOrder(JsonField.ofNullable(planPhaseOrder))
 
-                    /** The plan phase in which this adjustment is active. */
+                    /**
+                     * Alias for [Builder.planPhaseOrder].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
                     fun planPhaseOrder(planPhaseOrder: Long) =
                         planPhaseOrder(planPhaseOrder as Long?)
 
-                    /** The plan phase in which this adjustment is active. */
+                    /**
+                     * Sets [Builder.planPhaseOrder] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.planPhaseOrder] with a well-typed [Long]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
                     fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                         this.planPhaseOrder = planPhaseOrder
                     }
@@ -1662,7 +2160,13 @@ private constructor(
                     /** The reason for the adjustment. */
                     fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
-                    /** The reason for the adjustment. */
+                    /**
+                     * Sets [Builder.reason] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.reason] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
                     /**
@@ -1673,8 +2177,11 @@ private constructor(
                         usageDiscount(JsonField.of(usageDiscount))
 
                     /**
-                     * The number of usage units by which to discount the price this adjustment
-                     * applies to in a given billing period.
+                     * Sets [Builder.usageDiscount] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.usageDiscount] with a well-typed [Double]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun usageDiscount(usageDiscount: JsonField<Double>) = apply {
                         this.usageDiscount = usageDiscount
@@ -1865,65 +2372,129 @@ private constructor(
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
+                /**
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun id(): String = id.getRequired("id")
 
+                /**
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
                 /**
                  * The amount by which to discount the prices this adjustment applies to in a given
                  * billing period.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
 
-                /** The price IDs that this adjustment applies to. */
+                /**
+                 * The price IDs that this adjustment applies to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
                  * apply to only one price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
-                /** The plan phase in which this adjustment is active. */
+                /**
+                 * The plan phase in which this adjustment is active.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
                 fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
 
-                /** The reason for the adjustment. */
+                /**
+                 * The reason for the adjustment.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
                 fun reason(): String? = reason.getNullable("reason")
 
+                /**
+                 * Returns the raw JSON value of [id].
+                 *
+                 * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+                 */
                 @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+                /**
+                 * Returns the raw JSON value of [adjustmentType].
+                 *
+                 * Unlike [adjustmentType], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
                 fun _adjustmentType(): JsonField<AdjustmentType> = adjustmentType
 
                 /**
-                 * The amount by which to discount the prices this adjustment applies to in a given
-                 * billing period.
+                 * Returns the raw JSON value of [amountDiscount].
+                 *
+                 * Unlike [amountDiscount], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
                 @JsonProperty("amount_discount")
                 @ExcludeMissing
                 fun _amountDiscount(): JsonField<String> = amountDiscount
 
-                /** The price IDs that this adjustment applies to. */
+                /**
+                 * Returns the raw JSON value of [appliesToPriceIds].
+                 *
+                 * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments that
-                 * apply to only one price.
+                 * Returns the raw JSON value of [isInvoiceLevel].
+                 *
+                 * Unlike [isInvoiceLevel], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
                 @JsonProperty("is_invoice_level")
                 @ExcludeMissing
                 fun _isInvoiceLevel(): JsonField<Boolean> = isInvoiceLevel
 
-                /** The plan phase in which this adjustment is active. */
+                /**
+                 * Returns the raw JSON value of [planPhaseOrder].
+                 *
+                 * Unlike [planPhaseOrder], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("plan_phase_order")
                 @ExcludeMissing
                 fun _planPhaseOrder(): JsonField<Long> = planPhaseOrder
 
-                /** The reason for the adjustment. */
+                /**
+                 * Returns the raw JSON value of [reason].
+                 *
+                 * Unlike [reason], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
                 @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
                 @JsonAnyGetter
@@ -2000,11 +2571,25 @@ private constructor(
 
                     fun id(id: String) = id(JsonField.of(id))
 
+                    /**
+                     * Sets [Builder.id] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.id] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun id(id: JsonField<String>) = apply { this.id = id }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
                         adjustmentType(JsonField.of(adjustmentType))
 
+                    /**
+                     * Sets [Builder.adjustmentType] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.adjustmentType] with a well-typed
+                     * [AdjustmentType] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
                     fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
                         this.adjustmentType = adjustmentType
                     }
@@ -2017,8 +2602,11 @@ private constructor(
                         amountDiscount(JsonField.of(amountDiscount))
 
                     /**
-                     * The amount by which to discount the prices this adjustment applies to in a
-                     * given billing period.
+                     * Sets [Builder.amountDiscount] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.amountDiscount] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun amountDiscount(amountDiscount: JsonField<String>) = apply {
                         this.amountDiscount = amountDiscount
@@ -2028,12 +2616,22 @@ private constructor(
                     fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                         appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
-                    /** The price IDs that this adjustment applies to. */
+                    /**
+                     * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.appliesToPriceIds] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                     }
 
-                    /** The price IDs that this adjustment applies to. */
+                    /**
+                     * Adds a single [String] to [appliesToPriceIds].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
                             (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
@@ -2049,8 +2647,11 @@ private constructor(
                         isInvoiceLevel(JsonField.of(isInvoiceLevel))
 
                     /**
-                     * True for adjustments that apply to an entire invocice, false for adjustments
-                     * that apply to only one price.
+                     * Sets [Builder.isInvoiceLevel] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.isInvoiceLevel] with a well-typed [Boolean]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
                         this.isInvoiceLevel = isInvoiceLevel
@@ -2060,11 +2661,21 @@ private constructor(
                     fun planPhaseOrder(planPhaseOrder: Long?) =
                         planPhaseOrder(JsonField.ofNullable(planPhaseOrder))
 
-                    /** The plan phase in which this adjustment is active. */
+                    /**
+                     * Alias for [Builder.planPhaseOrder].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
                     fun planPhaseOrder(planPhaseOrder: Long) =
                         planPhaseOrder(planPhaseOrder as Long?)
 
-                    /** The plan phase in which this adjustment is active. */
+                    /**
+                     * Sets [Builder.planPhaseOrder] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.planPhaseOrder] with a well-typed [Long]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
                     fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                         this.planPhaseOrder = planPhaseOrder
                     }
@@ -2072,7 +2683,13 @@ private constructor(
                     /** The reason for the adjustment. */
                     fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
-                    /** The reason for the adjustment. */
+                    /**
+                     * Sets [Builder.reason] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.reason] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -2260,66 +2877,130 @@ private constructor(
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
+                /**
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun id(): String = id.getRequired("id")
 
+                /**
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
-                /** The price IDs that this adjustment applies to. */
+                /**
+                 * The price IDs that this adjustment applies to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
                  * apply to only one price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
                 /**
                  * The percentage (as a value between 0 and 1) by which to discount the price
                  * intervals this adjustment applies to in a given billing period.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun percentageDiscount(): Double =
                     percentageDiscount.getRequired("percentage_discount")
 
-                /** The plan phase in which this adjustment is active. */
+                /**
+                 * The plan phase in which this adjustment is active.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
                 fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
 
-                /** The reason for the adjustment. */
+                /**
+                 * The reason for the adjustment.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
                 fun reason(): String? = reason.getNullable("reason")
 
+                /**
+                 * Returns the raw JSON value of [id].
+                 *
+                 * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+                 */
                 @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+                /**
+                 * Returns the raw JSON value of [adjustmentType].
+                 *
+                 * Unlike [adjustmentType], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
                 fun _adjustmentType(): JsonField<AdjustmentType> = adjustmentType
 
-                /** The price IDs that this adjustment applies to. */
+                /**
+                 * Returns the raw JSON value of [appliesToPriceIds].
+                 *
+                 * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments that
-                 * apply to only one price.
+                 * Returns the raw JSON value of [isInvoiceLevel].
+                 *
+                 * Unlike [isInvoiceLevel], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
                 @JsonProperty("is_invoice_level")
                 @ExcludeMissing
                 fun _isInvoiceLevel(): JsonField<Boolean> = isInvoiceLevel
 
                 /**
-                 * The percentage (as a value between 0 and 1) by which to discount the price
-                 * intervals this adjustment applies to in a given billing period.
+                 * Returns the raw JSON value of [percentageDiscount].
+                 *
+                 * Unlike [percentageDiscount], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
                 @JsonProperty("percentage_discount")
                 @ExcludeMissing
                 fun _percentageDiscount(): JsonField<Double> = percentageDiscount
 
-                /** The plan phase in which this adjustment is active. */
+                /**
+                 * Returns the raw JSON value of [planPhaseOrder].
+                 *
+                 * Unlike [planPhaseOrder], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("plan_phase_order")
                 @ExcludeMissing
                 fun _planPhaseOrder(): JsonField<Long> = planPhaseOrder
 
-                /** The reason for the adjustment. */
+                /**
+                 * Returns the raw JSON value of [reason].
+                 *
+                 * Unlike [reason], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
                 @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
                 @JsonAnyGetter
@@ -2398,11 +3079,25 @@ private constructor(
 
                     fun id(id: String) = id(JsonField.of(id))
 
+                    /**
+                     * Sets [Builder.id] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.id] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun id(id: JsonField<String>) = apply { this.id = id }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
                         adjustmentType(JsonField.of(adjustmentType))
 
+                    /**
+                     * Sets [Builder.adjustmentType] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.adjustmentType] with a well-typed
+                     * [AdjustmentType] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
                     fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
                         this.adjustmentType = adjustmentType
                     }
@@ -2411,12 +3106,22 @@ private constructor(
                     fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                         appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
-                    /** The price IDs that this adjustment applies to. */
+                    /**
+                     * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.appliesToPriceIds] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                     }
 
-                    /** The price IDs that this adjustment applies to. */
+                    /**
+                     * Adds a single [String] to [appliesToPriceIds].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
                             (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
@@ -2432,8 +3137,11 @@ private constructor(
                         isInvoiceLevel(JsonField.of(isInvoiceLevel))
 
                     /**
-                     * True for adjustments that apply to an entire invocice, false for adjustments
-                     * that apply to only one price.
+                     * Sets [Builder.isInvoiceLevel] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.isInvoiceLevel] with a well-typed [Boolean]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
                         this.isInvoiceLevel = isInvoiceLevel
@@ -2447,8 +3155,11 @@ private constructor(
                         percentageDiscount(JsonField.of(percentageDiscount))
 
                     /**
-                     * The percentage (as a value between 0 and 1) by which to discount the price
-                     * intervals this adjustment applies to in a given billing period.
+                     * Sets [Builder.percentageDiscount] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.percentageDiscount] with a well-typed
+                     * [Double] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
                         this.percentageDiscount = percentageDiscount
@@ -2458,11 +3169,21 @@ private constructor(
                     fun planPhaseOrder(planPhaseOrder: Long?) =
                         planPhaseOrder(JsonField.ofNullable(planPhaseOrder))
 
-                    /** The plan phase in which this adjustment is active. */
+                    /**
+                     * Alias for [Builder.planPhaseOrder].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
                     fun planPhaseOrder(planPhaseOrder: Long) =
                         planPhaseOrder(planPhaseOrder as Long?)
 
-                    /** The plan phase in which this adjustment is active. */
+                    /**
+                     * Sets [Builder.planPhaseOrder] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.planPhaseOrder] with a well-typed [Long]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
                     fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                         this.planPhaseOrder = planPhaseOrder
                     }
@@ -2470,7 +3191,13 @@ private constructor(
                     /** The reason for the adjustment. */
                     fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
-                    /** The reason for the adjustment. */
+                    /**
+                     * Sets [Builder.reason] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.reason] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -2661,71 +3388,146 @@ private constructor(
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
+                /**
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun id(): String = id.getRequired("id")
 
+                /**
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
-                /** The price IDs that this adjustment applies to. */
+                /**
+                 * The price IDs that this adjustment applies to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
                  * apply to only one price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
-                /** The item ID that revenue from this minimum will be attributed to. */
+                /**
+                 * The item ID that revenue from this minimum will be attributed to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 /**
                  * The minimum amount to charge in a given billing period for the prices this
                  * adjustment applies to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
 
-                /** The plan phase in which this adjustment is active. */
+                /**
+                 * The plan phase in which this adjustment is active.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
                 fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
 
-                /** The reason for the adjustment. */
+                /**
+                 * The reason for the adjustment.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
                 fun reason(): String? = reason.getNullable("reason")
 
+                /**
+                 * Returns the raw JSON value of [id].
+                 *
+                 * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+                 */
                 @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+                /**
+                 * Returns the raw JSON value of [adjustmentType].
+                 *
+                 * Unlike [adjustmentType], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
                 fun _adjustmentType(): JsonField<AdjustmentType> = adjustmentType
 
-                /** The price IDs that this adjustment applies to. */
+                /**
+                 * Returns the raw JSON value of [appliesToPriceIds].
+                 *
+                 * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments that
-                 * apply to only one price.
+                 * Returns the raw JSON value of [isInvoiceLevel].
+                 *
+                 * Unlike [isInvoiceLevel], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
                 @JsonProperty("is_invoice_level")
                 @ExcludeMissing
                 fun _isInvoiceLevel(): JsonField<Boolean> = isInvoiceLevel
 
-                /** The item ID that revenue from this minimum will be attributed to. */
+                /**
+                 * Returns the raw JSON value of [itemId].
+                 *
+                 * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 /**
-                 * The minimum amount to charge in a given billing period for the prices this
-                 * adjustment applies to.
+                 * Returns the raw JSON value of [minimumAmount].
+                 *
+                 * Unlike [minimumAmount], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
                 @JsonProperty("minimum_amount")
                 @ExcludeMissing
                 fun _minimumAmount(): JsonField<String> = minimumAmount
 
-                /** The plan phase in which this adjustment is active. */
+                /**
+                 * Returns the raw JSON value of [planPhaseOrder].
+                 *
+                 * Unlike [planPhaseOrder], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("plan_phase_order")
                 @ExcludeMissing
                 fun _planPhaseOrder(): JsonField<Long> = planPhaseOrder
 
-                /** The reason for the adjustment. */
+                /**
+                 * Returns the raw JSON value of [reason].
+                 *
+                 * Unlike [reason], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
                 @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
                 @JsonAnyGetter
@@ -2805,11 +3607,25 @@ private constructor(
 
                     fun id(id: String) = id(JsonField.of(id))
 
+                    /**
+                     * Sets [Builder.id] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.id] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun id(id: JsonField<String>) = apply { this.id = id }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
                         adjustmentType(JsonField.of(adjustmentType))
 
+                    /**
+                     * Sets [Builder.adjustmentType] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.adjustmentType] with a well-typed
+                     * [AdjustmentType] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
                     fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
                         this.adjustmentType = adjustmentType
                     }
@@ -2818,12 +3634,22 @@ private constructor(
                     fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                         appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
-                    /** The price IDs that this adjustment applies to. */
+                    /**
+                     * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.appliesToPriceIds] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                     }
 
-                    /** The price IDs that this adjustment applies to. */
+                    /**
+                     * Adds a single [String] to [appliesToPriceIds].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
                             (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
@@ -2839,8 +3665,11 @@ private constructor(
                         isInvoiceLevel(JsonField.of(isInvoiceLevel))
 
                     /**
-                     * True for adjustments that apply to an entire invocice, false for adjustments
-                     * that apply to only one price.
+                     * Sets [Builder.isInvoiceLevel] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.isInvoiceLevel] with a well-typed [Boolean]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
                         this.isInvoiceLevel = isInvoiceLevel
@@ -2849,7 +3678,13 @@ private constructor(
                     /** The item ID that revenue from this minimum will be attributed to. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The item ID that revenue from this minimum will be attributed to. */
+                    /**
+                     * Sets [Builder.itemId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.itemId] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     /**
@@ -2860,8 +3695,11 @@ private constructor(
                         minimumAmount(JsonField.of(minimumAmount))
 
                     /**
-                     * The minimum amount to charge in a given billing period for the prices this
-                     * adjustment applies to.
+                     * Sets [Builder.minimumAmount] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.minimumAmount] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                         this.minimumAmount = minimumAmount
@@ -2871,11 +3709,21 @@ private constructor(
                     fun planPhaseOrder(planPhaseOrder: Long?) =
                         planPhaseOrder(JsonField.ofNullable(planPhaseOrder))
 
-                    /** The plan phase in which this adjustment is active. */
+                    /**
+                     * Alias for [Builder.planPhaseOrder].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
                     fun planPhaseOrder(planPhaseOrder: Long) =
                         planPhaseOrder(planPhaseOrder as Long?)
 
-                    /** The plan phase in which this adjustment is active. */
+                    /**
+                     * Sets [Builder.planPhaseOrder] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.planPhaseOrder] with a well-typed [Long]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
                     fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                         this.planPhaseOrder = planPhaseOrder
                     }
@@ -2883,7 +3731,13 @@ private constructor(
                     /** The reason for the adjustment. */
                     fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
-                    /** The reason for the adjustment. */
+                    /**
+                     * Sets [Builder.reason] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.reason] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3072,65 +3926,129 @@ private constructor(
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
+                /**
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun id(): String = id.getRequired("id")
 
+                /**
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
-                /** The price IDs that this adjustment applies to. */
+                /**
+                 * The price IDs that this adjustment applies to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
                  * apply to only one price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
                 /**
                  * The maximum amount to charge in a given billing period for the prices this
                  * adjustment applies to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun maximumAmount(): String = maximumAmount.getRequired("maximum_amount")
 
-                /** The plan phase in which this adjustment is active. */
+                /**
+                 * The plan phase in which this adjustment is active.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
                 fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
 
-                /** The reason for the adjustment. */
+                /**
+                 * The reason for the adjustment.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
                 fun reason(): String? = reason.getNullable("reason")
 
+                /**
+                 * Returns the raw JSON value of [id].
+                 *
+                 * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+                 */
                 @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+                /**
+                 * Returns the raw JSON value of [adjustmentType].
+                 *
+                 * Unlike [adjustmentType], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
                 fun _adjustmentType(): JsonField<AdjustmentType> = adjustmentType
 
-                /** The price IDs that this adjustment applies to. */
+                /**
+                 * Returns the raw JSON value of [appliesToPriceIds].
+                 *
+                 * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
                 /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments that
-                 * apply to only one price.
+                 * Returns the raw JSON value of [isInvoiceLevel].
+                 *
+                 * Unlike [isInvoiceLevel], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
                 @JsonProperty("is_invoice_level")
                 @ExcludeMissing
                 fun _isInvoiceLevel(): JsonField<Boolean> = isInvoiceLevel
 
                 /**
-                 * The maximum amount to charge in a given billing period for the prices this
-                 * adjustment applies to.
+                 * Returns the raw JSON value of [maximumAmount].
+                 *
+                 * Unlike [maximumAmount], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
                 @JsonProperty("maximum_amount")
                 @ExcludeMissing
                 fun _maximumAmount(): JsonField<String> = maximumAmount
 
-                /** The plan phase in which this adjustment is active. */
+                /**
+                 * Returns the raw JSON value of [planPhaseOrder].
+                 *
+                 * Unlike [planPhaseOrder], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
                 @JsonProperty("plan_phase_order")
                 @ExcludeMissing
                 fun _planPhaseOrder(): JsonField<Long> = planPhaseOrder
 
-                /** The reason for the adjustment. */
+                /**
+                 * Returns the raw JSON value of [reason].
+                 *
+                 * Unlike [reason], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
                 @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
                 @JsonAnyGetter
@@ -3206,11 +4124,25 @@ private constructor(
 
                     fun id(id: String) = id(JsonField.of(id))
 
+                    /**
+                     * Sets [Builder.id] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.id] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun id(id: JsonField<String>) = apply { this.id = id }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
                         adjustmentType(JsonField.of(adjustmentType))
 
+                    /**
+                     * Sets [Builder.adjustmentType] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.adjustmentType] with a well-typed
+                     * [AdjustmentType] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
                     fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
                         this.adjustmentType = adjustmentType
                     }
@@ -3219,12 +4151,22 @@ private constructor(
                     fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                         appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
-                    /** The price IDs that this adjustment applies to. */
+                    /**
+                     * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.appliesToPriceIds] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                     }
 
-                    /** The price IDs that this adjustment applies to. */
+                    /**
+                     * Adds a single [String] to [appliesToPriceIds].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
                             (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
@@ -3240,8 +4182,11 @@ private constructor(
                         isInvoiceLevel(JsonField.of(isInvoiceLevel))
 
                     /**
-                     * True for adjustments that apply to an entire invocice, false for adjustments
-                     * that apply to only one price.
+                     * Sets [Builder.isInvoiceLevel] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.isInvoiceLevel] with a well-typed [Boolean]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
                         this.isInvoiceLevel = isInvoiceLevel
@@ -3255,8 +4200,11 @@ private constructor(
                         maximumAmount(JsonField.of(maximumAmount))
 
                     /**
-                     * The maximum amount to charge in a given billing period for the prices this
-                     * adjustment applies to.
+                     * Sets [Builder.maximumAmount] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.maximumAmount] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                         this.maximumAmount = maximumAmount
@@ -3266,11 +4214,21 @@ private constructor(
                     fun planPhaseOrder(planPhaseOrder: Long?) =
                         planPhaseOrder(JsonField.ofNullable(planPhaseOrder))
 
-                    /** The plan phase in which this adjustment is active. */
+                    /**
+                     * Alias for [Builder.planPhaseOrder].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
                     fun planPhaseOrder(planPhaseOrder: Long) =
                         planPhaseOrder(planPhaseOrder as Long?)
 
-                    /** The plan phase in which this adjustment is active. */
+                    /**
+                     * Sets [Builder.planPhaseOrder] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.planPhaseOrder] with a well-typed [Long]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
                     fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                         this.planPhaseOrder = planPhaseOrder
                     }
@@ -3278,7 +4236,13 @@ private constructor(
                     /** The reason for the adjustment. */
                     fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
-                    /** The reason for the adjustment. */
+                    /**
+                     * Sets [Builder.reason] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.reason] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3474,38 +4438,48 @@ private constructor(
          * days in a month is greater than this value, the last day of the month is the billing
          * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
          * 30th.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun day(): Long = day.getRequired("day")
 
         /**
          * The month on which the billing cycle is anchored (e.g. a quarterly price anchored in
          * February would have cycles starting February, May, August, and November).
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun month(): Long? = month.getNullable("month")
 
         /**
          * The year on which the billing cycle is anchored (e.g. a 2 year billing cycle anchored on
          * 2021 would have cycles starting on 2021, 2023, 2025, etc.).
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun year(): Long? = year.getNullable("year")
 
         /**
-         * The day of the month on which the billing cycle is anchored. If the maximum number of
-         * days in a month is greater than this value, the last day of the month is the billing
-         * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
-         * 30th.
+         * Returns the raw JSON value of [day].
+         *
+         * Unlike [day], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("day") @ExcludeMissing fun _day(): JsonField<Long> = day
 
         /**
-         * The month on which the billing cycle is anchored (e.g. a quarterly price anchored in
-         * February would have cycles starting February, May, August, and November).
+         * Returns the raw JSON value of [month].
+         *
+         * Unlike [month], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("month") @ExcludeMissing fun _month(): JsonField<Long> = month
 
         /**
-         * The year on which the billing cycle is anchored (e.g. a 2 year billing cycle anchored on
-         * 2021 would have cycles starting on 2021, 2023, 2025, etc.).
+         * Returns the raw JSON value of [year].
+         *
+         * Unlike [year], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("year") @ExcludeMissing fun _year(): JsonField<Long> = year
 
@@ -3568,10 +4542,11 @@ private constructor(
             fun day(day: Long) = day(JsonField.of(day))
 
             /**
-             * The day of the month on which the billing cycle is anchored. If the maximum number of
-             * days in a month is greater than this value, the last day of the month is the billing
-             * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
-             * 30th.
+             * Sets [Builder.day] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.day] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun day(day: JsonField<Long>) = apply { this.day = day }
 
@@ -3582,14 +4557,18 @@ private constructor(
             fun month(month: Long?) = month(JsonField.ofNullable(month))
 
             /**
-             * The month on which the billing cycle is anchored (e.g. a quarterly price anchored in
-             * February would have cycles starting February, May, August, and November).
+             * Alias for [Builder.month].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
              */
             fun month(month: Long) = month(month as Long?)
 
             /**
-             * The month on which the billing cycle is anchored (e.g. a quarterly price anchored in
-             * February would have cycles starting February, May, August, and November).
+             * Sets [Builder.month] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.month] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun month(month: JsonField<Long>) = apply { this.month = month }
 
@@ -3600,14 +4579,18 @@ private constructor(
             fun year(year: Long?) = year(JsonField.ofNullable(year))
 
             /**
-             * The year on which the billing cycle is anchored (e.g. a 2 year billing cycle anchored
-             * on 2021 would have cycles starting on 2021, 2023, 2025, etc.).
+             * Alias for [Builder.year].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
              */
             fun year(year: Long) = year(year as Long?)
 
             /**
-             * The year on which the billing cycle is anchored (e.g. a 2 year billing cycle anchored
-             * on 2021 would have cycles starting on 2021, 2023, 2025, etc.).
+             * Sets [Builder.year] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.year] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun year(year: JsonField<Long>) = apply { this.year = year }
 
@@ -3857,50 +4840,114 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            /** Only available if discount_type is `amount`. */
+            /**
+             * Only available if discount_type is `amount`.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
 
-            /** The price ids that this discount interval applies to. */
+            /**
+             * The price ids that this discount interval applies to.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun appliesToPriceIds(): List<String> =
                 appliesToPriceIds.getRequired("applies_to_price_ids")
 
-            /** The price interval ids that this discount interval applies to. */
+            /**
+             * The price interval ids that this discount interval applies to.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun appliesToPriceIntervalIds(): List<String> =
                 appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
-            /** The end date of the discount interval. */
+            /**
+             * The end date of the discount interval.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
-            /** The start date of the discount interval. */
+            /**
+             * The start date of the discount interval.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
-            /** Only available if discount_type is `amount`. */
+            /**
+             * Returns the raw JSON value of [amountDiscount].
+             *
+             * Unlike [amountDiscount], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("amount_discount")
             @ExcludeMissing
             fun _amountDiscount(): JsonField<String> = amountDiscount
 
-            /** The price ids that this discount interval applies to. */
+            /**
+             * Returns the raw JSON value of [appliesToPriceIds].
+             *
+             * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("applies_to_price_ids")
             @ExcludeMissing
             fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
-            /** The price interval ids that this discount interval applies to. */
+            /**
+             * Returns the raw JSON value of [appliesToPriceIntervalIds].
+             *
+             * Unlike [appliesToPriceIntervalIds], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
             @JsonProperty("applies_to_price_interval_ids")
             @ExcludeMissing
             fun _appliesToPriceIntervalIds(): JsonField<List<String>> = appliesToPriceIntervalIds
 
+            /**
+             * Returns the raw JSON value of [discountType].
+             *
+             * Unlike [discountType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("discount_type")
             @ExcludeMissing
             fun _discountType(): JsonField<DiscountType> = discountType
 
-            /** The end date of the discount interval. */
+            /**
+             * Returns the raw JSON value of [endDate].
+             *
+             * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("end_date")
             @ExcludeMissing
             fun _endDate(): JsonField<OffsetDateTime> = endDate
 
-            /** The start date of the discount interval. */
+            /**
+             * Returns the raw JSON value of [startDate].
+             *
+             * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("start_date")
             @ExcludeMissing
             fun _startDate(): JsonField<OffsetDateTime> = startDate
@@ -3974,7 +5021,13 @@ private constructor(
                 fun amountDiscount(amountDiscount: String) =
                     amountDiscount(JsonField.of(amountDiscount))
 
-                /** Only available if discount_type is `amount`. */
+                /**
+                 * Sets [Builder.amountDiscount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.amountDiscount] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun amountDiscount(amountDiscount: JsonField<String>) = apply {
                     this.amountDiscount = amountDiscount
                 }
@@ -3983,12 +5036,22 @@ private constructor(
                 fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                     appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
-                /** The price ids that this discount interval applies to. */
+                /**
+                 * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.appliesToPriceIds] with a well-typed
+                 * `List<String>` value instead. This method is primarily for setting the field to
+                 * an undocumented or not yet supported value.
+                 */
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                 }
 
-                /** The price ids that this discount interval applies to. */
+                /**
+                 * Adds a single [String] to [appliesToPriceIds].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
                 fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                     appliesToPriceIds =
                         (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
@@ -4000,14 +5063,24 @@ private constructor(
                 fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: List<String>) =
                     appliesToPriceIntervalIds(JsonField.of(appliesToPriceIntervalIds))
 
-                /** The price interval ids that this discount interval applies to. */
+                /**
+                 * Sets [Builder.appliesToPriceIntervalIds] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.appliesToPriceIntervalIds] with a well-typed
+                 * `List<String>` value instead. This method is primarily for setting the field to
+                 * an undocumented or not yet supported value.
+                 */
                 fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: JsonField<List<String>>) =
                     apply {
                         this.appliesToPriceIntervalIds =
                             appliesToPriceIntervalIds.map { it.toMutableList() }
                     }
 
-                /** The price interval ids that this discount interval applies to. */
+                /**
+                 * Adds a single [String] to [appliesToPriceIntervalIds].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
                 fun addAppliesToPriceIntervalId(appliesToPriceIntervalId: String) = apply {
                     appliesToPriceIntervalIds =
                         (appliesToPriceIntervalIds ?: JsonField.of(mutableListOf())).also {
@@ -4019,6 +5092,13 @@ private constructor(
                 fun discountType(discountType: DiscountType) =
                     discountType(JsonField.of(discountType))
 
+                /**
+                 * Sets [Builder.discountType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.discountType] with a well-typed [DiscountType]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun discountType(discountType: JsonField<DiscountType>) = apply {
                     this.discountType = discountType
                 }
@@ -4026,13 +5106,25 @@ private constructor(
                 /** The end date of the discount interval. */
                 fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
-                /** The end date of the discount interval. */
+                /**
+                 * Sets [Builder.endDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
                 /** The start date of the discount interval. */
                 fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-                /** The start date of the discount interval. */
+                /**
+                 * Sets [Builder.startDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                     this.startDate = startDate
                 }
@@ -4217,50 +5309,114 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            /** The price ids that this discount interval applies to. */
+            /**
+             * The price ids that this discount interval applies to.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun appliesToPriceIds(): List<String> =
                 appliesToPriceIds.getRequired("applies_to_price_ids")
 
-            /** The price interval ids that this discount interval applies to. */
+            /**
+             * The price interval ids that this discount interval applies to.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun appliesToPriceIntervalIds(): List<String> =
                 appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
-            /** The end date of the discount interval. */
+            /**
+             * The end date of the discount interval.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
-            /** Only available if discount_type is `percentage`.This is a number between 0 and 1. */
+            /**
+             * Only available if discount_type is `percentage`.This is a number between 0 and 1.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
 
-            /** The start date of the discount interval. */
+            /**
+             * The start date of the discount interval.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
-            /** The price ids that this discount interval applies to. */
+            /**
+             * Returns the raw JSON value of [appliesToPriceIds].
+             *
+             * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("applies_to_price_ids")
             @ExcludeMissing
             fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
-            /** The price interval ids that this discount interval applies to. */
+            /**
+             * Returns the raw JSON value of [appliesToPriceIntervalIds].
+             *
+             * Unlike [appliesToPriceIntervalIds], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
             @JsonProperty("applies_to_price_interval_ids")
             @ExcludeMissing
             fun _appliesToPriceIntervalIds(): JsonField<List<String>> = appliesToPriceIntervalIds
 
+            /**
+             * Returns the raw JSON value of [discountType].
+             *
+             * Unlike [discountType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("discount_type")
             @ExcludeMissing
             fun _discountType(): JsonField<DiscountType> = discountType
 
-            /** The end date of the discount interval. */
+            /**
+             * Returns the raw JSON value of [endDate].
+             *
+             * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("end_date")
             @ExcludeMissing
             fun _endDate(): JsonField<OffsetDateTime> = endDate
 
-            /** Only available if discount_type is `percentage`.This is a number between 0 and 1. */
+            /**
+             * Returns the raw JSON value of [percentageDiscount].
+             *
+             * Unlike [percentageDiscount], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("percentage_discount")
             @ExcludeMissing
             fun _percentageDiscount(): JsonField<Double> = percentageDiscount
 
-            /** The start date of the discount interval. */
+            /**
+             * Returns the raw JSON value of [startDate].
+             *
+             * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("start_date")
             @ExcludeMissing
             fun _startDate(): JsonField<OffsetDateTime> = startDate
@@ -4336,12 +5492,22 @@ private constructor(
                 fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                     appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
-                /** The price ids that this discount interval applies to. */
+                /**
+                 * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.appliesToPriceIds] with a well-typed
+                 * `List<String>` value instead. This method is primarily for setting the field to
+                 * an undocumented or not yet supported value.
+                 */
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                 }
 
-                /** The price ids that this discount interval applies to. */
+                /**
+                 * Adds a single [String] to [appliesToPriceIds].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
                 fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                     appliesToPriceIds =
                         (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
@@ -4353,14 +5519,24 @@ private constructor(
                 fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: List<String>) =
                     appliesToPriceIntervalIds(JsonField.of(appliesToPriceIntervalIds))
 
-                /** The price interval ids that this discount interval applies to. */
+                /**
+                 * Sets [Builder.appliesToPriceIntervalIds] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.appliesToPriceIntervalIds] with a well-typed
+                 * `List<String>` value instead. This method is primarily for setting the field to
+                 * an undocumented or not yet supported value.
+                 */
                 fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: JsonField<List<String>>) =
                     apply {
                         this.appliesToPriceIntervalIds =
                             appliesToPriceIntervalIds.map { it.toMutableList() }
                     }
 
-                /** The price interval ids that this discount interval applies to. */
+                /**
+                 * Adds a single [String] to [appliesToPriceIntervalIds].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
                 fun addAppliesToPriceIntervalId(appliesToPriceIntervalId: String) = apply {
                     appliesToPriceIntervalIds =
                         (appliesToPriceIntervalIds ?: JsonField.of(mutableListOf())).also {
@@ -4372,6 +5548,13 @@ private constructor(
                 fun discountType(discountType: DiscountType) =
                     discountType(JsonField.of(discountType))
 
+                /**
+                 * Sets [Builder.discountType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.discountType] with a well-typed [DiscountType]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun discountType(discountType: JsonField<DiscountType>) = apply {
                     this.discountType = discountType
                 }
@@ -4379,7 +5562,13 @@ private constructor(
                 /** The end date of the discount interval. */
                 fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
-                /** The end date of the discount interval. */
+                /**
+                 * Sets [Builder.endDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
                 /**
@@ -4389,7 +5578,11 @@ private constructor(
                     percentageDiscount(JsonField.of(percentageDiscount))
 
                 /**
-                 * Only available if discount_type is `percentage`.This is a number between 0 and 1.
+                 * Sets [Builder.percentageDiscount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.percentageDiscount] with a well-typed [Double]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
                  */
                 fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
                     this.percentageDiscount = percentageDiscount
@@ -4398,7 +5591,13 @@ private constructor(
                 /** The start date of the discount interval. */
                 fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-                /** The start date of the discount interval. */
+                /**
+                 * Sets [Builder.startDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                     this.startDate = startDate
                 }
@@ -4583,55 +5782,114 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            /** The price ids that this discount interval applies to. */
+            /**
+             * The price ids that this discount interval applies to.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun appliesToPriceIds(): List<String> =
                 appliesToPriceIds.getRequired("applies_to_price_ids")
 
-            /** The price interval ids that this discount interval applies to. */
+            /**
+             * The price interval ids that this discount interval applies to.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun appliesToPriceIntervalIds(): List<String> =
                 appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
-            /** The end date of the discount interval. */
+            /**
+             * The end date of the discount interval.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
-            /** The start date of the discount interval. */
+            /**
+             * The start date of the discount interval.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
             /**
              * Only available if discount_type is `usage`. Number of usage units that this discount
              * is for
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
              */
             fun usageDiscount(): Double = usageDiscount.getRequired("usage_discount")
 
-            /** The price ids that this discount interval applies to. */
+            /**
+             * Returns the raw JSON value of [appliesToPriceIds].
+             *
+             * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("applies_to_price_ids")
             @ExcludeMissing
             fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
-            /** The price interval ids that this discount interval applies to. */
+            /**
+             * Returns the raw JSON value of [appliesToPriceIntervalIds].
+             *
+             * Unlike [appliesToPriceIntervalIds], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
             @JsonProperty("applies_to_price_interval_ids")
             @ExcludeMissing
             fun _appliesToPriceIntervalIds(): JsonField<List<String>> = appliesToPriceIntervalIds
 
+            /**
+             * Returns the raw JSON value of [discountType].
+             *
+             * Unlike [discountType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("discount_type")
             @ExcludeMissing
             fun _discountType(): JsonField<DiscountType> = discountType
 
-            /** The end date of the discount interval. */
+            /**
+             * Returns the raw JSON value of [endDate].
+             *
+             * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("end_date")
             @ExcludeMissing
             fun _endDate(): JsonField<OffsetDateTime> = endDate
 
-            /** The start date of the discount interval. */
+            /**
+             * Returns the raw JSON value of [startDate].
+             *
+             * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("start_date")
             @ExcludeMissing
             fun _startDate(): JsonField<OffsetDateTime> = startDate
 
             /**
-             * Only available if discount_type is `usage`. Number of usage units that this discount
-             * is for
+             * Returns the raw JSON value of [usageDiscount].
+             *
+             * Unlike [usageDiscount], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("usage_discount")
             @ExcludeMissing
@@ -4705,12 +5963,22 @@ private constructor(
                 fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                     appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
-                /** The price ids that this discount interval applies to. */
+                /**
+                 * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.appliesToPriceIds] with a well-typed
+                 * `List<String>` value instead. This method is primarily for setting the field to
+                 * an undocumented or not yet supported value.
+                 */
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                 }
 
-                /** The price ids that this discount interval applies to. */
+                /**
+                 * Adds a single [String] to [appliesToPriceIds].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
                 fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                     appliesToPriceIds =
                         (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
@@ -4722,14 +5990,24 @@ private constructor(
                 fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: List<String>) =
                     appliesToPriceIntervalIds(JsonField.of(appliesToPriceIntervalIds))
 
-                /** The price interval ids that this discount interval applies to. */
+                /**
+                 * Sets [Builder.appliesToPriceIntervalIds] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.appliesToPriceIntervalIds] with a well-typed
+                 * `List<String>` value instead. This method is primarily for setting the field to
+                 * an undocumented or not yet supported value.
+                 */
                 fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: JsonField<List<String>>) =
                     apply {
                         this.appliesToPriceIntervalIds =
                             appliesToPriceIntervalIds.map { it.toMutableList() }
                     }
 
-                /** The price interval ids that this discount interval applies to. */
+                /**
+                 * Adds a single [String] to [appliesToPriceIntervalIds].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
                 fun addAppliesToPriceIntervalId(appliesToPriceIntervalId: String) = apply {
                     appliesToPriceIntervalIds =
                         (appliesToPriceIntervalIds ?: JsonField.of(mutableListOf())).also {
@@ -4741,6 +6019,13 @@ private constructor(
                 fun discountType(discountType: DiscountType) =
                     discountType(JsonField.of(discountType))
 
+                /**
+                 * Sets [Builder.discountType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.discountType] with a well-typed [DiscountType]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun discountType(discountType: JsonField<DiscountType>) = apply {
                     this.discountType = discountType
                 }
@@ -4748,13 +6033,25 @@ private constructor(
                 /** The end date of the discount interval. */
                 fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
-                /** The end date of the discount interval. */
+                /**
+                 * Sets [Builder.endDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
                 /** The start date of the discount interval. */
                 fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-                /** The start date of the discount interval. */
+                /**
+                 * Sets [Builder.startDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                     this.startDate = startDate
                 }
@@ -4767,8 +6064,11 @@ private constructor(
                     usageDiscount(JsonField.of(usageDiscount))
 
                 /**
-                 * Only available if discount_type is `usage`. Number of usage units that this
-                 * discount is for
+                 * Sets [Builder.usageDiscount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.usageDiscount] with a well-typed [Double] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun usageDiscount(usageDiscount: JsonField<Double>) = apply {
                     this.usageDiscount = usageDiscount
@@ -4949,22 +6249,58 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun priceId(): String = priceId.getRequired("price_id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun quantity(): Double = quantity.getRequired("quantity")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
+        /**
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("end_date")
         @ExcludeMissing
         fun _endDate(): JsonField<OffsetDateTime> = endDate
 
+        /**
+         * Returns the raw JSON value of [priceId].
+         *
+         * Unlike [priceId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("price_id") @ExcludeMissing fun _priceId(): JsonField<String> = priceId
 
+        /**
+         * Returns the raw JSON value of [quantity].
+         *
+         * Unlike [quantity], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
+        /**
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("start_date")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
@@ -5024,18 +6360,46 @@ private constructor(
 
             fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
+            /**
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             fun priceId(priceId: String) = priceId(JsonField.of(priceId))
 
+            /**
+             * Sets [Builder.priceId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.priceId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
             fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
+            /**
+             * Sets [Builder.quantity] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.quantity] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
+            /**
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
             }
@@ -5110,50 +6474,93 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The price ids that this maximum interval applies to. */
+        /**
+         * The price ids that this maximum interval applies to.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun appliesToPriceIds(): List<String> =
             appliesToPriceIds.getRequired("applies_to_price_ids")
 
-        /** The price interval ids that this maximum interval applies to. */
+        /**
+         * The price interval ids that this maximum interval applies to.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun appliesToPriceIntervalIds(): List<String> =
             appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
-        /** The end date of the maximum interval. */
+        /**
+         * The end date of the maximum interval.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
         /**
          * The maximum amount to charge in a given billing period for the price intervals this
          * transform applies to.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun maximumAmount(): String = maximumAmount.getRequired("maximum_amount")
 
-        /** The start date of the maximum interval. */
+        /**
+         * The start date of the maximum interval.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
-        /** The price ids that this maximum interval applies to. */
+        /**
+         * Returns the raw JSON value of [appliesToPriceIds].
+         *
+         * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("applies_to_price_ids")
         @ExcludeMissing
         fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
-        /** The price interval ids that this maximum interval applies to. */
+        /**
+         * Returns the raw JSON value of [appliesToPriceIntervalIds].
+         *
+         * Unlike [appliesToPriceIntervalIds], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("applies_to_price_interval_ids")
         @ExcludeMissing
         fun _appliesToPriceIntervalIds(): JsonField<List<String>> = appliesToPriceIntervalIds
 
-        /** The end date of the maximum interval. */
+        /**
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("end_date")
         @ExcludeMissing
         fun _endDate(): JsonField<OffsetDateTime> = endDate
 
         /**
-         * The maximum amount to charge in a given billing period for the price intervals this
-         * transform applies to.
+         * Returns the raw JSON value of [maximumAmount].
+         *
+         * Unlike [maximumAmount], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("maximum_amount")
         @ExcludeMissing
         fun _maximumAmount(): JsonField<String> = maximumAmount
 
-        /** The start date of the maximum interval. */
+        /**
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("start_date")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
@@ -5220,12 +6627,22 @@ private constructor(
             fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                 appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
-            /** The price ids that this maximum interval applies to. */
+            /**
+             * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.appliesToPriceIds] with a well-typed `List<String>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                 this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
             }
 
-            /** The price ids that this maximum interval applies to. */
+            /**
+             * Adds a single [String] to [appliesToPriceIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                 appliesToPriceIds =
                     (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
@@ -5237,14 +6654,24 @@ private constructor(
             fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: List<String>) =
                 appliesToPriceIntervalIds(JsonField.of(appliesToPriceIntervalIds))
 
-            /** The price interval ids that this maximum interval applies to. */
+            /**
+             * Sets [Builder.appliesToPriceIntervalIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.appliesToPriceIntervalIds] with a well-typed
+             * `List<String>` value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
             fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: JsonField<List<String>>) =
                 apply {
                     this.appliesToPriceIntervalIds =
                         appliesToPriceIntervalIds.map { it.toMutableList() }
                 }
 
-            /** The price interval ids that this maximum interval applies to. */
+            /**
+             * Adds a single [String] to [appliesToPriceIntervalIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addAppliesToPriceIntervalId(appliesToPriceIntervalId: String) = apply {
                 appliesToPriceIntervalIds =
                     (appliesToPriceIntervalIds ?: JsonField.of(mutableListOf())).also {
@@ -5255,7 +6682,13 @@ private constructor(
             /** The end date of the maximum interval. */
             fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
-            /** The end date of the maximum interval. */
+            /**
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             /**
@@ -5265,8 +6698,11 @@ private constructor(
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
             /**
-             * The maximum amount to charge in a given billing period for the price intervals this
-             * transform applies to.
+             * Sets [Builder.maximumAmount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.maximumAmount] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
@@ -5275,7 +6711,13 @@ private constructor(
             /** The start date of the maximum interval. */
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-            /** The start date of the maximum interval. */
+            /**
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
             }
@@ -5436,50 +6878,93 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The price ids that this minimum interval applies to. */
+        /**
+         * The price ids that this minimum interval applies to.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun appliesToPriceIds(): List<String> =
             appliesToPriceIds.getRequired("applies_to_price_ids")
 
-        /** The price interval ids that this minimum interval applies to. */
+        /**
+         * The price interval ids that this minimum interval applies to.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun appliesToPriceIntervalIds(): List<String> =
             appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
-        /** The end date of the minimum interval. */
+        /**
+         * The end date of the minimum interval.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
         /**
          * The minimum amount to charge in a given billing period for the price intervals this
          * minimum applies to.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
 
-        /** The start date of the minimum interval. */
+        /**
+         * The start date of the minimum interval.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
-        /** The price ids that this minimum interval applies to. */
+        /**
+         * Returns the raw JSON value of [appliesToPriceIds].
+         *
+         * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("applies_to_price_ids")
         @ExcludeMissing
         fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
-        /** The price interval ids that this minimum interval applies to. */
+        /**
+         * Returns the raw JSON value of [appliesToPriceIntervalIds].
+         *
+         * Unlike [appliesToPriceIntervalIds], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("applies_to_price_interval_ids")
         @ExcludeMissing
         fun _appliesToPriceIntervalIds(): JsonField<List<String>> = appliesToPriceIntervalIds
 
-        /** The end date of the minimum interval. */
+        /**
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("end_date")
         @ExcludeMissing
         fun _endDate(): JsonField<OffsetDateTime> = endDate
 
         /**
-         * The minimum amount to charge in a given billing period for the price intervals this
-         * minimum applies to.
+         * Returns the raw JSON value of [minimumAmount].
+         *
+         * Unlike [minimumAmount], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("minimum_amount")
         @ExcludeMissing
         fun _minimumAmount(): JsonField<String> = minimumAmount
 
-        /** The start date of the minimum interval. */
+        /**
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("start_date")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
@@ -5546,12 +7031,22 @@ private constructor(
             fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                 appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
-            /** The price ids that this minimum interval applies to. */
+            /**
+             * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.appliesToPriceIds] with a well-typed `List<String>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                 this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
             }
 
-            /** The price ids that this minimum interval applies to. */
+            /**
+             * Adds a single [String] to [appliesToPriceIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                 appliesToPriceIds =
                     (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
@@ -5563,14 +7058,24 @@ private constructor(
             fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: List<String>) =
                 appliesToPriceIntervalIds(JsonField.of(appliesToPriceIntervalIds))
 
-            /** The price interval ids that this minimum interval applies to. */
+            /**
+             * Sets [Builder.appliesToPriceIntervalIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.appliesToPriceIntervalIds] with a well-typed
+             * `List<String>` value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
             fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: JsonField<List<String>>) =
                 apply {
                     this.appliesToPriceIntervalIds =
                         appliesToPriceIntervalIds.map { it.toMutableList() }
                 }
 
-            /** The price interval ids that this minimum interval applies to. */
+            /**
+             * Adds a single [String] to [appliesToPriceIntervalIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addAppliesToPriceIntervalId(appliesToPriceIntervalId: String) = apply {
                 appliesToPriceIntervalIds =
                     (appliesToPriceIntervalIds ?: JsonField.of(mutableListOf())).also {
@@ -5581,7 +7086,13 @@ private constructor(
             /** The end date of the minimum interval. */
             fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
-            /** The end date of the minimum interval. */
+            /**
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             /**
@@ -5591,8 +7102,11 @@ private constructor(
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
             /**
-             * The minimum amount to charge in a given billing period for the price intervals this
-             * minimum applies to.
+             * Sets [Builder.minimumAmount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.minimumAmount] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
@@ -5601,7 +7115,13 @@ private constructor(
             /** The start date of the minimum interval. */
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-            /** The start date of the minimum interval. */
+            /**
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
             }
@@ -5697,15 +7217,27 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
-        /** The day of the month that Orb bills for this price */
+        /**
+         * The day of the month that Orb bills for this price
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun billingCycleDay(): Long = billingCycleDay.getRequired("billing_cycle_day")
 
         /**
          * The end of the current billing period. This is an exclusive timestamp, such that the
          * instant returned is exactly the end of the billing period. Set to null if this price
          * interval is not currently active.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun currentBillingPeriodEndDate(): OffsetDateTime? =
             currentBillingPeriodEndDate.getNullable("current_billing_period_end_date")
@@ -5714,6 +7246,9 @@ private constructor(
          * The start date of the current billing period. This is an inclusive timestamp; the instant
          * returned is exactly the beginning of the billing period. Set to null if this price
          * interval is not currently active.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun currentBillingPeriodStartDate(): OffsetDateTime? =
             currentBillingPeriodStartDate.getNullable("current_billing_period_start_date")
@@ -5721,15 +7256,26 @@ private constructor(
         /**
          * The end date of the price interval. This is the date that Orb stops billing for this
          * price.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
-        /** An additional filter to apply to usage queries. */
+        /**
+         * An additional filter to apply to usage queries.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun filter(): String? = filter.getNullable("filter")
 
         /**
          * The fixed fee quantity transitions for this price interval. This is only relevant for
          * fixed fees.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun fixedFeeQuantityTransitions(): List<FixedFeeQuantityTransition>? =
             fixedFeeQuantityTransitions.getNullable("fixed_fee_quantity_transitions")
@@ -5745,41 +7291,62 @@ private constructor(
          *
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun price(): Price = price.getRequired("price")
 
         /**
          * The start date of the price interval. This is the date that Orb starts billing for this
          * price.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
         /**
          * A list of customer IDs whose usage events will be aggregated and billed under this price
          * interval.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun usageCustomerIds(): List<String>? = usageCustomerIds.getNullable("usage_customer_ids")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-        /** The day of the month that Orb bills for this price */
+        /**
+         * Returns the raw JSON value of [billingCycleDay].
+         *
+         * Unlike [billingCycleDay], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("billing_cycle_day")
         @ExcludeMissing
         fun _billingCycleDay(): JsonField<Long> = billingCycleDay
 
         /**
-         * The end of the current billing period. This is an exclusive timestamp, such that the
-         * instant returned is exactly the end of the billing period. Set to null if this price
-         * interval is not currently active.
+         * Returns the raw JSON value of [currentBillingPeriodEndDate].
+         *
+         * Unlike [currentBillingPeriodEndDate], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("current_billing_period_end_date")
         @ExcludeMissing
         fun _currentBillingPeriodEndDate(): JsonField<OffsetDateTime> = currentBillingPeriodEndDate
 
         /**
-         * The start date of the current billing period. This is an inclusive timestamp; the instant
-         * returned is exactly the beginning of the billing period. Set to null if this price
-         * interval is not currently active.
+         * Returns the raw JSON value of [currentBillingPeriodStartDate].
+         *
+         * Unlike [currentBillingPeriodStartDate], this method doesn't throw if the JSON field has
+         * an unexpected type.
          */
         @JsonProperty("current_billing_period_start_date")
         @ExcludeMissing
@@ -5787,19 +7354,26 @@ private constructor(
             currentBillingPeriodStartDate
 
         /**
-         * The end date of the price interval. This is the date that Orb stops billing for this
-         * price.
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("end_date")
         @ExcludeMissing
         fun _endDate(): JsonField<OffsetDateTime> = endDate
 
-        /** An additional filter to apply to usage queries. */
+        /**
+         * Returns the raw JSON value of [filter].
+         *
+         * Unlike [filter], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("filter") @ExcludeMissing fun _filter(): JsonField<String> = filter
 
         /**
-         * The fixed fee quantity transitions for this price interval. This is only relevant for
-         * fixed fees.
+         * Returns the raw JSON value of [fixedFeeQuantityTransitions].
+         *
+         * Unlike [fixedFeeQuantityTransitions], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("fixed_fee_quantity_transitions")
         @ExcludeMissing
@@ -5807,30 +7381,26 @@ private constructor(
             fixedFeeQuantityTransitions
 
         /**
-         * The Price resource represents a price that can be billed on a subscription, resulting in
-         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
-         * determine an amount to bill.
+         * Returns the raw JSON value of [price].
          *
-         * Orb supports a few different pricing models out of the box. Each of these models is
-         * serialized differently in a given Price object. The model_type field determines the key
-         * for the configuration object that is present.
-         *
-         * For more on the types of prices, see
-         * [the core concepts documentation](/core-concepts#plan-and-price)
+         * Unlike [price], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("price") @ExcludeMissing fun _price(): JsonField<Price> = price
 
         /**
-         * The start date of the price interval. This is the date that Orb starts billing for this
-         * price.
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("start_date")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
         /**
-         * A list of customer IDs whose usage events will be aggregated and billed under this price
-         * interval.
+         * Returns the raw JSON value of [usageCustomerIds].
+         *
+         * Unlike [usageCustomerIds], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("usage_customer_ids")
         @ExcludeMissing
@@ -5918,13 +7488,26 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             /** The day of the month that Orb bills for this price */
             fun billingCycleDay(billingCycleDay: Long) =
                 billingCycleDay(JsonField.of(billingCycleDay))
 
-            /** The day of the month that Orb bills for this price */
+            /**
+             * Sets [Builder.billingCycleDay] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingCycleDay] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun billingCycleDay(billingCycleDay: JsonField<Long>) = apply {
                 this.billingCycleDay = billingCycleDay
             }
@@ -5938,9 +7521,11 @@ private constructor(
                 currentBillingPeriodEndDate(JsonField.ofNullable(currentBillingPeriodEndDate))
 
             /**
-             * The end of the current billing period. This is an exclusive timestamp, such that the
-             * instant returned is exactly the end of the billing period. Set to null if this price
-             * interval is not currently active.
+             * Sets [Builder.currentBillingPeriodEndDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currentBillingPeriodEndDate] with a well-typed
+             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun currentBillingPeriodEndDate(
                 currentBillingPeriodEndDate: JsonField<OffsetDateTime>
@@ -5955,9 +7540,11 @@ private constructor(
                 currentBillingPeriodStartDate(JsonField.ofNullable(currentBillingPeriodStartDate))
 
             /**
-             * The start date of the current billing period. This is an inclusive timestamp; the
-             * instant returned is exactly the beginning of the billing period. Set to null if this
-             * price interval is not currently active.
+             * Sets [Builder.currentBillingPeriodStartDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currentBillingPeriodStartDate] with a well-typed
+             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun currentBillingPeriodStartDate(
                 currentBillingPeriodStartDate: JsonField<OffsetDateTime>
@@ -5970,15 +7557,24 @@ private constructor(
             fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
             /**
-             * The end date of the price interval. This is the date that Orb stops billing for this
-             * price.
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             /** An additional filter to apply to usage queries. */
             fun filter(filter: String?) = filter(JsonField.ofNullable(filter))
 
-            /** An additional filter to apply to usage queries. */
+            /**
+             * Sets [Builder.filter] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.filter] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun filter(filter: JsonField<String>) = apply { this.filter = filter }
 
             /**
@@ -5990,8 +7586,11 @@ private constructor(
             ) = fixedFeeQuantityTransitions(JsonField.ofNullable(fixedFeeQuantityTransitions))
 
             /**
-             * The fixed fee quantity transitions for this price interval. This is only relevant for
-             * fixed fees.
+             * Sets [Builder.fixedFeeQuantityTransitions] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.fixedFeeQuantityTransitions] with a well-typed
+             * `List<FixedFeeQuantityTransition>` value instead. This method is primarily for
+             * setting the field to an undocumented or not yet supported value.
              */
             fun fixedFeeQuantityTransitions(
                 fixedFeeQuantityTransitions: JsonField<List<FixedFeeQuantityTransition>>
@@ -6001,8 +7600,9 @@ private constructor(
             }
 
             /**
-             * The fixed fee quantity transitions for this price interval. This is only relevant for
-             * fixed fees.
+             * Adds a single [FixedFeeQuantityTransition] to [fixedFeeQuantityTransitions].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addFixedFeeQuantityTransition(
                 fixedFeeQuantityTransition: FixedFeeQuantityTransition
@@ -6029,427 +7629,149 @@ private constructor(
             fun price(price: Price) = price(JsonField.of(price))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
+             * Sets [Builder.price] to an arbitrary JSON value.
              *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * You should usually call [Builder.price] with a well-typed [Price] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun price(price: JsonField<Price>) = apply { this.price = price }
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofUnit(unit)`. */
             fun price(unit: Price.UnitPrice) = price(Price.ofUnit(unit))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofPackagePrice(packagePrice)`. */
             fun price(packagePrice: Price.PackagePrice) = price(Price.ofPackagePrice(packagePrice))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
             fun price(matrix: Price.MatrixPrice) = price(Price.ofMatrix(matrix))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
             fun price(tiered: Price.TieredPrice) = price(Price.ofTiered(tiered))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofTieredBps(tieredBps)`. */
             fun price(tieredBps: Price.TieredBpsPrice) = price(Price.ofTieredBps(tieredBps))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofBps(bps)`. */
             fun price(bps: Price.BpsPrice) = price(Price.ofBps(bps))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofBulkBps(bulkBps)`. */
             fun price(bulkBps: Price.BulkBpsPrice) = price(Price.ofBulkBps(bulkBps))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
             fun price(bulk: Price.BulkPrice) = price(Price.ofBulk(bulk))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
              */
             fun price(thresholdTotalAmount: Price.ThresholdTotalAmountPrice) =
                 price(Price.ofThresholdTotalAmount(thresholdTotalAmount))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofTieredPackage(tieredPackage)`. */
             fun price(tieredPackage: Price.TieredPackagePrice) =
                 price(Price.ofTieredPackage(tieredPackage))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
             fun price(groupedTiered: Price.GroupedTieredPrice) =
                 price(Price.ofGroupedTiered(groupedTiered))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
             fun price(tieredWithMinimum: Price.TieredWithMinimumPrice) =
                 price(Price.ofTieredWithMinimum(tieredWithMinimum))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with
+             * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
              */
             fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimumPrice) =
                 price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with
+             * `Price.ofPackageWithAllocation(packageWithAllocation)`.
              */
             fun price(packageWithAllocation: Price.PackageWithAllocationPrice) =
                 price(Price.ofPackageWithAllocation(packageWithAllocation))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofUnitWithPercent(unitWithPercent)`. */
             fun price(unitWithPercent: Price.UnitWithPercentPrice) =
                 price(Price.ofUnitWithPercent(unitWithPercent))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
              */
             fun price(matrixWithAllocation: Price.MatrixWithAllocationPrice) =
                 price(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with `Price.ofTieredWithProration(tieredWithProration)`.
              */
             fun price(tieredWithProration: Price.TieredWithProrationPrice) =
                 price(Price.ofTieredWithProration(tieredWithProration))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofUnitWithProration(unitWithProration)`. */
             fun price(unitWithProration: Price.UnitWithProrationPrice) =
                 price(Price.ofUnitWithProration(unitWithProration))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofGroupedAllocation(groupedAllocation)`. */
             fun price(groupedAllocation: Price.GroupedAllocationPrice) =
                 price(Price.ofGroupedAllocation(groupedAllocation))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with
+             * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
              */
             fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimumPrice) =
                 price(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with
+             * `Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)`.
              */
             fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimumPrice) =
                 price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with
+             * `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
              */
             fun price(matrixWithDisplayName: Price.MatrixWithDisplayNamePrice) =
                 price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
             fun price(bulkWithProration: Price.BulkWithProrationPrice) =
                 price(Price.ofBulkWithProration(bulkWithProration))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
              */
             fun price(groupedTieredPackage: Price.GroupedTieredPackagePrice) =
                 price(Price.ofGroupedTieredPackage(groupedTieredPackage))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with
+             * `Price.ofMaxGroupTieredPackage(maxGroupTieredPackage)`.
              */
             fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) =
                 price(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with
+             * `Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)`.
              */
             fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricingPrice) =
                 price(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with
+             * `Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)`.
              */
             fun price(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice) =
                 price(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
 
             /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
+             * Alias for calling [price] with
+             * `Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk)`.
              */
             fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulkPrice) =
                 price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
@@ -6461,8 +7783,11 @@ private constructor(
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
             /**
-             * The start date of the price interval. This is the date that Orb starts billing for
-             * this price.
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
@@ -6476,16 +7801,20 @@ private constructor(
                 usageCustomerIds(JsonField.ofNullable(usageCustomerIds))
 
             /**
-             * A list of customer IDs whose usage events will be aggregated and billed under this
-             * price interval.
+             * Sets [Builder.usageCustomerIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.usageCustomerIds] with a well-typed `List<String>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun usageCustomerIds(usageCustomerIds: JsonField<List<String>>) = apply {
                 this.usageCustomerIds = usageCustomerIds.map { it.toMutableList() }
             }
 
             /**
-             * A list of customer IDs whose usage events will be aggregated and billed under this
-             * price interval.
+             * Adds a single [String] to [usageCustomerIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addUsageCustomerId(usageCustomerId: String) = apply {
                 usageCustomerIds =
@@ -6548,18 +7877,50 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun effectiveDate(): OffsetDateTime = effectiveDate.getRequired("effective_date")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun priceId(): String = priceId.getRequired("price_id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun quantity(): Long = quantity.getRequired("quantity")
 
+            /**
+             * Returns the raw JSON value of [effectiveDate].
+             *
+             * Unlike [effectiveDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("effective_date")
             @ExcludeMissing
             fun _effectiveDate(): JsonField<OffsetDateTime> = effectiveDate
 
+            /**
+             * Returns the raw JSON value of [priceId].
+             *
+             * Unlike [priceId], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("price_id") @ExcludeMissing fun _priceId(): JsonField<String> = priceId
 
+            /**
+             * Returns the raw JSON value of [quantity].
+             *
+             * Unlike [quantity], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Long> = quantity
 
             @JsonAnyGetter
@@ -6616,16 +7977,37 @@ private constructor(
                 fun effectiveDate(effectiveDate: OffsetDateTime) =
                     effectiveDate(JsonField.of(effectiveDate))
 
+                /**
+                 * Sets [Builder.effectiveDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.effectiveDate] with a well-typed
+                 * [OffsetDateTime] value instead. This method is primarily for setting the field to
+                 * an undocumented or not yet supported value.
+                 */
                 fun effectiveDate(effectiveDate: JsonField<OffsetDateTime>) = apply {
                     this.effectiveDate = effectiveDate
                 }
 
                 fun priceId(priceId: String) = priceId(JsonField.of(priceId))
 
+                /**
+                 * Sets [Builder.priceId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.priceId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
                 fun quantity(quantity: Long) = quantity(JsonField.of(quantity))
 
+                /**
+                 * Sets [Builder.quantity] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.quantity] with a well-typed [Long] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun quantity(quantity: JsonField<Long>) = apply { this.quantity = quantity }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -6712,18 +8094,45 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun couponId(): String = couponId.getRequired("coupon_id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
+        /**
+         * Returns the raw JSON value of [couponId].
+         *
+         * Unlike [couponId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("coupon_id") @ExcludeMissing fun _couponId(): JsonField<String> = couponId
 
+        /**
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("end_date")
         @ExcludeMissing
         fun _endDate(): JsonField<OffsetDateTime> = endDate
 
+        /**
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("start_date")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
@@ -6779,14 +8188,35 @@ private constructor(
 
             fun couponId(couponId: String) = couponId(JsonField.of(couponId))
 
+            /**
+             * Sets [Builder.couponId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.couponId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun couponId(couponId: JsonField<String>) = apply { this.couponId = couponId }
 
             fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
+            /**
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
+            /**
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
             }
@@ -6951,8 +8381,17 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
+        /**
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("end_date")
         @ExcludeMissing
         fun _endDate(): JsonField<OffsetDateTime> = endDate
@@ -7000,6 +8439,13 @@ private constructor(
 
             fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
+            /**
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

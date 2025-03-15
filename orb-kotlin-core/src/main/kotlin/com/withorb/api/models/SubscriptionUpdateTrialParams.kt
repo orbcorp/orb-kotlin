@@ -63,24 +63,32 @@ private constructor(
     /**
      * The new date that the trial should end, or the literal string `immediate` to end the trial
      * immediately.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun trialEndDate(): TrialEndDate = body.trialEndDate()
 
     /**
      * If true, shifts subsequent price and adjustment intervals (preserving their durations, but
      * adjusting their absolute dates).
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun shift(): Boolean? = body.shift()
 
     /**
-     * The new date that the trial should end, or the literal string `immediate` to end the trial
-     * immediately.
+     * Returns the raw JSON value of [trialEndDate].
+     *
+     * Unlike [trialEndDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _trialEndDate(): JsonField<TrialEndDate> = body._trialEndDate()
 
     /**
-     * If true, shifts subsequent price and adjustment intervals (preserving their durations, but
-     * adjusting their absolute dates).
+     * Returns the raw JSON value of [shift].
+     *
+     * Unlike [shift], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _shift(): JsonField<Boolean> = body._shift()
 
@@ -120,26 +128,35 @@ private constructor(
         /**
          * The new date that the trial should end, or the literal string `immediate` to end the
          * trial immediately.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun trialEndDate(): TrialEndDate = trialEndDate.getRequired("trial_end_date")
 
         /**
          * If true, shifts subsequent price and adjustment intervals (preserving their durations,
          * but adjusting their absolute dates).
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun shift(): Boolean? = shift.getNullable("shift")
 
         /**
-         * The new date that the trial should end, or the literal string `immediate` to end the
-         * trial immediately.
+         * Returns the raw JSON value of [trialEndDate].
+         *
+         * Unlike [trialEndDate], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("trial_end_date")
         @ExcludeMissing
         fun _trialEndDate(): JsonField<TrialEndDate> = trialEndDate
 
         /**
-         * If true, shifts subsequent price and adjustment intervals (preserving their durations,
-         * but adjusting their absolute dates).
+         * Returns the raw JSON value of [shift].
+         *
+         * Unlike [shift], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("shift") @ExcludeMissing fun _shift(): JsonField<Boolean> = shift
 
@@ -194,23 +211,25 @@ private constructor(
             fun trialEndDate(trialEndDate: TrialEndDate) = trialEndDate(JsonField.of(trialEndDate))
 
             /**
-             * The new date that the trial should end, or the literal string `immediate` to end the
-             * trial immediately.
+             * Sets [Builder.trialEndDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.trialEndDate] with a well-typed [TrialEndDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun trialEndDate(trialEndDate: JsonField<TrialEndDate>) = apply {
                 this.trialEndDate = trialEndDate
             }
 
             /**
-             * The new date that the trial should end, or the literal string `immediate` to end the
-             * trial immediately.
+             * Alias for calling [trialEndDate] with
+             * `TrialEndDate.ofOffsetDateTime(offsetDateTime)`.
              */
             fun trialEndDate(offsetDateTime: OffsetDateTime) =
                 trialEndDate(TrialEndDate.ofOffsetDateTime(offsetDateTime))
 
             /**
-             * The new date that the trial should end, or the literal string `immediate` to end the
-             * trial immediately.
+             * Alias for calling [trialEndDate] with `TrialEndDate.ofUnionMember1(unionMember1)`.
              */
             fun trialEndDate(unionMember1: TrialEndDate.UnionMember1) =
                 trialEndDate(TrialEndDate.ofUnionMember1(unionMember1))
@@ -222,8 +241,11 @@ private constructor(
             fun shift(shift: Boolean) = shift(JsonField.of(shift))
 
             /**
-             * If true, shifts subsequent price and adjustment intervals (preserving their
-             * durations, but adjusting their absolute dates).
+             * Sets [Builder.shift] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.shift] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun shift(shift: JsonField<Boolean>) = apply { this.shift = shift }
 
@@ -314,25 +336,24 @@ private constructor(
         fun trialEndDate(trialEndDate: TrialEndDate) = apply { body.trialEndDate(trialEndDate) }
 
         /**
-         * The new date that the trial should end, or the literal string `immediate` to end the
-         * trial immediately.
+         * Sets [Builder.trialEndDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.trialEndDate] with a well-typed [TrialEndDate] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun trialEndDate(trialEndDate: JsonField<TrialEndDate>) = apply {
             body.trialEndDate(trialEndDate)
         }
 
         /**
-         * The new date that the trial should end, or the literal string `immediate` to end the
-         * trial immediately.
+         * Alias for calling [trialEndDate] with `TrialEndDate.ofOffsetDateTime(offsetDateTime)`.
          */
         fun trialEndDate(offsetDateTime: OffsetDateTime) = apply {
             body.trialEndDate(offsetDateTime)
         }
 
-        /**
-         * The new date that the trial should end, or the literal string `immediate` to end the
-         * trial immediately.
-         */
+        /** Alias for calling [trialEndDate] with `TrialEndDate.ofUnionMember1(unionMember1)`. */
         fun trialEndDate(unionMember1: TrialEndDate.UnionMember1) = apply {
             body.trialEndDate(unionMember1)
         }
@@ -344,8 +365,10 @@ private constructor(
         fun shift(shift: Boolean) = apply { body.shift(shift) }
 
         /**
-         * If true, shifts subsequent price and adjustment intervals (preserving their durations,
-         * but adjusting their absolute dates).
+         * Sets [Builder.shift] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.shift] with a well-typed [Boolean] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun shift(shift: JsonField<Boolean>) = apply { body.shift(shift) }
 

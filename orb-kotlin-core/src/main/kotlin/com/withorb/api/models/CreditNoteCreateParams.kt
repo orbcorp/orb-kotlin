@@ -30,20 +30,47 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun lineItems(): List<LineItem> = body.lineItems()
 
-    /** An optional memo to attach to the credit note. */
+    /**
+     * An optional memo to attach to the credit note.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun memo(): String? = body.memo()
 
-    /** An optional reason for the credit note. */
+    /**
+     * An optional reason for the credit note.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun reason(): Reason? = body.reason()
 
+    /**
+     * Returns the raw JSON value of [lineItems].
+     *
+     * Unlike [lineItems], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _lineItems(): JsonField<List<LineItem>> = body._lineItems()
 
-    /** An optional memo to attach to the credit note. */
+    /**
+     * Returns the raw JSON value of [memo].
+     *
+     * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _memo(): JsonField<String> = body._memo()
 
-    /** An optional reason for the credit note. */
+    /**
+     * Returns the raw JSON value of [reason].
+     *
+     * Unlike [reason], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _reason(): JsonField<Reason> = body._reason()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -75,22 +102,49 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
 
-        /** An optional memo to attach to the credit note. */
+        /**
+         * An optional memo to attach to the credit note.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun memo(): String? = memo.getNullable("memo")
 
-        /** An optional reason for the credit note. */
+        /**
+         * An optional reason for the credit note.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun reason(): Reason? = reason.getNullable("reason")
 
+        /**
+         * Returns the raw JSON value of [lineItems].
+         *
+         * Unlike [lineItems], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("line_items")
         @ExcludeMissing
         fun _lineItems(): JsonField<List<LineItem>> = lineItems
 
-        /** An optional memo to attach to the credit note. */
+        /**
+         * Returns the raw JSON value of [memo].
+         *
+         * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
 
-        /** An optional reason for the credit note. */
+        /**
+         * Returns the raw JSON value of [reason].
+         *
+         * Unlike [reason], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<Reason> = reason
 
         @JsonAnyGetter
@@ -142,10 +196,22 @@ private constructor(
 
             fun lineItems(lineItems: List<LineItem>) = lineItems(JsonField.of(lineItems))
 
+            /**
+             * Sets [Builder.lineItems] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.lineItems] with a well-typed `List<LineItem>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun lineItems(lineItems: JsonField<List<LineItem>>) = apply {
                 this.lineItems = lineItems.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [LineItem] to [lineItems].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addLineItem(lineItem: LineItem) = apply {
                 lineItems =
                     (lineItems ?: JsonField.of(mutableListOf())).also {
@@ -156,13 +222,25 @@ private constructor(
             /** An optional memo to attach to the credit note. */
             fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
 
-            /** An optional memo to attach to the credit note. */
+            /**
+             * Sets [Builder.memo] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.memo] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
             /** An optional reason for the credit note. */
             fun reason(reason: Reason?) = reason(JsonField.ofNullable(reason))
 
-            /** An optional reason for the credit note. */
+            /**
+             * Sets [Builder.reason] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.reason] with a well-typed [Reason] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -242,20 +320,42 @@ private constructor(
 
         fun lineItems(lineItems: List<LineItem>) = apply { body.lineItems(lineItems) }
 
+        /**
+         * Sets [Builder.lineItems] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lineItems] with a well-typed `List<LineItem>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lineItems(lineItems: JsonField<List<LineItem>>) = apply { body.lineItems(lineItems) }
 
+        /**
+         * Adds a single [LineItem] to [lineItems].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addLineItem(lineItem: LineItem) = apply { body.addLineItem(lineItem) }
 
         /** An optional memo to attach to the credit note. */
         fun memo(memo: String?) = apply { body.memo(memo) }
 
-        /** An optional memo to attach to the credit note. */
+        /**
+         * Sets [Builder.memo] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.memo] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun memo(memo: JsonField<String>) = apply { body.memo(memo) }
 
         /** An optional reason for the credit note. */
         fun reason(reason: Reason?) = apply { body.reason(reason) }
 
-        /** An optional reason for the credit note. */
+        /**
+         * Sets [Builder.reason] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.reason] with a well-typed [Reason] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun reason(reason: JsonField<Reason>) = apply { body.reason(reason) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
@@ -397,16 +497,35 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The total amount in the invoice's currency to credit this line item. */
+        /**
+         * The total amount in the invoice's currency to credit this line item.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun amount(): String = amount.getRequired("amount")
 
-        /** The ID of the line item to credit. */
+        /**
+         * The ID of the line item to credit.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun invoiceLineItemId(): String = invoiceLineItemId.getRequired("invoice_line_item_id")
 
-        /** The total amount in the invoice's currency to credit this line item. */
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
-        /** The ID of the line item to credit. */
+        /**
+         * Returns the raw JSON value of [invoiceLineItemId].
+         *
+         * Unlike [invoiceLineItemId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("invoice_line_item_id")
         @ExcludeMissing
         fun _invoiceLineItemId(): JsonField<String> = invoiceLineItemId
@@ -459,14 +578,26 @@ private constructor(
             /** The total amount in the invoice's currency to credit this line item. */
             fun amount(amount: String) = amount(JsonField.of(amount))
 
-            /** The total amount in the invoice's currency to credit this line item. */
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
             /** The ID of the line item to credit. */
             fun invoiceLineItemId(invoiceLineItemId: String) =
                 invoiceLineItemId(JsonField.of(invoiceLineItemId))
 
-            /** The ID of the line item to credit. */
+            /**
+             * Sets [Builder.invoiceLineItemId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.invoiceLineItemId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun invoiceLineItemId(invoiceLineItemId: JsonField<String>) = apply {
                 this.invoiceLineItemId = invoiceLineItemId
             }

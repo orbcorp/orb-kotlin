@@ -44,24 +44,51 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The price's output for the group */
+    /**
+     * The price's output for the group
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun amount(): String = amount.getRequired("amount")
 
-    /** The values for the group in the order specified by `grouping_keys` */
+    /**
+     * The values for the group in the order specified by `grouping_keys`
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun groupingValues(): List<GroupingValue> = groupingValues.getRequired("grouping_values")
 
-    /** The price's usage quantity for the group */
+    /**
+     * The price's usage quantity for the group
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun quantity(): Double = quantity.getRequired("quantity")
 
-    /** The price's output for the group */
+    /**
+     * Returns the raw JSON value of [amount].
+     *
+     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
-    /** The values for the group in the order specified by `grouping_keys` */
+    /**
+     * Returns the raw JSON value of [groupingValues].
+     *
+     * Unlike [groupingValues], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("grouping_values")
     @ExcludeMissing
     fun _groupingValues(): JsonField<List<GroupingValue>> = groupingValues
 
-    /** The price's usage quantity for the group */
+    /**
+     * Returns the raw JSON value of [quantity].
+     *
+     * Unlike [quantity], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
     @JsonAnyGetter
@@ -116,19 +143,34 @@ private constructor(
         /** The price's output for the group */
         fun amount(amount: String) = amount(JsonField.of(amount))
 
-        /** The price's output for the group */
+        /**
+         * Sets [Builder.amount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amount] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
         /** The values for the group in the order specified by `grouping_keys` */
         fun groupingValues(groupingValues: List<GroupingValue>) =
             groupingValues(JsonField.of(groupingValues))
 
-        /** The values for the group in the order specified by `grouping_keys` */
+        /**
+         * Sets [Builder.groupingValues] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.groupingValues] with a well-typed `List<GroupingValue>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun groupingValues(groupingValues: JsonField<List<GroupingValue>>) = apply {
             this.groupingValues = groupingValues.map { it.toMutableList() }
         }
 
-        /** The values for the group in the order specified by `grouping_keys` */
+        /**
+         * Adds a single [GroupingValue] to [groupingValues].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addGroupingValue(groupingValue: GroupingValue) = apply {
             groupingValues =
                 (groupingValues ?: JsonField.of(mutableListOf())).also {
@@ -136,19 +178,24 @@ private constructor(
                 }
         }
 
-        /** The values for the group in the order specified by `grouping_keys` */
+        /** Alias for calling [addGroupingValue] with `GroupingValue.ofString(string)`. */
         fun addGroupingValue(string: String) = addGroupingValue(GroupingValue.ofString(string))
 
-        /** The values for the group in the order specified by `grouping_keys` */
+        /** Alias for calling [addGroupingValue] with `GroupingValue.ofDouble(double)`. */
         fun addGroupingValue(double: Double) = addGroupingValue(GroupingValue.ofDouble(double))
 
-        /** The values for the group in the order specified by `grouping_keys` */
+        /** Alias for calling [addGroupingValue] with `GroupingValue.ofBoolean(boolean)`. */
         fun addGroupingValue(boolean: Boolean) = addGroupingValue(GroupingValue.ofBoolean(boolean))
 
         /** The price's usage quantity for the group */
         fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
-        /** The price's usage quantity for the group */
+        /**
+         * Sets [Builder.quantity] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.quantity] with a well-typed [Double] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

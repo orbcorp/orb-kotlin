@@ -17,6 +17,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 
@@ -34,22 +35,50 @@ private constructor(
 
     fun invoiceId(): String = invoiceId
 
-    /** A date string to specify the date of the payment. */
+    /**
+     * A date string to specify the date of the payment.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun paymentReceivedDate(): LocalDate = body.paymentReceivedDate()
 
-    /** An optional external ID to associate with the payment. */
+    /**
+     * An optional external ID to associate with the payment.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun externalId(): String? = body.externalId()
 
-    /** An optional note to associate with the payment. */
+    /**
+     * An optional note to associate with the payment.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun notes(): String? = body.notes()
 
-    /** A date string to specify the date of the payment. */
+    /**
+     * Returns the raw JSON value of [paymentReceivedDate].
+     *
+     * Unlike [paymentReceivedDate], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _paymentReceivedDate(): JsonField<LocalDate> = body._paymentReceivedDate()
 
-    /** An optional external ID to associate with the payment. */
+    /**
+     * Returns the raw JSON value of [externalId].
+     *
+     * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _externalId(): JsonField<String> = body._externalId()
 
-    /** An optional note to associate with the payment. */
+    /**
+     * Returns the raw JSON value of [notes].
+     *
+     * Unlike [notes], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _notes(): JsonField<String> = body._notes()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -88,27 +117,55 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** A date string to specify the date of the payment. */
+        /**
+         * A date string to specify the date of the payment.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun paymentReceivedDate(): LocalDate =
             paymentReceivedDate.getRequired("payment_received_date")
 
-        /** An optional external ID to associate with the payment. */
+        /**
+         * An optional external ID to associate with the payment.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun externalId(): String? = externalId.getNullable("external_id")
 
-        /** An optional note to associate with the payment. */
+        /**
+         * An optional note to associate with the payment.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun notes(): String? = notes.getNullable("notes")
 
-        /** A date string to specify the date of the payment. */
+        /**
+         * Returns the raw JSON value of [paymentReceivedDate].
+         *
+         * Unlike [paymentReceivedDate], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("payment_received_date")
         @ExcludeMissing
         fun _paymentReceivedDate(): JsonField<LocalDate> = paymentReceivedDate
 
-        /** An optional external ID to associate with the payment. */
+        /**
+         * Returns the raw JSON value of [externalId].
+         *
+         * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("external_id")
         @ExcludeMissing
         fun _externalId(): JsonField<String> = externalId
 
-        /** An optional note to associate with the payment. */
+        /**
+         * Returns the raw JSON value of [notes].
+         *
+         * Unlike [notes], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("notes") @ExcludeMissing fun _notes(): JsonField<String> = notes
 
         @JsonAnyGetter
@@ -162,7 +219,13 @@ private constructor(
             fun paymentReceivedDate(paymentReceivedDate: LocalDate) =
                 paymentReceivedDate(JsonField.of(paymentReceivedDate))
 
-            /** A date string to specify the date of the payment. */
+            /**
+             * Sets [Builder.paymentReceivedDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.paymentReceivedDate] with a well-typed [LocalDate]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun paymentReceivedDate(paymentReceivedDate: JsonField<LocalDate>) = apply {
                 this.paymentReceivedDate = paymentReceivedDate
             }
@@ -170,13 +233,25 @@ private constructor(
             /** An optional external ID to associate with the payment. */
             fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
 
-            /** An optional external ID to associate with the payment. */
+            /**
+             * Sets [Builder.externalId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
 
             /** An optional note to associate with the payment. */
             fun notes(notes: String?) = notes(JsonField.ofNullable(notes))
 
-            /** An optional note to associate with the payment. */
+            /**
+             * Sets [Builder.notes] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.notes] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun notes(notes: JsonField<String>) = apply { this.notes = notes }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -264,7 +339,13 @@ private constructor(
             body.paymentReceivedDate(paymentReceivedDate)
         }
 
-        /** A date string to specify the date of the payment. */
+        /**
+         * Sets [Builder.paymentReceivedDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paymentReceivedDate] with a well-typed [LocalDate] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun paymentReceivedDate(paymentReceivedDate: JsonField<LocalDate>) = apply {
             body.paymentReceivedDate(paymentReceivedDate)
         }
@@ -272,13 +353,24 @@ private constructor(
         /** An optional external ID to associate with the payment. */
         fun externalId(externalId: String?) = apply { body.externalId(externalId) }
 
-        /** An optional external ID to associate with the payment. */
+        /**
+         * Sets [Builder.externalId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun externalId(externalId: JsonField<String>) = apply { body.externalId(externalId) }
 
         /** An optional note to associate with the payment. */
         fun notes(notes: String?) = apply { body.notes(notes) }
 
-        /** An optional note to associate with the payment. */
+        /**
+         * Sets [Builder.notes] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.notes] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun notes(notes: JsonField<String>) = apply { body.notes(notes) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {

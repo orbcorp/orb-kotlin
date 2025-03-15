@@ -17,6 +17,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
@@ -69,7 +70,12 @@ private constructor(
 
     fun eventId(): String = eventId
 
-    /** A name to meaningfully identify the action or event type. */
+    /**
+     * A name to meaningfully identify the action or event type.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun eventName(): String = body.eventName()
 
     /**
@@ -82,29 +88,55 @@ private constructor(
      * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the time
      * that usage was recorded, and is particularly important to attribute usage to a given billing
      * period.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun timestamp(): OffsetDateTime = body.timestamp()
 
-    /** The Orb Customer identifier */
+    /**
+     * The Orb Customer identifier
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun customerId(): String? = body.customerId()
 
-    /** An alias for the Orb customer, whose mapping is specified when creating the customer */
+    /**
+     * An alias for the Orb customer, whose mapping is specified when creating the customer
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun externalCustomerId(): String? = body.externalCustomerId()
 
-    /** A name to meaningfully identify the action or event type. */
+    /**
+     * Returns the raw JSON value of [eventName].
+     *
+     * Unlike [eventName], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _eventName(): JsonField<String> = body._eventName()
 
     /**
-     * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the time
-     * that usage was recorded, and is particularly important to attribute usage to a given billing
-     * period.
+     * Returns the raw JSON value of [timestamp].
+     *
+     * Unlike [timestamp], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _timestamp(): JsonField<OffsetDateTime> = body._timestamp()
 
-    /** The Orb Customer identifier */
+    /**
+     * Returns the raw JSON value of [customerId].
+     *
+     * Unlike [customerId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _customerId(): JsonField<String> = body._customerId()
 
-    /** An alias for the Orb customer, whose mapping is specified when creating the customer */
+    /**
+     * Returns the raw JSON value of [externalCustomerId].
+     *
+     * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _externalCustomerId(): JsonField<String> = body._externalCustomerId()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -149,7 +181,12 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** A name to meaningfully identify the action or event type. */
+        /**
+         * A name to meaningfully identify the action or event type.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun eventName(): String = eventName.getRequired("event_name")
 
         /**
@@ -162,33 +199,59 @@ private constructor(
          * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
          * time that usage was recorded, and is particularly important to attribute usage to a given
          * billing period.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun timestamp(): OffsetDateTime = timestamp.getRequired("timestamp")
 
-        /** The Orb Customer identifier */
+        /**
+         * The Orb Customer identifier
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun customerId(): String? = customerId.getNullable("customer_id")
 
-        /** An alias for the Orb customer, whose mapping is specified when creating the customer */
+        /**
+         * An alias for the Orb customer, whose mapping is specified when creating the customer
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
-        /** A name to meaningfully identify the action or event type. */
+        /**
+         * Returns the raw JSON value of [eventName].
+         *
+         * Unlike [eventName], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("event_name") @ExcludeMissing fun _eventName(): JsonField<String> = eventName
 
         /**
-         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
-         * time that usage was recorded, and is particularly important to attribute usage to a given
-         * billing period.
+         * Returns the raw JSON value of [timestamp].
+         *
+         * Unlike [timestamp], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("timestamp")
         @ExcludeMissing
         fun _timestamp(): JsonField<OffsetDateTime> = timestamp
 
-        /** The Orb Customer identifier */
+        /**
+         * Returns the raw JSON value of [customerId].
+         *
+         * Unlike [customerId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("customer_id")
         @ExcludeMissing
         fun _customerId(): JsonField<String> = customerId
 
-        /** An alias for the Orb customer, whose mapping is specified when creating the customer */
+        /**
+         * Returns the raw JSON value of [externalCustomerId].
+         *
+         * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("external_customer_id")
         @ExcludeMissing
         fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -250,7 +313,13 @@ private constructor(
             /** A name to meaningfully identify the action or event type. */
             fun eventName(eventName: String) = eventName(JsonField.of(eventName))
 
-            /** A name to meaningfully identify the action or event type. */
+            /**
+             * Sets [Builder.eventName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.eventName] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun eventName(eventName: JsonField<String>) = apply { this.eventName = eventName }
 
             /**
@@ -267,9 +336,11 @@ private constructor(
             fun timestamp(timestamp: OffsetDateTime) = timestamp(JsonField.of(timestamp))
 
             /**
-             * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
-             * time that usage was recorded, and is particularly important to attribute usage to a
-             * given billing period.
+             * Sets [Builder.timestamp] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timestamp] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun timestamp(timestamp: JsonField<OffsetDateTime>) = apply {
                 this.timestamp = timestamp
@@ -278,7 +349,13 @@ private constructor(
             /** The Orb Customer identifier */
             fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
 
-            /** The Orb Customer identifier */
+            /**
+             * Sets [Builder.customerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
 
             /**
@@ -288,7 +365,11 @@ private constructor(
                 externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
             /**
-             * An alias for the Orb customer, whose mapping is specified when creating the customer
+             * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                 this.externalCustomerId = externalCustomerId
@@ -381,7 +462,13 @@ private constructor(
         /** A name to meaningfully identify the action or event type. */
         fun eventName(eventName: String) = apply { body.eventName(eventName) }
 
-        /** A name to meaningfully identify the action or event type. */
+        /**
+         * Sets [Builder.eventName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.eventName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun eventName(eventName: JsonField<String>) = apply { body.eventName(eventName) }
 
         /**
@@ -398,16 +485,24 @@ private constructor(
         fun timestamp(timestamp: OffsetDateTime) = apply { body.timestamp(timestamp) }
 
         /**
-         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
-         * time that usage was recorded, and is particularly important to attribute usage to a given
-         * billing period.
+         * Sets [Builder.timestamp] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.timestamp] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun timestamp(timestamp: JsonField<OffsetDateTime>) = apply { body.timestamp(timestamp) }
 
         /** The Orb Customer identifier */
         fun customerId(customerId: String?) = apply { body.customerId(customerId) }
 
-        /** The Orb Customer identifier */
+        /**
+         * Sets [Builder.customerId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.customerId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun customerId(customerId: JsonField<String>) = apply { body.customerId(customerId) }
 
         /** An alias for the Orb customer, whose mapping is specified when creating the customer */
@@ -415,7 +510,13 @@ private constructor(
             body.externalCustomerId(externalCustomerId)
         }
 
-        /** An alias for the Orb customer, whose mapping is specified when creating the customer */
+        /**
+         * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
             body.externalCustomerId(externalCustomerId)
         }
