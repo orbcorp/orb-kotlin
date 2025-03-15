@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.0-alpha.38 (2025-03-15)
+
+Full Changelog: [v0.1.0-alpha.37...v0.1.0-alpha.38](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.37...v0.1.0-alpha.38)
+
+### Features
+
+* **api:** api update ([#303](https://github.com/orbcorp/orb-kotlin/issues/303)) ([0ec5847](https://github.com/orbcorp/orb-kotlin/commit/0ec584700710fde74f69274dee7702b20146e759))
+
+
+### Chores
+
+* **api:** correctly support ExternalCustomerID array filter on Subscriptions.List ([#302](https://github.com/orbcorp/orb-kotlin/issues/302)) ([8d7ea78](https://github.com/orbcorp/orb-kotlin/commit/8d7ea7844ff53e5382ba0f0348843b5d4671cd74))
+* **internal:** codegen related update ([#298](https://github.com/orbcorp/orb-kotlin/issues/298)) ([2f1d714](https://github.com/orbcorp/orb-kotlin/commit/2f1d714536b4c71c46e35787c1a7fd69f9efc95d))
+* **internal:** codegen related update ([#300](https://github.com/orbcorp/orb-kotlin/issues/300)) ([0bb38e0](https://github.com/orbcorp/orb-kotlin/commit/0bb38e0979d05f5a6b9572d2fb230ee43a3a98a9))
+* **internal:** remove extra empty newlines ([#301](https://github.com/orbcorp/orb-kotlin/issues/301)) ([78e0540](https://github.com/orbcorp/orb-kotlin/commit/78e05405adb0ea2d37eb69447dd56958abce88b1))
+
+
+### Documentation
+
+* deduplicate and refine comments ([#304](https://github.com/orbcorp/orb-kotlin/issues/304)) ([3f1e2a5](https://github.com/orbcorp/orb-kotlin/commit/3f1e2a50b3c7f121784a3d017c92f1f3152f45d6))
+
 ## 0.1.0-alpha.37 (2025-03-11)
 
 Full Changelog: [v0.1.0-alpha.36...v0.1.0-alpha.37](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.36...v0.1.0-alpha.37)
