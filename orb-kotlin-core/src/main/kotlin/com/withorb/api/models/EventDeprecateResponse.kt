@@ -14,6 +14,7 @@ import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
 @NoAutoDetect
@@ -26,10 +27,19 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** event_id of the deprecated event, if successfully updated */
+    /**
+     * event_id of the deprecated event, if successfully updated
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun deprecated(): String = deprecated.getRequired("deprecated")
 
-    /** event_id of the deprecated event, if successfully updated */
+    /**
+     * Returns the raw JSON value of [deprecated].
+     *
+     * Unlike [deprecated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("deprecated") @ExcludeMissing fun _deprecated(): JsonField<String> = deprecated
 
     @JsonAnyGetter
@@ -76,7 +86,13 @@ private constructor(
         /** event_id of the deprecated event, if successfully updated */
         fun deprecated(deprecated: String) = deprecated(JsonField.of(deprecated))
 
-        /** event_id of the deprecated event, if successfully updated */
+        /**
+         * Sets [Builder.deprecated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.deprecated] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun deprecated(deprecated: JsonField<String>) = apply { this.deprecated = deprecated }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

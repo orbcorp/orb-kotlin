@@ -17,6 +17,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
 /**
@@ -31,41 +32,80 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    /** A description of the metric. */
+    /**
+     * A description of the metric.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun description(): String? = body.description()
 
-    /** The id of the item */
+    /**
+     * The id of the item
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun itemId(): String = body.itemId()
 
-    /** The name of the metric. */
+    /**
+     * The name of the metric.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
-    /** A sql string defining the metric. */
+    /**
+     * A sql string defining the metric.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun sql(): String = body.sql()
 
     /**
      * User-specified key/value pairs for the resource. Individual keys can be removed by setting
      * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
      * `null`.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun metadata(): Metadata? = body.metadata()
 
-    /** A description of the metric. */
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _description(): JsonField<String> = body._description()
 
-    /** The id of the item */
+    /**
+     * Returns the raw JSON value of [itemId].
+     *
+     * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _itemId(): JsonField<String> = body._itemId()
 
-    /** The name of the metric. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
-    /** A sql string defining the metric. */
+    /**
+     * Returns the raw JSON value of [sql].
+     *
+     * Unlike [sql], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _sql(): JsonField<String> = body._sql()
 
     /**
-     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
-     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
-     * `null`.
+     * Returns the raw JSON value of [metadata].
+     *
+     * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _metadata(): JsonField<Metadata> = body._metadata()
 
@@ -102,43 +142,82 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** A description of the metric. */
+        /**
+         * A description of the metric.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): String? = description.getNullable("description")
 
-        /** The id of the item */
+        /**
+         * The id of the item
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun itemId(): String = itemId.getRequired("item_id")
 
-        /** The name of the metric. */
+        /**
+         * The name of the metric.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
-        /** A sql string defining the metric. */
+        /**
+         * A sql string defining the metric.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun sql(): String = sql.getRequired("sql")
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun metadata(): Metadata? = metadata.getNullable("metadata")
 
-        /** A description of the metric. */
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
-        /** The id of the item */
+        /**
+         * Returns the raw JSON value of [itemId].
+         *
+         * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
-        /** The name of the metric. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-        /** A sql string defining the metric. */
+        /**
+         * Returns the raw JSON value of [sql].
+         *
+         * Unlike [sql], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("sql") @ExcludeMissing fun _sql(): JsonField<String> = sql
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
@@ -201,7 +280,13 @@ private constructor(
             /** A description of the metric. */
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
-            /** A description of the metric. */
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
@@ -209,19 +294,37 @@ private constructor(
             /** The id of the item */
             fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-            /** The id of the item */
+            /**
+             * Sets [Builder.itemId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.itemId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
             /** The name of the metric. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** The name of the metric. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** A sql string defining the metric. */
             fun sql(sql: String) = sql(JsonField.of(sql))
 
-            /** A sql string defining the metric. */
+            /**
+             * Sets [Builder.sql] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.sql] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun sql(sql: JsonField<String>) = apply { this.sql = sql }
 
             /**
@@ -232,9 +335,11 @@ private constructor(
             fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
 
             /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
@@ -321,25 +426,46 @@ private constructor(
         /** A description of the metric. */
         fun description(description: String?) = apply { body.description(description) }
 
-        /** A description of the metric. */
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /** The id of the item */
         fun itemId(itemId: String) = apply { body.itemId(itemId) }
 
-        /** The id of the item */
+        /**
+         * Sets [Builder.itemId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.itemId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun itemId(itemId: JsonField<String>) = apply { body.itemId(itemId) }
 
         /** The name of the metric. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** The name of the metric. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /** A sql string defining the metric. */
         fun sql(sql: String) = apply { body.sql(sql) }
 
-        /** A sql string defining the metric. */
+        /**
+         * Sets [Builder.sql] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.sql] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun sql(sql: JsonField<String>) = apply { body.sql(sql) }
 
         /**
@@ -350,9 +476,11 @@ private constructor(
         fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
+         * Sets [Builder.metadata] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
 

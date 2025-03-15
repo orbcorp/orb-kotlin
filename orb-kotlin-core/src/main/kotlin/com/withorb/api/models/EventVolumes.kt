@@ -15,6 +15,7 @@ import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
@@ -28,8 +29,17 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun data(): List<Data> = data.getRequired("data")
 
+    /**
+     * Returns the raw JSON value of [data].
+     *
+     * Unlike [data], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Data>> = data
 
     @JsonAnyGetter
@@ -75,10 +85,21 @@ private constructor(
 
         fun data(data: List<Data>) = data(JsonField.of(data))
 
+        /**
+         * Sets [Builder.data] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.data] with a well-typed `List<Data>` value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun data(data: JsonField<List<Data>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
+        /**
+         * Adds a single [Data] to [Builder.data].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addData(data: Data) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
@@ -133,20 +154,49 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The number of events ingested with a timestamp between the timeframe */
+        /**
+         * The number of events ingested with a timestamp between the timeframe
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun count(): Long = count.getRequired("count")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
-        /** The number of events ingested with a timestamp between the timeframe */
+        /**
+         * Returns the raw JSON value of [count].
+         *
+         * Unlike [count], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("count") @ExcludeMissing fun _count(): JsonField<Long> = count
 
+        /**
+         * Returns the raw JSON value of [timeframeEnd].
+         *
+         * Unlike [timeframeEnd], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("timeframe_end")
         @ExcludeMissing
         fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
 
+        /**
+         * Returns the raw JSON value of [timeframeStart].
+         *
+         * Unlike [timeframeStart], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("timeframe_start")
         @ExcludeMissing
         fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
@@ -203,12 +253,25 @@ private constructor(
             /** The number of events ingested with a timestamp between the timeframe */
             fun count(count: Long) = count(JsonField.of(count))
 
-            /** The number of events ingested with a timestamp between the timeframe */
+            /**
+             * Sets [Builder.count] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.count] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun count(count: JsonField<Long>) = apply { this.count = count }
 
             fun timeframeEnd(timeframeEnd: OffsetDateTime) =
                 timeframeEnd(JsonField.of(timeframeEnd))
 
+            /**
+             * Sets [Builder.timeframeEnd] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timeframeEnd] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
                 this.timeframeEnd = timeframeEnd
             }
@@ -216,6 +279,13 @@ private constructor(
             fun timeframeStart(timeframeStart: OffsetDateTime) =
                 timeframeStart(JsonField.of(timeframeStart))
 
+            /**
+             * Sets [Builder.timeframeStart] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timeframeStart] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
                 this.timeframeStart = timeframeStart
             }

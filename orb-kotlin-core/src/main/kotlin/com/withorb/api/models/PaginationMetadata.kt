@@ -14,6 +14,7 @@ import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
 @NoAutoDetect
@@ -29,12 +30,30 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun hasMore(): Boolean = hasMore.getRequired("has_more")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun nextCursor(): String? = nextCursor.getNullable("next_cursor")
 
+    /**
+     * Returns the raw JSON value of [hasMore].
+     *
+     * Unlike [hasMore], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("has_more") @ExcludeMissing fun _hasMore(): JsonField<Boolean> = hasMore
 
+    /**
+     * Returns the raw JSON value of [nextCursor].
+     *
+     * Unlike [nextCursor], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("next_cursor") @ExcludeMissing fun _nextCursor(): JsonField<String> = nextCursor
 
     @JsonAnyGetter
@@ -84,10 +103,23 @@ private constructor(
 
         fun hasMore(hasMore: Boolean) = hasMore(JsonField.of(hasMore))
 
+        /**
+         * Sets [Builder.hasMore] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.hasMore] with a well-typed [Boolean] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun hasMore(hasMore: JsonField<Boolean>) = apply { this.hasMore = hasMore }
 
         fun nextCursor(nextCursor: String?) = nextCursor(JsonField.ofNullable(nextCursor))
 
+        /**
+         * Sets [Builder.nextCursor] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.nextCursor] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun nextCursor(nextCursor: JsonField<String>) = apply { this.nextCursor = nextCursor }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

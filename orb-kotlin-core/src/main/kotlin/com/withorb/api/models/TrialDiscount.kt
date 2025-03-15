@@ -44,40 +44,83 @@ private constructor(
     /**
      * List of price_ids that this discount applies to. For plan/plan phase discounts, this can be a
      * subset of prices.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun reason(): String? = reason.getNullable("reason")
 
-    /** Only available if discount_type is `trial` */
+    /**
+     * Only available if discount_type is `trial`
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun trialAmountDiscount(): String? = trialAmountDiscount.getNullable("trial_amount_discount")
 
-    /** Only available if discount_type is `trial` */
+    /**
+     * Only available if discount_type is `trial`
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun trialPercentageDiscount(): Double? =
         trialPercentageDiscount.getNullable("trial_percentage_discount")
 
     /**
-     * List of price_ids that this discount applies to. For plan/plan phase discounts, this can be a
-     * subset of prices.
+     * Returns the raw JSON value of [appliesToPriceIds].
+     *
+     * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("applies_to_price_ids")
     @ExcludeMissing
     fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
+    /**
+     * Returns the raw JSON value of [discountType].
+     *
+     * Unlike [discountType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("discount_type")
     @ExcludeMissing
     fun _discountType(): JsonField<DiscountType> = discountType
 
+    /**
+     * Returns the raw JSON value of [reason].
+     *
+     * Unlike [reason], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
-    /** Only available if discount_type is `trial` */
+    /**
+     * Returns the raw JSON value of [trialAmountDiscount].
+     *
+     * Unlike [trialAmountDiscount], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("trial_amount_discount")
     @ExcludeMissing
     fun _trialAmountDiscount(): JsonField<String> = trialAmountDiscount
 
-    /** Only available if discount_type is `trial` */
+    /**
+     * Returns the raw JSON value of [trialPercentageDiscount].
+     *
+     * Unlike [trialPercentageDiscount], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("trial_percentage_discount")
     @ExcludeMissing
     fun _trialPercentageDiscount(): JsonField<Double> = trialPercentageDiscount
@@ -144,16 +187,20 @@ private constructor(
             appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
         /**
-         * List of price_ids that this discount applies to. For plan/plan phase discounts, this can
-         * be a subset of prices.
+         * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.appliesToPriceIds] with a well-typed `List<String>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
             this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
         }
 
         /**
-         * List of price_ids that this discount applies to. For plan/plan phase discounts, this can
-         * be a subset of prices.
+         * Adds a single [String] to [appliesToPriceIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addAppliesToPriceId(appliesToPriceId: String) = apply {
             appliesToPriceIds =
@@ -164,19 +211,38 @@ private constructor(
 
         fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
 
+        /**
+         * Sets [Builder.discountType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.discountType] with a well-typed [DiscountType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun discountType(discountType: JsonField<DiscountType>) = apply {
             this.discountType = discountType
         }
 
         fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
 
+        /**
+         * Sets [Builder.reason] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.reason] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
         /** Only available if discount_type is `trial` */
         fun trialAmountDiscount(trialAmountDiscount: String?) =
             trialAmountDiscount(JsonField.ofNullable(trialAmountDiscount))
 
-        /** Only available if discount_type is `trial` */
+        /**
+         * Sets [Builder.trialAmountDiscount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.trialAmountDiscount] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun trialAmountDiscount(trialAmountDiscount: JsonField<String>) = apply {
             this.trialAmountDiscount = trialAmountDiscount
         }
@@ -185,11 +251,21 @@ private constructor(
         fun trialPercentageDiscount(trialPercentageDiscount: Double?) =
             trialPercentageDiscount(JsonField.ofNullable(trialPercentageDiscount))
 
-        /** Only available if discount_type is `trial` */
+        /**
+         * Alias for [Builder.trialPercentageDiscount].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun trialPercentageDiscount(trialPercentageDiscount: Double) =
             trialPercentageDiscount(trialPercentageDiscount as Double?)
 
-        /** Only available if discount_type is `trial` */
+        /**
+         * Sets [Builder.trialPercentageDiscount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.trialPercentageDiscount] with a well-typed [Double]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun trialPercentageDiscount(trialPercentageDiscount: JsonField<Double>) = apply {
             this.trialPercentageDiscount = trialPercentageDiscount
         }

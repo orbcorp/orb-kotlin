@@ -438,26 +438,70 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun amount(): Double = amount.getRequired("amount")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): String = currency.getRequired("currency")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun customer(): Customer = customer.getRequired("customer")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): String? = description.getNullable("description")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryType(): EntryType = entryType.getRequired("entry_type")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun ledgerSequenceNumber(): Long =
             ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
@@ -465,54 +509,124 @@ private constructor(
          * User specified key-value pairs for the resource. If not present, this defaults to an
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
+        /**
+         * Returns the raw JSON value of [createdAt].
+         *
+         * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("created_at")
         @ExcludeMissing
         fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
+        /**
+         * Returns the raw JSON value of [creditBlock].
+         *
+         * Unlike [creditBlock], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("credit_block")
         @ExcludeMissing
         fun _creditBlock(): JsonField<CreditBlock> = creditBlock
 
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+        /**
+         * Returns the raw JSON value of [customer].
+         *
+         * Unlike [customer], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
 
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
+        /**
+         * Returns the raw JSON value of [endingBalance].
+         *
+         * Unlike [endingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("ending_balance")
         @ExcludeMissing
         fun _endingBalance(): JsonField<Double> = endingBalance
 
+        /**
+         * Returns the raw JSON value of [entryStatus].
+         *
+         * Unlike [entryStatus], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_status")
         @ExcludeMissing
         fun _entryStatus(): JsonField<EntryStatus> = entryStatus
 
+        /**
+         * Returns the raw JSON value of [entryType].
+         *
+         * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_type")
         @ExcludeMissing
         fun _entryType(): JsonField<EntryType> = entryType
 
+        /**
+         * Returns the raw JSON value of [ledgerSequenceNumber].
+         *
+         * Unlike [ledgerSequenceNumber], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("ledger_sequence_number")
         @ExcludeMissing
         fun _ledgerSequenceNumber(): JsonField<Long> = ledgerSequenceNumber
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
+        /**
+         * Returns the raw JSON value of [startingBalance].
+         *
+         * Unlike [startingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("starting_balance")
         @ExcludeMissing
         fun _startingBalance(): JsonField<Double> = startingBalance
@@ -608,57 +722,134 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
+            /**
+             * Sets [Builder.createdAt] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
+            /**
+             * Sets [Builder.creditBlock] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.creditBlock] with a well-typed [CreditBlock] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
+            /**
+             * Sets [Builder.customer] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customer] with a well-typed [Customer] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
+            /**
+             * Sets [Builder.endingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
+            /**
+             * Sets [Builder.entryStatus] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryStatus] with a well-typed [EntryStatus] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+            /**
+             * Sets [Builder.entryType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
+            /**
+             * Sets [Builder.ledgerSequenceNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ledgerSequenceNumber] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
@@ -671,15 +862,24 @@ private constructor(
             fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
             /**
-             * User specified key-value pairs for the resource. If not present, this defaults to an
-             * empty dictionary. Individual keys can be removed by setting the value to `null`, and
-             * the entire metadata mapping can be cleared by setting `metadata` to `null`.
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
+            /**
+             * Sets [Builder.startingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
@@ -739,18 +939,48 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun perUnitCostBasis(): String? = perUnitCostBasis.getNullable("per_unit_cost_basis")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [expiryDate].
+             *
+             * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("expiry_date")
             @ExcludeMissing
             fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
+            /**
+             * Returns the raw JSON value of [perUnitCostBasis].
+             *
+             * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("per_unit_cost_basis")
             @ExcludeMissing
             fun _perUnitCostBasis(): JsonField<String> = perUnitCostBasis
@@ -806,11 +1036,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime?) =
                     expiryDate(JsonField.ofNullable(expiryDate))
 
+                /**
+                 * Sets [Builder.expiryDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -818,6 +1062,13 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String?) =
                     perUnitCostBasis(JsonField.ofNullable(perUnitCostBasis))
 
+                /**
+                 * Sets [Builder.perUnitCostBasis] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.perUnitCostBasis] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
@@ -885,13 +1136,33 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun externalCustomerId(): String? =
                 externalCustomerId.getNullable("external_customer_id")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [externalCustomerId].
+             *
+             * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -943,11 +1214,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String?) =
                     externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
+                /**
+                 * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalCustomerId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
@@ -1356,26 +1641,70 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun amount(): Double = amount.getRequired("amount")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): String = currency.getRequired("currency")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun customer(): Customer = customer.getRequired("customer")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): String? = description.getNullable("description")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryType(): EntryType = entryType.getRequired("entry_type")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun ledgerSequenceNumber(): Long =
             ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
@@ -1383,68 +1712,165 @@ private constructor(
          * User specified key-value pairs for the resource. If not present, this defaults to an
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun eventId(): String? = eventId.getNullable("event_id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun invoiceId(): String? = invoiceId.getNullable("invoice_id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun priceId(): String? = priceId.getNullable("price_id")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
+        /**
+         * Returns the raw JSON value of [createdAt].
+         *
+         * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("created_at")
         @ExcludeMissing
         fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
+        /**
+         * Returns the raw JSON value of [creditBlock].
+         *
+         * Unlike [creditBlock], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("credit_block")
         @ExcludeMissing
         fun _creditBlock(): JsonField<CreditBlock> = creditBlock
 
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+        /**
+         * Returns the raw JSON value of [customer].
+         *
+         * Unlike [customer], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
 
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
+        /**
+         * Returns the raw JSON value of [endingBalance].
+         *
+         * Unlike [endingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("ending_balance")
         @ExcludeMissing
         fun _endingBalance(): JsonField<Double> = endingBalance
 
+        /**
+         * Returns the raw JSON value of [entryStatus].
+         *
+         * Unlike [entryStatus], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_status")
         @ExcludeMissing
         fun _entryStatus(): JsonField<EntryStatus> = entryStatus
 
+        /**
+         * Returns the raw JSON value of [entryType].
+         *
+         * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_type")
         @ExcludeMissing
         fun _entryType(): JsonField<EntryType> = entryType
 
+        /**
+         * Returns the raw JSON value of [ledgerSequenceNumber].
+         *
+         * Unlike [ledgerSequenceNumber], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("ledger_sequence_number")
         @ExcludeMissing
         fun _ledgerSequenceNumber(): JsonField<Long> = ledgerSequenceNumber
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
+        /**
+         * Returns the raw JSON value of [startingBalance].
+         *
+         * Unlike [startingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("starting_balance")
         @ExcludeMissing
         fun _startingBalance(): JsonField<Double> = startingBalance
 
+        /**
+         * Returns the raw JSON value of [eventId].
+         *
+         * Unlike [eventId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("event_id") @ExcludeMissing fun _eventId(): JsonField<String> = eventId
 
+        /**
+         * Returns the raw JSON value of [invoiceId].
+         *
+         * Unlike [invoiceId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("invoice_id") @ExcludeMissing fun _invoiceId(): JsonField<String> = invoiceId
 
+        /**
+         * Returns the raw JSON value of [priceId].
+         *
+         * Unlike [priceId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("price_id") @ExcludeMissing fun _priceId(): JsonField<String> = priceId
 
         @JsonAnyGetter
@@ -1547,57 +1973,134 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
+            /**
+             * Sets [Builder.createdAt] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
+            /**
+             * Sets [Builder.creditBlock] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.creditBlock] with a well-typed [CreditBlock] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
+            /**
+             * Sets [Builder.customer] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customer] with a well-typed [Customer] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
+            /**
+             * Sets [Builder.endingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
+            /**
+             * Sets [Builder.entryStatus] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryStatus] with a well-typed [EntryStatus] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+            /**
+             * Sets [Builder.entryType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
+            /**
+             * Sets [Builder.ledgerSequenceNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ledgerSequenceNumber] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
@@ -1610,29 +2113,59 @@ private constructor(
             fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
             /**
-             * User specified key-value pairs for the resource. If not present, this defaults to an
-             * empty dictionary. Individual keys can be removed by setting the value to `null`, and
-             * the entire metadata mapping can be cleared by setting `metadata` to `null`.
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
+            /**
+             * Sets [Builder.startingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
 
             fun eventId(eventId: String?) = eventId(JsonField.ofNullable(eventId))
 
+            /**
+             * Sets [Builder.eventId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.eventId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun eventId(eventId: JsonField<String>) = apply { this.eventId = eventId }
 
             fun invoiceId(invoiceId: String?) = invoiceId(JsonField.ofNullable(invoiceId))
 
+            /**
+             * Sets [Builder.invoiceId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.invoiceId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun invoiceId(invoiceId: JsonField<String>) = apply { this.invoiceId = invoiceId }
 
             fun priceId(priceId: String?) = priceId(JsonField.ofNullable(priceId))
 
+            /**
+             * Sets [Builder.priceId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.priceId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1693,18 +2226,48 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun perUnitCostBasis(): String? = perUnitCostBasis.getNullable("per_unit_cost_basis")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [expiryDate].
+             *
+             * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("expiry_date")
             @ExcludeMissing
             fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
+            /**
+             * Returns the raw JSON value of [perUnitCostBasis].
+             *
+             * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("per_unit_cost_basis")
             @ExcludeMissing
             fun _perUnitCostBasis(): JsonField<String> = perUnitCostBasis
@@ -1760,11 +2323,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime?) =
                     expiryDate(JsonField.ofNullable(expiryDate))
 
+                /**
+                 * Sets [Builder.expiryDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -1772,6 +2349,13 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String?) =
                     perUnitCostBasis(JsonField.ofNullable(perUnitCostBasis))
 
+                /**
+                 * Sets [Builder.perUnitCostBasis] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.perUnitCostBasis] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
@@ -1839,13 +2423,33 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun externalCustomerId(): String? =
                 externalCustomerId.getNullable("external_customer_id")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [externalCustomerId].
+             *
+             * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -1897,11 +2501,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String?) =
                     externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
+                /**
+                 * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalCustomerId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
@@ -2304,26 +2922,70 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun amount(): Double = amount.getRequired("amount")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): String = currency.getRequired("currency")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun customer(): Customer = customer.getRequired("customer")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): String? = description.getNullable("description")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryType(): EntryType = entryType.getRequired("entry_type")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun ledgerSequenceNumber(): Long =
             ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
@@ -2331,61 +2993,141 @@ private constructor(
          * User specified key-value pairs for the resource. If not present, this defaults to an
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun newBlockExpiryDate(): OffsetDateTime? =
             newBlockExpiryDate.getNullable("new_block_expiry_date")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
+        /**
+         * Returns the raw JSON value of [createdAt].
+         *
+         * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("created_at")
         @ExcludeMissing
         fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
+        /**
+         * Returns the raw JSON value of [creditBlock].
+         *
+         * Unlike [creditBlock], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("credit_block")
         @ExcludeMissing
         fun _creditBlock(): JsonField<CreditBlock> = creditBlock
 
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+        /**
+         * Returns the raw JSON value of [customer].
+         *
+         * Unlike [customer], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
 
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
+        /**
+         * Returns the raw JSON value of [endingBalance].
+         *
+         * Unlike [endingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("ending_balance")
         @ExcludeMissing
         fun _endingBalance(): JsonField<Double> = endingBalance
 
+        /**
+         * Returns the raw JSON value of [entryStatus].
+         *
+         * Unlike [entryStatus], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_status")
         @ExcludeMissing
         fun _entryStatus(): JsonField<EntryStatus> = entryStatus
 
+        /**
+         * Returns the raw JSON value of [entryType].
+         *
+         * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_type")
         @ExcludeMissing
         fun _entryType(): JsonField<EntryType> = entryType
 
+        /**
+         * Returns the raw JSON value of [ledgerSequenceNumber].
+         *
+         * Unlike [ledgerSequenceNumber], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("ledger_sequence_number")
         @ExcludeMissing
         fun _ledgerSequenceNumber(): JsonField<Long> = ledgerSequenceNumber
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
+        /**
+         * Returns the raw JSON value of [newBlockExpiryDate].
+         *
+         * Unlike [newBlockExpiryDate], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("new_block_expiry_date")
         @ExcludeMissing
         fun _newBlockExpiryDate(): JsonField<OffsetDateTime> = newBlockExpiryDate
 
+        /**
+         * Returns the raw JSON value of [startingBalance].
+         *
+         * Unlike [startingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("starting_balance")
         @ExcludeMissing
         fun _startingBalance(): JsonField<Double> = startingBalance
@@ -2487,57 +3229,134 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
+            /**
+             * Sets [Builder.createdAt] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
+            /**
+             * Sets [Builder.creditBlock] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.creditBlock] with a well-typed [CreditBlock] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
+            /**
+             * Sets [Builder.customer] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customer] with a well-typed [Customer] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
+            /**
+             * Sets [Builder.endingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
+            /**
+             * Sets [Builder.entryStatus] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryStatus] with a well-typed [EntryStatus] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+            /**
+             * Sets [Builder.entryType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
+            /**
+             * Sets [Builder.ledgerSequenceNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ledgerSequenceNumber] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
@@ -2550,15 +3369,24 @@ private constructor(
             fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
             /**
-             * User specified key-value pairs for the resource. If not present, this defaults to an
-             * empty dictionary. Individual keys can be removed by setting the value to `null`, and
-             * the entire metadata mapping can be cleared by setting `metadata` to `null`.
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun newBlockExpiryDate(newBlockExpiryDate: OffsetDateTime?) =
                 newBlockExpiryDate(JsonField.ofNullable(newBlockExpiryDate))
 
+            /**
+             * Sets [Builder.newBlockExpiryDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.newBlockExpiryDate] with a well-typed
+             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
             fun newBlockExpiryDate(newBlockExpiryDate: JsonField<OffsetDateTime>) = apply {
                 this.newBlockExpiryDate = newBlockExpiryDate
             }
@@ -2566,6 +3394,13 @@ private constructor(
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
+            /**
+             * Sets [Builder.startingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
@@ -2626,18 +3461,48 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun perUnitCostBasis(): String? = perUnitCostBasis.getNullable("per_unit_cost_basis")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [expiryDate].
+             *
+             * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("expiry_date")
             @ExcludeMissing
             fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
+            /**
+             * Returns the raw JSON value of [perUnitCostBasis].
+             *
+             * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("per_unit_cost_basis")
             @ExcludeMissing
             fun _perUnitCostBasis(): JsonField<String> = perUnitCostBasis
@@ -2693,11 +3558,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime?) =
                     expiryDate(JsonField.ofNullable(expiryDate))
 
+                /**
+                 * Sets [Builder.expiryDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -2705,6 +3584,13 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String?) =
                     perUnitCostBasis(JsonField.ofNullable(perUnitCostBasis))
 
+                /**
+                 * Sets [Builder.perUnitCostBasis] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.perUnitCostBasis] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
@@ -2772,13 +3658,33 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun externalCustomerId(): String? =
                 externalCustomerId.getNullable("external_customer_id")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [externalCustomerId].
+             *
+             * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -2830,11 +3736,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String?) =
                     externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
+                /**
+                 * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalCustomerId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
@@ -3234,26 +4154,70 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun amount(): Double = amount.getRequired("amount")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): String = currency.getRequired("currency")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun customer(): Customer = customer.getRequired("customer")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): String? = description.getNullable("description")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryType(): EntryType = entryType.getRequired("entry_type")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun ledgerSequenceNumber(): Long =
             ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
@@ -3261,54 +4225,124 @@ private constructor(
          * User specified key-value pairs for the resource. If not present, this defaults to an
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
+        /**
+         * Returns the raw JSON value of [createdAt].
+         *
+         * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("created_at")
         @ExcludeMissing
         fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
+        /**
+         * Returns the raw JSON value of [creditBlock].
+         *
+         * Unlike [creditBlock], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("credit_block")
         @ExcludeMissing
         fun _creditBlock(): JsonField<CreditBlock> = creditBlock
 
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+        /**
+         * Returns the raw JSON value of [customer].
+         *
+         * Unlike [customer], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
 
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
+        /**
+         * Returns the raw JSON value of [endingBalance].
+         *
+         * Unlike [endingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("ending_balance")
         @ExcludeMissing
         fun _endingBalance(): JsonField<Double> = endingBalance
 
+        /**
+         * Returns the raw JSON value of [entryStatus].
+         *
+         * Unlike [entryStatus], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_status")
         @ExcludeMissing
         fun _entryStatus(): JsonField<EntryStatus> = entryStatus
 
+        /**
+         * Returns the raw JSON value of [entryType].
+         *
+         * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_type")
         @ExcludeMissing
         fun _entryType(): JsonField<EntryType> = entryType
 
+        /**
+         * Returns the raw JSON value of [ledgerSequenceNumber].
+         *
+         * Unlike [ledgerSequenceNumber], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("ledger_sequence_number")
         @ExcludeMissing
         fun _ledgerSequenceNumber(): JsonField<Long> = ledgerSequenceNumber
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
+        /**
+         * Returns the raw JSON value of [startingBalance].
+         *
+         * Unlike [startingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("starting_balance")
         @ExcludeMissing
         fun _startingBalance(): JsonField<Double> = startingBalance
@@ -3406,57 +4440,134 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
+            /**
+             * Sets [Builder.createdAt] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
+            /**
+             * Sets [Builder.creditBlock] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.creditBlock] with a well-typed [CreditBlock] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
+            /**
+             * Sets [Builder.customer] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customer] with a well-typed [Customer] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
+            /**
+             * Sets [Builder.endingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
+            /**
+             * Sets [Builder.entryStatus] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryStatus] with a well-typed [EntryStatus] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+            /**
+             * Sets [Builder.entryType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
+            /**
+             * Sets [Builder.ledgerSequenceNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ledgerSequenceNumber] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
@@ -3469,15 +4580,24 @@ private constructor(
             fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
             /**
-             * User specified key-value pairs for the resource. If not present, this defaults to an
-             * empty dictionary. Individual keys can be removed by setting the value to `null`, and
-             * the entire metadata mapping can be cleared by setting `metadata` to `null`.
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
+            /**
+             * Sets [Builder.startingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
@@ -3537,18 +4657,48 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun perUnitCostBasis(): String? = perUnitCostBasis.getNullable("per_unit_cost_basis")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [expiryDate].
+             *
+             * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("expiry_date")
             @ExcludeMissing
             fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
+            /**
+             * Returns the raw JSON value of [perUnitCostBasis].
+             *
+             * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("per_unit_cost_basis")
             @ExcludeMissing
             fun _perUnitCostBasis(): JsonField<String> = perUnitCostBasis
@@ -3604,11 +4754,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime?) =
                     expiryDate(JsonField.ofNullable(expiryDate))
 
+                /**
+                 * Sets [Builder.expiryDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -3616,6 +4780,13 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String?) =
                     perUnitCostBasis(JsonField.ofNullable(perUnitCostBasis))
 
+                /**
+                 * Sets [Builder.perUnitCostBasis] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.perUnitCostBasis] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
@@ -3683,13 +4854,33 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun externalCustomerId(): String? =
                 externalCustomerId.getNullable("external_customer_id")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [externalCustomerId].
+             *
+             * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -3741,11 +4932,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String?) =
                     externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
+                /**
+                 * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalCustomerId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
@@ -4151,26 +5356,70 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun amount(): Double = amount.getRequired("amount")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): String = currency.getRequired("currency")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun customer(): Customer = customer.getRequired("customer")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): String? = description.getNullable("description")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryType(): EntryType = entryType.getRequired("entry_type")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun ledgerSequenceNumber(): Long =
             ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
@@ -4178,66 +5427,154 @@ private constructor(
          * User specified key-value pairs for the resource. If not present, this defaults to an
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun voidAmount(): Double = voidAmount.getRequired("void_amount")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun voidReason(): String? = voidReason.getNullable("void_reason")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
+        /**
+         * Returns the raw JSON value of [createdAt].
+         *
+         * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("created_at")
         @ExcludeMissing
         fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
+        /**
+         * Returns the raw JSON value of [creditBlock].
+         *
+         * Unlike [creditBlock], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("credit_block")
         @ExcludeMissing
         fun _creditBlock(): JsonField<CreditBlock> = creditBlock
 
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+        /**
+         * Returns the raw JSON value of [customer].
+         *
+         * Unlike [customer], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
 
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
+        /**
+         * Returns the raw JSON value of [endingBalance].
+         *
+         * Unlike [endingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("ending_balance")
         @ExcludeMissing
         fun _endingBalance(): JsonField<Double> = endingBalance
 
+        /**
+         * Returns the raw JSON value of [entryStatus].
+         *
+         * Unlike [entryStatus], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_status")
         @ExcludeMissing
         fun _entryStatus(): JsonField<EntryStatus> = entryStatus
 
+        /**
+         * Returns the raw JSON value of [entryType].
+         *
+         * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_type")
         @ExcludeMissing
         fun _entryType(): JsonField<EntryType> = entryType
 
+        /**
+         * Returns the raw JSON value of [ledgerSequenceNumber].
+         *
+         * Unlike [ledgerSequenceNumber], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("ledger_sequence_number")
         @ExcludeMissing
         fun _ledgerSequenceNumber(): JsonField<Long> = ledgerSequenceNumber
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
+        /**
+         * Returns the raw JSON value of [startingBalance].
+         *
+         * Unlike [startingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("starting_balance")
         @ExcludeMissing
         fun _startingBalance(): JsonField<Double> = startingBalance
 
+        /**
+         * Returns the raw JSON value of [voidAmount].
+         *
+         * Unlike [voidAmount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("void_amount")
         @ExcludeMissing
         fun _voidAmount(): JsonField<Double> = voidAmount
 
+        /**
+         * Returns the raw JSON value of [voidReason].
+         *
+         * Unlike [voidReason], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("void_reason")
         @ExcludeMissing
         fun _voidReason(): JsonField<String> = voidReason
@@ -4341,57 +5678,134 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
+            /**
+             * Sets [Builder.createdAt] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
+            /**
+             * Sets [Builder.creditBlock] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.creditBlock] with a well-typed [CreditBlock] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
+            /**
+             * Sets [Builder.customer] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customer] with a well-typed [Customer] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
+            /**
+             * Sets [Builder.endingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
+            /**
+             * Sets [Builder.entryStatus] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryStatus] with a well-typed [EntryStatus] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+            /**
+             * Sets [Builder.entryType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
+            /**
+             * Sets [Builder.ledgerSequenceNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ledgerSequenceNumber] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
@@ -4404,25 +5818,48 @@ private constructor(
             fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
             /**
-             * User specified key-value pairs for the resource. If not present, this defaults to an
-             * empty dictionary. Individual keys can be removed by setting the value to `null`, and
-             * the entire metadata mapping can be cleared by setting `metadata` to `null`.
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
+            /**
+             * Sets [Builder.startingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
 
             fun voidAmount(voidAmount: Double) = voidAmount(JsonField.of(voidAmount))
 
+            /**
+             * Sets [Builder.voidAmount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.voidAmount] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun voidAmount(voidAmount: JsonField<Double>) = apply { this.voidAmount = voidAmount }
 
             fun voidReason(voidReason: String?) = voidReason(JsonField.ofNullable(voidReason))
 
+            /**
+             * Sets [Builder.voidReason] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.voidReason] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun voidReason(voidReason: JsonField<String>) = apply { this.voidReason = voidReason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -4482,18 +5919,48 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun perUnitCostBasis(): String? = perUnitCostBasis.getNullable("per_unit_cost_basis")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [expiryDate].
+             *
+             * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("expiry_date")
             @ExcludeMissing
             fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
+            /**
+             * Returns the raw JSON value of [perUnitCostBasis].
+             *
+             * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("per_unit_cost_basis")
             @ExcludeMissing
             fun _perUnitCostBasis(): JsonField<String> = perUnitCostBasis
@@ -4549,11 +6016,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime?) =
                     expiryDate(JsonField.ofNullable(expiryDate))
 
+                /**
+                 * Sets [Builder.expiryDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -4561,6 +6042,13 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String?) =
                     perUnitCostBasis(JsonField.ofNullable(perUnitCostBasis))
 
+                /**
+                 * Sets [Builder.perUnitCostBasis] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.perUnitCostBasis] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
@@ -4628,13 +6116,33 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun externalCustomerId(): String? =
                 externalCustomerId.getNullable("external_customer_id")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [externalCustomerId].
+             *
+             * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -4686,11 +6194,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String?) =
                     externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
+                /**
+                 * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalCustomerId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
@@ -5099,26 +6621,70 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun amount(): Double = amount.getRequired("amount")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): String = currency.getRequired("currency")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun customer(): Customer = customer.getRequired("customer")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): String? = description.getNullable("description")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryType(): EntryType = entryType.getRequired("entry_type")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun ledgerSequenceNumber(): Long =
             ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
@@ -5126,73 +6692,171 @@ private constructor(
          * User specified key-value pairs for the resource. If not present, this defaults to an
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun newBlockExpiryDate(): OffsetDateTime =
             newBlockExpiryDate.getRequired("new_block_expiry_date")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun voidAmount(): Double = voidAmount.getRequired("void_amount")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun voidReason(): String? = voidReason.getNullable("void_reason")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
+        /**
+         * Returns the raw JSON value of [createdAt].
+         *
+         * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("created_at")
         @ExcludeMissing
         fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
+        /**
+         * Returns the raw JSON value of [creditBlock].
+         *
+         * Unlike [creditBlock], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("credit_block")
         @ExcludeMissing
         fun _creditBlock(): JsonField<CreditBlock> = creditBlock
 
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+        /**
+         * Returns the raw JSON value of [customer].
+         *
+         * Unlike [customer], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
 
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
+        /**
+         * Returns the raw JSON value of [endingBalance].
+         *
+         * Unlike [endingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("ending_balance")
         @ExcludeMissing
         fun _endingBalance(): JsonField<Double> = endingBalance
 
+        /**
+         * Returns the raw JSON value of [entryStatus].
+         *
+         * Unlike [entryStatus], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_status")
         @ExcludeMissing
         fun _entryStatus(): JsonField<EntryStatus> = entryStatus
 
+        /**
+         * Returns the raw JSON value of [entryType].
+         *
+         * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_type")
         @ExcludeMissing
         fun _entryType(): JsonField<EntryType> = entryType
 
+        /**
+         * Returns the raw JSON value of [ledgerSequenceNumber].
+         *
+         * Unlike [ledgerSequenceNumber], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("ledger_sequence_number")
         @ExcludeMissing
         fun _ledgerSequenceNumber(): JsonField<Long> = ledgerSequenceNumber
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
+        /**
+         * Returns the raw JSON value of [newBlockExpiryDate].
+         *
+         * Unlike [newBlockExpiryDate], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("new_block_expiry_date")
         @ExcludeMissing
         fun _newBlockExpiryDate(): JsonField<OffsetDateTime> = newBlockExpiryDate
 
+        /**
+         * Returns the raw JSON value of [startingBalance].
+         *
+         * Unlike [startingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("starting_balance")
         @ExcludeMissing
         fun _startingBalance(): JsonField<Double> = startingBalance
 
+        /**
+         * Returns the raw JSON value of [voidAmount].
+         *
+         * Unlike [voidAmount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("void_amount")
         @ExcludeMissing
         fun _voidAmount(): JsonField<Double> = voidAmount
 
+        /**
+         * Returns the raw JSON value of [voidReason].
+         *
+         * Unlike [voidReason], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("void_reason")
         @ExcludeMissing
         fun _voidReason(): JsonField<String> = voidReason
@@ -5300,57 +6964,134 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
+            /**
+             * Sets [Builder.createdAt] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
+            /**
+             * Sets [Builder.creditBlock] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.creditBlock] with a well-typed [CreditBlock] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
+            /**
+             * Sets [Builder.customer] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customer] with a well-typed [Customer] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
+            /**
+             * Sets [Builder.endingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
+            /**
+             * Sets [Builder.entryStatus] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryStatus] with a well-typed [EntryStatus] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+            /**
+             * Sets [Builder.entryType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
+            /**
+             * Sets [Builder.ledgerSequenceNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ledgerSequenceNumber] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
@@ -5363,15 +7104,24 @@ private constructor(
             fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
             /**
-             * User specified key-value pairs for the resource. If not present, this defaults to an
-             * empty dictionary. Individual keys can be removed by setting the value to `null`, and
-             * the entire metadata mapping can be cleared by setting `metadata` to `null`.
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun newBlockExpiryDate(newBlockExpiryDate: OffsetDateTime) =
                 newBlockExpiryDate(JsonField.of(newBlockExpiryDate))
 
+            /**
+             * Sets [Builder.newBlockExpiryDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.newBlockExpiryDate] with a well-typed
+             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
             fun newBlockExpiryDate(newBlockExpiryDate: JsonField<OffsetDateTime>) = apply {
                 this.newBlockExpiryDate = newBlockExpiryDate
             }
@@ -5379,16 +7129,37 @@ private constructor(
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
+            /**
+             * Sets [Builder.startingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
 
             fun voidAmount(voidAmount: Double) = voidAmount(JsonField.of(voidAmount))
 
+            /**
+             * Sets [Builder.voidAmount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.voidAmount] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun voidAmount(voidAmount: JsonField<Double>) = apply { this.voidAmount = voidAmount }
 
             fun voidReason(voidReason: String?) = voidReason(JsonField.ofNullable(voidReason))
 
+            /**
+             * Sets [Builder.voidReason] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.voidReason] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun voidReason(voidReason: JsonField<String>) = apply { this.voidReason = voidReason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -5449,18 +7220,48 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun perUnitCostBasis(): String? = perUnitCostBasis.getNullable("per_unit_cost_basis")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [expiryDate].
+             *
+             * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("expiry_date")
             @ExcludeMissing
             fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
+            /**
+             * Returns the raw JSON value of [perUnitCostBasis].
+             *
+             * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("per_unit_cost_basis")
             @ExcludeMissing
             fun _perUnitCostBasis(): JsonField<String> = perUnitCostBasis
@@ -5516,11 +7317,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime?) =
                     expiryDate(JsonField.ofNullable(expiryDate))
 
+                /**
+                 * Sets [Builder.expiryDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -5528,6 +7343,13 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String?) =
                     perUnitCostBasis(JsonField.ofNullable(perUnitCostBasis))
 
+                /**
+                 * Sets [Builder.perUnitCostBasis] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.perUnitCostBasis] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
@@ -5595,13 +7417,33 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun externalCustomerId(): String? =
                 externalCustomerId.getNullable("external_customer_id")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [externalCustomerId].
+             *
+             * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -5653,11 +7495,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String?) =
                     externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
+                /**
+                 * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalCustomerId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
@@ -6057,26 +7913,70 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun amount(): Double = amount.getRequired("amount")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): String = currency.getRequired("currency")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun customer(): Customer = customer.getRequired("customer")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): String? = description.getNullable("description")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun entryType(): EntryType = entryType.getRequired("entry_type")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun ledgerSequenceNumber(): Long =
             ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
@@ -6084,54 +7984,124 @@ private constructor(
          * User specified key-value pairs for the resource. If not present, this defaults to an
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
+        /**
+         * Returns the raw JSON value of [createdAt].
+         *
+         * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("created_at")
         @ExcludeMissing
         fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
+        /**
+         * Returns the raw JSON value of [creditBlock].
+         *
+         * Unlike [creditBlock], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("credit_block")
         @ExcludeMissing
         fun _creditBlock(): JsonField<CreditBlock> = creditBlock
 
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+        /**
+         * Returns the raw JSON value of [customer].
+         *
+         * Unlike [customer], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
 
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
+        /**
+         * Returns the raw JSON value of [endingBalance].
+         *
+         * Unlike [endingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("ending_balance")
         @ExcludeMissing
         fun _endingBalance(): JsonField<Double> = endingBalance
 
+        /**
+         * Returns the raw JSON value of [entryStatus].
+         *
+         * Unlike [entryStatus], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_status")
         @ExcludeMissing
         fun _entryStatus(): JsonField<EntryStatus> = entryStatus
 
+        /**
+         * Returns the raw JSON value of [entryType].
+         *
+         * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("entry_type")
         @ExcludeMissing
         fun _entryType(): JsonField<EntryType> = entryType
 
+        /**
+         * Returns the raw JSON value of [ledgerSequenceNumber].
+         *
+         * Unlike [ledgerSequenceNumber], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("ledger_sequence_number")
         @ExcludeMissing
         fun _ledgerSequenceNumber(): JsonField<Long> = ledgerSequenceNumber
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
+        /**
+         * Returns the raw JSON value of [startingBalance].
+         *
+         * Unlike [startingBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("starting_balance")
         @ExcludeMissing
         fun _startingBalance(): JsonField<Double> = startingBalance
@@ -6227,57 +8197,134 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
+            /**
+             * Sets [Builder.createdAt] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
+            /**
+             * Sets [Builder.creditBlock] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.creditBlock] with a well-typed [CreditBlock] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
+            /**
+             * Sets [Builder.customer] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customer] with a well-typed [Customer] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
+            /**
+             * Sets [Builder.endingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
+            /**
+             * Sets [Builder.entryStatus] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryStatus] with a well-typed [EntryStatus] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+            /**
+             * Sets [Builder.entryType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
+            /**
+             * Sets [Builder.ledgerSequenceNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ledgerSequenceNumber] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
@@ -6290,15 +8337,24 @@ private constructor(
             fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
             /**
-             * User specified key-value pairs for the resource. If not present, this defaults to an
-             * empty dictionary. Individual keys can be removed by setting the value to `null`, and
-             * the entire metadata mapping can be cleared by setting `metadata` to `null`.
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
+            /**
+             * Sets [Builder.startingBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startingBalance] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
@@ -6358,18 +8414,48 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun perUnitCostBasis(): String? = perUnitCostBasis.getNullable("per_unit_cost_basis")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [expiryDate].
+             *
+             * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("expiry_date")
             @ExcludeMissing
             fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
+            /**
+             * Returns the raw JSON value of [perUnitCostBasis].
+             *
+             * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("per_unit_cost_basis")
             @ExcludeMissing
             fun _perUnitCostBasis(): JsonField<String> = perUnitCostBasis
@@ -6425,11 +8511,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime?) =
                     expiryDate(JsonField.ofNullable(expiryDate))
 
+                /**
+                 * Sets [Builder.expiryDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -6437,6 +8537,13 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String?) =
                     perUnitCostBasis(JsonField.ofNullable(perUnitCostBasis))
 
+                /**
+                 * Sets [Builder.perUnitCostBasis] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.perUnitCostBasis] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
@@ -6504,13 +8611,33 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun externalCustomerId(): String? =
                 externalCustomerId.getNullable("external_customer_id")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [externalCustomerId].
+             *
+             * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -6562,11 +8689,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String?) =
                     externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
+                /**
+                 * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalCustomerId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }

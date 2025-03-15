@@ -17,6 +17,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
 /**
@@ -41,14 +42,16 @@ private constructor(
      * asynchronously. The synchronous option is only available for invoices that have no usage
      * fees. If the invoice is configured to sync to an external provider, a successful response
      * from this endpoint guarantees the invoice is present in the provider.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun synchronous(): Boolean? = body.synchronous()
 
     /**
-     * If true, the invoice will be issued synchronously. If false, the invoice will be issued
-     * asynchronously. The synchronous option is only available for invoices that have no usage
-     * fees. If the invoice is configured to sync to an external provider, a successful response
-     * from this endpoint guarantees the invoice is present in the provider.
+     * Returns the raw JSON value of [synchronous].
+     *
+     * Unlike [synchronous], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _synchronous(): JsonField<Boolean> = body._synchronous()
 
@@ -87,14 +90,16 @@ private constructor(
          * asynchronously. The synchronous option is only available for invoices that have no usage
          * fees. If the invoice is configured to sync to an external provider, a successful response
          * from this endpoint guarantees the invoice is present in the provider.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun synchronous(): Boolean? = synchronous.getNullable("synchronous")
 
         /**
-         * If true, the invoice will be issued synchronously. If false, the invoice will be issued
-         * asynchronously. The synchronous option is only available for invoices that have no usage
-         * fees. If the invoice is configured to sync to an external provider, a successful response
-         * from this endpoint guarantees the invoice is present in the provider.
+         * Returns the raw JSON value of [synchronous].
+         *
+         * Unlike [synchronous], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("synchronous")
         @ExcludeMissing
@@ -144,11 +149,11 @@ private constructor(
             fun synchronous(synchronous: Boolean) = synchronous(JsonField.of(synchronous))
 
             /**
-             * If true, the invoice will be issued synchronously. If false, the invoice will be
-             * issued asynchronously. The synchronous option is only available for invoices that
-             * have no usage fees. If the invoice is configured to sync to an external provider, a
-             * successful response from this endpoint guarantees the invoice is present in the
-             * provider.
+             * Sets [Builder.synchronous] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.synchronous] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun synchronous(synchronous: JsonField<Boolean>) = apply {
                 this.synchronous = synchronous
@@ -236,10 +241,11 @@ private constructor(
         fun synchronous(synchronous: Boolean) = apply { body.synchronous(synchronous) }
 
         /**
-         * If true, the invoice will be issued synchronously. If false, the invoice will be issued
-         * asynchronously. The synchronous option is only available for invoices that have no usage
-         * fees. If the invoice is configured to sync to an external provider, a successful response
-         * from this endpoint guarantees the invoice is present in the provider.
+         * Sets [Builder.synchronous] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.synchronous] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun synchronous(synchronous: JsonField<Boolean>) = apply { body.synchronous(synchronous) }
 

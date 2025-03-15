@@ -104,29 +104,69 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun additionalEmails(): List<String> = additionalEmails.getRequired("additional_emails")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun autoCollection(): Boolean = autoCollection.getRequired("auto_collection")
 
-    /** The customer's current balance in their currency. */
+    /**
+     * The customer's current balance in their currency.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun balance(): String = balance.getRequired("balance")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun billingAddress(): BillingAddress? = billingAddress.getNullable("billing_address")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun currency(): String? = currency.getNullable("currency")
 
     /**
      * A valid customer email, to be used for notifications. When Orb triggers payment through a
      * payment gateway, this email will be used for any automatically issued receipts.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun email(): String = email.getRequired("email")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun emailDelivery(): Boolean = emailDelivery.getRequired("email_delivery")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun exemptFromAutomatedTax(): Boolean? =
         exemptFromAutomatedTax.getNullable("exempt_from_automated_tax")
 
@@ -134,36 +174,66 @@ private constructor(
      * An optional user-defined ID for this customer resource, used throughout the system as an
      * alias for this Customer. Use this field to identify a customer by an existing identifier in
      * your system.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
-    /** The hierarchical relationships for this customer. */
+    /**
+     * The hierarchical relationships for this customer.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun hierarchy(): Hierarchy = hierarchy.getRequired("hierarchy")
 
     /**
      * User specified key-value pairs for the resource. If not present, this defaults to an empty
      * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
      * metadata mapping can be cleared by setting `metadata` to `null`.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun metadata(): Metadata = metadata.getRequired("metadata")
 
-    /** The full name of the customer */
+    /**
+     * The full name of the customer
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = name.getRequired("name")
 
     /**
      * This is used for creating charges or invoices in an external system via Orb. When not in test
      * mode, the connection must first be configured in the Orb webapp.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun paymentProvider(): PaymentProvider? = paymentProvider.getNullable("payment_provider")
 
     /**
      * The ID of this customer in an external payments solution, such as Stripe. This is used for
      * creating charges or invoices in the external system via Orb.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun paymentProviderId(): String? = paymentProviderId.getNullable("payment_provider_id")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun portalUrl(): String? = portalUrl.getNullable("portal_url")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun shippingAddress(): ShippingAddress? = shippingAddress.getNullable("shipping_address")
 
     /**
@@ -271,6 +341,9 @@ private constructor(
      * |Uruguay             |`uy_ruc`    |Uruguayan RUC Number                                                                                   |
      * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
      * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun taxId(): TaxId? = taxId.getNullable("tax_id")
 
@@ -278,216 +351,207 @@ private constructor(
      * A timezone identifier from the IANA timezone database, such as "America/Los_Angeles". This
      * "defaults to your account's timezone if not set. This cannot be changed after customer
      * creation.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun timezone(): String = timezone.getRequired("timezone")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun accountingSyncConfiguration(): AccountingSyncConfiguration? =
         accountingSyncConfiguration.getNullable("accounting_sync_configuration")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun reportingConfiguration(): ReportingConfiguration? =
         reportingConfiguration.getNullable("reporting_configuration")
 
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+    /**
+     * Returns the raw JSON value of [additionalEmails].
+     *
+     * Unlike [additionalEmails], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("additional_emails")
     @ExcludeMissing
     fun _additionalEmails(): JsonField<List<String>> = additionalEmails
 
+    /**
+     * Returns the raw JSON value of [autoCollection].
+     *
+     * Unlike [autoCollection], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("auto_collection")
     @ExcludeMissing
     fun _autoCollection(): JsonField<Boolean> = autoCollection
 
-    /** The customer's current balance in their currency. */
+    /**
+     * Returns the raw JSON value of [balance].
+     *
+     * Unlike [balance], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("balance") @ExcludeMissing fun _balance(): JsonField<String> = balance
 
+    /**
+     * Returns the raw JSON value of [billingAddress].
+     *
+     * Unlike [billingAddress], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("billing_address")
     @ExcludeMissing
     fun _billingAddress(): JsonField<BillingAddress> = billingAddress
 
+    /**
+     * Returns the raw JSON value of [createdAt].
+     *
+     * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("created_at")
     @ExcludeMissing
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
+    /**
+     * Returns the raw JSON value of [currency].
+     *
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
     /**
-     * A valid customer email, to be used for notifications. When Orb triggers payment through a
-     * payment gateway, this email will be used for any automatically issued receipts.
+     * Returns the raw JSON value of [email].
+     *
+     * Unlike [email], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("email") @ExcludeMissing fun _email(): JsonField<String> = email
 
+    /**
+     * Returns the raw JSON value of [emailDelivery].
+     *
+     * Unlike [emailDelivery], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("email_delivery")
     @ExcludeMissing
     fun _emailDelivery(): JsonField<Boolean> = emailDelivery
 
+    /**
+     * Returns the raw JSON value of [exemptFromAutomatedTax].
+     *
+     * Unlike [exemptFromAutomatedTax], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("exempt_from_automated_tax")
     @ExcludeMissing
     fun _exemptFromAutomatedTax(): JsonField<Boolean> = exemptFromAutomatedTax
 
     /**
-     * An optional user-defined ID for this customer resource, used throughout the system as an
-     * alias for this Customer. Use this field to identify a customer by an existing identifier in
-     * your system.
+     * Returns the raw JSON value of [externalCustomerId].
+     *
+     * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("external_customer_id")
     @ExcludeMissing
     fun _externalCustomerId(): JsonField<String> = externalCustomerId
 
-    /** The hierarchical relationships for this customer. */
+    /**
+     * Returns the raw JSON value of [hierarchy].
+     *
+     * Unlike [hierarchy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("hierarchy") @ExcludeMissing fun _hierarchy(): JsonField<Hierarchy> = hierarchy
 
     /**
-     * User specified key-value pairs for the resource. If not present, this defaults to an empty
-     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
-     * metadata mapping can be cleared by setting `metadata` to `null`.
+     * Returns the raw JSON value of [metadata].
+     *
+     * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
-    /** The full name of the customer */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     /**
-     * This is used for creating charges or invoices in an external system via Orb. When not in test
-     * mode, the connection must first be configured in the Orb webapp.
+     * Returns the raw JSON value of [paymentProvider].
+     *
+     * Unlike [paymentProvider], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("payment_provider")
     @ExcludeMissing
     fun _paymentProvider(): JsonField<PaymentProvider> = paymentProvider
 
     /**
-     * The ID of this customer in an external payments solution, such as Stripe. This is used for
-     * creating charges or invoices in the external system via Orb.
+     * Returns the raw JSON value of [paymentProviderId].
+     *
+     * Unlike [paymentProviderId], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("payment_provider_id")
     @ExcludeMissing
     fun _paymentProviderId(): JsonField<String> = paymentProviderId
 
+    /**
+     * Returns the raw JSON value of [portalUrl].
+     *
+     * Unlike [portalUrl], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("portal_url") @ExcludeMissing fun _portalUrl(): JsonField<String> = portalUrl
 
+    /**
+     * Returns the raw JSON value of [shippingAddress].
+     *
+     * Unlike [shippingAddress], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("shipping_address")
     @ExcludeMissing
     fun _shippingAddress(): JsonField<ShippingAddress> = shippingAddress
 
     /**
-     * Tax IDs are commonly required to be displayed on customer invoices, which are added to the
-     * headers of invoices.
+     * Returns the raw JSON value of [taxId].
      *
-     * ### Supported Tax ID Countries and Types
-     * |Country             |Type        |Description                                                                                            |
-     * |--------------------|------------|-------------------------------------------------------------------------------------------------------|
-     * |Andorra             |`ad_nrt`    |Andorran NRT Number                                                                                    |
-     * |Argentina           |`ar_cuit`   |Argentinian Tax ID Number                                                                              |
-     * |Australia           |`au_abn`    |Australian Business Number (AU ABN)                                                                    |
-     * |Australia           |`au_arn`    |Australian Taxation Office Reference Number                                                            |
-     * |Austria             |`eu_vat`    |European VAT Number                                                                                    |
-     * |Bahrain             |`bh_vat`    |Bahraini VAT Number                                                                                    |
-     * |Belgium             |`eu_vat`    |European VAT Number                                                                                    |
-     * |Bolivia             |`bo_tin`    |Bolivian Tax ID                                                                                        |
-     * |Brazil              |`br_cnpj`   |Brazilian CNPJ Number                                                                                  |
-     * |Brazil              |`br_cpf`    |Brazilian CPF Number                                                                                   |
-     * |Bulgaria            |`bg_uic`    |Bulgaria Unified Identification Code                                                                   |
-     * |Bulgaria            |`eu_vat`    |European VAT Number                                                                                    |
-     * |Canada              |`ca_bn`     |Canadian BN                                                                                            |
-     * |Canada              |`ca_gst_hst`|Canadian GST/HST Number                                                                                |
-     * |Canada              |`ca_pst_bc` |Canadian PST Number (British Columbia)                                                                 |
-     * |Canada              |`ca_pst_mb` |Canadian PST Number (Manitoba)                                                                         |
-     * |Canada              |`ca_pst_sk` |Canadian PST Number (Saskatchewan)                                                                     |
-     * |Canada              |`ca_qst`    |Canadian QST Number (Québec)                                                                           |
-     * |Chile               |`cl_tin`    |Chilean TIN                                                                                            |
-     * |China               |`cn_tin`    |Chinese Tax ID                                                                                         |
-     * |Colombia            |`co_nit`    |Colombian NIT Number                                                                                   |
-     * |Costa Rica          |`cr_tin`    |Costa Rican Tax ID                                                                                     |
-     * |Croatia             |`eu_vat`    |European VAT Number                                                                                    |
-     * |Cyprus              |`eu_vat`    |European VAT Number                                                                                    |
-     * |Czech Republic      |`eu_vat`    |European VAT Number                                                                                    |
-     * |Denmark             |`eu_vat`    |European VAT Number                                                                                    |
-     * |Dominican Republic  |`do_rcn`    |Dominican RCN Number                                                                                   |
-     * |Ecuador             |`ec_ruc`    |Ecuadorian RUC Number                                                                                  |
-     * |Egypt               |`eg_tin`    |Egyptian Tax Identification Number                                                                     |
-     * |El Salvador         |`sv_nit`    |El Salvadorian NIT Number                                                                              |
-     * |Estonia             |`eu_vat`    |European VAT Number                                                                                    |
-     * |EU                  |`eu_oss_vat`|European One Stop Shop VAT Number for non-Union scheme                                                 |
-     * |Finland             |`eu_vat`    |European VAT Number                                                                                    |
-     * |France              |`eu_vat`    |European VAT Number                                                                                    |
-     * |Georgia             |`ge_vat`    |Georgian VAT                                                                                           |
-     * |Germany             |`eu_vat`    |European VAT Number                                                                                    |
-     * |Greece              |`eu_vat`    |European VAT Number                                                                                    |
-     * |Hong Kong           |`hk_br`     |Hong Kong BR Number                                                                                    |
-     * |Hungary             |`eu_vat`    |European VAT Number                                                                                    |
-     * |Hungary             |`hu_tin`    |Hungary Tax Number (adószám)                                                                           |
-     * |Iceland             |`is_vat`    |Icelandic VAT                                                                                          |
-     * |India               |`in_gst`    |Indian GST Number                                                                                      |
-     * |Indonesia           |`id_npwp`   |Indonesian NPWP Number                                                                                 |
-     * |Ireland             |`eu_vat`    |European VAT Number                                                                                    |
-     * |Israel              |`il_vat`    |Israel VAT                                                                                             |
-     * |Italy               |`eu_vat`    |European VAT Number                                                                                    |
-     * |Japan               |`jp_cn`     |Japanese Corporate Number (_Hōjin Bangō_)                                                              |
-     * |Japan               |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (_Tōroku Kokugai Jigyōsha no Tōroku Bangō_)|
-     * |Japan               |`jp_trn`    |Japanese Tax Registration Number (_Tōroku Bangō_)                                                      |
-     * |Kazakhstan          |`kz_bin`    |Kazakhstani Business Identification Number                                                             |
-     * |Kenya               |`ke_pin`    |Kenya Revenue Authority Personal Identification Number                                                 |
-     * |Latvia              |`eu_vat`    |European VAT Number                                                                                    |
-     * |Liechtenstein       |`li_uid`    |Liechtensteinian UID Number                                                                            |
-     * |Lithuania           |`eu_vat`    |European VAT Number                                                                                    |
-     * |Luxembourg          |`eu_vat`    |European VAT Number                                                                                    |
-     * |Malaysia            |`my_frp`    |Malaysian FRP Number                                                                                   |
-     * |Malaysia            |`my_itn`    |Malaysian ITN                                                                                          |
-     * |Malaysia            |`my_sst`    |Malaysian SST Number                                                                                   |
-     * |Malta               |`eu_vat `   |European VAT Number                                                                                    |
-     * |Mexico              |`mx_rfc`    |Mexican RFC Number                                                                                     |
-     * |Netherlands         |`eu_vat`    |European VAT Number                                                                                    |
-     * |New Zealand         |`nz_gst`    |New Zealand GST Number                                                                                 |
-     * |Nigeria             |`ng_tin`    |Nigerian Tax Identification Number                                                                     |
-     * |Norway              |`no_vat`    |Norwegian VAT Number                                                                                   |
-     * |Norway              |`no_voec`   |Norwegian VAT on e-commerce Number                                                                     |
-     * |Oman                |`om_vat`    |Omani VAT Number                                                                                       |
-     * |Peru                |`pe_ruc`    |Peruvian RUC Number                                                                                    |
-     * |Philippines         |`ph_tin `   |Philippines Tax Identification Number                                                                  |
-     * |Poland              |`eu_vat`    |European VAT Number                                                                                    |
-     * |Portugal            |`eu_vat`    |European VAT Number                                                                                    |
-     * |Romania             |`eu_vat`    |European VAT Number                                                                                    |
-     * |Romania             |`ro_tin`    |Romanian Tax ID Number                                                                                 |
-     * |Russia              |`ru_inn`    |Russian INN                                                                                            |
-     * |Russia              |`ru_kpp`    |Russian KPP                                                                                            |
-     * |Saudi Arabia        |`sa_vat`    |Saudi Arabia VAT                                                                                       |
-     * |Serbia              |`rs_pib`    |Serbian PIB Number                                                                                     |
-     * |Singapore           |`sg_gst`    |Singaporean GST                                                                                        |
-     * |Singapore           |`sg_uen`    |Singaporean UEN                                                                                        |
-     * |Slovakia            |`eu_vat`    |European VAT Number                                                                                    |
-     * |Slovenia            |`eu_vat`    |European VAT Number                                                                                    |
-     * |Slovenia            |`si_tin`    |Slovenia Tax Number (davčna številka)                                                                  |
-     * |South Africa        |`za_vat`    |South African VAT Number                                                                               |
-     * |South Korea         |`kr_brn`    |Korean BRN                                                                                             |
-     * |Spain               |`es_cif`    |Spanish NIF Number (previously Spanish CIF Number)                                                     |
-     * |Spain               |`eu_vat`    |European VAT Number                                                                                    |
-     * |Sweden              |`eu_vat`    |European VAT Number                                                                                    |
-     * |Switzerland         |`ch_vat`    |Switzerland VAT Number                                                                                 |
-     * |Taiwan              |`tw_vat`    |Taiwanese VAT                                                                                          |
-     * |Thailand            |`th_vat`    |Thai VAT                                                                                               |
-     * |Turkey              |`tr_tin`    |Turkish Tax Identification Number                                                                      |
-     * |Ukraine             |`ua_vat`    |Ukrainian VAT                                                                                          |
-     * |United Arab Emirates|`ae_trn`    |United Arab Emirates TRN                                                                               |
-     * |United Kingdom      |`eu_vat`    |Northern Ireland VAT Number                                                                            |
-     * |United Kingdom      |`gb_vat`    |United Kingdom VAT Number                                                                              |
-     * |United States       |`us_ein`    |United States EIN                                                                                      |
-     * |Uruguay             |`uy_ruc`    |Uruguayan RUC Number                                                                                   |
-     * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
-     * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
+     * Unlike [taxId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("tax_id") @ExcludeMissing fun _taxId(): JsonField<TaxId> = taxId
 
     /**
-     * A timezone identifier from the IANA timezone database, such as "America/Los_Angeles". This
-     * "defaults to your account's timezone if not set. This cannot be changed after customer
-     * creation.
+     * Returns the raw JSON value of [timezone].
+     *
+     * Unlike [timezone], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("timezone") @ExcludeMissing fun _timezone(): JsonField<String> = timezone
 
+    /**
+     * Returns the raw JSON value of [accountingSyncConfiguration].
+     *
+     * Unlike [accountingSyncConfiguration], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("accounting_sync_configuration")
     @ExcludeMissing
     fun _accountingSyncConfiguration(): JsonField<AccountingSyncConfiguration> =
         accountingSyncConfiguration
 
+    /**
+     * Returns the raw JSON value of [reportingConfiguration].
+     *
+     * Unlike [reportingConfiguration], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("reporting_configuration")
     @ExcludeMissing
     fun _reportingConfiguration(): JsonField<ReportingConfiguration> = reportingConfiguration
@@ -618,15 +682,33 @@ private constructor(
 
         fun id(id: String) = id(JsonField.of(id))
 
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun additionalEmails(additionalEmails: List<String>) =
             additionalEmails(JsonField.of(additionalEmails))
 
+        /**
+         * Sets [Builder.additionalEmails] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.additionalEmails] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun additionalEmails(additionalEmails: JsonField<List<String>>) = apply {
             this.additionalEmails = additionalEmails.map { it.toMutableList() }
         }
 
+        /**
+         * Adds a single [String] to [additionalEmails].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addAdditionalEmail(additionalEmail: String) = apply {
             additionalEmails =
                 (additionalEmails ?: JsonField.of(mutableListOf())).also {
@@ -636,6 +718,13 @@ private constructor(
 
         fun autoCollection(autoCollection: Boolean) = autoCollection(JsonField.of(autoCollection))
 
+        /**
+         * Sets [Builder.autoCollection] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.autoCollection] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
             this.autoCollection = autoCollection
         }
@@ -643,22 +732,47 @@ private constructor(
         /** The customer's current balance in their currency. */
         fun balance(balance: String) = balance(JsonField.of(balance))
 
-        /** The customer's current balance in their currency. */
+        /**
+         * Sets [Builder.balance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.balance] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun balance(balance: JsonField<String>) = apply { this.balance = balance }
 
         fun billingAddress(billingAddress: BillingAddress?) =
             billingAddress(JsonField.ofNullable(billingAddress))
 
+        /**
+         * Sets [Builder.billingAddress] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingAddress] with a well-typed [BillingAddress] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun billingAddress(billingAddress: JsonField<BillingAddress>) = apply {
             this.billingAddress = billingAddress
         }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
+        /**
+         * Sets [Builder.createdAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
 
+        /**
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /**
@@ -668,13 +782,22 @@ private constructor(
         fun email(email: String) = email(JsonField.of(email))
 
         /**
-         * A valid customer email, to be used for notifications. When Orb triggers payment through a
-         * payment gateway, this email will be used for any automatically issued receipts.
+         * Sets [Builder.email] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.email] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun email(email: JsonField<String>) = apply { this.email = email }
 
         fun emailDelivery(emailDelivery: Boolean) = emailDelivery(JsonField.of(emailDelivery))
 
+        /**
+         * Sets [Builder.emailDelivery] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.emailDelivery] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun emailDelivery(emailDelivery: JsonField<Boolean>) = apply {
             this.emailDelivery = emailDelivery
         }
@@ -682,9 +805,21 @@ private constructor(
         fun exemptFromAutomatedTax(exemptFromAutomatedTax: Boolean?) =
             exemptFromAutomatedTax(JsonField.ofNullable(exemptFromAutomatedTax))
 
+        /**
+         * Alias for [Builder.exemptFromAutomatedTax].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun exemptFromAutomatedTax(exemptFromAutomatedTax: Boolean) =
             exemptFromAutomatedTax(exemptFromAutomatedTax as Boolean?)
 
+        /**
+         * Sets [Builder.exemptFromAutomatedTax] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.exemptFromAutomatedTax] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun exemptFromAutomatedTax(exemptFromAutomatedTax: JsonField<Boolean>) = apply {
             this.exemptFromAutomatedTax = exemptFromAutomatedTax
         }
@@ -698,9 +833,11 @@ private constructor(
             externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
         /**
-         * An optional user-defined ID for this customer resource, used throughout the system as an
-         * alias for this Customer. Use this field to identify a customer by an existing identifier
-         * in your system.
+         * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
             this.externalCustomerId = externalCustomerId
@@ -709,7 +846,13 @@ private constructor(
         /** The hierarchical relationships for this customer. */
         fun hierarchy(hierarchy: Hierarchy) = hierarchy(JsonField.of(hierarchy))
 
-        /** The hierarchical relationships for this customer. */
+        /**
+         * Sets [Builder.hierarchy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.hierarchy] with a well-typed [Hierarchy] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun hierarchy(hierarchy: JsonField<Hierarchy>) = apply { this.hierarchy = hierarchy }
 
         /**
@@ -720,16 +863,23 @@ private constructor(
         fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         * Sets [Builder.metadata] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
         /** The full name of the customer */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** The full name of the customer */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
@@ -740,8 +890,11 @@ private constructor(
             paymentProvider(JsonField.ofNullable(paymentProvider))
 
         /**
-         * This is used for creating charges or invoices in an external system via Orb. When not in
-         * test mode, the connection must first be configured in the Orb webapp.
+         * Sets [Builder.paymentProvider] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paymentProvider] with a well-typed [PaymentProvider]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun paymentProvider(paymentProvider: JsonField<PaymentProvider>) = apply {
             this.paymentProvider = paymentProvider
@@ -755,8 +908,11 @@ private constructor(
             paymentProviderId(JsonField.ofNullable(paymentProviderId))
 
         /**
-         * The ID of this customer in an external payments solution, such as Stripe. This is used
-         * for creating charges or invoices in the external system via Orb.
+         * Sets [Builder.paymentProviderId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paymentProviderId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun paymentProviderId(paymentProviderId: JsonField<String>) = apply {
             this.paymentProviderId = paymentProviderId
@@ -764,11 +920,25 @@ private constructor(
 
         fun portalUrl(portalUrl: String?) = portalUrl(JsonField.ofNullable(portalUrl))
 
+        /**
+         * Sets [Builder.portalUrl] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.portalUrl] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun portalUrl(portalUrl: JsonField<String>) = apply { this.portalUrl = portalUrl }
 
         fun shippingAddress(shippingAddress: ShippingAddress?) =
             shippingAddress(JsonField.ofNullable(shippingAddress))
 
+        /**
+         * Sets [Builder.shippingAddress] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.shippingAddress] with a well-typed [ShippingAddress]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun shippingAddress(shippingAddress: JsonField<ShippingAddress>) = apply {
             this.shippingAddress = shippingAddress
         }
@@ -882,110 +1052,10 @@ private constructor(
         fun taxId(taxId: TaxId?) = taxId(JsonField.ofNullable(taxId))
 
         /**
-         * Tax IDs are commonly required to be displayed on customer invoices, which are added to
-         * the headers of invoices.
+         * Sets [Builder.taxId] to an arbitrary JSON value.
          *
-         * ### Supported Tax ID Countries and Types
-         * |Country             |Type        |Description                                                                                            |
-         * |--------------------|------------|-------------------------------------------------------------------------------------------------------|
-         * |Andorra             |`ad_nrt`    |Andorran NRT Number                                                                                    |
-         * |Argentina           |`ar_cuit`   |Argentinian Tax ID Number                                                                              |
-         * |Australia           |`au_abn`    |Australian Business Number (AU ABN)                                                                    |
-         * |Australia           |`au_arn`    |Australian Taxation Office Reference Number                                                            |
-         * |Austria             |`eu_vat`    |European VAT Number                                                                                    |
-         * |Bahrain             |`bh_vat`    |Bahraini VAT Number                                                                                    |
-         * |Belgium             |`eu_vat`    |European VAT Number                                                                                    |
-         * |Bolivia             |`bo_tin`    |Bolivian Tax ID                                                                                        |
-         * |Brazil              |`br_cnpj`   |Brazilian CNPJ Number                                                                                  |
-         * |Brazil              |`br_cpf`    |Brazilian CPF Number                                                                                   |
-         * |Bulgaria            |`bg_uic`    |Bulgaria Unified Identification Code                                                                   |
-         * |Bulgaria            |`eu_vat`    |European VAT Number                                                                                    |
-         * |Canada              |`ca_bn`     |Canadian BN                                                                                            |
-         * |Canada              |`ca_gst_hst`|Canadian GST/HST Number                                                                                |
-         * |Canada              |`ca_pst_bc` |Canadian PST Number (British Columbia)                                                                 |
-         * |Canada              |`ca_pst_mb` |Canadian PST Number (Manitoba)                                                                         |
-         * |Canada              |`ca_pst_sk` |Canadian PST Number (Saskatchewan)                                                                     |
-         * |Canada              |`ca_qst`    |Canadian QST Number (Québec)                                                                           |
-         * |Chile               |`cl_tin`    |Chilean TIN                                                                                            |
-         * |China               |`cn_tin`    |Chinese Tax ID                                                                                         |
-         * |Colombia            |`co_nit`    |Colombian NIT Number                                                                                   |
-         * |Costa Rica          |`cr_tin`    |Costa Rican Tax ID                                                                                     |
-         * |Croatia             |`eu_vat`    |European VAT Number                                                                                    |
-         * |Cyprus              |`eu_vat`    |European VAT Number                                                                                    |
-         * |Czech Republic      |`eu_vat`    |European VAT Number                                                                                    |
-         * |Denmark             |`eu_vat`    |European VAT Number                                                                                    |
-         * |Dominican Republic  |`do_rcn`    |Dominican RCN Number                                                                                   |
-         * |Ecuador             |`ec_ruc`    |Ecuadorian RUC Number                                                                                  |
-         * |Egypt               |`eg_tin`    |Egyptian Tax Identification Number                                                                     |
-         * |El Salvador         |`sv_nit`    |El Salvadorian NIT Number                                                                              |
-         * |Estonia             |`eu_vat`    |European VAT Number                                                                                    |
-         * |EU                  |`eu_oss_vat`|European One Stop Shop VAT Number for non-Union scheme                                                 |
-         * |Finland             |`eu_vat`    |European VAT Number                                                                                    |
-         * |France              |`eu_vat`    |European VAT Number                                                                                    |
-         * |Georgia             |`ge_vat`    |Georgian VAT                                                                                           |
-         * |Germany             |`eu_vat`    |European VAT Number                                                                                    |
-         * |Greece              |`eu_vat`    |European VAT Number                                                                                    |
-         * |Hong Kong           |`hk_br`     |Hong Kong BR Number                                                                                    |
-         * |Hungary             |`eu_vat`    |European VAT Number                                                                                    |
-         * |Hungary             |`hu_tin`    |Hungary Tax Number (adószám)                                                                           |
-         * |Iceland             |`is_vat`    |Icelandic VAT                                                                                          |
-         * |India               |`in_gst`    |Indian GST Number                                                                                      |
-         * |Indonesia           |`id_npwp`   |Indonesian NPWP Number                                                                                 |
-         * |Ireland             |`eu_vat`    |European VAT Number                                                                                    |
-         * |Israel              |`il_vat`    |Israel VAT                                                                                             |
-         * |Italy               |`eu_vat`    |European VAT Number                                                                                    |
-         * |Japan               |`jp_cn`     |Japanese Corporate Number (_Hōjin Bangō_)                                                              |
-         * |Japan               |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (_Tōroku Kokugai Jigyōsha no Tōroku Bangō_)|
-         * |Japan               |`jp_trn`    |Japanese Tax Registration Number (_Tōroku Bangō_)                                                      |
-         * |Kazakhstan          |`kz_bin`    |Kazakhstani Business Identification Number                                                             |
-         * |Kenya               |`ke_pin`    |Kenya Revenue Authority Personal Identification Number                                                 |
-         * |Latvia              |`eu_vat`    |European VAT Number                                                                                    |
-         * |Liechtenstein       |`li_uid`    |Liechtensteinian UID Number                                                                            |
-         * |Lithuania           |`eu_vat`    |European VAT Number                                                                                    |
-         * |Luxembourg          |`eu_vat`    |European VAT Number                                                                                    |
-         * |Malaysia            |`my_frp`    |Malaysian FRP Number                                                                                   |
-         * |Malaysia            |`my_itn`    |Malaysian ITN                                                                                          |
-         * |Malaysia            |`my_sst`    |Malaysian SST Number                                                                                   |
-         * |Malta               |`eu_vat `   |European VAT Number                                                                                    |
-         * |Mexico              |`mx_rfc`    |Mexican RFC Number                                                                                     |
-         * |Netherlands         |`eu_vat`    |European VAT Number                                                                                    |
-         * |New Zealand         |`nz_gst`    |New Zealand GST Number                                                                                 |
-         * |Nigeria             |`ng_tin`    |Nigerian Tax Identification Number                                                                     |
-         * |Norway              |`no_vat`    |Norwegian VAT Number                                                                                   |
-         * |Norway              |`no_voec`   |Norwegian VAT on e-commerce Number                                                                     |
-         * |Oman                |`om_vat`    |Omani VAT Number                                                                                       |
-         * |Peru                |`pe_ruc`    |Peruvian RUC Number                                                                                    |
-         * |Philippines         |`ph_tin `   |Philippines Tax Identification Number                                                                  |
-         * |Poland              |`eu_vat`    |European VAT Number                                                                                    |
-         * |Portugal            |`eu_vat`    |European VAT Number                                                                                    |
-         * |Romania             |`eu_vat`    |European VAT Number                                                                                    |
-         * |Romania             |`ro_tin`    |Romanian Tax ID Number                                                                                 |
-         * |Russia              |`ru_inn`    |Russian INN                                                                                            |
-         * |Russia              |`ru_kpp`    |Russian KPP                                                                                            |
-         * |Saudi Arabia        |`sa_vat`    |Saudi Arabia VAT                                                                                       |
-         * |Serbia              |`rs_pib`    |Serbian PIB Number                                                                                     |
-         * |Singapore           |`sg_gst`    |Singaporean GST                                                                                        |
-         * |Singapore           |`sg_uen`    |Singaporean UEN                                                                                        |
-         * |Slovakia            |`eu_vat`    |European VAT Number                                                                                    |
-         * |Slovenia            |`eu_vat`    |European VAT Number                                                                                    |
-         * |Slovenia            |`si_tin`    |Slovenia Tax Number (davčna številka)                                                                  |
-         * |South Africa        |`za_vat`    |South African VAT Number                                                                               |
-         * |South Korea         |`kr_brn`    |Korean BRN                                                                                             |
-         * |Spain               |`es_cif`    |Spanish NIF Number (previously Spanish CIF Number)                                                     |
-         * |Spain               |`eu_vat`    |European VAT Number                                                                                    |
-         * |Sweden              |`eu_vat`    |European VAT Number                                                                                    |
-         * |Switzerland         |`ch_vat`    |Switzerland VAT Number                                                                                 |
-         * |Taiwan              |`tw_vat`    |Taiwanese VAT                                                                                          |
-         * |Thailand            |`th_vat`    |Thai VAT                                                                                               |
-         * |Turkey              |`tr_tin`    |Turkish Tax Identification Number                                                                      |
-         * |Ukraine             |`ua_vat`    |Ukrainian VAT                                                                                          |
-         * |United Arab Emirates|`ae_trn`    |United Arab Emirates TRN                                                                               |
-         * |United Kingdom      |`eu_vat`    |Northern Ireland VAT Number                                                                            |
-         * |United Kingdom      |`gb_vat`    |United Kingdom VAT Number                                                                              |
-         * |United States       |`us_ein`    |United States EIN                                                                                      |
-         * |Uruguay             |`uy_ruc`    |Uruguayan RUC Number                                                                                   |
-         * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
-         * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
+         * You should usually call [Builder.taxId] with a well-typed [TaxId] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun taxId(taxId: JsonField<TaxId>) = apply { this.taxId = taxId }
 
@@ -997,15 +1067,23 @@ private constructor(
         fun timezone(timezone: String) = timezone(JsonField.of(timezone))
 
         /**
-         * A timezone identifier from the IANA timezone database, such as "America/Los_Angeles".
-         * This "defaults to your account's timezone if not set. This cannot be changed after
-         * customer creation.
+         * Sets [Builder.timezone] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.timezone] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun timezone(timezone: JsonField<String>) = apply { this.timezone = timezone }
 
         fun accountingSyncConfiguration(accountingSyncConfiguration: AccountingSyncConfiguration?) =
             accountingSyncConfiguration(JsonField.ofNullable(accountingSyncConfiguration))
 
+        /**
+         * Sets [Builder.accountingSyncConfiguration] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingSyncConfiguration] with a well-typed
+         * [AccountingSyncConfiguration] value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
+         */
         fun accountingSyncConfiguration(
             accountingSyncConfiguration: JsonField<AccountingSyncConfiguration>
         ) = apply { this.accountingSyncConfiguration = accountingSyncConfiguration }
@@ -1013,6 +1091,13 @@ private constructor(
         fun reportingConfiguration(reportingConfiguration: ReportingConfiguration?) =
             reportingConfiguration(JsonField.ofNullable(reportingConfiguration))
 
+        /**
+         * Sets [Builder.reportingConfiguration] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.reportingConfiguration] with a well-typed
+         * [ReportingConfiguration] value instead. This method is primarily for setting the field to
+         * an undocumented or not yet supported value.
+         */
         fun reportingConfiguration(reportingConfiguration: JsonField<ReportingConfiguration>) =
             apply {
                 this.reportingConfiguration = reportingConfiguration
@@ -1091,30 +1176,84 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun city(): String? = city.getNullable("city")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun country(): String? = country.getNullable("country")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun line1(): String? = line1.getNullable("line1")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun line2(): String? = line2.getNullable("line2")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun postalCode(): String? = postalCode.getNullable("postal_code")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun state(): String? = state.getNullable("state")
 
+        /**
+         * Returns the raw JSON value of [city].
+         *
+         * Unlike [city], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("city") @ExcludeMissing fun _city(): JsonField<String> = city
 
+        /**
+         * Returns the raw JSON value of [country].
+         *
+         * Unlike [country], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("country") @ExcludeMissing fun _country(): JsonField<String> = country
 
+        /**
+         * Returns the raw JSON value of [line1].
+         *
+         * Unlike [line1], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("line1") @ExcludeMissing fun _line1(): JsonField<String> = line1
 
+        /**
+         * Returns the raw JSON value of [line2].
+         *
+         * Unlike [line2], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("line2") @ExcludeMissing fun _line2(): JsonField<String> = line2
 
+        /**
+         * Returns the raw JSON value of [postalCode].
+         *
+         * Unlike [postalCode], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("postal_code")
         @ExcludeMissing
         fun _postalCode(): JsonField<String> = postalCode
 
+        /**
+         * Returns the raw JSON value of [state].
+         *
+         * Unlike [state], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<String> = state
 
         @JsonAnyGetter
@@ -1180,26 +1319,68 @@ private constructor(
 
             fun city(city: String?) = city(JsonField.ofNullable(city))
 
+            /**
+             * Sets [Builder.city] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.city] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun city(city: JsonField<String>) = apply { this.city = city }
 
             fun country(country: String?) = country(JsonField.ofNullable(country))
 
+            /**
+             * Sets [Builder.country] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.country] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun country(country: JsonField<String>) = apply { this.country = country }
 
             fun line1(line1: String?) = line1(JsonField.ofNullable(line1))
 
+            /**
+             * Sets [Builder.line1] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.line1] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
             fun line2(line2: String?) = line2(JsonField.ofNullable(line2))
 
+            /**
+             * Sets [Builder.line2] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.line2] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
             fun postalCode(postalCode: String?) = postalCode(JsonField.ofNullable(postalCode))
 
+            /**
+             * Sets [Builder.postalCode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.postalCode] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
             fun state(state: String?) = state(JsonField.ofNullable(state))
 
+            /**
+             * Sets [Builder.state] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.state] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun state(state: JsonField<String>) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1266,12 +1447,30 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun children(): List<Child> = children.getRequired("children")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun parent(): Parent? = parent.getNullable("parent")
 
+        /**
+         * Returns the raw JSON value of [children].
+         *
+         * Unlike [children], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("children") @ExcludeMissing fun _children(): JsonField<List<Child>> = children
 
+        /**
+         * Returns the raw JSON value of [parent].
+         *
+         * Unlike [parent], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("parent") @ExcludeMissing fun _parent(): JsonField<Parent> = parent
 
         @JsonAnyGetter
@@ -1321,10 +1520,22 @@ private constructor(
 
             fun children(children: List<Child>) = children(JsonField.of(children))
 
+            /**
+             * Sets [Builder.children] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.children] with a well-typed `List<Child>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun children(children: JsonField<List<Child>>) = apply {
                 this.children = children.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [Child] to [children].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addChild(child: Child) = apply {
                 children =
                     (children ?: JsonField.of(mutableListOf())).also {
@@ -1334,6 +1545,13 @@ private constructor(
 
             fun parent(parent: Parent?) = parent(JsonField.ofNullable(parent))
 
+            /**
+             * Sets [Builder.parent] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.parent] with a well-typed [Parent] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun parent(parent: JsonField<Parent>) = apply { this.parent = parent }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1377,13 +1595,33 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun externalCustomerId(): String? =
                 externalCustomerId.getNullable("external_customer_id")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [externalCustomerId].
+             *
+             * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -1435,11 +1673,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String?) =
                     externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
+                /**
+                 * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalCustomerId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
@@ -1506,13 +1758,33 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun id(): String = id.getRequired("id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun externalCustomerId(): String? =
                 externalCustomerId.getNullable("external_customer_id")
 
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+            /**
+             * Returns the raw JSON value of [externalCustomerId].
+             *
+             * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -1564,11 +1836,25 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String?) =
                     externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
+                /**
+                 * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalCustomerId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
@@ -1871,30 +2157,84 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun city(): String? = city.getNullable("city")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun country(): String? = country.getNullable("country")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun line1(): String? = line1.getNullable("line1")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun line2(): String? = line2.getNullable("line2")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun postalCode(): String? = postalCode.getNullable("postal_code")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun state(): String? = state.getNullable("state")
 
+        /**
+         * Returns the raw JSON value of [city].
+         *
+         * Unlike [city], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("city") @ExcludeMissing fun _city(): JsonField<String> = city
 
+        /**
+         * Returns the raw JSON value of [country].
+         *
+         * Unlike [country], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("country") @ExcludeMissing fun _country(): JsonField<String> = country
 
+        /**
+         * Returns the raw JSON value of [line1].
+         *
+         * Unlike [line1], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("line1") @ExcludeMissing fun _line1(): JsonField<String> = line1
 
+        /**
+         * Returns the raw JSON value of [line2].
+         *
+         * Unlike [line2], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("line2") @ExcludeMissing fun _line2(): JsonField<String> = line2
 
+        /**
+         * Returns the raw JSON value of [postalCode].
+         *
+         * Unlike [postalCode], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("postal_code")
         @ExcludeMissing
         fun _postalCode(): JsonField<String> = postalCode
 
+        /**
+         * Returns the raw JSON value of [state].
+         *
+         * Unlike [state], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<String> = state
 
         @JsonAnyGetter
@@ -1960,26 +2300,68 @@ private constructor(
 
             fun city(city: String?) = city(JsonField.ofNullable(city))
 
+            /**
+             * Sets [Builder.city] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.city] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun city(city: JsonField<String>) = apply { this.city = city }
 
             fun country(country: String?) = country(JsonField.ofNullable(country))
 
+            /**
+             * Sets [Builder.country] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.country] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun country(country: JsonField<String>) = apply { this.country = country }
 
             fun line1(line1: String?) = line1(JsonField.ofNullable(line1))
 
+            /**
+             * Sets [Builder.line1] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.line1] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
             fun line2(line2: String?) = line2(JsonField.ofNullable(line2))
 
+            /**
+             * Sets [Builder.line2] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.line2] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
             fun postalCode(postalCode: String?) = postalCode(JsonField.ofNullable(postalCode))
 
+            /**
+             * Sets [Builder.postalCode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.postalCode] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
             fun state(state: String?) = state(JsonField.ofNullable(state))
 
+            /**
+             * Sets [Builder.state] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.state] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun state(state: JsonField<String>) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -2152,16 +2534,43 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun country(): Country = country.getRequired("country")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun type(): Type = type.getRequired("type")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun value(): String = value.getRequired("value")
 
+        /**
+         * Returns the raw JSON value of [country].
+         *
+         * Unlike [country], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("country") @ExcludeMissing fun _country(): JsonField<Country> = country
 
+        /**
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
+        /**
+         * Returns the raw JSON value of [value].
+         *
+         * Unlike [value], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<String> = value
 
         @JsonAnyGetter
@@ -2215,14 +2624,35 @@ private constructor(
 
             fun country(country: Country) = country(JsonField.of(country))
 
+            /**
+             * Sets [Builder.country] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.country] with a well-typed [Country] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun country(country: JsonField<Country>) = apply { this.country = country }
 
             fun type(type: Type) = type(JsonField.of(type))
 
+            /**
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
             fun value(value: String) = value(JsonField.of(value))
 
+            /**
+             * Sets [Builder.value] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.value] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun value(value: JsonField<String>) = apply { this.value = value }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3354,15 +3784,34 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun accountingProviders(): List<AccountingProvider> =
             accountingProviders.getRequired("accounting_providers")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun excluded(): Boolean = excluded.getRequired("excluded")
 
+        /**
+         * Returns the raw JSON value of [accountingProviders].
+         *
+         * Unlike [accountingProviders], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("accounting_providers")
         @ExcludeMissing
         fun _accountingProviders(): JsonField<List<AccountingProvider>> = accountingProviders
 
+        /**
+         * Returns the raw JSON value of [excluded].
+         *
+         * Unlike [excluded], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("excluded") @ExcludeMissing fun _excluded(): JsonField<Boolean> = excluded
 
         @JsonAnyGetter
@@ -3416,11 +3865,23 @@ private constructor(
             fun accountingProviders(accountingProviders: List<AccountingProvider>) =
                 accountingProviders(JsonField.of(accountingProviders))
 
+            /**
+             * Sets [Builder.accountingProviders] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountingProviders] with a well-typed
+             * `List<AccountingProvider>` value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
+             */
             fun accountingProviders(accountingProviders: JsonField<List<AccountingProvider>>) =
                 apply {
                     this.accountingProviders = accountingProviders.map { it.toMutableList() }
                 }
 
+            /**
+             * Adds a single [AccountingProvider] to [accountingProviders].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addAccountingProvider(accountingProvider: AccountingProvider) = apply {
                 accountingProviders =
                     (accountingProviders ?: JsonField.of(mutableListOf())).also {
@@ -3430,6 +3891,13 @@ private constructor(
 
             fun excluded(excluded: Boolean) = excluded(JsonField.of(excluded))
 
+            /**
+             * Sets [Builder.excluded] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.excluded] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun excluded(excluded: JsonField<Boolean>) = apply { this.excluded = excluded }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3475,15 +3943,36 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun externalProviderId(): String? =
                 externalProviderId.getNullable("external_provider_id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun providerType(): ProviderType = providerType.getRequired("provider_type")
 
+            /**
+             * Returns the raw JSON value of [externalProviderId].
+             *
+             * Unlike [externalProviderId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("external_provider_id")
             @ExcludeMissing
             fun _externalProviderId(): JsonField<String> = externalProviderId
 
+            /**
+             * Returns the raw JSON value of [providerType].
+             *
+             * Unlike [providerType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("provider_type")
             @ExcludeMissing
             fun _providerType(): JsonField<ProviderType> = providerType
@@ -3536,6 +4025,13 @@ private constructor(
                 fun externalProviderId(externalProviderId: String?) =
                     externalProviderId(JsonField.ofNullable(externalProviderId))
 
+                /**
+                 * Sets [Builder.externalProviderId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalProviderId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun externalProviderId(externalProviderId: JsonField<String>) = apply {
                     this.externalProviderId = externalProviderId
                 }
@@ -3543,6 +4039,13 @@ private constructor(
                 fun providerType(providerType: ProviderType) =
                     providerType(JsonField.of(providerType))
 
+                /**
+                 * Sets [Builder.providerType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.providerType] with a well-typed [ProviderType]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun providerType(providerType: JsonField<ProviderType>) = apply {
                     this.providerType = providerType
                 }
@@ -3728,8 +4231,17 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun exempt(): Boolean = exempt.getRequired("exempt")
 
+        /**
+         * Returns the raw JSON value of [exempt].
+         *
+         * Unlike [exempt], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("exempt") @ExcludeMissing fun _exempt(): JsonField<Boolean> = exempt
 
         @JsonAnyGetter
@@ -3775,6 +4287,13 @@ private constructor(
 
             fun exempt(exempt: Boolean) = exempt(JsonField.of(exempt))
 
+            /**
+             * Sets [Builder.exempt] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.exempt] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun exempt(exempt: JsonField<Boolean>) = apply { this.exempt = exempt }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
