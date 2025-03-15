@@ -42,37 +42,64 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun discount(): Discount = body.discount()
 
-    /** This string can be used to redeem this coupon for a given subscription. */
+    /**
+     * This string can be used to redeem this coupon for a given subscription.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun redemptionCode(): String = body.redemptionCode()
 
     /**
      * This allows for a coupon's discount to apply for a limited time (determined in months); a
      * `null` value here means "unlimited time".
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun durationInMonths(): Long? = body.durationInMonths()
 
     /**
      * The maximum number of redemptions allowed for this coupon before it is exhausted;`null` here
      * means "unlimited".
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun maxRedemptions(): Long? = body.maxRedemptions()
 
+    /**
+     * Returns the raw JSON value of [discount].
+     *
+     * Unlike [discount], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _discount(): JsonField<Discount> = body._discount()
 
-    /** This string can be used to redeem this coupon for a given subscription. */
+    /**
+     * Returns the raw JSON value of [redemptionCode].
+     *
+     * Unlike [redemptionCode], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _redemptionCode(): JsonField<String> = body._redemptionCode()
 
     /**
-     * This allows for a coupon's discount to apply for a limited time (determined in months); a
-     * `null` value here means "unlimited time".
+     * Returns the raw JSON value of [durationInMonths].
+     *
+     * Unlike [durationInMonths], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _durationInMonths(): JsonField<Long> = body._durationInMonths()
 
     /**
-     * The maximum number of redemptions allowed for this coupon before it is exhausted;`null` here
-     * means "unlimited".
+     * Returns the raw JSON value of [maxRedemptions].
+     *
+     * Unlike [maxRedemptions], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _maxRedemptions(): JsonField<Long> = body._maxRedemptions()
 
@@ -108,41 +135,70 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun discount(): Discount = discount.getRequired("discount")
 
-        /** This string can be used to redeem this coupon for a given subscription. */
+        /**
+         * This string can be used to redeem this coupon for a given subscription.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun redemptionCode(): String = redemptionCode.getRequired("redemption_code")
 
         /**
          * This allows for a coupon's discount to apply for a limited time (determined in months); a
          * `null` value here means "unlimited time".
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun durationInMonths(): Long? = durationInMonths.getNullable("duration_in_months")
 
         /**
          * The maximum number of redemptions allowed for this coupon before it is exhausted;`null`
          * here means "unlimited".
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun maxRedemptions(): Long? = maxRedemptions.getNullable("max_redemptions")
 
+        /**
+         * Returns the raw JSON value of [discount].
+         *
+         * Unlike [discount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("discount") @ExcludeMissing fun _discount(): JsonField<Discount> = discount
 
-        /** This string can be used to redeem this coupon for a given subscription. */
+        /**
+         * Returns the raw JSON value of [redemptionCode].
+         *
+         * Unlike [redemptionCode], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("redemption_code")
         @ExcludeMissing
         fun _redemptionCode(): JsonField<String> = redemptionCode
 
         /**
-         * This allows for a coupon's discount to apply for a limited time (determined in months); a
-         * `null` value here means "unlimited time".
+         * Returns the raw JSON value of [durationInMonths].
+         *
+         * Unlike [durationInMonths], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("duration_in_months")
         @ExcludeMissing
         fun _durationInMonths(): JsonField<Long> = durationInMonths
 
         /**
-         * The maximum number of redemptions allowed for this coupon before it is exhausted;`null`
-         * here means "unlimited".
+         * Returns the raw JSON value of [maxRedemptions].
+         *
+         * Unlike [maxRedemptions], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("max_redemptions")
         @ExcludeMissing
@@ -201,11 +257,31 @@ private constructor(
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
+            /**
+             * Sets [Builder.discount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.discount] with a well-typed [Discount] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
+            /**
+             * Alias for calling [discount] with
+             * `Discount.ofNewCouponPercentage(newCouponPercentage)`.
+             */
             fun discount(newCouponPercentage: Discount.NewCouponPercentageDiscount) =
                 discount(Discount.ofNewCouponPercentage(newCouponPercentage))
 
+            /**
+             * Alias for calling [discount] with the following:
+             * ```kotlin
+             * Discount.NewCouponPercentageDiscount.builder()
+             *     .discountType(CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType.PERCENTAGE)
+             *     .percentageDiscount(percentageDiscount)
+             *     .build()
+             * ```
+             */
             fun newCouponPercentageDiscount(percentageDiscount: Double) =
                 discount(
                     Discount.NewCouponPercentageDiscount.builder()
@@ -217,9 +293,19 @@ private constructor(
                         .build()
                 )
 
+            /** Alias for calling [discount] with `Discount.ofNewCouponAmount(newCouponAmount)`. */
             fun discount(newCouponAmount: Discount.NewCouponAmountDiscount) =
                 discount(Discount.ofNewCouponAmount(newCouponAmount))
 
+            /**
+             * Alias for calling [discount] with the following:
+             * ```kotlin
+             * Discount.NewCouponAmountDiscount.builder()
+             *     .discountType(CouponCreateParams.Discount.NewCouponAmountDiscount.DiscountType.AMOUNT)
+             *     .amountDiscount(amountDiscount)
+             *     .build()
+             * ```
+             */
             fun newCouponAmountDiscount(amountDiscount: String) =
                 discount(
                     Discount.NewCouponAmountDiscount.builder()
@@ -234,7 +320,13 @@ private constructor(
             fun redemptionCode(redemptionCode: String) =
                 redemptionCode(JsonField.of(redemptionCode))
 
-            /** This string can be used to redeem this coupon for a given subscription. */
+            /**
+             * Sets [Builder.redemptionCode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.redemptionCode] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun redemptionCode(redemptionCode: JsonField<String>) = apply {
                 this.redemptionCode = redemptionCode
             }
@@ -247,15 +339,19 @@ private constructor(
                 durationInMonths(JsonField.ofNullable(durationInMonths))
 
             /**
-             * This allows for a coupon's discount to apply for a limited time (determined in
-             * months); a `null` value here means "unlimited time".
+             * Alias for [Builder.durationInMonths].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
              */
             fun durationInMonths(durationInMonths: Long) =
                 durationInMonths(durationInMonths as Long?)
 
             /**
-             * This allows for a coupon's discount to apply for a limited time (determined in
-             * months); a `null` value here means "unlimited time".
+             * Sets [Builder.durationInMonths] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.durationInMonths] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun durationInMonths(durationInMonths: JsonField<Long>) = apply {
                 this.durationInMonths = durationInMonths
@@ -269,14 +365,18 @@ private constructor(
                 maxRedemptions(JsonField.ofNullable(maxRedemptions))
 
             /**
-             * The maximum number of redemptions allowed for this coupon before it is
-             * exhausted;`null` here means "unlimited".
+             * Alias for [Builder.maxRedemptions].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
              */
             fun maxRedemptions(maxRedemptions: Long) = maxRedemptions(maxRedemptions as Long?)
 
             /**
-             * The maximum number of redemptions allowed for this coupon before it is
-             * exhausted;`null` here means "unlimited".
+             * Sets [Builder.maxRedemptions] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.maxRedemptions] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun maxRedemptions(maxRedemptions: JsonField<Long>) = apply {
                 this.maxRedemptions = maxRedemptions
@@ -361,20 +461,49 @@ private constructor(
 
         fun discount(discount: Discount) = apply { body.discount(discount) }
 
+        /**
+         * Sets [Builder.discount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.discount] with a well-typed [Discount] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun discount(discount: JsonField<Discount>) = apply { body.discount(discount) }
 
+        /**
+         * Alias for calling [discount] with `Discount.ofNewCouponPercentage(newCouponPercentage)`.
+         */
         fun discount(newCouponPercentage: Discount.NewCouponPercentageDiscount) = apply {
             body.discount(newCouponPercentage)
         }
 
+        /**
+         * Alias for calling [discount] with the following:
+         * ```kotlin
+         * Discount.NewCouponPercentageDiscount.builder()
+         *     .discountType(CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType.PERCENTAGE)
+         *     .percentageDiscount(percentageDiscount)
+         *     .build()
+         * ```
+         */
         fun newCouponPercentageDiscount(percentageDiscount: Double) = apply {
             body.newCouponPercentageDiscount(percentageDiscount)
         }
 
+        /** Alias for calling [discount] with `Discount.ofNewCouponAmount(newCouponAmount)`. */
         fun discount(newCouponAmount: Discount.NewCouponAmountDiscount) = apply {
             body.discount(newCouponAmount)
         }
 
+        /**
+         * Alias for calling [discount] with the following:
+         * ```kotlin
+         * Discount.NewCouponAmountDiscount.builder()
+         *     .discountType(CouponCreateParams.Discount.NewCouponAmountDiscount.DiscountType.AMOUNT)
+         *     .amountDiscount(amountDiscount)
+         *     .build()
+         * ```
+         */
         fun newCouponAmountDiscount(amountDiscount: String) = apply {
             body.newCouponAmountDiscount(amountDiscount)
         }
@@ -382,7 +511,13 @@ private constructor(
         /** This string can be used to redeem this coupon for a given subscription. */
         fun redemptionCode(redemptionCode: String) = apply { body.redemptionCode(redemptionCode) }
 
-        /** This string can be used to redeem this coupon for a given subscription. */
+        /**
+         * Sets [Builder.redemptionCode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.redemptionCode] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun redemptionCode(redemptionCode: JsonField<String>) = apply {
             body.redemptionCode(redemptionCode)
         }
@@ -396,14 +531,18 @@ private constructor(
         }
 
         /**
-         * This allows for a coupon's discount to apply for a limited time (determined in months); a
-         * `null` value here means "unlimited time".
+         * Alias for [Builder.durationInMonths].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun durationInMonths(durationInMonths: Long) = durationInMonths(durationInMonths as Long?)
 
         /**
-         * This allows for a coupon's discount to apply for a limited time (determined in months); a
-         * `null` value here means "unlimited time".
+         * Sets [Builder.durationInMonths] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.durationInMonths] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun durationInMonths(durationInMonths: JsonField<Long>) = apply {
             body.durationInMonths(durationInMonths)
@@ -416,14 +555,18 @@ private constructor(
         fun maxRedemptions(maxRedemptions: Long?) = apply { body.maxRedemptions(maxRedemptions) }
 
         /**
-         * The maximum number of redemptions allowed for this coupon before it is exhausted;`null`
-         * here means "unlimited".
+         * Alias for [Builder.maxRedemptions].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun maxRedemptions(maxRedemptions: Long) = maxRedemptions(maxRedemptions as Long?)
 
         /**
-         * The maximum number of redemptions allowed for this coupon before it is exhausted;`null`
-         * here means "unlimited".
+         * Sets [Builder.maxRedemptions] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.maxRedemptions] with a well-typed [Long] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun maxRedemptions(maxRedemptions: JsonField<Long>) = apply {
             body.maxRedemptions(maxRedemptions)
@@ -721,14 +864,36 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
 
+            /**
+             * Returns the raw JSON value of [discountType].
+             *
+             * Unlike [discountType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("discount_type")
             @ExcludeMissing
             fun _discountType(): JsonField<DiscountType> = discountType
 
+            /**
+             * Returns the raw JSON value of [percentageDiscount].
+             *
+             * Unlike [percentageDiscount], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("percentage_discount")
             @ExcludeMissing
             fun _percentageDiscount(): JsonField<Double> = percentageDiscount
@@ -784,6 +949,13 @@ private constructor(
                 fun discountType(discountType: DiscountType) =
                     discountType(JsonField.of(discountType))
 
+                /**
+                 * Sets [Builder.discountType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.discountType] with a well-typed [DiscountType]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun discountType(discountType: JsonField<DiscountType>) = apply {
                     this.discountType = discountType
                 }
@@ -791,6 +963,13 @@ private constructor(
                 fun percentageDiscount(percentageDiscount: Double) =
                     percentageDiscount(JsonField.of(percentageDiscount))
 
+                /**
+                 * Sets [Builder.percentageDiscount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.percentageDiscount] with a well-typed [Double]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
                     this.percentageDiscount = percentageDiscount
                 }
@@ -955,14 +1134,36 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
+            /**
+             * Returns the raw JSON value of [amountDiscount].
+             *
+             * Unlike [amountDiscount], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
             @JsonProperty("amount_discount")
             @ExcludeMissing
             fun _amountDiscount(): JsonField<String> = amountDiscount
 
+            /**
+             * Returns the raw JSON value of [discountType].
+             *
+             * Unlike [discountType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("discount_type")
             @ExcludeMissing
             fun _discountType(): JsonField<DiscountType> = discountType
@@ -1017,6 +1218,13 @@ private constructor(
                 fun amountDiscount(amountDiscount: String) =
                     amountDiscount(JsonField.of(amountDiscount))
 
+                /**
+                 * Sets [Builder.amountDiscount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.amountDiscount] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun amountDiscount(amountDiscount: JsonField<String>) = apply {
                     this.amountDiscount = amountDiscount
                 }
@@ -1024,6 +1232,13 @@ private constructor(
                 fun discountType(discountType: DiscountType) =
                     discountType(JsonField.of(discountType))
 
+                /**
+                 * Sets [Builder.discountType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.discountType] with a well-typed [DiscountType]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun discountType(discountType: JsonField<DiscountType>) = apply {
                     this.discountType = discountType
                 }

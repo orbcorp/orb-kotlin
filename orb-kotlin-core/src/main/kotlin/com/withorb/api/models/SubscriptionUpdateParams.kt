@@ -17,6 +17,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
 /**
@@ -36,12 +37,18 @@ private constructor(
     /**
      * Determines whether issued invoices for this subscription will automatically be charged with
      * the saved payment method on the due date. This property defaults to the plan's behavior.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun autoCollection(): Boolean? = body.autoCollection()
 
     /**
      * Determines the default memo on this subscription's invoices. Note that if this is not
      * provided, it is determined by the plan configuration.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun defaultInvoiceMemo(): String? = body.defaultInvoiceMemo()
 
@@ -49,6 +56,9 @@ private constructor(
      * When this subscription's accrued usage reaches this threshold, an invoice will be issued for
      * the subscription. If not specified, invoices will only be issued at the end of the billing
      * period.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun invoicingThreshold(): String? = body.invoicingThreshold()
 
@@ -56,6 +66,9 @@ private constructor(
      * User-specified key/value pairs for the resource. Individual keys can be removed by setting
      * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
      * `null`.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun metadata(): Metadata? = body.metadata()
 
@@ -63,39 +76,46 @@ private constructor(
      * Determines the difference between the invoice issue date for subscription invoices as the
      * date that they are due. A value of `0` here represents that the invoice is due on issue,
      * whereas a value of `30` represents that the customer has a month to pay the invoice.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun netTerms(): Long? = body.netTerms()
 
     /**
-     * Determines whether issued invoices for this subscription will automatically be charged with
-     * the saved payment method on the due date. This property defaults to the plan's behavior.
+     * Returns the raw JSON value of [autoCollection].
+     *
+     * Unlike [autoCollection], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _autoCollection(): JsonField<Boolean> = body._autoCollection()
 
     /**
-     * Determines the default memo on this subscription's invoices. Note that if this is not
-     * provided, it is determined by the plan configuration.
+     * Returns the raw JSON value of [defaultInvoiceMemo].
+     *
+     * Unlike [defaultInvoiceMemo], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _defaultInvoiceMemo(): JsonField<String> = body._defaultInvoiceMemo()
 
     /**
-     * When this subscription's accrued usage reaches this threshold, an invoice will be issued for
-     * the subscription. If not specified, invoices will only be issued at the end of the billing
-     * period.
+     * Returns the raw JSON value of [invoicingThreshold].
+     *
+     * Unlike [invoicingThreshold], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _invoicingThreshold(): JsonField<String> = body._invoicingThreshold()
 
     /**
-     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
-     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
-     * `null`.
+     * Returns the raw JSON value of [metadata].
+     *
+     * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _metadata(): JsonField<Metadata> = body._metadata()
 
     /**
-     * Determines the difference between the invoice issue date for subscription invoices as the
-     * date that they are due. A value of `0` here represents that the invoice is due on issue,
-     * whereas a value of `30` represents that the customer has a month to pay the invoice.
+     * Returns the raw JSON value of [netTerms].
+     *
+     * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _netTerms(): JsonField<Long> = body._netTerms()
 
@@ -145,12 +165,18 @@ private constructor(
          * Determines whether issued invoices for this subscription will automatically be charged
          * with the saved payment method on the due date. This property defaults to the plan's
          * behavior.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun autoCollection(): Boolean? = autoCollection.getNullable("auto_collection")
 
         /**
          * Determines the default memo on this subscription's invoices. Note that if this is not
          * provided, it is determined by the plan configuration.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun defaultInvoiceMemo(): String? = defaultInvoiceMemo.getNullable("default_invoice_memo")
 
@@ -158,6 +184,9 @@ private constructor(
          * When this subscription's accrued usage reaches this threshold, an invoice will be issued
          * for the subscription. If not specified, invoices will only be issued at the end of the
          * billing period.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun invoicingThreshold(): String? = invoicingThreshold.getNullable("invoicing_threshold")
 
@@ -165,6 +194,9 @@ private constructor(
          * User-specified key/value pairs for the resource. Individual keys can be removed by
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun metadata(): Metadata? = metadata.getNullable("metadata")
 
@@ -172,46 +204,53 @@ private constructor(
          * Determines the difference between the invoice issue date for subscription invoices as the
          * date that they are due. A value of `0` here represents that the invoice is due on issue,
          * whereas a value of `30` represents that the customer has a month to pay the invoice.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun netTerms(): Long? = netTerms.getNullable("net_terms")
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be charged
-         * with the saved payment method on the due date. This property defaults to the plan's
-         * behavior.
+         * Returns the raw JSON value of [autoCollection].
+         *
+         * Unlike [autoCollection], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("auto_collection")
         @ExcludeMissing
         fun _autoCollection(): JsonField<Boolean> = autoCollection
 
         /**
-         * Determines the default memo on this subscription's invoices. Note that if this is not
-         * provided, it is determined by the plan configuration.
+         * Returns the raw JSON value of [defaultInvoiceMemo].
+         *
+         * Unlike [defaultInvoiceMemo], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("default_invoice_memo")
         @ExcludeMissing
         fun _defaultInvoiceMemo(): JsonField<String> = defaultInvoiceMemo
 
         /**
-         * When this subscription's accrued usage reaches this threshold, an invoice will be issued
-         * for the subscription. If not specified, invoices will only be issued at the end of the
-         * billing period.
+         * Returns the raw JSON value of [invoicingThreshold].
+         *
+         * Unlike [invoicingThreshold], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("invoicing_threshold")
         @ExcludeMissing
         fun _invoicingThreshold(): JsonField<String> = invoicingThreshold
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
         /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of `0` here represents that the invoice is due on issue,
-         * whereas a value of `30` represents that the customer has a month to pay the invoice.
+         * Returns the raw JSON value of [netTerms].
+         *
+         * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
 
@@ -270,16 +309,18 @@ private constructor(
                 autoCollection(JsonField.ofNullable(autoCollection))
 
             /**
-             * Determines whether issued invoices for this subscription will automatically be
-             * charged with the saved payment method on the due date. This property defaults to the
-             * plan's behavior.
+             * Alias for [Builder.autoCollection].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
              */
             fun autoCollection(autoCollection: Boolean) = autoCollection(autoCollection as Boolean?)
 
             /**
-             * Determines whether issued invoices for this subscription will automatically be
-             * charged with the saved payment method on the due date. This property defaults to the
-             * plan's behavior.
+             * Sets [Builder.autoCollection] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.autoCollection] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
                 this.autoCollection = autoCollection
@@ -293,8 +334,11 @@ private constructor(
                 defaultInvoiceMemo(JsonField.ofNullable(defaultInvoiceMemo))
 
             /**
-             * Determines the default memo on this subscription's invoices. Note that if this is not
-             * provided, it is determined by the plan configuration.
+             * Sets [Builder.defaultInvoiceMemo] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.defaultInvoiceMemo] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun defaultInvoiceMemo(defaultInvoiceMemo: JsonField<String>) = apply {
                 this.defaultInvoiceMemo = defaultInvoiceMemo
@@ -309,9 +353,11 @@ private constructor(
                 invoicingThreshold(JsonField.ofNullable(invoicingThreshold))
 
             /**
-             * When this subscription's accrued usage reaches this threshold, an invoice will be
-             * issued for the subscription. If not specified, invoices will only be issued at the
-             * end of the billing period.
+             * Sets [Builder.invoicingThreshold] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.invoicingThreshold] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun invoicingThreshold(invoicingThreshold: JsonField<String>) = apply {
                 this.invoicingThreshold = invoicingThreshold
@@ -325,9 +371,11 @@ private constructor(
             fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
 
             /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
@@ -340,18 +388,18 @@ private constructor(
             fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
 
             /**
-             * Determines the difference between the invoice issue date for subscription invoices as
-             * the date that they are due. A value of `0` here represents that the invoice is due on
-             * issue, whereas a value of `30` represents that the customer has a month to pay the
-             * invoice.
+             * Alias for [Builder.netTerms].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
              */
             fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
 
             /**
-             * Determines the difference between the invoice issue date for subscription invoices as
-             * the date that they are due. A value of `0` here represents that the invoice is due on
-             * issue, whereas a value of `30` represents that the customer has a month to pay the
-             * invoice.
+             * Sets [Builder.netTerms] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.netTerms] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
@@ -444,16 +492,18 @@ private constructor(
         fun autoCollection(autoCollection: Boolean?) = apply { body.autoCollection(autoCollection) }
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be charged
-         * with the saved payment method on the due date. This property defaults to the plan's
-         * behavior.
+         * Alias for [Builder.autoCollection].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun autoCollection(autoCollection: Boolean) = autoCollection(autoCollection as Boolean?)
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be charged
-         * with the saved payment method on the due date. This property defaults to the plan's
-         * behavior.
+         * Sets [Builder.autoCollection] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.autoCollection] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
             body.autoCollection(autoCollection)
@@ -468,8 +518,11 @@ private constructor(
         }
 
         /**
-         * Determines the default memo on this subscription's invoices. Note that if this is not
-         * provided, it is determined by the plan configuration.
+         * Sets [Builder.defaultInvoiceMemo] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.defaultInvoiceMemo] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun defaultInvoiceMemo(defaultInvoiceMemo: JsonField<String>) = apply {
             body.defaultInvoiceMemo(defaultInvoiceMemo)
@@ -485,9 +538,11 @@ private constructor(
         }
 
         /**
-         * When this subscription's accrued usage reaches this threshold, an invoice will be issued
-         * for the subscription. If not specified, invoices will only be issued at the end of the
-         * billing period.
+         * Sets [Builder.invoicingThreshold] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.invoicingThreshold] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun invoicingThreshold(invoicingThreshold: JsonField<String>) = apply {
             body.invoicingThreshold(invoicingThreshold)
@@ -501,9 +556,11 @@ private constructor(
         fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
+         * Sets [Builder.metadata] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
 
@@ -515,16 +572,17 @@ private constructor(
         fun netTerms(netTerms: Long?) = apply { body.netTerms(netTerms) }
 
         /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of `0` here represents that the invoice is due on issue,
-         * whereas a value of `30` represents that the customer has a month to pay the invoice.
+         * Alias for [Builder.netTerms].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
 
         /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of `0` here represents that the invoice is due on issue,
-         * whereas a value of `30` represents that the customer has a month to pay the invoice.
+         * Sets [Builder.netTerms] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.netTerms] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun netTerms(netTerms: JsonField<Long>) = apply { body.netTerms(netTerms) }
 

@@ -45,41 +45,106 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun balance(): Double = balance.getRequired("balance")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun effectiveDate(): OffsetDateTime? = effectiveDate.getNullable("effective_date")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun maximumInitialBalance(): Double? =
         maximumInitialBalance.getNullable("maximum_initial_balance")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun perUnitCostBasis(): String? = perUnitCostBasis.getNullable("per_unit_cost_basis")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun status(): Status = status.getRequired("status")
 
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+    /**
+     * Returns the raw JSON value of [balance].
+     *
+     * Unlike [balance], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("balance") @ExcludeMissing fun _balance(): JsonField<Double> = balance
 
+    /**
+     * Returns the raw JSON value of [effectiveDate].
+     *
+     * Unlike [effectiveDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("effective_date")
     @ExcludeMissing
     fun _effectiveDate(): JsonField<OffsetDateTime> = effectiveDate
 
+    /**
+     * Returns the raw JSON value of [expiryDate].
+     *
+     * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("expiry_date")
     @ExcludeMissing
     fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
+    /**
+     * Returns the raw JSON value of [maximumInitialBalance].
+     *
+     * Unlike [maximumInitialBalance], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("maximum_initial_balance")
     @ExcludeMissing
     fun _maximumInitialBalance(): JsonField<Double> = maximumInitialBalance
 
+    /**
+     * Returns the raw JSON value of [perUnitCostBasis].
+     *
+     * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("per_unit_cost_basis")
     @ExcludeMissing
     fun _perUnitCostBasis(): JsonField<String> = perUnitCostBasis
 
+    /**
+     * Returns the raw JSON value of [status].
+     *
+     * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
     @JsonAnyGetter
@@ -149,21 +214,47 @@ private constructor(
 
         fun id(id: String) = id(JsonField.of(id))
 
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun balance(balance: Double) = balance(JsonField.of(balance))
 
+        /**
+         * Sets [Builder.balance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.balance] with a well-typed [Double] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun balance(balance: JsonField<Double>) = apply { this.balance = balance }
 
         fun effectiveDate(effectiveDate: OffsetDateTime?) =
             effectiveDate(JsonField.ofNullable(effectiveDate))
 
+        /**
+         * Sets [Builder.effectiveDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.effectiveDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun effectiveDate(effectiveDate: JsonField<OffsetDateTime>) = apply {
             this.effectiveDate = effectiveDate
         }
 
         fun expiryDate(expiryDate: OffsetDateTime?) = expiryDate(JsonField.ofNullable(expiryDate))
 
+        /**
+         * Sets [Builder.expiryDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
             this.expiryDate = expiryDate
         }
@@ -171,9 +262,21 @@ private constructor(
         fun maximumInitialBalance(maximumInitialBalance: Double?) =
             maximumInitialBalance(JsonField.ofNullable(maximumInitialBalance))
 
+        /**
+         * Alias for [Builder.maximumInitialBalance].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun maximumInitialBalance(maximumInitialBalance: Double) =
             maximumInitialBalance(maximumInitialBalance as Double?)
 
+        /**
+         * Sets [Builder.maximumInitialBalance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.maximumInitialBalance] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun maximumInitialBalance(maximumInitialBalance: JsonField<Double>) = apply {
             this.maximumInitialBalance = maximumInitialBalance
         }
@@ -181,12 +284,25 @@ private constructor(
         fun perUnitCostBasis(perUnitCostBasis: String?) =
             perUnitCostBasis(JsonField.ofNullable(perUnitCostBasis))
 
+        /**
+         * Sets [Builder.perUnitCostBasis] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.perUnitCostBasis] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
             this.perUnitCostBasis = perUnitCostBasis
         }
 
         fun status(status: Status) = status(JsonField.of(status))
 
+        /**
+         * Sets [Builder.status] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.status] with a well-typed [Status] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

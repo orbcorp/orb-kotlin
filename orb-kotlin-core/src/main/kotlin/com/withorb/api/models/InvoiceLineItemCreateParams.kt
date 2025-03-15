@@ -17,6 +17,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 
@@ -31,46 +32,95 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    /** The total amount in the invoice's currency to add to the line item. */
+    /**
+     * The total amount in the invoice's currency to add to the line item.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun amount(): String = body.amount()
 
-    /** A date string to specify the line item's end date in the customer's timezone. */
+    /**
+     * A date string to specify the line item's end date in the customer's timezone.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun endDate(): LocalDate = body.endDate()
 
-    /** The id of the Invoice to add this line item. */
+    /**
+     * The id of the Invoice to add this line item.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun invoiceId(): String = body.invoiceId()
 
     /**
      * The item name associated with this line item. If an item with the same name exists in Orb,
      * that item will be associated with the line item.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun name(): String = body.name()
 
-    /** The number of units on the line item */
+    /**
+     * The number of units on the line item
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun quantity(): Double = body.quantity()
 
-    /** A date string to specify the line item's start date in the customer's timezone. */
+    /**
+     * A date string to specify the line item's start date in the customer's timezone.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun startDate(): LocalDate = body.startDate()
 
-    /** The total amount in the invoice's currency to add to the line item. */
+    /**
+     * Returns the raw JSON value of [amount].
+     *
+     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _amount(): JsonField<String> = body._amount()
 
-    /** A date string to specify the line item's end date in the customer's timezone. */
+    /**
+     * Returns the raw JSON value of [endDate].
+     *
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _endDate(): JsonField<LocalDate> = body._endDate()
 
-    /** The id of the Invoice to add this line item. */
+    /**
+     * Returns the raw JSON value of [invoiceId].
+     *
+     * Unlike [invoiceId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _invoiceId(): JsonField<String> = body._invoiceId()
 
     /**
-     * The item name associated with this line item. If an item with the same name exists in Orb,
-     * that item will be associated with the line item.
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _name(): JsonField<String> = body._name()
 
-    /** The number of units on the line item */
+    /**
+     * Returns the raw JSON value of [quantity].
+     *
+     * Unlike [quantity], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _quantity(): JsonField<Double> = body._quantity()
 
-    /** A date string to specify the line item's start date in the customer's timezone. */
+    /**
+     * Returns the raw JSON value of [startDate].
+     *
+     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _startDate(): JsonField<LocalDate> = body._startDate()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -111,46 +161,95 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The total amount in the invoice's currency to add to the line item. */
+        /**
+         * The total amount in the invoice's currency to add to the line item.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun amount(): String = amount.getRequired("amount")
 
-        /** A date string to specify the line item's end date in the customer's timezone. */
+        /**
+         * A date string to specify the line item's end date in the customer's timezone.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun endDate(): LocalDate = endDate.getRequired("end_date")
 
-        /** The id of the Invoice to add this line item. */
+        /**
+         * The id of the Invoice to add this line item.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun invoiceId(): String = invoiceId.getRequired("invoice_id")
 
         /**
          * The item name associated with this line item. If an item with the same name exists in
          * Orb, that item will be associated with the line item.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun name(): String = name.getRequired("name")
 
-        /** The number of units on the line item */
+        /**
+         * The number of units on the line item
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun quantity(): Double = quantity.getRequired("quantity")
 
-        /** A date string to specify the line item's start date in the customer's timezone. */
+        /**
+         * A date string to specify the line item's start date in the customer's timezone.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startDate(): LocalDate = startDate.getRequired("start_date")
 
-        /** The total amount in the invoice's currency to add to the line item. */
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
-        /** A date string to specify the line item's end date in the customer's timezone. */
+        /**
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("end_date") @ExcludeMissing fun _endDate(): JsonField<LocalDate> = endDate
 
-        /** The id of the Invoice to add this line item. */
+        /**
+         * Returns the raw JSON value of [invoiceId].
+         *
+         * Unlike [invoiceId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("invoice_id") @ExcludeMissing fun _invoiceId(): JsonField<String> = invoiceId
 
         /**
-         * The item name associated with this line item. If an item with the same name exists in
-         * Orb, that item will be associated with the line item.
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-        /** The number of units on the line item */
+        /**
+         * Returns the raw JSON value of [quantity].
+         *
+         * Unlike [quantity], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
-        /** A date string to specify the line item's start date in the customer's timezone. */
+        /**
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("start_date")
         @ExcludeMissing
         fun _startDate(): JsonField<LocalDate> = startDate
@@ -219,19 +318,37 @@ private constructor(
             /** The total amount in the invoice's currency to add to the line item. */
             fun amount(amount: String) = amount(JsonField.of(amount))
 
-            /** The total amount in the invoice's currency to add to the line item. */
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
             /** A date string to specify the line item's end date in the customer's timezone. */
             fun endDate(endDate: LocalDate) = endDate(JsonField.of(endDate))
 
-            /** A date string to specify the line item's end date in the customer's timezone. */
+            /**
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endDate(endDate: JsonField<LocalDate>) = apply { this.endDate = endDate }
 
             /** The id of the Invoice to add this line item. */
             fun invoiceId(invoiceId: String) = invoiceId(JsonField.of(invoiceId))
 
-            /** The id of the Invoice to add this line item. */
+            /**
+             * Sets [Builder.invoiceId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.invoiceId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun invoiceId(invoiceId: JsonField<String>) = apply { this.invoiceId = invoiceId }
 
             /**
@@ -241,21 +358,36 @@ private constructor(
             fun name(name: String) = name(JsonField.of(name))
 
             /**
-             * The item name associated with this line item. If an item with the same name exists in
-             * Orb, that item will be associated with the line item.
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** The number of units on the line item */
             fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
-            /** The number of units on the line item */
+            /**
+             * Sets [Builder.quantity] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.quantity] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
             /** A date string to specify the line item's start date in the customer's timezone. */
             fun startDate(startDate: LocalDate) = startDate(JsonField.of(startDate))
 
-            /** A date string to specify the line item's start date in the customer's timezone. */
+            /**
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startDate(startDate: JsonField<LocalDate>) = apply { this.startDate = startDate }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -344,19 +476,36 @@ private constructor(
         /** The total amount in the invoice's currency to add to the line item. */
         fun amount(amount: String) = apply { body.amount(amount) }
 
-        /** The total amount in the invoice's currency to add to the line item. */
+        /**
+         * Sets [Builder.amount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amount] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun amount(amount: JsonField<String>) = apply { body.amount(amount) }
 
         /** A date string to specify the line item's end date in the customer's timezone. */
         fun endDate(endDate: LocalDate) = apply { body.endDate(endDate) }
 
-        /** A date string to specify the line item's end date in the customer's timezone. */
+        /**
+         * Sets [Builder.endDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.endDate] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun endDate(endDate: JsonField<LocalDate>) = apply { body.endDate(endDate) }
 
         /** The id of the Invoice to add this line item. */
         fun invoiceId(invoiceId: String) = apply { body.invoiceId(invoiceId) }
 
-        /** The id of the Invoice to add this line item. */
+        /**
+         * Sets [Builder.invoiceId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.invoiceId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun invoiceId(invoiceId: JsonField<String>) = apply { body.invoiceId(invoiceId) }
 
         /**
@@ -366,21 +515,34 @@ private constructor(
         fun name(name: String) = apply { body.name(name) }
 
         /**
-         * The item name associated with this line item. If an item with the same name exists in
-         * Orb, that item will be associated with the line item.
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /** The number of units on the line item */
         fun quantity(quantity: Double) = apply { body.quantity(quantity) }
 
-        /** The number of units on the line item */
+        /**
+         * Sets [Builder.quantity] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.quantity] with a well-typed [Double] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun quantity(quantity: JsonField<Double>) = apply { body.quantity(quantity) }
 
         /** A date string to specify the line item's start date in the customer's timezone. */
         fun startDate(startDate: LocalDate) = apply { body.startDate(startDate) }
 
-        /** A date string to specify the line item's start date in the customer's timezone. */
+        /**
+         * Sets [Builder.startDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startDate] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun startDate(startDate: JsonField<LocalDate>) = apply { body.startDate(startDate) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {

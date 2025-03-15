@@ -33,12 +33,31 @@ private constructor(
 
     fun itemId(): String = itemId
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun externalConnections(): List<ExternalConnection>? = body.externalConnections()
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun name(): String? = body.name()
 
+    /**
+     * Returns the raw JSON value of [externalConnections].
+     *
+     * Unlike [externalConnections], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _externalConnections(): JsonField<List<ExternalConnection>> = body._externalConnections()
 
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -79,15 +98,34 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun externalConnections(): List<ExternalConnection>? =
             externalConnections.getNullable("external_connections")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun name(): String? = name.getNullable("name")
 
+        /**
+         * Returns the raw JSON value of [externalConnections].
+         *
+         * Unlike [externalConnections], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("external_connections")
         @ExcludeMissing
         fun _externalConnections(): JsonField<List<ExternalConnection>> = externalConnections
 
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         @JsonAnyGetter
@@ -130,11 +168,23 @@ private constructor(
             fun externalConnections(externalConnections: List<ExternalConnection>?) =
                 externalConnections(JsonField.ofNullable(externalConnections))
 
+            /**
+             * Sets [Builder.externalConnections] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalConnections] with a well-typed
+             * `List<ExternalConnection>` value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
+             */
             fun externalConnections(externalConnections: JsonField<List<ExternalConnection>>) =
                 apply {
                     this.externalConnections = externalConnections.map { it.toMutableList() }
                 }
 
+            /**
+             * Adds a single [ExternalConnection] to [externalConnections].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addExternalConnection(externalConnection: ExternalConnection) = apply {
                 externalConnections =
                     (externalConnections ?: JsonField.of(mutableListOf())).also {
@@ -144,6 +194,13 @@ private constructor(
 
             fun name(name: String?) = name(JsonField.ofNullable(name))
 
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -228,16 +285,34 @@ private constructor(
             body.externalConnections(externalConnections)
         }
 
+        /**
+         * Sets [Builder.externalConnections] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalConnections] with a well-typed
+         * `List<ExternalConnection>` value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
+         */
         fun externalConnections(externalConnections: JsonField<List<ExternalConnection>>) = apply {
             body.externalConnections(externalConnections)
         }
 
+        /**
+         * Adds a single [ExternalConnection] to [externalConnections].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addExternalConnection(externalConnection: ExternalConnection) = apply {
             body.addExternalConnection(externalConnection)
         }
 
         fun name(name: String?) = apply { body.name(name) }
 
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
@@ -380,15 +455,35 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun externalConnectionName(): ExternalConnectionName =
             externalConnectionName.getRequired("external_connection_name")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun externalEntityId(): String = externalEntityId.getRequired("external_entity_id")
 
+        /**
+         * Returns the raw JSON value of [externalConnectionName].
+         *
+         * Unlike [externalConnectionName], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("external_connection_name")
         @ExcludeMissing
         fun _externalConnectionName(): JsonField<ExternalConnectionName> = externalConnectionName
 
+        /**
+         * Returns the raw JSON value of [externalEntityId].
+         *
+         * Unlike [externalEntityId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("external_entity_id")
         @ExcludeMissing
         fun _externalEntityId(): JsonField<String> = externalEntityId
@@ -441,6 +536,13 @@ private constructor(
             fun externalConnectionName(externalConnectionName: ExternalConnectionName) =
                 externalConnectionName(JsonField.of(externalConnectionName))
 
+            /**
+             * Sets [Builder.externalConnectionName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalConnectionName] with a well-typed
+             * [ExternalConnectionName] value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
+             */
             fun externalConnectionName(externalConnectionName: JsonField<ExternalConnectionName>) =
                 apply {
                     this.externalConnectionName = externalConnectionName
@@ -449,6 +551,13 @@ private constructor(
             fun externalEntityId(externalEntityId: String) =
                 externalEntityId(JsonField.of(externalEntityId))
 
+            /**
+             * Sets [Builder.externalEntityId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalEntityId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun externalEntityId(externalEntityId: JsonField<String>) = apply {
                 this.externalEntityId = externalEntityId
             }

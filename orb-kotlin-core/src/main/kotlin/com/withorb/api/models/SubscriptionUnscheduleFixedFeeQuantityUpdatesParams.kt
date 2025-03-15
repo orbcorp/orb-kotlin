@@ -17,6 +17,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
 /**
@@ -35,10 +36,19 @@ private constructor(
 
     fun subscriptionId(): String = subscriptionId
 
-    /** Price for which the updates should be cleared. Must be a fixed fee. */
+    /**
+     * Price for which the updates should be cleared. Must be a fixed fee.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun priceId(): String = body.priceId()
 
-    /** Price for which the updates should be cleared. Must be a fixed fee. */
+    /**
+     * Returns the raw JSON value of [priceId].
+     *
+     * Unlike [priceId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _priceId(): JsonField<String> = body._priceId()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -71,10 +81,19 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Price for which the updates should be cleared. Must be a fixed fee. */
+        /**
+         * Price for which the updates should be cleared. Must be a fixed fee.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun priceId(): String = priceId.getRequired("price_id")
 
-        /** Price for which the updates should be cleared. Must be a fixed fee. */
+        /**
+         * Returns the raw JSON value of [priceId].
+         *
+         * Unlike [priceId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("price_id") @ExcludeMissing fun _priceId(): JsonField<String> = priceId
 
         @JsonAnyGetter
@@ -121,7 +140,13 @@ private constructor(
             /** Price for which the updates should be cleared. Must be a fixed fee. */
             fun priceId(priceId: String) = priceId(JsonField.of(priceId))
 
-            /** Price for which the updates should be cleared. Must be a fixed fee. */
+            /**
+             * Sets [Builder.priceId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.priceId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -209,7 +234,12 @@ private constructor(
         /** Price for which the updates should be cleared. Must be a fixed fee. */
         fun priceId(priceId: String) = apply { body.priceId(priceId) }
 
-        /** Price for which the updates should be cleared. Must be a fixed fee. */
+        /**
+         * Sets [Builder.priceId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.priceId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun priceId(priceId: JsonField<String>) = apply { body.priceId(priceId) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {

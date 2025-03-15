@@ -57,70 +57,160 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** Also referred to as alert_id in this documentation. */
+    /**
+     * Also referred to as alert_id in this documentation.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
-    /** The creation time of the resource in Orb. */
+    /**
+     * The creation time of the resource in Orb.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
-    /** The name of the currency the credit balance or invoice cost is denominated in. */
+    /**
+     * The name of the currency the credit balance or invoice cost is denominated in.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun currency(): String? = currency.getNullable("currency")
 
-    /** The customer the alert applies to. */
+    /**
+     * The customer the alert applies to.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun customer(): Customer? = customer.getNullable("customer")
 
-    /** Whether the alert is enabled or disabled. */
+    /**
+     * Whether the alert is enabled or disabled.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun enabled(): Boolean = enabled.getRequired("enabled")
 
-    /** The metric the alert applies to. */
+    /**
+     * The metric the alert applies to.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun metric(): Metric? = metric.getNullable("metric")
 
-    /** The plan the alert applies to. */
+    /**
+     * The plan the alert applies to.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun plan(): Plan? = plan.getNullable("plan")
 
-    /** The subscription the alert applies to. */
+    /**
+     * The subscription the alert applies to.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun subscription(): Subscription? = subscription.getNullable("subscription")
 
-    /** The thresholds that define the conditions under which the alert will be triggered. */
+    /**
+     * The thresholds that define the conditions under which the alert will be triggered.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun thresholds(): List<Threshold>? = thresholds.getNullable("thresholds")
 
-    /** The type of alert. This must be a valid alert type. */
+    /**
+     * The type of alert. This must be a valid alert type.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun type(): Type = type.getRequired("type")
 
-    /** Also referred to as alert_id in this documentation. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    /** The creation time of the resource in Orb. */
+    /**
+     * Returns the raw JSON value of [createdAt].
+     *
+     * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("created_at")
     @ExcludeMissing
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
-    /** The name of the currency the credit balance or invoice cost is denominated in. */
+    /**
+     * Returns the raw JSON value of [currency].
+     *
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
-    /** The customer the alert applies to. */
+    /**
+     * Returns the raw JSON value of [customer].
+     *
+     * Unlike [customer], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
 
-    /** Whether the alert is enabled or disabled. */
+    /**
+     * Returns the raw JSON value of [enabled].
+     *
+     * Unlike [enabled], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("enabled") @ExcludeMissing fun _enabled(): JsonField<Boolean> = enabled
 
-    /** The metric the alert applies to. */
+    /**
+     * Returns the raw JSON value of [metric].
+     *
+     * Unlike [metric], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("metric") @ExcludeMissing fun _metric(): JsonField<Metric> = metric
 
-    /** The plan the alert applies to. */
+    /**
+     * Returns the raw JSON value of [plan].
+     *
+     * Unlike [plan], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("plan") @ExcludeMissing fun _plan(): JsonField<Plan> = plan
 
-    /** The subscription the alert applies to. */
+    /**
+     * Returns the raw JSON value of [subscription].
+     *
+     * Unlike [subscription], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("subscription")
     @ExcludeMissing
     fun _subscription(): JsonField<Subscription> = subscription
 
-    /** The thresholds that define the conditions under which the alert will be triggered. */
+    /**
+     * Returns the raw JSON value of [thresholds].
+     *
+     * Unlike [thresholds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("thresholds")
     @ExcludeMissing
     fun _thresholds(): JsonField<List<Threshold>> = thresholds
 
-    /** The type of alert. This must be a valid alert type. */
+    /**
+     * Returns the raw JSON value of [type].
+     *
+     * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
     @JsonAnyGetter
@@ -203,50 +293,93 @@ private constructor(
         /** Also referred to as alert_id in this documentation. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** Also referred to as alert_id in this documentation. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The creation time of the resource in Orb. */
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-        /** The creation time of the resource in Orb. */
+        /**
+         * Sets [Builder.createdAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         /** The name of the currency the credit balance or invoice cost is denominated in. */
         fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
 
-        /** The name of the currency the credit balance or invoice cost is denominated in. */
+        /**
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /** The customer the alert applies to. */
         fun customer(customer: Customer?) = customer(JsonField.ofNullable(customer))
 
-        /** The customer the alert applies to. */
+        /**
+         * Sets [Builder.customer] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.customer] with a well-typed [Customer] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
         /** Whether the alert is enabled or disabled. */
         fun enabled(enabled: Boolean) = enabled(JsonField.of(enabled))
 
-        /** Whether the alert is enabled or disabled. */
+        /**
+         * Sets [Builder.enabled] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.enabled] with a well-typed [Boolean] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun enabled(enabled: JsonField<Boolean>) = apply { this.enabled = enabled }
 
         /** The metric the alert applies to. */
         fun metric(metric: Metric?) = metric(JsonField.ofNullable(metric))
 
-        /** The metric the alert applies to. */
+        /**
+         * Sets [Builder.metric] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metric] with a well-typed [Metric] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun metric(metric: JsonField<Metric>) = apply { this.metric = metric }
 
         /** The plan the alert applies to. */
         fun plan(plan: Plan?) = plan(JsonField.ofNullable(plan))
 
-        /** The plan the alert applies to. */
+        /**
+         * Sets [Builder.plan] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.plan] with a well-typed [Plan] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
         /** The subscription the alert applies to. */
         fun subscription(subscription: Subscription?) =
             subscription(JsonField.ofNullable(subscription))
 
-        /** The subscription the alert applies to. */
+        /**
+         * Sets [Builder.subscription] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.subscription] with a well-typed [Subscription] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun subscription(subscription: JsonField<Subscription>) = apply {
             this.subscription = subscription
         }
@@ -254,12 +387,22 @@ private constructor(
         /** The thresholds that define the conditions under which the alert will be triggered. */
         fun thresholds(thresholds: List<Threshold>?) = thresholds(JsonField.ofNullable(thresholds))
 
-        /** The thresholds that define the conditions under which the alert will be triggered. */
+        /**
+         * Sets [Builder.thresholds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.thresholds] with a well-typed `List<Threshold>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
             this.thresholds = thresholds.map { it.toMutableList() }
         }
 
-        /** The thresholds that define the conditions under which the alert will be triggered. */
+        /**
+         * Adds a single [Threshold] to [thresholds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addThreshold(threshold: Threshold) = apply {
             thresholds =
                 (thresholds ?: JsonField.of(mutableListOf())).also {
@@ -270,7 +413,12 @@ private constructor(
         /** The type of alert. This must be a valid alert type. */
         fun type(type: Type) = type(JsonField.of(type))
 
-        /** The type of alert. This must be a valid alert type. */
+        /**
+         * Sets [Builder.type] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -321,12 +469,31 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+        /**
+         * Returns the raw JSON value of [externalCustomerId].
+         *
+         * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("external_customer_id")
         @ExcludeMissing
         fun _externalCustomerId(): JsonField<String> = externalCustomerId
@@ -378,11 +545,25 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun externalCustomerId(externalCustomerId: String?) =
                 externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
+            /**
+             * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                 this.externalCustomerId = externalCustomerId
             }
@@ -442,8 +623,17 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         @JsonAnyGetter
@@ -489,6 +679,13 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -550,32 +747,63 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun id(): String? = id.getNullable("id")
 
         /**
          * An optional user-defined ID for this plan resource, used throughout the system as an
          * alias for this Plan. Use this field to identify a plan by an existing identifier in your
          * system.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun externalPlanId(): String? = externalPlanId.getNullable("external_plan_id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun name(): String? = name.getNullable("name")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun planVersion(): String = planVersion.getRequired("plan_version")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         /**
-         * An optional user-defined ID for this plan resource, used throughout the system as an
-         * alias for this Plan. Use this field to identify a plan by an existing identifier in your
-         * system.
+         * Returns the raw JSON value of [externalPlanId].
+         *
+         * Unlike [externalPlanId], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("external_plan_id")
         @ExcludeMissing
         fun _externalPlanId(): JsonField<String> = externalPlanId
 
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
+        /**
+         * Returns the raw JSON value of [planVersion].
+         *
+         * Unlike [planVersion], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("plan_version")
         @ExcludeMissing
         fun _planVersion(): JsonField<String> = planVersion
@@ -635,6 +863,13 @@ private constructor(
 
             fun id(id: String?) = id(JsonField.ofNullable(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             /**
@@ -646,9 +881,11 @@ private constructor(
                 externalPlanId(JsonField.ofNullable(externalPlanId))
 
             /**
-             * An optional user-defined ID for this plan resource, used throughout the system as an
-             * alias for this Plan. Use this field to identify a plan by an existing identifier in
-             * your system.
+             * Sets [Builder.externalPlanId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalPlanId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun externalPlanId(externalPlanId: JsonField<String>) = apply {
                 this.externalPlanId = externalPlanId
@@ -656,10 +893,24 @@ private constructor(
 
             fun name(name: String?) = name(JsonField.ofNullable(name))
 
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun planVersion(planVersion: String) = planVersion(JsonField.of(planVersion))
 
+            /**
+             * Sets [Builder.planVersion] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.planVersion] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun planVersion(planVersion: JsonField<String>) = apply {
                 this.planVersion = planVersion
             }
@@ -721,8 +972,17 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun id(): String = id.getRequired("id")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         @JsonAnyGetter
@@ -768,6 +1028,13 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -826,13 +1093,16 @@ private constructor(
          * The value at which an alert will fire. For credit balance alerts, the alert will fire at
          * or below this value. For usage and cost alerts, the alert will fire at or above this
          * value.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun value(): Double = value.getRequired("value")
 
         /**
-         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
-         * or below this value. For usage and cost alerts, the alert will fire at or above this
-         * value.
+         * Returns the raw JSON value of [value].
+         *
+         * Unlike [value], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Double> = value
 
@@ -885,9 +1155,11 @@ private constructor(
             fun value(value: Double) = value(JsonField.of(value))
 
             /**
-             * The value at which an alert will fire. For credit balance alerts, the alert will fire
-             * at or below this value. For usage and cost alerts, the alert will fire at or above
-             * this value.
+             * Sets [Builder.value] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.value] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun value(value: JsonField<Double>) = apply { this.value = value }
 

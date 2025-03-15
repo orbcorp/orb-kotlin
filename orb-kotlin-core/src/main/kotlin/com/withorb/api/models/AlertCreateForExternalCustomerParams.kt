@@ -40,22 +40,49 @@ private constructor(
 
     fun externalCustomerId(): String = externalCustomerId
 
-    /** The case sensitive currency or custom pricing unit to use for this alert. */
+    /**
+     * The case sensitive currency or custom pricing unit to use for this alert.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun currency(): String = body.currency()
 
-    /** The type of alert to create. This must be a valid alert type. */
+    /**
+     * The type of alert to create. This must be a valid alert type.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun type(): Type = body.type()
 
-    /** The thresholds that define the values at which the alert will be triggered. */
+    /**
+     * The thresholds that define the values at which the alert will be triggered.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun thresholds(): List<Threshold>? = body.thresholds()
 
-    /** The case sensitive currency or custom pricing unit to use for this alert. */
+    /**
+     * Returns the raw JSON value of [currency].
+     *
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _currency(): JsonField<String> = body._currency()
 
-    /** The type of alert to create. This must be a valid alert type. */
+    /**
+     * Returns the raw JSON value of [type].
+     *
+     * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _type(): JsonField<Type> = body._type()
 
-    /** The thresholds that define the values at which the alert will be triggered. */
+    /**
+     * Returns the raw JSON value of [thresholds].
+     *
+     * Unlike [thresholds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _thresholds(): JsonField<List<Threshold>> = body._thresholds()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -92,22 +119,49 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The case sensitive currency or custom pricing unit to use for this alert. */
+        /**
+         * The case sensitive currency or custom pricing unit to use for this alert.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): String = currency.getRequired("currency")
 
-        /** The type of alert to create. This must be a valid alert type. */
+        /**
+         * The type of alert to create. This must be a valid alert type.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun type(): Type = type.getRequired("type")
 
-        /** The thresholds that define the values at which the alert will be triggered. */
+        /**
+         * The thresholds that define the values at which the alert will be triggered.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun thresholds(): List<Threshold>? = thresholds.getNullable("thresholds")
 
-        /** The case sensitive currency or custom pricing unit to use for this alert. */
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
-        /** The type of alert to create. This must be a valid alert type. */
+        /**
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
-        /** The thresholds that define the values at which the alert will be triggered. */
+        /**
+         * Returns the raw JSON value of [thresholds].
+         *
+         * Unlike [thresholds], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("thresholds")
         @ExcludeMissing
         fun _thresholds(): JsonField<List<Threshold>> = thresholds
@@ -163,25 +217,47 @@ private constructor(
             /** The case sensitive currency or custom pricing unit to use for this alert. */
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            /** The case sensitive currency or custom pricing unit to use for this alert. */
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             /** The type of alert to create. This must be a valid alert type. */
             fun type(type: Type) = type(JsonField.of(type))
 
-            /** The type of alert to create. This must be a valid alert type. */
+            /**
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /** The thresholds that define the values at which the alert will be triggered. */
             fun thresholds(thresholds: List<Threshold>?) =
                 thresholds(JsonField.ofNullable(thresholds))
 
-            /** The thresholds that define the values at which the alert will be triggered. */
+            /**
+             * Sets [Builder.thresholds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.thresholds] with a well-typed `List<Threshold>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
                 this.thresholds = thresholds.map { it.toMutableList() }
             }
 
-            /** The thresholds that define the values at which the alert will be triggered. */
+            /**
+             * Adds a single [Threshold] to [thresholds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addThreshold(threshold: Threshold) = apply {
                 thresholds =
                     (thresholds ?: JsonField.of(mutableListOf())).also {
@@ -279,24 +355,44 @@ private constructor(
         /** The case sensitive currency or custom pricing unit to use for this alert. */
         fun currency(currency: String) = apply { body.currency(currency) }
 
-        /** The case sensitive currency or custom pricing unit to use for this alert. */
+        /**
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun currency(currency: JsonField<String>) = apply { body.currency(currency) }
 
         /** The type of alert to create. This must be a valid alert type. */
         fun type(type: Type) = apply { body.type(type) }
 
-        /** The type of alert to create. This must be a valid alert type. */
+        /**
+         * Sets [Builder.type] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun type(type: JsonField<Type>) = apply { body.type(type) }
 
         /** The thresholds that define the values at which the alert will be triggered. */
         fun thresholds(thresholds: List<Threshold>?) = apply { body.thresholds(thresholds) }
 
-        /** The thresholds that define the values at which the alert will be triggered. */
+        /**
+         * Sets [Builder.thresholds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.thresholds] with a well-typed `List<Threshold>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
             body.thresholds(thresholds)
         }
 
-        /** The thresholds that define the values at which the alert will be triggered. */
+        /**
+         * Adds a single [Threshold] to [thresholds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addThreshold(threshold: Threshold) = apply { body.addThreshold(threshold) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
@@ -545,13 +641,16 @@ private constructor(
          * The value at which an alert will fire. For credit balance alerts, the alert will fire at
          * or below this value. For usage and cost alerts, the alert will fire at or above this
          * value.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun value(): Double = value.getRequired("value")
 
         /**
-         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
-         * or below this value. For usage and cost alerts, the alert will fire at or above this
-         * value.
+         * Returns the raw JSON value of [value].
+         *
+         * Unlike [value], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Double> = value
 
@@ -604,9 +703,11 @@ private constructor(
             fun value(value: Double) = value(JsonField.of(value))
 
             /**
-             * The value at which an alert will fire. For credit balance alerts, the alert will fire
-             * at or below this value. For usage and cost alerts, the alert will fire at or above
-             * this value.
+             * Sets [Builder.value] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.value] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun value(value: JsonField<Double>) = apply { this.value = value }
 

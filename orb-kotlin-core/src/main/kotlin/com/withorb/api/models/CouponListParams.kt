@@ -95,7 +95,11 @@ private constructor(
         /** The number of items to fetch. Defaults to 20. */
         fun limit(limit: Long?) = apply { this.limit = limit }
 
-        /** The number of items to fetch. Defaults to 20. */
+        /**
+         * Alias for [Builder.limit].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun limit(limit: Long) = limit(limit as Long?)
 
         /** Filter to coupons matching this redemption code. */
@@ -107,7 +111,9 @@ private constructor(
         fun showArchived(showArchived: Boolean?) = apply { this.showArchived = showArchived }
 
         /**
-         * Show archived coupons as well (by default, this endpoint only returns active coupons).
+         * Alias for [Builder.showArchived].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun showArchived(showArchived: Boolean) = showArchived(showArchived as Boolean?)
 

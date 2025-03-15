@@ -134,8 +134,9 @@ private constructor(
         }
 
         /**
-         * If set to True, all expired and depleted blocks, as well as active block will be
-         * returned.
+         * Alias for [Builder.includeAllBlocks].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun includeAllBlocks(includeAllBlocks: Boolean) =
             includeAllBlocks(includeAllBlocks as Boolean?)
@@ -143,7 +144,11 @@ private constructor(
         /** The number of items to fetch. Defaults to 20. */
         fun limit(limit: Long?) = apply { this.limit = limit }
 
-        /** The number of items to fetch. Defaults to 20. */
+        /**
+         * Alias for [Builder.limit].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun limit(limit: Long) = limit(limit as Long?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

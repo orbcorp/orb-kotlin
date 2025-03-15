@@ -14,6 +14,7 @@ import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
@@ -34,22 +35,58 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun plan(): Plan = plan.getRequired("plan")
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
+    /**
+     * Returns the raw JSON value of [createdAt].
+     *
+     * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("created_at")
     @ExcludeMissing
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
+    /**
+     * Returns the raw JSON value of [endDate].
+     *
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("end_date") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
 
+    /**
+     * Returns the raw JSON value of [plan].
+     *
+     * Unlike [plan], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("plan") @ExcludeMissing fun _plan(): JsonField<Plan> = plan
 
+    /**
+     * Returns the raw JSON value of [startDate].
+     *
+     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("start_date")
     @ExcludeMissing
     fun _startDate(): JsonField<OffsetDateTime> = startDate
@@ -112,18 +149,45 @@ private constructor(
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
+        /**
+         * Sets [Builder.createdAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
+        /**
+         * Sets [Builder.endDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
         fun plan(plan: Plan) = plan(JsonField.of(plan))
 
+        /**
+         * Sets [Builder.plan] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.plan] with a well-typed [Plan] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
         fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
+        /**
+         * Sets [Builder.startDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { this.startDate = startDate }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -170,28 +234,50 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun id(): String? = id.getNullable("id")
 
         /**
          * An optional user-defined ID for this plan resource, used throughout the system as an
          * alias for this Plan. Use this field to identify a plan by an existing identifier in your
          * system.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun externalPlanId(): String? = externalPlanId.getNullable("external_plan_id")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun name(): String? = name.getNullable("name")
 
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         /**
-         * An optional user-defined ID for this plan resource, used throughout the system as an
-         * alias for this Plan. Use this field to identify a plan by an existing identifier in your
-         * system.
+         * Returns the raw JSON value of [externalPlanId].
+         *
+         * Unlike [externalPlanId], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("external_plan_id")
         @ExcludeMissing
         fun _externalPlanId(): JsonField<String> = externalPlanId
 
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         @JsonAnyGetter
@@ -245,6 +331,13 @@ private constructor(
 
             fun id(id: String?) = id(JsonField.ofNullable(id))
 
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             /**
@@ -256,9 +349,11 @@ private constructor(
                 externalPlanId(JsonField.ofNullable(externalPlanId))
 
             /**
-             * An optional user-defined ID for this plan resource, used throughout the system as an
-             * alias for this Plan. Use this field to identify a plan by an existing identifier in
-             * your system.
+             * Sets [Builder.externalPlanId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalPlanId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun externalPlanId(externalPlanId: JsonField<String>) = apply {
                 this.externalPlanId = externalPlanId
@@ -266,6 +361,13 @@ private constructor(
 
             fun name(name: String?) = name(JsonField.ofNullable(name))
 
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
