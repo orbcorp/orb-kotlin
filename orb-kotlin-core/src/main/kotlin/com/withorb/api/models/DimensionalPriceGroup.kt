@@ -15,6 +15,7 @@ import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
 /**
@@ -42,18 +43,35 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
      * The billable metric associated with this dimensional price group. All prices associated with
      * this dimensional price group will be computed using this billable metric.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun billableMetricId(): String = billableMetricId.getRequired("billable_metric_id")
 
-    /** The dimensions that this dimensional price group is defined over */
+    /**
+     * The dimensions that this dimensional price group is defined over
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun dimensions(): List<String> = dimensions.getRequired("dimensions")
 
-    /** An alias for the dimensional price group */
+    /**
+     * An alias for the dimensional price group
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun externalDimensionalPriceGroupId(): String? =
         externalDimensionalPriceGroupId.getNullable("external_dimensional_price_group_id")
 
@@ -61,40 +79,68 @@ private constructor(
      * User specified key-value pairs for the resource. If not present, this defaults to an empty
      * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
      * metadata mapping can be cleared by setting `metadata` to `null`.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun metadata(): Metadata = metadata.getRequired("metadata")
 
-    /** The name of the dimensional price group */
+    /**
+     * The name of the dimensional price group
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = name.getRequired("name")
 
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The billable metric associated with this dimensional price group. All prices associated with
-     * this dimensional price group will be computed using this billable metric.
+     * Returns the raw JSON value of [billableMetricId].
+     *
+     * Unlike [billableMetricId], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("billable_metric_id")
     @ExcludeMissing
     fun _billableMetricId(): JsonField<String> = billableMetricId
 
-    /** The dimensions that this dimensional price group is defined over */
+    /**
+     * Returns the raw JSON value of [dimensions].
+     *
+     * Unlike [dimensions], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dimensions")
     @ExcludeMissing
     fun _dimensions(): JsonField<List<String>> = dimensions
 
-    /** An alias for the dimensional price group */
+    /**
+     * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+     *
+     * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("external_dimensional_price_group_id")
     @ExcludeMissing
     fun _externalDimensionalPriceGroupId(): JsonField<String> = externalDimensionalPriceGroupId
 
     /**
-     * User specified key-value pairs for the resource. If not present, this defaults to an empty
-     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
-     * metadata mapping can be cleared by setting `metadata` to `null`.
+     * Returns the raw JSON value of [metadata].
+     *
+     * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
-    /** The name of the dimensional price group */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     @JsonAnyGetter
@@ -160,6 +206,12 @@ private constructor(
 
         fun id(id: String) = id(JsonField.of(id))
 
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -170,8 +222,11 @@ private constructor(
             billableMetricId(JsonField.of(billableMetricId))
 
         /**
-         * The billable metric associated with this dimensional price group. All prices associated
-         * with this dimensional price group will be computed using this billable metric.
+         * Sets [Builder.billableMetricId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billableMetricId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun billableMetricId(billableMetricId: JsonField<String>) = apply {
             this.billableMetricId = billableMetricId
@@ -180,12 +235,22 @@ private constructor(
         /** The dimensions that this dimensional price group is defined over */
         fun dimensions(dimensions: List<String>) = dimensions(JsonField.of(dimensions))
 
-        /** The dimensions that this dimensional price group is defined over */
+        /**
+         * Sets [Builder.dimensions] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dimensions] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dimensions(dimensions: JsonField<List<String>>) = apply {
             this.dimensions = dimensions.map { it.toMutableList() }
         }
 
-        /** The dimensions that this dimensional price group is defined over */
+        /**
+         * Adds a single [String] to [dimensions].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addDimension(dimension: String) = apply {
             dimensions =
                 (dimensions ?: JsonField.of(mutableListOf())).also {
@@ -197,7 +262,13 @@ private constructor(
         fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
             externalDimensionalPriceGroupId(JsonField.ofNullable(externalDimensionalPriceGroupId))
 
-        /** An alias for the dimensional price group */
+        /**
+         * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalDimensionalPriceGroupId] with a well-typed
+         * [String] value instead. This method is primarily for setting the field to an undocumented
+         * or not yet supported value.
+         */
         fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: JsonField<String>) =
             apply {
                 this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
@@ -211,16 +282,23 @@ private constructor(
         fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         * Sets [Builder.metadata] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
         /** The name of the dimensional price group */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** The name of the dimensional price group */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

@@ -145,7 +145,11 @@ private constructor(
         /** The number of items to fetch. Defaults to 20. */
         fun limit(limit: Long?) = apply { this.limit = limit }
 
-        /** The number of items to fetch. Defaults to 20. */
+        /**
+         * Alias for [Builder.limit].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun limit(limit: Long) = limit(limit as Long?)
 
         /** The plan status to filter to ('active', 'archived', or 'draft'). */

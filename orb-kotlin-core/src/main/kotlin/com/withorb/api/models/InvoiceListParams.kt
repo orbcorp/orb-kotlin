@@ -267,16 +267,30 @@ private constructor(
 
         fun isRecurring(isRecurring: Boolean?) = apply { this.isRecurring = isRecurring }
 
+        /**
+         * Alias for [Builder.isRecurring].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun isRecurring(isRecurring: Boolean) = isRecurring(isRecurring as Boolean?)
 
         /** The number of items to fetch. Defaults to 20. */
         fun limit(limit: Long?) = apply { this.limit = limit }
 
-        /** The number of items to fetch. Defaults to 20. */
+        /**
+         * Alias for [Builder.limit].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun limit(limit: Long) = limit(limit as Long?)
 
         fun status(status: List<Status>?) = apply { this.status = status?.toMutableList() }
 
+        /**
+         * Adds a single [Status] to [Builder.status].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addStatus(status: Status) = apply {
             this.status = (this.status ?: mutableListOf()).apply { add(status) }
         }

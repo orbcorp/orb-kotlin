@@ -44,22 +44,49 @@ private constructor(
 
     fun subscriptionId(): String = subscriptionId
 
-    /** The thresholds that define the values at which the alert will be triggered. */
+    /**
+     * The thresholds that define the values at which the alert will be triggered.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun thresholds(): List<Threshold> = body.thresholds()
 
-    /** The type of alert to create. This must be a valid alert type. */
+    /**
+     * The type of alert to create. This must be a valid alert type.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun type(): Type = body.type()
 
-    /** The metric to track usage for. */
+    /**
+     * The metric to track usage for.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
     fun metricId(): String? = body.metricId()
 
-    /** The thresholds that define the values at which the alert will be triggered. */
+    /**
+     * Returns the raw JSON value of [thresholds].
+     *
+     * Unlike [thresholds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _thresholds(): JsonField<List<Threshold>> = body._thresholds()
 
-    /** The type of alert to create. This must be a valid alert type. */
+    /**
+     * Returns the raw JSON value of [type].
+     *
+     * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _type(): JsonField<Type> = body._type()
 
-    /** The metric to track usage for. */
+    /**
+     * Returns the raw JSON value of [metricId].
+     *
+     * Unlike [metricId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _metricId(): JsonField<String> = body._metricId()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -96,24 +123,51 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The thresholds that define the values at which the alert will be triggered. */
+        /**
+         * The thresholds that define the values at which the alert will be triggered.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun thresholds(): List<Threshold> = thresholds.getRequired("thresholds")
 
-        /** The type of alert to create. This must be a valid alert type. */
+        /**
+         * The type of alert to create. This must be a valid alert type.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun type(): Type = type.getRequired("type")
 
-        /** The metric to track usage for. */
+        /**
+         * The metric to track usage for.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun metricId(): String? = metricId.getNullable("metric_id")
 
-        /** The thresholds that define the values at which the alert will be triggered. */
+        /**
+         * Returns the raw JSON value of [thresholds].
+         *
+         * Unlike [thresholds], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("thresholds")
         @ExcludeMissing
         fun _thresholds(): JsonField<List<Threshold>> = thresholds
 
-        /** The type of alert to create. This must be a valid alert type. */
+        /**
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
-        /** The metric to track usage for. */
+        /**
+         * Returns the raw JSON value of [metricId].
+         *
+         * Unlike [metricId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("metric_id") @ExcludeMissing fun _metricId(): JsonField<String> = metricId
 
         @JsonAnyGetter
@@ -167,12 +221,22 @@ private constructor(
             /** The thresholds that define the values at which the alert will be triggered. */
             fun thresholds(thresholds: List<Threshold>) = thresholds(JsonField.of(thresholds))
 
-            /** The thresholds that define the values at which the alert will be triggered. */
+            /**
+             * Sets [Builder.thresholds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.thresholds] with a well-typed `List<Threshold>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
                 this.thresholds = thresholds.map { it.toMutableList() }
             }
 
-            /** The thresholds that define the values at which the alert will be triggered. */
+            /**
+             * Adds a single [Threshold] to [thresholds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addThreshold(threshold: Threshold) = apply {
                 thresholds =
                     (thresholds ?: JsonField.of(mutableListOf())).also {
@@ -183,13 +247,25 @@ private constructor(
             /** The type of alert to create. This must be a valid alert type. */
             fun type(type: Type) = type(JsonField.of(type))
 
-            /** The type of alert to create. This must be a valid alert type. */
+            /**
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /** The metric to track usage for. */
             fun metricId(metricId: String?) = metricId(JsonField.ofNullable(metricId))
 
-            /** The metric to track usage for. */
+            /**
+             * Sets [Builder.metricId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metricId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun metricId(metricId: JsonField<String>) = apply { this.metricId = metricId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -279,24 +355,44 @@ private constructor(
         /** The thresholds that define the values at which the alert will be triggered. */
         fun thresholds(thresholds: List<Threshold>) = apply { body.thresholds(thresholds) }
 
-        /** The thresholds that define the values at which the alert will be triggered. */
+        /**
+         * Sets [Builder.thresholds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.thresholds] with a well-typed `List<Threshold>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
             body.thresholds(thresholds)
         }
 
-        /** The thresholds that define the values at which the alert will be triggered. */
+        /**
+         * Adds a single [Threshold] to [thresholds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addThreshold(threshold: Threshold) = apply { body.addThreshold(threshold) }
 
         /** The type of alert to create. This must be a valid alert type. */
         fun type(type: Type) = apply { body.type(type) }
 
-        /** The type of alert to create. This must be a valid alert type. */
+        /**
+         * Sets [Builder.type] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun type(type: JsonField<Type>) = apply { body.type(type) }
 
         /** The metric to track usage for. */
         fun metricId(metricId: String?) = apply { body.metricId(metricId) }
 
-        /** The metric to track usage for. */
+        /**
+         * Sets [Builder.metricId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metricId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun metricId(metricId: JsonField<String>) = apply { body.metricId(metricId) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
@@ -441,13 +537,16 @@ private constructor(
          * The value at which an alert will fire. For credit balance alerts, the alert will fire at
          * or below this value. For usage and cost alerts, the alert will fire at or above this
          * value.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun value(): Double = value.getRequired("value")
 
         /**
-         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
-         * or below this value. For usage and cost alerts, the alert will fire at or above this
-         * value.
+         * Returns the raw JSON value of [value].
+         *
+         * Unlike [value], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Double> = value
 
@@ -500,9 +599,11 @@ private constructor(
             fun value(value: Double) = value(JsonField.of(value))
 
             /**
-             * The value at which an alert will fire. For credit balance alerts, the alert will fire
-             * at or below this value. For usage and cost alerts, the alert will fire at or above
-             * this value.
+             * Sets [Builder.value] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.value] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun value(value: JsonField<Double>) = apply { this.value = value }
 

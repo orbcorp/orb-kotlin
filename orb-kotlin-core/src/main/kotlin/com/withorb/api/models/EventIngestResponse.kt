@@ -15,6 +15,7 @@ import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
 @NoAutoDetect
@@ -31,6 +32,9 @@ private constructor(
     /**
      * Contains all failing validation events. In the case of a 200, this array will always be
      * empty. This field will always be present.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun validationFailed(): List<ValidationFailed> =
         validationFailed.getRequired("validation_failed")
@@ -38,20 +42,26 @@ private constructor(
     /**
      * Optional debug information (only present when debug=true is passed to the endpoint). Contains
      * ingested and duplicate event idempotency keys.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
     fun debug(): Debug? = debug.getNullable("debug")
 
     /**
-     * Contains all failing validation events. In the case of a 200, this array will always be
-     * empty. This field will always be present.
+     * Returns the raw JSON value of [validationFailed].
+     *
+     * Unlike [validationFailed], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("validation_failed")
     @ExcludeMissing
     fun _validationFailed(): JsonField<List<ValidationFailed>> = validationFailed
 
     /**
-     * Optional debug information (only present when debug=true is passed to the endpoint). Contains
-     * ingested and duplicate event idempotency keys.
+     * Returns the raw JSON value of [debug].
+     *
+     * Unlike [debug], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("debug") @ExcludeMissing fun _debug(): JsonField<Debug> = debug
 
@@ -107,16 +117,20 @@ private constructor(
             validationFailed(JsonField.of(validationFailed))
 
         /**
-         * Contains all failing validation events. In the case of a 200, this array will always be
-         * empty. This field will always be present.
+         * Sets [Builder.validationFailed] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.validationFailed] with a well-typed
+         * `List<ValidationFailed>` value instead. This method is primarily for setting the field to
+         * an undocumented or not yet supported value.
          */
         fun validationFailed(validationFailed: JsonField<List<ValidationFailed>>) = apply {
             this.validationFailed = validationFailed.map { it.toMutableList() }
         }
 
         /**
-         * Contains all failing validation events. In the case of a 200, this array will always be
-         * empty. This field will always be present.
+         * Adds a single [ValidationFailed] to [Builder.validationFailed].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addValidationFailed(validationFailed: ValidationFailed) = apply {
             this.validationFailed =
@@ -132,8 +146,10 @@ private constructor(
         fun debug(debug: Debug?) = debug(JsonField.ofNullable(debug))
 
         /**
-         * Optional debug information (only present when debug=true is passed to the endpoint).
-         * Contains ingested and duplicate event idempotency keys.
+         * Sets [Builder.debug] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.debug] with a well-typed [Debug] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun debug(debug: JsonField<Debug>) = apply { this.debug = debug }
 
@@ -178,18 +194,38 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The passed idempotency_key corresponding to the validation_errors */
+        /**
+         * The passed idempotency_key corresponding to the validation_errors
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun idempotencyKey(): String = idempotencyKey.getRequired("idempotency_key")
 
-        /** An array of strings corresponding to validation failures for this idempotency_key. */
+        /**
+         * An array of strings corresponding to validation failures for this idempotency_key.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun validationErrors(): List<String> = validationErrors.getRequired("validation_errors")
 
-        /** The passed idempotency_key corresponding to the validation_errors */
+        /**
+         * Returns the raw JSON value of [idempotencyKey].
+         *
+         * Unlike [idempotencyKey], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("idempotency_key")
         @ExcludeMissing
         fun _idempotencyKey(): JsonField<String> = idempotencyKey
 
-        /** An array of strings corresponding to validation failures for this idempotency_key. */
+        /**
+         * Returns the raw JSON value of [validationErrors].
+         *
+         * Unlike [validationErrors], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("validation_errors")
         @ExcludeMissing
         fun _validationErrors(): JsonField<List<String>> = validationErrors
@@ -243,7 +279,13 @@ private constructor(
             fun idempotencyKey(idempotencyKey: String) =
                 idempotencyKey(JsonField.of(idempotencyKey))
 
-            /** The passed idempotency_key corresponding to the validation_errors */
+            /**
+             * Sets [Builder.idempotencyKey] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.idempotencyKey] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun idempotencyKey(idempotencyKey: JsonField<String>) = apply {
                 this.idempotencyKey = idempotencyKey
             }
@@ -255,14 +297,20 @@ private constructor(
                 validationErrors(JsonField.of(validationErrors))
 
             /**
-             * An array of strings corresponding to validation failures for this idempotency_key.
+             * Sets [Builder.validationErrors] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.validationErrors] with a well-typed `List<String>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun validationErrors(validationErrors: JsonField<List<String>>) = apply {
                 this.validationErrors = validationErrors.map { it.toMutableList() }
             }
 
             /**
-             * An array of strings corresponding to validation failures for this idempotency_key.
+             * Adds a single [String] to [validationErrors].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addValidationError(validationError: String) = apply {
                 validationErrors =
@@ -334,14 +382,32 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun duplicate(): List<String> = duplicate.getRequired("duplicate")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun ingested(): List<String> = ingested.getRequired("ingested")
 
+        /**
+         * Returns the raw JSON value of [duplicate].
+         *
+         * Unlike [duplicate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("duplicate")
         @ExcludeMissing
         fun _duplicate(): JsonField<List<String>> = duplicate
 
+        /**
+         * Returns the raw JSON value of [ingested].
+         *
+         * Unlike [ingested], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("ingested")
         @ExcludeMissing
         fun _ingested(): JsonField<List<String>> = ingested
@@ -393,10 +459,22 @@ private constructor(
 
             fun duplicate(duplicate: List<String>) = duplicate(JsonField.of(duplicate))
 
+            /**
+             * Sets [Builder.duplicate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.duplicate] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun duplicate(duplicate: JsonField<List<String>>) = apply {
                 this.duplicate = duplicate.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [String] to [Builder.duplicate].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addDuplicate(duplicate: String) = apply {
                 this.duplicate =
                     (this.duplicate ?: JsonField.of(mutableListOf())).also {
@@ -406,10 +484,22 @@ private constructor(
 
             fun ingested(ingested: List<String>) = ingested(JsonField.of(ingested))
 
+            /**
+             * Sets [Builder.ingested] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ingested] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun ingested(ingested: JsonField<List<String>>) = apply {
                 this.ingested = ingested.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [String] to [Builder.ingested].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addIngested(ingested: String) = apply {
                 this.ingested =
                     (this.ingested ?: JsonField.of(mutableListOf())).also {

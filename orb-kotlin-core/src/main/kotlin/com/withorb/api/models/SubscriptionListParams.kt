@@ -164,6 +164,11 @@ private constructor(
             this.customerId = customerId?.toMutableList()
         }
 
+        /**
+         * Adds a single [String] to [Builder.customerId].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addCustomerId(customerId: String) = apply {
             this.customerId = (this.customerId ?: mutableListOf()).apply { add(customerId) }
         }
@@ -172,6 +177,11 @@ private constructor(
             this.externalCustomerId = externalCustomerId?.toMutableList()
         }
 
+        /**
+         * Adds a single [String] to [Builder.externalCustomerId].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addExternalCustomerId(externalCustomerId: String) = apply {
             this.externalCustomerId =
                 (this.externalCustomerId ?: mutableListOf()).apply { add(externalCustomerId) }
@@ -180,7 +190,11 @@ private constructor(
         /** The number of items to fetch. Defaults to 20. */
         fun limit(limit: Long?) = apply { this.limit = limit }
 
-        /** The number of items to fetch. Defaults to 20. */
+        /**
+         * Alias for [Builder.limit].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun limit(limit: Long) = limit(limit as Long?)
 
         fun status(status: Status?) = apply { this.status = status }

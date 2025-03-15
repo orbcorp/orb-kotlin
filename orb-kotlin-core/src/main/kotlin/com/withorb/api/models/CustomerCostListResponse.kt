@@ -15,6 +15,7 @@ import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
@@ -28,8 +29,17 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun data(): List<Data> = data.getRequired("data")
 
+    /**
+     * Returns the raw JSON value of [data].
+     *
+     * Unlike [data], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Data>> = data
 
     @JsonAnyGetter
@@ -75,10 +85,21 @@ private constructor(
 
         fun data(data: List<Data>) = data(JsonField.of(data))
 
+        /**
+         * Sets [Builder.data] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.data] with a well-typed `List<Data>` value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun data(data: JsonField<List<Data>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
+        /**
+         * Adds a single [Data] to [Builder.data].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addData(data: Data) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
@@ -135,34 +156,82 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun perPriceCosts(): List<PerPriceCost> = perPriceCosts.getRequired("per_price_costs")
 
-        /** Total costs for the timeframe, excluding any minimums and discounts. */
+        /**
+         * Total costs for the timeframe, excluding any minimums and discounts.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun subtotal(): String = subtotal.getRequired("subtotal")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
 
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
-        /** Total costs for the timeframe, including any minimums and discounts. */
+        /**
+         * Total costs for the timeframe, including any minimums and discounts.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun total(): String = total.getRequired("total")
 
+        /**
+         * Returns the raw JSON value of [perPriceCosts].
+         *
+         * Unlike [perPriceCosts], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("per_price_costs")
         @ExcludeMissing
         fun _perPriceCosts(): JsonField<List<PerPriceCost>> = perPriceCosts
 
-        /** Total costs for the timeframe, excluding any minimums and discounts. */
+        /**
+         * Returns the raw JSON value of [subtotal].
+         *
+         * Unlike [subtotal], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("subtotal") @ExcludeMissing fun _subtotal(): JsonField<String> = subtotal
 
+        /**
+         * Returns the raw JSON value of [timeframeEnd].
+         *
+         * Unlike [timeframeEnd], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("timeframe_end")
         @ExcludeMissing
         fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
 
+        /**
+         * Returns the raw JSON value of [timeframeStart].
+         *
+         * Unlike [timeframeStart], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("timeframe_start")
         @ExcludeMissing
         fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
 
-        /** Total costs for the timeframe, including any minimums and discounts. */
+        /**
+         * Returns the raw JSON value of [total].
+         *
+         * Unlike [total], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("total") @ExcludeMissing fun _total(): JsonField<String> = total
 
         @JsonAnyGetter
@@ -225,10 +294,22 @@ private constructor(
             fun perPriceCosts(perPriceCosts: List<PerPriceCost>) =
                 perPriceCosts(JsonField.of(perPriceCosts))
 
+            /**
+             * Sets [Builder.perPriceCosts] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.perPriceCosts] with a well-typed
+             * `List<PerPriceCost>` value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
+             */
             fun perPriceCosts(perPriceCosts: JsonField<List<PerPriceCost>>) = apply {
                 this.perPriceCosts = perPriceCosts.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [PerPriceCost] to [perPriceCosts].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addPerPriceCost(perPriceCost: PerPriceCost) = apply {
                 perPriceCosts =
                     (perPriceCosts ?: JsonField.of(mutableListOf())).also {
@@ -239,12 +320,25 @@ private constructor(
             /** Total costs for the timeframe, excluding any minimums and discounts. */
             fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
 
-            /** Total costs for the timeframe, excluding any minimums and discounts. */
+            /**
+             * Sets [Builder.subtotal] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.subtotal] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
 
             fun timeframeEnd(timeframeEnd: OffsetDateTime) =
                 timeframeEnd(JsonField.of(timeframeEnd))
 
+            /**
+             * Sets [Builder.timeframeEnd] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timeframeEnd] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
                 this.timeframeEnd = timeframeEnd
             }
@@ -252,6 +346,13 @@ private constructor(
             fun timeframeStart(timeframeStart: OffsetDateTime) =
                 timeframeStart(JsonField.of(timeframeStart))
 
+            /**
+             * Sets [Builder.timeframeStart] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timeframeStart] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
                 this.timeframeStart = timeframeStart
             }
@@ -259,7 +360,13 @@ private constructor(
             /** Total costs for the timeframe, including any minimums and discounts. */
             fun total(total: String) = total(JsonField.of(total))
 
-            /** Total costs for the timeframe, including any minimums and discounts. */
+            /**
+             * Sets [Builder.total] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.total] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun total(total: JsonField<String>) = apply { this.total = total }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -315,34 +422,85 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            /** The price object */
+            /**
+             * The price object
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun price(): Price = price.getRequired("price")
 
-            /** The price the cost is associated with */
+            /**
+             * The price the cost is associated with
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun priceId(): String = priceId.getRequired("price_id")
 
-            /** Price's contributions for the timeframe, excluding any minimums and discounts. */
+            /**
+             * Price's contributions for the timeframe, excluding any minimums and discounts.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun subtotal(): String = subtotal.getRequired("subtotal")
 
-            /** Price's contributions for the timeframe, including minimums and discounts. */
+            /**
+             * Price's contributions for the timeframe, including minimums and discounts.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun total(): String = total.getRequired("total")
 
-            /** The price's quantity for the timeframe */
+            /**
+             * The price's quantity for the timeframe
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun quantity(): Double? = quantity.getNullable("quantity")
 
-            /** The price object */
+            /**
+             * Returns the raw JSON value of [price].
+             *
+             * Unlike [price], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("price") @ExcludeMissing fun _price(): JsonField<Price> = price
 
-            /** The price the cost is associated with */
+            /**
+             * Returns the raw JSON value of [priceId].
+             *
+             * Unlike [priceId], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("price_id") @ExcludeMissing fun _priceId(): JsonField<String> = priceId
 
-            /** Price's contributions for the timeframe, excluding any minimums and discounts. */
+            /**
+             * Returns the raw JSON value of [subtotal].
+             *
+             * Unlike [subtotal], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("subtotal") @ExcludeMissing fun _subtotal(): JsonField<String> = subtotal
 
-            /** Price's contributions for the timeframe, including minimums and discounts. */
+            /**
+             * Returns the raw JSON value of [total].
+             *
+             * Unlike [total], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("total") @ExcludeMissing fun _total(): JsonField<String> = total
 
-            /** The price's quantity for the timeframe */
+            /**
+             * Returns the raw JSON value of [quantity].
+             *
+             * Unlike [quantity], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
             @JsonAnyGetter
@@ -404,119 +562,178 @@ private constructor(
                 /** The price object */
                 fun price(price: Price) = price(JsonField.of(price))
 
-                /** The price object */
+                /**
+                 * Sets [Builder.price] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.price] with a well-typed [Price] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun price(price: JsonField<Price>) = apply { this.price = price }
 
-                /** The price object */
+                /** Alias for calling [price] with `Price.ofUnit(unit)`. */
                 fun price(unit: Price.UnitPrice) = price(Price.ofUnit(unit))
 
-                /** The price object */
+                /** Alias for calling [price] with `Price.ofPackagePrice(packagePrice)`. */
                 fun price(packagePrice: Price.PackagePrice) =
                     price(Price.ofPackagePrice(packagePrice))
 
-                /** The price object */
+                /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
                 fun price(matrix: Price.MatrixPrice) = price(Price.ofMatrix(matrix))
 
-                /** The price object */
+                /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
                 fun price(tiered: Price.TieredPrice) = price(Price.ofTiered(tiered))
 
-                /** The price object */
+                /** Alias for calling [price] with `Price.ofTieredBps(tieredBps)`. */
                 fun price(tieredBps: Price.TieredBpsPrice) = price(Price.ofTieredBps(tieredBps))
 
-                /** The price object */
+                /** Alias for calling [price] with `Price.ofBps(bps)`. */
                 fun price(bps: Price.BpsPrice) = price(Price.ofBps(bps))
 
-                /** The price object */
+                /** Alias for calling [price] with `Price.ofBulkBps(bulkBps)`. */
                 fun price(bulkBps: Price.BulkBpsPrice) = price(Price.ofBulkBps(bulkBps))
 
-                /** The price object */
+                /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
                 fun price(bulk: Price.BulkPrice) = price(Price.ofBulk(bulk))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
+                 */
                 fun price(thresholdTotalAmount: Price.ThresholdTotalAmountPrice) =
                     price(Price.ofThresholdTotalAmount(thresholdTotalAmount))
 
-                /** The price object */
+                /** Alias for calling [price] with `Price.ofTieredPackage(tieredPackage)`. */
                 fun price(tieredPackage: Price.TieredPackagePrice) =
                     price(Price.ofTieredPackage(tieredPackage))
 
-                /** The price object */
+                /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
                 fun price(groupedTiered: Price.GroupedTieredPrice) =
                     price(Price.ofGroupedTiered(groupedTiered))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with `Price.ofTieredWithMinimum(tieredWithMinimum)`.
+                 */
                 fun price(tieredWithMinimum: Price.TieredWithMinimumPrice) =
                     price(Price.ofTieredWithMinimum(tieredWithMinimum))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
+                 */
                 fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimumPrice) =
                     price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofPackageWithAllocation(packageWithAllocation)`.
+                 */
                 fun price(packageWithAllocation: Price.PackageWithAllocationPrice) =
                     price(Price.ofPackageWithAllocation(packageWithAllocation))
 
-                /** The price object */
+                /** Alias for calling [price] with `Price.ofUnitWithPercent(unitWithPercent)`. */
                 fun price(unitWithPercent: Price.UnitWithPercentPrice) =
                     price(Price.ofUnitWithPercent(unitWithPercent))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
+                 */
                 fun price(matrixWithAllocation: Price.MatrixWithAllocationPrice) =
                     price(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofTieredWithProration(tieredWithProration)`.
+                 */
                 fun price(tieredWithProration: Price.TieredWithProrationPrice) =
                     price(Price.ofTieredWithProration(tieredWithProration))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with `Price.ofUnitWithProration(unitWithProration)`.
+                 */
                 fun price(unitWithProration: Price.UnitWithProrationPrice) =
                     price(Price.ofUnitWithProration(unitWithProration))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with `Price.ofGroupedAllocation(groupedAllocation)`.
+                 */
                 fun price(groupedAllocation: Price.GroupedAllocationPrice) =
                     price(Price.ofGroupedAllocation(groupedAllocation))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
+                 */
                 fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimumPrice) =
                     price(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)`.
+                 */
                 fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimumPrice) =
                     price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
+                 */
                 fun price(matrixWithDisplayName: Price.MatrixWithDisplayNamePrice) =
                     price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`.
+                 */
                 fun price(bulkWithProration: Price.BulkWithProrationPrice) =
                     price(Price.ofBulkWithProration(bulkWithProration))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
+                 */
                 fun price(groupedTieredPackage: Price.GroupedTieredPackagePrice) =
                     price(Price.ofGroupedTieredPackage(groupedTieredPackage))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofMaxGroupTieredPackage(maxGroupTieredPackage)`.
+                 */
                 fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) =
                     price(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)`.
+                 */
                 fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricingPrice) =
                     price(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)`.
+                 */
                 fun price(
                     scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice
                 ) = price(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
 
-                /** The price object */
+                /**
+                 * Alias for calling [price] with
+                 * `Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk)`.
+                 */
                 fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulkPrice) =
                     price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
                 /** The price the cost is associated with */
                 fun priceId(priceId: String) = priceId(JsonField.of(priceId))
 
-                /** The price the cost is associated with */
+                /**
+                 * Sets [Builder.priceId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.priceId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
                 /**
@@ -525,23 +742,43 @@ private constructor(
                 fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
 
                 /**
-                 * Price's contributions for the timeframe, excluding any minimums and discounts.
+                 * Sets [Builder.subtotal] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.subtotal] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
 
                 /** Price's contributions for the timeframe, including minimums and discounts. */
                 fun total(total: String) = total(JsonField.of(total))
 
-                /** Price's contributions for the timeframe, including minimums and discounts. */
+                /**
+                 * Sets [Builder.total] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.total] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
                 fun total(total: JsonField<String>) = apply { this.total = total }
 
                 /** The price's quantity for the timeframe */
                 fun quantity(quantity: Double?) = quantity(JsonField.ofNullable(quantity))
 
-                /** The price's quantity for the timeframe */
+                /**
+                 * Alias for [Builder.quantity].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
                 fun quantity(quantity: Double) = quantity(quantity as Double?)
 
-                /** The price's quantity for the timeframe */
+                /**
+                 * Sets [Builder.quantity] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.quantity] with a well-typed [Double] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

@@ -577,14 +577,26 @@ private constructor(
             /**
              * The number of credits to effect. Note that this is required for increment, decrement,
              * void, or undo operations.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
              */
             fun amount(): Double = amount.getRequired("amount")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun entryType(): EntryType = entryType.getRequired("entry_type")
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
 
@@ -592,22 +604,36 @@ private constructor(
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun description(): String? = description.getNullable("description")
 
             /**
              * An ISO 8601 format date that denotes when this credit balance should become available
              * for use.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun effectiveDate(): OffsetDateTime? = effectiveDate.getNullable("effective_date")
 
-            /** An ISO 8601 format date that denotes when this credit balance should expire. */
+            /**
+             * An ISO 8601 format date that denotes when this credit balance should expire.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
             /**
              * Passing `invoice_settings` automatically generates an invoice for the newly added
              * credits. If `invoice_settings` is passed, you must specify per_unit_cost_basis, as
              * the calculation of the invoice total is done on that basis.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun invoiceSettings(): InvoiceSettings? =
                 invoiceSettings.getNullable("invoice_settings")
@@ -616,74 +642,101 @@ private constructor(
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /**
              * Can only be specified when entry_type=increment. How much, in the customer's
              * currency, a customer paid for a single credit in this block
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun perUnitCostBasis(): String? = perUnitCostBasis.getNullable("per_unit_cost_basis")
 
             /**
-             * The number of credits to effect. Note that this is required for increment, decrement,
-             * void, or undo operations.
+             * Returns the raw JSON value of [amount].
+             *
+             * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
+            /**
+             * Returns the raw JSON value of [entryType].
+             *
+             * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("entry_type")
             @ExcludeMissing
             fun _entryType(): JsonField<EntryType> = entryType
 
             /**
-             * The currency or custom pricing unit to use for this ledger entry. If this is a
-             * real-world currency, it must match the customer's invoicing currency.
+             * Returns the raw JSON value of [currency].
+             *
+             * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
-             * Optional metadata that can be specified when adding ledger results via the API. For
-             * example, this can be used to note an increment refers to trial credits, or for noting
-             * corrections as a result of an incident, etc.
+             * Returns the raw JSON value of [description].
+             *
+             * Unlike [description], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("description")
             @ExcludeMissing
             fun _description(): JsonField<String> = description
 
             /**
-             * An ISO 8601 format date that denotes when this credit balance should become available
-             * for use.
+             * Returns the raw JSON value of [effectiveDate].
+             *
+             * Unlike [effectiveDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("effective_date")
             @ExcludeMissing
             fun _effectiveDate(): JsonField<OffsetDateTime> = effectiveDate
 
-            /** An ISO 8601 format date that denotes when this credit balance should expire. */
+            /**
+             * Returns the raw JSON value of [expiryDate].
+             *
+             * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("expiry_date")
             @ExcludeMissing
             fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
             /**
-             * Passing `invoice_settings` automatically generates an invoice for the newly added
-             * credits. If `invoice_settings` is passed, you must specify per_unit_cost_basis, as
-             * the calculation of the invoice total is done on that basis.
+             * Returns the raw JSON value of [invoiceSettings].
+             *
+             * Unlike [invoiceSettings], this method doesn't throw if the JSON field has an
+             * unexpected type.
              */
             @JsonProperty("invoice_settings")
             @ExcludeMissing
             fun _invoiceSettings(): JsonField<InvoiceSettings> = invoiceSettings
 
             /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
+             * Returns the raw JSON value of [metadata].
+             *
+             * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("metadata")
             @ExcludeMissing
             fun _metadata(): JsonField<Metadata> = metadata
 
             /**
-             * Can only be specified when entry_type=increment. How much, in the customer's
-             * currency, a customer paid for a single credit in this block
+             * Returns the raw JSON value of [perUnitCostBasis].
+             *
+             * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an
+             * unexpected type.
              */
             @JsonProperty("per_unit_cost_basis")
             @ExcludeMissing
@@ -768,13 +821,23 @@ private constructor(
                 fun amount(amount: Double) = amount(JsonField.of(amount))
 
                 /**
-                 * The number of credits to effect. Note that this is required for increment,
-                 * decrement, void, or undo operations.
+                 * Sets [Builder.amount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.amount] with a well-typed [Double] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
                 fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+                /**
+                 * Sets [Builder.entryType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun entryType(entryType: JsonField<EntryType>) = apply {
                     this.entryType = entryType
                 }
@@ -786,8 +849,11 @@ private constructor(
                 fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
 
                 /**
-                 * The currency or custom pricing unit to use for this ledger entry. If this is a
-                 * real-world currency, it must match the customer's invoicing currency.
+                 * Sets [Builder.currency] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.currency] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
@@ -800,9 +866,11 @@ private constructor(
                     description(JsonField.ofNullable(description))
 
                 /**
-                 * Optional metadata that can be specified when adding ledger results via the API.
-                 * For example, this can be used to note an increment refers to trial credits, or
-                 * for noting corrections as a result of an incident, etc.
+                 * Sets [Builder.description] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.description] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun description(description: JsonField<String>) = apply {
                     this.description = description
@@ -816,8 +884,11 @@ private constructor(
                     effectiveDate(JsonField.ofNullable(effectiveDate))
 
                 /**
-                 * An ISO 8601 format date that denotes when this credit balance should become
-                 * available for use.
+                 * Sets [Builder.effectiveDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.effectiveDate] with a well-typed
+                 * [OffsetDateTime] value instead. This method is primarily for setting the field to
+                 * an undocumented or not yet supported value.
                  */
                 fun effectiveDate(effectiveDate: JsonField<OffsetDateTime>) = apply {
                     this.effectiveDate = effectiveDate
@@ -827,7 +898,13 @@ private constructor(
                 fun expiryDate(expiryDate: OffsetDateTime?) =
                     expiryDate(JsonField.ofNullable(expiryDate))
 
-                /** An ISO 8601 format date that denotes when this credit balance should expire. */
+                /**
+                 * Sets [Builder.expiryDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -841,9 +918,11 @@ private constructor(
                     invoiceSettings(JsonField.ofNullable(invoiceSettings))
 
                 /**
-                 * Passing `invoice_settings` automatically generates an invoice for the newly added
-                 * credits. If `invoice_settings` is passed, you must specify per_unit_cost_basis,
-                 * as the calculation of the invoice total is done on that basis.
+                 * Sets [Builder.invoiceSettings] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.invoiceSettings] with a well-typed
+                 * [InvoiceSettings] value instead. This method is primarily for setting the field
+                 * to an undocumented or not yet supported value.
                  */
                 fun invoiceSettings(invoiceSettings: JsonField<InvoiceSettings>) = apply {
                     this.invoiceSettings = invoiceSettings
@@ -857,9 +936,11 @@ private constructor(
                 fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
 
                 /**
-                 * User-specified key/value pairs for the resource. Individual keys can be removed
-                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
-                 * setting `metadata` to `null`.
+                 * Sets [Builder.metadata] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
@@ -871,8 +952,11 @@ private constructor(
                     perUnitCostBasis(JsonField.ofNullable(perUnitCostBasis))
 
                 /**
-                 * Can only be specified when entry_type=increment. How much, in the customer's
-                 * currency, a customer paid for a single credit in this block
+                 * Sets [Builder.perUnitCostBasis] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.perUnitCostBasis] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
                  */
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
@@ -1039,6 +1123,10 @@ private constructor(
                 /**
                  * Whether the credits purchase invoice should auto collect with the customer's
                  * saved payment method.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun autoCollection(): Boolean = autoCollection.getRequired("auto_collection")
 
@@ -1046,42 +1134,64 @@ private constructor(
                  * The net terms determines the difference between the invoice date and the issue
                  * date for the invoice. If you intend the invoice to be due on issue, set this
                  * to 0.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
                  */
                 fun netTerms(): Long = netTerms.getRequired("net_terms")
 
-                /** An optional memo to display on the invoice. */
+                /**
+                 * An optional memo to display on the invoice.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
                 fun memo(): String? = memo.getNullable("memo")
 
                 /**
                  * If true, the new credit block will require that the corresponding invoice is paid
                  * before it can be drawn down from.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
                  */
                 fun requireSuccessfulPayment(): Boolean? =
                     requireSuccessfulPayment.getNullable("require_successful_payment")
 
                 /**
-                 * Whether the credits purchase invoice should auto collect with the customer's
-                 * saved payment method.
+                 * Returns the raw JSON value of [autoCollection].
+                 *
+                 * Unlike [autoCollection], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
                 @JsonProperty("auto_collection")
                 @ExcludeMissing
                 fun _autoCollection(): JsonField<Boolean> = autoCollection
 
                 /**
-                 * The net terms determines the difference between the invoice date and the issue
-                 * date for the invoice. If you intend the invoice to be due on issue, set this
-                 * to 0.
+                 * Returns the raw JSON value of [netTerms].
+                 *
+                 * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected
+                 * type.
                  */
                 @JsonProperty("net_terms")
                 @ExcludeMissing
                 fun _netTerms(): JsonField<Long> = netTerms
 
-                /** An optional memo to display on the invoice. */
+                /**
+                 * Returns the raw JSON value of [memo].
+                 *
+                 * Unlike [memo], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
                 @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
 
                 /**
-                 * If true, the new credit block will require that the corresponding invoice is paid
-                 * before it can be drawn down from.
+                 * Returns the raw JSON value of [requireSuccessfulPayment].
+                 *
+                 * Unlike [requireSuccessfulPayment], this method doesn't throw if the JSON field
+                 * has an unexpected type.
                  */
                 @JsonProperty("require_successful_payment")
                 @ExcludeMissing
@@ -1146,8 +1256,11 @@ private constructor(
                         autoCollection(JsonField.of(autoCollection))
 
                     /**
-                     * Whether the credits purchase invoice should auto collect with the customer's
-                     * saved payment method.
+                     * Sets [Builder.autoCollection] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.autoCollection] with a well-typed [Boolean]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
                         this.autoCollection = autoCollection
@@ -1161,16 +1274,24 @@ private constructor(
                     fun netTerms(netTerms: Long) = netTerms(JsonField.of(netTerms))
 
                     /**
-                     * The net terms determines the difference between the invoice date and the
-                     * issue date for the invoice. If you intend the invoice to be due on issue, set
-                     * this to 0.
+                     * Sets [Builder.netTerms] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.netTerms] with a well-typed [Long] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
                      */
                     fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
                     /** An optional memo to display on the invoice. */
                     fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
 
-                    /** An optional memo to display on the invoice. */
+                    /**
+                     * Sets [Builder.memo] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.memo] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
                     fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
                     /**
@@ -1181,8 +1302,11 @@ private constructor(
                         requireSuccessfulPayment(JsonField.of(requireSuccessfulPayment))
 
                     /**
-                     * If true, the new credit block will require that the corresponding invoice is
-                     * paid before it can be drawn down from.
+                     * Sets [Builder.requireSuccessfulPayment] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.requireSuccessfulPayment] with a well-typed
+                     * [Boolean] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
                      */
                     fun requireSuccessfulPayment(requireSuccessfulPayment: JsonField<Boolean>) =
                         apply {
@@ -1369,14 +1493,26 @@ private constructor(
             /**
              * The number of credits to effect. Note that this is required for increment, decrement,
              * void, or undo operations.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
              */
             fun amount(): Double = amount.getRequired("amount")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun entryType(): EntryType = entryType.getRequired("entry_type")
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
 
@@ -1384,6 +1520,9 @@ private constructor(
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun description(): String? = description.getNullable("description")
 
@@ -1391,38 +1530,52 @@ private constructor(
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /**
-             * The number of credits to effect. Note that this is required for increment, decrement,
-             * void, or undo operations.
+             * Returns the raw JSON value of [amount].
+             *
+             * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
+            /**
+             * Returns the raw JSON value of [entryType].
+             *
+             * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("entry_type")
             @ExcludeMissing
             fun _entryType(): JsonField<EntryType> = entryType
 
             /**
-             * The currency or custom pricing unit to use for this ledger entry. If this is a
-             * real-world currency, it must match the customer's invoicing currency.
+             * Returns the raw JSON value of [currency].
+             *
+             * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
-             * Optional metadata that can be specified when adding ledger results via the API. For
-             * example, this can be used to note an increment refers to trial credits, or for noting
-             * corrections as a result of an incident, etc.
+             * Returns the raw JSON value of [description].
+             *
+             * Unlike [description], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("description")
             @ExcludeMissing
             fun _description(): JsonField<String> = description
 
             /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
+             * Returns the raw JSON value of [metadata].
+             *
+             * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("metadata")
             @ExcludeMissing
@@ -1495,13 +1648,23 @@ private constructor(
                 fun amount(amount: Double) = amount(JsonField.of(amount))
 
                 /**
-                 * The number of credits to effect. Note that this is required for increment,
-                 * decrement, void, or undo operations.
+                 * Sets [Builder.amount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.amount] with a well-typed [Double] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
                 fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+                /**
+                 * Sets [Builder.entryType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun entryType(entryType: JsonField<EntryType>) = apply {
                     this.entryType = entryType
                 }
@@ -1513,8 +1676,11 @@ private constructor(
                 fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
 
                 /**
-                 * The currency or custom pricing unit to use for this ledger entry. If this is a
-                 * real-world currency, it must match the customer's invoicing currency.
+                 * Sets [Builder.currency] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.currency] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
@@ -1527,9 +1693,11 @@ private constructor(
                     description(JsonField.ofNullable(description))
 
                 /**
-                 * Optional metadata that can be specified when adding ledger results via the API.
-                 * For example, this can be used to note an increment refers to trial credits, or
-                 * for noting corrections as a result of an incident, etc.
+                 * Sets [Builder.description] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.description] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun description(description: JsonField<String>) = apply {
                     this.description = description
@@ -1543,9 +1711,11 @@ private constructor(
                 fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
 
                 /**
-                 * User-specified key/value pairs for the resource. Individual keys can be removed
-                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
-                 * setting `metadata` to `null`.
+                 * Sets [Builder.metadata] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
@@ -1814,32 +1984,55 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun entryType(): EntryType = entryType.getRequired("entry_type")
 
-            /** An ISO 8601 format date that identifies the origination credit block to expire */
+            /**
+             * An ISO 8601 format date that identifies the origination credit block to expire
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
             /**
              * A future date (specified in YYYY-MM-DD format) used for expiration change, denoting
              * when credits transferred (as part of a partial block expiration) should expire.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
              */
             fun targetExpiryDate(): LocalDate = targetExpiryDate.getRequired("target_expiry_date")
 
             /**
              * The number of credits to effect. Note that this is required for increment, decrement,
              * void, or undo operations.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun amount(): Double? = amount.getNullable("amount")
 
             /**
              * The ID of the block affected by an expiration_change, used to differentiate between
              * multiple blocks with the same `expiry_date`.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun blockId(): String? = blockId.getNullable("block_id")
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
 
@@ -1847,6 +2040,9 @@ private constructor(
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun description(): String? = description.getNullable("description")
 
@@ -1854,57 +2050,79 @@ private constructor(
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun metadata(): Metadata? = metadata.getNullable("metadata")
 
+            /**
+             * Returns the raw JSON value of [entryType].
+             *
+             * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("entry_type")
             @ExcludeMissing
             fun _entryType(): JsonField<EntryType> = entryType
 
-            /** An ISO 8601 format date that identifies the origination credit block to expire */
+            /**
+             * Returns the raw JSON value of [expiryDate].
+             *
+             * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("expiry_date")
             @ExcludeMissing
             fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
             /**
-             * A future date (specified in YYYY-MM-DD format) used for expiration change, denoting
-             * when credits transferred (as part of a partial block expiration) should expire.
+             * Returns the raw JSON value of [targetExpiryDate].
+             *
+             * Unlike [targetExpiryDate], this method doesn't throw if the JSON field has an
+             * unexpected type.
              */
             @JsonProperty("target_expiry_date")
             @ExcludeMissing
             fun _targetExpiryDate(): JsonField<LocalDate> = targetExpiryDate
 
             /**
-             * The number of credits to effect. Note that this is required for increment, decrement,
-             * void, or undo operations.
+             * Returns the raw JSON value of [amount].
+             *
+             * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
             /**
-             * The ID of the block affected by an expiration_change, used to differentiate between
-             * multiple blocks with the same `expiry_date`.
+             * Returns the raw JSON value of [blockId].
+             *
+             * Unlike [blockId], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("block_id") @ExcludeMissing fun _blockId(): JsonField<String> = blockId
 
             /**
-             * The currency or custom pricing unit to use for this ledger entry. If this is a
-             * real-world currency, it must match the customer's invoicing currency.
+             * Returns the raw JSON value of [currency].
+             *
+             * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
-             * Optional metadata that can be specified when adding ledger results via the API. For
-             * example, this can be used to note an increment refers to trial credits, or for noting
-             * corrections as a result of an incident, etc.
+             * Returns the raw JSON value of [description].
+             *
+             * Unlike [description], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("description")
             @ExcludeMissing
             fun _description(): JsonField<String> = description
 
             /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
+             * Returns the raw JSON value of [metadata].
+             *
+             * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("metadata")
             @ExcludeMissing
@@ -1983,6 +2201,13 @@ private constructor(
 
                 fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+                /**
+                 * Sets [Builder.entryType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun entryType(entryType: JsonField<EntryType>) = apply {
                     this.entryType = entryType
                 }
@@ -1994,7 +2219,11 @@ private constructor(
                     expiryDate(JsonField.ofNullable(expiryDate))
 
                 /**
-                 * An ISO 8601 format date that identifies the origination credit block to expire
+                 * Sets [Builder.expiryDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
                  */
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
@@ -2009,9 +2238,11 @@ private constructor(
                     targetExpiryDate(JsonField.of(targetExpiryDate))
 
                 /**
-                 * A future date (specified in YYYY-MM-DD format) used for expiration change,
-                 * denoting when credits transferred (as part of a partial block expiration) should
-                 * expire.
+                 * Sets [Builder.targetExpiryDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.targetExpiryDate] with a well-typed [LocalDate]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
                  */
                 fun targetExpiryDate(targetExpiryDate: JsonField<LocalDate>) = apply {
                     this.targetExpiryDate = targetExpiryDate
@@ -2024,14 +2255,18 @@ private constructor(
                 fun amount(amount: Double?) = amount(JsonField.ofNullable(amount))
 
                 /**
-                 * The number of credits to effect. Note that this is required for increment,
-                 * decrement, void, or undo operations.
+                 * Alias for [Builder.amount].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
                  */
                 fun amount(amount: Double) = amount(amount as Double?)
 
                 /**
-                 * The number of credits to effect. Note that this is required for increment,
-                 * decrement, void, or undo operations.
+                 * Sets [Builder.amount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.amount] with a well-typed [Double] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
@@ -2042,8 +2277,11 @@ private constructor(
                 fun blockId(blockId: String?) = blockId(JsonField.ofNullable(blockId))
 
                 /**
-                 * The ID of the block affected by an expiration_change, used to differentiate
-                 * between multiple blocks with the same `expiry_date`.
+                 * Sets [Builder.blockId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.blockId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun blockId(blockId: JsonField<String>) = apply { this.blockId = blockId }
 
@@ -2054,8 +2292,11 @@ private constructor(
                 fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
 
                 /**
-                 * The currency or custom pricing unit to use for this ledger entry. If this is a
-                 * real-world currency, it must match the customer's invoicing currency.
+                 * Sets [Builder.currency] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.currency] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
@@ -2068,9 +2309,11 @@ private constructor(
                     description(JsonField.ofNullable(description))
 
                 /**
-                 * Optional metadata that can be specified when adding ledger results via the API.
-                 * For example, this can be used to note an increment refers to trial credits, or
-                 * for noting corrections as a result of an incident, etc.
+                 * Sets [Builder.description] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.description] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun description(description: JsonField<String>) = apply {
                     this.description = description
@@ -2084,9 +2327,11 @@ private constructor(
                 fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
 
                 /**
-                 * User-specified key/value pairs for the resource. Individual keys can be removed
-                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
-                 * setting `metadata` to `null`.
+                 * Sets [Builder.metadata] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
@@ -2358,17 +2603,35 @@ private constructor(
             /**
              * The number of credits to effect. Note that this is required for increment, decrement,
              * void, or undo operations.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
              */
             fun amount(): Double = amount.getRequired("amount")
 
-            /** The ID of the block to void. */
+            /**
+             * The ID of the block to void.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun blockId(): String = blockId.getRequired("block_id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun entryType(): EntryType = entryType.getRequired("entry_type")
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
 
@@ -2376,6 +2639,9 @@ private constructor(
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun description(): String? = description.getNullable("description")
 
@@ -2383,50 +2649,78 @@ private constructor(
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun metadata(): Metadata? = metadata.getNullable("metadata")
 
-            /** Can only be specified when `entry_type=void`. The reason for the void. */
+            /**
+             * Can only be specified when `entry_type=void`. The reason for the void.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
             fun voidReason(): VoidReason? = voidReason.getNullable("void_reason")
 
             /**
-             * The number of credits to effect. Note that this is required for increment, decrement,
-             * void, or undo operations.
+             * Returns the raw JSON value of [amount].
+             *
+             * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
-            /** The ID of the block to void. */
+            /**
+             * Returns the raw JSON value of [blockId].
+             *
+             * Unlike [blockId], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("block_id") @ExcludeMissing fun _blockId(): JsonField<String> = blockId
 
+            /**
+             * Returns the raw JSON value of [entryType].
+             *
+             * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("entry_type")
             @ExcludeMissing
             fun _entryType(): JsonField<EntryType> = entryType
 
             /**
-             * The currency or custom pricing unit to use for this ledger entry. If this is a
-             * real-world currency, it must match the customer's invoicing currency.
+             * Returns the raw JSON value of [currency].
+             *
+             * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
-             * Optional metadata that can be specified when adding ledger results via the API. For
-             * example, this can be used to note an increment refers to trial credits, or for noting
-             * corrections as a result of an incident, etc.
+             * Returns the raw JSON value of [description].
+             *
+             * Unlike [description], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("description")
             @ExcludeMissing
             fun _description(): JsonField<String> = description
 
             /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
+             * Returns the raw JSON value of [metadata].
+             *
+             * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("metadata")
             @ExcludeMissing
             fun _metadata(): JsonField<Metadata> = metadata
 
-            /** Can only be specified when `entry_type=void`. The reason for the void. */
+            /**
+             * Returns the raw JSON value of [voidReason].
+             *
+             * Unlike [voidReason], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("void_reason")
             @ExcludeMissing
             fun _voidReason(): JsonField<VoidReason> = voidReason
@@ -2503,19 +2797,35 @@ private constructor(
                 fun amount(amount: Double) = amount(JsonField.of(amount))
 
                 /**
-                 * The number of credits to effect. Note that this is required for increment,
-                 * decrement, void, or undo operations.
+                 * Sets [Builder.amount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.amount] with a well-typed [Double] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
                 /** The ID of the block to void. */
                 fun blockId(blockId: String) = blockId(JsonField.of(blockId))
 
-                /** The ID of the block to void. */
+                /**
+                 * Sets [Builder.blockId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.blockId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun blockId(blockId: JsonField<String>) = apply { this.blockId = blockId }
 
                 fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+                /**
+                 * Sets [Builder.entryType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun entryType(entryType: JsonField<EntryType>) = apply {
                     this.entryType = entryType
                 }
@@ -2527,8 +2837,11 @@ private constructor(
                 fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
 
                 /**
-                 * The currency or custom pricing unit to use for this ledger entry. If this is a
-                 * real-world currency, it must match the customer's invoicing currency.
+                 * Sets [Builder.currency] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.currency] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
@@ -2541,9 +2854,11 @@ private constructor(
                     description(JsonField.ofNullable(description))
 
                 /**
-                 * Optional metadata that can be specified when adding ledger results via the API.
-                 * For example, this can be used to note an increment refers to trial credits, or
-                 * for noting corrections as a result of an incident, etc.
+                 * Sets [Builder.description] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.description] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun description(description: JsonField<String>) = apply {
                     this.description = description
@@ -2557,9 +2872,11 @@ private constructor(
                 fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
 
                 /**
-                 * User-specified key/value pairs for the resource. Individual keys can be removed
-                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
-                 * setting `metadata` to `null`.
+                 * Sets [Builder.metadata] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
@@ -2567,7 +2884,13 @@ private constructor(
                 fun voidReason(voidReason: VoidReason?) =
                     voidReason(JsonField.ofNullable(voidReason))
 
-                /** Can only be specified when `entry_type=void`. The reason for the void. */
+                /**
+                 * Sets [Builder.voidReason] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.voidReason] with a well-typed [VoidReason] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun voidReason(voidReason: JsonField<VoidReason>) = apply {
                     this.voidReason = voidReason
                 }
@@ -2934,17 +3257,35 @@ private constructor(
             /**
              * The number of credits to effect. Note that this is required for increment, decrement
              * or void operations.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
              */
             fun amount(): Double = amount.getRequired("amount")
 
-            /** The ID of the block to reverse a decrement from. */
+            /**
+             * The ID of the block to reverse a decrement from.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun blockId(): String = blockId.getRequired("block_id")
 
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun entryType(): EntryType = entryType.getRequired("entry_type")
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
 
@@ -2952,6 +3293,9 @@ private constructor(
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun description(): String? = description.getNullable("description")
 
@@ -2959,41 +3303,59 @@ private constructor(
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
              */
             fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /**
-             * The number of credits to effect. Note that this is required for increment, decrement
-             * or void operations.
+             * Returns the raw JSON value of [amount].
+             *
+             * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
-            /** The ID of the block to reverse a decrement from. */
+            /**
+             * Returns the raw JSON value of [blockId].
+             *
+             * Unlike [blockId], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("block_id") @ExcludeMissing fun _blockId(): JsonField<String> = blockId
 
+            /**
+             * Returns the raw JSON value of [entryType].
+             *
+             * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("entry_type")
             @ExcludeMissing
             fun _entryType(): JsonField<EntryType> = entryType
 
             /**
-             * The currency or custom pricing unit to use for this ledger entry. If this is a
-             * real-world currency, it must match the customer's invoicing currency.
+             * Returns the raw JSON value of [currency].
+             *
+             * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
-             * Optional metadata that can be specified when adding ledger results via the API. For
-             * example, this can be used to note an increment refers to trial credits, or for noting
-             * corrections as a result of an incident, etc.
+             * Returns the raw JSON value of [description].
+             *
+             * Unlike [description], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("description")
             @ExcludeMissing
             fun _description(): JsonField<String> = description
 
             /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
+             * Returns the raw JSON value of [metadata].
+             *
+             * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+             * type.
              */
             @JsonProperty("metadata")
             @ExcludeMissing
@@ -3070,19 +3432,35 @@ private constructor(
                 fun amount(amount: Double) = amount(JsonField.of(amount))
 
                 /**
-                 * The number of credits to effect. Note that this is required for increment,
-                 * decrement or void operations.
+                 * Sets [Builder.amount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.amount] with a well-typed [Double] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
                 /** The ID of the block to reverse a decrement from. */
                 fun blockId(blockId: String) = blockId(JsonField.of(blockId))
 
-                /** The ID of the block to reverse a decrement from. */
+                /**
+                 * Sets [Builder.blockId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.blockId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun blockId(blockId: JsonField<String>) = apply { this.blockId = blockId }
 
                 fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
+                /**
+                 * Sets [Builder.entryType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.entryType] with a well-typed [EntryType] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun entryType(entryType: JsonField<EntryType>) = apply {
                     this.entryType = entryType
                 }
@@ -3094,8 +3472,11 @@ private constructor(
                 fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
 
                 /**
-                 * The currency or custom pricing unit to use for this ledger entry. If this is a
-                 * real-world currency, it must match the customer's invoicing currency.
+                 * Sets [Builder.currency] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.currency] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
@@ -3108,9 +3489,11 @@ private constructor(
                     description(JsonField.ofNullable(description))
 
                 /**
-                 * Optional metadata that can be specified when adding ledger results via the API.
-                 * For example, this can be used to note an increment refers to trial credits, or
-                 * for noting corrections as a result of an incident, etc.
+                 * Sets [Builder.description] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.description] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun description(description: JsonField<String>) = apply {
                     this.description = description
@@ -3124,9 +3507,11 @@ private constructor(
                 fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
 
                 /**
-                 * User-specified key/value pairs for the resource. Individual keys can be removed
-                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
-                 * setting `metadata` to `null`.
+                 * Sets [Builder.metadata] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
                 fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
@@ -3410,6 +3795,10 @@ private constructor(
 
         fun body(body: Body) = apply { this.body = body }
 
+        /**
+         * Alias for calling [body] with
+         * `Body.ofAddIncrementCreditLedgerEntryRequestParams(addIncrementCreditLedgerEntryRequestParams)`.
+         */
         fun body(
             addIncrementCreditLedgerEntryRequestParams:
                 Body.AddIncrementCreditLedgerEntryRequestParams
@@ -3420,6 +3809,15 @@ private constructor(
                 )
             )
 
+        /**
+         * Alias for calling [body] with the following:
+         * ```kotlin
+         * Body.AddIncrementCreditLedgerEntryRequestParams.builder()
+         *     .entryType(CustomerCreditLedgerCreateEntryByExternalIdParams.Body.AddIncrementCreditLedgerEntryRequestParams.EntryType.INCREMENT)
+         *     .amount(amount)
+         *     .build()
+         * ```
+         */
         fun addIncrementCreditLedgerEntryRequestParamsBody(amount: Double) =
             body(
                 Body.AddIncrementCreditLedgerEntryRequestParams.builder()
@@ -3433,6 +3831,10 @@ private constructor(
                     .build()
             )
 
+        /**
+         * Alias for calling [body] with
+         * `Body.ofAddDecrementCreditLedgerEntryRequestParams(addDecrementCreditLedgerEntryRequestParams)`.
+         */
         fun body(
             addDecrementCreditLedgerEntryRequestParams:
                 Body.AddDecrementCreditLedgerEntryRequestParams
@@ -3443,6 +3845,15 @@ private constructor(
                 )
             )
 
+        /**
+         * Alias for calling [body] with the following:
+         * ```kotlin
+         * Body.AddDecrementCreditLedgerEntryRequestParams.builder()
+         *     .entryType(CustomerCreditLedgerCreateEntryByExternalIdParams.Body.AddDecrementCreditLedgerEntryRequestParams.EntryType.DECREMENT)
+         *     .amount(amount)
+         *     .build()
+         * ```
+         */
         fun addDecrementCreditLedgerEntryRequestParamsBody(amount: Double) =
             body(
                 Body.AddDecrementCreditLedgerEntryRequestParams.builder()
@@ -3456,6 +3867,10 @@ private constructor(
                     .build()
             )
 
+        /**
+         * Alias for calling [body] with
+         * `Body.ofAddExpirationChangeCreditLedgerEntryRequestParams(addExpirationChangeCreditLedgerEntryRequestParams)`.
+         */
         fun body(
             addExpirationChangeCreditLedgerEntryRequestParams:
                 Body.AddExpirationChangeCreditLedgerEntryRequestParams
@@ -3466,6 +3881,10 @@ private constructor(
                 )
             )
 
+        /**
+         * Alias for calling [body] with
+         * `Body.ofAddVoidCreditLedgerEntryRequestParams(addVoidCreditLedgerEntryRequestParams)`.
+         */
         fun body(
             addVoidCreditLedgerEntryRequestParams: Body.AddVoidCreditLedgerEntryRequestParams
         ) =
@@ -3473,6 +3892,10 @@ private constructor(
                 Body.ofAddVoidCreditLedgerEntryRequestParams(addVoidCreditLedgerEntryRequestParams)
             )
 
+        /**
+         * Alias for calling [body] with
+         * `Body.ofAddAmendmentCreditLedgerEntryRequestParams(addAmendmentCreditLedgerEntryRequestParams)`.
+         */
         fun body(
             addAmendmentCreditLedgerEntryRequestParams:
                 Body.AddAmendmentCreditLedgerEntryRequestParams
