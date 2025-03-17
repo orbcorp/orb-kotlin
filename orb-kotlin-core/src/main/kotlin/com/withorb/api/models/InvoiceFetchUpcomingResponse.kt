@@ -1902,6 +1902,58 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [InvoiceFetchUpcomingResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .amountDue()
+         * .autoCollection()
+         * .billingAddress()
+         * .createdAt()
+         * .creditNotes()
+         * .currency()
+         * .customer()
+         * .customerBalanceTransactions()
+         * .customerTaxId()
+         * .discount()
+         * .discounts()
+         * .dueDate()
+         * .eligibleToIssueAt()
+         * .hostedInvoiceUrl()
+         * .invoiceNumber()
+         * .invoicePdf()
+         * .invoiceSource()
+         * .issueFailedAt()
+         * .issuedAt()
+         * .lineItems()
+         * .maximum()
+         * .maximumAmount()
+         * .memo()
+         * .metadata()
+         * .minimum()
+         * .minimumAmount()
+         * .paidAt()
+         * .paymentAttempts()
+         * .paymentFailedAt()
+         * .paymentStartedAt()
+         * .scheduledIssueAt()
+         * .shippingAddress()
+         * .status()
+         * .subscription()
+         * .subtotal()
+         * .syncFailedAt()
+         * .targetDate()
+         * .total()
+         * .voidedAt()
+         * .willAutoIssue()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): InvoiceFetchUpcomingResponse =
             InvoiceFetchUpcomingResponse(
                 checkRequired("id", id),
@@ -2198,6 +2250,21 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AutoCollection].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .enabled()
+             * .nextAttemptAt()
+             * .numAttempts()
+             * .previouslyAttemptedAt()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): AutoCollection =
                 AutoCollection(
                     checkRequired("enabled", enabled),
@@ -2478,6 +2545,23 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [BillingAddress].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .city()
+             * .country()
+             * .line1()
+             * .line2()
+             * .postalCode()
+             * .state()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): BillingAddress =
                 BillingAddress(
                     checkRequired("city", city),
@@ -2805,6 +2889,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CreditNote].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .creditNoteNumber()
+             * .memo()
+             * .reason()
+             * .total()
+             * .type()
+             * .voidedAt()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): CreditNote =
                 CreditNote(
                     checkRequired("id", id),
@@ -2966,6 +3068,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Customer].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .externalCustomerId()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Customer =
                 Customer(
                     checkRequired("id", id),
@@ -3413,6 +3528,27 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CustomerBalanceTransaction].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .action()
+             * .amount()
+             * .createdAt()
+             * .creditNote()
+             * .description()
+             * .endingBalance()
+             * .invoice()
+             * .startingBalance()
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): CustomerBalanceTransaction =
                 CustomerBalanceTransaction(
                     checkRequired("id", id),
@@ -3673,6 +3809,18 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [CreditNote].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): CreditNote =
                     CreditNote(checkRequired("id", id), additionalProperties.toImmutable())
             }
@@ -3797,6 +3945,18 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Invoice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Invoice =
                     Invoice(checkRequired("id", id), additionalProperties.toImmutable())
             }
@@ -4195,6 +4355,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CustomerTaxId].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .country()
+             * .type()
+             * .value()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): CustomerTaxId =
                 CustomerTaxId(
                     checkRequired("country", country),
@@ -6593,6 +6767,39 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [LineItem].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .adjustedSubtotal()
+             * .adjustments()
+             * .amount()
+             * .creditsApplied()
+             * .discount()
+             * .endDate()
+             * .filter()
+             * .grouping()
+             * .maximum()
+             * .maximumAmount()
+             * .minimum()
+             * .minimumAmount()
+             * .name()
+             * .partiallyInvoicedAmount()
+             * .price()
+             * .quantity()
+             * .startDate()
+             * .subLineItems()
+             * .subtotal()
+             * .taxAmounts()
+             * .usageCustomerIds()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): LineItem =
                 LineItem(
                     checkRequired("id", id),
@@ -7255,6 +7462,24 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [MonetaryUsageDiscountAdjustment].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .id()
+                     * .adjustmentType()
+                     * .amount()
+                     * .appliesToPriceIds()
+                     * .isInvoiceLevel()
+                     * .reason()
+                     * .usageDiscount()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): MonetaryUsageDiscountAdjustment =
                         MonetaryUsageDiscountAdjustment(
                             checkRequired("id", id),
@@ -7748,6 +7973,24 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [MonetaryAmountDiscountAdjustment].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .id()
+                     * .adjustmentType()
+                     * .amount()
+                     * .amountDiscount()
+                     * .appliesToPriceIds()
+                     * .isInvoiceLevel()
+                     * .reason()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): MonetaryAmountDiscountAdjustment =
                         MonetaryAmountDiscountAdjustment(
                             checkRequired("id", id),
@@ -8242,6 +8485,24 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [MonetaryPercentageDiscountAdjustment].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .id()
+                     * .adjustmentType()
+                     * .amount()
+                     * .appliesToPriceIds()
+                     * .isInvoiceLevel()
+                     * .percentageDiscount()
+                     * .reason()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): MonetaryPercentageDiscountAdjustment =
                         MonetaryPercentageDiscountAdjustment(
                             checkRequired("id", id),
@@ -8770,6 +9031,25 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [MonetaryMinimumAdjustment].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .id()
+                     * .adjustmentType()
+                     * .amount()
+                     * .appliesToPriceIds()
+                     * .isInvoiceLevel()
+                     * .itemId()
+                     * .minimumAmount()
+                     * .reason()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): MonetaryMinimumAdjustment =
                         MonetaryMinimumAdjustment(
                             checkRequired("id", id),
@@ -9263,6 +9543,24 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [MonetaryMaximumAdjustment].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .id()
+                     * .adjustmentType()
+                     * .amount()
+                     * .appliesToPriceIds()
+                     * .isInvoiceLevel()
+                     * .maximumAmount()
+                     * .reason()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): MonetaryMaximumAdjustment =
                         MonetaryMaximumAdjustment(
                             checkRequired("id", id),
@@ -9566,6 +9864,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Maximum].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .appliesToPriceIds()
+                 * .maximumAmount()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Maximum =
                     Maximum(
                         checkRequired("appliesToPriceIds", appliesToPriceIds).map {
@@ -9762,6 +10073,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Minimum].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .appliesToPriceIds()
+                 * .minimumAmount()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Minimum =
                     Minimum(
                         checkRequired("appliesToPriceIds", appliesToPriceIds).map {
@@ -10240,6 +10564,23 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [MatrixSubLineItem].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .amount()
+                     * .grouping()
+                     * .matrixConfig()
+                     * .name()
+                     * .quantity()
+                     * .type()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): MatrixSubLineItem =
                         MatrixSubLineItem(
                             checkRequired("amount", amount),
@@ -10388,6 +10729,19 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Grouping].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .key()
+                         * .value()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): Grouping =
                             Grouping(
                                 checkRequired("key", key),
@@ -10538,6 +10892,18 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [MatrixConfig].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .dimensionValues()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): MatrixConfig =
                             MatrixConfig(
                                 checkRequired("dimensionValues", dimensionValues).map {
@@ -10956,6 +11322,23 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [TierSubLineItem].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .amount()
+                     * .grouping()
+                     * .name()
+                     * .quantity()
+                     * .tierConfig()
+                     * .type()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): TierSubLineItem =
                         TierSubLineItem(
                             checkRequired("amount", amount),
@@ -11104,6 +11487,19 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Grouping].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .key()
+                         * .value()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): Grouping =
                             Grouping(
                                 checkRequired("key", key),
@@ -11315,6 +11711,20 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [TierConfig].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .firstUnit()
+                         * .lastUnit()
+                         * .unitAmount()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): TierConfig =
                             TierConfig(
                                 checkRequired("firstUnit", firstUnit),
@@ -11696,6 +12106,22 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [OtherSubLineItem].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .amount()
+                     * .grouping()
+                     * .name()
+                     * .quantity()
+                     * .type()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): OtherSubLineItem =
                         OtherSubLineItem(
                             checkRequired("amount", amount),
@@ -11843,6 +12269,19 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Grouping].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .key()
+                         * .value()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): Grouping =
                             Grouping(
                                 checkRequired("key", key),
@@ -12170,6 +12609,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [TaxAmount].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amount()
+                 * .taxRateDescription()
+                 * .taxRatePercentage()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): TaxAmount =
                     TaxAmount(
                         checkRequired("amount", amount),
@@ -12375,6 +12828,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Maximum].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .appliesToPriceIds()
+             * .maximumAmount()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Maximum =
                 Maximum(
                     checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
@@ -12464,6 +12930,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
@@ -12644,6 +13115,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Minimum].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .appliesToPriceIds()
+             * .minimumAmount()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Minimum =
                 Minimum(
                     checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
@@ -12952,6 +13436,23 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [PaymentAttempt].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .paymentProvider()
+             * .paymentProviderId()
+             * .succeeded()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): PaymentAttempt =
                 PaymentAttempt(
                     checkRequired("id", id),
@@ -13332,6 +13833,23 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ShippingAddress].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .city()
+             * .country()
+             * .line1()
+             * .line2()
+             * .postalCode()
+             * .state()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ShippingAddress =
                 ShippingAddress(
                     checkRequired("city", city),
@@ -13570,6 +14088,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Subscription].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Subscription =
                 Subscription(checkRequired("id", id), additionalProperties.toImmutable())
         }

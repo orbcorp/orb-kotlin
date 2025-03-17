@@ -273,6 +273,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .paymentReceivedDate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Body =
                 Body(
                     checkRequired("paymentReceivedDate", paymentReceivedDate),
@@ -490,6 +502,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [InvoiceMarkPaidParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .invoiceId()
+         * .paymentReceivedDate()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): InvoiceMarkPaidParams =
             InvoiceMarkPaidParams(
                 checkRequired("invoiceId", invoiceId),

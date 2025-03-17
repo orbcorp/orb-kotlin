@@ -892,6 +892,30 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [IncrementLedgerEntry].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .startingBalance()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): IncrementLedgerEntry =
                 IncrementLedgerEntry(
                     checkRequired("id", id),
@@ -1084,6 +1108,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [CreditBlock].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): CreditBlock =
                     CreditBlock(
                         checkRequired("id", id),
@@ -1248,6 +1286,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Customer].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Customer =
                     Customer(
                         checkRequired("id", id),
@@ -1538,6 +1589,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
@@ -2176,6 +2232,30 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [DecrementLedgerEntry].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .startingBalance()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): DecrementLedgerEntry =
                 DecrementLedgerEntry(
                     checkRequired("id", id),
@@ -2371,6 +2451,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [CreditBlock].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): CreditBlock =
                     CreditBlock(
                         checkRequired("id", id),
@@ -2535,6 +2629,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Customer].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Customer =
                     Customer(
                         checkRequired("id", id),
@@ -2825,6 +2932,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
@@ -3413,6 +3525,31 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ExpirationChangeLedgerEntry].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .newBlockExpiryDate()
+             * .startingBalance()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ExpirationChangeLedgerEntry =
                 ExpirationChangeLedgerEntry(
                     checkRequired("id", id),
@@ -3606,6 +3743,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [CreditBlock].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): CreditBlock =
                     CreditBlock(
                         checkRequired("id", id),
@@ -3770,6 +3921,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Customer].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Customer =
                     Customer(
                         checkRequired("id", id),
@@ -4060,6 +4224,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
@@ -4610,6 +4779,30 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CreditBlockExpiryLedgerEntry].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .startingBalance()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): CreditBlockExpiryLedgerEntry =
                 CreditBlockExpiryLedgerEntry(
                     checkRequired("id", id),
@@ -4802,6 +4995,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [CreditBlock].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): CreditBlock =
                     CreditBlock(
                         checkRequired("id", id),
@@ -4966,6 +5173,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Customer].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Customer =
                     Customer(
                         checkRequired("id", id),
@@ -5256,6 +5476,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
@@ -5870,6 +6095,32 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [VoidLedgerEntry].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .startingBalance()
+             * .voidAmount()
+             * .voidReason()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): VoidLedgerEntry =
                 VoidLedgerEntry(
                     checkRequired("id", id),
@@ -6064,6 +6315,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [CreditBlock].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): CreditBlock =
                     CreditBlock(
                         checkRequired("id", id),
@@ -6228,6 +6493,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Customer].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Customer =
                     Customer(
                         checkRequired("id", id),
@@ -6518,6 +6796,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
@@ -7170,6 +7453,33 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [VoidInitiatedLedgerEntry].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .newBlockExpiryDate()
+             * .startingBalance()
+             * .voidAmount()
+             * .voidReason()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): VoidInitiatedLedgerEntry =
                 VoidInitiatedLedgerEntry(
                     checkRequired("id", id),
@@ -7365,6 +7675,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [CreditBlock].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): CreditBlock =
                     CreditBlock(
                         checkRequired("id", id),
@@ -7529,6 +7853,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Customer].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Customer =
                     Customer(
                         checkRequired("id", id),
@@ -7819,6 +8156,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
@@ -8367,6 +8709,30 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AmendmentLedgerEntry].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .creditBlock()
+             * .currency()
+             * .customer()
+             * .description()
+             * .endingBalance()
+             * .entryStatus()
+             * .entryType()
+             * .ledgerSequenceNumber()
+             * .metadata()
+             * .startingBalance()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): AmendmentLedgerEntry =
                 AmendmentLedgerEntry(
                     checkRequired("id", id),
@@ -8559,6 +8925,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [CreditBlock].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .expiryDate()
+                 * .perUnitCostBasis()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): CreditBlock =
                     CreditBlock(
                         checkRequired("id", id),
@@ -8723,6 +9103,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Customer].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Customer =
                     Customer(
                         checkRequired("id", id),
@@ -9013,6 +9406,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 

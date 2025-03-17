@@ -691,6 +691,21 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .currency()
+             * .invoiceDate()
+             * .lineItems()
+             * .netTerms()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Body =
                 Body(
                     checkRequired("currency", currency),
@@ -1052,6 +1067,21 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [InvoiceCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .currency()
+         * .invoiceDate()
+         * .lineItems()
+         * .netTerms()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): InvoiceCreateParams =
             InvoiceCreateParams(
                 body.build(),
@@ -1361,6 +1391,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [LineItem].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .endDate()
+             * .itemId()
+             * .modelType()
+             * .name()
+             * .quantity()
+             * .startDate()
+             * .unitConfig()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): LineItem =
                 LineItem(
                     checkRequired("endDate", endDate),
@@ -1577,6 +1625,18 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [UnitConfig].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .unitAmount()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): UnitConfig =
                     UnitConfig(
                         checkRequired("unitAmount", unitAmount),
@@ -1683,6 +1743,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
