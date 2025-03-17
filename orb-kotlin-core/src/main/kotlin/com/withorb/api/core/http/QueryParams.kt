@@ -1,3 +1,5 @@
+// File generated from our OpenAPI spec by Stainless.
+
 package com.withorb.api.core.http
 
 import com.withorb.api.core.toImmutable
