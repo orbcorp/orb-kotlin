@@ -6,7 +6,7 @@ import com.withorb.api.core.JsonValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class DimensionalPriceGroupsTest {
+internal class DimensionalPriceGroupsTest {
 
     @Test
     fun createDimensionalPriceGroups() {
