@@ -5,7 +5,7 @@ package com.withorb.api.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CustomerFetchParamsTest {
+internal class CustomerFetchParamsTest {
 
     @Test
     fun create() {
