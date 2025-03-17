@@ -1438,6 +1438,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Body =
                 Body(
                     accountingSyncConfiguration,
@@ -2057,6 +2062,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [CustomerUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .customerId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CustomerUpdateParams =
             CustomerUpdateParams(
                 checkRequired("customerId", customerId),
@@ -2216,6 +2233,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AccountingSyncConfiguration].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): AccountingSyncConfiguration =
                 AccountingSyncConfiguration(
                     (accountingProviders ?: JsonMissing.of()).map { it.toImmutable() },
@@ -2367,6 +2389,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [AccountingProvider].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .externalProviderId()
+                 * .providerType()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): AccountingProvider =
                     AccountingProvider(
                         checkRequired("externalProviderId", externalProviderId),
@@ -2651,6 +2686,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [BillingAddress].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): BillingAddress =
                 BillingAddress(
                     city,
@@ -2838,6 +2878,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Hierarchy].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Hierarchy =
                 Hierarchy(
                     (childCustomerIds ?: JsonMissing.of()).map { it.toImmutable() },
@@ -2927,6 +2972,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
@@ -3168,6 +3218,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ReportingConfiguration].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .exempt()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ReportingConfiguration =
                 ReportingConfiguration(
                     checkRequired("exempt", exempt),
@@ -3433,6 +3495,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ShippingAddress].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): ShippingAddress =
                 ShippingAddress(
                     city,
@@ -3789,6 +3856,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewAvalaraTaxConfiguration].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .taxExempt()
+                 * .taxProvider()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewAvalaraTaxConfiguration =
                     NewAvalaraTaxConfiguration(
                         checkRequired("taxExempt", taxExempt),
@@ -4054,6 +4134,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewTaxJarConfiguration].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .taxExempt()
+                 * .taxProvider()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewTaxJarConfiguration =
                     NewTaxJarConfiguration(
                         checkRequired("taxExempt", taxExempt),
@@ -4439,6 +4532,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [TaxId].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .country()
+             * .type()
+             * .value()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): TaxId =
                 TaxId(
                     checkRequired("country", country),

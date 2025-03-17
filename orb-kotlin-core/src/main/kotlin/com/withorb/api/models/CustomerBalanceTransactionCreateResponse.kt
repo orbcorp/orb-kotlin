@@ -425,6 +425,27 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [CustomerBalanceTransactionCreateResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .action()
+         * .amount()
+         * .createdAt()
+         * .creditNote()
+         * .description()
+         * .endingBalance()
+         * .invoice()
+         * .startingBalance()
+         * .type()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CustomerBalanceTransactionCreateResponse =
             CustomerBalanceTransactionCreateResponse(
                 checkRequired("id", id),
@@ -676,6 +697,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CreditNote].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): CreditNote =
                 CreditNote(checkRequired("id", id), additionalProperties.toImmutable())
         }
@@ -793,6 +826,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Invoice].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Invoice =
                 Invoice(checkRequired("id", id), additionalProperties.toImmutable())
         }
