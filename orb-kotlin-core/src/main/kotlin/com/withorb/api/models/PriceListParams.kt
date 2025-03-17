@@ -183,6 +183,11 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [PriceListParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): PriceListParams =
             PriceListParams(cursor, limit, additionalHeaders.build(), additionalQueryParams.build())
     }

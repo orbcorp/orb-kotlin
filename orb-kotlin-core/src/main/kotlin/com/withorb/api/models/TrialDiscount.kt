@@ -289,6 +289,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [TrialDiscount].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .appliesToPriceIds()
+         * .discountType()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): TrialDiscount =
             TrialDiscount(
                 checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },

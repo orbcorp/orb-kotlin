@@ -210,6 +210,19 @@ private constructor(
             keys.forEach(::removeAdditionalBodyProperty)
         }
 
+        /**
+         * Returns an immutable instance of [CustomerCreditTopUpDeleteParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .customerId()
+         * .topUpId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CustomerCreditTopUpDeleteParams =
             CustomerCreditTopUpDeleteParams(
                 checkRequired("customerId", customerId),

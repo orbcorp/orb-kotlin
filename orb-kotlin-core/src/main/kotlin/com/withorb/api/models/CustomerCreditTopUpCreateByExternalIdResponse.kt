@@ -386,6 +386,23 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [CustomerCreditTopUpCreateByExternalIdResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .amount()
+         * .currency()
+         * .invoiceSettings()
+         * .perUnitCostBasis()
+         * .threshold()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CustomerCreditTopUpCreateByExternalIdResponse =
             CustomerCreditTopUpCreateByExternalIdResponse(
                 checkRequired("id", id),
@@ -624,6 +641,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [InvoiceSettings].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .autoCollection()
+             * .netTerms()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): InvoiceSettings =
                 InvoiceSettings(
                     checkRequired("autoCollection", autoCollection),

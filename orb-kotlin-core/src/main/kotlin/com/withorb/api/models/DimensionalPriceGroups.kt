@@ -164,6 +164,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [DimensionalPriceGroups].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .data()
+         * .paginationMetadata()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): DimensionalPriceGroups =
             DimensionalPriceGroups(
                 checkRequired("data", data).map { it.toImmutable() },

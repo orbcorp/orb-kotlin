@@ -242,6 +242,20 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [PercentageDiscount].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .appliesToPriceIds()
+         * .discountType()
+         * .percentageDiscount()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PercentageDiscount =
             PercentageDiscount(
                 checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },

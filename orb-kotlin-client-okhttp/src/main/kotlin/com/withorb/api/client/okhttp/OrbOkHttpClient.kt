@@ -150,6 +150,11 @@ class OrbOkHttpClient private constructor() {
 
         fun fromEnv() = apply { clientOptions.fromEnv() }
 
+        /**
+         * Returns an immutable instance of [OrbClient].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): OrbClient =
             OrbClientImpl(
                 clientOptions
