@@ -7,7 +7,7 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CustomerCreditLedgerCreateEntryParamsTest {
+internal class CustomerCreditLedgerCreateEntryParamsTest {
 
     @Test
     fun create() {

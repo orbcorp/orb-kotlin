@@ -5,7 +5,7 @@ package com.withorb.api.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CustomerCreditTopUpDeleteByExternalIdParamsTest {
+internal class CustomerCreditTopUpDeleteByExternalIdParamsTest {
 
     @Test
     fun create() {

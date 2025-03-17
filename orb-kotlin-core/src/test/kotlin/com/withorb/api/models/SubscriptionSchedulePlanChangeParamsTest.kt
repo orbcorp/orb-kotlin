@@ -8,7 +8,7 @@ import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class SubscriptionSchedulePlanChangeParamsTest {
+internal class SubscriptionSchedulePlanChangeParamsTest {
 
     @Test
     fun create() {
