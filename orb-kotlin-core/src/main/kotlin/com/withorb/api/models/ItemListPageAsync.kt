@@ -161,7 +161,13 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
+            /**
+             * Returns an immutable instance of [Response].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Response =
+                Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 

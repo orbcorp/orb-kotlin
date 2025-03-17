@@ -180,6 +180,11 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ItemListParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): ItemListParams =
             ItemListParams(cursor, limit, additionalHeaders.build(), additionalQueryParams.build())
     }

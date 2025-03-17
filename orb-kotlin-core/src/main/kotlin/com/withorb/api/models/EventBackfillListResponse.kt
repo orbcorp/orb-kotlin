@@ -495,6 +495,27 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [EventBackfillListResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .closeTime()
+         * .createdAt()
+         * .customerId()
+         * .eventsIngested()
+         * .replaceExistingEvents()
+         * .revertedAt()
+         * .status()
+         * .timeframeEnd()
+         * .timeframeStart()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): EventBackfillListResponse =
             EventBackfillListResponse(
                 checkRequired("id", id),

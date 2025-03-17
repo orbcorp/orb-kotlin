@@ -243,6 +243,20 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [UsageDiscount].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .appliesToPriceIds()
+         * .discountType()
+         * .usageDiscount()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): UsageDiscount =
             UsageDiscount(
                 checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },

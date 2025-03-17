@@ -384,6 +384,24 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Coupon].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .archivedAt()
+         * .discount()
+         * .durationInMonths()
+         * .maxRedemptions()
+         * .redemptionCode()
+         * .timesRedeemed()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Coupon =
             Coupon(
                 checkRequired("id", id),

@@ -720,6 +720,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .currency()
+             * .name()
+             * .prices()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Body =
                 Body(
                     checkRequired("currency", currency),
@@ -1197,6 +1211,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [PlanCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .currency()
+         * .name()
+         * .prices()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PlanCreateParams =
             PlanCreateParams(body.build(), additionalHeaders.build(), additionalQueryParams.build())
     }
@@ -2843,6 +2871,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanUnitPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .unitConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanUnitPrice =
                     NewPlanUnitPrice(
                         checkRequired("cadence", cadence),
@@ -3194,6 +3238,18 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [UnitConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .unitAmount()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): UnitConfig =
                         UnitConfig(
                             checkRequired("unitAmount", unitAmount),
@@ -3371,6 +3427,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -3658,6 +3727,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -3858,6 +3940,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -4588,6 +4675,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanPackagePrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .packageConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanPackagePrice =
                     NewPlanPackagePrice(
                         checkRequired("cadence", cadence),
@@ -4984,6 +5087,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [PackageConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .packageAmount()
+                     * .packageSize()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): PackageConfig =
                         PackageConfig(
                             checkRequired("packageAmount", packageAmount),
@@ -5162,6 +5278,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -5449,6 +5578,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -5649,6 +5791,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -6379,6 +6526,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanMatrixPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .matrixConfig()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanMatrixPrice =
                     NewPlanMatrixPrice(
                         checkRequired("cadence", cadence),
@@ -6744,6 +6907,20 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [MatrixConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .defaultUnitAmount()
+                     * .dimensions()
+                     * .matrixValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): MatrixConfig =
                         MatrixConfig(
                             checkRequired("defaultUnitAmount", defaultUnitAmount),
@@ -6922,6 +7099,19 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [MatrixValue].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .dimensionValues()
+                         * .unitAmount()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): MatrixValue =
                             MatrixValue(
                                 checkRequired("dimensionValues", dimensionValues).map {
@@ -7216,6 +7406,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -7503,6 +7706,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -7703,6 +7919,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -8433,6 +8654,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanTieredPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .tieredConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanTieredPrice =
                     NewPlanTieredPrice(
                         checkRequired("cadence", cadence),
@@ -8794,6 +9031,18 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [TieredConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .tiers()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): TieredConfig =
                         TieredConfig(
                             checkRequired("tiers", tiers).map { it.toImmutable() },
@@ -8996,6 +9245,19 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Tier].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .firstUnit()
+                         * .unitAmount()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): Tier =
                             Tier(
                                 checkRequired("firstUnit", firstUnit),
@@ -9193,6 +9455,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -9480,6 +9755,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -9680,6 +9968,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -10412,6 +10705,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanTieredBpsPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .tieredBpsConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanTieredBpsPrice =
                     NewPlanTieredBpsPrice(
                         checkRequired("cadence", cadence),
@@ -10777,6 +11086,18 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [TieredBpsConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .tiers()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): TieredBpsConfig =
                         TieredBpsConfig(
                             checkRequired("tiers", tiers).map { it.toImmutable() },
@@ -11007,6 +11328,19 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Tier].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .bps()
+                         * .minimumAmount()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): Tier =
                             Tier(
                                 checkRequired("bps", bps),
@@ -11205,6 +11539,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -11492,6 +11839,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -11692,6 +12052,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -12421,6 +12786,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanBpsPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .bpsConfig()
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanBpsPrice =
                     NewPlanBpsPrice(
                         checkRequired("bpsConfig", bpsConfig),
@@ -12583,6 +12964,18 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BpsConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .bps()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BpsConfig =
                         BpsConfig(
                             checkRequired("bps", bps),
@@ -12984,6 +13377,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -13271,6 +13677,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -13471,6 +13890,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -14201,6 +14625,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanBulkBpsPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .bulkBpsConfig()
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanBulkBpsPrice =
                     NewPlanBulkBpsPrice(
                         checkRequired("bulkBpsConfig", bulkBpsConfig),
@@ -14343,6 +14783,18 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BulkBpsConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .tiers()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BulkBpsConfig =
                         BulkBpsConfig(
                             checkRequired("tiers", tiers).map { it.toImmutable() },
@@ -14532,6 +14984,18 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Tier].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .bps()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): Tier =
                             Tier(
                                 checkRequired("bps", bps),
@@ -14952,6 +15416,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -15239,6 +15716,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -15439,6 +15929,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -16168,6 +16663,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanBulkPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .bulkConfig()
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanBulkPrice =
                     NewPlanBulkPrice(
                         checkRequired("bulkConfig", bulkConfig),
@@ -16306,6 +16817,18 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BulkConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .tiers()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BulkConfig =
                         BulkConfig(
                             checkRequired("tiers", tiers).map { it.toImmutable() },
@@ -16468,6 +16991,18 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Tier].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .unitAmount()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): Tier =
                             Tier(
                                 checkRequired("unitAmount", unitAmount),
@@ -16887,6 +17422,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -17174,6 +17722,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -17374,6 +17935,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -18116,6 +18682,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanThresholdTotalAmountPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .thresholdTotalAmountConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanThresholdTotalAmountPrice =
                     NewPlanThresholdTotalAmountPrice(
                         checkRequired("cadence", cadence),
@@ -18426,6 +19008,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [ThresholdTotalAmountConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): ThresholdTotalAmountConfig =
                         ThresholdTotalAmountConfig(additionalProperties.toImmutable())
                 }
@@ -18600,6 +19187,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -18887,6 +19487,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -19087,6 +19700,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -19822,6 +20440,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanTieredPackagePrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .tieredPackageConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanTieredPackagePrice =
                     NewPlanTieredPackagePrice(
                         checkRequired("cadence", cadence),
@@ -20131,6 +20765,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [TieredPackageConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): TieredPackageConfig =
                         TieredPackageConfig(additionalProperties.toImmutable())
                 }
@@ -20305,6 +20944,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -20592,6 +21244,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -20792,6 +21457,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -21531,6 +22201,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanTieredWithMinimumPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .tieredWithMinimumConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanTieredWithMinimumPrice =
                     NewPlanTieredWithMinimumPrice(
                         checkRequired("cadence", cadence),
@@ -21840,6 +22526,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [TieredWithMinimumConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): TieredWithMinimumConfig =
                         TieredWithMinimumConfig(additionalProperties.toImmutable())
                 }
@@ -22014,6 +22705,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -22301,6 +23005,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -22501,6 +23218,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -23238,6 +23960,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanUnitWithPercentPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .unitWithPercentConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanUnitWithPercentPrice =
                     NewPlanUnitWithPercentPrice(
                         checkRequired("cadence", cadence),
@@ -23547,6 +24285,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [UnitWithPercentConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): UnitWithPercentConfig =
                         UnitWithPercentConfig(additionalProperties.toImmutable())
                 }
@@ -23721,6 +24464,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -24008,6 +24764,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -24208,6 +24977,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -24950,6 +25724,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanPackageWithAllocationPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .packageWithAllocationConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanPackageWithAllocationPrice =
                     NewPlanPackageWithAllocationPrice(
                         checkRequired("cadence", cadence),
@@ -25260,6 +26050,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [PackageWithAllocationConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): PackageWithAllocationConfig =
                         PackageWithAllocationConfig(additionalProperties.toImmutable())
                 }
@@ -25434,6 +26229,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -25721,6 +26529,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -25921,6 +26742,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -26661,6 +27487,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanTierWithProrationPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .tieredWithProrationConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanTierWithProrationPrice =
                     NewPlanTierWithProrationPrice(
                         checkRequired("cadence", cadence),
@@ -26971,6 +27813,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [TieredWithProrationConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): TieredWithProrationConfig =
                         TieredWithProrationConfig(additionalProperties.toImmutable())
                 }
@@ -27145,6 +27992,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -27432,6 +28292,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -27632,6 +28505,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -28371,6 +29249,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanUnitWithProrationPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .unitWithProrationConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanUnitWithProrationPrice =
                     NewPlanUnitWithProrationPrice(
                         checkRequired("cadence", cadence),
@@ -28680,6 +29574,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [UnitWithProrationConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): UnitWithProrationConfig =
                         UnitWithProrationConfig(additionalProperties.toImmutable())
                 }
@@ -28854,6 +29753,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -29141,6 +30053,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -29341,6 +30266,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -30080,6 +31010,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanGroupedAllocationPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .groupedAllocationConfig()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanGroupedAllocationPrice =
                     NewPlanGroupedAllocationPrice(
                         checkRequired("cadence", cadence),
@@ -30293,6 +31239,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [GroupedAllocationConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): GroupedAllocationConfig =
                         GroupedAllocationConfig(additionalProperties.toImmutable())
                 }
@@ -30563,6 +31514,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -30850,6 +31814,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -31050,6 +32027,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -31796,6 +32778,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanGroupedWithProratedMinimumPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .groupedWithProratedMinimumConfig()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanGroupedWithProratedMinimumPrice =
                     NewPlanGroupedWithProratedMinimumPrice(
                         checkRequired("cadence", cadence),
@@ -32014,6 +33012,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [GroupedWithProratedMinimumConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): GroupedWithProratedMinimumConfig =
                         GroupedWithProratedMinimumConfig(additionalProperties.toImmutable())
                 }
@@ -32284,6 +33287,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -32571,6 +33587,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -32771,6 +33800,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -33515,6 +34549,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanGroupedWithMeteredMinimumPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .groupedWithMeteredMinimumConfig()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanGroupedWithMeteredMinimumPrice =
                     NewPlanGroupedWithMeteredMinimumPrice(
                         checkRequired("cadence", cadence),
@@ -33733,6 +34783,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [GroupedWithMeteredMinimumConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): GroupedWithMeteredMinimumConfig =
                         GroupedWithMeteredMinimumConfig(additionalProperties.toImmutable())
                 }
@@ -34003,6 +35058,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -34290,6 +35358,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -34490,6 +35571,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -35232,6 +36318,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanMatrixWithDisplayNamePrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .matrixWithDisplayNameConfig()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanMatrixWithDisplayNamePrice =
                     NewPlanMatrixWithDisplayNamePrice(
                         checkRequired("cadence", cadence),
@@ -35446,6 +36548,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [MatrixWithDisplayNameConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): MatrixWithDisplayNameConfig =
                         MatrixWithDisplayNameConfig(additionalProperties.toImmutable())
                 }
@@ -35716,6 +36823,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -36003,6 +37123,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -36203,6 +37336,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -36942,6 +38080,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanBulkWithProrationPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .bulkWithProrationConfig()
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanBulkWithProrationPrice =
                     NewPlanBulkWithProrationPrice(
                         checkRequired("bulkWithProrationConfig", bulkWithProrationConfig),
@@ -37028,6 +38182,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BulkWithProrationConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): BulkWithProrationConfig =
                         BulkWithProrationConfig(additionalProperties.toImmutable())
                 }
@@ -37425,6 +38584,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -37712,6 +38884,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -37912,6 +39097,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -38654,6 +39844,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanGroupedTieredPackagePrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .groupedTieredPackageConfig()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanGroupedTieredPackagePrice =
                     NewPlanGroupedTieredPackagePrice(
                         checkRequired("cadence", cadence),
@@ -38868,6 +40074,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [GroupedTieredPackageConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): GroupedTieredPackageConfig =
                         GroupedTieredPackageConfig(additionalProperties.toImmutable())
                 }
@@ -39138,6 +40349,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -39425,6 +40649,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -39625,6 +40862,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -40367,6 +41609,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanMaxGroupTieredPackagePrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .maxGroupTieredPackageConfig()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanMaxGroupTieredPackagePrice =
                     NewPlanMaxGroupTieredPackagePrice(
                         checkRequired("cadence", cadence),
@@ -40581,6 +41839,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [MaxGroupTieredPackageConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): MaxGroupTieredPackageConfig =
                         MaxGroupTieredPackageConfig(additionalProperties.toImmutable())
                 }
@@ -40851,6 +42114,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -41138,6 +42414,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -41338,6 +42627,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -42095,6 +43389,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanScalableMatrixWithUnitPricingPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .scalableMatrixWithUnitPricingConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanScalableMatrixWithUnitPricingPrice =
                     NewPlanScalableMatrixWithUnitPricingPrice(
                         checkRequired("cadence", cadence),
@@ -42409,6 +43719,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [ScalableMatrixWithUnitPricingConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): ScalableMatrixWithUnitPricingConfig =
                         ScalableMatrixWithUnitPricingConfig(additionalProperties.toImmutable())
                 }
@@ -42583,6 +43898,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -42870,6 +44198,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -43070,6 +44411,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -43829,6 +45175,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanScalableMatrixWithTieredPricingPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * .scalableMatrixWithTieredPricingConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanScalableMatrixWithTieredPricingPrice =
                     NewPlanScalableMatrixWithTieredPricingPrice(
                         checkRequired("cadence", cadence),
@@ -44147,6 +45509,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [ScalableMatrixWithTieredPricingConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): ScalableMatrixWithTieredPricingConfig =
                         ScalableMatrixWithTieredPricingConfig(additionalProperties.toImmutable())
                 }
@@ -44321,6 +45688,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -44608,6 +45988,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -44808,6 +46201,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -45550,6 +46948,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [NewPlanCumulativeGroupedBulkPrice].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .cumulativeGroupedBulkConfig()
+                 * .itemId()
+                 * .modelType()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): NewPlanCumulativeGroupedBulkPrice =
                     NewPlanCumulativeGroupedBulkPrice(
                         checkRequired("cadence", cadence),
@@ -45764,6 +47178,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [CumulativeGroupedBulkConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): CumulativeGroupedBulkConfig =
                         CumulativeGroupedBulkConfig(additionalProperties.toImmutable())
                 }
@@ -46034,6 +47453,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): BillingCycleConfiguration =
                         BillingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -46321,6 +47753,19 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): InvoicingCycleConfiguration =
                         InvoicingCycleConfiguration(
                             checkRequired("duration", duration),
@@ -46521,6 +47966,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -46623,6 +48073,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
