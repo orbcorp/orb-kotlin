@@ -5,7 +5,7 @@ package com.withorb.api.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AmountDiscountTest {
+internal class AmountDiscountTest {
 
     @Test
     fun createAmountDiscount() {

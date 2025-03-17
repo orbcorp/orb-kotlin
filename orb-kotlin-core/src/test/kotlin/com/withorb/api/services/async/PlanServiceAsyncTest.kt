@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class PlanServiceAsyncTest {
+internal class PlanServiceAsyncTest {
 
     @Test
     suspend fun create() {

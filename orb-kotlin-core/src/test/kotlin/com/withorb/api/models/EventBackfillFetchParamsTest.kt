@@ -5,7 +5,7 @@ package com.withorb.api.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class EventBackfillFetchParamsTest {
+internal class EventBackfillFetchParamsTest {
 
     @Test
     fun create() {

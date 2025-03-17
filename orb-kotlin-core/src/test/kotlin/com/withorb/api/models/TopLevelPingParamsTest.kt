@@ -4,7 +4,7 @@ package com.withorb.api.models
 
 import org.junit.jupiter.api.Test
 
-class TopLevelPingParamsTest {
+internal class TopLevelPingParamsTest {
 
     @Test
     fun create() {

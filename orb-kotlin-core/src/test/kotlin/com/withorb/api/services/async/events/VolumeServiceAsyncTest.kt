@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class VolumeServiceAsyncTest {
+internal class VolumeServiceAsyncTest {
 
     @Test
     suspend fun list() {

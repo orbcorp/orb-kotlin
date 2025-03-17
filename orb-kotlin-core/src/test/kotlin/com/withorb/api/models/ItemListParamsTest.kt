@@ -6,7 +6,7 @@ import com.withorb.api.core.http.QueryParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ItemListParamsTest {
+internal class ItemListParamsTest {
 
     @Test
     fun create() {

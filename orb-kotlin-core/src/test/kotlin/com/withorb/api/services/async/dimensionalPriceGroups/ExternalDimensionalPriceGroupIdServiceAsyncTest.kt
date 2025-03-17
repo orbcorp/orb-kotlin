@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class ExternalDimensionalPriceGroupIdServiceAsyncTest {
+internal class ExternalDimensionalPriceGroupIdServiceAsyncTest {
 
     @Test
     suspend fun retrieve() {
