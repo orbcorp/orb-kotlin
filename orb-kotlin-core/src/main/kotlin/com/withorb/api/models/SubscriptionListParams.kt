@@ -88,7 +88,7 @@ private constructor(
                 customerId?.forEach { put("customer_id[]", it) }
                 externalCustomerId?.forEach { put("external_customer_id[]", it) }
                 limit?.let { put("limit", it.toString()) }
-                status?.let { put("status", it.toString()) }
+                status?.let { put("status", it.asString()) }
                 putAll(additionalQueryParams)
             }
             .build()
