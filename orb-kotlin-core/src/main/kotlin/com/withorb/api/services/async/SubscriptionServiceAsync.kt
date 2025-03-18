@@ -283,9 +283,13 @@ interface SubscriptionServiceAsync {
      * issue an invoice when usage amounts hit $10.00 for a subscription that invoices in USD.
      */
     suspend fun create(
-        params: SubscriptionCreateParams,
+        params: SubscriptionCreateParams = SubscriptionCreateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionCreateResponse
+
+    /** @see [create] */
+    suspend fun create(requestOptions: RequestOptions): SubscriptionCreateResponse =
+        create(SubscriptionCreateParams.none(), requestOptions)
 
     /**
      * This endpoint can be used to update the `metadata`, `net terms`, `auto_collection`,
@@ -926,9 +930,16 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun create(
-            params: SubscriptionCreateParams,
+            params: SubscriptionCreateParams = SubscriptionCreateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionCreateResponse>
+
+        /** @see [create] */
+        @MustBeClosed
+        suspend fun create(
+            requestOptions: RequestOptions
+        ): HttpResponseFor<SubscriptionCreateResponse> =
+            create(SubscriptionCreateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `put /subscriptions/{subscription_id}`, but is otherwise
