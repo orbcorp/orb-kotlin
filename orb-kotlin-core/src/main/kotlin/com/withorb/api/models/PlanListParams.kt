@@ -76,7 +76,7 @@ private constructor(
                 }
                 cursor?.let { put("cursor", it) }
                 limit?.let { put("limit", it.toString()) }
-                status?.let { put("status", it.asString()) }
+                status?.let { put("status", it.toString()) }
                 putAll(additionalQueryParams)
             }
             .build()

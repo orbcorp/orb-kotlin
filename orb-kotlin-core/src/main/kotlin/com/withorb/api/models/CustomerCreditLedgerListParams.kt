@@ -166,8 +166,8 @@ private constructor(
                 }
                 currency?.let { put("currency", it) }
                 cursor?.let { put("cursor", it) }
-                entryStatus?.let { put("entry_status", it.asString()) }
-                entryType?.let { put("entry_type", it.asString()) }
+                entryStatus?.let { put("entry_status", it.toString()) }
+                entryType?.let { put("entry_type", it.toString()) }
                 limit?.let { put("limit", it.toString()) }
                 minimumAmount?.let { put("minimum_amount", it) }
                 putAll(additionalQueryParams)
