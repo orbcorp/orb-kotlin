@@ -23,17 +23,21 @@ internal class AlertEnableParamsTest {
                 .alertConfigurationId("alert_configuration_id")
                 .subscriptionId("subscription_id")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("subscription_id", "subscription_id")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(QueryParams.builder().put("subscription_id", "subscription_id").build())
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params =
             AlertEnableParams.builder().alertConfigurationId("alert_configuration_id").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

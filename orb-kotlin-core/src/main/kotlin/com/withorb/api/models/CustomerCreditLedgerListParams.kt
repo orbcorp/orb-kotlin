@@ -143,41 +143,30 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.createdAtGt?.let {
-            queryParams.put(
-                "created_at[gt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.createdAtGte?.let {
-            queryParams.put(
-                "created_at[gte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.createdAtLt?.let {
-            queryParams.put(
-                "created_at[lt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.createdAtLte?.let {
-            queryParams.put(
-                "created_at[lte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.currency?.let { queryParams.put("currency", listOf(it.toString())) }
-        this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
-        this.entryStatus?.let { queryParams.put("entry_status", listOf(it.toString())) }
-        this.entryType?.let { queryParams.put("entry_type", listOf(it.toString())) }
-        this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
-        this.minimumAmount?.let { queryParams.put("minimum_amount", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                createdAtGt?.let {
+                    put("created_at[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                createdAtGte?.let {
+                    put("created_at[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                createdAtLt?.let {
+                    put("created_at[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                createdAtLte?.let {
+                    put("created_at[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                currency?.let { put("currency", it) }
+                cursor?.let { put("cursor", it) }
+                entryStatus?.let { put("entry_status", it.asString()) }
+                entryType?.let { put("entry_type", it.asString()) }
+                limit?.let { put("limit", it.toString()) }
+                minimumAmount?.let { put("minimum_amount", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {
