@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class CustomerBalanceTransactionCreateResponseTest {
 
     @Test
-    fun createCustomerBalanceTransactionCreateResponse() {
+    fun create() {
         val customerBalanceTransactionCreateResponse =
             CustomerBalanceTransactionCreateResponse.builder()
                 .id("cgZa3SXcsPTVyC4Y")
@@ -29,7 +29,7 @@ internal class CustomerBalanceTransactionCreateResponseTest {
                 .startingBalance("33.00")
                 .type(CustomerBalanceTransactionCreateResponse.Type.INCREMENT)
                 .build()
-        assertThat(customerBalanceTransactionCreateResponse).isNotNull
+
         assertThat(customerBalanceTransactionCreateResponse.id()).isEqualTo("cgZa3SXcsPTVyC4Y")
         assertThat(customerBalanceTransactionCreateResponse.action())
             .isEqualTo(CustomerBalanceTransactionCreateResponse.Action.APPLIED_TO_INVOICE)

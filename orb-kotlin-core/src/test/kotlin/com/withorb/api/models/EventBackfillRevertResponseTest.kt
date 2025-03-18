@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class EventBackfillRevertResponseTest {
 
     @Test
-    fun createEventBackfillRevertResponse() {
+    fun create() {
         val eventBackfillRevertResponse =
             EventBackfillRevertResponse.builder()
                 .id("id")
@@ -24,7 +24,7 @@ internal class EventBackfillRevertResponseTest {
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .deprecationFilter("my_numeric_property > 100 AND my_other_property = 'bar'")
                 .build()
-        assertThat(eventBackfillRevertResponse).isNotNull
+
         assertThat(eventBackfillRevertResponse.id()).isEqualTo("id")
         assertThat(eventBackfillRevertResponse.closeTime())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

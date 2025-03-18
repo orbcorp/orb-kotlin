@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class EventSearchResponseTest {
 
     @Test
-    fun createEventSearchResponse() {
+    fun create() {
         val eventSearchResponse =
             EventSearchResponse.builder()
                 .addData(
@@ -25,7 +25,7 @@ internal class EventSearchResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(eventSearchResponse).isNotNull
+
         assertThat(eventSearchResponse.data())
             .containsExactly(
                 EventSearchResponse.Data.builder()

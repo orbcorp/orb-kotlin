@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class CustomerTest {
 
     @Test
-    fun createCustomer() {
+    fun create() {
         val customer =
             Customer.builder()
                 .id("id")
@@ -95,7 +95,7 @@ internal class CustomerTest {
                     Customer.ReportingConfiguration.builder().exempt(true).build()
                 )
                 .build()
-        assertThat(customer).isNotNull
+
         assertThat(customer.id()).isEqualTo("id")
         assertThat(customer.additionalEmails()).containsExactly("string")
         assertThat(customer.autoCollection()).isEqualTo(true)

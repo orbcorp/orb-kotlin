@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class SubscriptionCreateResponseTest {
 
     @Test
-    fun createSubscriptionCreateResponse() {
+    fun create() {
         val subscriptionCreateResponse =
             SubscriptionCreateResponse.builder()
                 .id("id")
@@ -502,7 +502,7 @@ internal class SubscriptionCreateResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(subscriptionCreateResponse).isNotNull
+
         assertThat(subscriptionCreateResponse.id()).isEqualTo("id")
         assertThat(subscriptionCreateResponse.activePlanPhaseOrder()).isEqualTo(0L)
         assertThat(subscriptionCreateResponse.adjustmentIntervals())

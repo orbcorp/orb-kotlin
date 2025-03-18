@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class InvoiceLineItemCreateResponseTest {
 
     @Test
-    fun createInvoiceLineItemCreateResponse() {
+    fun create() {
         val invoiceLineItemCreateResponse =
             InvoiceLineItemCreateResponse.builder()
                 .id("id")
@@ -172,7 +172,7 @@ internal class InvoiceLineItemCreateResponseTest {
                 )
                 .addUsageCustomerId("string")
                 .build()
-        assertThat(invoiceLineItemCreateResponse).isNotNull
+
         assertThat(invoiceLineItemCreateResponse.id()).isEqualTo("id")
         assertThat(invoiceLineItemCreateResponse.adjustedSubtotal()).isEqualTo("5.00")
         assertThat(invoiceLineItemCreateResponse.adjustments())

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class EventBackfillCloseResponseTest {
 
     @Test
-    fun createEventBackfillCloseResponse() {
+    fun create() {
         val eventBackfillCloseResponse =
             EventBackfillCloseResponse.builder()
                 .id("id")
@@ -24,7 +24,7 @@ internal class EventBackfillCloseResponseTest {
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .deprecationFilter("my_numeric_property > 100 AND my_other_property = 'bar'")
                 .build()
-        assertThat(eventBackfillCloseResponse).isNotNull
+
         assertThat(eventBackfillCloseResponse.id()).isEqualTo("id")
         assertThat(eventBackfillCloseResponse.closeTime())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
