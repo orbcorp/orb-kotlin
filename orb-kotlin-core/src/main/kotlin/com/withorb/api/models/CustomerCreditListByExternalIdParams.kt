@@ -54,15 +54,16 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.currency?.let { queryParams.put("currency", listOf(it.toString())) }
-        this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
-        this.includeAllBlocks?.let { queryParams.put("include_all_blocks", listOf(it.toString())) }
-        this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                currency?.let { put("currency", it) }
+                cursor?.let { put("cursor", it) }
+                includeAllBlocks?.let { put("include_all_blocks", it.toString()) }
+                limit?.let { put("limit", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {

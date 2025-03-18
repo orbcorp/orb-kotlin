@@ -16,16 +16,20 @@ internal class InvoiceFetchUpcomingParamsTest {
     @Test
     fun queryParams() {
         val params = InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
-        val expected = QueryParams.builder()
-        expected.put("subscription_id", "subscription_id")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(QueryParams.builder().put("subscription_id", "subscription_id").build())
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
-        val expected = QueryParams.builder()
-        expected.put("subscription_id", "subscription_id")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(QueryParams.builder().put("subscription_id", "subscription_id").build())
     }
 }

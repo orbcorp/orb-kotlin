@@ -250,39 +250,26 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.billableMetricId?.let { queryParams.put("billable_metric_id", listOf(it.toString())) }
-        this.firstDimensionKey?.let {
-            queryParams.put("first_dimension_key", listOf(it.toString()))
-        }
-        this.firstDimensionValue?.let {
-            queryParams.put("first_dimension_value", listOf(it.toString()))
-        }
-        this.granularity?.let { queryParams.put("granularity", listOf(it.toString())) }
-        this.groupBy?.let { queryParams.put("group_by", listOf(it.toString())) }
-        this.secondDimensionKey?.let {
-            queryParams.put("second_dimension_key", listOf(it.toString()))
-        }
-        this.secondDimensionValue?.let {
-            queryParams.put("second_dimension_value", listOf(it.toString()))
-        }
-        this.timeframeEnd?.let {
-            queryParams.put(
-                "timeframe_end",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.timeframeStart?.let {
-            queryParams.put(
-                "timeframe_start",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.viewMode?.let { queryParams.put("view_mode", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                billableMetricId?.let { put("billable_metric_id", it) }
+                firstDimensionKey?.let { put("first_dimension_key", it) }
+                firstDimensionValue?.let { put("first_dimension_value", it) }
+                granularity?.let { put("granularity", it.asString()) }
+                groupBy?.let { put("group_by", it) }
+                secondDimensionKey?.let { put("second_dimension_key", it) }
+                secondDimensionValue?.let { put("second_dimension_value", it) }
+                timeframeEnd?.let {
+                    put("timeframe_end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                timeframeStart?.let {
+                    put("timeframe_start", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                viewMode?.let { put("view_mode", it.asString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {

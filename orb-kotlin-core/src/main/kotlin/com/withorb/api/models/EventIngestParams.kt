@@ -251,13 +251,14 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.backfillId?.let { queryParams.put("backfill_id", listOf(it.toString())) }
-        this.debug?.let { queryParams.put("debug", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                backfillId?.let { put("backfill_id", it) }
+                debug?.let { put("debug", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     @NoAutoDetect
     class Body

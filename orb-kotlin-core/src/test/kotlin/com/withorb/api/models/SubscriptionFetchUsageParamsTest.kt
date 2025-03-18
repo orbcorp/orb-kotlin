@@ -42,26 +42,34 @@ internal class SubscriptionFetchUsageParamsTest {
                 .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                 .viewMode(SubscriptionFetchUsageParams.ViewMode.PERIODIC)
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("billable_metric_id", "billable_metric_id")
-        expected.put("first_dimension_key", "first_dimension_key")
-        expected.put("first_dimension_value", "first_dimension_value")
-        expected.put("granularity", SubscriptionFetchUsageParams.Granularity.DAY.toString())
-        expected.put("group_by", "group_by")
-        expected.put("second_dimension_key", "second_dimension_key")
-        expected.put("second_dimension_value", "second_dimension_value")
-        expected.put("timeframe_end", "2022-03-01T05:00:00Z")
-        expected.put("timeframe_start", "2022-02-01T05:00:00Z")
-        expected.put("view_mode", SubscriptionFetchUsageParams.ViewMode.PERIODIC.toString())
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("billable_metric_id", "billable_metric_id")
+                    .put("first_dimension_key", "first_dimension_key")
+                    .put("first_dimension_value", "first_dimension_value")
+                    .put("granularity", "day")
+                    .put("group_by", "group_by")
+                    .put("second_dimension_key", "second_dimension_key")
+                    .put("second_dimension_value", "second_dimension_value")
+                    .put("timeframe_end", "2022-03-01T05:00:00Z")
+                    .put("timeframe_start", "2022-02-01T05:00:00Z")
+                    .put("view_mode", "periodic")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params =
             SubscriptionFetchUsageParams.builder().subscriptionId("subscription_id").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

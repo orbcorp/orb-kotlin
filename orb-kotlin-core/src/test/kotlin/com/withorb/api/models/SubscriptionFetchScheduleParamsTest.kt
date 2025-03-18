@@ -34,22 +34,30 @@ internal class SubscriptionFetchScheduleParamsTest {
                 .startDateLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .startDateLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("cursor", "cursor")
-        expected.put("limit", "1")
-        expected.put("start_date[gt]", "2019-12-27T18:11:19.117Z")
-        expected.put("start_date[gte]", "2019-12-27T18:11:19.117Z")
-        expected.put("start_date[lt]", "2019-12-27T18:11:19.117Z")
-        expected.put("start_date[lte]", "2019-12-27T18:11:19.117Z")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("cursor", "cursor")
+                    .put("limit", "1")
+                    .put("start_date[gt]", "2019-12-27T18:11:19.117Z")
+                    .put("start_date[gte]", "2019-12-27T18:11:19.117Z")
+                    .put("start_date[lt]", "2019-12-27T18:11:19.117Z")
+                    .put("start_date[lte]", "2019-12-27T18:11:19.117Z")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params =
             SubscriptionFetchScheduleParams.builder().subscriptionId("subscription_id").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

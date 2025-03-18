@@ -109,52 +109,39 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.amount?.let { queryParams.put("amount", listOf(it.toString())) }
-        this.amountGt?.let { queryParams.put("amount[gt]", listOf(it.toString())) }
-        this.amountLt?.let { queryParams.put("amount[lt]", listOf(it.toString())) }
-        this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
-        this.customerId?.let { queryParams.put("customer_id", listOf(it.toString())) }
-        this.dateType?.let { queryParams.put("date_type", listOf(it.toString())) }
-        this.dueDate?.let { queryParams.put("due_date", listOf(it.toString())) }
-        this.dueDateWindow?.let { queryParams.put("due_date_window", listOf(it.toString())) }
-        this.dueDateGt?.let { queryParams.put("due_date[gt]", listOf(it.toString())) }
-        this.dueDateLt?.let { queryParams.put("due_date[lt]", listOf(it.toString())) }
-        this.externalCustomerId?.let {
-            queryParams.put("external_customer_id", listOf(it.toString()))
-        }
-        this.invoiceDateGt?.let {
-            queryParams.put(
-                "invoice_date[gt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.invoiceDateGte?.let {
-            queryParams.put(
-                "invoice_date[gte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.invoiceDateLt?.let {
-            queryParams.put(
-                "invoice_date[lt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.invoiceDateLte?.let {
-            queryParams.put(
-                "invoice_date[lte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.isRecurring?.let { queryParams.put("is_recurring", listOf(it.toString())) }
-        this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
-        this.status?.let { queryParams.put("status[]", it.map(Any::toString)) }
-        this.subscriptionId?.let { queryParams.put("subscription_id", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                amount?.let { put("amount", it) }
+                amountGt?.let { put("amount[gt]", it) }
+                amountLt?.let { put("amount[lt]", it) }
+                cursor?.let { put("cursor", it) }
+                customerId?.let { put("customer_id", it) }
+                dateType?.let { put("date_type", it.asString()) }
+                dueDate?.let { put("due_date", it.toString()) }
+                dueDateWindow?.let { put("due_date_window", it) }
+                dueDateGt?.let { put("due_date[gt]", it.toString()) }
+                dueDateLt?.let { put("due_date[lt]", it.toString()) }
+                externalCustomerId?.let { put("external_customer_id", it) }
+                invoiceDateGt?.let {
+                    put("invoice_date[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                invoiceDateGte?.let {
+                    put("invoice_date[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                invoiceDateLt?.let {
+                    put("invoice_date[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                invoiceDateLte?.let {
+                    put("invoice_date[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                isRecurring?.let { put("is_recurring", it.toString()) }
+                limit?.let { put("limit", it.toString()) }
+                status?.forEach { put("status[]", it.asString()) }
+                subscriptionId?.let { put("subscription_id", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun toBuilder() = Builder().from(this)
 
