@@ -49,7 +49,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("coupons", params.getPathParam(0), "subscriptions")
+                    .addPathSegments("coupons", params._pathParam(0), "subscriptions")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))

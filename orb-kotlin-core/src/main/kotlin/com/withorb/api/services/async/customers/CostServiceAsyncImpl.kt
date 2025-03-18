@@ -58,7 +58,7 @@ class CostServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("customers", params.getPathParam(0), "costs")
+                    .addPathSegments("customers", params._pathParam(0), "costs")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -88,7 +88,7 @@ class CostServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .addPathSegments(
                         "customers",
                         "external_customer_id",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "costs",
                     )
                     .build()

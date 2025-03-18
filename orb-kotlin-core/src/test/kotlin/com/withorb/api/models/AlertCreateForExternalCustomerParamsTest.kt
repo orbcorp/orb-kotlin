@@ -21,6 +21,20 @@ internal class AlertCreateForExternalCustomerParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            AlertCreateForExternalCustomerParams.builder()
+                .externalCustomerId("external_customer_id")
+                .currency("currency")
+                .type(AlertCreateForExternalCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("external_customer_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             AlertCreateForExternalCustomerParams.builder()
@@ -39,8 +53,8 @@ internal class AlertCreateForExternalCustomerParamsTest {
         assertThat(body.type())
             .isEqualTo(AlertCreateForExternalCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
         assertThat(body.thresholds())
-            .isEqualTo(
-                listOf(AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build())
+            .containsExactly(
+                AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
             )
     }
 
@@ -59,20 +73,5 @@ internal class AlertCreateForExternalCustomerParamsTest {
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.type())
             .isEqualTo(AlertCreateForExternalCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            AlertCreateForExternalCustomerParams.builder()
-                .externalCustomerId("external_customer_id")
-                .currency("currency")
-                .type(AlertCreateForExternalCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
-                .build()
-        assertThat(params).isNotNull
-        // path param "externalCustomerId"
-        assertThat(params.getPathParam(0)).isEqualTo("external_customer_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

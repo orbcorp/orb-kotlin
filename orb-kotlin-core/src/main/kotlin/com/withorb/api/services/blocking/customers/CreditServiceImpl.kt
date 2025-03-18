@@ -82,7 +82,7 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("customers", params.getPathParam(0), "credits")
+                    .addPathSegments("customers", params._pathParam(0), "credits")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -113,7 +113,7 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
                     .addPathSegments(
                         "customers",
                         "external_customer_id",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "credits",
                     )
                     .build()

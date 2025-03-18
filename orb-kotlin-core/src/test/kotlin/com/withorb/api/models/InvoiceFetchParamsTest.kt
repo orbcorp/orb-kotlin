@@ -13,12 +13,11 @@ internal class InvoiceFetchParamsTest {
     }
 
     @Test
-    fun getPathParam() {
+    fun pathParams() {
         val params = InvoiceFetchParams.builder().invoiceId("invoice_id").build()
-        assertThat(params).isNotNull
-        // path param "invoiceId"
-        assertThat(params.getPathParam(0)).isEqualTo("invoice_id")
+
+        assertThat(params._pathParam(0)).isEqualTo("invoice_id")
         // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 }

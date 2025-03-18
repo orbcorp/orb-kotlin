@@ -22,14 +22,4 @@ internal class InvoiceFetchUpcomingParamsTest {
         assertThat(queryParams)
             .isEqualTo(QueryParams.builder().put("subscription_id", "subscription_id").build())
     }
-
-    @Test
-    fun queryParamsWithoutOptionalFields() {
-        val params = InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
-
-        val queryParams = params._queryParams()
-
-        assertThat(queryParams)
-            .isEqualTo(QueryParams.builder().put("subscription_id", "subscription_id").build())
-    }
 }

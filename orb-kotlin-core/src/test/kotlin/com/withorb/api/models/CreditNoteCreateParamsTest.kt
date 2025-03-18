@@ -40,13 +40,11 @@ internal class CreditNoteCreateParamsTest {
 
         assertNotNull(body)
         assertThat(body.lineItems())
-            .isEqualTo(
-                listOf(
-                    CreditNoteCreateParams.LineItem.builder()
-                        .amount("amount")
-                        .invoiceLineItemId("4khy3nwzktxv7")
-                        .build()
-                )
+            .containsExactly(
+                CreditNoteCreateParams.LineItem.builder()
+                    .amount("amount")
+                    .invoiceLineItemId("4khy3nwzktxv7")
+                    .build()
             )
         assertThat(body.memo()).isEqualTo("An optional memo for my credit note.")
         assertThat(body.reason()).isEqualTo(CreditNoteCreateParams.Reason.DUPLICATE)
@@ -68,13 +66,11 @@ internal class CreditNoteCreateParamsTest {
 
         assertNotNull(body)
         assertThat(body.lineItems())
-            .isEqualTo(
-                listOf(
-                    CreditNoteCreateParams.LineItem.builder()
-                        .amount("amount")
-                        .invoiceLineItemId("4khy3nwzktxv7")
-                        .build()
-                )
+            .containsExactly(
+                CreditNoteCreateParams.LineItem.builder()
+                    .amount("amount")
+                    .invoiceLineItemId("4khy3nwzktxv7")
+                    .build()
             )
     }
 }

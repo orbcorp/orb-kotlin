@@ -54,6 +54,19 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
+                .externalCustomerId("external_customer_id")
+                .addIncrementCreditLedgerEntryRequestParamsBody(0.0)
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("external_customer_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
@@ -169,19 +182,5 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
                             .build()
                     )
             )
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
-                .externalCustomerId("external_customer_id")
-                .addIncrementCreditLedgerEntryRequestParamsBody(0.0)
-                .build()
-        assertThat(params).isNotNull
-        // path param "externalCustomerId"
-        assertThat(params.getPathParam(0)).isEqualTo("external_customer_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

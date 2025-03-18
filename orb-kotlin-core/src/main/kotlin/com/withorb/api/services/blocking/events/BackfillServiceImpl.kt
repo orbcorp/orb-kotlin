@@ -144,7 +144,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("events", "backfills", params.getPathParam(0), "close")
+                    .addPathSegments("events", "backfills", params._pathParam(0), "close")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
                     .prepare(clientOptions, params)
@@ -172,7 +172,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("events", "backfills", params.getPathParam(0))
+                    .addPathSegments("events", "backfills", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -199,7 +199,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("events", "backfills", params.getPathParam(0), "revert")
+                    .addPathSegments("events", "backfills", params._pathParam(0), "revert")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
                     .prepare(clientOptions, params)

@@ -186,7 +186,7 @@ internal class CustomerCreateParamsTest {
                     .excluded(true)
                     .build()
             )
-        assertThat(body.additionalEmails()).isEqualTo(listOf("dev@stainless.com"))
+        assertThat(body.additionalEmails()).containsExactly("dev@stainless.com")
         assertThat(body.autoCollection()).isEqualTo(true)
         assertThat(body.billingAddress())
             .isEqualTo(

@@ -174,7 +174,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
-                    .addPathSegments("customers", params.getPathParam(0))
+                    .addPathSegments("customers", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -228,7 +228,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
-                    .addPathSegments("customers", params.getPathParam(0))
+                    .addPathSegments("customers", params._pathParam(0))
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
                     .prepare(clientOptions, params)
@@ -247,7 +247,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("customers", params.getPathParam(0))
+                    .addPathSegments("customers", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -273,7 +273,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("customers", "external_customer_id", params.getPathParam(0))
+                    .addPathSegments("customers", "external_customer_id", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -302,7 +302,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .addPathSegments(
                         "customers",
                         "external_customer_id",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "sync_payment_methods_from_gateway",
                     )
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
@@ -327,7 +327,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "customers",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "sync_payment_methods_from_gateway",
                     )
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
@@ -350,7 +350,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
-                    .addPathSegments("customers", "external_customer_id", params.getPathParam(0))
+                    .addPathSegments("customers", "external_customer_id", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)

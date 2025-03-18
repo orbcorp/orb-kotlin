@@ -56,7 +56,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .addPathSegments(
                         "dimensional_price_groups",
                         "external_dimensional_price_group_id",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                     )
                     .build()
                     .prepareAsync(clientOptions, params)
