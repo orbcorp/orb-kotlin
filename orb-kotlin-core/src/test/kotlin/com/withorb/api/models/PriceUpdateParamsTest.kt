@@ -22,6 +22,15 @@ internal class PriceUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = PriceUpdateParams.builder().priceId("price_id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("price_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             PriceUpdateParams.builder()
@@ -51,15 +60,5 @@ internal class PriceUpdateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = PriceUpdateParams.builder().priceId("price_id").build()
-        assertThat(params).isNotNull
-        // path param "priceId"
-        assertThat(params.getPathParam(0)).isEqualTo("price_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

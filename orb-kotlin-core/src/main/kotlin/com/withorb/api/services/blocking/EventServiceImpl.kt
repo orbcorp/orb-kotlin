@@ -101,7 +101,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
-                    .addPathSegments("events", params.getPathParam(0))
+                    .addPathSegments("events", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -129,7 +129,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
-                    .addPathSegments("events", params.getPathParam(0), "deprecate")
+                    .addPathSegments("events", params._pathParam(0), "deprecate")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
                     .prepare(clientOptions, params)

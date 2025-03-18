@@ -94,6 +94,15 @@ internal class CustomerUpdateByExternalIdParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = CustomerUpdateByExternalIdParams.builder().id("external_customer_id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("external_customer_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             CustomerUpdateByExternalIdParams.builder()
@@ -195,7 +204,7 @@ internal class CustomerUpdateByExternalIdParamsTest {
                     .excluded(true)
                     .build()
             )
-        assertThat(body.additionalEmails()).isEqualTo(listOf("string"))
+        assertThat(body.additionalEmails()).containsExactly("string")
         assertThat(body.autoCollection()).isEqualTo(true)
         assertThat(body.billingAddress())
             .isEqualTo(
@@ -279,15 +288,5 @@ internal class CustomerUpdateByExternalIdParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = CustomerUpdateByExternalIdParams.builder().id("external_customer_id").build()
-        assertThat(params).isNotNull
-        // path param "id"
-        assertThat(params.getPathParam(0)).isEqualTo("external_customer_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

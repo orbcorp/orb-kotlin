@@ -59,7 +59,7 @@ class BalanceTransactionServiceImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("customers", params.getPathParam(0), "balance_transactions")
+                    .addPathSegments("customers", params._pathParam(0), "balance_transactions")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -87,7 +87,7 @@ class BalanceTransactionServiceImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("customers", params.getPathParam(0), "balance_transactions")
+                    .addPathSegments("customers", params._pathParam(0), "balance_transactions")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))

@@ -19,6 +19,19 @@ internal class SubscriptionUpdateTrialParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            SubscriptionUpdateTrialParams.builder()
+                .subscriptionId("subscription_id")
+                .trialEndDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("subscription_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             SubscriptionUpdateTrialParams.builder()
@@ -56,19 +69,5 @@ internal class SubscriptionUpdateTrialParamsTest {
                     OffsetDateTime.parse("2017-07-21T17:32:28Z")
                 )
             )
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            SubscriptionUpdateTrialParams.builder()
-                .subscriptionId("subscription_id")
-                .trialEndDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
-                .build()
-        assertThat(params).isNotNull
-        // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

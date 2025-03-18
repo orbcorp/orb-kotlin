@@ -26,6 +26,15 @@ internal class SubscriptionUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = SubscriptionUpdateParams.builder().subscriptionId("subscription_id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("subscription_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             SubscriptionUpdateParams.builder()
@@ -63,15 +72,5 @@ internal class SubscriptionUpdateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = SubscriptionUpdateParams.builder().subscriptionId("subscription_id").build()
-        assertThat(params).isNotNull
-        // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

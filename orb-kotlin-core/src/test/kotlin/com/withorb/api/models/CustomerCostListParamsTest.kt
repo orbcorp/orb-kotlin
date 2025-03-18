@@ -21,6 +21,15 @@ internal class CustomerCostListParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = CustomerCostListParams.builder().customerId("customer_id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("customer_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun queryParams() {
         val params =
             CustomerCostListParams.builder()
@@ -51,15 +60,5 @@ internal class CustomerCostListParamsTest {
         val queryParams = params._queryParams()
 
         assertThat(queryParams).isEqualTo(QueryParams.builder().build())
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = CustomerCostListParams.builder().customerId("customer_id").build()
-        assertThat(params).isNotNull
-        // path param "customerId"
-        assertThat(params.getPathParam(0)).isEqualTo("customer_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

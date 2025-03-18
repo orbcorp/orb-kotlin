@@ -22,6 +22,20 @@ internal class SubscriptionUpdateFixedFeeQuantityParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            SubscriptionUpdateFixedFeeQuantityParams.builder()
+                .subscriptionId("subscription_id")
+                .priceId("price_id")
+                .quantity(0.0)
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("subscription_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             SubscriptionUpdateFixedFeeQuantityParams.builder()
@@ -58,20 +72,5 @@ internal class SubscriptionUpdateFixedFeeQuantityParamsTest {
         assertNotNull(body)
         assertThat(body.priceId()).isEqualTo("price_id")
         assertThat(body.quantity()).isEqualTo(0.0)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            SubscriptionUpdateFixedFeeQuantityParams.builder()
-                .subscriptionId("subscription_id")
-                .priceId("price_id")
-                .quantity(0.0)
-                .build()
-        assertThat(params).isNotNull
-        // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

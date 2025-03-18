@@ -13,13 +13,12 @@ internal class PriceExternalPriceIdFetchParamsTest {
     }
 
     @Test
-    fun getPathParam() {
+    fun pathParams() {
         val params =
             PriceExternalPriceIdFetchParams.builder().externalPriceId("external_price_id").build()
-        assertThat(params).isNotNull
-        // path param "externalPriceId"
-        assertThat(params.getPathParam(0)).isEqualTo("external_price_id")
+
+        assertThat(params._pathParam(0)).isEqualTo("external_price_id")
         // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 }

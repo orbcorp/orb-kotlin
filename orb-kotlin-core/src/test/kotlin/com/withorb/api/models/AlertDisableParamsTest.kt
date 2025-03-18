@@ -17,6 +17,16 @@ internal class AlertDisableParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            AlertDisableParams.builder().alertConfigurationId("alert_configuration_id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("alert_configuration_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun queryParams() {
         val params =
             AlertDisableParams.builder()
@@ -38,16 +48,5 @@ internal class AlertDisableParamsTest {
         val queryParams = params._queryParams()
 
         assertThat(queryParams).isEqualTo(QueryParams.builder().build())
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            AlertDisableParams.builder().alertConfigurationId("alert_configuration_id").build()
-        assertThat(params).isNotNull
-        // path param "alertConfigurationId"
-        assertThat(params.getPathParam(0)).isEqualTo("alert_configuration_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }
