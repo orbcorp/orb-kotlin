@@ -75,37 +75,26 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
-        this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
-        this.operationTimeGt?.let {
-            queryParams.put(
-                "operation_time[gt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.operationTimeGte?.let {
-            queryParams.put(
-                "operation_time[gte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.operationTimeLt?.let {
-            queryParams.put(
-                "operation_time[lt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.operationTimeLte?.let {
-            queryParams.put(
-                "operation_time[lte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                cursor?.let { put("cursor", it) }
+                limit?.let { put("limit", it.toString()) }
+                operationTimeGt?.let {
+                    put("operation_time[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                operationTimeGte?.let {
+                    put("operation_time[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                operationTimeLt?.let {
+                    put("operation_time[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                operationTimeLte?.let {
+                    put("operation_time[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {

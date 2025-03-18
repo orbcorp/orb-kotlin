@@ -64,25 +64,21 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.timeframeStart.let {
-            queryParams.put(
-                "timeframe_start",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
-        this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
-        this.timeframeEnd?.let {
-            queryParams.put(
-                "timeframe_end",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                put(
+                    "timeframe_start",
+                    DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(timeframeStart),
+                )
+                cursor?.let { put("cursor", it) }
+                limit?.let { put("limit", it.toString()) }
+                timeframeEnd?.let {
+                    put("timeframe_end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun toBuilder() = Builder().from(this)
 

@@ -46,10 +46,13 @@ internal class EventIngestParamsTest {
                         .build()
                 )
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("backfill_id", "backfill_id")
-        expected.put("debug", "true")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder().put("backfill_id", "backfill_id").put("debug", "true").build()
+            )
     }
 
     @Test
@@ -65,8 +68,10 @@ internal class EventIngestParamsTest {
                         .build()
                 )
                 .build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

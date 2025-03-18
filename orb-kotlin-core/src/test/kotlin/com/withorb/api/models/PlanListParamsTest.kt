@@ -34,21 +34,29 @@ internal class PlanListParamsTest {
                 .limit(1L)
                 .status(PlanListParams.Status.ACTIVE)
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("created_at[gt]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[gte]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[lt]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[lte]", "2019-12-27T18:11:19.117Z")
-        expected.put("cursor", "cursor")
-        expected.put("limit", "1")
-        expected.put("status", PlanListParams.Status.ACTIVE.toString())
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("created_at[gt]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[gte]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[lt]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[lte]", "2019-12-27T18:11:19.117Z")
+                    .put("cursor", "cursor")
+                    .put("limit", "1")
+                    .put("status", "active")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = PlanListParams.builder().build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 }

@@ -42,24 +42,24 @@ internal class CustomerCreditLedgerListByExternalIdParamsTest {
                 .limit(1L)
                 .minimumAmount("minimum_amount")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("created_at[gt]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[gte]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[lt]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[lte]", "2019-12-27T18:11:19.117Z")
-        expected.put("currency", "currency")
-        expected.put("cursor", "cursor")
-        expected.put(
-            "entry_status",
-            CustomerCreditLedgerListByExternalIdParams.EntryStatus.COMMITTED.toString(),
-        )
-        expected.put(
-            "entry_type",
-            CustomerCreditLedgerListByExternalIdParams.EntryType.INCREMENT.toString(),
-        )
-        expected.put("limit", "1")
-        expected.put("minimum_amount", "minimum_amount")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("created_at[gt]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[gte]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[lt]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[lte]", "2019-12-27T18:11:19.117Z")
+                    .put("currency", "currency")
+                    .put("cursor", "cursor")
+                    .put("entry_status", "committed")
+                    .put("entry_type", "increment")
+                    .put("limit", "1")
+                    .put("minimum_amount", "minimum_amount")
+                    .build()
+            )
     }
 
     @Test
@@ -68,8 +68,10 @@ internal class CustomerCreditLedgerListByExternalIdParamsTest {
             CustomerCreditLedgerListByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
                 .build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

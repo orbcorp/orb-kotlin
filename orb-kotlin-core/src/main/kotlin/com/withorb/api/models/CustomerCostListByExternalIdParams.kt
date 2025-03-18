@@ -158,25 +158,20 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.currency?.let { queryParams.put("currency", listOf(it.toString())) }
-        this.timeframeEnd?.let {
-            queryParams.put(
-                "timeframe_end",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.timeframeStart?.let {
-            queryParams.put(
-                "timeframe_start",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.viewMode?.let { queryParams.put("view_mode", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                currency?.let { put("currency", it) }
+                timeframeEnd?.let {
+                    put("timeframe_end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                timeframeStart?.let {
+                    put("timeframe_start", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                viewMode?.let { put("view_mode", it.asString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {
