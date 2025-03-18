@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class PercentageDiscountTest {
 
     @Test
-    fun createPercentageDiscount() {
+    fun create() {
         val percentageDiscount =
             PercentageDiscount.builder()
                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
@@ -17,7 +17,7 @@ internal class PercentageDiscountTest {
                 .percentageDiscount(0.15)
                 .reason("reason")
                 .build()
-        assertThat(percentageDiscount).isNotNull
+
         assertThat(percentageDiscount.appliesToPriceIds())
             .containsExactly("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
         assertThat(percentageDiscount.discountType())

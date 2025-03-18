@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class PriceEvaluateResponseTest {
 
     @Test
-    fun createPriceEvaluateResponse() {
+    fun create() {
         val priceEvaluateResponse =
             PriceEvaluateResponse.builder()
                 .addData(
@@ -19,7 +19,7 @@ internal class PriceEvaluateResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(priceEvaluateResponse).isNotNull
+
         assertThat(priceEvaluateResponse.data())
             .containsExactly(
                 EvaluatePriceGroup.builder()

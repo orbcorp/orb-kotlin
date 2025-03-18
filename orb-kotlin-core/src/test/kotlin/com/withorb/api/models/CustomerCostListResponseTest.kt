@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class CustomerCostListResponseTest {
 
     @Test
-    fun createCustomerCostListResponse() {
+    fun create() {
         val customerCostListResponse =
             CustomerCostListResponse.builder()
                 .addData(
@@ -128,7 +128,7 @@ internal class CustomerCostListResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(customerCostListResponse).isNotNull
+
         assertThat(customerCostListResponse.data())
             .containsExactly(
                 CustomerCostListResponse.Data.builder()

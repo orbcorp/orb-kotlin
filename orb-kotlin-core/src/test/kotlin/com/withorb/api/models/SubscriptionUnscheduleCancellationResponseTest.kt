@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class SubscriptionUnscheduleCancellationResponseTest {
 
     @Test
-    fun createSubscriptionUnscheduleCancellationResponse() {
+    fun create() {
         val subscriptionUnscheduleCancellationResponse =
             SubscriptionUnscheduleCancellationResponse.builder()
                 .id("id")
@@ -508,7 +508,7 @@ internal class SubscriptionUnscheduleCancellationResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(subscriptionUnscheduleCancellationResponse).isNotNull
+
         assertThat(subscriptionUnscheduleCancellationResponse.id()).isEqualTo("id")
         assertThat(subscriptionUnscheduleCancellationResponse.activePlanPhaseOrder()).isEqualTo(0L)
         assertThat(subscriptionUnscheduleCancellationResponse.adjustmentIntervals())

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class DimensionalPriceGroupTest {
 
     @Test
-    fun createDimensionalPriceGroup() {
+    fun create() {
         val dimensionalPriceGroup =
             DimensionalPriceGroup.builder()
                 .id("id")
@@ -24,7 +24,7 @@ internal class DimensionalPriceGroupTest {
                 )
                 .name("name")
                 .build()
-        assertThat(dimensionalPriceGroup).isNotNull
+
         assertThat(dimensionalPriceGroup.id()).isEqualTo("id")
         assertThat(dimensionalPriceGroup.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(dimensionalPriceGroup.dimensions()).containsExactly("region", "instance_type")
