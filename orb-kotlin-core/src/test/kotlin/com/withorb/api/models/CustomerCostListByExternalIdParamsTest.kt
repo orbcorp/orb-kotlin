@@ -30,12 +30,18 @@ internal class CustomerCostListByExternalIdParamsTest {
                 .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                 .viewMode(CustomerCostListByExternalIdParams.ViewMode.PERIODIC)
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("currency", "currency")
-        expected.put("timeframe_end", "2022-03-01T05:00:00Z")
-        expected.put("timeframe_start", "2022-02-01T05:00:00Z")
-        expected.put("view_mode", CustomerCostListByExternalIdParams.ViewMode.PERIODIC.toString())
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("currency", "currency")
+                    .put("timeframe_end", "2022-03-01T05:00:00Z")
+                    .put("timeframe_start", "2022-02-01T05:00:00Z")
+                    .put("view_mode", "periodic")
+                    .build()
+            )
     }
 
     @Test
@@ -44,8 +50,10 @@ internal class CustomerCostListByExternalIdParamsTest {
             CustomerCostListByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
                 .build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

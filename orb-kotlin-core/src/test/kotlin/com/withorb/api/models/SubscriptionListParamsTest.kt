@@ -38,23 +38,31 @@ internal class SubscriptionListParamsTest {
                 .limit(1L)
                 .status(SubscriptionListParams.Status.ACTIVE)
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("created_at[gt]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[gte]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[lt]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[lte]", "2019-12-27T18:11:19.117Z")
-        expected.put("cursor", "cursor")
-        expected.put("customer_id[]", "string")
-        expected.put("external_customer_id[]", "string")
-        expected.put("limit", "1")
-        expected.put("status", SubscriptionListParams.Status.ACTIVE.toString())
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("created_at[gt]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[gte]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[lt]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[lte]", "2019-12-27T18:11:19.117Z")
+                    .put("cursor", "cursor")
+                    .put("customer_id[]", "string")
+                    .put("external_customer_id[]", "string")
+                    .put("limit", "1")
+                    .put("status", "active")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = SubscriptionListParams.builder().build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 }

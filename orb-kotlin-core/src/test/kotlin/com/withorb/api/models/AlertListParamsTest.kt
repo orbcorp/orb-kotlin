@@ -38,23 +38,31 @@ internal class AlertListParamsTest {
                 .limit(1L)
                 .subscriptionId("subscription_id")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("created_at[gt]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[gte]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[lt]", "2019-12-27T18:11:19.117Z")
-        expected.put("created_at[lte]", "2019-12-27T18:11:19.117Z")
-        expected.put("cursor", "cursor")
-        expected.put("customer_id", "customer_id")
-        expected.put("external_customer_id", "external_customer_id")
-        expected.put("limit", "1")
-        expected.put("subscription_id", "subscription_id")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("created_at[gt]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[gte]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[lt]", "2019-12-27T18:11:19.117Z")
+                    .put("created_at[lte]", "2019-12-27T18:11:19.117Z")
+                    .put("cursor", "cursor")
+                    .put("customer_id", "customer_id")
+                    .put("external_customer_id", "external_customer_id")
+                    .put("limit", "1")
+                    .put("subscription_id", "subscription_id")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = AlertListParams.builder().build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 }

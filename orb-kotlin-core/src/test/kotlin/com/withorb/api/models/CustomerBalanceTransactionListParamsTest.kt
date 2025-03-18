@@ -34,22 +34,30 @@ internal class CustomerBalanceTransactionListParamsTest {
                 .operationTimeLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .operationTimeLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("cursor", "cursor")
-        expected.put("limit", "1")
-        expected.put("operation_time[gt]", "2019-12-27T18:11:19.117Z")
-        expected.put("operation_time[gte]", "2019-12-27T18:11:19.117Z")
-        expected.put("operation_time[lt]", "2019-12-27T18:11:19.117Z")
-        expected.put("operation_time[lte]", "2019-12-27T18:11:19.117Z")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("cursor", "cursor")
+                    .put("limit", "1")
+                    .put("operation_time[gt]", "2019-12-27T18:11:19.117Z")
+                    .put("operation_time[gte]", "2019-12-27T18:11:19.117Z")
+                    .put("operation_time[lt]", "2019-12-27T18:11:19.117Z")
+                    .put("operation_time[lte]", "2019-12-27T18:11:19.117Z")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params =
             CustomerBalanceTransactionListParams.builder().customerId("customer_id").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

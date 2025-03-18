@@ -54,37 +54,26 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
-        this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
-        this.startDateGt?.let {
-            queryParams.put(
-                "start_date[gt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.startDateGte?.let {
-            queryParams.put(
-                "start_date[gte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.startDateLt?.let {
-            queryParams.put(
-                "start_date[lt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        this.startDateLte?.let {
-            queryParams.put(
-                "start_date[lte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
-            )
-        }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                cursor?.let { put("cursor", it) }
+                limit?.let { put("limit", it.toString()) }
+                startDateGt?.let {
+                    put("start_date[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                startDateGte?.let {
+                    put("start_date[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                startDateLt?.let {
+                    put("start_date[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                startDateLte?.let {
+                    put("start_date[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {
