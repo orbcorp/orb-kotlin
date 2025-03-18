@@ -77,7 +77,7 @@ private constructor(
                 timeframeStart?.let {
                     put("timeframe_start", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
                 }
-                viewMode?.let { put("view_mode", it.asString()) }
+                viewMode?.let { put("view_mode", it.toString()) }
                 putAll(additionalQueryParams)
             }
             .build()
