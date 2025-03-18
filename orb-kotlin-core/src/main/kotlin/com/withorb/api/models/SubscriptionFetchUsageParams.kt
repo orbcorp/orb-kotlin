@@ -262,7 +262,7 @@ private constructor(
                 billableMetricId?.let { put("billable_metric_id", it) }
                 firstDimensionKey?.let { put("first_dimension_key", it) }
                 firstDimensionValue?.let { put("first_dimension_value", it) }
-                granularity?.let { put("granularity", it.toString()) }
+                granularity?.let { put("granularity", it.asString()) }
                 groupBy?.let { put("group_by", it) }
                 secondDimensionKey?.let { put("second_dimension_key", it) }
                 secondDimensionValue?.let { put("second_dimension_value", it) }
@@ -272,7 +272,7 @@ private constructor(
                 timeframeStart?.let {
                     put("timeframe_start", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
                 }
-                viewMode?.let { put("view_mode", it.toString()) }
+                viewMode?.let { put("view_mode", it.asString()) }
                 putAll(additionalQueryParams)
             }
             .build()
