@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class EventVolumesTest {
 
     @Test
-    fun createEventVolumes() {
+    fun create() {
         val eventVolumes =
             EventVolumes.builder()
                 .addData(
@@ -20,7 +20,7 @@ internal class EventVolumesTest {
                         .build()
                 )
                 .build()
-        assertThat(eventVolumes).isNotNull
+
         assertThat(eventVolumes.data())
             .containsExactly(
                 EventVolumes.Data.builder()

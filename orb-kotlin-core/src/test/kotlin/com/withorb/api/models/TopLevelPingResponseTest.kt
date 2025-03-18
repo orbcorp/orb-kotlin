@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 internal class TopLevelPingResponseTest {
 
     @Test
-    fun createTopLevelPingResponse() {
+    fun create() {
         val topLevelPingResponse = TopLevelPingResponse.builder().response("response").build()
-        assertThat(topLevelPingResponse).isNotNull
+
         assertThat(topLevelPingResponse.response()).isEqualTo("response")
     }
 }

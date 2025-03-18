@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class CreditNoteTest {
 
     @Test
-    fun createCreditNote() {
+    fun create() {
         val creditNote =
             CreditNote.builder()
                 .id("id")
@@ -87,7 +87,7 @@ internal class CreditNoteTest {
                         .build()
                 )
                 .build()
-        assertThat(creditNote).isNotNull
+
         assertThat(creditNote.id()).isEqualTo("id")
         assertThat(creditNote.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

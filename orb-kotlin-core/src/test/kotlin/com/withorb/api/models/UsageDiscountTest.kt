@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class UsageDiscountTest {
 
     @Test
-    fun createUsageDiscount() {
+    fun create() {
         val usageDiscount =
             UsageDiscount.builder()
                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
@@ -17,7 +17,7 @@ internal class UsageDiscountTest {
                 .usageDiscount(0.0)
                 .reason("reason")
                 .build()
-        assertThat(usageDiscount).isNotNull
+
         assertThat(usageDiscount.appliesToPriceIds())
             .containsExactly("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
         assertThat(usageDiscount.discountType()).isEqualTo(UsageDiscount.DiscountType.USAGE)

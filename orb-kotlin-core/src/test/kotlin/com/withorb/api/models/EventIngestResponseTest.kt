@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class EventIngestResponseTest {
 
     @Test
-    fun createEventIngestResponse() {
+    fun create() {
         val eventIngestResponse =
             EventIngestResponse.builder()
                 .addValidationFailed(
@@ -24,7 +24,7 @@ internal class EventIngestResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(eventIngestResponse).isNotNull
+
         assertThat(eventIngestResponse.validationFailed())
             .containsExactly(
                 EventIngestResponse.ValidationFailed.builder()
