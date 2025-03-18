@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class TrialDiscountTest {
 
     @Test
-    fun createTrialDiscount() {
+    fun create() {
         val trialDiscount =
             TrialDiscount.builder()
                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
@@ -18,7 +18,7 @@ internal class TrialDiscountTest {
                 .trialAmountDiscount("trial_amount_discount")
                 .trialPercentageDiscount(0.0)
                 .build()
-        assertThat(trialDiscount).isNotNull
+
         assertThat(trialDiscount.appliesToPriceIds())
             .containsExactly("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
         assertThat(trialDiscount.discountType()).isEqualTo(TrialDiscount.DiscountType.TRIAL)

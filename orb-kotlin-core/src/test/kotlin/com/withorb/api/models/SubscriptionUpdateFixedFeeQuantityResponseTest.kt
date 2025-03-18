@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class SubscriptionUpdateFixedFeeQuantityResponseTest {
 
     @Test
-    fun createSubscriptionUpdateFixedFeeQuantityResponse() {
+    fun create() {
         val subscriptionUpdateFixedFeeQuantityResponse =
             SubscriptionUpdateFixedFeeQuantityResponse.builder()
                 .id("id")
@@ -508,7 +508,7 @@ internal class SubscriptionUpdateFixedFeeQuantityResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(subscriptionUpdateFixedFeeQuantityResponse).isNotNull
+
         assertThat(subscriptionUpdateFixedFeeQuantityResponse.id()).isEqualTo("id")
         assertThat(subscriptionUpdateFixedFeeQuantityResponse.activePlanPhaseOrder()).isEqualTo(0L)
         assertThat(subscriptionUpdateFixedFeeQuantityResponse.adjustmentIntervals())

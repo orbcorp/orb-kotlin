@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test
 internal class EventDeprecateResponseTest {
 
     @Test
-    fun createEventDeprecateResponse() {
+    fun create() {
         val eventDeprecateResponse =
             EventDeprecateResponse.builder().deprecated("deprecated").build()
-        assertThat(eventDeprecateResponse).isNotNull
+
         assertThat(eventDeprecateResponse.deprecated()).isEqualTo("deprecated")
     }
 }

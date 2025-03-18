@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class BillableMetricTest {
 
     @Test
-    fun createBillableMetric() {
+    fun create() {
         val billableMetric =
             BillableMetric.builder()
                 .id("id")
@@ -38,7 +38,7 @@ internal class BillableMetricTest {
                 .name("name")
                 .status(BillableMetric.Status.ACTIVE)
                 .build()
-        assertThat(billableMetric).isNotNull
+
         assertThat(billableMetric.id()).isEqualTo("id")
         assertThat(billableMetric.description()).isEqualTo("description")
         assertThat(billableMetric.item())

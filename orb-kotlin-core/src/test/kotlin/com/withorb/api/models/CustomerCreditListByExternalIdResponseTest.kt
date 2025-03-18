@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class CustomerCreditListByExternalIdResponseTest {
 
     @Test
-    fun createCustomerCreditListByExternalIdResponse() {
+    fun create() {
         val customerCreditListByExternalIdResponse =
             CustomerCreditListByExternalIdResponse.builder()
                 .id("id")
@@ -20,7 +20,7 @@ internal class CustomerCreditListByExternalIdResponseTest {
                 .perUnitCostBasis("per_unit_cost_basis")
                 .status(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
                 .build()
-        assertThat(customerCreditListByExternalIdResponse).isNotNull
+
         assertThat(customerCreditListByExternalIdResponse.id()).isEqualTo("id")
         assertThat(customerCreditListByExternalIdResponse.balance()).isEqualTo(0.0)
         assertThat(customerCreditListByExternalIdResponse.effectiveDate())

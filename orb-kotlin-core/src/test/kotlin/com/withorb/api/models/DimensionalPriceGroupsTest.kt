@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class DimensionalPriceGroupsTest {
 
     @Test
-    fun createDimensionalPriceGroups() {
+    fun create() {
         val dimensionalPriceGroups =
             DimensionalPriceGroups.builder()
                 .addData(
@@ -31,7 +31,7 @@ internal class DimensionalPriceGroupsTest {
                     PaginationMetadata.builder().hasMore(true).nextCursor("next_cursor").build()
                 )
                 .build()
-        assertThat(dimensionalPriceGroups).isNotNull
+
         assertThat(dimensionalPriceGroups.data())
             .containsExactly(
                 DimensionalPriceGroup.builder()

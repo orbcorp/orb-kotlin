@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test
 internal class PaginationMetadataTest {
 
     @Test
-    fun createPaginationMetadata() {
+    fun create() {
         val paginationMetadata =
             PaginationMetadata.builder().hasMore(true).nextCursor("next_cursor").build()
-        assertThat(paginationMetadata).isNotNull
+
         assertThat(paginationMetadata.hasMore()).isEqualTo(true)
         assertThat(paginationMetadata.nextCursor()).isEqualTo("next_cursor")
     }

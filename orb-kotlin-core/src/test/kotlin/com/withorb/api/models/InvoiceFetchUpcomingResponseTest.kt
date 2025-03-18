@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class InvoiceFetchUpcomingResponseTest {
 
     @Test
-    fun createInvoiceFetchUpcomingResponse() {
+    fun create() {
         val invoiceFetchUpcomingResponse =
             InvoiceFetchUpcomingResponse.builder()
                 .id("id")
@@ -343,7 +343,7 @@ internal class InvoiceFetchUpcomingResponseTest {
                 .voidedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .willAutoIssue(true)
                 .build()
-        assertThat(invoiceFetchUpcomingResponse).isNotNull
+
         assertThat(invoiceFetchUpcomingResponse.id()).isEqualTo("id")
         assertThat(invoiceFetchUpcomingResponse.amountDue()).isEqualTo("8.00")
         assertThat(invoiceFetchUpcomingResponse.autoCollection())

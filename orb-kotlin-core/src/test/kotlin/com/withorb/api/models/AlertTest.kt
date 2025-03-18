@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class AlertTest {
 
     @Test
-    fun createAlert() {
+    fun create() {
         val alert =
             Alert.builder()
                 .id("XuxCbt7x9L82yyeF")
@@ -35,7 +35,7 @@ internal class AlertTest {
                 .addThreshold(Alert.Threshold.builder().value(0.0).build())
                 .type(Alert.Type.CREDIT_BALANCE_DEPLETED)
                 .build()
-        assertThat(alert).isNotNull
+
         assertThat(alert.id()).isEqualTo("XuxCbt7x9L82yyeF")
         assertThat(alert.createdAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(alert.currency()).isEqualTo("currency")

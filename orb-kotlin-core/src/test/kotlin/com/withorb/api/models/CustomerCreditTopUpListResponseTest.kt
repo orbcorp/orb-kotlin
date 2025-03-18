@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class CustomerCreditTopUpListResponseTest {
 
     @Test
-    fun createCustomerCreditTopUpListResponse() {
+    fun create() {
         val customerCreditTopUpListResponse =
             CustomerCreditTopUpListResponse.builder()
                 .id("id")
@@ -27,7 +27,7 @@ internal class CustomerCreditTopUpListResponseTest {
                 .expiresAfter(0L)
                 .expiresAfterUnit(CustomerCreditTopUpListResponse.ExpiresAfterUnit.DAY)
                 .build()
-        assertThat(customerCreditTopUpListResponse).isNotNull
+
         assertThat(customerCreditTopUpListResponse.id()).isEqualTo("id")
         assertThat(customerCreditTopUpListResponse.amount()).isEqualTo("amount")
         assertThat(customerCreditTopUpListResponse.currency()).isEqualTo("currency")

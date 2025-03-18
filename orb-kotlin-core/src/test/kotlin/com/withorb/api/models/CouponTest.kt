@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class CouponTest {
 
     @Test
-    fun createCoupon() {
+    fun create() {
         val coupon =
             Coupon.builder()
                 .id("7iz2yanVjQoBZhyH")
@@ -28,7 +28,7 @@ internal class CouponTest {
                 .redemptionCode("HALFOFF")
                 .timesRedeemed(0L)
                 .build()
-        assertThat(coupon).isNotNull
+
         assertThat(coupon.id()).isEqualTo("7iz2yanVjQoBZhyH")
         assertThat(coupon.archivedAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(coupon.discount())

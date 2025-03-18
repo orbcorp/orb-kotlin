@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test
 internal class EvaluatePriceGroupTest {
 
     @Test
-    fun createEvaluatePriceGroup() {
+    fun create() {
         val evaluatePriceGroup =
             EvaluatePriceGroup.builder()
                 .amount("amount")
                 .addGroupingValue("string")
                 .quantity(0.0)
                 .build()
-        assertThat(evaluatePriceGroup).isNotNull
+
         assertThat(evaluatePriceGroup.amount()).isEqualTo("amount")
         assertThat(evaluatePriceGroup.groupingValues())
             .containsExactly(EvaluatePriceGroup.GroupingValue.ofString("string"))

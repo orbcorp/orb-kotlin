@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 internal class EventUpdateResponseTest {
 
     @Test
-    fun createEventUpdateResponse() {
+    fun create() {
         val eventUpdateResponse = EventUpdateResponse.builder().amended("amended").build()
-        assertThat(eventUpdateResponse).isNotNull
+
         assertThat(eventUpdateResponse.amended()).isEqualTo("amended")
     }
 }

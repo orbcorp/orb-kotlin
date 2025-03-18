@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class SubscriptionsTest {
 
     @Test
-    fun createSubscriptions() {
+    fun create() {
         val subscriptions =
             Subscriptions.builder()
                 .addData(
@@ -550,7 +550,7 @@ internal class SubscriptionsTest {
                     PaginationMetadata.builder().hasMore(true).nextCursor("next_cursor").build()
                 )
                 .build()
-        assertThat(subscriptions).isNotNull
+
         assertThat(subscriptions.data())
             .containsExactly(
                 Subscription.builder()

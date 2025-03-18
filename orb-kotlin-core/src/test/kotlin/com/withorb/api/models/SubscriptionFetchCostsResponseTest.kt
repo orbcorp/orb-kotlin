@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class SubscriptionFetchCostsResponseTest {
 
     @Test
-    fun createSubscriptionFetchCostsResponse() {
+    fun create() {
         val subscriptionFetchCostsResponse =
             SubscriptionFetchCostsResponse.builder()
                 .addData(
@@ -128,7 +128,7 @@ internal class SubscriptionFetchCostsResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(subscriptionFetchCostsResponse).isNotNull
+
         assertThat(subscriptionFetchCostsResponse.data())
             .containsExactly(
                 SubscriptionFetchCostsResponse.Data.builder()
