@@ -117,7 +117,7 @@ private constructor(
                 amountLt?.let { put("amount[lt]", it) }
                 cursor?.let { put("cursor", it) }
                 customerId?.let { put("customer_id", it) }
-                dateType?.let { put("date_type", it.asString()) }
+                dateType?.let { put("date_type", it.toString()) }
                 dueDate?.let { put("due_date", it.toString()) }
                 dueDateWindow?.let { put("due_date_window", it) }
                 dueDateGt?.let { put("due_date[gt]", it.toString()) }
@@ -137,7 +137,7 @@ private constructor(
                 }
                 isRecurring?.let { put("is_recurring", it.toString()) }
                 limit?.let { put("limit", it.toString()) }
-                status?.forEach { put("status[]", it.asString()) }
+                status?.forEach { put("status[]", it.toString()) }
                 subscriptionId?.let { put("subscription_id", it) }
                 putAll(additionalQueryParams)
             }
