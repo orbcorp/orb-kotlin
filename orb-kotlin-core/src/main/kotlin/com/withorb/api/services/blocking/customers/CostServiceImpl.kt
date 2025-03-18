@@ -57,7 +57,7 @@ class CostServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("customers", params.getPathParam(0), "costs")
+                    .addPathSegments("customers", params._pathParam(0), "costs")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -87,7 +87,7 @@ class CostServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .addPathSegments(
                         "customers",
                         "external_customer_id",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "costs",
                     )
                     .build()

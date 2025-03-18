@@ -45,7 +45,7 @@ internal class DimensionalPriceGroupCreateParamsTest {
 
         assertNotNull(body)
         assertThat(body.billableMetricId()).isEqualTo("billable_metric_id")
-        assertThat(body.dimensions()).isEqualTo(listOf("region", "instance_type"))
+        assertThat(body.dimensions()).containsExactly("region", "instance_type")
         assertThat(body.name()).isEqualTo("name")
         assertThat(body.externalDimensionalPriceGroupId())
             .isEqualTo("external_dimensional_price_group_id")
@@ -71,7 +71,7 @@ internal class DimensionalPriceGroupCreateParamsTest {
 
         assertNotNull(body)
         assertThat(body.billableMetricId()).isEqualTo("billable_metric_id")
-        assertThat(body.dimensions()).isEqualTo(listOf("region", "instance_type"))
+        assertThat(body.dimensions()).containsExactly("region", "instance_type")
         assertThat(body.name()).isEqualTo("name")
     }
 }

@@ -23,6 +23,15 @@ internal class PlanUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = PlanUpdateParams.builder().planId("plan_id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("plan_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             PlanUpdateParams.builder()
@@ -54,15 +63,5 @@ internal class PlanUpdateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = PlanUpdateParams.builder().planId("plan_id").build()
-        assertThat(params).isNotNull
-        // path param "planId"
-        assertThat(params.getPathParam(0)).isEqualTo("plan_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

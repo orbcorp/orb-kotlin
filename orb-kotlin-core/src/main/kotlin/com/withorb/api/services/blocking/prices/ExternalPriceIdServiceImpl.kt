@@ -57,7 +57,7 @@ class ExternalPriceIdServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
-                    .addPathSegments("prices", "external_price_id", params.getPathParam(0))
+                    .addPathSegments("prices", "external_price_id", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -84,7 +84,7 @@ class ExternalPriceIdServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("prices", "external_price_id", params.getPathParam(0))
+                    .addPathSegments("prices", "external_price_id", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))

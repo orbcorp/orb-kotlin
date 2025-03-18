@@ -13,12 +13,11 @@ internal class MetricFetchParamsTest {
     }
 
     @Test
-    fun getPathParam() {
+    fun pathParams() {
         val params = MetricFetchParams.builder().metricId("metric_id").build()
-        assertThat(params).isNotNull
-        // path param "metricId"
-        assertThat(params.getPathParam(0)).isEqualTo("metric_id")
+
+        assertThat(params._pathParam(0)).isEqualTo("metric_id")
         // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 }

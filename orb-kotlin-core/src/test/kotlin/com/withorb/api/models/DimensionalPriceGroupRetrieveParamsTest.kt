@@ -15,15 +15,14 @@ internal class DimensionalPriceGroupRetrieveParamsTest {
     }
 
     @Test
-    fun getPathParam() {
+    fun pathParams() {
         val params =
             DimensionalPriceGroupRetrieveParams.builder()
                 .dimensionalPriceGroupId("dimensional_price_group_id")
                 .build()
-        assertThat(params).isNotNull
-        // path param "dimensionalPriceGroupId"
-        assertThat(params.getPathParam(0)).isEqualTo("dimensional_price_group_id")
+
+        assertThat(params._pathParam(0)).isEqualTo("dimensional_price_group_id")
         // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 }
