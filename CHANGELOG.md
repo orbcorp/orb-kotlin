@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.1.0-alpha.39 (2025-03-18)
+
+Full Changelog: [v0.1.0-alpha.38...v0.1.0-alpha.39](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.38...v0.1.0-alpha.39)
+
+### Bug Fixes
+
+* **client:** support kotlin 1.8 runtime ([#314](https://github.com/orbcorp/orb-kotlin/issues/314)) ([b6088b6](https://github.com/orbcorp/orb-kotlin/commit/b6088b656731c5d883afd991ab86c35391431592))
+
+
+### Chores
+
+* **internal:** add generated comment ([#308](https://github.com/orbcorp/orb-kotlin/issues/308)) ([508d62f](https://github.com/orbcorp/orb-kotlin/commit/508d62fdf477a1a8cced41f0f4818a729bdb232f))
+* **internal:** add some tests for union classes ([#313](https://github.com/orbcorp/orb-kotlin/issues/313)) ([8c9ac0b](https://github.com/orbcorp/orb-kotlin/commit/8c9ac0bd41e3b4c405b04b1c14303553356de8a7))
+* **internal:** delete duplicate tests ([f2c97e2](https://github.com/orbcorp/orb-kotlin/commit/f2c97e25871645e728d08d57fe6315bf28a7922b))
+* **internal:** generate more tests ([e8b0072](https://github.com/orbcorp/orb-kotlin/commit/e8b007278b33fed90e8b226f91d713570b119785))
+* **internal:** make test classes internal ([#306](https://github.com/orbcorp/orb-kotlin/issues/306)) ([fce9632](https://github.com/orbcorp/orb-kotlin/commit/fce963209fe420d127886ebce58c8db27cad80cc))
+* **internal:** refactor query param serialization impl and tests ([#310](https://github.com/orbcorp/orb-kotlin/issues/310)) ([209ee40](https://github.com/orbcorp/orb-kotlin/commit/209ee40143201a36b78126ea4670b8a2e6bd795d))
+* **internal:** refactor some test assertions ([f2c97e2](https://github.com/orbcorp/orb-kotlin/commit/f2c97e25871645e728d08d57fe6315bf28a7922b))
+* **internal:** reformat some tests ([#312](https://github.com/orbcorp/orb-kotlin/issues/312)) ([e8b0072](https://github.com/orbcorp/orb-kotlin/commit/e8b007278b33fed90e8b226f91d713570b119785))
+* **internal:** rename `getPathParam` ([#311](https://github.com/orbcorp/orb-kotlin/issues/311)) ([f2c97e2](https://github.com/orbcorp/orb-kotlin/commit/f2c97e25871645e728d08d57fe6315bf28a7922b))
+* **internal:** reorder some params methodsc ([f2c97e2](https://github.com/orbcorp/orb-kotlin/commit/f2c97e25871645e728d08d57fe6315bf28a7922b))
+
+
+### Documentation
+
+* add `build` method comments ([#309](https://github.com/orbcorp/orb-kotlin/issues/309)) ([183d314](https://github.com/orbcorp/orb-kotlin/commit/183d314e7a3794a38c9236fa10d96a8512de7cc6))
+
 ## 0.1.0-alpha.38 (2025-03-15)
 
 Full Changelog: [v0.1.0-alpha.37...v0.1.0-alpha.38](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.37...v0.1.0-alpha.38)
