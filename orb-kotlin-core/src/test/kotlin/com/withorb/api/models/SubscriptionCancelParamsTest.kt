@@ -20,6 +20,19 @@ internal class SubscriptionCancelParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            SubscriptionCancelParams.builder()
+                .subscriptionId("subscription_id")
+                .cancelOption(SubscriptionCancelParams.CancelOption.END_OF_SUBSCRIPTION_TERM)
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("subscription_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             SubscriptionCancelParams.builder()
@@ -52,19 +65,5 @@ internal class SubscriptionCancelParamsTest {
         assertNotNull(body)
         assertThat(body.cancelOption())
             .isEqualTo(SubscriptionCancelParams.CancelOption.END_OF_SUBSCRIPTION_TERM)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            SubscriptionCancelParams.builder()
-                .subscriptionId("subscription_id")
-                .cancelOption(SubscriptionCancelParams.CancelOption.END_OF_SUBSCRIPTION_TERM)
-                .build()
-        assertThat(params).isNotNull
-        // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

@@ -22,6 +22,15 @@ internal class MetricUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = MetricUpdateParams.builder().metricId("metric_id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("metric_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             MetricUpdateParams.builder()
@@ -51,15 +60,5 @@ internal class MetricUpdateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = MetricUpdateParams.builder().metricId("metric_id").build()
-        assertThat(params).isNotNull
-        // path param "metricId"
-        assertThat(params.getPathParam(0)).isEqualTo("metric_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

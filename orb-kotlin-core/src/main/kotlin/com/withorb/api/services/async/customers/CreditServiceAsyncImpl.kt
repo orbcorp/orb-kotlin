@@ -82,7 +82,7 @@ class CreditServiceAsyncImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("customers", params.getPathParam(0), "credits")
+                    .addPathSegments("customers", params._pathParam(0), "credits")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -120,7 +120,7 @@ class CreditServiceAsyncImpl internal constructor(private val clientOptions: Cli
                     .addPathSegments(
                         "customers",
                         "external_customer_id",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "credits",
                     )
                     .build()

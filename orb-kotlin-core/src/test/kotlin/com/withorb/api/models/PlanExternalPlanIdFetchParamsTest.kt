@@ -13,13 +13,12 @@ internal class PlanExternalPlanIdFetchParamsTest {
     }
 
     @Test
-    fun getPathParam() {
+    fun pathParams() {
         val params =
             PlanExternalPlanIdFetchParams.builder().externalPlanId("external_plan_id").build()
-        assertThat(params).isNotNull
-        // path param "externalPlanId"
-        assertThat(params.getPathParam(0)).isEqualTo("external_plan_id")
+
+        assertThat(params._pathParam(0)).isEqualTo("external_plan_id")
         // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 }

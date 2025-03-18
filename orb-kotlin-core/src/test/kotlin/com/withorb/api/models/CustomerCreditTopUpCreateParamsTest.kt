@@ -32,6 +32,28 @@ internal class CustomerCreditTopUpCreateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            CustomerCreditTopUpCreateParams.builder()
+                .customerId("customer_id")
+                .amount("amount")
+                .currency("currency")
+                .invoiceSettings(
+                    CustomerCreditTopUpCreateParams.InvoiceSettings.builder()
+                        .autoCollection(true)
+                        .netTerms(0L)
+                        .build()
+                )
+                .perUnitCostBasis("per_unit_cost_basis")
+                .threshold("threshold")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("customer_id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             CustomerCreditTopUpCreateParams.builder()
@@ -106,28 +128,5 @@ internal class CustomerCreditTopUpCreateParamsTest {
             )
         assertThat(body.perUnitCostBasis()).isEqualTo("per_unit_cost_basis")
         assertThat(body.threshold()).isEqualTo("threshold")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            CustomerCreditTopUpCreateParams.builder()
-                .customerId("customer_id")
-                .amount("amount")
-                .currency("currency")
-                .invoiceSettings(
-                    CustomerCreditTopUpCreateParams.InvoiceSettings.builder()
-                        .autoCollection(true)
-                        .netTerms(0L)
-                        .build()
-                )
-                .perUnitCostBasis("per_unit_cost_basis")
-                .threshold("threshold")
-                .build()
-        assertThat(params).isNotNull
-        // path param "customerId"
-        assertThat(params.getPathParam(0)).isEqualTo("customer_id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

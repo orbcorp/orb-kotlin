@@ -96,17 +96,15 @@ internal class EventIngestParamsTest {
 
         assertNotNull(body)
         assertThat(body.events())
-            .isEqualTo(
-                listOf(
-                    EventIngestParams.Event.builder()
-                        .eventName("event_name")
-                        .idempotencyKey("idempotency_key")
-                        .properties(JsonValue.from(mapOf<String, Any>()))
-                        .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                        .customerId("customer_id")
-                        .externalCustomerId("external_customer_id")
-                        .build()
-                )
+            .containsExactly(
+                EventIngestParams.Event.builder()
+                    .eventName("event_name")
+                    .idempotencyKey("idempotency_key")
+                    .properties(JsonValue.from(mapOf<String, Any>()))
+                    .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
+                    .customerId("customer_id")
+                    .externalCustomerId("external_customer_id")
+                    .build()
             )
     }
 
@@ -128,15 +126,13 @@ internal class EventIngestParamsTest {
 
         assertNotNull(body)
         assertThat(body.events())
-            .isEqualTo(
-                listOf(
-                    EventIngestParams.Event.builder()
-                        .eventName("event_name")
-                        .idempotencyKey("idempotency_key")
-                        .properties(JsonValue.from(mapOf<String, Any>()))
-                        .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                        .build()
-                )
+            .containsExactly(
+                EventIngestParams.Event.builder()
+                    .eventName("event_name")
+                    .idempotencyKey("idempotency_key")
+                    .properties(JsonValue.from(mapOf<String, Any>()))
+                    .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
+                    .build()
             )
     }
 }

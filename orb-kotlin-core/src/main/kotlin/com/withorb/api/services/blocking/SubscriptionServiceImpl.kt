@@ -211,7 +211,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
-                    .addPathSegments("subscriptions", params.getPathParam(0))
+                    .addPathSegments("subscriptions", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -269,7 +269,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("subscriptions", params.getPathParam(0), "cancel")
+                    .addPathSegments("subscriptions", params._pathParam(0), "cancel")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -296,7 +296,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("subscriptions", params.getPathParam(0))
+                    .addPathSegments("subscriptions", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -323,7 +323,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("subscriptions", params.getPathParam(0), "costs")
+                    .addPathSegments("subscriptions", params._pathParam(0), "costs")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -350,7 +350,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("subscriptions", params.getPathParam(0), "schedule")
+                    .addPathSegments("subscriptions", params._pathParam(0), "schedule")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -383,7 +383,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("subscriptions", params.getPathParam(0), "usage")
+                    .addPathSegments("subscriptions", params._pathParam(0), "usage")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -410,7 +410,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("subscriptions", params.getPathParam(0), "price_intervals")
+                    .addPathSegments("subscriptions", params._pathParam(0), "price_intervals")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -438,11 +438,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments(
-                        "subscriptions",
-                        params.getPathParam(0),
-                        "schedule_plan_change",
-                    )
+                    .addPathSegments("subscriptions", params._pathParam(0), "schedule_plan_change")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -470,7 +466,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("subscriptions", params.getPathParam(0), "trigger_phase")
+                    .addPathSegments("subscriptions", params._pathParam(0), "trigger_phase")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -501,7 +497,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "subscriptions",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "unschedule_cancellation",
                     )
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
@@ -536,7 +532,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "subscriptions",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "unschedule_fixed_fee_quantity_updates",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
@@ -569,7 +565,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "subscriptions",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "unschedule_pending_plan_changes",
                     )
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
@@ -602,7 +598,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "subscriptions",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "update_fixed_fee_quantity",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
@@ -632,7 +628,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("subscriptions", params.getPathParam(0), "update_trial")
+                    .addPathSegments("subscriptions", params._pathParam(0), "update_trial")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)

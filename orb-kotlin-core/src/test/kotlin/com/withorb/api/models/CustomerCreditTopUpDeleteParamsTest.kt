@@ -16,18 +16,16 @@ internal class CustomerCreditTopUpDeleteParamsTest {
     }
 
     @Test
-    fun getPathParam() {
+    fun pathParams() {
         val params =
             CustomerCreditTopUpDeleteParams.builder()
                 .customerId("customer_id")
                 .topUpId("top_up_id")
                 .build()
-        assertThat(params).isNotNull
-        // path param "customerId"
-        assertThat(params.getPathParam(0)).isEqualTo("customer_id")
-        // path param "topUpId"
-        assertThat(params.getPathParam(1)).isEqualTo("top_up_id")
+
+        assertThat(params._pathParam(0)).isEqualTo("customer_id")
+        assertThat(params._pathParam(1)).isEqualTo("top_up_id")
         // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
+        assertThat(params._pathParam(2)).isEqualTo("")
     }
 }
