@@ -1,21 +1,16 @@
+// File generated from our OpenAPI spec by Stainless.
+
 package com.withorb.api.errors
 
+import com.withorb.api.core.JsonValue
 import com.withorb.api.core.http.Headers
 
-abstract class OrbServiceException(
-    private val statusCode: Int,
-    private val headers: Headers,
-    private val body: String,
-    private val error: OrbError,
-    message: String = "$statusCode: $error",
-    cause: Throwable? = null,
-) : OrbException(message, cause) {
+abstract class OrbServiceException
+protected constructor(message: String, cause: Throwable? = null) : OrbException(message, cause) {
 
-    fun statusCode(): Int = statusCode
+    abstract fun statusCode(): Int
 
-    fun headers(): Headers = headers
+    abstract fun headers(): Headers
 
-    fun body(): String = body
-
-    fun error(): OrbError = error
+    abstract fun body(): JsonValue
 }

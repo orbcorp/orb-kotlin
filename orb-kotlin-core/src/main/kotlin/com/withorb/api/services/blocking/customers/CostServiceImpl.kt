@@ -3,6 +3,7 @@
 package com.withorb.api.services.blocking.customers
 
 import com.withorb.api.core.ClientOptions
+import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
@@ -13,7 +14,6 @@ import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
-import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CustomerCostListByExternalIdParams
 import com.withorb.api.models.CustomerCostListByExternalIdResponse
 import com.withorb.api.models.CustomerCostListParams
@@ -44,7 +44,7 @@ class CostServiceImpl internal constructor(private val clientOptions: ClientOpti
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CostService.WithRawResponse {
 
-        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val listHandler: Handler<CustomerCostListResponse> =
             jsonHandler<CustomerCostListResponse>(clientOptions.jsonMapper)
