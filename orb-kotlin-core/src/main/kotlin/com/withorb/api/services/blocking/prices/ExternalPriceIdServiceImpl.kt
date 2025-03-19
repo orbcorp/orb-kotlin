@@ -3,6 +3,7 @@
 package com.withorb.api.services.blocking.prices
 
 import com.withorb.api.core.ClientOptions
+import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
-import com.withorb.api.errors.OrbError
 import com.withorb.api.models.Price
 import com.withorb.api.models.PriceExternalPriceIdFetchParams
 import com.withorb.api.models.PriceExternalPriceIdUpdateParams
@@ -45,7 +45,7 @@ class ExternalPriceIdServiceImpl internal constructor(private val clientOptions:
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ExternalPriceIdService.WithRawResponse {
 
-        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val updateHandler: Handler<Price> =
             jsonHandler<Price>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
