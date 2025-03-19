@@ -3,6 +3,7 @@
 package com.withorb.api.services.async.customers
 
 import com.withorb.api.core.ClientOptions
+import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
-import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CustomerBalanceTransactionCreateParams
 import com.withorb.api.models.CustomerBalanceTransactionCreateResponse
 import com.withorb.api.models.CustomerBalanceTransactionListPageAsync
@@ -46,7 +46,7 @@ internal constructor(private val clientOptions: ClientOptions) : BalanceTransact
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         BalanceTransactionServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val createHandler: Handler<CustomerBalanceTransactionCreateResponse> =
             jsonHandler<CustomerBalanceTransactionCreateResponse>(clientOptions.jsonMapper)

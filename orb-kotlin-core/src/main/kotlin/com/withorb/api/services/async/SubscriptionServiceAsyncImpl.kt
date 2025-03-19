@@ -3,6 +3,7 @@
 package com.withorb.api.services.async
 
 import com.withorb.api.core.ClientOptions
+import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
-import com.withorb.api.errors.OrbError
 import com.withorb.api.models.Subscription
 import com.withorb.api.models.SubscriptionCancelParams
 import com.withorb.api.models.SubscriptionCancelResponse
@@ -171,7 +171,7 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         SubscriptionServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val createHandler: Handler<SubscriptionCreateResponse> =
             jsonHandler<SubscriptionCreateResponse>(clientOptions.jsonMapper)

@@ -3,6 +3,7 @@
 package com.withorb.api.services.async.customers
 
 import com.withorb.api.core.ClientOptions
+import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
@@ -13,7 +14,6 @@ import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
-import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CustomerCreditListByExternalIdPageAsync
 import com.withorb.api.models.CustomerCreditListByExternalIdParams
 import com.withorb.api.models.CustomerCreditListPageAsync
@@ -57,7 +57,7 @@ class CreditServiceAsyncImpl internal constructor(private val clientOptions: Cli
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CreditServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val ledger: LedgerServiceAsync.WithRawResponse by lazy {
             LedgerServiceAsyncImpl.WithRawResponseImpl(clientOptions)
