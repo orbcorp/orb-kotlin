@@ -3,6 +3,7 @@
 package com.withorb.api.services.async
 
 import com.withorb.api.core.ClientOptions
+import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
-import com.withorb.api.errors.OrbError
 import com.withorb.api.models.EventDeprecateParams
 import com.withorb.api.models.EventDeprecateResponse
 import com.withorb.api.models.EventIngestParams
@@ -76,7 +76,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         EventServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val backfills: BackfillServiceAsync.WithRawResponse by lazy {
             BackfillServiceAsyncImpl.WithRawResponseImpl(clientOptions)
