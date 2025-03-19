@@ -21,9 +21,9 @@ kotlin {
             "-nowarn",
         )
         jvmTarget.set(JvmTarget.JVM_1_8)
-        languageVersion.set(KotlinVersion.KOTLIN_1_8)
-        apiVersion.set(KotlinVersion.KOTLIN_1_8)
-        coreLibrariesVersion = "1.8.0"
+        languageVersion.set(KotlinVersion.KOTLIN_1_9)
+        apiVersion.set(KotlinVersion.KOTLIN_1_9)
+        coreLibrariesVersion = "1.9.20"
     }
 }
 
