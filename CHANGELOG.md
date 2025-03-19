@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.0-alpha.40 (2025-03-19)
+
+Full Changelog: [v0.1.0-alpha.39...v0.1.0-alpha.40](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.39...v0.1.0-alpha.40)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** refactor exception structure and methods ([#319](https://github.com/orbcorp/orb-kotlin/issues/319))
+
+### Bug Fixes
+
+* compilation error ([2fcd864](https://github.com/orbcorp/orb-kotlin/commit/2fcd864383f175898c93300b0f09b18f6172624f))
+
+
+### Chores
+
+* **client:** refactor exception structure and methods ([#319](https://github.com/orbcorp/orb-kotlin/issues/319)) ([c104589](https://github.com/orbcorp/orb-kotlin/commit/c104589d56d87f20229aed1bb47d9c516a57e541))
+* **internal:** codegen related update ([#317](https://github.com/orbcorp/orb-kotlin/issues/317)) ([8214b19](https://github.com/orbcorp/orb-kotlin/commit/8214b19a75eda1eaa86350ca23799b9c68b681fb))
+
 ## 0.1.0-alpha.39 (2025-03-18)
 
 Full Changelog: [v0.1.0-alpha.38...v0.1.0-alpha.39](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.38...v0.1.0-alpha.39)
