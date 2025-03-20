@@ -295,7 +295,7 @@ internal class SubscriptionCreateParamsTest {
                     .build()
             )
             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-            .trialDurationDays(999999L)
+            .trialDurationDays(0L)
             .addUsageCustomerId("string")
             .build()
     }
@@ -596,7 +596,7 @@ internal class SubscriptionCreateParamsTest {
                         .build()
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .trialDurationDays(999999L)
+                .trialDurationDays(0L)
                 .addUsageCustomerId("string")
                 .build()
 
@@ -895,7 +895,7 @@ internal class SubscriptionCreateParamsTest {
                     .build()
             )
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(body.trialDurationDays()).isEqualTo(999999L)
+        assertThat(body.trialDurationDays()).isEqualTo(0L)
         assertThat(body.usageCustomerIds()).containsExactly("string")
     }
 
