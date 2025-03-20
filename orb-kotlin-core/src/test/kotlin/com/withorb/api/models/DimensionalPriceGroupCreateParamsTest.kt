@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -43,7 +42,6 @@ internal class DimensionalPriceGroupCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(body.dimensions()).containsExactly("region", "instance_type")
         assertThat(body.name()).isEqualTo("name")
@@ -69,7 +67,6 @@ internal class DimensionalPriceGroupCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(body.dimensions()).containsExactly("region", "instance_type")
         assertThat(body.name()).isEqualTo("name")
