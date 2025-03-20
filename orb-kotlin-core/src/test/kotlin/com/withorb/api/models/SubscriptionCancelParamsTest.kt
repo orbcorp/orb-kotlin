@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import java.time.OffsetDateTime
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -44,7 +43,6 @@ internal class SubscriptionCancelParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.cancelOption())
             .isEqualTo(SubscriptionCancelParams.CancelOption.END_OF_SUBSCRIPTION_TERM)
         assertThat(body.allowInvoiceCreditOrVoid()).isEqualTo(true)
@@ -62,7 +60,6 @@ internal class SubscriptionCancelParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.cancelOption())
             .isEqualTo(SubscriptionCancelParams.CancelOption.END_OF_SUBSCRIPTION_TERM)
     }

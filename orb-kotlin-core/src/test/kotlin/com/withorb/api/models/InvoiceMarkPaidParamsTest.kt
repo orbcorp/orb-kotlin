@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import java.time.LocalDate
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -44,7 +43,6 @@ internal class InvoiceMarkPaidParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.paymentReceivedDate()).isEqualTo(LocalDate.parse("2023-09-22"))
         assertThat(body.externalId()).isEqualTo("external_payment_id_123")
         assertThat(body.notes()).isEqualTo("notes")
@@ -60,7 +58,6 @@ internal class InvoiceMarkPaidParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.paymentReceivedDate()).isEqualTo(LocalDate.parse("2023-09-22"))
     }
 }
