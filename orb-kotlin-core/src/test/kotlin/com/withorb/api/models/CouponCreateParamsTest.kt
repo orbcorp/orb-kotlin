@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -30,7 +29,6 @@ internal class CouponCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.discount())
             .isEqualTo(
                 CouponCreateParams.Discount.ofNewCouponPercentage(
@@ -58,7 +56,6 @@ internal class CouponCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.discount())
             .isEqualTo(
                 CouponCreateParams.Discount.ofNewCouponPercentage(

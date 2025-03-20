@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -38,7 +37,6 @@ internal class CreditNoteCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.lineItems())
             .containsExactly(
                 CreditNoteCreateParams.LineItem.builder()
@@ -64,7 +62,6 @@ internal class CreditNoteCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.lineItems())
             .containsExactly(
                 CreditNoteCreateParams.LineItem.builder()
