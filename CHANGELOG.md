@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.0-alpha.42 (2025-03-21)
+
+Full Changelog: [v0.1.0-alpha.41...v0.1.0-alpha.42](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.41...v0.1.0-alpha.42)
+
+### Chores
+
+* **internal:** make multipart assertions more robust ([193ea38](https://github.com/orbcorp/orb-kotlin/commit/193ea38408d9fad2ea7603e85ab1daab33362438))
+* **internal:** remove unnecessary `assertNotNull` calls ([193ea38](https://github.com/orbcorp/orb-kotlin/commit/193ea38408d9fad2ea7603e85ab1daab33362438))
+* **internal:** remove unnecessary import ([#326](https://github.com/orbcorp/orb-kotlin/issues/326)) ([f972e35](https://github.com/orbcorp/orb-kotlin/commit/f972e357430eb1fa63b6fdbd932c531cb7f2e16e))
+
+
+### Documentation
+
+* minor readme tweak ([#328](https://github.com/orbcorp/orb-kotlin/issues/328)) ([41ff090](https://github.com/orbcorp/orb-kotlin/commit/41ff0900476241a36ac646660372ced75d125084))
+* refine comments on multipart params ([#324](https://github.com/orbcorp/orb-kotlin/issues/324)) ([193ea38](https://github.com/orbcorp/orb-kotlin/commit/193ea38408d9fad2ea7603e85ab1daab33362438))
+* update readme exception docs ([#327](https://github.com/orbcorp/orb-kotlin/issues/327)) ([1f45211](https://github.com/orbcorp/orb-kotlin/commit/1f4521157a664d867219cf5026f266db5c03d04a))
+
 ## 0.1.0-alpha.41 (2025-03-20)
 
 Full Changelog: [v0.1.0-alpha.40...v0.1.0-alpha.41](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.40...v0.1.0-alpha.41)
