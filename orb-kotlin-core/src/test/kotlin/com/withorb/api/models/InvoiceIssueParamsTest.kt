@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -28,7 +27,6 @@ internal class InvoiceIssueParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.synchronous()).isEqualTo(true)
     }
 
@@ -37,7 +35,5 @@ internal class InvoiceIssueParamsTest {
         val params = InvoiceIssueParams.builder().invoiceId("invoice_id").build()
 
         val body = params._body()
-
-        assertNotNull(body)
     }
 }

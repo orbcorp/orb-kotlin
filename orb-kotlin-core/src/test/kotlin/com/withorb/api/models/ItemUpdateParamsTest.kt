@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -51,7 +50,6 @@ internal class ItemUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.externalConnections())
             .containsExactly(
                 ItemUpdateParams.ExternalConnection.builder()
@@ -69,7 +67,5 @@ internal class ItemUpdateParamsTest {
         val params = ItemUpdateParams.builder().itemId("item_id").build()
 
         val body = params._body()
-
-        assertNotNull(body)
     }
 }

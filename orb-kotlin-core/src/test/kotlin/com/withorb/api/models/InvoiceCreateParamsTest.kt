@@ -5,7 +5,6 @@ package com.withorb.api.models
 import com.withorb.api.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -97,7 +96,6 @@ internal class InvoiceCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.invoiceDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.lineItems())
@@ -167,7 +165,6 @@ internal class InvoiceCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.invoiceDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.lineItems())

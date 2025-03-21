@@ -2,11 +2,11 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/0.1.0-alpha.41)
+[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/0.1.0-alpha.42)
 
 <!-- x-release-please-end -->
 
-The Orb Kotlin SDK provides convenient access to the Orb REST API from applications written in Kotlin.
+The Orb Kotlin SDK provides convenient access to the [Orb REST API](https://docs.withorb.com/reference/api-reference) from applications written in Kotlin.
 
 The Orb Kotlin SDK is similar to the Orb Java SDK but with minor differences that make it more ergonomic for use in Kotlin, such as nullable values instead of `Optional`, `Sequence` instead of `Stream`, and suspend functions instead of `CompletableFuture`.
 
@@ -19,16 +19,16 @@ The REST API documentation can be found on [docs.withorb.com](https://docs.witho
 ### Gradle
 
 ```kotlin
-implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.41")
+implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.42")
 ```
 
 ### Maven
 
 ```xml
 <dependency>
-    <groupId>com.withorb.api</groupId>
-    <artifactId>orb-kotlin</artifactId>
-    <version>0.1.0-alpha.41</version>
+  <groupId>com.withorb.api</groupId>
+  <artifactId>orb-kotlin</artifactId>
+  <version>0.1.0-alpha.42</version>
 </dependency>
 ```
 
@@ -193,16 +193,16 @@ The SDK throws custom unchecked exception types:
 
 - [`OrbServiceException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbServiceException.kt): Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
 
-  | Status | Exception                       |
-  | ------ | ------------------------------- |
-  | 400    | `BadRequestException`           |
-  | 401    | `AuthenticationException`       |
-  | 403    | `PermissionDeniedException`     |
-  | 404    | `NotFoundException`             |
-  | 422    | `UnprocessableEntityException`  |
-  | 429    | `RateLimitException`            |
-  | 5xx    | `InternalServerException`       |
-  | others | `UnexpectedStatusCodeException` |
+  | Status | Exception                                                                                                                  |
+  | ------ | -------------------------------------------------------------------------------------------------------------------------- |
+  | 400    | [`BadRequestException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/BadRequestException.kt)                     |
+  | 401    | [`UnauthorizedException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/UnauthorizedException.kt)                 |
+  | 403    | [`PermissionDeniedException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/PermissionDeniedException.kt)         |
+  | 404    | [`NotFoundException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/NotFoundException.kt)                         |
+  | 422    | [`UnprocessableEntityException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/UnprocessableEntityException.kt)   |
+  | 429    | [`RateLimitException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/RateLimitException.kt)                       |
+  | 5xx    | [`InternalServerException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/InternalServerException.kt)             |
+  | others | [`UnexpectedStatusCodeException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/UnexpectedStatusCodeException.kt) |
 
 - [`OrbIoException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbIoException.kt): I/O networking errors.
 

@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import java.time.OffsetDateTime
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -77,7 +76,6 @@ internal class CustomerCreditTopUpCreateByExternalIdParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.invoiceSettings())
@@ -116,7 +114,6 @@ internal class CustomerCreditTopUpCreateByExternalIdParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.invoiceSettings())

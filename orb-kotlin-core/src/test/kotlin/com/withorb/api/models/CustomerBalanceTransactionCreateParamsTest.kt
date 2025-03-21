@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -44,7 +43,6 @@ internal class CustomerBalanceTransactionCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.type()).isEqualTo(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
         assertThat(body.description()).isEqualTo("description")
@@ -61,7 +59,6 @@ internal class CustomerBalanceTransactionCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.type()).isEqualTo(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
     }

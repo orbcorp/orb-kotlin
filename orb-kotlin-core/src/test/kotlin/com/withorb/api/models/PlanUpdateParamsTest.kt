@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -46,7 +45,6 @@ internal class PlanUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
         assertThat(body.metadata())
             .isEqualTo(
@@ -61,7 +59,5 @@ internal class PlanUpdateParamsTest {
         val params = PlanUpdateParams.builder().planId("plan_id").build()
 
         val body = params._body()
-
-        assertNotNull(body)
     }
 }
