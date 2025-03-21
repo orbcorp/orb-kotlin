@@ -193,16 +193,16 @@ The SDK throws custom unchecked exception types:
 
 - [`OrbServiceException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbServiceException.kt): Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
 
-  | Status | Exception                       |
-  | ------ | ------------------------------- |
-  | 400    | `BadRequestException`           |
-  | 401    | `AuthenticationException`       |
-  | 403    | `PermissionDeniedException`     |
-  | 404    | `NotFoundException`             |
-  | 422    | `UnprocessableEntityException`  |
-  | 429    | `RateLimitException`            |
-  | 5xx    | `InternalServerException`       |
-  | others | `UnexpectedStatusCodeException` |
+  | Status | Exception                                                                                                                  |
+  | ------ | -------------------------------------------------------------------------------------------------------------------------- |
+  | 400    | [`BadRequestException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/BadRequestException.kt)                     |
+  | 401    | [`UnauthorizedException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/UnauthorizedException.kt)                 |
+  | 403    | [`PermissionDeniedException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/PermissionDeniedException.kt)         |
+  | 404    | [`NotFoundException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/NotFoundException.kt)                         |
+  | 422    | [`UnprocessableEntityException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/UnprocessableEntityException.kt)   |
+  | 429    | [`RateLimitException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/RateLimitException.kt)                       |
+  | 5xx    | [`InternalServerException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/InternalServerException.kt)             |
+  | others | [`UnexpectedStatusCodeException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/UnexpectedStatusCodeException.kt) |
 
 - [`OrbIoException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbIoException.kt): I/O networking errors.
 
