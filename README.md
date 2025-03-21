@@ -6,7 +6,7 @@
 
 <!-- x-release-please-end -->
 
-The Orb Kotlin SDK provides convenient access to the Orb REST API from applications written in Kotlin.
+The Orb Kotlin SDK provides convenient access to the [Orb REST API](https://docs.withorb.com/reference/api-reference) from applications written in Kotlin.
 
 The Orb Kotlin SDK is similar to the Orb Java SDK but with minor differences that make it more ergonomic for use in Kotlin, such as nullable values instead of `Optional`, `Sequence` instead of `Stream`, and suspend functions instead of `CompletableFuture`.
 
@@ -26,9 +26,9 @@ implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.41")
 
 ```xml
 <dependency>
-    <groupId>com.withorb.api</groupId>
-    <artifactId>orb-kotlin</artifactId>
-    <version>0.1.0-alpha.41</version>
+  <groupId>com.withorb.api</groupId>
+  <artifactId>orb-kotlin</artifactId>
+  <version>0.1.0-alpha.41</version>
 </dependency>
 ```
 
