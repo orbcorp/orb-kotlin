@@ -20,17 +20,15 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
 /**
@@ -150,6 +148,281 @@ private constructor(
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun toBuilder() = Builder().from(this)
+
+    companion object {
+
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CustomerCreditLedgerCreateEntryByExternalIdParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .externalCustomerId()
+         * .body()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [CustomerCreditLedgerCreateEntryByExternalIdParams]. */
+    class Builder internal constructor() {
+
+        private var externalCustomerId: String? = null
+        private var body: Body? = null
+        private var additionalHeaders: Headers.Builder = Headers.builder()
+        private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
+
+        internal fun from(
+            customerCreditLedgerCreateEntryByExternalIdParams:
+                CustomerCreditLedgerCreateEntryByExternalIdParams
+        ) = apply {
+            externalCustomerId =
+                customerCreditLedgerCreateEntryByExternalIdParams.externalCustomerId
+            body = customerCreditLedgerCreateEntryByExternalIdParams.body
+            additionalHeaders =
+                customerCreditLedgerCreateEntryByExternalIdParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                customerCreditLedgerCreateEntryByExternalIdParams.additionalQueryParams.toBuilder()
+        }
+
+        fun externalCustomerId(externalCustomerId: String) = apply {
+            this.externalCustomerId = externalCustomerId
+        }
+
+        fun body(body: Body) = apply { this.body = body }
+
+        /**
+         * Alias for calling [body] with
+         * `Body.ofAddIncrementCreditLedgerEntryRequestParams(addIncrementCreditLedgerEntryRequestParams)`.
+         */
+        fun body(
+            addIncrementCreditLedgerEntryRequestParams:
+                Body.AddIncrementCreditLedgerEntryRequestParams
+        ) =
+            body(
+                Body.ofAddIncrementCreditLedgerEntryRequestParams(
+                    addIncrementCreditLedgerEntryRequestParams
+                )
+            )
+
+        /**
+         * Alias for calling [body] with the following:
+         * ```kotlin
+         * Body.AddIncrementCreditLedgerEntryRequestParams.builder()
+         *     .entryType(CustomerCreditLedgerCreateEntryByExternalIdParams.Body.AddIncrementCreditLedgerEntryRequestParams.EntryType.INCREMENT)
+         *     .amount(amount)
+         *     .build()
+         * ```
+         */
+        fun addIncrementCreditLedgerEntryRequestParamsBody(amount: Double) =
+            body(
+                Body.AddIncrementCreditLedgerEntryRequestParams.builder()
+                    .entryType(
+                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
+                            .AddIncrementCreditLedgerEntryRequestParams
+                            .EntryType
+                            .INCREMENT
+                    )
+                    .amount(amount)
+                    .build()
+            )
+
+        /**
+         * Alias for calling [body] with
+         * `Body.ofAddDecrementCreditLedgerEntryRequestParams(addDecrementCreditLedgerEntryRequestParams)`.
+         */
+        fun body(
+            addDecrementCreditLedgerEntryRequestParams:
+                Body.AddDecrementCreditLedgerEntryRequestParams
+        ) =
+            body(
+                Body.ofAddDecrementCreditLedgerEntryRequestParams(
+                    addDecrementCreditLedgerEntryRequestParams
+                )
+            )
+
+        /**
+         * Alias for calling [body] with the following:
+         * ```kotlin
+         * Body.AddDecrementCreditLedgerEntryRequestParams.builder()
+         *     .entryType(CustomerCreditLedgerCreateEntryByExternalIdParams.Body.AddDecrementCreditLedgerEntryRequestParams.EntryType.DECREMENT)
+         *     .amount(amount)
+         *     .build()
+         * ```
+         */
+        fun addDecrementCreditLedgerEntryRequestParamsBody(amount: Double) =
+            body(
+                Body.AddDecrementCreditLedgerEntryRequestParams.builder()
+                    .entryType(
+                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
+                            .AddDecrementCreditLedgerEntryRequestParams
+                            .EntryType
+                            .DECREMENT
+                    )
+                    .amount(amount)
+                    .build()
+            )
+
+        /**
+         * Alias for calling [body] with
+         * `Body.ofAddExpirationChangeCreditLedgerEntryRequestParams(addExpirationChangeCreditLedgerEntryRequestParams)`.
+         */
+        fun body(
+            addExpirationChangeCreditLedgerEntryRequestParams:
+                Body.AddExpirationChangeCreditLedgerEntryRequestParams
+        ) =
+            body(
+                Body.ofAddExpirationChangeCreditLedgerEntryRequestParams(
+                    addExpirationChangeCreditLedgerEntryRequestParams
+                )
+            )
+
+        /**
+         * Alias for calling [body] with
+         * `Body.ofAddVoidCreditLedgerEntryRequestParams(addVoidCreditLedgerEntryRequestParams)`.
+         */
+        fun body(
+            addVoidCreditLedgerEntryRequestParams: Body.AddVoidCreditLedgerEntryRequestParams
+        ) =
+            body(
+                Body.ofAddVoidCreditLedgerEntryRequestParams(addVoidCreditLedgerEntryRequestParams)
+            )
+
+        /**
+         * Alias for calling [body] with
+         * `Body.ofAddAmendmentCreditLedgerEntryRequestParams(addAmendmentCreditLedgerEntryRequestParams)`.
+         */
+        fun body(
+            addAmendmentCreditLedgerEntryRequestParams:
+                Body.AddAmendmentCreditLedgerEntryRequestParams
+        ) =
+            body(
+                Body.ofAddAmendmentCreditLedgerEntryRequestParams(
+                    addAmendmentCreditLedgerEntryRequestParams
+                )
+            )
+
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
+
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
+
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
+        }
+
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
+        }
+
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
+
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
+
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
+
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
+
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
+
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
+
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
+
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
+
+        /**
+         * Returns an immutable instance of [CustomerCreditLedgerCreateEntryByExternalIdParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .externalCustomerId()
+         * .body()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CustomerCreditLedgerCreateEntryByExternalIdParams =
+            CustomerCreditLedgerCreateEntryByExternalIdParams(
+                checkRequired("externalCustomerId", externalCustomerId),
+                checkRequired("body", body),
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
+            )
+    }
 
     internal fun _body(): Body = body
 
@@ -538,40 +811,61 @@ private constructor(
             }
         }
 
-        @NoAutoDetect
         class AddIncrementCreditLedgerEntryRequestParams
-        @JsonCreator
         private constructor(
-            @JsonProperty("amount")
-            @ExcludeMissing
-            private val amount: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("entry_type")
-            @ExcludeMissing
-            private val entryType: JsonField<EntryType> = JsonMissing.of(),
-            @JsonProperty("currency")
-            @ExcludeMissing
-            private val currency: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("description")
-            @ExcludeMissing
-            private val description: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("effective_date")
-            @ExcludeMissing
-            private val effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("expiry_date")
-            @ExcludeMissing
-            private val expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("invoice_settings")
-            @ExcludeMissing
-            private val invoiceSettings: JsonField<InvoiceSettings> = JsonMissing.of(),
-            @JsonProperty("metadata")
-            @ExcludeMissing
-            private val metadata: JsonField<Metadata> = JsonMissing.of(),
-            @JsonProperty("per_unit_cost_basis")
-            @ExcludeMissing
-            private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val amount: JsonField<Double>,
+            private val entryType: JsonField<EntryType>,
+            private val currency: JsonField<String>,
+            private val description: JsonField<String>,
+            private val effectiveDate: JsonField<OffsetDateTime>,
+            private val expiryDate: JsonField<OffsetDateTime>,
+            private val invoiceSettings: JsonField<InvoiceSettings>,
+            private val metadata: JsonField<Metadata>,
+            private val perUnitCostBasis: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("amount")
+                @ExcludeMissing
+                amount: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("entry_type")
+                @ExcludeMissing
+                entryType: JsonField<EntryType> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("description")
+                @ExcludeMissing
+                description: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("effective_date")
+                @ExcludeMissing
+                effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+                @JsonProperty("expiry_date")
+                @ExcludeMissing
+                expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+                @JsonProperty("invoice_settings")
+                @ExcludeMissing
+                invoiceSettings: JsonField<InvoiceSettings> = JsonMissing.of(),
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                metadata: JsonField<Metadata> = JsonMissing.of(),
+                @JsonProperty("per_unit_cost_basis")
+                @ExcludeMissing
+                perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+            ) : this(
+                amount,
+                entryType,
+                currency,
+                description,
+                effectiveDate,
+                expiryDate,
+                invoiceSettings,
+                metadata,
+                perUnitCostBasis,
+                mutableMapOf(),
+            )
 
             /**
              * The number of credits to effect. Note that this is required for increment, decrement,
@@ -741,28 +1035,15 @@ private constructor(
             @ExcludeMissing
             fun _perUnitCostBasis(): JsonField<String> = perUnitCostBasis
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): AddIncrementCreditLedgerEntryRequestParams = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                amount()
-                entryType()
-                currency()
-                description()
-                effectiveDate()
-                expiryDate()
-                invoiceSettings()?.validate()
-                metadata()?.validate()
-                perUnitCostBasis()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -1007,8 +1288,27 @@ private constructor(
                         invoiceSettings,
                         metadata,
                         perUnitCostBasis,
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): AddIncrementCreditLedgerEntryRequestParams = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                amount()
+                entryType()
+                currency()
+                description()
+                effectiveDate()
+                expiryDate()
+                invoiceSettings()?.validate()
+                metadata()?.validate()
+                perUnitCostBasis()
+                validated = true
             }
 
             class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1112,25 +1412,30 @@ private constructor(
              * credits. If `invoice_settings` is passed, you must specify per_unit_cost_basis, as
              * the calculation of the invoice total is done on that basis.
              */
-            @NoAutoDetect
             class InvoiceSettings
-            @JsonCreator
             private constructor(
-                @JsonProperty("auto_collection")
-                @ExcludeMissing
-                private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
-                @JsonProperty("net_terms")
-                @ExcludeMissing
-                private val netTerms: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("memo")
-                @ExcludeMissing
-                private val memo: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("require_successful_payment")
-                @ExcludeMissing
-                private val requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val autoCollection: JsonField<Boolean>,
+                private val netTerms: JsonField<Long>,
+                private val memo: JsonField<String>,
+                private val requireSuccessfulPayment: JsonField<Boolean>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("auto_collection")
+                    @ExcludeMissing
+                    autoCollection: JsonField<Boolean> = JsonMissing.of(),
+                    @JsonProperty("net_terms")
+                    @ExcludeMissing
+                    netTerms: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("memo")
+                    @ExcludeMissing
+                    memo: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("require_successful_payment")
+                    @ExcludeMissing
+                    requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of(),
+                ) : this(autoCollection, netTerms, memo, requireSuccessfulPayment, mutableMapOf())
 
                 /**
                  * Whether the credits purchase invoice should auto collect with the customer's
@@ -1209,23 +1514,15 @@ private constructor(
                 @ExcludeMissing
                 fun _requireSuccessfulPayment(): JsonField<Boolean> = requireSuccessfulPayment
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): InvoiceSettings = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    autoCollection()
-                    netTerms()
-                    memo()
-                    requireSuccessfulPayment()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -1366,8 +1663,22 @@ private constructor(
                             checkRequired("netTerms", netTerms),
                             memo,
                             requireSuccessfulPayment,
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): InvoiceSettings = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    autoCollection()
+                    netTerms()
+                    memo()
+                    requireSuccessfulPayment()
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -1393,27 +1704,20 @@ private constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @NoAutoDetect
             class Metadata
-            @JsonCreator
-            private constructor(
+            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+                @JsonCreator private constructor() : this(mutableMapOf())
+
                 @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-            ) {
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): Metadata = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -1459,7 +1763,17 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Metadata = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -1497,28 +1811,34 @@ private constructor(
                 "AddIncrementCreditLedgerEntryRequestParams{amount=$amount, entryType=$entryType, currency=$currency, description=$description, effectiveDate=$effectiveDate, expiryDate=$expiryDate, invoiceSettings=$invoiceSettings, metadata=$metadata, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
         }
 
-        @NoAutoDetect
         class AddDecrementCreditLedgerEntryRequestParams
-        @JsonCreator
         private constructor(
-            @JsonProperty("amount")
-            @ExcludeMissing
-            private val amount: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("entry_type")
-            @ExcludeMissing
-            private val entryType: JsonField<EntryType> = JsonMissing.of(),
-            @JsonProperty("currency")
-            @ExcludeMissing
-            private val currency: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("description")
-            @ExcludeMissing
-            private val description: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("metadata")
-            @ExcludeMissing
-            private val metadata: JsonField<Metadata> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val amount: JsonField<Double>,
+            private val entryType: JsonField<EntryType>,
+            private val currency: JsonField<String>,
+            private val description: JsonField<String>,
+            private val metadata: JsonField<Metadata>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("amount")
+                @ExcludeMissing
+                amount: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("entry_type")
+                @ExcludeMissing
+                entryType: JsonField<EntryType> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("description")
+                @ExcludeMissing
+                description: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                metadata: JsonField<Metadata> = JsonMissing.of(),
+            ) : this(amount, entryType, currency, description, metadata, mutableMapOf())
 
             /**
              * The number of credits to effect. Note that this is required for increment, decrement,
@@ -1611,24 +1931,15 @@ private constructor(
             @ExcludeMissing
             fun _metadata(): JsonField<Metadata> = metadata
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): AddDecrementCreditLedgerEntryRequestParams = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                amount()
-                entryType()
-                currency()
-                description()
-                metadata()?.validate()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -1791,8 +2102,23 @@ private constructor(
                         currency,
                         description,
                         metadata,
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): AddDecrementCreditLedgerEntryRequestParams = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                amount()
+                entryType()
+                currency()
+                description()
+                metadata()?.validate()
+                validated = true
             }
 
             class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1896,27 +2222,20 @@ private constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @NoAutoDetect
             class Metadata
-            @JsonCreator
-            private constructor(
+            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+                @JsonCreator private constructor() : this(mutableMapOf())
+
                 @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-            ) {
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): Metadata = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -1962,7 +2281,17 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Metadata = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -2000,37 +2329,56 @@ private constructor(
                 "AddDecrementCreditLedgerEntryRequestParams{amount=$amount, entryType=$entryType, currency=$currency, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
-        @NoAutoDetect
         class AddExpirationChangeCreditLedgerEntryRequestParams
-        @JsonCreator
         private constructor(
-            @JsonProperty("entry_type")
-            @ExcludeMissing
-            private val entryType: JsonField<EntryType> = JsonMissing.of(),
-            @JsonProperty("expiry_date")
-            @ExcludeMissing
-            private val expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("target_expiry_date")
-            @ExcludeMissing
-            private val targetExpiryDate: JsonField<LocalDate> = JsonMissing.of(),
-            @JsonProperty("amount")
-            @ExcludeMissing
-            private val amount: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("block_id")
-            @ExcludeMissing
-            private val blockId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("currency")
-            @ExcludeMissing
-            private val currency: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("description")
-            @ExcludeMissing
-            private val description: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("metadata")
-            @ExcludeMissing
-            private val metadata: JsonField<Metadata> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val entryType: JsonField<EntryType>,
+            private val expiryDate: JsonField<OffsetDateTime>,
+            private val targetExpiryDate: JsonField<LocalDate>,
+            private val amount: JsonField<Double>,
+            private val blockId: JsonField<String>,
+            private val currency: JsonField<String>,
+            private val description: JsonField<String>,
+            private val metadata: JsonField<Metadata>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("entry_type")
+                @ExcludeMissing
+                entryType: JsonField<EntryType> = JsonMissing.of(),
+                @JsonProperty("expiry_date")
+                @ExcludeMissing
+                expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+                @JsonProperty("target_expiry_date")
+                @ExcludeMissing
+                targetExpiryDate: JsonField<LocalDate> = JsonMissing.of(),
+                @JsonProperty("amount")
+                @ExcludeMissing
+                amount: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("block_id")
+                @ExcludeMissing
+                blockId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("description")
+                @ExcludeMissing
+                description: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                metadata: JsonField<Metadata> = JsonMissing.of(),
+            ) : this(
+                entryType,
+                expiryDate,
+                targetExpiryDate,
+                amount,
+                blockId,
+                currency,
+                description,
+                metadata,
+                mutableMapOf(),
+            )
 
             /**
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -2176,27 +2524,15 @@ private constructor(
             @ExcludeMissing
             fun _metadata(): JsonField<Metadata> = metadata
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): AddExpirationChangeCreditLedgerEntryRequestParams = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                entryType()
-                expiryDate()
-                targetExpiryDate()
-                amount()
-                blockId()
-                currency()
-                description()
-                metadata()?.validate()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -2430,8 +2766,26 @@ private constructor(
                         currency,
                         description,
                         metadata,
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): AddExpirationChangeCreditLedgerEntryRequestParams = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                entryType()
+                expiryDate()
+                targetExpiryDate()
+                amount()
+                blockId()
+                currency()
+                description()
+                metadata()?.validate()
+                validated = true
             }
 
             class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -2535,27 +2889,20 @@ private constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @NoAutoDetect
             class Metadata
-            @JsonCreator
-            private constructor(
+            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+                @JsonCreator private constructor() : this(mutableMapOf())
+
                 @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-            ) {
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): Metadata = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -2601,7 +2948,17 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Metadata = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -2639,34 +2996,51 @@ private constructor(
                 "AddExpirationChangeCreditLedgerEntryRequestParams{entryType=$entryType, expiryDate=$expiryDate, targetExpiryDate=$targetExpiryDate, amount=$amount, blockId=$blockId, currency=$currency, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
-        @NoAutoDetect
         class AddVoidCreditLedgerEntryRequestParams
-        @JsonCreator
         private constructor(
-            @JsonProperty("amount")
-            @ExcludeMissing
-            private val amount: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("block_id")
-            @ExcludeMissing
-            private val blockId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("entry_type")
-            @ExcludeMissing
-            private val entryType: JsonField<EntryType> = JsonMissing.of(),
-            @JsonProperty("currency")
-            @ExcludeMissing
-            private val currency: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("description")
-            @ExcludeMissing
-            private val description: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("metadata")
-            @ExcludeMissing
-            private val metadata: JsonField<Metadata> = JsonMissing.of(),
-            @JsonProperty("void_reason")
-            @ExcludeMissing
-            private val voidReason: JsonField<VoidReason> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val amount: JsonField<Double>,
+            private val blockId: JsonField<String>,
+            private val entryType: JsonField<EntryType>,
+            private val currency: JsonField<String>,
+            private val description: JsonField<String>,
+            private val metadata: JsonField<Metadata>,
+            private val voidReason: JsonField<VoidReason>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("amount")
+                @ExcludeMissing
+                amount: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("block_id")
+                @ExcludeMissing
+                blockId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("entry_type")
+                @ExcludeMissing
+                entryType: JsonField<EntryType> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("description")
+                @ExcludeMissing
+                description: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                metadata: JsonField<Metadata> = JsonMissing.of(),
+                @JsonProperty("void_reason")
+                @ExcludeMissing
+                voidReason: JsonField<VoidReason> = JsonMissing.of(),
+            ) : this(
+                amount,
+                blockId,
+                entryType,
+                currency,
+                description,
+                metadata,
+                voidReason,
+                mutableMapOf(),
+            )
 
             /**
              * The number of credits to effect. Note that this is required for increment, decrement,
@@ -2793,26 +3167,15 @@ private constructor(
             @ExcludeMissing
             fun _voidReason(): JsonField<VoidReason> = voidReason
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): AddVoidCreditLedgerEntryRequestParams = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                amount()
-                blockId()
-                entryType()
-                currency()
-                description()
-                metadata()?.validate()
-                voidReason()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -3008,8 +3371,25 @@ private constructor(
                         description,
                         metadata,
                         voidReason,
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): AddVoidCreditLedgerEntryRequestParams = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                amount()
+                blockId()
+                entryType()
+                currency()
+                description()
+                metadata()?.validate()
+                voidReason()
+                validated = true
             }
 
             class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -3113,27 +3493,20 @@ private constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @NoAutoDetect
             class Metadata
-            @JsonCreator
-            private constructor(
+            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+                @JsonCreator private constructor() : this(mutableMapOf())
+
                 @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-            ) {
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): Metadata = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -3179,7 +3552,17 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Metadata = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -3315,31 +3698,38 @@ private constructor(
                 "AddVoidCreditLedgerEntryRequestParams{amount=$amount, blockId=$blockId, entryType=$entryType, currency=$currency, description=$description, metadata=$metadata, voidReason=$voidReason, additionalProperties=$additionalProperties}"
         }
 
-        @NoAutoDetect
         class AddAmendmentCreditLedgerEntryRequestParams
-        @JsonCreator
         private constructor(
-            @JsonProperty("amount")
-            @ExcludeMissing
-            private val amount: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("block_id")
-            @ExcludeMissing
-            private val blockId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("entry_type")
-            @ExcludeMissing
-            private val entryType: JsonField<EntryType> = JsonMissing.of(),
-            @JsonProperty("currency")
-            @ExcludeMissing
-            private val currency: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("description")
-            @ExcludeMissing
-            private val description: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("metadata")
-            @ExcludeMissing
-            private val metadata: JsonField<Metadata> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val amount: JsonField<Double>,
+            private val blockId: JsonField<String>,
+            private val entryType: JsonField<EntryType>,
+            private val currency: JsonField<String>,
+            private val description: JsonField<String>,
+            private val metadata: JsonField<Metadata>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("amount")
+                @ExcludeMissing
+                amount: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("block_id")
+                @ExcludeMissing
+                blockId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("entry_type")
+                @ExcludeMissing
+                entryType: JsonField<EntryType> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("description")
+                @ExcludeMissing
+                description: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                metadata: JsonField<Metadata> = JsonMissing.of(),
+            ) : this(amount, blockId, entryType, currency, description, metadata, mutableMapOf())
 
             /**
              * The number of credits to effect. Note that this is required for increment, decrement
@@ -3448,25 +3838,15 @@ private constructor(
             @ExcludeMissing
             fun _metadata(): JsonField<Metadata> = metadata
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): AddAmendmentCreditLedgerEntryRequestParams = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                amount()
-                blockId()
-                entryType()
-                currency()
-                description()
-                metadata()?.validate()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -3646,8 +4026,24 @@ private constructor(
                         currency,
                         description,
                         metadata,
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): AddAmendmentCreditLedgerEntryRequestParams = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                amount()
+                blockId()
+                entryType()
+                currency()
+                description()
+                metadata()?.validate()
+                validated = true
             }
 
             class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -3751,27 +4147,20 @@ private constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @NoAutoDetect
             class Metadata
-            @JsonCreator
-            private constructor(
+            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+                @JsonCreator private constructor() : this(mutableMapOf())
+
                 @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-            ) {
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): Metadata = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -3817,7 +4206,17 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Metadata = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -3854,282 +4253,6 @@ private constructor(
             override fun toString() =
                 "AddAmendmentCreditLedgerEntryRequestParams{amount=$amount, blockId=$blockId, entryType=$entryType, currency=$currency, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
-    }
-
-    fun toBuilder() = Builder().from(this)
-
-    companion object {
-
-        /**
-         * Returns a mutable builder for constructing an instance of
-         * [CustomerCreditLedgerCreateEntryByExternalIdParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalCustomerId()
-         * .body()
-         * ```
-         */
-        fun builder() = Builder()
-    }
-
-    /** A builder for [CustomerCreditLedgerCreateEntryByExternalIdParams]. */
-    @NoAutoDetect
-    class Builder internal constructor() {
-
-        private var externalCustomerId: String? = null
-        private var body: Body? = null
-        private var additionalHeaders: Headers.Builder = Headers.builder()
-        private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-
-        internal fun from(
-            customerCreditLedgerCreateEntryByExternalIdParams:
-                CustomerCreditLedgerCreateEntryByExternalIdParams
-        ) = apply {
-            externalCustomerId =
-                customerCreditLedgerCreateEntryByExternalIdParams.externalCustomerId
-            body = customerCreditLedgerCreateEntryByExternalIdParams.body
-            additionalHeaders =
-                customerCreditLedgerCreateEntryByExternalIdParams.additionalHeaders.toBuilder()
-            additionalQueryParams =
-                customerCreditLedgerCreateEntryByExternalIdParams.additionalQueryParams.toBuilder()
-        }
-
-        fun externalCustomerId(externalCustomerId: String) = apply {
-            this.externalCustomerId = externalCustomerId
-        }
-
-        fun body(body: Body) = apply { this.body = body }
-
-        /**
-         * Alias for calling [body] with
-         * `Body.ofAddIncrementCreditLedgerEntryRequestParams(addIncrementCreditLedgerEntryRequestParams)`.
-         */
-        fun body(
-            addIncrementCreditLedgerEntryRequestParams:
-                Body.AddIncrementCreditLedgerEntryRequestParams
-        ) =
-            body(
-                Body.ofAddIncrementCreditLedgerEntryRequestParams(
-                    addIncrementCreditLedgerEntryRequestParams
-                )
-            )
-
-        /**
-         * Alias for calling [body] with the following:
-         * ```kotlin
-         * Body.AddIncrementCreditLedgerEntryRequestParams.builder()
-         *     .entryType(CustomerCreditLedgerCreateEntryByExternalIdParams.Body.AddIncrementCreditLedgerEntryRequestParams.EntryType.INCREMENT)
-         *     .amount(amount)
-         *     .build()
-         * ```
-         */
-        fun addIncrementCreditLedgerEntryRequestParamsBody(amount: Double) =
-            body(
-                Body.AddIncrementCreditLedgerEntryRequestParams.builder()
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                            .AddIncrementCreditLedgerEntryRequestParams
-                            .EntryType
-                            .INCREMENT
-                    )
-                    .amount(amount)
-                    .build()
-            )
-
-        /**
-         * Alias for calling [body] with
-         * `Body.ofAddDecrementCreditLedgerEntryRequestParams(addDecrementCreditLedgerEntryRequestParams)`.
-         */
-        fun body(
-            addDecrementCreditLedgerEntryRequestParams:
-                Body.AddDecrementCreditLedgerEntryRequestParams
-        ) =
-            body(
-                Body.ofAddDecrementCreditLedgerEntryRequestParams(
-                    addDecrementCreditLedgerEntryRequestParams
-                )
-            )
-
-        /**
-         * Alias for calling [body] with the following:
-         * ```kotlin
-         * Body.AddDecrementCreditLedgerEntryRequestParams.builder()
-         *     .entryType(CustomerCreditLedgerCreateEntryByExternalIdParams.Body.AddDecrementCreditLedgerEntryRequestParams.EntryType.DECREMENT)
-         *     .amount(amount)
-         *     .build()
-         * ```
-         */
-        fun addDecrementCreditLedgerEntryRequestParamsBody(amount: Double) =
-            body(
-                Body.AddDecrementCreditLedgerEntryRequestParams.builder()
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                            .AddDecrementCreditLedgerEntryRequestParams
-                            .EntryType
-                            .DECREMENT
-                    )
-                    .amount(amount)
-                    .build()
-            )
-
-        /**
-         * Alias for calling [body] with
-         * `Body.ofAddExpirationChangeCreditLedgerEntryRequestParams(addExpirationChangeCreditLedgerEntryRequestParams)`.
-         */
-        fun body(
-            addExpirationChangeCreditLedgerEntryRequestParams:
-                Body.AddExpirationChangeCreditLedgerEntryRequestParams
-        ) =
-            body(
-                Body.ofAddExpirationChangeCreditLedgerEntryRequestParams(
-                    addExpirationChangeCreditLedgerEntryRequestParams
-                )
-            )
-
-        /**
-         * Alias for calling [body] with
-         * `Body.ofAddVoidCreditLedgerEntryRequestParams(addVoidCreditLedgerEntryRequestParams)`.
-         */
-        fun body(
-            addVoidCreditLedgerEntryRequestParams: Body.AddVoidCreditLedgerEntryRequestParams
-        ) =
-            body(
-                Body.ofAddVoidCreditLedgerEntryRequestParams(addVoidCreditLedgerEntryRequestParams)
-            )
-
-        /**
-         * Alias for calling [body] with
-         * `Body.ofAddAmendmentCreditLedgerEntryRequestParams(addAmendmentCreditLedgerEntryRequestParams)`.
-         */
-        fun body(
-            addAmendmentCreditLedgerEntryRequestParams:
-                Body.AddAmendmentCreditLedgerEntryRequestParams
-        ) =
-            body(
-                Body.ofAddAmendmentCreditLedgerEntryRequestParams(
-                    addAmendmentCreditLedgerEntryRequestParams
-                )
-            )
-
-        fun additionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
-
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
-
-        fun putAdditionalHeader(name: String, value: String) = apply {
-            additionalHeaders.put(name, value)
-        }
-
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.put(name, values)
-        }
-
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
-
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
-
-        fun replaceAdditionalHeaders(name: String, value: String) = apply {
-            additionalHeaders.replace(name, value)
-        }
-
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.replace(name, values)
-        }
-
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
-
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
-
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
-
-        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
-            additionalHeaders.removeAll(names)
-        }
-
-        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
-
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
-
-        fun putAdditionalQueryParam(key: String, value: String) = apply {
-            additionalQueryParams.put(key, value)
-        }
-
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.put(key, values)
-        }
-
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.putAll(additionalQueryParams)
-        }
-
-        fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalQueryParams.putAll(additionalQueryParams)
-            }
-
-        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
-            additionalQueryParams.replace(key, value)
-        }
-
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.replace(key, values)
-        }
-
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.replaceAll(additionalQueryParams)
-        }
-
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalQueryParams.replaceAll(additionalQueryParams)
-            }
-
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
-
-        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
-            additionalQueryParams.removeAll(keys)
-        }
-
-        /**
-         * Returns an immutable instance of [CustomerCreditLedgerCreateEntryByExternalIdParams].
-         *
-         * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalCustomerId()
-         * .body()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
-         */
-        fun build(): CustomerCreditLedgerCreateEntryByExternalIdParams =
-            CustomerCreditLedgerCreateEntryByExternalIdParams(
-                checkRequired("externalCustomerId", externalCustomerId),
-                checkRequired("body", body),
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
-            )
     }
 
     override fun equals(other: Any?): Boolean {

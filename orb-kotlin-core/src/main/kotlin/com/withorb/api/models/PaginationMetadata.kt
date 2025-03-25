@@ -10,25 +10,25 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class PaginationMetadata
-@JsonCreator
 private constructor(
-    @JsonProperty("has_more")
-    @ExcludeMissing
-    private val hasMore: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("next_cursor")
-    @ExcludeMissing
-    private val nextCursor: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val hasMore: JsonField<Boolean>,
+    private val nextCursor: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("has_more") @ExcludeMissing hasMore: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("next_cursor")
+        @ExcludeMissing
+        nextCursor: JsonField<String> = JsonMissing.of(),
+    ) : this(hasMore, nextCursor, mutableMapOf())
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -56,21 +56,15 @@ private constructor(
      */
     @JsonProperty("next_cursor") @ExcludeMissing fun _nextCursor(): JsonField<String> = nextCursor
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): PaginationMetadata = apply {
-        if (validated) {
-            return@apply
-        }
-
-        hasMore()
-        nextCursor()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -158,8 +152,20 @@ private constructor(
             PaginationMetadata(
                 checkRequired("hasMore", hasMore),
                 checkRequired("nextCursor", nextCursor),
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): PaginationMetadata = apply {
+        if (validated) {
+            return@apply
+        }
+
+        hasMore()
+        nextCursor()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

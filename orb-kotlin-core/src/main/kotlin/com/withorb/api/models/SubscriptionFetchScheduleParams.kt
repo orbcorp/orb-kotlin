@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
@@ -52,35 +51,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> subscriptionId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                cursor?.let { put("cursor", it) }
-                limit?.let { put("limit", it.toString()) }
-                startDateGt?.let {
-                    put("start_date[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                startDateGte?.let {
-                    put("start_date[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                startDateLt?.let {
-                    put("start_date[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                startDateLte?.let {
-                    put("start_date[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                putAll(additionalQueryParams)
-            }
-            .build()
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -98,7 +68,6 @@ private constructor(
     }
 
     /** A builder for [SubscriptionFetchScheduleParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var subscriptionId: String? = null
@@ -274,6 +243,35 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> subscriptionId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                cursor?.let { put("cursor", it) }
+                limit?.let { put("limit", it.toString()) }
+                startDateGt?.let {
+                    put("start_date[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                startDateGte?.let {
+                    put("start_date[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                startDateLt?.let {
+                    put("start_date[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                startDateLte?.let {
+                    put("start_date[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

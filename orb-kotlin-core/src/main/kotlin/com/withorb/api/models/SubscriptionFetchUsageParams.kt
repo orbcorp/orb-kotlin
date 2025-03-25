@@ -5,7 +5,6 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
@@ -248,35 +247,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> subscriptionId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                billableMetricId?.let { put("billable_metric_id", it) }
-                firstDimensionKey?.let { put("first_dimension_key", it) }
-                firstDimensionValue?.let { put("first_dimension_value", it) }
-                granularity?.let { put("granularity", it.toString()) }
-                groupBy?.let { put("group_by", it) }
-                secondDimensionKey?.let { put("second_dimension_key", it) }
-                secondDimensionValue?.let { put("second_dimension_value", it) }
-                timeframeEnd?.let {
-                    put("timeframe_end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                timeframeStart?.let {
-                    put("timeframe_start", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                viewMode?.let { put("view_mode", it.toString()) }
-                putAll(additionalQueryParams)
-            }
-            .build()
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -293,7 +263,6 @@ private constructor(
     }
 
     /** A builder for [SubscriptionFetchUsageParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var subscriptionId: String? = null
@@ -501,6 +470,35 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> subscriptionId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                billableMetricId?.let { put("billable_metric_id", it) }
+                firstDimensionKey?.let { put("first_dimension_key", it) }
+                firstDimensionValue?.let { put("first_dimension_value", it) }
+                granularity?.let { put("granularity", it.toString()) }
+                groupBy?.let { put("group_by", it) }
+                secondDimensionKey?.let { put("second_dimension_key", it) }
+                secondDimensionValue?.let { put("second_dimension_value", it) }
+                timeframeEnd?.let {
+                    put("timeframe_end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                timeframeStart?.let {
+                    put("timeframe_start", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                viewMode?.let { put("view_mode", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     /** This determines the windowing of usage reporting. */
     class Granularity @JsonCreator private constructor(private val value: JsonField<String>) :

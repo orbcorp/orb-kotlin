@@ -10,15 +10,13 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
 /**
@@ -182,424 +180,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): Body = body
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("timeframe_end")
-        @ExcludeMissing
-        private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("timeframe_start")
-        @ExcludeMissing
-        private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("close_time")
-        @ExcludeMissing
-        private val closeTime: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("customer_id")
-        @ExcludeMissing
-        private val customerId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("deprecation_filter")
-        @ExcludeMissing
-        private val deprecationFilter: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
-        private val externalCustomerId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("replace_existing_events")
-        @ExcludeMissing
-        private val replaceExistingEvents: JsonField<Boolean> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb
-         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
-         * limit and your use case.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
-
-        /**
-         * The (inclusive) start of the usage timeframe affected by this backfill. By default, Orb
-         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
-         * limit and your use case.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
-
-        /**
-         * The time at which no more events will be accepted for this backfill. The backfill will
-         * automatically begin reflecting throughout Orb at the close time. If not specified, it
-         * will default to 1 day after the creation of the backfill.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun closeTime(): OffsetDateTime? = closeTime.getNullable("close_time")
-
-        /**
-         * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
-         * field will scope the backfill to all customers.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun customerId(): String? = customerId.getNullable("customer_id")
-
-        /**
-         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
-         * to filter the set of events to deprecate
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun deprecationFilter(): String? = deprecationFilter.getNullable("deprecation_filter")
-
-        /**
-         * The external customer ID of the customer to which this backfill is scoped. Omitting this
-         * field will scope the backfill to all customers.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
-
-        /**
-         * If true, replaces all existing events in the timeframe with the newly ingested events. If
-         * false, adds the newly ingested events to the existing events.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun replaceExistingEvents(): Boolean? =
-            replaceExistingEvents.getNullable("replace_existing_events")
-
-        /**
-         * Returns the raw JSON value of [timeframeEnd].
-         *
-         * Unlike [timeframeEnd], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("timeframe_end")
-        @ExcludeMissing
-        fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
-
-        /**
-         * Returns the raw JSON value of [timeframeStart].
-         *
-         * Unlike [timeframeStart], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("timeframe_start")
-        @ExcludeMissing
-        fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
-
-        /**
-         * Returns the raw JSON value of [closeTime].
-         *
-         * Unlike [closeTime], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("close_time")
-        @ExcludeMissing
-        fun _closeTime(): JsonField<OffsetDateTime> = closeTime
-
-        /**
-         * Returns the raw JSON value of [customerId].
-         *
-         * Unlike [customerId], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("customer_id")
-        @ExcludeMissing
-        fun _customerId(): JsonField<String> = customerId
-
-        /**
-         * Returns the raw JSON value of [deprecationFilter].
-         *
-         * Unlike [deprecationFilter], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("deprecation_filter")
-        @ExcludeMissing
-        fun _deprecationFilter(): JsonField<String> = deprecationFilter
-
-        /**
-         * Returns the raw JSON value of [externalCustomerId].
-         *
-         * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
-        fun _externalCustomerId(): JsonField<String> = externalCustomerId
-
-        /**
-         * Returns the raw JSON value of [replaceExistingEvents].
-         *
-         * Unlike [replaceExistingEvents], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("replace_existing_events")
-        @ExcludeMissing
-        fun _replaceExistingEvents(): JsonField<Boolean> = replaceExistingEvents
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            timeframeEnd()
-            timeframeStart()
-            closeTime()
-            customerId()
-            deprecationFilter()
-            externalCustomerId()
-            replaceExistingEvents()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .timeframeEnd()
-             * .timeframeStart()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var timeframeEnd: JsonField<OffsetDateTime>? = null
-            private var timeframeStart: JsonField<OffsetDateTime>? = null
-            private var closeTime: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var customerId: JsonField<String> = JsonMissing.of()
-            private var deprecationFilter: JsonField<String> = JsonMissing.of()
-            private var externalCustomerId: JsonField<String> = JsonMissing.of()
-            private var replaceExistingEvents: JsonField<Boolean> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(body: Body) = apply {
-                timeframeEnd = body.timeframeEnd
-                timeframeStart = body.timeframeStart
-                closeTime = body.closeTime
-                customerId = body.customerId
-                deprecationFilter = body.deprecationFilter
-                externalCustomerId = body.externalCustomerId
-                replaceExistingEvents = body.replaceExistingEvents
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb
-             * allows backfills up to 10 days in duration at a time. Reach out to discuss extending
-             * this limit and your use case.
-             */
-            fun timeframeEnd(timeframeEnd: OffsetDateTime) =
-                timeframeEnd(JsonField.of(timeframeEnd))
-
-            /**
-             * Sets [Builder.timeframeEnd] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.timeframeEnd] with a well-typed [OffsetDateTime]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
-                this.timeframeEnd = timeframeEnd
-            }
-
-            /**
-             * The (inclusive) start of the usage timeframe affected by this backfill. By default,
-             * Orb allows backfills up to 10 days in duration at a time. Reach out to discuss
-             * extending this limit and your use case.
-             */
-            fun timeframeStart(timeframeStart: OffsetDateTime) =
-                timeframeStart(JsonField.of(timeframeStart))
-
-            /**
-             * Sets [Builder.timeframeStart] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.timeframeStart] with a well-typed [OffsetDateTime]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
-                this.timeframeStart = timeframeStart
-            }
-
-            /**
-             * The time at which no more events will be accepted for this backfill. The backfill
-             * will automatically begin reflecting throughout Orb at the close time. If not
-             * specified, it will default to 1 day after the creation of the backfill.
-             */
-            fun closeTime(closeTime: OffsetDateTime?) = closeTime(JsonField.ofNullable(closeTime))
-
-            /**
-             * Sets [Builder.closeTime] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.closeTime] with a well-typed [OffsetDateTime] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun closeTime(closeTime: JsonField<OffsetDateTime>) = apply {
-                this.closeTime = closeTime
-            }
-
-            /**
-             * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
-             * field will scope the backfill to all customers.
-             */
-            fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
-
-            /**
-             * Sets [Builder.customerId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.customerId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
-
-            /**
-             * A boolean [computed property](/extensibility/advanced-metrics#computed-properties)
-             * used to filter the set of events to deprecate
-             */
-            fun deprecationFilter(deprecationFilter: String?) =
-                deprecationFilter(JsonField.ofNullable(deprecationFilter))
-
-            /**
-             * Sets [Builder.deprecationFilter] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.deprecationFilter] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun deprecationFilter(deprecationFilter: JsonField<String>) = apply {
-                this.deprecationFilter = deprecationFilter
-            }
-
-            /**
-             * The external customer ID of the customer to which this backfill is scoped. Omitting
-             * this field will scope the backfill to all customers.
-             */
-            fun externalCustomerId(externalCustomerId: String?) =
-                externalCustomerId(JsonField.ofNullable(externalCustomerId))
-
-            /**
-             * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
-                this.externalCustomerId = externalCustomerId
-            }
-
-            /**
-             * If true, replaces all existing events in the timeframe with the newly ingested
-             * events. If false, adds the newly ingested events to the existing events.
-             */
-            fun replaceExistingEvents(replaceExistingEvents: Boolean) =
-                replaceExistingEvents(JsonField.of(replaceExistingEvents))
-
-            /**
-             * Sets [Builder.replaceExistingEvents] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.replaceExistingEvents] with a well-typed [Boolean]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun replaceExistingEvents(replaceExistingEvents: JsonField<Boolean>) = apply {
-                this.replaceExistingEvents = replaceExistingEvents
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .timeframeEnd()
-             * .timeframeStart()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("timeframeEnd", timeframeEnd),
-                    checkRequired("timeframeStart", timeframeStart),
-                    closeTime,
-                    customerId,
-                    deprecationFilter,
-                    externalCustomerId,
-                    replaceExistingEvents,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && closeTime == other.closeTime && customerId == other.customerId && deprecationFilter == other.deprecationFilter && externalCustomerId == other.externalCustomerId && replaceExistingEvents == other.replaceExistingEvents && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(timeframeEnd, timeframeStart, closeTime, customerId, deprecationFilter, externalCustomerId, replaceExistingEvents, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, closeTime=$closeTime, customerId=$customerId, deprecationFilter=$deprecationFilter, externalCustomerId=$externalCustomerId, replaceExistingEvents=$replaceExistingEvents, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -617,7 +197,6 @@ private constructor(
     }
 
     /** A builder for [EventBackfillCreateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var body: Body.Builder = Body.builder()
@@ -892,6 +471,447 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    internal fun _body(): Body = body
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val timeframeEnd: JsonField<OffsetDateTime>,
+        private val timeframeStart: JsonField<OffsetDateTime>,
+        private val closeTime: JsonField<OffsetDateTime>,
+        private val customerId: JsonField<String>,
+        private val deprecationFilter: JsonField<String>,
+        private val externalCustomerId: JsonField<String>,
+        private val replaceExistingEvents: JsonField<Boolean>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("timeframe_end")
+            @ExcludeMissing
+            timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("timeframe_start")
+            @ExcludeMissing
+            timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("close_time")
+            @ExcludeMissing
+            closeTime: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("customer_id")
+            @ExcludeMissing
+            customerId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("deprecation_filter")
+            @ExcludeMissing
+            deprecationFilter: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("replace_existing_events")
+            @ExcludeMissing
+            replaceExistingEvents: JsonField<Boolean> = JsonMissing.of(),
+        ) : this(
+            timeframeEnd,
+            timeframeStart,
+            closeTime,
+            customerId,
+            deprecationFilter,
+            externalCustomerId,
+            replaceExistingEvents,
+            mutableMapOf(),
+        )
+
+        /**
+         * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb
+         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+         * limit and your use case.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
+
+        /**
+         * The (inclusive) start of the usage timeframe affected by this backfill. By default, Orb
+         * allows backfills up to 10 days in duration at a time. Reach out to discuss extending this
+         * limit and your use case.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
+
+        /**
+         * The time at which no more events will be accepted for this backfill. The backfill will
+         * automatically begin reflecting throughout Orb at the close time. If not specified, it
+         * will default to 1 day after the creation of the backfill.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun closeTime(): OffsetDateTime? = closeTime.getNullable("close_time")
+
+        /**
+         * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
+         * field will scope the backfill to all customers.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun customerId(): String? = customerId.getNullable("customer_id")
+
+        /**
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the set of events to deprecate
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun deprecationFilter(): String? = deprecationFilter.getNullable("deprecation_filter")
+
+        /**
+         * The external customer ID of the customer to which this backfill is scoped. Omitting this
+         * field will scope the backfill to all customers.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
+
+        /**
+         * If true, replaces all existing events in the timeframe with the newly ingested events. If
+         * false, adds the newly ingested events to the existing events.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun replaceExistingEvents(): Boolean? =
+            replaceExistingEvents.getNullable("replace_existing_events")
+
+        /**
+         * Returns the raw JSON value of [timeframeEnd].
+         *
+         * Unlike [timeframeEnd], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
+
+        /**
+         * Returns the raw JSON value of [timeframeStart].
+         *
+         * Unlike [timeframeStart], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
+
+        /**
+         * Returns the raw JSON value of [closeTime].
+         *
+         * Unlike [closeTime], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("close_time")
+        @ExcludeMissing
+        fun _closeTime(): JsonField<OffsetDateTime> = closeTime
+
+        /**
+         * Returns the raw JSON value of [customerId].
+         *
+         * Unlike [customerId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("customer_id")
+        @ExcludeMissing
+        fun _customerId(): JsonField<String> = customerId
+
+        /**
+         * Returns the raw JSON value of [deprecationFilter].
+         *
+         * Unlike [deprecationFilter], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("deprecation_filter")
+        @ExcludeMissing
+        fun _deprecationFilter(): JsonField<String> = deprecationFilter
+
+        /**
+         * Returns the raw JSON value of [externalCustomerId].
+         *
+         * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("external_customer_id")
+        @ExcludeMissing
+        fun _externalCustomerId(): JsonField<String> = externalCustomerId
+
+        /**
+         * Returns the raw JSON value of [replaceExistingEvents].
+         *
+         * Unlike [replaceExistingEvents], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("replace_existing_events")
+        @ExcludeMissing
+        fun _replaceExistingEvents(): JsonField<Boolean> = replaceExistingEvents
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .timeframeEnd()
+             * .timeframeStart()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var timeframeEnd: JsonField<OffsetDateTime>? = null
+            private var timeframeStart: JsonField<OffsetDateTime>? = null
+            private var closeTime: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var customerId: JsonField<String> = JsonMissing.of()
+            private var deprecationFilter: JsonField<String> = JsonMissing.of()
+            private var externalCustomerId: JsonField<String> = JsonMissing.of()
+            private var replaceExistingEvents: JsonField<Boolean> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                timeframeEnd = body.timeframeEnd
+                timeframeStart = body.timeframeStart
+                closeTime = body.closeTime
+                customerId = body.customerId
+                deprecationFilter = body.deprecationFilter
+                externalCustomerId = body.externalCustomerId
+                replaceExistingEvents = body.replaceExistingEvents
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * The (exclusive) end of the usage timeframe affected by this backfill. By default, Orb
+             * allows backfills up to 10 days in duration at a time. Reach out to discuss extending
+             * this limit and your use case.
+             */
+            fun timeframeEnd(timeframeEnd: OffsetDateTime) =
+                timeframeEnd(JsonField.of(timeframeEnd))
+
+            /**
+             * Sets [Builder.timeframeEnd] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timeframeEnd] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
+                this.timeframeEnd = timeframeEnd
+            }
+
+            /**
+             * The (inclusive) start of the usage timeframe affected by this backfill. By default,
+             * Orb allows backfills up to 10 days in duration at a time. Reach out to discuss
+             * extending this limit and your use case.
+             */
+            fun timeframeStart(timeframeStart: OffsetDateTime) =
+                timeframeStart(JsonField.of(timeframeStart))
+
+            /**
+             * Sets [Builder.timeframeStart] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timeframeStart] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
+                this.timeframeStart = timeframeStart
+            }
+
+            /**
+             * The time at which no more events will be accepted for this backfill. The backfill
+             * will automatically begin reflecting throughout Orb at the close time. If not
+             * specified, it will default to 1 day after the creation of the backfill.
+             */
+            fun closeTime(closeTime: OffsetDateTime?) = closeTime(JsonField.ofNullable(closeTime))
+
+            /**
+             * Sets [Builder.closeTime] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.closeTime] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun closeTime(closeTime: JsonField<OffsetDateTime>) = apply {
+                this.closeTime = closeTime
+            }
+
+            /**
+             * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
+             * field will scope the backfill to all customers.
+             */
+            fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
+
+            /**
+             * Sets [Builder.customerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
+
+            /**
+             * A boolean [computed property](/extensibility/advanced-metrics#computed-properties)
+             * used to filter the set of events to deprecate
+             */
+            fun deprecationFilter(deprecationFilter: String?) =
+                deprecationFilter(JsonField.ofNullable(deprecationFilter))
+
+            /**
+             * Sets [Builder.deprecationFilter] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.deprecationFilter] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun deprecationFilter(deprecationFilter: JsonField<String>) = apply {
+                this.deprecationFilter = deprecationFilter
+            }
+
+            /**
+             * The external customer ID of the customer to which this backfill is scoped. Omitting
+             * this field will scope the backfill to all customers.
+             */
+            fun externalCustomerId(externalCustomerId: String?) =
+                externalCustomerId(JsonField.ofNullable(externalCustomerId))
+
+            /**
+             * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
+                this.externalCustomerId = externalCustomerId
+            }
+
+            /**
+             * If true, replaces all existing events in the timeframe with the newly ingested
+             * events. If false, adds the newly ingested events to the existing events.
+             */
+            fun replaceExistingEvents(replaceExistingEvents: Boolean) =
+                replaceExistingEvents(JsonField.of(replaceExistingEvents))
+
+            /**
+             * Sets [Builder.replaceExistingEvents] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.replaceExistingEvents] with a well-typed [Boolean]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun replaceExistingEvents(replaceExistingEvents: JsonField<Boolean>) = apply {
+                this.replaceExistingEvents = replaceExistingEvents
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .timeframeEnd()
+             * .timeframeStart()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("timeframeEnd", timeframeEnd),
+                    checkRequired("timeframeStart", timeframeStart),
+                    closeTime,
+                    customerId,
+                    deprecationFilter,
+                    externalCustomerId,
+                    replaceExistingEvents,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            timeframeEnd()
+            timeframeStart()
+            closeTime()
+            customerId()
+            deprecationFilter()
+            externalCustomerId()
+            replaceExistingEvents()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && closeTime == other.closeTime && customerId == other.customerId && deprecationFilter == other.deprecationFilter && externalCustomerId == other.externalCustomerId && replaceExistingEvents == other.replaceExistingEvents && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(timeframeEnd, timeframeStart, closeTime, customerId, deprecationFilter, externalCustomerId, replaceExistingEvents, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, closeTime=$closeTime, customerId=$customerId, deprecationFilter=$deprecationFilter, externalCustomerId=$externalCustomerId, replaceExistingEvents=$replaceExistingEvents, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

@@ -10,24 +10,24 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class EventSearchResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("data")
-    @ExcludeMissing
-    private val data: JsonField<List<Data>> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val data: JsonField<List<Data>>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("data") @ExcludeMissing data: JsonField<List<Data>> = JsonMissing.of()
+    ) : this(data, mutableMapOf())
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -42,20 +42,15 @@ private constructor(
      */
     @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Data>> = data
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): EventSearchResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        data().forEach { it.validate() }
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -141,8 +136,19 @@ private constructor(
         fun build(): EventSearchResponse =
             EventSearchResponse(
                 checkRequired("data", data).map { it.toImmutable() },
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): EventSearchResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        data().forEach { it.validate() }
+        validated = true
     }
 
     /**
@@ -150,32 +156,47 @@ private constructor(
      * a customer. Events are the core of Orb's usage-based billing model, and are used to calculate
      * the usage charges for a given billing period.
      */
-    @NoAutoDetect
     class Data
-    @JsonCreator
     private constructor(
-        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("customer_id")
-        @ExcludeMissing
-        private val customerId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("deprecated")
-        @ExcludeMissing
-        private val deprecated: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("event_name")
-        @ExcludeMissing
-        private val eventName: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
-        private val externalCustomerId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("properties")
-        @ExcludeMissing
-        private val properties: JsonValue = JsonMissing.of(),
-        @JsonProperty("timestamp")
-        @ExcludeMissing
-        private val timestamp: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val id: JsonField<String>,
+        private val customerId: JsonField<String>,
+        private val deprecated: JsonField<Boolean>,
+        private val eventName: JsonField<String>,
+        private val externalCustomerId: JsonField<String>,
+        private val properties: JsonValue,
+        private val timestamp: JsonField<OffsetDateTime>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("customer_id")
+            @ExcludeMissing
+            customerId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("deprecated")
+            @ExcludeMissing
+            deprecated: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("event_name")
+            @ExcludeMissing
+            eventName: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("properties") @ExcludeMissing properties: JsonValue = JsonMissing.of(),
+            @JsonProperty("timestamp")
+            @ExcludeMissing
+            timestamp: JsonField<OffsetDateTime> = JsonMissing.of(),
+        ) : this(
+            id,
+            customerId,
+            deprecated,
+            eventName,
+            externalCustomerId,
+            properties,
+            timestamp,
+            mutableMapOf(),
+        )
 
         /**
          * A unique value, generated by the client, that is used to de-duplicate events. Exactly one
@@ -286,25 +307,15 @@ private constructor(
         @ExcludeMissing
         fun _timestamp(): JsonField<OffsetDateTime> = timestamp
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Data = apply {
-            if (validated) {
-                return@apply
-            }
-
-            id()
-            customerId()
-            deprecated()
-            eventName()
-            externalCustomerId()
-            timestamp()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -489,8 +500,24 @@ private constructor(
                     checkRequired("externalCustomerId", externalCustomerId),
                     checkRequired("properties", properties),
                     checkRequired("timestamp", timestamp),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Data = apply {
+            if (validated) {
+                return@apply
+            }
+
+            id()
+            customerId()
+            deprecated()
+            eventName()
+            externalCustomerId()
+            timestamp()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

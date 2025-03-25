@@ -10,24 +10,24 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class CustomerCostListResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("data")
-    @ExcludeMissing
-    private val data: JsonField<List<Data>> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val data: JsonField<List<Data>>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("data") @ExcludeMissing data: JsonField<List<Data>> = JsonMissing.of()
+    ) : this(data, mutableMapOf())
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -42,20 +42,15 @@ private constructor(
      */
     @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Data>> = data
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CustomerCostListResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        data().forEach { it.validate() }
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -141,32 +136,47 @@ private constructor(
         fun build(): CustomerCostListResponse =
             CustomerCostListResponse(
                 checkRequired("data", data).map { it.toImmutable() },
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
     }
 
-    @NoAutoDetect
+    private var validated: Boolean = false
+
+    fun validate(): CustomerCostListResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        data().forEach { it.validate() }
+        validated = true
+    }
+
     class Data
-    @JsonCreator
     private constructor(
-        @JsonProperty("per_price_costs")
-        @ExcludeMissing
-        private val perPriceCosts: JsonField<List<PerPriceCost>> = JsonMissing.of(),
-        @JsonProperty("subtotal")
-        @ExcludeMissing
-        private val subtotal: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("timeframe_end")
-        @ExcludeMissing
-        private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("timeframe_start")
-        @ExcludeMissing
-        private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("total")
-        @ExcludeMissing
-        private val total: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val perPriceCosts: JsonField<List<PerPriceCost>>,
+        private val subtotal: JsonField<String>,
+        private val timeframeEnd: JsonField<OffsetDateTime>,
+        private val timeframeStart: JsonField<OffsetDateTime>,
+        private val total: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("per_price_costs")
+            @ExcludeMissing
+            perPriceCosts: JsonField<List<PerPriceCost>> = JsonMissing.of(),
+            @JsonProperty("subtotal")
+            @ExcludeMissing
+            subtotal: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("timeframe_end")
+            @ExcludeMissing
+            timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("timeframe_start")
+            @ExcludeMissing
+            timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("total") @ExcludeMissing total: JsonField<String> = JsonMissing.of(),
+        ) : this(perPriceCosts, subtotal, timeframeEnd, timeframeStart, total, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -246,24 +256,15 @@ private constructor(
          */
         @JsonProperty("total") @ExcludeMissing fun _total(): JsonField<String> = total
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Data = apply {
-            if (validated) {
-                return@apply
-            }
-
-            perPriceCosts().forEach { it.validate() }
-            subtotal()
-            timeframeEnd()
-            timeframeStart()
-            total()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -423,32 +424,49 @@ private constructor(
                     checkRequired("timeframeEnd", timeframeEnd),
                     checkRequired("timeframeStart", timeframeStart),
                     checkRequired("total", total),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
         }
 
-        @NoAutoDetect
+        private var validated: Boolean = false
+
+        fun validate(): Data = apply {
+            if (validated) {
+                return@apply
+            }
+
+            perPriceCosts().forEach { it.validate() }
+            subtotal()
+            timeframeEnd()
+            timeframeStart()
+            total()
+            validated = true
+        }
+
         class PerPriceCost
-        @JsonCreator
         private constructor(
-            @JsonProperty("price")
-            @ExcludeMissing
-            private val price: JsonField<Price> = JsonMissing.of(),
-            @JsonProperty("price_id")
-            @ExcludeMissing
-            private val priceId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("subtotal")
-            @ExcludeMissing
-            private val subtotal: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("total")
-            @ExcludeMissing
-            private val total: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("quantity")
-            @ExcludeMissing
-            private val quantity: JsonField<Double> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val price: JsonField<Price>,
+            private val priceId: JsonField<String>,
+            private val subtotal: JsonField<String>,
+            private val total: JsonField<String>,
+            private val quantity: JsonField<Double>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("price") @ExcludeMissing price: JsonField<Price> = JsonMissing.of(),
+                @JsonProperty("price_id")
+                @ExcludeMissing
+                priceId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("subtotal")
+                @ExcludeMissing
+                subtotal: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("total") @ExcludeMissing total: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("quantity")
+                @ExcludeMissing
+                quantity: JsonField<Double> = JsonMissing.of(),
+            ) : this(price, priceId, subtotal, total, quantity, mutableMapOf())
 
             /**
              * The price object
@@ -531,24 +549,15 @@ private constructor(
              */
             @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): PerPriceCost = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                price().validate()
-                priceId()
-                subtotal()
-                total()
-                quantity()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -853,8 +862,23 @@ private constructor(
                         checkRequired("subtotal", subtotal),
                         checkRequired("total", total),
                         quantity,
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): PerPriceCost = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                price().validate()
+                priceId()
+                subtotal()
+                total()
+                quantity()
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {

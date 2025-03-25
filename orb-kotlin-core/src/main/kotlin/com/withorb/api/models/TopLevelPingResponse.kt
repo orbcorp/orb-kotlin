@@ -10,22 +10,21 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class TopLevelPingResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("response")
-    @ExcludeMissing
-    private val response: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val response: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("response") @ExcludeMissing response: JsonField<String> = JsonMissing.of()
+    ) : this(response, mutableMapOf())
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -40,20 +39,15 @@ private constructor(
      */
     @JsonProperty("response") @ExcludeMissing fun _response(): JsonField<String> = response
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): TopLevelPingResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        response()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -125,8 +119,19 @@ private constructor(
         fun build(): TopLevelPingResponse =
             TopLevelPingResponse(
                 checkRequired("response", response),
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): TopLevelPingResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        response()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

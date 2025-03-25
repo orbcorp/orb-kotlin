@@ -11,55 +11,77 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
 /**
  * A backfill represents an update to historical usage data, adding or replacing events in a
  * timeframe.
  */
-@NoAutoDetect
 class EventBackfillCreateResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("close_time")
-    @ExcludeMissing
-    private val closeTime: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("created_at")
-    @ExcludeMissing
-    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("customer_id")
-    @ExcludeMissing
-    private val customerId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("events_ingested")
-    @ExcludeMissing
-    private val eventsIngested: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("replace_existing_events")
-    @ExcludeMissing
-    private val replaceExistingEvents: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("reverted_at")
-    @ExcludeMissing
-    private val revertedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("status")
-    @ExcludeMissing
-    private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonProperty("timeframe_end")
-    @ExcludeMissing
-    private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("timeframe_start")
-    @ExcludeMissing
-    private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("deprecation_filter")
-    @ExcludeMissing
-    private val deprecationFilter: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val closeTime: JsonField<OffsetDateTime>,
+    private val createdAt: JsonField<OffsetDateTime>,
+    private val customerId: JsonField<String>,
+    private val eventsIngested: JsonField<Long>,
+    private val replaceExistingEvents: JsonField<Boolean>,
+    private val revertedAt: JsonField<OffsetDateTime>,
+    private val status: JsonField<Status>,
+    private val timeframeEnd: JsonField<OffsetDateTime>,
+    private val timeframeStart: JsonField<OffsetDateTime>,
+    private val deprecationFilter: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("close_time")
+        @ExcludeMissing
+        closeTime: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("customer_id")
+        @ExcludeMissing
+        customerId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("events_ingested")
+        @ExcludeMissing
+        eventsIngested: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("replace_existing_events")
+        @ExcludeMissing
+        replaceExistingEvents: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("reverted_at")
+        @ExcludeMissing
+        revertedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("deprecation_filter")
+        @ExcludeMissing
+        deprecationFilter: JsonField<String> = JsonMissing.of(),
+    ) : this(
+        id,
+        closeTime,
+        createdAt,
+        customerId,
+        eventsIngested,
+        replaceExistingEvents,
+        revertedAt,
+        status,
+        timeframeEnd,
+        timeframeStart,
+        deprecationFilter,
+        mutableMapOf(),
+    )
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -242,30 +264,15 @@ private constructor(
     @ExcludeMissing
     fun _deprecationFilter(): JsonField<String> = deprecationFilter
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): EventBackfillCreateResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        closeTime()
-        createdAt()
-        customerId()
-        eventsIngested()
-        replaceExistingEvents()
-        revertedAt()
-        status()
-        timeframeEnd()
-        timeframeStart()
-        deprecationFilter()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -529,8 +536,29 @@ private constructor(
                 checkRequired("timeframeEnd", timeframeEnd),
                 checkRequired("timeframeStart", timeframeStart),
                 deprecationFilter,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): EventBackfillCreateResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        closeTime()
+        createdAt()
+        customerId()
+        eventsIngested()
+        replaceExistingEvents()
+        revertedAt()
+        status()
+        timeframeEnd()
+        timeframeStart()
+        deprecationFilter()
+        validated = true
     }
 
     /** The status of the backfill. */

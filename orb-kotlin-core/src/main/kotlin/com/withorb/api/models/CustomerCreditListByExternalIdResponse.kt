@@ -11,39 +11,51 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class CustomerCreditListByExternalIdResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("balance")
-    @ExcludeMissing
-    private val balance: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("effective_date")
-    @ExcludeMissing
-    private val effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("expiry_date")
-    @ExcludeMissing
-    private val expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("maximum_initial_balance")
-    @ExcludeMissing
-    private val maximumInitialBalance: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("per_unit_cost_basis")
-    @ExcludeMissing
-    private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("status")
-    @ExcludeMissing
-    private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val balance: JsonField<Double>,
+    private val effectiveDate: JsonField<OffsetDateTime>,
+    private val expiryDate: JsonField<OffsetDateTime>,
+    private val maximumInitialBalance: JsonField<Double>,
+    private val perUnitCostBasis: JsonField<String>,
+    private val status: JsonField<Status>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("balance") @ExcludeMissing balance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("effective_date")
+        @ExcludeMissing
+        effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("expiry_date")
+        @ExcludeMissing
+        expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("maximum_initial_balance")
+        @ExcludeMissing
+        maximumInitialBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("per_unit_cost_basis")
+        @ExcludeMissing
+        perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
+    ) : this(
+        id,
+        balance,
+        effectiveDate,
+        expiryDate,
+        maximumInitialBalance,
+        perUnitCostBasis,
+        status,
+        mutableMapOf(),
+    )
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -147,26 +159,15 @@ private constructor(
      */
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CustomerCreditListByExternalIdResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        balance()
-        effectiveDate()
-        expiryDate()
-        maximumInitialBalance()
-        perUnitCostBasis()
-        status()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -355,8 +356,25 @@ private constructor(
                 checkRequired("maximumInitialBalance", maximumInitialBalance),
                 checkRequired("perUnitCostBasis", perUnitCostBasis),
                 checkRequired("status", status),
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): CustomerCreditListByExternalIdResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        balance()
+        effectiveDate()
+        expiryDate()
+        maximumInitialBalance()
+        perUnitCostBasis()
+        status()
+        validated = true
     }
 
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
