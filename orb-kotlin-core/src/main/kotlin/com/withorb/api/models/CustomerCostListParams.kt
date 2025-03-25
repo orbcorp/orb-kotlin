@@ -5,7 +5,6 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
@@ -156,29 +155,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> customerId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                currency?.let { put("currency", it) }
-                timeframeEnd?.let {
-                    put("timeframe_end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                timeframeStart?.let {
-                    put("timeframe_start", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                viewMode?.let { put("view_mode", it.toString()) }
-                putAll(additionalQueryParams)
-            }
-            .build()
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -195,7 +171,6 @@ private constructor(
     }
 
     /** A builder for [CustomerCostListParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var customerId: String? = null
@@ -357,6 +332,29 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> customerId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                currency?.let { put("currency", it) }
+                timeframeEnd?.let {
+                    put("timeframe_end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                timeframeStart?.let {
+                    put("timeframe_start", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                viewMode?.let { put("view_mode", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     /**
      * Controls whether Orb returns cumulative costs since the start of the billing period, or

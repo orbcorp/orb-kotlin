@@ -5,7 +5,6 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -107,42 +106,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                amount?.let { put("amount", it) }
-                amountGt?.let { put("amount[gt]", it) }
-                amountLt?.let { put("amount[lt]", it) }
-                cursor?.let { put("cursor", it) }
-                customerId?.let { put("customer_id", it) }
-                dateType?.let { put("date_type", it.toString()) }
-                dueDate?.let { put("due_date", it.toString()) }
-                dueDateWindow?.let { put("due_date_window", it) }
-                dueDateGt?.let { put("due_date[gt]", it.toString()) }
-                dueDateLt?.let { put("due_date[lt]", it.toString()) }
-                externalCustomerId?.let { put("external_customer_id", it) }
-                invoiceDateGt?.let {
-                    put("invoice_date[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                invoiceDateGte?.let {
-                    put("invoice_date[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                invoiceDateLt?.let {
-                    put("invoice_date[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                invoiceDateLte?.let {
-                    put("invoice_date[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                isRecurring?.let { put("is_recurring", it.toString()) }
-                limit?.let { put("limit", it.toString()) }
-                status?.forEach { put("status[]", it.toString()) }
-                subscriptionId?.let { put("subscription_id", it) }
-                putAll(additionalQueryParams)
-            }
-            .build()
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -154,7 +117,6 @@ private constructor(
     }
 
     /** A builder for [InvoiceListParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var amount: String? = null
@@ -412,6 +374,42 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                amount?.let { put("amount", it) }
+                amountGt?.let { put("amount[gt]", it) }
+                amountLt?.let { put("amount[lt]", it) }
+                cursor?.let { put("cursor", it) }
+                customerId?.let { put("customer_id", it) }
+                dateType?.let { put("date_type", it.toString()) }
+                dueDate?.let { put("due_date", it.toString()) }
+                dueDateWindow?.let { put("due_date_window", it) }
+                dueDateGt?.let { put("due_date[gt]", it.toString()) }
+                dueDateLt?.let { put("due_date[lt]", it.toString()) }
+                externalCustomerId?.let { put("external_customer_id", it) }
+                invoiceDateGt?.let {
+                    put("invoice_date[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                invoiceDateGte?.let {
+                    put("invoice_date[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                invoiceDateLt?.let {
+                    put("invoice_date[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                invoiceDateLte?.let {
+                    put("invoice_date[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                isRecurring?.let { put("is_recurring", it.toString()) }
+                limit?.let { put("limit", it.toString()) }
+                status?.forEach { put("status[]", it.toString()) }
+                subscriptionId?.let { put("subscription_id", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     class DateType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 

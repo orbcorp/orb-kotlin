@@ -11,13 +11,12 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
 /**
@@ -25,20 +24,26 @@ import java.util.Objects
  * items, billable metrics, and prices and are used for defining external sync behavior for invoices
  * and tax calculation purposes.
  */
-@NoAutoDetect
 class Item
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("created_at")
-    @ExcludeMissing
-    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("external_connections")
-    @ExcludeMissing
-    private val externalConnections: JsonField<List<ExternalConnection>> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val createdAt: JsonField<OffsetDateTime>,
+    private val externalConnections: JsonField<List<ExternalConnection>>,
+    private val name: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("external_connections")
+        @ExcludeMissing
+        externalConnections: JsonField<List<ExternalConnection>> = JsonMissing.of(),
+        @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+    ) : this(id, createdAt, externalConnections, name, mutableMapOf())
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -98,23 +103,15 @@ private constructor(
      */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): Item = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        createdAt()
-        externalConnections().forEach { it.validate() }
-        name()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -248,23 +245,40 @@ private constructor(
                 checkRequired("createdAt", createdAt),
                 checkRequired("externalConnections", externalConnections).map { it.toImmutable() },
                 checkRequired("name", name),
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
     }
 
-    @NoAutoDetect
+    private var validated: Boolean = false
+
+    fun validate(): Item = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        createdAt()
+        externalConnections().forEach { it.validate() }
+        name()
+        validated = true
+    }
+
     class ExternalConnection
-    @JsonCreator
     private constructor(
-        @JsonProperty("external_connection_name")
-        @ExcludeMissing
-        private val externalConnectionName: JsonField<ExternalConnectionName> = JsonMissing.of(),
-        @JsonProperty("external_entity_id")
-        @ExcludeMissing
-        private val externalEntityId: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val externalConnectionName: JsonField<ExternalConnectionName>,
+        private val externalEntityId: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("external_connection_name")
+            @ExcludeMissing
+            externalConnectionName: JsonField<ExternalConnectionName> = JsonMissing.of(),
+            @JsonProperty("external_entity_id")
+            @ExcludeMissing
+            externalEntityId: JsonField<String> = JsonMissing.of(),
+        ) : this(externalConnectionName, externalEntityId, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -299,21 +313,15 @@ private constructor(
         @ExcludeMissing
         fun _externalEntityId(): JsonField<String> = externalEntityId
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): ExternalConnection = apply {
-            if (validated) {
-                return@apply
-            }
-
-            externalConnectionName()
-            externalEntityId()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -409,8 +417,20 @@ private constructor(
                 ExternalConnection(
                     checkRequired("externalConnectionName", externalConnectionName),
                     checkRequired("externalEntityId", externalEntityId),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): ExternalConnection = apply {
+            if (validated) {
+                return@apply
+            }
+
+            externalConnectionName()
+            externalEntityId()
+            validated = true
         }
 
         class ExternalConnectionName

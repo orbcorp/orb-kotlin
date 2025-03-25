@@ -11,15 +11,14 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
 /** This endpoint is used to create a single [`Credit Note`](/invoicing/credit-notes). */
@@ -79,228 +78,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): Body = body
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("line_items")
-        @ExcludeMissing
-        private val lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
-        @JsonProperty("memo")
-        @ExcludeMissing
-        private val memo: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("reason")
-        @ExcludeMissing
-        private val reason: JsonField<Reason> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
-
-        /**
-         * An optional memo to attach to the credit note.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun memo(): String? = memo.getNullable("memo")
-
-        /**
-         * An optional reason for the credit note.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun reason(): Reason? = reason.getNullable("reason")
-
-        /**
-         * Returns the raw JSON value of [lineItems].
-         *
-         * Unlike [lineItems], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("line_items")
-        @ExcludeMissing
-        fun _lineItems(): JsonField<List<LineItem>> = lineItems
-
-        /**
-         * Returns the raw JSON value of [memo].
-         *
-         * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
-
-        /**
-         * Returns the raw JSON value of [reason].
-         *
-         * Unlike [reason], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<Reason> = reason
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            lineItems().forEach { it.validate() }
-            memo()
-            reason()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .lineItems()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var lineItems: JsonField<MutableList<LineItem>>? = null
-            private var memo: JsonField<String> = JsonMissing.of()
-            private var reason: JsonField<Reason> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(body: Body) = apply {
-                lineItems = body.lineItems.map { it.toMutableList() }
-                memo = body.memo
-                reason = body.reason
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            fun lineItems(lineItems: List<LineItem>) = lineItems(JsonField.of(lineItems))
-
-            /**
-             * Sets [Builder.lineItems] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.lineItems] with a well-typed `List<LineItem>` value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun lineItems(lineItems: JsonField<List<LineItem>>) = apply {
-                this.lineItems = lineItems.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [LineItem] to [lineItems].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addLineItem(lineItem: LineItem) = apply {
-                lineItems =
-                    (lineItems ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("lineItems", it).add(lineItem)
-                    }
-            }
-
-            /** An optional memo to attach to the credit note. */
-            fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
-
-            /**
-             * Sets [Builder.memo] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.memo] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun memo(memo: JsonField<String>) = apply { this.memo = memo }
-
-            /** An optional reason for the credit note. */
-            fun reason(reason: Reason?) = reason(JsonField.ofNullable(reason))
-
-            /**
-             * Sets [Builder.reason] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.reason] with a well-typed [Reason] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .lineItems()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("lineItems", lineItems).map { it.toImmutable() },
-                    memo,
-                    reason,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && lineItems == other.lineItems && memo == other.memo && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(lineItems, memo, reason, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{lineItems=$lineItems, memo=$memo, reason=$reason, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -317,7 +94,6 @@ private constructor(
     }
 
     /** A builder for [CreditNoteCreateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var body: Body.Builder = Body.builder()
@@ -507,19 +283,248 @@ private constructor(
             )
     }
 
-    @NoAutoDetect
-    class LineItem
-    @JsonCreator
+    internal fun _body(): Body = body
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
     private constructor(
-        @JsonProperty("amount")
-        @ExcludeMissing
-        private val amount: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("invoice_line_item_id")
-        @ExcludeMissing
-        private val invoiceLineItemId: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val lineItems: JsonField<List<LineItem>>,
+        private val memo: JsonField<String>,
+        private val reason: JsonField<Reason>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("line_items")
+            @ExcludeMissing
+            lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
+            @JsonProperty("memo") @ExcludeMissing memo: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("reason") @ExcludeMissing reason: JsonField<Reason> = JsonMissing.of(),
+        ) : this(lineItems, memo, reason, mutableMapOf())
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
+
+        /**
+         * An optional memo to attach to the credit note.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun memo(): String? = memo.getNullable("memo")
+
+        /**
+         * An optional reason for the credit note.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun reason(): Reason? = reason.getNullable("reason")
+
+        /**
+         * Returns the raw JSON value of [lineItems].
+         *
+         * Unlike [lineItems], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("line_items")
+        @ExcludeMissing
+        fun _lineItems(): JsonField<List<LineItem>> = lineItems
+
+        /**
+         * Returns the raw JSON value of [memo].
+         *
+         * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
+
+        /**
+         * Returns the raw JSON value of [reason].
+         *
+         * Unlike [reason], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<Reason> = reason
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .lineItems()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var lineItems: JsonField<MutableList<LineItem>>? = null
+            private var memo: JsonField<String> = JsonMissing.of()
+            private var reason: JsonField<Reason> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                lineItems = body.lineItems.map { it.toMutableList() }
+                memo = body.memo
+                reason = body.reason
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            fun lineItems(lineItems: List<LineItem>) = lineItems(JsonField.of(lineItems))
+
+            /**
+             * Sets [Builder.lineItems] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.lineItems] with a well-typed `List<LineItem>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun lineItems(lineItems: JsonField<List<LineItem>>) = apply {
+                this.lineItems = lineItems.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [LineItem] to [lineItems].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addLineItem(lineItem: LineItem) = apply {
+                lineItems =
+                    (lineItems ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("lineItems", it).add(lineItem)
+                    }
+            }
+
+            /** An optional memo to attach to the credit note. */
+            fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
+
+            /**
+             * Sets [Builder.memo] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.memo] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun memo(memo: JsonField<String>) = apply { this.memo = memo }
+
+            /** An optional reason for the credit note. */
+            fun reason(reason: Reason?) = reason(JsonField.ofNullable(reason))
+
+            /**
+             * Sets [Builder.reason] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.reason] with a well-typed [Reason] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .lineItems()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("lineItems", lineItems).map { it.toImmutable() },
+                    memo,
+                    reason,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            lineItems().forEach { it.validate() }
+            memo()
+            reason()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && lineItems == other.lineItems && memo == other.memo && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(lineItems, memo, reason, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{lineItems=$lineItems, memo=$memo, reason=$reason, additionalProperties=$additionalProperties}"
+    }
+
+    class LineItem
+    private constructor(
+        private val amount: JsonField<String>,
+        private val invoiceLineItemId: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("amount") @ExcludeMissing amount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("invoice_line_item_id")
+            @ExcludeMissing
+            invoiceLineItemId: JsonField<String> = JsonMissing.of(),
+        ) : this(amount, invoiceLineItemId, mutableMapOf())
 
         /**
          * The total amount in the invoice's currency to credit this line item.
@@ -554,21 +559,15 @@ private constructor(
         @ExcludeMissing
         fun _invoiceLineItemId(): JsonField<String> = invoiceLineItemId
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): LineItem = apply {
-            if (validated) {
-                return@apply
-            }
-
-            amount()
-            invoiceLineItemId()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -662,8 +661,20 @@ private constructor(
                 LineItem(
                     checkRequired("amount", amount),
                     checkRequired("invoiceLineItemId", invoiceLineItemId),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): LineItem = apply {
+            if (validated) {
+                return@apply
+            }
+
+            amount()
+            invoiceLineItemId()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

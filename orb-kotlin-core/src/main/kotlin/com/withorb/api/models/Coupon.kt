@@ -19,13 +19,11 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
 /**
@@ -34,31 +32,47 @@ import java.util.Objects
  * which applies the discount to a subscription or invoice. The duration of a coupon determines how
  * long it remains available for use by end users.
  */
-@NoAutoDetect
 class Coupon
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("archived_at")
-    @ExcludeMissing
-    private val archivedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("discount")
-    @ExcludeMissing
-    private val discount: JsonField<Discount> = JsonMissing.of(),
-    @JsonProperty("duration_in_months")
-    @ExcludeMissing
-    private val durationInMonths: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("max_redemptions")
-    @ExcludeMissing
-    private val maxRedemptions: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("redemption_code")
-    @ExcludeMissing
-    private val redemptionCode: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("times_redeemed")
-    @ExcludeMissing
-    private val timesRedeemed: JsonField<Long> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val archivedAt: JsonField<OffsetDateTime>,
+    private val discount: JsonField<Discount>,
+    private val durationInMonths: JsonField<Long>,
+    private val maxRedemptions: JsonField<Long>,
+    private val redemptionCode: JsonField<String>,
+    private val timesRedeemed: JsonField<Long>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("archived_at")
+        @ExcludeMissing
+        archivedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("discount") @ExcludeMissing discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("duration_in_months")
+        @ExcludeMissing
+        durationInMonths: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("max_redemptions")
+        @ExcludeMissing
+        maxRedemptions: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("redemption_code")
+        @ExcludeMissing
+        redemptionCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("times_redeemed")
+        @ExcludeMissing
+        timesRedeemed: JsonField<Long> = JsonMissing.of(),
+    ) : this(
+        id,
+        archivedAt,
+        discount,
+        durationInMonths,
+        maxRedemptions,
+        redemptionCode,
+        timesRedeemed,
+        mutableMapOf(),
+    )
 
     /**
      * Also referred to as coupon_id in this documentation.
@@ -177,26 +191,15 @@ private constructor(
     @ExcludeMissing
     fun _timesRedeemed(): JsonField<Long> = timesRedeemed
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): Coupon = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        archivedAt()
-        discount().validate()
-        durationInMonths()
-        maxRedemptions()
-        redemptionCode()
-        timesRedeemed()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -411,8 +414,25 @@ private constructor(
                 checkRequired("maxRedemptions", maxRedemptions),
                 checkRequired("redemptionCode", redemptionCode),
                 checkRequired("timesRedeemed", timesRedeemed),
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): Coupon = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        archivedAt()
+        discount().validate()
+        durationInMonths()
+        maxRedemptions()
+        redemptionCode()
+        timesRedeemed()
+        validated = true
     }
 
     @JsonDeserialize(using = Discount.Deserializer::class)

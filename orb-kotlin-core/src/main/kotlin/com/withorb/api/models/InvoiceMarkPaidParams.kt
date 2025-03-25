@@ -10,15 +10,13 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.LocalDate
+import java.util.Collections
 import java.util.Objects
 
 /**
@@ -87,230 +85,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> invoiceId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("payment_received_date")
-        @ExcludeMissing
-        private val paymentReceivedDate: JsonField<LocalDate> = JsonMissing.of(),
-        @JsonProperty("external_id")
-        @ExcludeMissing
-        private val externalId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("notes")
-        @ExcludeMissing
-        private val notes: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * A date string to specify the date of the payment.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun paymentReceivedDate(): LocalDate =
-            paymentReceivedDate.getRequired("payment_received_date")
-
-        /**
-         * An optional external ID to associate with the payment.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun externalId(): String? = externalId.getNullable("external_id")
-
-        /**
-         * An optional note to associate with the payment.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun notes(): String? = notes.getNullable("notes")
-
-        /**
-         * Returns the raw JSON value of [paymentReceivedDate].
-         *
-         * Unlike [paymentReceivedDate], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("payment_received_date")
-        @ExcludeMissing
-        fun _paymentReceivedDate(): JsonField<LocalDate> = paymentReceivedDate
-
-        /**
-         * Returns the raw JSON value of [externalId].
-         *
-         * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("external_id")
-        @ExcludeMissing
-        fun _externalId(): JsonField<String> = externalId
-
-        /**
-         * Returns the raw JSON value of [notes].
-         *
-         * Unlike [notes], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("notes") @ExcludeMissing fun _notes(): JsonField<String> = notes
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            paymentReceivedDate()
-            externalId()
-            notes()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .paymentReceivedDate()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var paymentReceivedDate: JsonField<LocalDate>? = null
-            private var externalId: JsonField<String> = JsonMissing.of()
-            private var notes: JsonField<String> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(body: Body) = apply {
-                paymentReceivedDate = body.paymentReceivedDate
-                externalId = body.externalId
-                notes = body.notes
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /** A date string to specify the date of the payment. */
-            fun paymentReceivedDate(paymentReceivedDate: LocalDate) =
-                paymentReceivedDate(JsonField.of(paymentReceivedDate))
-
-            /**
-             * Sets [Builder.paymentReceivedDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.paymentReceivedDate] with a well-typed [LocalDate]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun paymentReceivedDate(paymentReceivedDate: JsonField<LocalDate>) = apply {
-                this.paymentReceivedDate = paymentReceivedDate
-            }
-
-            /** An optional external ID to associate with the payment. */
-            fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
-
-            /**
-             * Sets [Builder.externalId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.externalId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
-
-            /** An optional note to associate with the payment. */
-            fun notes(notes: String?) = notes(JsonField.ofNullable(notes))
-
-            /**
-             * Sets [Builder.notes] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.notes] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun notes(notes: JsonField<String>) = apply { this.notes = notes }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .paymentReceivedDate()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("paymentReceivedDate", paymentReceivedDate),
-                    externalId,
-                    notes,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && paymentReceivedDate == other.paymentReceivedDate && externalId == other.externalId && notes == other.notes && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(paymentReceivedDate, externalId, notes, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{paymentReceivedDate=$paymentReceivedDate, externalId=$externalId, notes=$notes, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -328,7 +102,6 @@ private constructor(
     }
 
     /** A builder for [InvoiceMarkPaidParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var invoiceId: String? = null
@@ -521,6 +294,238 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> invoiceId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val paymentReceivedDate: JsonField<LocalDate>,
+        private val externalId: JsonField<String>,
+        private val notes: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("payment_received_date")
+            @ExcludeMissing
+            paymentReceivedDate: JsonField<LocalDate> = JsonMissing.of(),
+            @JsonProperty("external_id")
+            @ExcludeMissing
+            externalId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("notes") @ExcludeMissing notes: JsonField<String> = JsonMissing.of(),
+        ) : this(paymentReceivedDate, externalId, notes, mutableMapOf())
+
+        /**
+         * A date string to specify the date of the payment.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun paymentReceivedDate(): LocalDate =
+            paymentReceivedDate.getRequired("payment_received_date")
+
+        /**
+         * An optional external ID to associate with the payment.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun externalId(): String? = externalId.getNullable("external_id")
+
+        /**
+         * An optional note to associate with the payment.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun notes(): String? = notes.getNullable("notes")
+
+        /**
+         * Returns the raw JSON value of [paymentReceivedDate].
+         *
+         * Unlike [paymentReceivedDate], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("payment_received_date")
+        @ExcludeMissing
+        fun _paymentReceivedDate(): JsonField<LocalDate> = paymentReceivedDate
+
+        /**
+         * Returns the raw JSON value of [externalId].
+         *
+         * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        fun _externalId(): JsonField<String> = externalId
+
+        /**
+         * Returns the raw JSON value of [notes].
+         *
+         * Unlike [notes], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("notes") @ExcludeMissing fun _notes(): JsonField<String> = notes
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .paymentReceivedDate()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var paymentReceivedDate: JsonField<LocalDate>? = null
+            private var externalId: JsonField<String> = JsonMissing.of()
+            private var notes: JsonField<String> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                paymentReceivedDate = body.paymentReceivedDate
+                externalId = body.externalId
+                notes = body.notes
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** A date string to specify the date of the payment. */
+            fun paymentReceivedDate(paymentReceivedDate: LocalDate) =
+                paymentReceivedDate(JsonField.of(paymentReceivedDate))
+
+            /**
+             * Sets [Builder.paymentReceivedDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.paymentReceivedDate] with a well-typed [LocalDate]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun paymentReceivedDate(paymentReceivedDate: JsonField<LocalDate>) = apply {
+                this.paymentReceivedDate = paymentReceivedDate
+            }
+
+            /** An optional external ID to associate with the payment. */
+            fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
+
+            /**
+             * Sets [Builder.externalId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
+
+            /** An optional note to associate with the payment. */
+            fun notes(notes: String?) = notes(JsonField.ofNullable(notes))
+
+            /**
+             * Sets [Builder.notes] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.notes] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun notes(notes: JsonField<String>) = apply { this.notes = notes }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .paymentReceivedDate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("paymentReceivedDate", paymentReceivedDate),
+                    externalId,
+                    notes,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            paymentReceivedDate()
+            externalId()
+            notes()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && paymentReceivedDate == other.paymentReceivedDate && externalId == other.externalId && notes == other.notes && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(paymentReceivedDate, externalId, notes, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{paymentReceivedDate=$paymentReceivedDate, externalId=$externalId, notes=$notes, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
