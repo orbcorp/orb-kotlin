@@ -20,95 +20,139 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class SubscriptionTriggerPhaseResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("active_plan_phase_order")
-    @ExcludeMissing
-    private val activePlanPhaseOrder: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("adjustment_intervals")
-    @ExcludeMissing
-    private val adjustmentIntervals: JsonField<List<AdjustmentInterval>> = JsonMissing.of(),
-    @JsonProperty("auto_collection")
-    @ExcludeMissing
-    private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("billing_cycle_anchor_configuration")
-    @ExcludeMissing
-    private val billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration> =
-        JsonMissing.of(),
-    @JsonProperty("billing_cycle_day")
-    @ExcludeMissing
-    private val billingCycleDay: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("created_at")
-    @ExcludeMissing
-    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("current_billing_period_end_date")
-    @ExcludeMissing
-    private val currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("current_billing_period_start_date")
-    @ExcludeMissing
-    private val currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("customer")
-    @ExcludeMissing
-    private val customer: JsonField<Customer> = JsonMissing.of(),
-    @JsonProperty("default_invoice_memo")
-    @ExcludeMissing
-    private val defaultInvoiceMemo: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("discount_intervals")
-    @ExcludeMissing
-    private val discountIntervals: JsonField<List<DiscountInterval>> = JsonMissing.of(),
-    @JsonProperty("end_date")
-    @ExcludeMissing
-    private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("fixed_fee_quantity_schedule")
-    @ExcludeMissing
-    private val fixedFeeQuantitySchedule: JsonField<List<FixedFeeQuantitySchedule>> =
-        JsonMissing.of(),
-    @JsonProperty("invoicing_threshold")
-    @ExcludeMissing
-    private val invoicingThreshold: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("maximum_intervals")
-    @ExcludeMissing
-    private val maximumIntervals: JsonField<List<MaximumInterval>> = JsonMissing.of(),
-    @JsonProperty("metadata")
-    @ExcludeMissing
-    private val metadata: JsonField<Metadata> = JsonMissing.of(),
-    @JsonProperty("minimum_intervals")
-    @ExcludeMissing
-    private val minimumIntervals: JsonField<List<MinimumInterval>> = JsonMissing.of(),
-    @JsonProperty("net_terms")
-    @ExcludeMissing
-    private val netTerms: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("plan") @ExcludeMissing private val plan: JsonField<Plan> = JsonMissing.of(),
-    @JsonProperty("price_intervals")
-    @ExcludeMissing
-    private val priceIntervals: JsonField<List<PriceInterval>> = JsonMissing.of(),
-    @JsonProperty("redeemed_coupon")
-    @ExcludeMissing
-    private val redeemedCoupon: JsonField<RedeemedCoupon> = JsonMissing.of(),
-    @JsonProperty("start_date")
-    @ExcludeMissing
-    private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("status")
-    @ExcludeMissing
-    private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonProperty("trial_info")
-    @ExcludeMissing
-    private val trialInfo: JsonField<TrialInfo> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val activePlanPhaseOrder: JsonField<Long>,
+    private val adjustmentIntervals: JsonField<List<AdjustmentInterval>>,
+    private val autoCollection: JsonField<Boolean>,
+    private val billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration>,
+    private val billingCycleDay: JsonField<Long>,
+    private val createdAt: JsonField<OffsetDateTime>,
+    private val currentBillingPeriodEndDate: JsonField<OffsetDateTime>,
+    private val currentBillingPeriodStartDate: JsonField<OffsetDateTime>,
+    private val customer: JsonField<Customer>,
+    private val defaultInvoiceMemo: JsonField<String>,
+    private val discountIntervals: JsonField<List<DiscountInterval>>,
+    private val endDate: JsonField<OffsetDateTime>,
+    private val fixedFeeQuantitySchedule: JsonField<List<FixedFeeQuantitySchedule>>,
+    private val invoicingThreshold: JsonField<String>,
+    private val maximumIntervals: JsonField<List<MaximumInterval>>,
+    private val metadata: JsonField<Metadata>,
+    private val minimumIntervals: JsonField<List<MinimumInterval>>,
+    private val netTerms: JsonField<Long>,
+    private val plan: JsonField<Plan>,
+    private val priceIntervals: JsonField<List<PriceInterval>>,
+    private val redeemedCoupon: JsonField<RedeemedCoupon>,
+    private val startDate: JsonField<OffsetDateTime>,
+    private val status: JsonField<Status>,
+    private val trialInfo: JsonField<TrialInfo>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("active_plan_phase_order")
+        @ExcludeMissing
+        activePlanPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("adjustment_intervals")
+        @ExcludeMissing
+        adjustmentIntervals: JsonField<List<AdjustmentInterval>> = JsonMissing.of(),
+        @JsonProperty("auto_collection")
+        @ExcludeMissing
+        autoCollection: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_anchor_configuration")
+        @ExcludeMissing
+        billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billing_cycle_day")
+        @ExcludeMissing
+        billingCycleDay: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("current_billing_period_end_date")
+        @ExcludeMissing
+        currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("current_billing_period_start_date")
+        @ExcludeMissing
+        currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("customer") @ExcludeMissing customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("default_invoice_memo")
+        @ExcludeMissing
+        defaultInvoiceMemo: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("discount_intervals")
+        @ExcludeMissing
+        discountIntervals: JsonField<List<DiscountInterval>> = JsonMissing.of(),
+        @JsonProperty("end_date")
+        @ExcludeMissing
+        endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("fixed_fee_quantity_schedule")
+        @ExcludeMissing
+        fixedFeeQuantitySchedule: JsonField<List<FixedFeeQuantitySchedule>> = JsonMissing.of(),
+        @JsonProperty("invoicing_threshold")
+        @ExcludeMissing
+        invoicingThreshold: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum_intervals")
+        @ExcludeMissing
+        maximumIntervals: JsonField<List<MaximumInterval>> = JsonMissing.of(),
+        @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("minimum_intervals")
+        @ExcludeMissing
+        minimumIntervals: JsonField<List<MinimumInterval>> = JsonMissing.of(),
+        @JsonProperty("net_terms") @ExcludeMissing netTerms: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("plan") @ExcludeMissing plan: JsonField<Plan> = JsonMissing.of(),
+        @JsonProperty("price_intervals")
+        @ExcludeMissing
+        priceIntervals: JsonField<List<PriceInterval>> = JsonMissing.of(),
+        @JsonProperty("redeemed_coupon")
+        @ExcludeMissing
+        redeemedCoupon: JsonField<RedeemedCoupon> = JsonMissing.of(),
+        @JsonProperty("start_date")
+        @ExcludeMissing
+        startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
+        @JsonProperty("trial_info")
+        @ExcludeMissing
+        trialInfo: JsonField<TrialInfo> = JsonMissing.of(),
+    ) : this(
+        id,
+        activePlanPhaseOrder,
+        adjustmentIntervals,
+        autoCollection,
+        billingCycleAnchorConfiguration,
+        billingCycleDay,
+        createdAt,
+        currentBillingPeriodEndDate,
+        currentBillingPeriodStartDate,
+        customer,
+        defaultInvoiceMemo,
+        discountIntervals,
+        endDate,
+        fixedFeeQuantitySchedule,
+        invoicingThreshold,
+        maximumIntervals,
+        metadata,
+        minimumIntervals,
+        netTerms,
+        plan,
+        priceIntervals,
+        redeemedCoupon,
+        startDate,
+        status,
+        trialInfo,
+        mutableMapOf(),
+    )
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -555,44 +599,15 @@ private constructor(
      */
     @JsonProperty("trial_info") @ExcludeMissing fun _trialInfo(): JsonField<TrialInfo> = trialInfo
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): SubscriptionTriggerPhaseResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        activePlanPhaseOrder()
-        adjustmentIntervals().forEach { it.validate() }
-        autoCollection()
-        billingCycleAnchorConfiguration().validate()
-        billingCycleDay()
-        createdAt()
-        currentBillingPeriodEndDate()
-        currentBillingPeriodStartDate()
-        customer().validate()
-        defaultInvoiceMemo()
-        discountIntervals().forEach { it.validate() }
-        endDate()
-        fixedFeeQuantitySchedule().forEach { it.validate() }
-        invoicingThreshold()
-        maximumIntervals().forEach { it.validate() }
-        metadata().validate()
-        minimumIntervals().forEach { it.validate() }
-        netTerms()
-        plan().validate()
-        priceIntervals().forEach { it.validate() }
-        redeemedCoupon()?.validate()
-        startDate()
-        status()
-        trialInfo().validate()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -1282,30 +1297,71 @@ private constructor(
                 checkRequired("startDate", startDate),
                 checkRequired("status", status),
                 checkRequired("trialInfo", trialInfo),
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
     }
 
-    @NoAutoDetect
+    private var validated: Boolean = false
+
+    fun validate(): SubscriptionTriggerPhaseResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        activePlanPhaseOrder()
+        adjustmentIntervals().forEach { it.validate() }
+        autoCollection()
+        billingCycleAnchorConfiguration().validate()
+        billingCycleDay()
+        createdAt()
+        currentBillingPeriodEndDate()
+        currentBillingPeriodStartDate()
+        customer().validate()
+        defaultInvoiceMemo()
+        discountIntervals().forEach { it.validate() }
+        endDate()
+        fixedFeeQuantitySchedule().forEach { it.validate() }
+        invoicingThreshold()
+        maximumIntervals().forEach { it.validate() }
+        metadata().validate()
+        minimumIntervals().forEach { it.validate() }
+        netTerms()
+        plan().validate()
+        priceIntervals().forEach { it.validate() }
+        redeemedCoupon()?.validate()
+        startDate()
+        status()
+        trialInfo().validate()
+        validated = true
+    }
+
     class AdjustmentInterval
-    @JsonCreator
     private constructor(
-        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("adjustment")
-        @ExcludeMissing
-        private val adjustment: JsonField<Adjustment> = JsonMissing.of(),
-        @JsonProperty("applies_to_price_interval_ids")
-        @ExcludeMissing
-        private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val id: JsonField<String>,
+        private val adjustment: JsonField<Adjustment>,
+        private val appliesToPriceIntervalIds: JsonField<List<String>>,
+        private val endDate: JsonField<OffsetDateTime>,
+        private val startDate: JsonField<OffsetDateTime>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("adjustment")
+            @ExcludeMissing
+            adjustment: JsonField<Adjustment> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_interval_ids")
+            @ExcludeMissing
+            appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("end_date")
+            @ExcludeMissing
+            endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("start_date")
+            @ExcludeMissing
+            startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        ) : this(id, adjustment, appliesToPriceIntervalIds, endDate, startDate, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -1388,24 +1444,15 @@ private constructor(
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): AdjustmentInterval = apply {
-            if (validated) {
-                return@apply
-            }
-
-            id()
-            adjustment().validate()
-            appliesToPriceIntervalIds()
-            endDate()
-            startDate()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1605,8 +1652,23 @@ private constructor(
                     },
                     checkRequired("endDate", endDate),
                     checkRequired("startDate", startDate),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): AdjustmentInterval = apply {
+            if (validated) {
+                return@apply
+            }
+
+            id()
+            adjustment().validate()
+            appliesToPriceIntervalIds()
+            endDate()
+            startDate()
+            validated = true
         }
 
         @JsonDeserialize(using = Adjustment.Deserializer::class)
@@ -1888,34 +1950,49 @@ private constructor(
                 }
             }
 
-            @NoAutoDetect
             class PlanPhaseUsageDiscountAdjustment
-            @JsonCreator
             private constructor(
-                @JsonProperty("id")
-                @ExcludeMissing
-                private val id: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("adjustment_type")
-                @ExcludeMissing
-                private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-                @JsonProperty("is_invoice_level")
-                @ExcludeMissing
-                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("reason")
-                @ExcludeMissing
-                private val reason: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("usage_discount")
-                @ExcludeMissing
-                private val usageDiscount: JsonField<Double> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val id: JsonField<String>,
+                private val adjustmentType: JsonField<AdjustmentType>,
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
+                private val planPhaseOrder: JsonField<Long>,
+                private val reason: JsonField<String>,
+                private val usageDiscount: JsonField<Double>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("adjustment_type")
+                    @ExcludeMissing
+                    adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
+                    @JsonProperty("plan_phase_order")
+                    @ExcludeMissing
+                    planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("reason")
+                    @ExcludeMissing
+                    reason: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("usage_discount")
+                    @ExcludeMissing
+                    usageDiscount: JsonField<Double> = JsonMissing.of(),
+                ) : this(
+                    id,
+                    adjustmentType,
+                    appliesToPriceIds,
+                    isInvoiceLevel,
+                    planPhaseOrder,
+                    reason,
+                    usageDiscount,
+                    mutableMapOf(),
+                )
 
                 /**
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -2042,26 +2119,15 @@ private constructor(
                 @ExcludeMissing
                 fun _usageDiscount(): JsonField<Double> = usageDiscount
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): PlanPhaseUsageDiscountAdjustment = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    id()
-                    adjustmentType()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    planPhaseOrder()
-                    reason()
-                    usageDiscount()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -2288,8 +2354,25 @@ private constructor(
                             checkRequired("planPhaseOrder", planPhaseOrder),
                             checkRequired("reason", reason),
                             checkRequired("usageDiscount", usageDiscount),
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): PlanPhaseUsageDiscountAdjustment = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    id()
+                    adjustmentType()
+                    appliesToPriceIds()
+                    isInvoiceLevel()
+                    planPhaseOrder()
+                    reason()
+                    usageDiscount()
+                    validated = true
                 }
 
                 class AdjustmentType
@@ -2411,34 +2494,49 @@ private constructor(
                     "PlanPhaseUsageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
             }
 
-            @NoAutoDetect
             class PlanPhaseAmountDiscountAdjustment
-            @JsonCreator
             private constructor(
-                @JsonProperty("id")
-                @ExcludeMissing
-                private val id: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("adjustment_type")
-                @ExcludeMissing
-                private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
-                @JsonProperty("amount_discount")
-                @ExcludeMissing
-                private val amountDiscount: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-                @JsonProperty("is_invoice_level")
-                @ExcludeMissing
-                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("reason")
-                @ExcludeMissing
-                private val reason: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val id: JsonField<String>,
+                private val adjustmentType: JsonField<AdjustmentType>,
+                private val amountDiscount: JsonField<String>,
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
+                private val planPhaseOrder: JsonField<Long>,
+                private val reason: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("adjustment_type")
+                    @ExcludeMissing
+                    adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+                    @JsonProperty("amount_discount")
+                    @ExcludeMissing
+                    amountDiscount: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
+                    @JsonProperty("plan_phase_order")
+                    @ExcludeMissing
+                    planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("reason")
+                    @ExcludeMissing
+                    reason: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    id,
+                    adjustmentType,
+                    amountDiscount,
+                    appliesToPriceIds,
+                    isInvoiceLevel,
+                    planPhaseOrder,
+                    reason,
+                    mutableMapOf(),
+                )
 
                 /**
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -2565,26 +2663,15 @@ private constructor(
                  */
                 @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): PlanPhaseAmountDiscountAdjustment = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    id()
-                    adjustmentType()
-                    amountDiscount()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    planPhaseOrder()
-                    reason()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -2811,8 +2898,25 @@ private constructor(
                             checkRequired("isInvoiceLevel", isInvoiceLevel),
                             checkRequired("planPhaseOrder", planPhaseOrder),
                             checkRequired("reason", reason),
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): PlanPhaseAmountDiscountAdjustment = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    id()
+                    adjustmentType()
+                    amountDiscount()
+                    appliesToPriceIds()
+                    isInvoiceLevel()
+                    planPhaseOrder()
+                    reason()
+                    validated = true
                 }
 
                 class AdjustmentType
@@ -2934,34 +3038,49 @@ private constructor(
                     "PlanPhaseAmountDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
-            @NoAutoDetect
             class PlanPhasePercentageDiscountAdjustment
-            @JsonCreator
             private constructor(
-                @JsonProperty("id")
-                @ExcludeMissing
-                private val id: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("adjustment_type")
-                @ExcludeMissing
-                private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-                @JsonProperty("is_invoice_level")
-                @ExcludeMissing
-                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-                @JsonProperty("percentage_discount")
-                @ExcludeMissing
-                private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("reason")
-                @ExcludeMissing
-                private val reason: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val id: JsonField<String>,
+                private val adjustmentType: JsonField<AdjustmentType>,
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
+                private val percentageDiscount: JsonField<Double>,
+                private val planPhaseOrder: JsonField<Long>,
+                private val reason: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("adjustment_type")
+                    @ExcludeMissing
+                    adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
+                    @JsonProperty("percentage_discount")
+                    @ExcludeMissing
+                    percentageDiscount: JsonField<Double> = JsonMissing.of(),
+                    @JsonProperty("plan_phase_order")
+                    @ExcludeMissing
+                    planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("reason")
+                    @ExcludeMissing
+                    reason: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    id,
+                    adjustmentType,
+                    appliesToPriceIds,
+                    isInvoiceLevel,
+                    percentageDiscount,
+                    planPhaseOrder,
+                    reason,
+                    mutableMapOf(),
+                )
 
                 /**
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -3089,26 +3208,15 @@ private constructor(
                  */
                 @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): PlanPhasePercentageDiscountAdjustment = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    id()
-                    adjustmentType()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    percentageDiscount()
-                    planPhaseOrder()
-                    reason()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -3337,8 +3445,25 @@ private constructor(
                             checkRequired("percentageDiscount", percentageDiscount),
                             checkRequired("planPhaseOrder", planPhaseOrder),
                             checkRequired("reason", reason),
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): PlanPhasePercentageDiscountAdjustment = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    id()
+                    adjustmentType()
+                    appliesToPriceIds()
+                    isInvoiceLevel()
+                    percentageDiscount()
+                    planPhaseOrder()
+                    reason()
+                    validated = true
                 }
 
                 class AdjustmentType
@@ -3460,37 +3585,54 @@ private constructor(
                     "PlanPhasePercentageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
-            @NoAutoDetect
             class PlanPhaseMinimumAdjustment
-            @JsonCreator
             private constructor(
-                @JsonProperty("id")
-                @ExcludeMissing
-                private val id: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("adjustment_type")
-                @ExcludeMissing
-                private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-                @JsonProperty("is_invoice_level")
-                @ExcludeMissing
-                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-                @JsonProperty("item_id")
-                @ExcludeMissing
-                private val itemId: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
-                private val minimumAmount: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("reason")
-                @ExcludeMissing
-                private val reason: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val id: JsonField<String>,
+                private val adjustmentType: JsonField<AdjustmentType>,
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
+                private val itemId: JsonField<String>,
+                private val minimumAmount: JsonField<String>,
+                private val planPhaseOrder: JsonField<Long>,
+                private val reason: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("adjustment_type")
+                    @ExcludeMissing
+                    adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
+                    @JsonProperty("item_id")
+                    @ExcludeMissing
+                    itemId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("minimum_amount")
+                    @ExcludeMissing
+                    minimumAmount: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("plan_phase_order")
+                    @ExcludeMissing
+                    planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("reason")
+                    @ExcludeMissing
+                    reason: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    id,
+                    adjustmentType,
+                    appliesToPriceIds,
+                    isInvoiceLevel,
+                    itemId,
+                    minimumAmount,
+                    planPhaseOrder,
+                    reason,
+                    mutableMapOf(),
+                )
 
                 /**
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -3634,27 +3776,15 @@ private constructor(
                  */
                 @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): PlanPhaseMinimumAdjustment = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    id()
-                    adjustmentType()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    itemId()
-                    minimumAmount()
-                    planPhaseOrder()
-                    reason()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -3897,8 +4027,26 @@ private constructor(
                             checkRequired("minimumAmount", minimumAmount),
                             checkRequired("planPhaseOrder", planPhaseOrder),
                             checkRequired("reason", reason),
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): PlanPhaseMinimumAdjustment = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    id()
+                    adjustmentType()
+                    appliesToPriceIds()
+                    isInvoiceLevel()
+                    itemId()
+                    minimumAmount()
+                    planPhaseOrder()
+                    reason()
+                    validated = true
                 }
 
                 class AdjustmentType
@@ -4020,34 +4168,49 @@ private constructor(
                     "PlanPhaseMinimumAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
-            @NoAutoDetect
             class PlanPhaseMaximumAdjustment
-            @JsonCreator
             private constructor(
-                @JsonProperty("id")
-                @ExcludeMissing
-                private val id: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("adjustment_type")
-                @ExcludeMissing
-                private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-                @JsonProperty("is_invoice_level")
-                @ExcludeMissing
-                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
-                private val maximumAmount: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("reason")
-                @ExcludeMissing
-                private val reason: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val id: JsonField<String>,
+                private val adjustmentType: JsonField<AdjustmentType>,
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
+                private val maximumAmount: JsonField<String>,
+                private val planPhaseOrder: JsonField<Long>,
+                private val reason: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("adjustment_type")
+                    @ExcludeMissing
+                    adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
+                    @JsonProperty("maximum_amount")
+                    @ExcludeMissing
+                    maximumAmount: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("plan_phase_order")
+                    @ExcludeMissing
+                    planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("reason")
+                    @ExcludeMissing
+                    reason: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    id,
+                    adjustmentType,
+                    appliesToPriceIds,
+                    isInvoiceLevel,
+                    maximumAmount,
+                    planPhaseOrder,
+                    reason,
+                    mutableMapOf(),
+                )
 
                 /**
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -4174,26 +4337,15 @@ private constructor(
                  */
                 @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): PlanPhaseMaximumAdjustment = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    id()
-                    adjustmentType()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    maximumAmount()
-                    planPhaseOrder()
-                    reason()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -4419,8 +4571,25 @@ private constructor(
                             checkRequired("maximumAmount", maximumAmount),
                             checkRequired("planPhaseOrder", planPhaseOrder),
                             checkRequired("reason", reason),
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): PlanPhaseMaximumAdjustment = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    id()
+                    adjustmentType()
+                    appliesToPriceIds()
+                    isInvoiceLevel()
+                    maximumAmount()
+                    planPhaseOrder()
+                    reason()
+                    validated = true
                 }
 
                 class AdjustmentType
@@ -4561,18 +4730,20 @@ private constructor(
             "AdjustmentInterval{id=$id, adjustment=$adjustment, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, endDate=$endDate, startDate=$startDate, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class BillingCycleAnchorConfiguration
-    @JsonCreator
     private constructor(
-        @JsonProperty("day") @ExcludeMissing private val day: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("month")
-        @ExcludeMissing
-        private val month: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("year") @ExcludeMissing private val year: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val day: JsonField<Long>,
+        private val month: JsonField<Long>,
+        private val year: JsonField<Long>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("day") @ExcludeMissing day: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("month") @ExcludeMissing month: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("year") @ExcludeMissing year: JsonField<Long> = JsonMissing.of(),
+        ) : this(day, month, year, mutableMapOf())
 
         /**
          * The day of the month on which the billing cycle is anchored. If the maximum number of
@@ -4624,22 +4795,15 @@ private constructor(
          */
         @JsonProperty("year") @ExcludeMissing fun _year(): JsonField<Long> = year
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): BillingCycleAnchorConfiguration = apply {
-            if (validated) {
-                return@apply
-            }
-
-            day()
-            month()
-            year()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -4771,8 +4935,21 @@ private constructor(
                     checkRequired("day", day),
                     month,
                     year,
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): BillingCycleAnchorConfiguration = apply {
+            if (validated) {
+                return@apply
+            }
+
+            day()
+            month()
+            year()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -4967,31 +5144,46 @@ private constructor(
             }
         }
 
-        @NoAutoDetect
         class AmountDiscountInterval
-        @JsonCreator
         private constructor(
-            @JsonProperty("amount_discount")
-            @ExcludeMissing
-            private val amountDiscount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("applies_to_price_ids")
-            @ExcludeMissing
-            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("applies_to_price_interval_ids")
-            @ExcludeMissing
-            private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("discount_type")
-            @ExcludeMissing
-            private val discountType: JsonField<DiscountType> = JsonMissing.of(),
-            @JsonProperty("end_date")
-            @ExcludeMissing
-            private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("start_date")
-            @ExcludeMissing
-            private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val amountDiscount: JsonField<String>,
+            private val appliesToPriceIds: JsonField<List<String>>,
+            private val appliesToPriceIntervalIds: JsonField<List<String>>,
+            private val discountType: JsonField<DiscountType>,
+            private val endDate: JsonField<OffsetDateTime>,
+            private val startDate: JsonField<OffsetDateTime>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("amount_discount")
+                @ExcludeMissing
+                amountDiscount: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("applies_to_price_interval_ids")
+                @ExcludeMissing
+                appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("discount_type")
+                @ExcludeMissing
+                discountType: JsonField<DiscountType> = JsonMissing.of(),
+                @JsonProperty("end_date")
+                @ExcludeMissing
+                endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+                @JsonProperty("start_date")
+                @ExcludeMissing
+                startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            ) : this(
+                amountDiscount,
+                appliesToPriceIds,
+                appliesToPriceIntervalIds,
+                discountType,
+                endDate,
+                startDate,
+                mutableMapOf(),
+            )
 
             /**
              * Only available if discount_type is `amount`.
@@ -5105,25 +5297,15 @@ private constructor(
             @ExcludeMissing
             fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): AmountDiscountInterval = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                amountDiscount()
-                appliesToPriceIds()
-                appliesToPriceIntervalIds()
-                discountType()
-                endDate()
-                startDate()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -5333,8 +5515,24 @@ private constructor(
                         checkRequired("discountType", discountType),
                         checkRequired("endDate", endDate),
                         checkRequired("startDate", startDate),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): AmountDiscountInterval = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                amountDiscount()
+                appliesToPriceIds()
+                appliesToPriceIntervalIds()
+                discountType()
+                endDate()
+                startDate()
+                validated = true
             }
 
             class DiscountType
@@ -5453,31 +5651,46 @@ private constructor(
                 "AmountDiscountInterval{amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, discountType=$discountType, endDate=$endDate, startDate=$startDate, additionalProperties=$additionalProperties}"
         }
 
-        @NoAutoDetect
         class PercentageDiscountInterval
-        @JsonCreator
         private constructor(
-            @JsonProperty("applies_to_price_ids")
-            @ExcludeMissing
-            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("applies_to_price_interval_ids")
-            @ExcludeMissing
-            private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("discount_type")
-            @ExcludeMissing
-            private val discountType: JsonField<DiscountType> = JsonMissing.of(),
-            @JsonProperty("end_date")
-            @ExcludeMissing
-            private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("percentage_discount")
-            @ExcludeMissing
-            private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("start_date")
-            @ExcludeMissing
-            private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val appliesToPriceIds: JsonField<List<String>>,
+            private val appliesToPriceIntervalIds: JsonField<List<String>>,
+            private val discountType: JsonField<DiscountType>,
+            private val endDate: JsonField<OffsetDateTime>,
+            private val percentageDiscount: JsonField<Double>,
+            private val startDate: JsonField<OffsetDateTime>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("applies_to_price_interval_ids")
+                @ExcludeMissing
+                appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("discount_type")
+                @ExcludeMissing
+                discountType: JsonField<DiscountType> = JsonMissing.of(),
+                @JsonProperty("end_date")
+                @ExcludeMissing
+                endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+                @JsonProperty("percentage_discount")
+                @ExcludeMissing
+                percentageDiscount: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("start_date")
+                @ExcludeMissing
+                startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            ) : this(
+                appliesToPriceIds,
+                appliesToPriceIntervalIds,
+                discountType,
+                endDate,
+                percentageDiscount,
+                startDate,
+                mutableMapOf(),
+            )
 
             /**
              * The price ids that this discount interval applies to.
@@ -5591,25 +5804,15 @@ private constructor(
             @ExcludeMissing
             fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): PercentageDiscountInterval = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                appliesToPriceIds()
-                appliesToPriceIntervalIds()
-                discountType()
-                endDate()
-                percentageDiscount()
-                startDate()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -5823,8 +6026,24 @@ private constructor(
                         checkRequired("endDate", endDate),
                         checkRequired("percentageDiscount", percentageDiscount),
                         checkRequired("startDate", startDate),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): PercentageDiscountInterval = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                appliesToPriceIds()
+                appliesToPriceIntervalIds()
+                discountType()
+                endDate()
+                percentageDiscount()
+                startDate()
+                validated = true
             }
 
             class DiscountType
@@ -5943,31 +6162,46 @@ private constructor(
                 "PercentageDiscountInterval{appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, discountType=$discountType, endDate=$endDate, percentageDiscount=$percentageDiscount, startDate=$startDate, additionalProperties=$additionalProperties}"
         }
 
-        @NoAutoDetect
         class UsageDiscountInterval
-        @JsonCreator
         private constructor(
-            @JsonProperty("applies_to_price_ids")
-            @ExcludeMissing
-            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("applies_to_price_interval_ids")
-            @ExcludeMissing
-            private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("discount_type")
-            @ExcludeMissing
-            private val discountType: JsonField<DiscountType> = JsonMissing.of(),
-            @JsonProperty("end_date")
-            @ExcludeMissing
-            private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("start_date")
-            @ExcludeMissing
-            private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("usage_discount")
-            @ExcludeMissing
-            private val usageDiscount: JsonField<Double> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val appliesToPriceIds: JsonField<List<String>>,
+            private val appliesToPriceIntervalIds: JsonField<List<String>>,
+            private val discountType: JsonField<DiscountType>,
+            private val endDate: JsonField<OffsetDateTime>,
+            private val startDate: JsonField<OffsetDateTime>,
+            private val usageDiscount: JsonField<Double>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("applies_to_price_interval_ids")
+                @ExcludeMissing
+                appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("discount_type")
+                @ExcludeMissing
+                discountType: JsonField<DiscountType> = JsonMissing.of(),
+                @JsonProperty("end_date")
+                @ExcludeMissing
+                endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+                @JsonProperty("start_date")
+                @ExcludeMissing
+                startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+                @JsonProperty("usage_discount")
+                @ExcludeMissing
+                usageDiscount: JsonField<Double> = JsonMissing.of(),
+            ) : this(
+                appliesToPriceIds,
+                appliesToPriceIntervalIds,
+                discountType,
+                endDate,
+                startDate,
+                usageDiscount,
+                mutableMapOf(),
+            )
 
             /**
              * The price ids that this discount interval applies to.
@@ -6082,25 +6316,15 @@ private constructor(
             @ExcludeMissing
             fun _usageDiscount(): JsonField<Double> = usageDiscount
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): UsageDiscountInterval = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                appliesToPriceIds()
-                appliesToPriceIntervalIds()
-                discountType()
-                endDate()
-                startDate()
-                usageDiscount()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -6312,8 +6536,24 @@ private constructor(
                         checkRequired("endDate", endDate),
                         checkRequired("startDate", startDate),
                         checkRequired("usageDiscount", usageDiscount),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): UsageDiscountInterval = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                appliesToPriceIds()
+                appliesToPriceIntervalIds()
+                discountType()
+                endDate()
+                startDate()
+                usageDiscount()
+                validated = true
             }
 
             class DiscountType
@@ -6433,25 +6673,28 @@ private constructor(
         }
     }
 
-    @NoAutoDetect
     class FixedFeeQuantitySchedule
-    @JsonCreator
     private constructor(
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("price_id")
-        @ExcludeMissing
-        private val priceId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("quantity")
-        @ExcludeMissing
-        private val quantity: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val endDate: JsonField<OffsetDateTime>,
+        private val priceId: JsonField<String>,
+        private val quantity: JsonField<Double>,
+        private val startDate: JsonField<OffsetDateTime>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("end_date")
+            @ExcludeMissing
+            endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("price_id") @ExcludeMissing priceId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("quantity")
+            @ExcludeMissing
+            quantity: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("start_date")
+            @ExcludeMissing
+            startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        ) : this(endDate, priceId, quantity, startDate, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -6509,23 +6752,15 @@ private constructor(
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): FixedFeeQuantitySchedule = apply {
-            if (validated) {
-                return@apply
-            }
-
-            endDate()
-            priceId()
-            quantity()
-            startDate()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -6648,8 +6883,22 @@ private constructor(
                     checkRequired("priceId", priceId),
                     checkRequired("quantity", quantity),
                     checkRequired("startDate", startDate),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): FixedFeeQuantitySchedule = apply {
+            if (validated) {
+                return@apply
+            }
+
+            endDate()
+            priceId()
+            quantity()
+            startDate()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -6670,28 +6919,41 @@ private constructor(
             "FixedFeeQuantitySchedule{endDate=$endDate, priceId=$priceId, quantity=$quantity, startDate=$startDate, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class MaximumInterval
-    @JsonCreator
     private constructor(
-        @JsonProperty("applies_to_price_ids")
-        @ExcludeMissing
-        private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("applies_to_price_interval_ids")
-        @ExcludeMissing
-        private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("maximum_amount")
-        @ExcludeMissing
-        private val maximumAmount: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val appliesToPriceIds: JsonField<List<String>>,
+        private val appliesToPriceIntervalIds: JsonField<List<String>>,
+        private val endDate: JsonField<OffsetDateTime>,
+        private val maximumAmount: JsonField<String>,
+        private val startDate: JsonField<OffsetDateTime>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_interval_ids")
+            @ExcludeMissing
+            appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("end_date")
+            @ExcludeMissing
+            endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("start_date")
+            @ExcludeMissing
+            startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        ) : this(
+            appliesToPriceIds,
+            appliesToPriceIntervalIds,
+            endDate,
+            maximumAmount,
+            startDate,
+            mutableMapOf(),
+        )
 
         /**
          * The price ids that this maximum interval applies to.
@@ -6784,24 +7046,15 @@ private constructor(
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): MaximumInterval = apply {
-            if (validated) {
-                return@apply
-            }
-
-            appliesToPriceIds()
-            appliesToPriceIntervalIds()
-            endDate()
-            maximumAmount()
-            startDate()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -6985,8 +7238,23 @@ private constructor(
                     checkRequired("endDate", endDate),
                     checkRequired("maximumAmount", maximumAmount),
                     checkRequired("startDate", startDate),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): MaximumInterval = apply {
+            if (validated) {
+                return@apply
+            }
+
+            appliesToPriceIds()
+            appliesToPriceIntervalIds()
+            endDate()
+            maximumAmount()
+            startDate()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -7012,27 +7280,20 @@ private constructor(
      * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
      * metadata mapping can be cleared by setting `metadata` to `null`.
      */
-    @NoAutoDetect
     class Metadata
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Metadata = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -7075,7 +7336,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+            fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Metadata = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -7095,28 +7366,41 @@ private constructor(
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class MinimumInterval
-    @JsonCreator
     private constructor(
-        @JsonProperty("applies_to_price_ids")
-        @ExcludeMissing
-        private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("applies_to_price_interval_ids")
-        @ExcludeMissing
-        private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("minimum_amount")
-        @ExcludeMissing
-        private val minimumAmount: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val appliesToPriceIds: JsonField<List<String>>,
+        private val appliesToPriceIntervalIds: JsonField<List<String>>,
+        private val endDate: JsonField<OffsetDateTime>,
+        private val minimumAmount: JsonField<String>,
+        private val startDate: JsonField<OffsetDateTime>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_interval_ids")
+            @ExcludeMissing
+            appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("end_date")
+            @ExcludeMissing
+            endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("start_date")
+            @ExcludeMissing
+            startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        ) : this(
+            appliesToPriceIds,
+            appliesToPriceIntervalIds,
+            endDate,
+            minimumAmount,
+            startDate,
+            mutableMapOf(),
+        )
 
         /**
          * The price ids that this minimum interval applies to.
@@ -7209,24 +7493,15 @@ private constructor(
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): MinimumInterval = apply {
-            if (validated) {
-                return@apply
-            }
-
-            appliesToPriceIds()
-            appliesToPriceIntervalIds()
-            endDate()
-            minimumAmount()
-            startDate()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -7410,8 +7685,23 @@ private constructor(
                     checkRequired("endDate", endDate),
                     checkRequired("minimumAmount", minimumAmount),
                     checkRequired("startDate", startDate),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): MinimumInterval = apply {
+            if (validated) {
+                return@apply
+            }
+
+            appliesToPriceIds()
+            appliesToPriceIntervalIds()
+            endDate()
+            minimumAmount()
+            startDate()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -7436,42 +7726,61 @@ private constructor(
      * The Price Interval resource represents a period of time for which a price will bill on a
      * subscription. A subscription’s price intervals define its billing behavior.
      */
-    @NoAutoDetect
     class PriceInterval
-    @JsonCreator
     private constructor(
-        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("billing_cycle_day")
-        @ExcludeMissing
-        private val billingCycleDay: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("current_billing_period_end_date")
-        @ExcludeMissing
-        private val currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("current_billing_period_start_date")
-        @ExcludeMissing
-        private val currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("filter")
-        @ExcludeMissing
-        private val filter: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("fixed_fee_quantity_transitions")
-        @ExcludeMissing
-        private val fixedFeeQuantityTransitions: JsonField<List<FixedFeeQuantityTransition>> =
-            JsonMissing.of(),
-        @JsonProperty("price")
-        @ExcludeMissing
-        private val price: JsonField<Price> = JsonMissing.of(),
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("usage_customer_ids")
-        @ExcludeMissing
-        private val usageCustomerIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val id: JsonField<String>,
+        private val billingCycleDay: JsonField<Long>,
+        private val currentBillingPeriodEndDate: JsonField<OffsetDateTime>,
+        private val currentBillingPeriodStartDate: JsonField<OffsetDateTime>,
+        private val endDate: JsonField<OffsetDateTime>,
+        private val filter: JsonField<String>,
+        private val fixedFeeQuantityTransitions: JsonField<List<FixedFeeQuantityTransition>>,
+        private val price: JsonField<Price>,
+        private val startDate: JsonField<OffsetDateTime>,
+        private val usageCustomerIds: JsonField<List<String>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("billing_cycle_day")
+            @ExcludeMissing
+            billingCycleDay: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("current_billing_period_end_date")
+            @ExcludeMissing
+            currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("current_billing_period_start_date")
+            @ExcludeMissing
+            currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("end_date")
+            @ExcludeMissing
+            endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("filter") @ExcludeMissing filter: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("fixed_fee_quantity_transitions")
+            @ExcludeMissing
+            fixedFeeQuantityTransitions: JsonField<List<FixedFeeQuantityTransition>> =
+                JsonMissing.of(),
+            @JsonProperty("price") @ExcludeMissing price: JsonField<Price> = JsonMissing.of(),
+            @JsonProperty("start_date")
+            @ExcludeMissing
+            startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("usage_customer_ids")
+            @ExcludeMissing
+            usageCustomerIds: JsonField<List<String>> = JsonMissing.of(),
+        ) : this(
+            id,
+            billingCycleDay,
+            currentBillingPeriodEndDate,
+            currentBillingPeriodStartDate,
+            endDate,
+            filter,
+            fixedFeeQuantityTransitions,
+            price,
+            startDate,
+            usageCustomerIds,
+            mutableMapOf(),
+        )
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -7662,29 +7971,15 @@ private constructor(
         @ExcludeMissing
         fun _usageCustomerIds(): JsonField<List<String>> = usageCustomerIds
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): PriceInterval = apply {
-            if (validated) {
-                return@apply
-            }
-
-            id()
-            billingCycleDay()
-            currentBillingPeriodEndDate()
-            currentBillingPeriodStartDate()
-            endDate()
-            filter()
-            fixedFeeQuantityTransitions()?.forEach { it.validate() }
-            price().validate()
-            startDate()
-            usageCustomerIds()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -8133,26 +8428,50 @@ private constructor(
                     checkRequired("price", price),
                     checkRequired("startDate", startDate),
                     checkRequired("usageCustomerIds", usageCustomerIds).map { it.toImmutable() },
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
         }
 
-        @NoAutoDetect
+        private var validated: Boolean = false
+
+        fun validate(): PriceInterval = apply {
+            if (validated) {
+                return@apply
+            }
+
+            id()
+            billingCycleDay()
+            currentBillingPeriodEndDate()
+            currentBillingPeriodStartDate()
+            endDate()
+            filter()
+            fixedFeeQuantityTransitions()?.forEach { it.validate() }
+            price().validate()
+            startDate()
+            usageCustomerIds()
+            validated = true
+        }
+
         class FixedFeeQuantityTransition
-        @JsonCreator
         private constructor(
-            @JsonProperty("effective_date")
-            @ExcludeMissing
-            private val effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("price_id")
-            @ExcludeMissing
-            private val priceId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("quantity")
-            @ExcludeMissing
-            private val quantity: JsonField<Long> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val effectiveDate: JsonField<OffsetDateTime>,
+            private val priceId: JsonField<String>,
+            private val quantity: JsonField<Long>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("effective_date")
+                @ExcludeMissing
+                effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+                @JsonProperty("price_id")
+                @ExcludeMissing
+                priceId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("quantity")
+                @ExcludeMissing
+                quantity: JsonField<Long> = JsonMissing.of(),
+            ) : this(effectiveDate, priceId, quantity, mutableMapOf())
 
             /**
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -8200,22 +8519,15 @@ private constructor(
              */
             @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Long> = quantity
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): FixedFeeQuantityTransition = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                effectiveDate()
-                priceId()
-                quantity()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -8328,8 +8640,21 @@ private constructor(
                         checkRequired("effectiveDate", effectiveDate),
                         checkRequired("priceId", priceId),
                         checkRequired("quantity", quantity),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): FixedFeeQuantityTransition = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                effectiveDate()
+                priceId()
+                quantity()
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -8368,22 +8693,26 @@ private constructor(
             "PriceInterval{id=$id, billingCycleDay=$billingCycleDay, currentBillingPeriodEndDate=$currentBillingPeriodEndDate, currentBillingPeriodStartDate=$currentBillingPeriodStartDate, endDate=$endDate, filter=$filter, fixedFeeQuantityTransitions=$fixedFeeQuantityTransitions, price=$price, startDate=$startDate, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class RedeemedCoupon
-    @JsonCreator
     private constructor(
-        @JsonProperty("coupon_id")
-        @ExcludeMissing
-        private val couponId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val couponId: JsonField<String>,
+        private val endDate: JsonField<OffsetDateTime>,
+        private val startDate: JsonField<OffsetDateTime>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("coupon_id")
+            @ExcludeMissing
+            couponId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("end_date")
+            @ExcludeMissing
+            endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("start_date")
+            @ExcludeMissing
+            startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        ) : this(couponId, endDate, startDate, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -8428,22 +8757,15 @@ private constructor(
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): RedeemedCoupon = apply {
-            if (validated) {
-                return@apply
-            }
-
-            couponId()
-            endDate()
-            startDate()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -8550,8 +8872,21 @@ private constructor(
                     checkRequired("couponId", couponId),
                     checkRequired("endDate", endDate),
                     checkRequired("startDate", startDate),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): RedeemedCoupon = apply {
+            if (validated) {
+                return@apply
+            }
+
+            couponId()
+            endDate()
+            startDate()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -8675,16 +9010,18 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    @NoAutoDetect
     class TrialInfo
-    @JsonCreator
     private constructor(
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val endDate: JsonField<OffsetDateTime>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("end_date")
+            @ExcludeMissing
+            endDate: JsonField<OffsetDateTime> = JsonMissing.of()
+        ) : this(endDate, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -8701,20 +9038,15 @@ private constructor(
         @ExcludeMissing
         fun _endDate(): JsonField<OffsetDateTime> = endDate
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): TrialInfo = apply {
-            if (validated) {
-                return@apply
-            }
-
-            endDate()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -8785,7 +9117,18 @@ private constructor(
              * @throws IllegalStateException if any required field is unset.
              */
             fun build(): TrialInfo =
-                TrialInfo(checkRequired("endDate", endDate), additionalProperties.toImmutable())
+                TrialInfo(checkRequired("endDate", endDate), additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): TrialInfo = apply {
+            if (validated) {
+                return@apply
+            }
+
+            endDate()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

@@ -10,10 +10,8 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.services.async.InvoiceServiceAsync
+import java.util.Collections
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
@@ -92,16 +90,18 @@ private constructor(
         ) = InvoiceListPageAsync(invoicesService, params, response)
     }
 
-    @NoAutoDetect
-    class Response
-    @JsonCreator
-    constructor(
-        @JsonProperty("data") private val data: JsonField<List<Invoice>> = JsonMissing.of(),
-        @JsonProperty("pagination_metadata")
-        private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    class Response(
+        private val data: JsonField<List<Invoice>>,
+        private val paginationMetadata: JsonField<PaginationMetadata>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("data") data: JsonField<List<Invoice>> = JsonMissing.of(),
+            @JsonProperty("pagination_metadata")
+            paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
+        ) : this(data, paginationMetadata, mutableMapOf())
 
         fun data(): List<Invoice> = data.getNullable("data") ?: listOf()
 
@@ -113,9 +113,15 @@ private constructor(
         @JsonProperty("pagination_metadata")
         fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         private var validated: Boolean = false
 
@@ -183,7 +189,7 @@ private constructor(
              * Further updates to this [Builder] will not mutate the returned instance.
              */
             fun build(): Response =
-                Response(data, paginationMetadata, additionalProperties.toImmutable())
+                Response(data, paginationMetadata, additionalProperties.toMutableMap())
         }
     }
 

@@ -11,35 +11,46 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class TrialDiscount
-@JsonCreator
 private constructor(
-    @JsonProperty("applies_to_price_ids")
-    @ExcludeMissing
-    private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("discount_type")
-    @ExcludeMissing
-    private val discountType: JsonField<DiscountType> = JsonMissing.of(),
-    @JsonProperty("reason")
-    @ExcludeMissing
-    private val reason: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("trial_amount_discount")
-    @ExcludeMissing
-    private val trialAmountDiscount: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("trial_percentage_discount")
-    @ExcludeMissing
-    private val trialPercentageDiscount: JsonField<Double> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val appliesToPriceIds: JsonField<List<String>>,
+    private val discountType: JsonField<DiscountType>,
+    private val reason: JsonField<String>,
+    private val trialAmountDiscount: JsonField<String>,
+    private val trialPercentageDiscount: JsonField<Double>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("applies_to_price_ids")
+        @ExcludeMissing
+        appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("discount_type")
+        @ExcludeMissing
+        discountType: JsonField<DiscountType> = JsonMissing.of(),
+        @JsonProperty("reason") @ExcludeMissing reason: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("trial_amount_discount")
+        @ExcludeMissing
+        trialAmountDiscount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("trial_percentage_discount")
+        @ExcludeMissing
+        trialPercentageDiscount: JsonField<Double> = JsonMissing.of(),
+    ) : this(
+        appliesToPriceIds,
+        discountType,
+        reason,
+        trialAmountDiscount,
+        trialPercentageDiscount,
+        mutableMapOf(),
+    )
 
     /**
      * List of price_ids that this discount applies to. For plan/plan phase discounts, this can be a
@@ -125,24 +136,15 @@ private constructor(
     @ExcludeMissing
     fun _trialPercentageDiscount(): JsonField<Double> = trialPercentageDiscount
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): TrialDiscount = apply {
-        if (validated) {
-            return@apply
-        }
-
-        appliesToPriceIds()
-        discountType()
-        reason()
-        trialAmountDiscount()
-        trialPercentageDiscount()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -309,8 +311,23 @@ private constructor(
                 reason,
                 trialAmountDiscount,
                 trialPercentageDiscount,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): TrialDiscount = apply {
+        if (validated) {
+            return@apply
+        }
+
+        appliesToPriceIds()
+        discountType()
+        reason()
+        trialAmountDiscount()
+        trialPercentageDiscount()
+        validated = true
     }
 
     class DiscountType @JsonCreator private constructor(private val value: JsonField<String>) :

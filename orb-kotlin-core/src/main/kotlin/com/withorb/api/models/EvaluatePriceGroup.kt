@@ -19,30 +19,30 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class EvaluatePriceGroup
-@JsonCreator
 private constructor(
-    @JsonProperty("amount")
-    @ExcludeMissing
-    private val amount: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("grouping_values")
-    @ExcludeMissing
-    private val groupingValues: JsonField<List<GroupingValue>> = JsonMissing.of(),
-    @JsonProperty("quantity")
-    @ExcludeMissing
-    private val quantity: JsonField<Double> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val amount: JsonField<String>,
+    private val groupingValues: JsonField<List<GroupingValue>>,
+    private val quantity: JsonField<Double>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("amount") @ExcludeMissing amount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("grouping_values")
+        @ExcludeMissing
+        groupingValues: JsonField<List<GroupingValue>> = JsonMissing.of(),
+        @JsonProperty("quantity") @ExcludeMissing quantity: JsonField<Double> = JsonMissing.of(),
+    ) : this(amount, groupingValues, quantity, mutableMapOf())
 
     /**
      * The price's output for the group
@@ -91,22 +91,15 @@ private constructor(
      */
     @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): EvaluatePriceGroup = apply {
-        if (validated) {
-            return@apply
-        }
-
-        amount()
-        groupingValues().forEach { it.validate() }
-        quantity()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -236,8 +229,21 @@ private constructor(
                 checkRequired("amount", amount),
                 checkRequired("groupingValues", groupingValues).map { it.toImmutable() },
                 checkRequired("quantity", quantity),
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): EvaluatePriceGroup = apply {
+        if (validated) {
+            return@apply
+        }
+
+        amount()
+        groupingValues().forEach { it.validate() }
+        quantity()
+        validated = true
     }
 
     @JsonDeserialize(using = GroupingValue.Deserializer::class)

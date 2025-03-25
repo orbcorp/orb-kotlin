@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
@@ -26,16 +25,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                put("subscription_id", subscriptionId)
-                putAll(additionalQueryParams)
-            }
-            .build()
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -52,7 +41,6 @@ private constructor(
     }
 
     /** A builder for [InvoiceFetchUpcomingParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var subscriptionId: String? = null
@@ -184,6 +172,16 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                put("subscription_id", subscriptionId)
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

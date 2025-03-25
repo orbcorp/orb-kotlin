@@ -10,15 +10,14 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
 /** This endpoint updates the thresholds of an alert. */
@@ -53,169 +52,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> alertConfigurationId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("thresholds")
-        @ExcludeMissing
-        private val thresholds: JsonField<List<Threshold>> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The thresholds that define the values at which the alert will be triggered.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun thresholds(): List<Threshold> = thresholds.getRequired("thresholds")
-
-        /**
-         * Returns the raw JSON value of [thresholds].
-         *
-         * Unlike [thresholds], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("thresholds")
-        @ExcludeMissing
-        fun _thresholds(): JsonField<List<Threshold>> = thresholds
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            thresholds().forEach { it.validate() }
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .thresholds()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var thresholds: JsonField<MutableList<Threshold>>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(body: Body) = apply {
-                thresholds = body.thresholds.map { it.toMutableList() }
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /** The thresholds that define the values at which the alert will be triggered. */
-            fun thresholds(thresholds: List<Threshold>) = thresholds(JsonField.of(thresholds))
-
-            /**
-             * Sets [Builder.thresholds] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.thresholds] with a well-typed `List<Threshold>`
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
-                this.thresholds = thresholds.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [Threshold] to [thresholds].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addThreshold(threshold: Threshold) = apply {
-                thresholds =
-                    (thresholds ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("thresholds", it).add(threshold)
-                    }
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .thresholds()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("thresholds", thresholds).map { it.toImmutable() },
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && thresholds == other.thresholds && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(thresholds, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{thresholds=$thresholds, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -233,7 +69,6 @@ private constructor(
     }
 
     /** A builder for [AlertUpdateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var alertConfigurationId: String? = null
@@ -412,17 +247,188 @@ private constructor(
             )
     }
 
-    /** Thresholds are used to define the conditions under which an alert will be triggered. */
-    @NoAutoDetect
-    class Threshold
-    @JsonCreator
+    internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> alertConfigurationId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
     private constructor(
-        @JsonProperty("value")
-        @ExcludeMissing
-        private val value: JsonField<Double> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val thresholds: JsonField<List<Threshold>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("thresholds")
+            @ExcludeMissing
+            thresholds: JsonField<List<Threshold>> = JsonMissing.of()
+        ) : this(thresholds, mutableMapOf())
+
+        /**
+         * The thresholds that define the values at which the alert will be triggered.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun thresholds(): List<Threshold> = thresholds.getRequired("thresholds")
+
+        /**
+         * Returns the raw JSON value of [thresholds].
+         *
+         * Unlike [thresholds], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("thresholds")
+        @ExcludeMissing
+        fun _thresholds(): JsonField<List<Threshold>> = thresholds
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .thresholds()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var thresholds: JsonField<MutableList<Threshold>>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                thresholds = body.thresholds.map { it.toMutableList() }
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** The thresholds that define the values at which the alert will be triggered. */
+            fun thresholds(thresholds: List<Threshold>) = thresholds(JsonField.of(thresholds))
+
+            /**
+             * Sets [Builder.thresholds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.thresholds] with a well-typed `List<Threshold>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
+                this.thresholds = thresholds.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Threshold] to [thresholds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addThreshold(threshold: Threshold) = apply {
+                thresholds =
+                    (thresholds ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("thresholds", it).add(threshold)
+                    }
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .thresholds()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("thresholds", thresholds).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            thresholds().forEach { it.validate() }
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && thresholds == other.thresholds && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(thresholds, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{thresholds=$thresholds, additionalProperties=$additionalProperties}"
+    }
+
+    /** Thresholds are used to define the conditions under which an alert will be triggered. */
+    class Threshold
+    private constructor(
+        private val value: JsonField<Double>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("value") @ExcludeMissing value: JsonField<Double> = JsonMissing.of()
+        ) : this(value, mutableMapOf())
 
         /**
          * The value at which an alert will fire. For credit balance alerts, the alert will fire at
@@ -441,20 +447,15 @@ private constructor(
          */
         @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Double> = value
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Threshold = apply {
-            if (validated) {
-                return@apply
-            }
-
-            value()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -530,7 +531,18 @@ private constructor(
              * @throws IllegalStateException if any required field is unset.
              */
             fun build(): Threshold =
-                Threshold(checkRequired("value", value), additionalProperties.toImmutable())
+                Threshold(checkRequired("value", value), additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Threshold = apply {
+            if (validated) {
+                return@apply
+            }
+
+            value()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

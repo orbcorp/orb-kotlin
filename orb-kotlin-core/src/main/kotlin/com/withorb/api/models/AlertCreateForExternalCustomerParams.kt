@@ -11,15 +11,14 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
 /**
@@ -91,238 +90,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> externalCustomerId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("currency")
-        @ExcludeMissing
-        private val currency: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
-        @JsonProperty("thresholds")
-        @ExcludeMissing
-        private val thresholds: JsonField<List<Threshold>> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The case sensitive currency or custom pricing unit to use for this alert.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun currency(): String = currency.getRequired("currency")
-
-        /**
-         * The type of alert to create. This must be a valid alert type.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun type(): Type = type.getRequired("type")
-
-        /**
-         * The thresholds that define the values at which the alert will be triggered.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun thresholds(): List<Threshold>? = thresholds.getNullable("thresholds")
-
-        /**
-         * Returns the raw JSON value of [currency].
-         *
-         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
-
-        /**
-         * Returns the raw JSON value of [type].
-         *
-         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
-
-        /**
-         * Returns the raw JSON value of [thresholds].
-         *
-         * Unlike [thresholds], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("thresholds")
-        @ExcludeMissing
-        fun _thresholds(): JsonField<List<Threshold>> = thresholds
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            currency()
-            type()
-            thresholds()?.forEach { it.validate() }
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .currency()
-             * .type()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var currency: JsonField<String>? = null
-            private var type: JsonField<Type>? = null
-            private var thresholds: JsonField<MutableList<Threshold>>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(body: Body) = apply {
-                currency = body.currency
-                type = body.type
-                thresholds = body.thresholds.map { it.toMutableList() }
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /** The case sensitive currency or custom pricing unit to use for this alert. */
-            fun currency(currency: String) = currency(JsonField.of(currency))
-
-            /**
-             * Sets [Builder.currency] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.currency] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
-
-            /** The type of alert to create. This must be a valid alert type. */
-            fun type(type: Type) = type(JsonField.of(type))
-
-            /**
-             * Sets [Builder.type] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
-
-            /** The thresholds that define the values at which the alert will be triggered. */
-            fun thresholds(thresholds: List<Threshold>?) =
-                thresholds(JsonField.ofNullable(thresholds))
-
-            /**
-             * Sets [Builder.thresholds] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.thresholds] with a well-typed `List<Threshold>`
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
-                this.thresholds = thresholds.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [Threshold] to [thresholds].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addThreshold(threshold: Threshold) = apply {
-                thresholds =
-                    (thresholds ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("thresholds", it).add(threshold)
-                    }
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .currency()
-             * .type()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("currency", currency),
-                    checkRequired("type", type),
-                    (thresholds ?: JsonMissing.of()).map { it.toImmutable() },
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && currency == other.currency && type == other.type && thresholds == other.thresholds && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(currency, type, thresholds, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{currency=$currency, type=$type, thresholds=$thresholds, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -342,7 +109,6 @@ private constructor(
     }
 
     /** A builder for [AlertCreateForExternalCustomerParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var externalCustomerId: String? = null
@@ -547,6 +313,248 @@ private constructor(
             )
     }
 
+    internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> externalCustomerId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val currency: JsonField<String>,
+        private val type: JsonField<Type>,
+        private val thresholds: JsonField<List<Threshold>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("currency")
+            @ExcludeMissing
+            currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+            @JsonProperty("thresholds")
+            @ExcludeMissing
+            thresholds: JsonField<List<Threshold>> = JsonMissing.of(),
+        ) : this(currency, type, thresholds, mutableMapOf())
+
+        /**
+         * The case sensitive currency or custom pricing unit to use for this alert.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun currency(): String = currency.getRequired("currency")
+
+        /**
+         * The type of alert to create. This must be a valid alert type.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun type(): Type = type.getRequired("type")
+
+        /**
+         * The thresholds that define the values at which the alert will be triggered.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun thresholds(): List<Threshold>? = thresholds.getNullable("thresholds")
+
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+        /**
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
+
+        /**
+         * Returns the raw JSON value of [thresholds].
+         *
+         * Unlike [thresholds], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("thresholds")
+        @ExcludeMissing
+        fun _thresholds(): JsonField<List<Threshold>> = thresholds
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .currency()
+             * .type()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var currency: JsonField<String>? = null
+            private var type: JsonField<Type>? = null
+            private var thresholds: JsonField<MutableList<Threshold>>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                currency = body.currency
+                type = body.type
+                thresholds = body.thresholds.map { it.toMutableList() }
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** The case sensitive currency or custom pricing unit to use for this alert. */
+            fun currency(currency: String) = currency(JsonField.of(currency))
+
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+            /** The type of alert to create. This must be a valid alert type. */
+            fun type(type: Type) = type(JsonField.of(type))
+
+            /**
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun type(type: JsonField<Type>) = apply { this.type = type }
+
+            /** The thresholds that define the values at which the alert will be triggered. */
+            fun thresholds(thresholds: List<Threshold>?) =
+                thresholds(JsonField.ofNullable(thresholds))
+
+            /**
+             * Sets [Builder.thresholds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.thresholds] with a well-typed `List<Threshold>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
+                this.thresholds = thresholds.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Threshold] to [thresholds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addThreshold(threshold: Threshold) = apply {
+                thresholds =
+                    (thresholds ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("thresholds", it).add(threshold)
+                    }
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .currency()
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("currency", currency),
+                    checkRequired("type", type),
+                    (thresholds ?: JsonMissing.of()).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            currency()
+            type()
+            thresholds()?.forEach { it.validate() }
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && currency == other.currency && type == other.type && thresholds == other.thresholds && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(currency, type, thresholds, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{currency=$currency, type=$type, thresholds=$thresholds, additionalProperties=$additionalProperties}"
+    }
+
     /** The type of alert to create. This must be a valid alert type. */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -652,16 +660,16 @@ private constructor(
     }
 
     /** Thresholds are used to define the conditions under which an alert will be triggered. */
-    @NoAutoDetect
     class Threshold
-    @JsonCreator
     private constructor(
-        @JsonProperty("value")
-        @ExcludeMissing
-        private val value: JsonField<Double> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val value: JsonField<Double>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("value") @ExcludeMissing value: JsonField<Double> = JsonMissing.of()
+        ) : this(value, mutableMapOf())
 
         /**
          * The value at which an alert will fire. For credit balance alerts, the alert will fire at
@@ -680,20 +688,15 @@ private constructor(
          */
         @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Double> = value
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Threshold = apply {
-            if (validated) {
-                return@apply
-            }
-
-            value()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -769,7 +772,18 @@ private constructor(
              * @throws IllegalStateException if any required field is unset.
              */
             fun build(): Threshold =
-                Threshold(checkRequired("value", value), additionalProperties.toImmutable())
+                Threshold(checkRequired("value", value), additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Threshold = apply {
+            if (validated) {
+                return@apply
+            }
+
+            value()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

@@ -10,14 +10,12 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
 /**
@@ -125,336 +123,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> subscriptionId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("auto_collection")
-        @ExcludeMissing
-        private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("default_invoice_memo")
-        @ExcludeMissing
-        private val defaultInvoiceMemo: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("invoicing_threshold")
-        @ExcludeMissing
-        private val invoicingThreshold: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
-        @JsonProperty("net_terms")
-        @ExcludeMissing
-        private val netTerms: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * Determines whether issued invoices for this subscription will automatically be charged
-         * with the saved payment method on the due date. This property defaults to the plan's
-         * behavior.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun autoCollection(): Boolean? = autoCollection.getNullable("auto_collection")
-
-        /**
-         * Determines the default memo on this subscription's invoices. Note that if this is not
-         * provided, it is determined by the plan configuration.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun defaultInvoiceMemo(): String? = defaultInvoiceMemo.getNullable("default_invoice_memo")
-
-        /**
-         * When this subscription's accrued usage reaches this threshold, an invoice will be issued
-         * for the subscription. If not specified, invoices will only be issued at the end of the
-         * billing period.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun invoicingThreshold(): String? = invoicingThreshold.getNullable("invoicing_threshold")
-
-        /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun metadata(): Metadata? = metadata.getNullable("metadata")
-
-        /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of `0` here represents that the invoice is due on issue,
-         * whereas a value of `30` represents that the customer has a month to pay the invoice.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun netTerms(): Long? = netTerms.getNullable("net_terms")
-
-        /**
-         * Returns the raw JSON value of [autoCollection].
-         *
-         * Unlike [autoCollection], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("auto_collection")
-        @ExcludeMissing
-        fun _autoCollection(): JsonField<Boolean> = autoCollection
-
-        /**
-         * Returns the raw JSON value of [defaultInvoiceMemo].
-         *
-         * Unlike [defaultInvoiceMemo], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("default_invoice_memo")
-        @ExcludeMissing
-        fun _defaultInvoiceMemo(): JsonField<String> = defaultInvoiceMemo
-
-        /**
-         * Returns the raw JSON value of [invoicingThreshold].
-         *
-         * Unlike [invoicingThreshold], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("invoicing_threshold")
-        @ExcludeMissing
-        fun _invoicingThreshold(): JsonField<String> = invoicingThreshold
-
-        /**
-         * Returns the raw JSON value of [metadata].
-         *
-         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
-
-        /**
-         * Returns the raw JSON value of [netTerms].
-         *
-         * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            autoCollection()
-            defaultInvoiceMemo()
-            invoicingThreshold()
-            metadata()?.validate()
-            netTerms()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /** Returns a mutable builder for constructing an instance of [Body]. */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var autoCollection: JsonField<Boolean> = JsonMissing.of()
-            private var defaultInvoiceMemo: JsonField<String> = JsonMissing.of()
-            private var invoicingThreshold: JsonField<String> = JsonMissing.of()
-            private var metadata: JsonField<Metadata> = JsonMissing.of()
-            private var netTerms: JsonField<Long> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(body: Body) = apply {
-                autoCollection = body.autoCollection
-                defaultInvoiceMemo = body.defaultInvoiceMemo
-                invoicingThreshold = body.invoicingThreshold
-                metadata = body.metadata
-                netTerms = body.netTerms
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * Determines whether issued invoices for this subscription will automatically be
-             * charged with the saved payment method on the due date. This property defaults to the
-             * plan's behavior.
-             */
-            fun autoCollection(autoCollection: Boolean?) =
-                autoCollection(JsonField.ofNullable(autoCollection))
-
-            /**
-             * Alias for [Builder.autoCollection].
-             *
-             * This unboxed primitive overload exists for backwards compatibility.
-             */
-            fun autoCollection(autoCollection: Boolean) = autoCollection(autoCollection as Boolean?)
-
-            /**
-             * Sets [Builder.autoCollection] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.autoCollection] with a well-typed [Boolean] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
-                this.autoCollection = autoCollection
-            }
-
-            /**
-             * Determines the default memo on this subscription's invoices. Note that if this is not
-             * provided, it is determined by the plan configuration.
-             */
-            fun defaultInvoiceMemo(defaultInvoiceMemo: String?) =
-                defaultInvoiceMemo(JsonField.ofNullable(defaultInvoiceMemo))
-
-            /**
-             * Sets [Builder.defaultInvoiceMemo] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.defaultInvoiceMemo] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun defaultInvoiceMemo(defaultInvoiceMemo: JsonField<String>) = apply {
-                this.defaultInvoiceMemo = defaultInvoiceMemo
-            }
-
-            /**
-             * When this subscription's accrued usage reaches this threshold, an invoice will be
-             * issued for the subscription. If not specified, invoices will only be issued at the
-             * end of the billing period.
-             */
-            fun invoicingThreshold(invoicingThreshold: String?) =
-                invoicingThreshold(JsonField.ofNullable(invoicingThreshold))
-
-            /**
-             * Sets [Builder.invoicingThreshold] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.invoicingThreshold] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun invoicingThreshold(invoicingThreshold: JsonField<String>) = apply {
-                this.invoicingThreshold = invoicingThreshold
-            }
-
-            /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
-             */
-            fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
-
-            /**
-             * Sets [Builder.metadata] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
-
-            /**
-             * Determines the difference between the invoice issue date for subscription invoices as
-             * the date that they are due. A value of `0` here represents that the invoice is due on
-             * issue, whereas a value of `30` represents that the customer has a month to pay the
-             * invoice.
-             */
-            fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
-
-            /**
-             * Alias for [Builder.netTerms].
-             *
-             * This unboxed primitive overload exists for backwards compatibility.
-             */
-            fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
-
-            /**
-             * Sets [Builder.netTerms] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.netTerms] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Body =
-                Body(
-                    autoCollection,
-                    defaultInvoiceMemo,
-                    invoicingThreshold,
-                    metadata,
-                    netTerms,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && autoCollection == other.autoCollection && defaultInvoiceMemo == other.defaultInvoiceMemo && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(autoCollection, defaultInvoiceMemo, invoicingThreshold, metadata, netTerms, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -471,7 +139,6 @@ private constructor(
     }
 
     /** A builder for [SubscriptionUpdateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var subscriptionId: String? = null
@@ -728,32 +395,372 @@ private constructor(
             )
     }
 
+    internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> subscriptionId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val autoCollection: JsonField<Boolean>,
+        private val defaultInvoiceMemo: JsonField<String>,
+        private val invoicingThreshold: JsonField<String>,
+        private val metadata: JsonField<Metadata>,
+        private val netTerms: JsonField<Long>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("auto_collection")
+            @ExcludeMissing
+            autoCollection: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("default_invoice_memo")
+            @ExcludeMissing
+            defaultInvoiceMemo: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("invoicing_threshold")
+            @ExcludeMissing
+            invoicingThreshold: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            metadata: JsonField<Metadata> = JsonMissing.of(),
+            @JsonProperty("net_terms") @ExcludeMissing netTerms: JsonField<Long> = JsonMissing.of(),
+        ) : this(
+            autoCollection,
+            defaultInvoiceMemo,
+            invoicingThreshold,
+            metadata,
+            netTerms,
+            mutableMapOf(),
+        )
+
+        /**
+         * Determines whether issued invoices for this subscription will automatically be charged
+         * with the saved payment method on the due date. This property defaults to the plan's
+         * behavior.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun autoCollection(): Boolean? = autoCollection.getNullable("auto_collection")
+
+        /**
+         * Determines the default memo on this subscription's invoices. Note that if this is not
+         * provided, it is determined by the plan configuration.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun defaultInvoiceMemo(): String? = defaultInvoiceMemo.getNullable("default_invoice_memo")
+
+        /**
+         * When this subscription's accrued usage reaches this threshold, an invoice will be issued
+         * for the subscription. If not specified, invoices will only be issued at the end of the
+         * billing period.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun invoicingThreshold(): String? = invoicingThreshold.getNullable("invoicing_threshold")
+
+        /**
+         * User-specified key/value pairs for the resource. Individual keys can be removed by
+         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
+         * `metadata` to `null`.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+        /**
+         * Determines the difference between the invoice issue date for subscription invoices as the
+         * date that they are due. A value of `0` here represents that the invoice is due on issue,
+         * whereas a value of `30` represents that the customer has a month to pay the invoice.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun netTerms(): Long? = netTerms.getNullable("net_terms")
+
+        /**
+         * Returns the raw JSON value of [autoCollection].
+         *
+         * Unlike [autoCollection], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("auto_collection")
+        @ExcludeMissing
+        fun _autoCollection(): JsonField<Boolean> = autoCollection
+
+        /**
+         * Returns the raw JSON value of [defaultInvoiceMemo].
+         *
+         * Unlike [defaultInvoiceMemo], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("default_invoice_memo")
+        @ExcludeMissing
+        fun _defaultInvoiceMemo(): JsonField<String> = defaultInvoiceMemo
+
+        /**
+         * Returns the raw JSON value of [invoicingThreshold].
+         *
+         * Unlike [invoicingThreshold], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("invoicing_threshold")
+        @ExcludeMissing
+        fun _invoicingThreshold(): JsonField<String> = invoicingThreshold
+
+        /**
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
+
+        /**
+         * Returns the raw JSON value of [netTerms].
+         *
+         * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Body]. */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var autoCollection: JsonField<Boolean> = JsonMissing.of()
+            private var defaultInvoiceMemo: JsonField<String> = JsonMissing.of()
+            private var invoicingThreshold: JsonField<String> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var netTerms: JsonField<Long> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                autoCollection = body.autoCollection
+                defaultInvoiceMemo = body.defaultInvoiceMemo
+                invoicingThreshold = body.invoicingThreshold
+                metadata = body.metadata
+                netTerms = body.netTerms
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * Determines whether issued invoices for this subscription will automatically be
+             * charged with the saved payment method on the due date. This property defaults to the
+             * plan's behavior.
+             */
+            fun autoCollection(autoCollection: Boolean?) =
+                autoCollection(JsonField.ofNullable(autoCollection))
+
+            /**
+             * Alias for [Builder.autoCollection].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun autoCollection(autoCollection: Boolean) = autoCollection(autoCollection as Boolean?)
+
+            /**
+             * Sets [Builder.autoCollection] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.autoCollection] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
+                this.autoCollection = autoCollection
+            }
+
+            /**
+             * Determines the default memo on this subscription's invoices. Note that if this is not
+             * provided, it is determined by the plan configuration.
+             */
+            fun defaultInvoiceMemo(defaultInvoiceMemo: String?) =
+                defaultInvoiceMemo(JsonField.ofNullable(defaultInvoiceMemo))
+
+            /**
+             * Sets [Builder.defaultInvoiceMemo] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.defaultInvoiceMemo] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun defaultInvoiceMemo(defaultInvoiceMemo: JsonField<String>) = apply {
+                this.defaultInvoiceMemo = defaultInvoiceMemo
+            }
+
+            /**
+             * When this subscription's accrued usage reaches this threshold, an invoice will be
+             * issued for the subscription. If not specified, invoices will only be issued at the
+             * end of the billing period.
+             */
+            fun invoicingThreshold(invoicingThreshold: String?) =
+                invoicingThreshold(JsonField.ofNullable(invoicingThreshold))
+
+            /**
+             * Sets [Builder.invoicingThreshold] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.invoicingThreshold] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun invoicingThreshold(invoicingThreshold: JsonField<String>) = apply {
+                this.invoicingThreshold = invoicingThreshold
+            }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+            /**
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+            /**
+             * Determines the difference between the invoice issue date for subscription invoices as
+             * the date that they are due. A value of `0` here represents that the invoice is due on
+             * issue, whereas a value of `30` represents that the customer has a month to pay the
+             * invoice.
+             */
+            fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
+
+            /**
+             * Alias for [Builder.netTerms].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
+
+            /**
+             * Sets [Builder.netTerms] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.netTerms] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Body =
+                Body(
+                    autoCollection,
+                    defaultInvoiceMemo,
+                    invoicingThreshold,
+                    metadata,
+                    netTerms,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            autoCollection()
+            defaultInvoiceMemo()
+            invoicingThreshold()
+            metadata()?.validate()
+            netTerms()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && autoCollection == other.autoCollection && defaultInvoiceMemo == other.defaultInvoiceMemo && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(autoCollection, defaultInvoiceMemo, invoicingThreshold, metadata, netTerms, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalProperties=$additionalProperties}"
+    }
+
     /**
      * User-specified key/value pairs for the resource. Individual keys can be removed by setting
      * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
      * `null`.
      */
-    @NoAutoDetect
     class Metadata
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Metadata = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -796,7 +803,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+            fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Metadata = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

@@ -10,24 +10,24 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class EventVolumes
-@JsonCreator
 private constructor(
-    @JsonProperty("data")
-    @ExcludeMissing
-    private val data: JsonField<List<Data>> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val data: JsonField<List<Data>>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("data") @ExcludeMissing data: JsonField<List<Data>> = JsonMissing.of()
+    ) : this(data, mutableMapOf())
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -42,20 +42,15 @@ private constructor(
      */
     @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Data>> = data
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): EventVolumes = apply {
-        if (validated) {
-            return@apply
-        }
-
-        data().forEach { it.validate() }
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -141,30 +136,43 @@ private constructor(
         fun build(): EventVolumes =
             EventVolumes(
                 checkRequired("data", data).map { it.toImmutable() },
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): EventVolumes = apply {
+        if (validated) {
+            return@apply
+        }
+
+        data().forEach { it.validate() }
+        validated = true
     }
 
     /**
      * An EventVolume contains the event volume ingested in an hourly window. The timestamp used for
      * the aggregation is the `timestamp` datetime field on events.
      */
-    @NoAutoDetect
     class Data
-    @JsonCreator
     private constructor(
-        @JsonProperty("count")
-        @ExcludeMissing
-        private val count: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("timeframe_end")
-        @ExcludeMissing
-        private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("timeframe_start")
-        @ExcludeMissing
-        private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val count: JsonField<Long>,
+        private val timeframeEnd: JsonField<OffsetDateTime>,
+        private val timeframeStart: JsonField<OffsetDateTime>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("count") @ExcludeMissing count: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("timeframe_end")
+            @ExcludeMissing
+            timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("timeframe_start")
+            @ExcludeMissing
+            timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
+        ) : this(count, timeframeEnd, timeframeStart, mutableMapOf())
 
         /**
          * The number of events ingested with a timestamp between the timeframe
@@ -213,22 +221,15 @@ private constructor(
         @ExcludeMissing
         fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Data = apply {
-            if (validated) {
-                return@apply
-            }
-
-            count()
-            timeframeEnd()
-            timeframeStart()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -340,8 +341,21 @@ private constructor(
                     checkRequired("count", count),
                     checkRequired("timeframeEnd", timeframeEnd),
                     checkRequired("timeframeStart", timeframeStart),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Data = apply {
+            if (validated) {
+                return@apply
+            }
+
+            count()
+            timeframeEnd()
+            timeframeStart()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

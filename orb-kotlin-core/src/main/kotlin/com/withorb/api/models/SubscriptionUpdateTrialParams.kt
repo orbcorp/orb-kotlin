@@ -20,16 +20,14 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
 /**
@@ -98,213 +96,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> subscriptionId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("trial_end_date")
-        @ExcludeMissing
-        private val trialEndDate: JsonField<TrialEndDate> = JsonMissing.of(),
-        @JsonProperty("shift")
-        @ExcludeMissing
-        private val shift: JsonField<Boolean> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The new date that the trial should end, or the literal string `immediate` to end the
-         * trial immediately.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun trialEndDate(): TrialEndDate = trialEndDate.getRequired("trial_end_date")
-
-        /**
-         * If true, shifts subsequent price and adjustment intervals (preserving their durations,
-         * but adjusting their absolute dates).
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun shift(): Boolean? = shift.getNullable("shift")
-
-        /**
-         * Returns the raw JSON value of [trialEndDate].
-         *
-         * Unlike [trialEndDate], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("trial_end_date")
-        @ExcludeMissing
-        fun _trialEndDate(): JsonField<TrialEndDate> = trialEndDate
-
-        /**
-         * Returns the raw JSON value of [shift].
-         *
-         * Unlike [shift], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("shift") @ExcludeMissing fun _shift(): JsonField<Boolean> = shift
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            trialEndDate().validate()
-            shift()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .trialEndDate()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var trialEndDate: JsonField<TrialEndDate>? = null
-            private var shift: JsonField<Boolean> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(body: Body) = apply {
-                trialEndDate = body.trialEndDate
-                shift = body.shift
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * The new date that the trial should end, or the literal string `immediate` to end the
-             * trial immediately.
-             */
-            fun trialEndDate(trialEndDate: TrialEndDate) = trialEndDate(JsonField.of(trialEndDate))
-
-            /**
-             * Sets [Builder.trialEndDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.trialEndDate] with a well-typed [TrialEndDate] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun trialEndDate(trialEndDate: JsonField<TrialEndDate>) = apply {
-                this.trialEndDate = trialEndDate
-            }
-
-            /**
-             * Alias for calling [trialEndDate] with
-             * `TrialEndDate.ofOffsetDateTime(offsetDateTime)`.
-             */
-            fun trialEndDate(offsetDateTime: OffsetDateTime) =
-                trialEndDate(TrialEndDate.ofOffsetDateTime(offsetDateTime))
-
-            /**
-             * Alias for calling [trialEndDate] with `TrialEndDate.ofUnionMember1(unionMember1)`.
-             */
-            fun trialEndDate(unionMember1: TrialEndDate.UnionMember1) =
-                trialEndDate(TrialEndDate.ofUnionMember1(unionMember1))
-
-            /**
-             * If true, shifts subsequent price and adjustment intervals (preserving their
-             * durations, but adjusting their absolute dates).
-             */
-            fun shift(shift: Boolean) = shift(JsonField.of(shift))
-
-            /**
-             * Sets [Builder.shift] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.shift] with a well-typed [Boolean] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun shift(shift: JsonField<Boolean>) = apply { this.shift = shift }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .trialEndDate()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("trialEndDate", trialEndDate),
-                    shift,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && trialEndDate == other.trialEndDate && shift == other.shift && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(trialEndDate, shift, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{trialEndDate=$trialEndDate, shift=$shift, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -323,7 +114,6 @@ private constructor(
     }
 
     /** A builder for [SubscriptionUpdateTrialParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var subscriptionId: String? = null
@@ -520,6 +310,220 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> subscriptionId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val trialEndDate: JsonField<TrialEndDate>,
+        private val shift: JsonField<Boolean>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("trial_end_date")
+            @ExcludeMissing
+            trialEndDate: JsonField<TrialEndDate> = JsonMissing.of(),
+            @JsonProperty("shift") @ExcludeMissing shift: JsonField<Boolean> = JsonMissing.of(),
+        ) : this(trialEndDate, shift, mutableMapOf())
+
+        /**
+         * The new date that the trial should end, or the literal string `immediate` to end the
+         * trial immediately.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun trialEndDate(): TrialEndDate = trialEndDate.getRequired("trial_end_date")
+
+        /**
+         * If true, shifts subsequent price and adjustment intervals (preserving their durations,
+         * but adjusting their absolute dates).
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun shift(): Boolean? = shift.getNullable("shift")
+
+        /**
+         * Returns the raw JSON value of [trialEndDate].
+         *
+         * Unlike [trialEndDate], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("trial_end_date")
+        @ExcludeMissing
+        fun _trialEndDate(): JsonField<TrialEndDate> = trialEndDate
+
+        /**
+         * Returns the raw JSON value of [shift].
+         *
+         * Unlike [shift], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("shift") @ExcludeMissing fun _shift(): JsonField<Boolean> = shift
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .trialEndDate()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var trialEndDate: JsonField<TrialEndDate>? = null
+            private var shift: JsonField<Boolean> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                trialEndDate = body.trialEndDate
+                shift = body.shift
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * The new date that the trial should end, or the literal string `immediate` to end the
+             * trial immediately.
+             */
+            fun trialEndDate(trialEndDate: TrialEndDate) = trialEndDate(JsonField.of(trialEndDate))
+
+            /**
+             * Sets [Builder.trialEndDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.trialEndDate] with a well-typed [TrialEndDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun trialEndDate(trialEndDate: JsonField<TrialEndDate>) = apply {
+                this.trialEndDate = trialEndDate
+            }
+
+            /**
+             * Alias for calling [trialEndDate] with
+             * `TrialEndDate.ofOffsetDateTime(offsetDateTime)`.
+             */
+            fun trialEndDate(offsetDateTime: OffsetDateTime) =
+                trialEndDate(TrialEndDate.ofOffsetDateTime(offsetDateTime))
+
+            /**
+             * Alias for calling [trialEndDate] with `TrialEndDate.ofUnionMember1(unionMember1)`.
+             */
+            fun trialEndDate(unionMember1: TrialEndDate.UnionMember1) =
+                trialEndDate(TrialEndDate.ofUnionMember1(unionMember1))
+
+            /**
+             * If true, shifts subsequent price and adjustment intervals (preserving their
+             * durations, but adjusting their absolute dates).
+             */
+            fun shift(shift: Boolean) = shift(JsonField.of(shift))
+
+            /**
+             * Sets [Builder.shift] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.shift] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun shift(shift: JsonField<Boolean>) = apply { this.shift = shift }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .trialEndDate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("trialEndDate", trialEndDate),
+                    shift,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            trialEndDate().validate()
+            shift()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && trialEndDate == other.trialEndDate && shift == other.shift && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(trialEndDate, shift, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{trialEndDate=$trialEndDate, shift=$shift, additionalProperties=$additionalProperties}"
     }
 
     /**
