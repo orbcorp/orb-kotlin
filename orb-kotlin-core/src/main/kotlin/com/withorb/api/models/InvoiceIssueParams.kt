@@ -10,14 +10,12 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
 /**
@@ -61,148 +59,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> invoiceId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("synchronous")
-        @ExcludeMissing
-        private val synchronous: JsonField<Boolean> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * If true, the invoice will be issued synchronously. If false, the invoice will be issued
-         * asynchronously. The synchronous option is only available for invoices that have no usage
-         * fees. If the invoice is configured to sync to an external provider, a successful response
-         * from this endpoint guarantees the invoice is present in the provider.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun synchronous(): Boolean? = synchronous.getNullable("synchronous")
-
-        /**
-         * Returns the raw JSON value of [synchronous].
-         *
-         * Unlike [synchronous], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("synchronous")
-        @ExcludeMissing
-        fun _synchronous(): JsonField<Boolean> = synchronous
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            synchronous()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /** Returns a mutable builder for constructing an instance of [Body]. */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var synchronous: JsonField<Boolean> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(body: Body) = apply {
-                synchronous = body.synchronous
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * If true, the invoice will be issued synchronously. If false, the invoice will be
-             * issued asynchronously. The synchronous option is only available for invoices that
-             * have no usage fees. If the invoice is configured to sync to an external provider, a
-             * successful response from this endpoint guarantees the invoice is present in the
-             * provider.
-             */
-            fun synchronous(synchronous: Boolean) = synchronous(JsonField.of(synchronous))
-
-            /**
-             * Sets [Builder.synchronous] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.synchronous] with a well-typed [Boolean] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun synchronous(synchronous: JsonField<Boolean>) = apply {
-                this.synchronous = synchronous
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Body = Body(synchronous, additionalProperties.toImmutable())
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && synchronous == other.synchronous && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(synchronous, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{synchronous=$synchronous, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -219,7 +75,6 @@ private constructor(
     }
 
     /** A builder for [InvoiceIssueParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var invoiceId: String? = null
@@ -389,6 +244,156 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> invoiceId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val synchronous: JsonField<Boolean>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("synchronous")
+            @ExcludeMissing
+            synchronous: JsonField<Boolean> = JsonMissing.of()
+        ) : this(synchronous, mutableMapOf())
+
+        /**
+         * If true, the invoice will be issued synchronously. If false, the invoice will be issued
+         * asynchronously. The synchronous option is only available for invoices that have no usage
+         * fees. If the invoice is configured to sync to an external provider, a successful response
+         * from this endpoint guarantees the invoice is present in the provider.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun synchronous(): Boolean? = synchronous.getNullable("synchronous")
+
+        /**
+         * Returns the raw JSON value of [synchronous].
+         *
+         * Unlike [synchronous], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("synchronous")
+        @ExcludeMissing
+        fun _synchronous(): JsonField<Boolean> = synchronous
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Body]. */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var synchronous: JsonField<Boolean> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                synchronous = body.synchronous
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * If true, the invoice will be issued synchronously. If false, the invoice will be
+             * issued asynchronously. The synchronous option is only available for invoices that
+             * have no usage fees. If the invoice is configured to sync to an external provider, a
+             * successful response from this endpoint guarantees the invoice is present in the
+             * provider.
+             */
+            fun synchronous(synchronous: Boolean) = synchronous(JsonField.of(synchronous))
+
+            /**
+             * Sets [Builder.synchronous] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.synchronous] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun synchronous(synchronous: JsonField<Boolean>) = apply {
+                this.synchronous = synchronous
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Body = Body(synchronous, additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            synchronous()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && synchronous == other.synchronous && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(synchronous, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{synchronous=$synchronous, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

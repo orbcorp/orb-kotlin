@@ -10,15 +10,13 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.LocalDate
+import java.util.Collections
 import java.util.Objects
 
 /** Manually trigger a phase, effective the given date (or the current time, if not specified). */
@@ -72,200 +70,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> subscriptionId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("allow_invoice_credit_or_void")
-        @ExcludeMissing
-        private val allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("effective_date")
-        @ExcludeMissing
-        private val effectiveDate: JsonField<LocalDate> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * If false, this request will fail if it would void an issued invoice or create a credit
-         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
-         * be changed.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun allowInvoiceCreditOrVoid(): Boolean? =
-            allowInvoiceCreditOrVoid.getNullable("allow_invoice_credit_or_void")
-
-        /**
-         * The date on which the phase change should take effect. If not provided, defaults to today
-         * in the customer's timezone.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun effectiveDate(): LocalDate? = effectiveDate.getNullable("effective_date")
-
-        /**
-         * Returns the raw JSON value of [allowInvoiceCreditOrVoid].
-         *
-         * Unlike [allowInvoiceCreditOrVoid], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("allow_invoice_credit_or_void")
-        @ExcludeMissing
-        fun _allowInvoiceCreditOrVoid(): JsonField<Boolean> = allowInvoiceCreditOrVoid
-
-        /**
-         * Returns the raw JSON value of [effectiveDate].
-         *
-         * Unlike [effectiveDate], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("effective_date")
-        @ExcludeMissing
-        fun _effectiveDate(): JsonField<LocalDate> = effectiveDate
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            allowInvoiceCreditOrVoid()
-            effectiveDate()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /** Returns a mutable builder for constructing an instance of [Body]. */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of()
-            private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(body: Body) = apply {
-                allowInvoiceCreditOrVoid = body.allowInvoiceCreditOrVoid
-                effectiveDate = body.effectiveDate
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * If false, this request will fail if it would void an issued invoice or create a
-             * credit note. Consider using this as a safety mechanism if you do not expect existing
-             * invoices to be changed.
-             */
-            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean?) =
-                allowInvoiceCreditOrVoid(JsonField.ofNullable(allowInvoiceCreditOrVoid))
-
-            /**
-             * Alias for [Builder.allowInvoiceCreditOrVoid].
-             *
-             * This unboxed primitive overload exists for backwards compatibility.
-             */
-            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean) =
-                allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid as Boolean?)
-
-            /**
-             * Sets [Builder.allowInvoiceCreditOrVoid] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.allowInvoiceCreditOrVoid] with a well-typed
-             * [Boolean] value instead. This method is primarily for setting the field to an
-             * undocumented or not yet supported value.
-             */
-            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: JsonField<Boolean>) = apply {
-                this.allowInvoiceCreditOrVoid = allowInvoiceCreditOrVoid
-            }
-
-            /**
-             * The date on which the phase change should take effect. If not provided, defaults to
-             * today in the customer's timezone.
-             */
-            fun effectiveDate(effectiveDate: LocalDate?) =
-                effectiveDate(JsonField.ofNullable(effectiveDate))
-
-            /**
-             * Sets [Builder.effectiveDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.effectiveDate] with a well-typed [LocalDate] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun effectiveDate(effectiveDate: JsonField<LocalDate>) = apply {
-                this.effectiveDate = effectiveDate
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Body =
-                Body(allowInvoiceCreditOrVoid, effectiveDate, additionalProperties.toImmutable())
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && effectiveDate == other.effectiveDate && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(allowInvoiceCreditOrVoid, effectiveDate, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -283,7 +87,6 @@ private constructor(
     }
 
     /** A builder for [SubscriptionTriggerPhaseParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var subscriptionId: String? = null
@@ -481,6 +284,209 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> subscriptionId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val allowInvoiceCreditOrVoid: JsonField<Boolean>,
+        private val effectiveDate: JsonField<LocalDate>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("allow_invoice_credit_or_void")
+            @ExcludeMissing
+            allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("effective_date")
+            @ExcludeMissing
+            effectiveDate: JsonField<LocalDate> = JsonMissing.of(),
+        ) : this(allowInvoiceCreditOrVoid, effectiveDate, mutableMapOf())
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun allowInvoiceCreditOrVoid(): Boolean? =
+            allowInvoiceCreditOrVoid.getNullable("allow_invoice_credit_or_void")
+
+        /**
+         * The date on which the phase change should take effect. If not provided, defaults to today
+         * in the customer's timezone.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun effectiveDate(): LocalDate? = effectiveDate.getNullable("effective_date")
+
+        /**
+         * Returns the raw JSON value of [allowInvoiceCreditOrVoid].
+         *
+         * Unlike [allowInvoiceCreditOrVoid], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("allow_invoice_credit_or_void")
+        @ExcludeMissing
+        fun _allowInvoiceCreditOrVoid(): JsonField<Boolean> = allowInvoiceCreditOrVoid
+
+        /**
+         * Returns the raw JSON value of [effectiveDate].
+         *
+         * Unlike [effectiveDate], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("effective_date")
+        @ExcludeMissing
+        fun _effectiveDate(): JsonField<LocalDate> = effectiveDate
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Body]. */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of()
+            private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                allowInvoiceCreditOrVoid = body.allowInvoiceCreditOrVoid
+                effectiveDate = body.effectiveDate
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean?) =
+                allowInvoiceCreditOrVoid(JsonField.ofNullable(allowInvoiceCreditOrVoid))
+
+            /**
+             * Alias for [Builder.allowInvoiceCreditOrVoid].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean) =
+                allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid as Boolean?)
+
+            /**
+             * Sets [Builder.allowInvoiceCreditOrVoid] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.allowInvoiceCreditOrVoid] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: JsonField<Boolean>) = apply {
+                this.allowInvoiceCreditOrVoid = allowInvoiceCreditOrVoid
+            }
+
+            /**
+             * The date on which the phase change should take effect. If not provided, defaults to
+             * today in the customer's timezone.
+             */
+            fun effectiveDate(effectiveDate: LocalDate?) =
+                effectiveDate(JsonField.ofNullable(effectiveDate))
+
+            /**
+             * Sets [Builder.effectiveDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.effectiveDate] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun effectiveDate(effectiveDate: JsonField<LocalDate>) = apply {
+                this.effectiveDate = effectiveDate
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Body =
+                Body(allowInvoiceCreditOrVoid, effectiveDate, additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            allowInvoiceCreditOrVoid()
+            effectiveDate()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && effectiveDate == other.effectiveDate && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(allowInvoiceCreditOrVoid, effectiveDate, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

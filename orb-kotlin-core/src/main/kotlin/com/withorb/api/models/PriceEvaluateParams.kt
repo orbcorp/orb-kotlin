@@ -10,16 +10,15 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
 /**
@@ -150,372 +149,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> priceId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("timeframe_end")
-        @ExcludeMissing
-        private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("timeframe_start")
-        @ExcludeMissing
-        private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("customer_id")
-        @ExcludeMissing
-        private val customerId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
-        private val externalCustomerId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("filter")
-        @ExcludeMissing
-        private val filter: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("grouping_keys")
-        @ExcludeMissing
-        private val groupingKeys: JsonField<List<String>> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The exclusive upper bound for event timestamps
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
-
-        /**
-         * The inclusive lower bound for event timestamps
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
-
-        /**
-         * The ID of the customer to which this evaluation is scoped.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun customerId(): String? = customerId.getNullable("customer_id")
-
-        /**
-         * The external customer ID of the customer to which this evaluation is scoped.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
-
-        /**
-         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
-         * to filter the underlying billable metric
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun filter(): String? = filter.getNullable("filter")
-
-        /**
-         * Properties (or
-         * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to group
-         * the underlying billable metric
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun groupingKeys(): List<String>? = groupingKeys.getNullable("grouping_keys")
-
-        /**
-         * Returns the raw JSON value of [timeframeEnd].
-         *
-         * Unlike [timeframeEnd], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("timeframe_end")
-        @ExcludeMissing
-        fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
-
-        /**
-         * Returns the raw JSON value of [timeframeStart].
-         *
-         * Unlike [timeframeStart], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("timeframe_start")
-        @ExcludeMissing
-        fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
-
-        /**
-         * Returns the raw JSON value of [customerId].
-         *
-         * Unlike [customerId], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("customer_id")
-        @ExcludeMissing
-        fun _customerId(): JsonField<String> = customerId
-
-        /**
-         * Returns the raw JSON value of [externalCustomerId].
-         *
-         * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
-        fun _externalCustomerId(): JsonField<String> = externalCustomerId
-
-        /**
-         * Returns the raw JSON value of [filter].
-         *
-         * Unlike [filter], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("filter") @ExcludeMissing fun _filter(): JsonField<String> = filter
-
-        /**
-         * Returns the raw JSON value of [groupingKeys].
-         *
-         * Unlike [groupingKeys], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("grouping_keys")
-        @ExcludeMissing
-        fun _groupingKeys(): JsonField<List<String>> = groupingKeys
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            timeframeEnd()
-            timeframeStart()
-            customerId()
-            externalCustomerId()
-            filter()
-            groupingKeys()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .timeframeEnd()
-             * .timeframeStart()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var timeframeEnd: JsonField<OffsetDateTime>? = null
-            private var timeframeStart: JsonField<OffsetDateTime>? = null
-            private var customerId: JsonField<String> = JsonMissing.of()
-            private var externalCustomerId: JsonField<String> = JsonMissing.of()
-            private var filter: JsonField<String> = JsonMissing.of()
-            private var groupingKeys: JsonField<MutableList<String>>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(body: Body) = apply {
-                timeframeEnd = body.timeframeEnd
-                timeframeStart = body.timeframeStart
-                customerId = body.customerId
-                externalCustomerId = body.externalCustomerId
-                filter = body.filter
-                groupingKeys = body.groupingKeys.map { it.toMutableList() }
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /** The exclusive upper bound for event timestamps */
-            fun timeframeEnd(timeframeEnd: OffsetDateTime) =
-                timeframeEnd(JsonField.of(timeframeEnd))
-
-            /**
-             * Sets [Builder.timeframeEnd] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.timeframeEnd] with a well-typed [OffsetDateTime]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
-                this.timeframeEnd = timeframeEnd
-            }
-
-            /** The inclusive lower bound for event timestamps */
-            fun timeframeStart(timeframeStart: OffsetDateTime) =
-                timeframeStart(JsonField.of(timeframeStart))
-
-            /**
-             * Sets [Builder.timeframeStart] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.timeframeStart] with a well-typed [OffsetDateTime]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
-                this.timeframeStart = timeframeStart
-            }
-
-            /** The ID of the customer to which this evaluation is scoped. */
-            fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
-
-            /**
-             * Sets [Builder.customerId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.customerId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
-
-            /** The external customer ID of the customer to which this evaluation is scoped. */
-            fun externalCustomerId(externalCustomerId: String?) =
-                externalCustomerId(JsonField.ofNullable(externalCustomerId))
-
-            /**
-             * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
-                this.externalCustomerId = externalCustomerId
-            }
-
-            /**
-             * A boolean [computed property](/extensibility/advanced-metrics#computed-properties)
-             * used to filter the underlying billable metric
-             */
-            fun filter(filter: String?) = filter(JsonField.ofNullable(filter))
-
-            /**
-             * Sets [Builder.filter] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.filter] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun filter(filter: JsonField<String>) = apply { this.filter = filter }
-
-            /**
-             * Properties (or
-             * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to
-             * group the underlying billable metric
-             */
-            fun groupingKeys(groupingKeys: List<String>) = groupingKeys(JsonField.of(groupingKeys))
-
-            /**
-             * Sets [Builder.groupingKeys] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.groupingKeys] with a well-typed `List<String>` value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun groupingKeys(groupingKeys: JsonField<List<String>>) = apply {
-                this.groupingKeys = groupingKeys.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [String] to [groupingKeys].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addGroupingKey(groupingKey: String) = apply {
-                groupingKeys =
-                    (groupingKeys ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("groupingKeys", it).add(groupingKey)
-                    }
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .timeframeEnd()
-             * .timeframeStart()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("timeframeEnd", timeframeEnd),
-                    checkRequired("timeframeStart", timeframeStart),
-                    customerId,
-                    externalCustomerId,
-                    filter,
-                    (groupingKeys ?: JsonMissing.of()).map { it.toImmutable() },
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && customerId == other.customerId && externalCustomerId == other.externalCustomerId && filter == other.filter && groupingKeys == other.groupingKeys && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(timeframeEnd, timeframeStart, customerId, externalCustomerId, filter, groupingKeys, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, customerId=$customerId, externalCustomerId=$externalCustomerId, filter=$filter, groupingKeys=$groupingKeys, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -534,7 +167,6 @@ private constructor(
     }
 
     /** A builder for [PriceEvaluateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var priceId: String? = null
@@ -786,6 +418,391 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> priceId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val timeframeEnd: JsonField<OffsetDateTime>,
+        private val timeframeStart: JsonField<OffsetDateTime>,
+        private val customerId: JsonField<String>,
+        private val externalCustomerId: JsonField<String>,
+        private val filter: JsonField<String>,
+        private val groupingKeys: JsonField<List<String>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("timeframe_end")
+            @ExcludeMissing
+            timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("timeframe_start")
+            @ExcludeMissing
+            timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("customer_id")
+            @ExcludeMissing
+            customerId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("filter") @ExcludeMissing filter: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("grouping_keys")
+            @ExcludeMissing
+            groupingKeys: JsonField<List<String>> = JsonMissing.of(),
+        ) : this(
+            timeframeEnd,
+            timeframeStart,
+            customerId,
+            externalCustomerId,
+            filter,
+            groupingKeys,
+            mutableMapOf(),
+        )
+
+        /**
+         * The exclusive upper bound for event timestamps
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
+
+        /**
+         * The inclusive lower bound for event timestamps
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
+
+        /**
+         * The ID of the customer to which this evaluation is scoped.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun customerId(): String? = customerId.getNullable("customer_id")
+
+        /**
+         * The external customer ID of the customer to which this evaluation is scoped.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
+
+        /**
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the underlying billable metric
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun filter(): String? = filter.getNullable("filter")
+
+        /**
+         * Properties (or
+         * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to group
+         * the underlying billable metric
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun groupingKeys(): List<String>? = groupingKeys.getNullable("grouping_keys")
+
+        /**
+         * Returns the raw JSON value of [timeframeEnd].
+         *
+         * Unlike [timeframeEnd], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
+
+        /**
+         * Returns the raw JSON value of [timeframeStart].
+         *
+         * Unlike [timeframeStart], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
+
+        /**
+         * Returns the raw JSON value of [customerId].
+         *
+         * Unlike [customerId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("customer_id")
+        @ExcludeMissing
+        fun _customerId(): JsonField<String> = customerId
+
+        /**
+         * Returns the raw JSON value of [externalCustomerId].
+         *
+         * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("external_customer_id")
+        @ExcludeMissing
+        fun _externalCustomerId(): JsonField<String> = externalCustomerId
+
+        /**
+         * Returns the raw JSON value of [filter].
+         *
+         * Unlike [filter], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("filter") @ExcludeMissing fun _filter(): JsonField<String> = filter
+
+        /**
+         * Returns the raw JSON value of [groupingKeys].
+         *
+         * Unlike [groupingKeys], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("grouping_keys")
+        @ExcludeMissing
+        fun _groupingKeys(): JsonField<List<String>> = groupingKeys
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .timeframeEnd()
+             * .timeframeStart()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var timeframeEnd: JsonField<OffsetDateTime>? = null
+            private var timeframeStart: JsonField<OffsetDateTime>? = null
+            private var customerId: JsonField<String> = JsonMissing.of()
+            private var externalCustomerId: JsonField<String> = JsonMissing.of()
+            private var filter: JsonField<String> = JsonMissing.of()
+            private var groupingKeys: JsonField<MutableList<String>>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                timeframeEnd = body.timeframeEnd
+                timeframeStart = body.timeframeStart
+                customerId = body.customerId
+                externalCustomerId = body.externalCustomerId
+                filter = body.filter
+                groupingKeys = body.groupingKeys.map { it.toMutableList() }
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** The exclusive upper bound for event timestamps */
+            fun timeframeEnd(timeframeEnd: OffsetDateTime) =
+                timeframeEnd(JsonField.of(timeframeEnd))
+
+            /**
+             * Sets [Builder.timeframeEnd] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timeframeEnd] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
+                this.timeframeEnd = timeframeEnd
+            }
+
+            /** The inclusive lower bound for event timestamps */
+            fun timeframeStart(timeframeStart: OffsetDateTime) =
+                timeframeStart(JsonField.of(timeframeStart))
+
+            /**
+             * Sets [Builder.timeframeStart] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timeframeStart] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
+                this.timeframeStart = timeframeStart
+            }
+
+            /** The ID of the customer to which this evaluation is scoped. */
+            fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
+
+            /**
+             * Sets [Builder.customerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
+
+            /** The external customer ID of the customer to which this evaluation is scoped. */
+            fun externalCustomerId(externalCustomerId: String?) =
+                externalCustomerId(JsonField.ofNullable(externalCustomerId))
+
+            /**
+             * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
+                this.externalCustomerId = externalCustomerId
+            }
+
+            /**
+             * A boolean [computed property](/extensibility/advanced-metrics#computed-properties)
+             * used to filter the underlying billable metric
+             */
+            fun filter(filter: String?) = filter(JsonField.ofNullable(filter))
+
+            /**
+             * Sets [Builder.filter] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.filter] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun filter(filter: JsonField<String>) = apply { this.filter = filter }
+
+            /**
+             * Properties (or
+             * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to
+             * group the underlying billable metric
+             */
+            fun groupingKeys(groupingKeys: List<String>) = groupingKeys(JsonField.of(groupingKeys))
+
+            /**
+             * Sets [Builder.groupingKeys] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.groupingKeys] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun groupingKeys(groupingKeys: JsonField<List<String>>) = apply {
+                this.groupingKeys = groupingKeys.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [String] to [groupingKeys].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addGroupingKey(groupingKey: String) = apply {
+                groupingKeys =
+                    (groupingKeys ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("groupingKeys", it).add(groupingKey)
+                    }
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .timeframeEnd()
+             * .timeframeStart()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("timeframeEnd", timeframeEnd),
+                    checkRequired("timeframeStart", timeframeStart),
+                    customerId,
+                    externalCustomerId,
+                    filter,
+                    (groupingKeys ?: JsonMissing.of()).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            timeframeEnd()
+            timeframeStart()
+            customerId()
+            externalCustomerId()
+            filter()
+            groupingKeys()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && customerId == other.customerId && externalCustomerId == other.externalCustomerId && filter == other.filter && groupingKeys == other.groupingKeys && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(timeframeEnd, timeframeStart, customerId, externalCustomerId, filter, groupingKeys, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, customerId=$customerId, externalCustomerId=$externalCustomerId, filter=$filter, groupingKeys=$groupingKeys, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

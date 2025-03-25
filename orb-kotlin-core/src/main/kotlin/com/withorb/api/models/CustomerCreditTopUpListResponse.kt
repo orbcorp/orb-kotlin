@@ -11,41 +11,53 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
-import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class CustomerCreditTopUpListResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("amount")
-    @ExcludeMissing
-    private val amount: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("currency")
-    @ExcludeMissing
-    private val currency: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("invoice_settings")
-    @ExcludeMissing
-    private val invoiceSettings: JsonField<InvoiceSettings> = JsonMissing.of(),
-    @JsonProperty("per_unit_cost_basis")
-    @ExcludeMissing
-    private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("threshold")
-    @ExcludeMissing
-    private val threshold: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("expires_after")
-    @ExcludeMissing
-    private val expiresAfter: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("expires_after_unit")
-    @ExcludeMissing
-    private val expiresAfterUnit: JsonField<ExpiresAfterUnit> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val amount: JsonField<String>,
+    private val currency: JsonField<String>,
+    private val invoiceSettings: JsonField<InvoiceSettings>,
+    private val perUnitCostBasis: JsonField<String>,
+    private val threshold: JsonField<String>,
+    private val expiresAfter: JsonField<Long>,
+    private val expiresAfterUnit: JsonField<ExpiresAfterUnit>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("amount") @ExcludeMissing amount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("invoice_settings")
+        @ExcludeMissing
+        invoiceSettings: JsonField<InvoiceSettings> = JsonMissing.of(),
+        @JsonProperty("per_unit_cost_basis")
+        @ExcludeMissing
+        perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("threshold") @ExcludeMissing threshold: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("expires_after")
+        @ExcludeMissing
+        expiresAfter: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("expires_after_unit")
+        @ExcludeMissing
+        expiresAfterUnit: JsonField<ExpiresAfterUnit> = JsonMissing.of(),
+    ) : this(
+        id,
+        amount,
+        currency,
+        invoiceSettings,
+        perUnitCostBasis,
+        threshold,
+        expiresAfter,
+        expiresAfterUnit,
+        mutableMapOf(),
+    )
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -178,27 +190,15 @@ private constructor(
     @ExcludeMissing
     fun _expiresAfterUnit(): JsonField<ExpiresAfterUnit> = expiresAfterUnit
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CustomerCreditTopUpListResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        amount()
-        currency()
-        invoiceSettings().validate()
-        perUnitCostBasis()
-        threshold()
-        expiresAfter()
-        expiresAfterUnit()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -411,30 +411,49 @@ private constructor(
                 checkRequired("threshold", threshold),
                 expiresAfter,
                 expiresAfterUnit,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
     }
 
+    private var validated: Boolean = false
+
+    fun validate(): CustomerCreditTopUpListResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        amount()
+        currency()
+        invoiceSettings().validate()
+        perUnitCostBasis()
+        threshold()
+        expiresAfter()
+        expiresAfterUnit()
+        validated = true
+    }
+
     /** Settings for invoices generated by triggered top-ups. */
-    @NoAutoDetect
     class InvoiceSettings
-    @JsonCreator
     private constructor(
-        @JsonProperty("auto_collection")
-        @ExcludeMissing
-        private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("net_terms")
-        @ExcludeMissing
-        private val netTerms: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("memo")
-        @ExcludeMissing
-        private val memo: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("require_successful_payment")
-        @ExcludeMissing
-        private val requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val autoCollection: JsonField<Boolean>,
+        private val netTerms: JsonField<Long>,
+        private val memo: JsonField<String>,
+        private val requireSuccessfulPayment: JsonField<Boolean>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("auto_collection")
+            @ExcludeMissing
+            autoCollection: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("net_terms") @ExcludeMissing netTerms: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("memo") @ExcludeMissing memo: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("require_successful_payment")
+            @ExcludeMissing
+            requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of(),
+        ) : this(autoCollection, netTerms, memo, requireSuccessfulPayment, mutableMapOf())
 
         /**
          * Whether the credits purchase invoice should auto collect with the customer's saved
@@ -506,23 +525,15 @@ private constructor(
         @ExcludeMissing
         fun _requireSuccessfulPayment(): JsonField<Boolean> = requireSuccessfulPayment
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): InvoiceSettings = apply {
-            if (validated) {
-                return@apply
-            }
-
-            autoCollection()
-            netTerms()
-            memo()
-            requireSuccessfulPayment()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -658,8 +669,22 @@ private constructor(
                     checkRequired("netTerms", netTerms),
                     memo,
                     requireSuccessfulPayment,
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): InvoiceSettings = apply {
+            if (validated) {
+                return@apply
+            }
+
+            autoCollection()
+            netTerms()
+            memo()
+            requireSuccessfulPayment()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

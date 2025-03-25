@@ -5,7 +5,6 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
@@ -141,39 +140,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> externalCustomerId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                createdAtGt?.let {
-                    put("created_at[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                createdAtGte?.let {
-                    put("created_at[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                createdAtLt?.let {
-                    put("created_at[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                createdAtLte?.let {
-                    put("created_at[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                currency?.let { put("currency", it) }
-                cursor?.let { put("cursor", it) }
-                entryStatus?.let { put("entry_status", it.toString()) }
-                entryType?.let { put("entry_type", it.toString()) }
-                limit?.let { put("limit", it.toString()) }
-                minimumAmount?.let { put("minimum_amount", it) }
-                putAll(additionalQueryParams)
-            }
-            .build()
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -191,7 +157,6 @@ private constructor(
     }
 
     /** A builder for [CustomerCreditLedgerListByExternalIdParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var externalCustomerId: String? = null
@@ -392,6 +357,39 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> externalCustomerId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                createdAtGt?.let {
+                    put("created_at[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                createdAtGte?.let {
+                    put("created_at[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                createdAtLt?.let {
+                    put("created_at[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                createdAtLte?.let {
+                    put("created_at[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                currency?.let { put("currency", it) }
+                cursor?.let { put("cursor", it) }
+                entryStatus?.let { put("entry_status", it.toString()) }
+                entryType?.let { put("entry_type", it.toString()) }
+                limit?.let { put("limit", it.toString()) }
+                minimumAmount?.let { put("minimum_amount", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     class EntryStatus @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {

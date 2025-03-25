@@ -11,13 +11,12 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
 /**
@@ -38,71 +37,108 @@ import java.util.Objects
  * timezone. See [Timezone localization](/essentials/timezones) for information on what this
  * timezone parameter influences within Orb.
  */
-@NoAutoDetect
 class Customer
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("additional_emails")
-    @ExcludeMissing
-    private val additionalEmails: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("auto_collection")
-    @ExcludeMissing
-    private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("balance")
-    @ExcludeMissing
-    private val balance: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("billing_address")
-    @ExcludeMissing
-    private val billingAddress: JsonField<BillingAddress> = JsonMissing.of(),
-    @JsonProperty("created_at")
-    @ExcludeMissing
-    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("currency")
-    @ExcludeMissing
-    private val currency: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("email") @ExcludeMissing private val email: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("email_delivery")
-    @ExcludeMissing
-    private val emailDelivery: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("exempt_from_automated_tax")
-    @ExcludeMissing
-    private val exemptFromAutomatedTax: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("external_customer_id")
-    @ExcludeMissing
-    private val externalCustomerId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("hierarchy")
-    @ExcludeMissing
-    private val hierarchy: JsonField<Hierarchy> = JsonMissing.of(),
-    @JsonProperty("metadata")
-    @ExcludeMissing
-    private val metadata: JsonField<Metadata> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("payment_provider")
-    @ExcludeMissing
-    private val paymentProvider: JsonField<PaymentProvider> = JsonMissing.of(),
-    @JsonProperty("payment_provider_id")
-    @ExcludeMissing
-    private val paymentProviderId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("portal_url")
-    @ExcludeMissing
-    private val portalUrl: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("shipping_address")
-    @ExcludeMissing
-    private val shippingAddress: JsonField<ShippingAddress> = JsonMissing.of(),
-    @JsonProperty("tax_id") @ExcludeMissing private val taxId: JsonField<TaxId> = JsonMissing.of(),
-    @JsonProperty("timezone")
-    @ExcludeMissing
-    private val timezone: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("accounting_sync_configuration")
-    @ExcludeMissing
-    private val accountingSyncConfiguration: JsonField<AccountingSyncConfiguration> =
-        JsonMissing.of(),
-    @JsonProperty("reporting_configuration")
-    @ExcludeMissing
-    private val reportingConfiguration: JsonField<ReportingConfiguration> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val additionalEmails: JsonField<List<String>>,
+    private val autoCollection: JsonField<Boolean>,
+    private val balance: JsonField<String>,
+    private val billingAddress: JsonField<BillingAddress>,
+    private val createdAt: JsonField<OffsetDateTime>,
+    private val currency: JsonField<String>,
+    private val email: JsonField<String>,
+    private val emailDelivery: JsonField<Boolean>,
+    private val exemptFromAutomatedTax: JsonField<Boolean>,
+    private val externalCustomerId: JsonField<String>,
+    private val hierarchy: JsonField<Hierarchy>,
+    private val metadata: JsonField<Metadata>,
+    private val name: JsonField<String>,
+    private val paymentProvider: JsonField<PaymentProvider>,
+    private val paymentProviderId: JsonField<String>,
+    private val portalUrl: JsonField<String>,
+    private val shippingAddress: JsonField<ShippingAddress>,
+    private val taxId: JsonField<TaxId>,
+    private val timezone: JsonField<String>,
+    private val accountingSyncConfiguration: JsonField<AccountingSyncConfiguration>,
+    private val reportingConfiguration: JsonField<ReportingConfiguration>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("additional_emails")
+        @ExcludeMissing
+        additionalEmails: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("auto_collection")
+        @ExcludeMissing
+        autoCollection: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("balance") @ExcludeMissing balance: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("billing_address")
+        @ExcludeMissing
+        billingAddress: JsonField<BillingAddress> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("email") @ExcludeMissing email: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("email_delivery")
+        @ExcludeMissing
+        emailDelivery: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("exempt_from_automated_tax")
+        @ExcludeMissing
+        exemptFromAutomatedTax: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("external_customer_id")
+        @ExcludeMissing
+        externalCustomerId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("hierarchy")
+        @ExcludeMissing
+        hierarchy: JsonField<Hierarchy> = JsonMissing.of(),
+        @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("payment_provider")
+        @ExcludeMissing
+        paymentProvider: JsonField<PaymentProvider> = JsonMissing.of(),
+        @JsonProperty("payment_provider_id")
+        @ExcludeMissing
+        paymentProviderId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("portal_url") @ExcludeMissing portalUrl: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("shipping_address")
+        @ExcludeMissing
+        shippingAddress: JsonField<ShippingAddress> = JsonMissing.of(),
+        @JsonProperty("tax_id") @ExcludeMissing taxId: JsonField<TaxId> = JsonMissing.of(),
+        @JsonProperty("timezone") @ExcludeMissing timezone: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("accounting_sync_configuration")
+        @ExcludeMissing
+        accountingSyncConfiguration: JsonField<AccountingSyncConfiguration> = JsonMissing.of(),
+        @JsonProperty("reporting_configuration")
+        @ExcludeMissing
+        reportingConfiguration: JsonField<ReportingConfiguration> = JsonMissing.of(),
+    ) : this(
+        id,
+        additionalEmails,
+        autoCollection,
+        balance,
+        billingAddress,
+        createdAt,
+        currency,
+        email,
+        emailDelivery,
+        exemptFromAutomatedTax,
+        externalCustomerId,
+        hierarchy,
+        metadata,
+        name,
+        paymentProvider,
+        paymentProviderId,
+        portalUrl,
+        shippingAddress,
+        taxId,
+        timezone,
+        accountingSyncConfiguration,
+        reportingConfiguration,
+        mutableMapOf(),
+    )
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -556,41 +592,15 @@ private constructor(
     @ExcludeMissing
     fun _reportingConfiguration(): JsonField<ReportingConfiguration> = reportingConfiguration
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): Customer = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        additionalEmails()
-        autoCollection()
-        balance()
-        billingAddress()?.validate()
-        createdAt()
-        currency()
-        email()
-        emailDelivery()
-        exemptFromAutomatedTax()
-        externalCustomerId()
-        hierarchy().validate()
-        metadata().validate()
-        name()
-        paymentProvider()
-        paymentProviderId()
-        portalUrl()
-        shippingAddress()?.validate()
-        taxId()?.validate()
-        timezone()
-        accountingSyncConfiguration()?.validate()
-        reportingConfiguration()?.validate()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -1177,35 +1187,64 @@ private constructor(
                 checkRequired("timezone", timezone),
                 accountingSyncConfiguration,
                 reportingConfiguration,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
     }
 
-    @NoAutoDetect
+    private var validated: Boolean = false
+
+    fun validate(): Customer = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        additionalEmails()
+        autoCollection()
+        balance()
+        billingAddress()?.validate()
+        createdAt()
+        currency()
+        email()
+        emailDelivery()
+        exemptFromAutomatedTax()
+        externalCustomerId()
+        hierarchy().validate()
+        metadata().validate()
+        name()
+        paymentProvider()
+        paymentProviderId()
+        portalUrl()
+        shippingAddress()?.validate()
+        taxId()?.validate()
+        timezone()
+        accountingSyncConfiguration()?.validate()
+        reportingConfiguration()?.validate()
+        validated = true
+    }
+
     class BillingAddress
-    @JsonCreator
     private constructor(
-        @JsonProperty("city")
-        @ExcludeMissing
-        private val city: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("country")
-        @ExcludeMissing
-        private val country: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("line1")
-        @ExcludeMissing
-        private val line1: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("line2")
-        @ExcludeMissing
-        private val line2: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("postal_code")
-        @ExcludeMissing
-        private val postalCode: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("state")
-        @ExcludeMissing
-        private val state: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val city: JsonField<String>,
+        private val country: JsonField<String>,
+        private val line1: JsonField<String>,
+        private val line2: JsonField<String>,
+        private val postalCode: JsonField<String>,
+        private val state: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("city") @ExcludeMissing city: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("country") @ExcludeMissing country: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("line1") @ExcludeMissing line1: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("line2") @ExcludeMissing line2: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("postal_code")
+            @ExcludeMissing
+            postalCode: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("state") @ExcludeMissing state: JsonField<String> = JsonMissing.of(),
+        ) : this(city, country, line1, line2, postalCode, state, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1287,25 +1326,15 @@ private constructor(
          */
         @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<String> = state
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): BillingAddress = apply {
-            if (validated) {
-                return@apply
-            }
-
-            city()
-            country()
-            line1()
-            line2()
-            postalCode()
-            state()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1458,8 +1487,24 @@ private constructor(
                     checkRequired("line2", line2),
                     checkRequired("postalCode", postalCode),
                     checkRequired("state", state),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): BillingAddress = apply {
+            if (validated) {
+                return@apply
+            }
+
+            city()
+            country()
+            line1()
+            line2()
+            postalCode()
+            state()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1481,19 +1526,20 @@ private constructor(
     }
 
     /** The hierarchical relationships for this customer. */
-    @NoAutoDetect
     class Hierarchy
-    @JsonCreator
     private constructor(
-        @JsonProperty("children")
-        @ExcludeMissing
-        private val children: JsonField<List<Child>> = JsonMissing.of(),
-        @JsonProperty("parent")
-        @ExcludeMissing
-        private val parent: JsonField<Parent> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val children: JsonField<List<Child>>,
+        private val parent: JsonField<Parent>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("children")
+            @ExcludeMissing
+            children: JsonField<List<Child>> = JsonMissing.of(),
+            @JsonProperty("parent") @ExcludeMissing parent: JsonField<Parent> = JsonMissing.of(),
+        ) : this(children, parent, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -1521,21 +1567,15 @@ private constructor(
          */
         @JsonProperty("parent") @ExcludeMissing fun _parent(): JsonField<Parent> = parent
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Hierarchy = apply {
-            if (validated) {
-                return@apply
-            }
-
-            children().forEach { it.validate() }
-            parent()?.validate()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1638,23 +1678,36 @@ private constructor(
                 Hierarchy(
                     checkRequired("children", children).map { it.toImmutable() },
                     checkRequired("parent", parent),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
         }
 
-        @NoAutoDetect
+        private var validated: Boolean = false
+
+        fun validate(): Hierarchy = apply {
+            if (validated) {
+                return@apply
+            }
+
+            children().forEach { it.validate() }
+            parent()?.validate()
+            validated = true
+        }
+
         class Child
-        @JsonCreator
         private constructor(
-            @JsonProperty("id")
-            @ExcludeMissing
-            private val id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("external_customer_id")
-            @ExcludeMissing
-            private val externalCustomerId: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val id: JsonField<String>,
+            private val externalCustomerId: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("external_customer_id")
+                @ExcludeMissing
+                externalCustomerId: JsonField<String> = JsonMissing.of(),
+            ) : this(id, externalCustomerId, mutableMapOf())
 
             /**
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -1687,21 +1740,15 @@ private constructor(
             @ExcludeMissing
             fun _externalCustomerId(): JsonField<String> = externalCustomerId
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Child = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                id()
-                externalCustomerId()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -1796,8 +1843,20 @@ private constructor(
                     Child(
                         checkRequired("id", id),
                         checkRequired("externalCustomerId", externalCustomerId),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Child = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                id()
+                externalCustomerId()
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1818,19 +1877,20 @@ private constructor(
                 "Child{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
         }
 
-        @NoAutoDetect
         class Parent
-        @JsonCreator
         private constructor(
-            @JsonProperty("id")
-            @ExcludeMissing
-            private val id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("external_customer_id")
-            @ExcludeMissing
-            private val externalCustomerId: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val id: JsonField<String>,
+            private val externalCustomerId: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("external_customer_id")
+                @ExcludeMissing
+                externalCustomerId: JsonField<String> = JsonMissing.of(),
+            ) : this(id, externalCustomerId, mutableMapOf())
 
             /**
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -1863,21 +1923,15 @@ private constructor(
             @ExcludeMissing
             fun _externalCustomerId(): JsonField<String> = externalCustomerId
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Parent = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                id()
-                externalCustomerId()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -1972,8 +2026,20 @@ private constructor(
                     Parent(
                         checkRequired("id", id),
                         checkRequired("externalCustomerId", externalCustomerId),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Parent = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                id()
+                externalCustomerId()
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -2017,27 +2083,20 @@ private constructor(
      * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
      * metadata mapping can be cleared by setting `metadata` to `null`.
      */
-    @NoAutoDetect
     class Metadata
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Metadata = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -2080,7 +2139,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+            fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Metadata = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -2223,31 +2292,28 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    @NoAutoDetect
     class ShippingAddress
-    @JsonCreator
     private constructor(
-        @JsonProperty("city")
-        @ExcludeMissing
-        private val city: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("country")
-        @ExcludeMissing
-        private val country: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("line1")
-        @ExcludeMissing
-        private val line1: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("line2")
-        @ExcludeMissing
-        private val line2: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("postal_code")
-        @ExcludeMissing
-        private val postalCode: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("state")
-        @ExcludeMissing
-        private val state: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val city: JsonField<String>,
+        private val country: JsonField<String>,
+        private val line1: JsonField<String>,
+        private val line2: JsonField<String>,
+        private val postalCode: JsonField<String>,
+        private val state: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("city") @ExcludeMissing city: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("country") @ExcludeMissing country: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("line1") @ExcludeMissing line1: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("line2") @ExcludeMissing line2: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("postal_code")
+            @ExcludeMissing
+            postalCode: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("state") @ExcludeMissing state: JsonField<String> = JsonMissing.of(),
+        ) : this(city, country, line1, line2, postalCode, state, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -2329,25 +2395,15 @@ private constructor(
          */
         @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<String> = state
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): ShippingAddress = apply {
-            if (validated) {
-                return@apply
-            }
-
-            city()
-            country()
-            line1()
-            line2()
-            postalCode()
-            state()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -2500,8 +2556,24 @@ private constructor(
                     checkRequired("line2", line2),
                     checkRequired("postalCode", postalCode),
                     checkRequired("state", state),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): ShippingAddress = apply {
+            if (validated) {
+                return@apply
+            }
+
+            city()
+            country()
+            line1()
+            line2()
+            postalCode()
+            state()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -2628,20 +2700,20 @@ private constructor(
      * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
      * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
      */
-    @NoAutoDetect
     class TaxId
-    @JsonCreator
     private constructor(
-        @JsonProperty("country")
-        @ExcludeMissing
-        private val country: JsonField<Country> = JsonMissing.of(),
-        @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
-        @JsonProperty("value")
-        @ExcludeMissing
-        private val value: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val country: JsonField<Country>,
+        private val type: JsonField<Type>,
+        private val value: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("country") @ExcludeMissing country: JsonField<Country> = JsonMissing.of(),
+            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+            @JsonProperty("value") @ExcludeMissing value: JsonField<String> = JsonMissing.of(),
+        ) : this(country, type, value, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -2682,22 +2754,15 @@ private constructor(
          */
         @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<String> = value
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): TaxId = apply {
-            if (validated) {
-                return@apply
-            }
-
-            country()
-            type()
-            value()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -2802,8 +2867,21 @@ private constructor(
                     checkRequired("country", country),
                     checkRequired("type", type),
                     checkRequired("value", value),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): TaxId = apply {
+            if (validated) {
+                return@apply
+            }
+
+            country()
+            type()
+            value()
+            validated = true
         }
 
         class Country @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -3893,19 +3971,22 @@ private constructor(
             "TaxId{country=$country, type=$type, value=$value, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class AccountingSyncConfiguration
-    @JsonCreator
     private constructor(
-        @JsonProperty("accounting_providers")
-        @ExcludeMissing
-        private val accountingProviders: JsonField<List<AccountingProvider>> = JsonMissing.of(),
-        @JsonProperty("excluded")
-        @ExcludeMissing
-        private val excluded: JsonField<Boolean> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val accountingProviders: JsonField<List<AccountingProvider>>,
+        private val excluded: JsonField<Boolean>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("accounting_providers")
+            @ExcludeMissing
+            accountingProviders: JsonField<List<AccountingProvider>> = JsonMissing.of(),
+            @JsonProperty("excluded")
+            @ExcludeMissing
+            excluded: JsonField<Boolean> = JsonMissing.of(),
+        ) : this(accountingProviders, excluded, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -3937,21 +4018,15 @@ private constructor(
          */
         @JsonProperty("excluded") @ExcludeMissing fun _excluded(): JsonField<Boolean> = excluded
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): AccountingSyncConfiguration = apply {
-            if (validated) {
-                return@apply
-            }
-
-            accountingProviders().forEach { it.validate() }
-            excluded()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -4061,23 +4136,38 @@ private constructor(
                         it.toImmutable()
                     },
                     checkRequired("excluded", excluded),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
         }
 
-        @NoAutoDetect
+        private var validated: Boolean = false
+
+        fun validate(): AccountingSyncConfiguration = apply {
+            if (validated) {
+                return@apply
+            }
+
+            accountingProviders().forEach { it.validate() }
+            excluded()
+            validated = true
+        }
+
         class AccountingProvider
-        @JsonCreator
         private constructor(
-            @JsonProperty("external_provider_id")
-            @ExcludeMissing
-            private val externalProviderId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("provider_type")
-            @ExcludeMissing
-            private val providerType: JsonField<ProviderType> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val externalProviderId: JsonField<String>,
+            private val providerType: JsonField<ProviderType>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("external_provider_id")
+                @ExcludeMissing
+                externalProviderId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("provider_type")
+                @ExcludeMissing
+                providerType: JsonField<ProviderType> = JsonMissing.of(),
+            ) : this(externalProviderId, providerType, mutableMapOf())
 
             /**
              * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -4113,21 +4203,15 @@ private constructor(
             @ExcludeMissing
             fun _providerType(): JsonField<ProviderType> = providerType
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): AccountingProvider = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                externalProviderId()
-                providerType()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -4225,8 +4309,20 @@ private constructor(
                     AccountingProvider(
                         checkRequired("externalProviderId", externalProviderId),
                         checkRequired("providerType", providerType),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): AccountingProvider = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                externalProviderId()
+                providerType()
+                validated = true
             }
 
             class ProviderType
@@ -4369,16 +4465,16 @@ private constructor(
             "AccountingSyncConfiguration{accountingProviders=$accountingProviders, excluded=$excluded, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class ReportingConfiguration
-    @JsonCreator
     private constructor(
-        @JsonProperty("exempt")
-        @ExcludeMissing
-        private val exempt: JsonField<Boolean> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val exempt: JsonField<Boolean>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("exempt") @ExcludeMissing exempt: JsonField<Boolean> = JsonMissing.of()
+        ) : this(exempt, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -4393,20 +4489,15 @@ private constructor(
          */
         @JsonProperty("exempt") @ExcludeMissing fun _exempt(): JsonField<Boolean> = exempt
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): ReportingConfiguration = apply {
-            if (validated) {
-                return@apply
-            }
-
-            exempt()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -4479,8 +4570,19 @@ private constructor(
             fun build(): ReportingConfiguration =
                 ReportingConfiguration(
                     checkRequired("exempt", exempt),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): ReportingConfiguration = apply {
+            if (validated) {
+                return@apply
+            }
+
+            exempt()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

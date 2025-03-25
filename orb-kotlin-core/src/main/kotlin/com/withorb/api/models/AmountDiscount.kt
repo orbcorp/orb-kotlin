@@ -11,32 +11,35 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class AmountDiscount
-@JsonCreator
 private constructor(
-    @JsonProperty("amount_discount")
-    @ExcludeMissing
-    private val amountDiscount: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("applies_to_price_ids")
-    @ExcludeMissing
-    private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("discount_type")
-    @ExcludeMissing
-    private val discountType: JsonField<DiscountType> = JsonMissing.of(),
-    @JsonProperty("reason")
-    @ExcludeMissing
-    private val reason: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val amountDiscount: JsonField<String>,
+    private val appliesToPriceIds: JsonField<List<String>>,
+    private val discountType: JsonField<DiscountType>,
+    private val reason: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("amount_discount")
+        @ExcludeMissing
+        amountDiscount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("applies_to_price_ids")
+        @ExcludeMissing
+        appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("discount_type")
+        @ExcludeMissing
+        discountType: JsonField<DiscountType> = JsonMissing.of(),
+        @JsonProperty("reason") @ExcludeMissing reason: JsonField<String> = JsonMissing.of(),
+    ) : this(amountDiscount, appliesToPriceIds, discountType, reason, mutableMapOf())
 
     /**
      * Only available if discount_type is `amount`.
@@ -102,23 +105,15 @@ private constructor(
      */
     @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): AmountDiscount = apply {
-        if (validated) {
-            return@apply
-        }
-
-        amountDiscount()
-        appliesToPriceIds()
-        discountType()
-        reason()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -260,8 +255,22 @@ private constructor(
                 checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
                 checkRequired("discountType", discountType),
                 reason,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): AmountDiscount = apply {
+        if (validated) {
+            return@apply
+        }
+
+        amountDiscount()
+        appliesToPriceIds()
+        discountType()
+        reason()
+        validated = true
     }
 
     class DiscountType @JsonCreator private constructor(private val value: JsonField<String>) :

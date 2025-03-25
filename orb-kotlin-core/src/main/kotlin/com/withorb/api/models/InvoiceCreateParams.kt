@@ -11,17 +11,16 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.Params
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
 /** This endpoint is used to create a one-off invoice for a customer. */
@@ -195,551 +194,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): Body = body
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("currency")
-        @ExcludeMissing
-        private val currency: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("invoice_date")
-        @ExcludeMissing
-        private val invoiceDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("line_items")
-        @ExcludeMissing
-        private val lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
-        @JsonProperty("net_terms")
-        @ExcludeMissing
-        private val netTerms: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("customer_id")
-        @ExcludeMissing
-        private val customerId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("discount")
-        @ExcludeMissing
-        private val discount: JsonField<Discount> = JsonMissing.of(),
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
-        private val externalCustomerId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("memo")
-        @ExcludeMissing
-        private val memo: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
-        @JsonProperty("will_auto_issue")
-        @ExcludeMissing
-        private val willAutoIssue: JsonField<Boolean> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * An ISO 4217 currency string. Must be the same as the customer's currency if it is set.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun currency(): String = currency.getRequired("currency")
-
-        /**
-         * Optional invoice date to set. Must be in the past, if not set, `invoice_date` is set to
-         * the current time in the customer's timezone.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun invoiceDate(): OffsetDateTime = invoiceDate.getRequired("invoice_date")
-
-        /**
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
-
-        /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of '0' here represents that the invoice is due on issue,
-         * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun netTerms(): Long = netTerms.getRequired("net_terms")
-
-        /**
-         * The id of the `Customer` to create this invoice for. One of `customer_id` and
-         * `external_customer_id` are required.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun customerId(): String? = customerId.getNullable("customer_id")
-
-        /**
-         * An optional discount to attach to the invoice.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun discount(): Discount? = discount.getNullable("discount")
-
-        /**
-         * The `external_customer_id` of the `Customer` to create this invoice for. One of
-         * `customer_id` and `external_customer_id` are required.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
-
-        /**
-         * An optional memo to attach to the invoice.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun memo(): String? = memo.getNullable("memo")
-
-        /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun metadata(): Metadata? = metadata.getNullable("metadata")
-
-        /**
-         * When true, this invoice will automatically be issued upon creation. When false, the
-         * resulting invoice will require manual review to issue. Defaulted to false.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun willAutoIssue(): Boolean? = willAutoIssue.getNullable("will_auto_issue")
-
-        /**
-         * Returns the raw JSON value of [currency].
-         *
-         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
-
-        /**
-         * Returns the raw JSON value of [invoiceDate].
-         *
-         * Unlike [invoiceDate], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("invoice_date")
-        @ExcludeMissing
-        fun _invoiceDate(): JsonField<OffsetDateTime> = invoiceDate
-
-        /**
-         * Returns the raw JSON value of [lineItems].
-         *
-         * Unlike [lineItems], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("line_items")
-        @ExcludeMissing
-        fun _lineItems(): JsonField<List<LineItem>> = lineItems
-
-        /**
-         * Returns the raw JSON value of [netTerms].
-         *
-         * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
-
-        /**
-         * Returns the raw JSON value of [customerId].
-         *
-         * Unlike [customerId], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("customer_id")
-        @ExcludeMissing
-        fun _customerId(): JsonField<String> = customerId
-
-        /**
-         * Returns the raw JSON value of [discount].
-         *
-         * Unlike [discount], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("discount") @ExcludeMissing fun _discount(): JsonField<Discount> = discount
-
-        /**
-         * Returns the raw JSON value of [externalCustomerId].
-         *
-         * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
-        fun _externalCustomerId(): JsonField<String> = externalCustomerId
-
-        /**
-         * Returns the raw JSON value of [memo].
-         *
-         * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
-
-        /**
-         * Returns the raw JSON value of [metadata].
-         *
-         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
-
-        /**
-         * Returns the raw JSON value of [willAutoIssue].
-         *
-         * Unlike [willAutoIssue], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("will_auto_issue")
-        @ExcludeMissing
-        fun _willAutoIssue(): JsonField<Boolean> = willAutoIssue
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            currency()
-            invoiceDate()
-            lineItems().forEach { it.validate() }
-            netTerms()
-            customerId()
-            discount()?.validate()
-            externalCustomerId()
-            memo()
-            metadata()?.validate()
-            willAutoIssue()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .currency()
-             * .invoiceDate()
-             * .lineItems()
-             * .netTerms()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var currency: JsonField<String>? = null
-            private var invoiceDate: JsonField<OffsetDateTime>? = null
-            private var lineItems: JsonField<MutableList<LineItem>>? = null
-            private var netTerms: JsonField<Long>? = null
-            private var customerId: JsonField<String> = JsonMissing.of()
-            private var discount: JsonField<Discount> = JsonMissing.of()
-            private var externalCustomerId: JsonField<String> = JsonMissing.of()
-            private var memo: JsonField<String> = JsonMissing.of()
-            private var metadata: JsonField<Metadata> = JsonMissing.of()
-            private var willAutoIssue: JsonField<Boolean> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(body: Body) = apply {
-                currency = body.currency
-                invoiceDate = body.invoiceDate
-                lineItems = body.lineItems.map { it.toMutableList() }
-                netTerms = body.netTerms
-                customerId = body.customerId
-                discount = body.discount
-                externalCustomerId = body.externalCustomerId
-                memo = body.memo
-                metadata = body.metadata
-                willAutoIssue = body.willAutoIssue
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * An ISO 4217 currency string. Must be the same as the customer's currency if it is
-             * set.
-             */
-            fun currency(currency: String) = currency(JsonField.of(currency))
-
-            /**
-             * Sets [Builder.currency] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.currency] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
-
-            /**
-             * Optional invoice date to set. Must be in the past, if not set, `invoice_date` is set
-             * to the current time in the customer's timezone.
-             */
-            fun invoiceDate(invoiceDate: OffsetDateTime) = invoiceDate(JsonField.of(invoiceDate))
-
-            /**
-             * Sets [Builder.invoiceDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.invoiceDate] with a well-typed [OffsetDateTime]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun invoiceDate(invoiceDate: JsonField<OffsetDateTime>) = apply {
-                this.invoiceDate = invoiceDate
-            }
-
-            fun lineItems(lineItems: List<LineItem>) = lineItems(JsonField.of(lineItems))
-
-            /**
-             * Sets [Builder.lineItems] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.lineItems] with a well-typed `List<LineItem>` value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun lineItems(lineItems: JsonField<List<LineItem>>) = apply {
-                this.lineItems = lineItems.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [LineItem] to [lineItems].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addLineItem(lineItem: LineItem) = apply {
-                lineItems =
-                    (lineItems ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("lineItems", it).add(lineItem)
-                    }
-            }
-
-            /**
-             * Determines the difference between the invoice issue date for subscription invoices as
-             * the date that they are due. A value of '0' here represents that the invoice is due on
-             * issue, whereas a value of 30 represents that the customer has 30 days to pay the
-             * invoice.
-             */
-            fun netTerms(netTerms: Long) = netTerms(JsonField.of(netTerms))
-
-            /**
-             * Sets [Builder.netTerms] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.netTerms] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
-
-            /**
-             * The id of the `Customer` to create this invoice for. One of `customer_id` and
-             * `external_customer_id` are required.
-             */
-            fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
-
-            /**
-             * Sets [Builder.customerId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.customerId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
-
-            /** An optional discount to attach to the invoice. */
-            fun discount(discount: Discount?) = discount(JsonField.ofNullable(discount))
-
-            /**
-             * Sets [Builder.discount] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.discount] with a well-typed [Discount] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
-
-            /** Alias for calling [discount] with `Discount.ofPercentage(percentage)`. */
-            fun discount(percentage: PercentageDiscount) =
-                discount(Discount.ofPercentage(percentage))
-
-            /** Alias for calling [discount] with `Discount.ofTrial(trial)`. */
-            fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
-
-            /**
-             * Alias for calling [discount] with the following:
-             * ```kotlin
-             * TrialDiscount.builder()
-             *     .discountType(TrialDiscount.DiscountType.TRIAL)
-             *     .appliesToPriceIds(appliesToPriceIds)
-             *     .build()
-             * ```
-             */
-            fun trialDiscount(appliesToPriceIds: List<String>) =
-                discount(
-                    TrialDiscount.builder()
-                        .discountType(TrialDiscount.DiscountType.TRIAL)
-                        .appliesToPriceIds(appliesToPriceIds)
-                        .build()
-                )
-
-            /** Alias for calling [discount] with `Discount.ofUsage(usage)`. */
-            fun discount(usage: UsageDiscount) = discount(Discount.ofUsage(usage))
-
-            /** Alias for calling [discount] with `Discount.ofAmount(amount)`. */
-            fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
-
-            /**
-             * The `external_customer_id` of the `Customer` to create this invoice for. One of
-             * `customer_id` and `external_customer_id` are required.
-             */
-            fun externalCustomerId(externalCustomerId: String?) =
-                externalCustomerId(JsonField.ofNullable(externalCustomerId))
-
-            /**
-             * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
-                this.externalCustomerId = externalCustomerId
-            }
-
-            /** An optional memo to attach to the invoice. */
-            fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
-
-            /**
-             * Sets [Builder.memo] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.memo] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun memo(memo: JsonField<String>) = apply { this.memo = memo }
-
-            /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
-             */
-            fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
-
-            /**
-             * Sets [Builder.metadata] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
-
-            /**
-             * When true, this invoice will automatically be issued upon creation. When false, the
-             * resulting invoice will require manual review to issue. Defaulted to false.
-             */
-            fun willAutoIssue(willAutoIssue: Boolean) = willAutoIssue(JsonField.of(willAutoIssue))
-
-            /**
-             * Sets [Builder.willAutoIssue] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.willAutoIssue] with a well-typed [Boolean] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun willAutoIssue(willAutoIssue: JsonField<Boolean>) = apply {
-                this.willAutoIssue = willAutoIssue
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .currency()
-             * .invoiceDate()
-             * .lineItems()
-             * .netTerms()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("currency", currency),
-                    checkRequired("invoiceDate", invoiceDate),
-                    checkRequired("lineItems", lineItems).map { it.toImmutable() },
-                    checkRequired("netTerms", netTerms),
-                    customerId,
-                    discount,
-                    externalCustomerId,
-                    memo,
-                    metadata,
-                    willAutoIssue,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && currency == other.currency && invoiceDate == other.invoiceDate && lineItems == other.lineItems && netTerms == other.netTerms && customerId == other.customerId && discount == other.discount && externalCustomerId == other.externalCustomerId && memo == other.memo && metadata == other.metadata && willAutoIssue == other.willAutoIssue && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(currency, invoiceDate, lineItems, netTerms, customerId, discount, externalCustomerId, memo, metadata, willAutoIssue, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, netTerms=$netTerms, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -759,7 +213,6 @@ private constructor(
     }
 
     /** A builder for [InvoiceCreateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var body: Body.Builder = Body.builder()
@@ -1090,34 +543,608 @@ private constructor(
             )
     }
 
-    @NoAutoDetect
-    class LineItem
-    @JsonCreator
+    internal fun _body(): Body = body
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
     private constructor(
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<LocalDate> = JsonMissing.of(),
-        @JsonProperty("item_id")
-        @ExcludeMissing
-        private val itemId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("model_type")
-        @ExcludeMissing
-        private val modelType: JsonField<ModelType> = JsonMissing.of(),
-        @JsonProperty("name")
-        @ExcludeMissing
-        private val name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("quantity")
-        @ExcludeMissing
-        private val quantity: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<LocalDate> = JsonMissing.of(),
-        @JsonProperty("unit_config")
-        @ExcludeMissing
-        private val unitConfig: JsonField<UnitConfig> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val currency: JsonField<String>,
+        private val invoiceDate: JsonField<OffsetDateTime>,
+        private val lineItems: JsonField<List<LineItem>>,
+        private val netTerms: JsonField<Long>,
+        private val customerId: JsonField<String>,
+        private val discount: JsonField<Discount>,
+        private val externalCustomerId: JsonField<String>,
+        private val memo: JsonField<String>,
+        private val metadata: JsonField<Metadata>,
+        private val willAutoIssue: JsonField<Boolean>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("currency")
+            @ExcludeMissing
+            currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("invoice_date")
+            @ExcludeMissing
+            invoiceDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("line_items")
+            @ExcludeMissing
+            lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
+            @JsonProperty("net_terms") @ExcludeMissing netTerms: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("customer_id")
+            @ExcludeMissing
+            customerId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("discount")
+            @ExcludeMissing
+            discount: JsonField<Discount> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("memo") @ExcludeMissing memo: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            metadata: JsonField<Metadata> = JsonMissing.of(),
+            @JsonProperty("will_auto_issue")
+            @ExcludeMissing
+            willAutoIssue: JsonField<Boolean> = JsonMissing.of(),
+        ) : this(
+            currency,
+            invoiceDate,
+            lineItems,
+            netTerms,
+            customerId,
+            discount,
+            externalCustomerId,
+            memo,
+            metadata,
+            willAutoIssue,
+            mutableMapOf(),
+        )
+
+        /**
+         * An ISO 4217 currency string. Must be the same as the customer's currency if it is set.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun currency(): String = currency.getRequired("currency")
+
+        /**
+         * Optional invoice date to set. Must be in the past, if not set, `invoice_date` is set to
+         * the current time in the customer's timezone.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun invoiceDate(): OffsetDateTime = invoiceDate.getRequired("invoice_date")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
+
+        /**
+         * Determines the difference between the invoice issue date for subscription invoices as the
+         * date that they are due. A value of '0' here represents that the invoice is due on issue,
+         * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun netTerms(): Long = netTerms.getRequired("net_terms")
+
+        /**
+         * The id of the `Customer` to create this invoice for. One of `customer_id` and
+         * `external_customer_id` are required.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun customerId(): String? = customerId.getNullable("customer_id")
+
+        /**
+         * An optional discount to attach to the invoice.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun discount(): Discount? = discount.getNullable("discount")
+
+        /**
+         * The `external_customer_id` of the `Customer` to create this invoice for. One of
+         * `customer_id` and `external_customer_id` are required.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
+
+        /**
+         * An optional memo to attach to the invoice.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun memo(): String? = memo.getNullable("memo")
+
+        /**
+         * User-specified key/value pairs for the resource. Individual keys can be removed by
+         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
+         * `metadata` to `null`.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+        /**
+         * When true, this invoice will automatically be issued upon creation. When false, the
+         * resulting invoice will require manual review to issue. Defaulted to false.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun willAutoIssue(): Boolean? = willAutoIssue.getNullable("will_auto_issue")
+
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+        /**
+         * Returns the raw JSON value of [invoiceDate].
+         *
+         * Unlike [invoiceDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("invoice_date")
+        @ExcludeMissing
+        fun _invoiceDate(): JsonField<OffsetDateTime> = invoiceDate
+
+        /**
+         * Returns the raw JSON value of [lineItems].
+         *
+         * Unlike [lineItems], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("line_items")
+        @ExcludeMissing
+        fun _lineItems(): JsonField<List<LineItem>> = lineItems
+
+        /**
+         * Returns the raw JSON value of [netTerms].
+         *
+         * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
+
+        /**
+         * Returns the raw JSON value of [customerId].
+         *
+         * Unlike [customerId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("customer_id")
+        @ExcludeMissing
+        fun _customerId(): JsonField<String> = customerId
+
+        /**
+         * Returns the raw JSON value of [discount].
+         *
+         * Unlike [discount], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("discount") @ExcludeMissing fun _discount(): JsonField<Discount> = discount
+
+        /**
+         * Returns the raw JSON value of [externalCustomerId].
+         *
+         * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("external_customer_id")
+        @ExcludeMissing
+        fun _externalCustomerId(): JsonField<String> = externalCustomerId
+
+        /**
+         * Returns the raw JSON value of [memo].
+         *
+         * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
+
+        /**
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
+
+        /**
+         * Returns the raw JSON value of [willAutoIssue].
+         *
+         * Unlike [willAutoIssue], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("will_auto_issue")
+        @ExcludeMissing
+        fun _willAutoIssue(): JsonField<Boolean> = willAutoIssue
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .currency()
+             * .invoiceDate()
+             * .lineItems()
+             * .netTerms()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var currency: JsonField<String>? = null
+            private var invoiceDate: JsonField<OffsetDateTime>? = null
+            private var lineItems: JsonField<MutableList<LineItem>>? = null
+            private var netTerms: JsonField<Long>? = null
+            private var customerId: JsonField<String> = JsonMissing.of()
+            private var discount: JsonField<Discount> = JsonMissing.of()
+            private var externalCustomerId: JsonField<String> = JsonMissing.of()
+            private var memo: JsonField<String> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var willAutoIssue: JsonField<Boolean> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                currency = body.currency
+                invoiceDate = body.invoiceDate
+                lineItems = body.lineItems.map { it.toMutableList() }
+                netTerms = body.netTerms
+                customerId = body.customerId
+                discount = body.discount
+                externalCustomerId = body.externalCustomerId
+                memo = body.memo
+                metadata = body.metadata
+                willAutoIssue = body.willAutoIssue
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * An ISO 4217 currency string. Must be the same as the customer's currency if it is
+             * set.
+             */
+            fun currency(currency: String) = currency(JsonField.of(currency))
+
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+            /**
+             * Optional invoice date to set. Must be in the past, if not set, `invoice_date` is set
+             * to the current time in the customer's timezone.
+             */
+            fun invoiceDate(invoiceDate: OffsetDateTime) = invoiceDate(JsonField.of(invoiceDate))
+
+            /**
+             * Sets [Builder.invoiceDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.invoiceDate] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun invoiceDate(invoiceDate: JsonField<OffsetDateTime>) = apply {
+                this.invoiceDate = invoiceDate
+            }
+
+            fun lineItems(lineItems: List<LineItem>) = lineItems(JsonField.of(lineItems))
+
+            /**
+             * Sets [Builder.lineItems] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.lineItems] with a well-typed `List<LineItem>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun lineItems(lineItems: JsonField<List<LineItem>>) = apply {
+                this.lineItems = lineItems.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [LineItem] to [lineItems].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addLineItem(lineItem: LineItem) = apply {
+                lineItems =
+                    (lineItems ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("lineItems", it).add(lineItem)
+                    }
+            }
+
+            /**
+             * Determines the difference between the invoice issue date for subscription invoices as
+             * the date that they are due. A value of '0' here represents that the invoice is due on
+             * issue, whereas a value of 30 represents that the customer has 30 days to pay the
+             * invoice.
+             */
+            fun netTerms(netTerms: Long) = netTerms(JsonField.of(netTerms))
+
+            /**
+             * Sets [Builder.netTerms] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.netTerms] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
+
+            /**
+             * The id of the `Customer` to create this invoice for. One of `customer_id` and
+             * `external_customer_id` are required.
+             */
+            fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
+
+            /**
+             * Sets [Builder.customerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
+
+            /** An optional discount to attach to the invoice. */
+            fun discount(discount: Discount?) = discount(JsonField.ofNullable(discount))
+
+            /**
+             * Sets [Builder.discount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.discount] with a well-typed [Discount] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
+
+            /** Alias for calling [discount] with `Discount.ofPercentage(percentage)`. */
+            fun discount(percentage: PercentageDiscount) =
+                discount(Discount.ofPercentage(percentage))
+
+            /** Alias for calling [discount] with `Discount.ofTrial(trial)`. */
+            fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            /**
+             * Alias for calling [discount] with the following:
+             * ```kotlin
+             * TrialDiscount.builder()
+             *     .discountType(TrialDiscount.DiscountType.TRIAL)
+             *     .appliesToPriceIds(appliesToPriceIds)
+             *     .build()
+             * ```
+             */
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
+            /** Alias for calling [discount] with `Discount.ofUsage(usage)`. */
+            fun discount(usage: UsageDiscount) = discount(Discount.ofUsage(usage))
+
+            /** Alias for calling [discount] with `Discount.ofAmount(amount)`. */
+            fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
+
+            /**
+             * The `external_customer_id` of the `Customer` to create this invoice for. One of
+             * `customer_id` and `external_customer_id` are required.
+             */
+            fun externalCustomerId(externalCustomerId: String?) =
+                externalCustomerId(JsonField.ofNullable(externalCustomerId))
+
+            /**
+             * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
+                this.externalCustomerId = externalCustomerId
+            }
+
+            /** An optional memo to attach to the invoice. */
+            fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
+
+            /**
+             * Sets [Builder.memo] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.memo] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun memo(memo: JsonField<String>) = apply { this.memo = memo }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+            /**
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+            /**
+             * When true, this invoice will automatically be issued upon creation. When false, the
+             * resulting invoice will require manual review to issue. Defaulted to false.
+             */
+            fun willAutoIssue(willAutoIssue: Boolean) = willAutoIssue(JsonField.of(willAutoIssue))
+
+            /**
+             * Sets [Builder.willAutoIssue] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.willAutoIssue] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun willAutoIssue(willAutoIssue: JsonField<Boolean>) = apply {
+                this.willAutoIssue = willAutoIssue
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .currency()
+             * .invoiceDate()
+             * .lineItems()
+             * .netTerms()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("currency", currency),
+                    checkRequired("invoiceDate", invoiceDate),
+                    checkRequired("lineItems", lineItems).map { it.toImmutable() },
+                    checkRequired("netTerms", netTerms),
+                    customerId,
+                    discount,
+                    externalCustomerId,
+                    memo,
+                    metadata,
+                    willAutoIssue,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            currency()
+            invoiceDate()
+            lineItems().forEach { it.validate() }
+            netTerms()
+            customerId()
+            discount()?.validate()
+            externalCustomerId()
+            memo()
+            metadata()?.validate()
+            willAutoIssue()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && currency == other.currency && invoiceDate == other.invoiceDate && lineItems == other.lineItems && netTerms == other.netTerms && customerId == other.customerId && discount == other.discount && externalCustomerId == other.externalCustomerId && memo == other.memo && metadata == other.metadata && willAutoIssue == other.willAutoIssue && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(currency, invoiceDate, lineItems, netTerms, customerId, discount, externalCustomerId, memo, metadata, willAutoIssue, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, netTerms=$netTerms, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
+    }
+
+    class LineItem
+    private constructor(
+        private val endDate: JsonField<LocalDate>,
+        private val itemId: JsonField<String>,
+        private val modelType: JsonField<ModelType>,
+        private val name: JsonField<String>,
+        private val quantity: JsonField<Double>,
+        private val startDate: JsonField<LocalDate>,
+        private val unitConfig: JsonField<UnitConfig>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("end_date")
+            @ExcludeMissing
+            endDate: JsonField<LocalDate> = JsonMissing.of(),
+            @JsonProperty("item_id") @ExcludeMissing itemId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("model_type")
+            @ExcludeMissing
+            modelType: JsonField<ModelType> = JsonMissing.of(),
+            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("quantity")
+            @ExcludeMissing
+            quantity: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("start_date")
+            @ExcludeMissing
+            startDate: JsonField<LocalDate> = JsonMissing.of(),
+            @JsonProperty("unit_config")
+            @ExcludeMissing
+            unitConfig: JsonField<UnitConfig> = JsonMissing.of(),
+        ) : this(endDate, itemId, modelType, name, quantity, startDate, unitConfig, mutableMapOf())
 
         /**
          * A date string to specify the line item's end date in the customer's timezone.
@@ -1224,26 +1251,15 @@ private constructor(
         @ExcludeMissing
         fun _unitConfig(): JsonField<UnitConfig> = unitConfig
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): LineItem = apply {
-            if (validated) {
-                return@apply
-            }
-
-            endDate()
-            itemId()
-            modelType()
-            name()
-            quantity()
-            startDate()
-            unitConfig().validate()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1418,8 +1434,25 @@ private constructor(
                     checkRequired("quantity", quantity),
                     checkRequired("startDate", startDate),
                     checkRequired("unitConfig", unitConfig),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): LineItem = apply {
+            if (validated) {
+                return@apply
+            }
+
+            endDate()
+            itemId()
+            modelType()
+            name()
+            quantity()
+            startDate()
+            unitConfig().validate()
+            validated = true
         }
 
         class ModelType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1518,16 +1551,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @NoAutoDetect
         class UnitConfig
-        @JsonCreator
         private constructor(
-            @JsonProperty("unit_amount")
-            @ExcludeMissing
-            private val unitAmount: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val unitAmount: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("unit_amount")
+                @ExcludeMissing
+                unitAmount: JsonField<String> = JsonMissing.of()
+            ) : this(unitAmount, mutableMapOf())
 
             /**
              * Rate per unit of usage
@@ -1548,20 +1583,15 @@ private constructor(
             @ExcludeMissing
             fun _unitAmount(): JsonField<String> = unitAmount
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): UnitConfig = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                unitAmount()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -1640,8 +1670,19 @@ private constructor(
                 fun build(): UnitConfig =
                     UnitConfig(
                         checkRequired("unitAmount", unitAmount),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): UnitConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                unitAmount()
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1685,27 +1726,20 @@ private constructor(
      * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
      * `null`.
      */
-    @NoAutoDetect
     class Metadata
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Metadata = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1748,7 +1782,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+            fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Metadata = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
