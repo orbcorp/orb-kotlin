@@ -3959,19 +3959,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -4017,7 +4013,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -5876,19 +5872,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -5934,7 +5926,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -8080,19 +8072,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -8138,7 +8126,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -10204,19 +10192,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -10262,7 +10246,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -12364,19 +12348,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -12422,7 +12402,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -14266,19 +14246,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -14324,7 +14300,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -16380,19 +16356,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -16438,7 +16410,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -18460,19 +18432,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -18518,7 +18486,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -19567,19 +19535,15 @@ private constructor(
             }
 
             class ThresholdTotalAmountConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -19631,7 +19595,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): ThresholdTotalAmountConfig =
-                        ThresholdTotalAmountConfig(additionalProperties.toMutableMap())
+                        ThresholdTotalAmountConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -20285,19 +20249,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -20343,7 +20303,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -21385,19 +21345,15 @@ private constructor(
             }
 
             class TieredPackageConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -21448,7 +21404,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): TieredPackageConfig =
-                        TieredPackageConfig(additionalProperties.toMutableMap())
+                        TieredPackageConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -22102,19 +22058,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -22160,7 +22112,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -23205,19 +23157,15 @@ private constructor(
             }
 
             class TieredWithMinimumConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -23268,7 +23216,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): TieredWithMinimumConfig =
-                        TieredWithMinimumConfig(additionalProperties.toMutableMap())
+                        TieredWithMinimumConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -23922,19 +23870,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -23980,7 +23924,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -25024,19 +24968,15 @@ private constructor(
             }
 
             class UnitWithPercentConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -25087,7 +25027,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): UnitWithPercentConfig =
-                        UnitWithPercentConfig(additionalProperties.toMutableMap())
+                        UnitWithPercentConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -25741,19 +25681,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -25799,7 +25735,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -26848,19 +26784,15 @@ private constructor(
             }
 
             class PackageWithAllocationConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -26912,7 +26844,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): PackageWithAllocationConfig =
-                        PackageWithAllocationConfig(additionalProperties.toMutableMap())
+                        PackageWithAllocationConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -27566,19 +27498,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -27624,7 +27552,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -28670,19 +28598,15 @@ private constructor(
             }
 
             class TieredWithProrationConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -28734,7 +28658,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): TieredWithProrationConfig =
-                        TieredWithProrationConfig(additionalProperties.toMutableMap())
+                        TieredWithProrationConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -29388,19 +29312,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -29446,7 +29366,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -30491,19 +30411,15 @@ private constructor(
             }
 
             class UnitWithProrationConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -30554,7 +30470,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): UnitWithProrationConfig =
-                        UnitWithProrationConfig(additionalProperties.toMutableMap())
+                        UnitWithProrationConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -31208,19 +31124,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -31266,7 +31178,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -32215,19 +32127,15 @@ private constructor(
             }
 
             class GroupedAllocationConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -32278,7 +32186,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): GroupedAllocationConfig =
-                        GroupedAllocationConfig(additionalProperties.toMutableMap())
+                        GroupedAllocationConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -33028,19 +32936,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -33086,7 +32990,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -34046,19 +33950,15 @@ private constructor(
             }
 
             class GroupedWithProratedMinimumConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -34111,7 +34011,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): GroupedWithProratedMinimumConfig =
-                        GroupedWithProratedMinimumConfig(additionalProperties.toMutableMap())
+                        GroupedWithProratedMinimumConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -34861,19 +34761,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -34919,7 +34815,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -35876,19 +35772,15 @@ private constructor(
             }
 
             class GroupedWithMeteredMinimumConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -35941,7 +35833,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): GroupedWithMeteredMinimumConfig =
-                        GroupedWithMeteredMinimumConfig(additionalProperties.toMutableMap())
+                        GroupedWithMeteredMinimumConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -36691,19 +36583,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -36749,7 +36637,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -37702,19 +37590,15 @@ private constructor(
             }
 
             class MatrixWithDisplayNameConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -37766,7 +37650,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): MatrixWithDisplayNameConfig =
-                        MatrixWithDisplayNameConfig(additionalProperties.toMutableMap())
+                        MatrixWithDisplayNameConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -38516,19 +38400,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -38574,7 +38454,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -39396,19 +39276,15 @@ private constructor(
             }
 
             class BulkWithProrationConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -39459,7 +39335,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): BulkWithProrationConfig =
-                        BulkWithProrationConfig(additionalProperties.toMutableMap())
+                        BulkWithProrationConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -40336,19 +40212,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -40394,7 +40266,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -41347,19 +41219,15 @@ private constructor(
             }
 
             class GroupedTieredPackageConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -41411,7 +41279,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): GroupedTieredPackageConfig =
-                        GroupedTieredPackageConfig(additionalProperties.toMutableMap())
+                        GroupedTieredPackageConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -42161,19 +42029,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -42219,7 +42083,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -43172,19 +43036,15 @@ private constructor(
             }
 
             class MaxGroupTieredPackageConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -43236,7 +43096,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): MaxGroupTieredPackageConfig =
-                        MaxGroupTieredPackageConfig(additionalProperties.toMutableMap())
+                        MaxGroupTieredPackageConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -43986,19 +43846,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -44044,7 +43900,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -45112,19 +44968,15 @@ private constructor(
             }
 
             class ScalableMatrixWithUnitPricingConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -45177,7 +45029,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): ScalableMatrixWithUnitPricingConfig =
-                        ScalableMatrixWithUnitPricingConfig(additionalProperties.toMutableMap())
+                        ScalableMatrixWithUnitPricingConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -45831,19 +45683,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -45889,7 +45737,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -46962,19 +46810,15 @@ private constructor(
             }
 
             class ScalableMatrixWithTieredPricingConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -47028,7 +46872,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): ScalableMatrixWithTieredPricingConfig =
-                        ScalableMatrixWithTieredPricingConfig(additionalProperties.toMutableMap())
+                        ScalableMatrixWithTieredPricingConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -47682,19 +47526,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -47740,7 +47580,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -48693,19 +48533,15 @@ private constructor(
             }
 
             class CumulativeGroupedBulkConfig
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -48757,7 +48593,7 @@ private constructor(
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
                     fun build(): CumulativeGroupedBulkConfig =
-                        CumulativeGroupedBulkConfig(additionalProperties.toMutableMap())
+                        CumulativeGroupedBulkConfig(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -49507,19 +49343,15 @@ private constructor(
              * setting `metadata` to `null`.
              */
             class Metadata
-            private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-                @JsonCreator private constructor() : this(mutableMapOf())
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
                 fun toBuilder() = Builder().from(this)
 
@@ -49565,7 +49397,7 @@ private constructor(
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      */
-                    fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
                 private var validated: Boolean = false
@@ -49620,19 +49452,15 @@ private constructor(
      * `null`.
      */
     class Metadata
-    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-        @JsonCreator private constructor() : this(mutableMapOf())
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
 
@@ -49675,7 +49503,7 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         private var validated: Boolean = false
