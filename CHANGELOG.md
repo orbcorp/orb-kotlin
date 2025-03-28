@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.43 (2025-03-28)
+
+Full Changelog: [v0.1.0-alpha.42...v0.1.0-alpha.43](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.42...v0.1.0-alpha.43)
+
+### Bug Fixes
+
+* **client:** don't call `validate()` during deserialization if we don't have to ([#332](https://github.com/orbcorp/orb-kotlin/issues/332)) ([b687f31](https://github.com/orbcorp/orb-kotlin/commit/b687f31cc92558cd23cfb20222b9f66cfd2db3c7))
+
 ## 0.1.0-alpha.42 (2025-03-27)
 
 Full Changelog: [v0.1.0-alpha.41...v0.1.0-alpha.42](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.41...v0.1.0-alpha.42)
