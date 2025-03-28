@@ -711,74 +711,56 @@ private constructor(
 
                 when (entryType) {
                     "increment" -> {
-                        tryDeserialize(
-                                node,
-                                jacksonTypeRef<AddIncrementCreditLedgerEntryRequestParams>(),
-                            ) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Body(
-                                    addIncrementCreditLedgerEntryRequestParams = it,
-                                    _json = json,
-                                )
-                            }
+                        return Body(
+                            addIncrementCreditLedgerEntryRequestParams =
+                                deserialize(
+                                    node,
+                                    jacksonTypeRef<AddIncrementCreditLedgerEntryRequestParams>(),
+                                ),
+                            _json = json,
+                        )
                     }
                     "decrement" -> {
-                        tryDeserialize(
-                                node,
-                                jacksonTypeRef<AddDecrementCreditLedgerEntryRequestParams>(),
-                            ) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Body(
-                                    addDecrementCreditLedgerEntryRequestParams = it,
-                                    _json = json,
-                                )
-                            }
+                        return Body(
+                            addDecrementCreditLedgerEntryRequestParams =
+                                deserialize(
+                                    node,
+                                    jacksonTypeRef<AddDecrementCreditLedgerEntryRequestParams>(),
+                                ),
+                            _json = json,
+                        )
                     }
                     "expiration_change" -> {
-                        tryDeserialize(
-                                node,
-                                jacksonTypeRef<AddExpirationChangeCreditLedgerEntryRequestParams>(),
-                            ) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Body(
-                                    addExpirationChangeCreditLedgerEntryRequestParams = it,
-                                    _json = json,
-                                )
-                            }
+                        return Body(
+                            addExpirationChangeCreditLedgerEntryRequestParams =
+                                deserialize(
+                                    node,
+                                    jacksonTypeRef<
+                                        AddExpirationChangeCreditLedgerEntryRequestParams
+                                    >(),
+                                ),
+                            _json = json,
+                        )
                     }
                     "void" -> {
-                        tryDeserialize(
-                                node,
-                                jacksonTypeRef<AddVoidCreditLedgerEntryRequestParams>(),
-                            ) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Body(
-                                    addVoidCreditLedgerEntryRequestParams = it,
-                                    _json = json,
-                                )
-                            }
+                        return Body(
+                            addVoidCreditLedgerEntryRequestParams =
+                                deserialize(
+                                    node,
+                                    jacksonTypeRef<AddVoidCreditLedgerEntryRequestParams>(),
+                                ),
+                            _json = json,
+                        )
                     }
                     "amendment" -> {
-                        tryDeserialize(
-                                node,
-                                jacksonTypeRef<AddAmendmentCreditLedgerEntryRequestParams>(),
-                            ) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Body(
-                                    addAmendmentCreditLedgerEntryRequestParams = it,
-                                    _json = json,
-                                )
-                            }
+                        return Body(
+                            addAmendmentCreditLedgerEntryRequestParams =
+                                deserialize(
+                                    node,
+                                    jacksonTypeRef<AddAmendmentCreditLedgerEntryRequestParams>(),
+                                ),
+                            _json = json,
+                        )
                     }
                 }
 

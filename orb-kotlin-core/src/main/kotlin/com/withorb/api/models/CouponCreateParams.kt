@@ -846,20 +846,18 @@ private constructor(
 
                 when (discountType) {
                     "percentage" -> {
-                        tryDeserialize(node, jacksonTypeRef<NewCouponPercentageDiscount>()) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Discount(newCouponPercentage = it, _json = json)
-                            }
+                        return Discount(
+                            newCouponPercentage =
+                                deserialize(node, jacksonTypeRef<NewCouponPercentageDiscount>()),
+                            _json = json,
+                        )
                     }
                     "amount" -> {
-                        tryDeserialize(node, jacksonTypeRef<NewCouponAmountDiscount>()) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Discount(newCouponAmount = it, _json = json)
-                            }
+                        return Discount(
+                            newCouponAmount =
+                                deserialize(node, jacksonTypeRef<NewCouponAmountDiscount>()),
+                            _json = json,
+                        )
                     }
                 }
 
