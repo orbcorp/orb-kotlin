@@ -7208,53 +7208,48 @@ private constructor(
 
                     when (adjustmentType) {
                         "usage_discount" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<MonetaryUsageDiscountAdjustment>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Adjustment(monetaryUsageDiscount = it, _json = json)
-                                }
+                            return Adjustment(
+                                monetaryUsageDiscount =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<MonetaryUsageDiscountAdjustment>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "amount_discount" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<MonetaryAmountDiscountAdjustment>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Adjustment(monetaryAmountDiscount = it, _json = json)
-                                }
+                            return Adjustment(
+                                monetaryAmountDiscount =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<MonetaryAmountDiscountAdjustment>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "percentage_discount" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<MonetaryPercentageDiscountAdjustment>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Adjustment(monetaryPercentageDiscount = it, _json = json)
-                                }
+                            return Adjustment(
+                                monetaryPercentageDiscount =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<MonetaryPercentageDiscountAdjustment>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "minimum" -> {
-                            tryDeserialize(node, jacksonTypeRef<MonetaryMinimumAdjustment>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Adjustment(monetaryMinimum = it, _json = json)
-                                }
+                            return Adjustment(
+                                monetaryMinimum =
+                                    deserialize(node, jacksonTypeRef<MonetaryMinimumAdjustment>()),
+                                _json = json,
+                            )
                         }
                         "maximum" -> {
-                            tryDeserialize(node, jacksonTypeRef<MonetaryMaximumAdjustment>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Adjustment(monetaryMaximum = it, _json = json)
-                                }
+                            return Adjustment(
+                                monetaryMaximum =
+                                    deserialize(node, jacksonTypeRef<MonetaryMaximumAdjustment>()),
+                                _json = json,
+                            )
                         }
                     }
 
@@ -10549,28 +10544,22 @@ private constructor(
 
                     when (type) {
                         "matrix" -> {
-                            tryDeserialize(node, jacksonTypeRef<MatrixSubLineItem>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return SubLineItem(matrix = it, _json = json)
-                                }
+                            return SubLineItem(
+                                matrix = deserialize(node, jacksonTypeRef<MatrixSubLineItem>()),
+                                _json = json,
+                            )
                         }
                         "tier" -> {
-                            tryDeserialize(node, jacksonTypeRef<TierSubLineItem>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return SubLineItem(tier = it, _json = json)
-                                }
+                            return SubLineItem(
+                                tier = deserialize(node, jacksonTypeRef<TierSubLineItem>()),
+                                _json = json,
+                            )
                         }
                         "'null'" -> {
-                            tryDeserialize(node, jacksonTypeRef<OtherSubLineItem>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return SubLineItem(other = it, _json = json)
-                                }
+                            return SubLineItem(
+                                other = deserialize(node, jacksonTypeRef<OtherSubLineItem>()),
+                                _json = json,
+                            )
                         }
                     }
 

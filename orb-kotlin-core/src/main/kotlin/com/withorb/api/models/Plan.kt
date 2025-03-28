@@ -1479,47 +1479,48 @@ private constructor(
 
                 when (adjustmentType) {
                     "usage_discount" -> {
-                        tryDeserialize(node, jacksonTypeRef<PlanPhaseUsageDiscountAdjustment>()) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Adjustment(planPhaseUsageDiscount = it, _json = json)
-                            }
+                        return Adjustment(
+                            planPhaseUsageDiscount =
+                                deserialize(
+                                    node,
+                                    jacksonTypeRef<PlanPhaseUsageDiscountAdjustment>(),
+                                ),
+                            _json = json,
+                        )
                     }
                     "amount_discount" -> {
-                        tryDeserialize(node, jacksonTypeRef<PlanPhaseAmountDiscountAdjustment>()) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Adjustment(planPhaseAmountDiscount = it, _json = json)
-                            }
+                        return Adjustment(
+                            planPhaseAmountDiscount =
+                                deserialize(
+                                    node,
+                                    jacksonTypeRef<PlanPhaseAmountDiscountAdjustment>(),
+                                ),
+                            _json = json,
+                        )
                     }
                     "percentage_discount" -> {
-                        tryDeserialize(
-                                node,
-                                jacksonTypeRef<PlanPhasePercentageDiscountAdjustment>(),
-                            ) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Adjustment(planPhasePercentageDiscount = it, _json = json)
-                            }
+                        return Adjustment(
+                            planPhasePercentageDiscount =
+                                deserialize(
+                                    node,
+                                    jacksonTypeRef<PlanPhasePercentageDiscountAdjustment>(),
+                                ),
+                            _json = json,
+                        )
                     }
                     "minimum" -> {
-                        tryDeserialize(node, jacksonTypeRef<PlanPhaseMinimumAdjustment>()) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Adjustment(planPhaseMinimum = it, _json = json)
-                            }
+                        return Adjustment(
+                            planPhaseMinimum =
+                                deserialize(node, jacksonTypeRef<PlanPhaseMinimumAdjustment>()),
+                            _json = json,
+                        )
                     }
                     "maximum" -> {
-                        tryDeserialize(node, jacksonTypeRef<PlanPhaseMaximumAdjustment>()) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return Adjustment(planPhaseMaximum = it, _json = json)
-                            }
+                        return Adjustment(
+                            planPhaseMaximum =
+                                deserialize(node, jacksonTypeRef<PlanPhaseMaximumAdjustment>()),
+                            _json = json,
+                        )
                     }
                 }
 
