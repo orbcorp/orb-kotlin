@@ -287,73 +287,52 @@ private constructor(
 
             when (entryType) {
                 "increment" -> {
-                    tryDeserialize(node, jacksonTypeRef<IncrementLedgerEntry>()) { it.validate() }
-                        ?.let {
-                            return CustomerCreditLedgerCreateEntryByExternalIdResponse(
-                                incrementLedgerEntry = it,
-                                _json = json,
-                            )
-                        }
+                    return CustomerCreditLedgerCreateEntryByExternalIdResponse(
+                        incrementLedgerEntry =
+                            deserialize(node, jacksonTypeRef<IncrementLedgerEntry>()),
+                        _json = json,
+                    )
                 }
                 "decrement" -> {
-                    tryDeserialize(node, jacksonTypeRef<DecrementLedgerEntry>()) { it.validate() }
-                        ?.let {
-                            return CustomerCreditLedgerCreateEntryByExternalIdResponse(
-                                decrementLedgerEntry = it,
-                                _json = json,
-                            )
-                        }
+                    return CustomerCreditLedgerCreateEntryByExternalIdResponse(
+                        decrementLedgerEntry =
+                            deserialize(node, jacksonTypeRef<DecrementLedgerEntry>()),
+                        _json = json,
+                    )
                 }
                 "expiration_change" -> {
-                    tryDeserialize(node, jacksonTypeRef<ExpirationChangeLedgerEntry>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return CustomerCreditLedgerCreateEntryByExternalIdResponse(
-                                expirationChangeLedgerEntry = it,
-                                _json = json,
-                            )
-                        }
+                    return CustomerCreditLedgerCreateEntryByExternalIdResponse(
+                        expirationChangeLedgerEntry =
+                            deserialize(node, jacksonTypeRef<ExpirationChangeLedgerEntry>()),
+                        _json = json,
+                    )
                 }
                 "credit_block_expiry" -> {
-                    tryDeserialize(node, jacksonTypeRef<CreditBlockExpiryLedgerEntry>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return CustomerCreditLedgerCreateEntryByExternalIdResponse(
-                                creditBlockExpiryLedgerEntry = it,
-                                _json = json,
-                            )
-                        }
+                    return CustomerCreditLedgerCreateEntryByExternalIdResponse(
+                        creditBlockExpiryLedgerEntry =
+                            deserialize(node, jacksonTypeRef<CreditBlockExpiryLedgerEntry>()),
+                        _json = json,
+                    )
                 }
                 "void" -> {
-                    tryDeserialize(node, jacksonTypeRef<VoidLedgerEntry>()) { it.validate() }
-                        ?.let {
-                            return CustomerCreditLedgerCreateEntryByExternalIdResponse(
-                                voidLedgerEntry = it,
-                                _json = json,
-                            )
-                        }
+                    return CustomerCreditLedgerCreateEntryByExternalIdResponse(
+                        voidLedgerEntry = deserialize(node, jacksonTypeRef<VoidLedgerEntry>()),
+                        _json = json,
+                    )
                 }
                 "void_initiated" -> {
-                    tryDeserialize(node, jacksonTypeRef<VoidInitiatedLedgerEntry>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return CustomerCreditLedgerCreateEntryByExternalIdResponse(
-                                voidInitiatedLedgerEntry = it,
-                                _json = json,
-                            )
-                        }
+                    return CustomerCreditLedgerCreateEntryByExternalIdResponse(
+                        voidInitiatedLedgerEntry =
+                            deserialize(node, jacksonTypeRef<VoidInitiatedLedgerEntry>()),
+                        _json = json,
+                    )
                 }
                 "amendment" -> {
-                    tryDeserialize(node, jacksonTypeRef<AmendmentLedgerEntry>()) { it.validate() }
-                        ?.let {
-                            return CustomerCreditLedgerCreateEntryByExternalIdResponse(
-                                amendmentLedgerEntry = it,
-                                _json = json,
-                            )
-                        }
+                    return CustomerCreditLedgerCreateEntryByExternalIdResponse(
+                        amendmentLedgerEntry =
+                            deserialize(node, jacksonTypeRef<AmendmentLedgerEntry>()),
+                        _json = json,
+                    )
                 }
             }
 

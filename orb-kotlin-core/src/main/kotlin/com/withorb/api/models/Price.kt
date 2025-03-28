@@ -681,198 +681,189 @@ private constructor(
 
             when (modelType) {
                 "unit" -> {
-                    tryDeserialize(node, jacksonTypeRef<UnitPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(unit = it, _json = json)
-                        }
+                    return Price(
+                        unit = deserialize(node, jacksonTypeRef<UnitPrice>()),
+                        _json = json,
+                    )
                 }
                 "package" -> {
-                    tryDeserialize(node, jacksonTypeRef<PackagePrice>()) { it.validate() }
-                        ?.let {
-                            return Price(packagePrice = it, _json = json)
-                        }
+                    return Price(
+                        packagePrice = deserialize(node, jacksonTypeRef<PackagePrice>()),
+                        _json = json,
+                    )
                 }
                 "matrix" -> {
-                    tryDeserialize(node, jacksonTypeRef<MatrixPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(matrix = it, _json = json)
-                        }
+                    return Price(
+                        matrix = deserialize(node, jacksonTypeRef<MatrixPrice>()),
+                        _json = json,
+                    )
                 }
                 "tiered" -> {
-                    tryDeserialize(node, jacksonTypeRef<TieredPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(tiered = it, _json = json)
-                        }
+                    return Price(
+                        tiered = deserialize(node, jacksonTypeRef<TieredPrice>()),
+                        _json = json,
+                    )
                 }
                 "tiered_bps" -> {
-                    tryDeserialize(node, jacksonTypeRef<TieredBpsPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(tieredBps = it, _json = json)
-                        }
+                    return Price(
+                        tieredBps = deserialize(node, jacksonTypeRef<TieredBpsPrice>()),
+                        _json = json,
+                    )
                 }
                 "bps" -> {
-                    tryDeserialize(node, jacksonTypeRef<BpsPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(bps = it, _json = json)
-                        }
+                    return Price(bps = deserialize(node, jacksonTypeRef<BpsPrice>()), _json = json)
                 }
                 "bulk_bps" -> {
-                    tryDeserialize(node, jacksonTypeRef<BulkBpsPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(bulkBps = it, _json = json)
-                        }
+                    return Price(
+                        bulkBps = deserialize(node, jacksonTypeRef<BulkBpsPrice>()),
+                        _json = json,
+                    )
                 }
                 "bulk" -> {
-                    tryDeserialize(node, jacksonTypeRef<BulkPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(bulk = it, _json = json)
-                        }
+                    return Price(
+                        bulk = deserialize(node, jacksonTypeRef<BulkPrice>()),
+                        _json = json,
+                    )
                 }
                 "threshold_total_amount" -> {
-                    tryDeserialize(node, jacksonTypeRef<ThresholdTotalAmountPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(thresholdTotalAmount = it, _json = json)
-                        }
+                    return Price(
+                        thresholdTotalAmount =
+                            deserialize(node, jacksonTypeRef<ThresholdTotalAmountPrice>()),
+                        _json = json,
+                    )
                 }
                 "tiered_package" -> {
-                    tryDeserialize(node, jacksonTypeRef<TieredPackagePrice>()) { it.validate() }
-                        ?.let {
-                            return Price(tieredPackage = it, _json = json)
-                        }
+                    return Price(
+                        tieredPackage = deserialize(node, jacksonTypeRef<TieredPackagePrice>()),
+                        _json = json,
+                    )
                 }
                 "grouped_tiered" -> {
-                    tryDeserialize(node, jacksonTypeRef<GroupedTieredPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(groupedTiered = it, _json = json)
-                        }
+                    return Price(
+                        groupedTiered = deserialize(node, jacksonTypeRef<GroupedTieredPrice>()),
+                        _json = json,
+                    )
                 }
                 "tiered_with_minimum" -> {
-                    tryDeserialize(node, jacksonTypeRef<TieredWithMinimumPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(tieredWithMinimum = it, _json = json)
-                        }
+                    return Price(
+                        tieredWithMinimum =
+                            deserialize(node, jacksonTypeRef<TieredWithMinimumPrice>()),
+                        _json = json,
+                    )
                 }
                 "tiered_package_with_minimum" -> {
-                    tryDeserialize(node, jacksonTypeRef<TieredPackageWithMinimumPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(tieredPackageWithMinimum = it, _json = json)
-                        }
+                    return Price(
+                        tieredPackageWithMinimum =
+                            deserialize(node, jacksonTypeRef<TieredPackageWithMinimumPrice>()),
+                        _json = json,
+                    )
                 }
                 "package_with_allocation" -> {
-                    tryDeserialize(node, jacksonTypeRef<PackageWithAllocationPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(packageWithAllocation = it, _json = json)
-                        }
+                    return Price(
+                        packageWithAllocation =
+                            deserialize(node, jacksonTypeRef<PackageWithAllocationPrice>()),
+                        _json = json,
+                    )
                 }
                 "unit_with_percent" -> {
-                    tryDeserialize(node, jacksonTypeRef<UnitWithPercentPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(unitWithPercent = it, _json = json)
-                        }
+                    return Price(
+                        unitWithPercent = deserialize(node, jacksonTypeRef<UnitWithPercentPrice>()),
+                        _json = json,
+                    )
                 }
                 "matrix_with_allocation" -> {
-                    tryDeserialize(node, jacksonTypeRef<MatrixWithAllocationPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(matrixWithAllocation = it, _json = json)
-                        }
+                    return Price(
+                        matrixWithAllocation =
+                            deserialize(node, jacksonTypeRef<MatrixWithAllocationPrice>()),
+                        _json = json,
+                    )
                 }
                 "tiered_with_proration" -> {
-                    tryDeserialize(node, jacksonTypeRef<TieredWithProrationPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(tieredWithProration = it, _json = json)
-                        }
+                    return Price(
+                        tieredWithProration =
+                            deserialize(node, jacksonTypeRef<TieredWithProrationPrice>()),
+                        _json = json,
+                    )
                 }
                 "unit_with_proration" -> {
-                    tryDeserialize(node, jacksonTypeRef<UnitWithProrationPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(unitWithProration = it, _json = json)
-                        }
+                    return Price(
+                        unitWithProration =
+                            deserialize(node, jacksonTypeRef<UnitWithProrationPrice>()),
+                        _json = json,
+                    )
                 }
                 "grouped_allocation" -> {
-                    tryDeserialize(node, jacksonTypeRef<GroupedAllocationPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(groupedAllocation = it, _json = json)
-                        }
+                    return Price(
+                        groupedAllocation =
+                            deserialize(node, jacksonTypeRef<GroupedAllocationPrice>()),
+                        _json = json,
+                    )
                 }
                 "grouped_with_prorated_minimum" -> {
-                    tryDeserialize(node, jacksonTypeRef<GroupedWithProratedMinimumPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(groupedWithProratedMinimum = it, _json = json)
-                        }
+                    return Price(
+                        groupedWithProratedMinimum =
+                            deserialize(node, jacksonTypeRef<GroupedWithProratedMinimumPrice>()),
+                        _json = json,
+                    )
                 }
                 "grouped_with_metered_minimum" -> {
-                    tryDeserialize(node, jacksonTypeRef<GroupedWithMeteredMinimumPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(groupedWithMeteredMinimum = it, _json = json)
-                        }
+                    return Price(
+                        groupedWithMeteredMinimum =
+                            deserialize(node, jacksonTypeRef<GroupedWithMeteredMinimumPrice>()),
+                        _json = json,
+                    )
                 }
                 "matrix_with_display_name" -> {
-                    tryDeserialize(node, jacksonTypeRef<MatrixWithDisplayNamePrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(matrixWithDisplayName = it, _json = json)
-                        }
+                    return Price(
+                        matrixWithDisplayName =
+                            deserialize(node, jacksonTypeRef<MatrixWithDisplayNamePrice>()),
+                        _json = json,
+                    )
                 }
                 "bulk_with_proration" -> {
-                    tryDeserialize(node, jacksonTypeRef<BulkWithProrationPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(bulkWithProration = it, _json = json)
-                        }
+                    return Price(
+                        bulkWithProration =
+                            deserialize(node, jacksonTypeRef<BulkWithProrationPrice>()),
+                        _json = json,
+                    )
                 }
                 "grouped_tiered_package" -> {
-                    tryDeserialize(node, jacksonTypeRef<GroupedTieredPackagePrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(groupedTieredPackage = it, _json = json)
-                        }
+                    return Price(
+                        groupedTieredPackage =
+                            deserialize(node, jacksonTypeRef<GroupedTieredPackagePrice>()),
+                        _json = json,
+                    )
                 }
                 "max_group_tiered_package" -> {
-                    tryDeserialize(node, jacksonTypeRef<MaxGroupTieredPackagePrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(maxGroupTieredPackage = it, _json = json)
-                        }
+                    return Price(
+                        maxGroupTieredPackage =
+                            deserialize(node, jacksonTypeRef<MaxGroupTieredPackagePrice>()),
+                        _json = json,
+                    )
                 }
                 "scalable_matrix_with_unit_pricing" -> {
-                    tryDeserialize(node, jacksonTypeRef<ScalableMatrixWithUnitPricingPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(scalableMatrixWithUnitPricing = it, _json = json)
-                        }
+                    return Price(
+                        scalableMatrixWithUnitPricing =
+                            deserialize(node, jacksonTypeRef<ScalableMatrixWithUnitPricingPrice>()),
+                        _json = json,
+                    )
                 }
                 "scalable_matrix_with_tiered_pricing" -> {
-                    tryDeserialize(node, jacksonTypeRef<ScalableMatrixWithTieredPricingPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(scalableMatrixWithTieredPricing = it, _json = json)
-                        }
+                    return Price(
+                        scalableMatrixWithTieredPricing =
+                            deserialize(
+                                node,
+                                jacksonTypeRef<ScalableMatrixWithTieredPricingPrice>(),
+                            ),
+                        _json = json,
+                    )
                 }
                 "cumulative_grouped_bulk" -> {
-                    tryDeserialize(node, jacksonTypeRef<CumulativeGroupedBulkPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(cumulativeGroupedBulk = it, _json = json)
-                        }
+                    return Price(
+                        cumulativeGroupedBulk =
+                            deserialize(node, jacksonTypeRef<CumulativeGroupedBulkPrice>()),
+                        _json = json,
+                    )
                 }
             }
 

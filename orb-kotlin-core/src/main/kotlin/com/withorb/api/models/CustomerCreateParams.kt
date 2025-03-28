@@ -3792,20 +3792,17 @@ private constructor(
 
                 when (taxProvider) {
                     "avalara" -> {
-                        tryDeserialize(node, jacksonTypeRef<NewAvalaraTaxConfiguration>()) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return TaxConfiguration(newAvalara = it, _json = json)
-                            }
+                        return TaxConfiguration(
+                            newAvalara =
+                                deserialize(node, jacksonTypeRef<NewAvalaraTaxConfiguration>()),
+                            _json = json,
+                        )
                     }
                     "taxjar" -> {
-                        tryDeserialize(node, jacksonTypeRef<NewTaxJarConfiguration>()) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return TaxConfiguration(newTaxJar = it, _json = json)
-                            }
+                        return TaxConfiguration(
+                            newTaxJar = deserialize(node, jacksonTypeRef<NewTaxJarConfiguration>()),
+                            _json = json,
+                        )
                     }
                 }
 
