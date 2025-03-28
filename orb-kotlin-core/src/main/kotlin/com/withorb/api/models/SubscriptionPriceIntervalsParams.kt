@@ -2532,34 +2532,34 @@ private constructor(
 
                     when (discountType) {
                         "amount" -> {
-                            tryDeserialize(node, jacksonTypeRef<AmountDiscountCreationParams>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Discount(amountDiscountCreationParams = it, _json = json)
-                                }
+                            return Discount(
+                                amountDiscountCreationParams =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<AmountDiscountCreationParams>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "percentage" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<PercentageDiscountCreationParams>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Discount(
-                                        percentageDiscountCreationParams = it,
-                                        _json = json,
-                                    )
-                                }
+                            return Discount(
+                                percentageDiscountCreationParams =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<PercentageDiscountCreationParams>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "usage" -> {
-                            tryDeserialize(node, jacksonTypeRef<UsageDiscountCreationParams>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Discount(usageDiscountCreationParams = it, _json = json)
-                                }
+                            return Discount(
+                                usageDiscountCreationParams =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<UsageDiscountCreationParams>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                     }
 
@@ -4705,311 +4705,264 @@ private constructor(
 
                     when (modelType) {
                         "unit" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewFloatingUnitPrice>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingUnit = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingUnit =
+                                    deserialize(node, jacksonTypeRef<NewFloatingUnitPrice>()),
+                                _json = json,
+                            )
                         }
                         "package" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewFloatingPackagePrice>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingPackage = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingPackage =
+                                    deserialize(node, jacksonTypeRef<NewFloatingPackagePrice>()),
+                                _json = json,
+                            )
                         }
                         "matrix" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewFloatingMatrixPrice>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingMatrix = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingMatrix =
+                                    deserialize(node, jacksonTypeRef<NewFloatingMatrixPrice>()),
+                                _json = json,
+                            )
                         }
                         "matrix_with_allocation" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingMatrixWithAllocationPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingMatrixWithAllocation = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingMatrixWithAllocation =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingMatrixWithAllocationPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "tiered" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPrice>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingTiered = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingTiered =
+                                    deserialize(node, jacksonTypeRef<NewFloatingTieredPrice>()),
+                                _json = json,
+                            )
                         }
                         "tiered_bps" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewFloatingTieredBpsPrice>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingTieredBps = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingTieredBps =
+                                    deserialize(node, jacksonTypeRef<NewFloatingTieredBpsPrice>()),
+                                _json = json,
+                            )
                         }
                         "bps" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewFloatingBpsPrice>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingBps = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingBps =
+                                    deserialize(node, jacksonTypeRef<NewFloatingBpsPrice>()),
+                                _json = json,
+                            )
                         }
                         "bulk_bps" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewFloatingBulkBpsPrice>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingBulkBps = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingBulkBps =
+                                    deserialize(node, jacksonTypeRef<NewFloatingBulkBpsPrice>()),
+                                _json = json,
+                            )
                         }
                         "bulk" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewFloatingBulkPrice>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingBulk = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingBulk =
+                                    deserialize(node, jacksonTypeRef<NewFloatingBulkPrice>()),
+                                _json = json,
+                            )
                         }
                         "threshold_total_amount" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingThresholdTotalAmountPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingThresholdTotalAmount = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingThresholdTotalAmount =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingThresholdTotalAmountPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "tiered_package" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPackagePrice>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingTieredPackage = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingTieredPackage =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingTieredPackagePrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "grouped_tiered" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedTieredPrice>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingGroupedTiered = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingGroupedTiered =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingGroupedTieredPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "max_group_tiered_package" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingMaxGroupTieredPackagePrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(
-                                        newFloatingMaxGroupTieredPackage = it,
-                                        _json = json,
-                                    )
-                                }
+                            return Price(
+                                newFloatingMaxGroupTieredPackage =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingMaxGroupTieredPackagePrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "tiered_with_minimum" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingTieredWithMinimumPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingTieredWithMinimum = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingTieredWithMinimum =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingTieredWithMinimumPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "package_with_allocation" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingPackageWithAllocationPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(
-                                        newFloatingPackageWithAllocation = it,
-                                        _json = json,
-                                    )
-                                }
+                            return Price(
+                                newFloatingPackageWithAllocation =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingPackageWithAllocationPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "tiered_package_with_minimum" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingTieredPackageWithMinimumPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(
-                                        newFloatingTieredPackageWithMinimum = it,
-                                        _json = json,
-                                    )
-                                }
+                            return Price(
+                                newFloatingTieredPackageWithMinimum =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingTieredPackageWithMinimumPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "unit_with_percent" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingUnitWithPercentPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingUnitWithPercent = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingUnitWithPercent =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingUnitWithPercentPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "tiered_with_proration" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingTieredWithProrationPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingTieredWithProration = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingTieredWithProration =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingTieredWithProrationPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "unit_with_proration" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingUnitWithProrationPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingUnitWithProration = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingUnitWithProration =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingUnitWithProrationPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "grouped_allocation" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingGroupedAllocationPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingGroupedAllocation = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingGroupedAllocation =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingGroupedAllocationPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "grouped_with_prorated_minimum" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingGroupedWithProratedMinimumPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(
-                                        newFloatingGroupedWithProratedMinimum = it,
-                                        _json = json,
-                                    )
-                                }
+                            return Price(
+                                newFloatingGroupedWithProratedMinimum =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingGroupedWithProratedMinimumPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "grouped_with_metered_minimum" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingGroupedWithMeteredMinimumPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(
-                                        newFloatingGroupedWithMeteredMinimum = it,
-                                        _json = json,
-                                    )
-                                }
+                            return Price(
+                                newFloatingGroupedWithMeteredMinimum =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingGroupedWithMeteredMinimumPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "matrix_with_display_name" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingMatrixWithDisplayNamePrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(
-                                        newFloatingMatrixWithDisplayName = it,
-                                        _json = json,
-                                    )
-                                }
+                            return Price(
+                                newFloatingMatrixWithDisplayName =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingMatrixWithDisplayNamePrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "bulk_with_proration" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingBulkWithProrationPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingBulkWithProration = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingBulkWithProration =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingBulkWithProrationPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "grouped_tiered_package" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingGroupedTieredPackagePrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(newFloatingGroupedTieredPackage = it, _json = json)
-                                }
+                            return Price(
+                                newFloatingGroupedTieredPackage =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingGroupedTieredPackagePrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "scalable_matrix_with_unit_pricing" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingScalableMatrixWithUnitPricingPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(
-                                        newFloatingScalableMatrixWithUnitPricing = it,
-                                        _json = json,
-                                    )
-                                }
+                            return Price(
+                                newFloatingScalableMatrixWithUnitPricing =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<
+                                            NewFloatingScalableMatrixWithUnitPricingPrice
+                                        >(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "scalable_matrix_with_tiered_pricing" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<
-                                        NewFloatingScalableMatrixWithTieredPricingPrice
-                                    >(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(
-                                        newFloatingScalableMatrixWithTieredPricing = it,
-                                        _json = json,
-                                    )
-                                }
+                            return Price(
+                                newFloatingScalableMatrixWithTieredPricing =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<
+                                            NewFloatingScalableMatrixWithTieredPricingPrice
+                                        >(),
+                                    ),
+                                _json = json,
+                            )
                         }
                         "cumulative_grouped_bulk" -> {
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingCumulativeGroupedBulkPrice>(),
-                                ) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Price(
-                                        newFloatingCumulativeGroupedBulk = it,
-                                        _json = json,
-                                    )
-                                }
+                            return Price(
+                                newFloatingCumulativeGroupedBulk =
+                                    deserialize(
+                                        node,
+                                        jacksonTypeRef<NewFloatingCumulativeGroupedBulkPrice>(),
+                                    ),
+                                _json = json,
+                            )
                         }
                     }
 
@@ -59845,40 +59798,37 @@ private constructor(
 
                     when (adjustmentType) {
                         "percentage_discount" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewPercentageDiscount>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Adjustment(newPercentageDiscount = it, _json = json)
-                                }
+                            return Adjustment(
+                                newPercentageDiscount =
+                                    deserialize(node, jacksonTypeRef<NewPercentageDiscount>()),
+                                _json = json,
+                            )
                         }
                         "usage_discount" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewUsageDiscount>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Adjustment(newUsageDiscount = it, _json = json)
-                                }
+                            return Adjustment(
+                                newUsageDiscount =
+                                    deserialize(node, jacksonTypeRef<NewUsageDiscount>()),
+                                _json = json,
+                            )
                         }
                         "amount_discount" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewAmountDiscount>()) {
-                                    it.validate()
-                                }
-                                ?.let {
-                                    return Adjustment(newAmountDiscount = it, _json = json)
-                                }
+                            return Adjustment(
+                                newAmountDiscount =
+                                    deserialize(node, jacksonTypeRef<NewAmountDiscount>()),
+                                _json = json,
+                            )
                         }
                         "minimum" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewMinimum>()) { it.validate() }
-                                ?.let {
-                                    return Adjustment(newMinimum = it, _json = json)
-                                }
+                            return Adjustment(
+                                newMinimum = deserialize(node, jacksonTypeRef<NewMinimum>()),
+                                _json = json,
+                            )
                         }
                         "maximum" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewMaximum>()) { it.validate() }
-                                ?.let {
-                                    return Adjustment(newMaximum = it, _json = json)
-                                }
+                            return Adjustment(
+                                newMaximum = deserialize(node, jacksonTypeRef<NewMaximum>()),
+                                _json = json,
+                            )
                         }
                     }
 

@@ -544,16 +544,16 @@ private constructor(
 
                 when (discountType) {
                     "percentage" -> {
-                        tryDeserialize(node, jacksonTypeRef<PercentageDiscount>()) { it.validate() }
-                            ?.let {
-                                return Discount(percentage = it, _json = json)
-                            }
+                        return Discount(
+                            percentage = deserialize(node, jacksonTypeRef<PercentageDiscount>()),
+                            _json = json,
+                        )
                     }
                     "amount" -> {
-                        tryDeserialize(node, jacksonTypeRef<AmountDiscount>()) { it.validate() }
-                            ?.let {
-                                return Discount(amount = it, _json = json)
-                            }
+                        return Discount(
+                            amount = deserialize(node, jacksonTypeRef<AmountDiscount>()),
+                            _json = json,
+                        )
                     }
                 }
 
