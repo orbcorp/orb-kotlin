@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.44 (2025-03-31)
+
+Full Changelog: [v0.1.0-alpha.43...v0.1.0-alpha.44](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.43...v0.1.0-alpha.44)
+
+### Bug Fixes
+
+* **client:** limit json deserialization coercion ([#336](https://github.com/orbcorp/orb-kotlin/issues/336)) ([fdf0191](https://github.com/orbcorp/orb-kotlin/commit/fdf019104b2c68434927bbce8ba77785a18b4d4c))
+
 ## 0.1.0-alpha.43 (2025-03-28)
 
 Full Changelog: [v0.1.0-alpha.42...v0.1.0-alpha.43](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.42...v0.1.0-alpha.43)
