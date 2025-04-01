@@ -153,6 +153,21 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: OrbInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int = (data.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+
     class Data
     private constructor(
         private val perPriceCosts: JsonField<List<PerPriceCost>>,
@@ -444,6 +459,27 @@ private constructor(
             total()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (perPriceCosts.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (subtotal.asKnown() == null) 0 else 1) +
+                (if (timeframeEnd.asKnown() == null) 0 else 1) +
+                (if (timeframeStart.asKnown() == null) 0 else 1) +
+                (if (total.asKnown() == null) 0 else 1)
 
         class PerPriceCost
         private constructor(
@@ -882,6 +918,27 @@ private constructor(
                 quantity()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (price.asKnown()?.validity() ?: 0) +
+                    (if (priceId.asKnown() == null) 0 else 1) +
+                    (if (subtotal.asKnown() == null) 0 else 1) +
+                    (if (total.asKnown() == null) 0 else 1) +
+                    (if (quantity.asKnown() == null) 0 else 1)
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {

@@ -2,7 +2,9 @@
 
 package com.withorb.api.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -181,5 +183,102 @@ internal class CustomerTest {
             )
         assertThat(customer.reportingConfiguration())
             .isEqualTo(Customer.ReportingConfiguration.builder().exempt(true).build())
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val customer =
+            Customer.builder()
+                .id("id")
+                .addAdditionalEmail("string")
+                .autoCollection(true)
+                .balance("balance")
+                .billingAddress(
+                    Customer.BillingAddress.builder()
+                        .city("city")
+                        .country("country")
+                        .line1("line1")
+                        .line2("line2")
+                        .postalCode("postal_code")
+                        .state("state")
+                        .build()
+                )
+                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .currency("currency")
+                .email("email")
+                .emailDelivery(true)
+                .exemptFromAutomatedTax(true)
+                .externalCustomerId("external_customer_id")
+                .hierarchy(
+                    Customer.Hierarchy.builder()
+                        .addChild(
+                            Customer.Hierarchy.Child.builder()
+                                .id("id")
+                                .externalCustomerId("external_customer_id")
+                                .build()
+                        )
+                        .parent(
+                            Customer.Hierarchy.Parent.builder()
+                                .id("id")
+                                .externalCustomerId("external_customer_id")
+                                .build()
+                        )
+                        .build()
+                )
+                .metadata(
+                    Customer.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .name("name")
+                .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
+                .paymentProviderId("payment_provider_id")
+                .portalUrl("portal_url")
+                .shippingAddress(
+                    Customer.ShippingAddress.builder()
+                        .city("city")
+                        .country("country")
+                        .line1("line1")
+                        .line2("line2")
+                        .postalCode("postal_code")
+                        .state("state")
+                        .build()
+                )
+                .taxId(
+                    Customer.TaxId.builder()
+                        .country(Customer.TaxId.Country.AD)
+                        .type(Customer.TaxId.Type.AD_NRT)
+                        .value("value")
+                        .build()
+                )
+                .timezone("timezone")
+                .accountingSyncConfiguration(
+                    Customer.AccountingSyncConfiguration.builder()
+                        .addAccountingProvider(
+                            Customer.AccountingSyncConfiguration.AccountingProvider.builder()
+                                .externalProviderId("external_provider_id")
+                                .providerType(
+                                    Customer.AccountingSyncConfiguration.AccountingProvider
+                                        .ProviderType
+                                        .QUICKBOOKS
+                                )
+                                .build()
+                        )
+                        .excluded(true)
+                        .build()
+                )
+                .reportingConfiguration(
+                    Customer.ReportingConfiguration.builder().exempt(true).build()
+                )
+                .build()
+
+        val roundtrippedCustomer =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(customer),
+                jacksonTypeRef<Customer>(),
+            )
+
+        assertThat(roundtrippedCustomer).isEqualTo(customer)
     }
 }

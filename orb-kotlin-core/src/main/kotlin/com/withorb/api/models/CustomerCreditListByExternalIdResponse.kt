@@ -373,9 +373,31 @@ private constructor(
         expiryDate()
         maximumInitialBalance()
         perUnitCostBasis()
-        status()
+        status().validate()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: OrbInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (id.asKnown() == null) 0 else 1) +
+            (if (balance.asKnown() == null) 0 else 1) +
+            (if (effectiveDate.asKnown() == null) 0 else 1) +
+            (if (expiryDate.asKnown() == null) 0 else 1) +
+            (if (maximumInitialBalance.asKnown() == null) 0 else 1) +
+            (if (perUnitCostBasis.asKnown() == null) 0 else 1) +
+            (status.asKnown()?.validity() ?: 0)
 
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -460,6 +482,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

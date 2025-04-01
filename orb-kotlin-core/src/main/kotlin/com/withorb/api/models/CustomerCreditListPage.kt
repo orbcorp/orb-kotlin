@@ -10,6 +10,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
+import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.services.blocking.customers.CreditService
 import java.util.Collections
 import java.util.Objects
@@ -128,6 +129,14 @@ private constructor(
             paginationMetadata().validate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
 
         fun toBuilder() = Builder().from(this)
 

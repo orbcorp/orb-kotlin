@@ -1224,9 +1224,33 @@ private constructor(
             externalPlanId()
             metadata()?.validate()
             netTerms()
-            status()
+            status()?.validate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (currency.asKnown() == null) 0 else 1) +
+                (if (name.asKnown() == null) 0 else 1) +
+                (prices.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (defaultInvoiceMemo.asKnown() == null) 0 else 1) +
+                (if (externalPlanId.asKnown() == null) 0 else 1) +
+                (metadata.asKnown()?.validity() ?: 0) +
+                (if (netTerms.asKnown() == null) 0 else 1) +
+                (status.asKnown()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1469,8 +1493,8 @@ private constructor(
 
         fun _json(): JsonValue? = _json
 
-        fun <T> accept(visitor: Visitor<T>): T {
-            return when {
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
                 newPlanUnit != null -> visitor.visitNewPlanUnit(newPlanUnit)
                 newPlanPackage != null -> visitor.visitNewPlanPackage(newPlanPackage)
                 newPlanMatrix != null -> visitor.visitNewPlanMatrix(newPlanMatrix)
@@ -1521,7 +1545,6 @@ private constructor(
                     visitor.visitNewPlanCumulativeGroupedBulk(newPlanCumulativeGroupedBulk)
                 else -> visitor.unknown(_json)
             }
-        }
 
         private var validated: Boolean = false
 
@@ -1671,6 +1694,121 @@ private constructor(
             )
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            accept(
+                object : Visitor<Int> {
+                    override fun visitNewPlanUnit(newPlanUnit: NewPlanUnitPrice) =
+                        newPlanUnit.validity()
+
+                    override fun visitNewPlanPackage(newPlanPackage: NewPlanPackagePrice) =
+                        newPlanPackage.validity()
+
+                    override fun visitNewPlanMatrix(newPlanMatrix: NewPlanMatrixPrice) =
+                        newPlanMatrix.validity()
+
+                    override fun visitNewPlanTiered(newPlanTiered: NewPlanTieredPrice) =
+                        newPlanTiered.validity()
+
+                    override fun visitNewPlanTieredBps(newPlanTieredBps: NewPlanTieredBpsPrice) =
+                        newPlanTieredBps.validity()
+
+                    override fun visitNewPlanBps(newPlanBps: NewPlanBpsPrice) =
+                        newPlanBps.validity()
+
+                    override fun visitNewPlanBulkBps(newPlanBulkBps: NewPlanBulkBpsPrice) =
+                        newPlanBulkBps.validity()
+
+                    override fun visitNewPlanBulk(newPlanBulk: NewPlanBulkPrice) =
+                        newPlanBulk.validity()
+
+                    override fun visitNewPlanThresholdTotalAmount(
+                        newPlanThresholdTotalAmount: NewPlanThresholdTotalAmountPrice
+                    ) = newPlanThresholdTotalAmount.validity()
+
+                    override fun visitNewPlanTieredPackage(
+                        newPlanTieredPackage: NewPlanTieredPackagePrice
+                    ) = newPlanTieredPackage.validity()
+
+                    override fun visitNewPlanTieredWithMinimum(
+                        newPlanTieredWithMinimum: NewPlanTieredWithMinimumPrice
+                    ) = newPlanTieredWithMinimum.validity()
+
+                    override fun visitNewPlanUnitWithPercent(
+                        newPlanUnitWithPercent: NewPlanUnitWithPercentPrice
+                    ) = newPlanUnitWithPercent.validity()
+
+                    override fun visitNewPlanPackageWithAllocation(
+                        newPlanPackageWithAllocation: NewPlanPackageWithAllocationPrice
+                    ) = newPlanPackageWithAllocation.validity()
+
+                    override fun visitNewPlanTierWithProration(
+                        newPlanTierWithProration: NewPlanTierWithProrationPrice
+                    ) = newPlanTierWithProration.validity()
+
+                    override fun visitNewPlanUnitWithProration(
+                        newPlanUnitWithProration: NewPlanUnitWithProrationPrice
+                    ) = newPlanUnitWithProration.validity()
+
+                    override fun visitNewPlanGroupedAllocation(
+                        newPlanGroupedAllocation: NewPlanGroupedAllocationPrice
+                    ) = newPlanGroupedAllocation.validity()
+
+                    override fun visitNewPlanGroupedWithProratedMinimum(
+                        newPlanGroupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
+                    ) = newPlanGroupedWithProratedMinimum.validity()
+
+                    override fun visitNewPlanGroupedWithMeteredMinimum(
+                        newPlanGroupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
+                    ) = newPlanGroupedWithMeteredMinimum.validity()
+
+                    override fun visitNewPlanMatrixWithDisplayName(
+                        newPlanMatrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
+                    ) = newPlanMatrixWithDisplayName.validity()
+
+                    override fun visitNewPlanBulkWithProration(
+                        newPlanBulkWithProration: NewPlanBulkWithProrationPrice
+                    ) = newPlanBulkWithProration.validity()
+
+                    override fun visitNewPlanGroupedTieredPackage(
+                        newPlanGroupedTieredPackage: NewPlanGroupedTieredPackagePrice
+                    ) = newPlanGroupedTieredPackage.validity()
+
+                    override fun visitNewPlanMaxGroupTieredPackage(
+                        newPlanMaxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
+                    ) = newPlanMaxGroupTieredPackage.validity()
+
+                    override fun visitNewPlanScalableMatrixWithUnitPricing(
+                        newPlanScalableMatrixWithUnitPricing:
+                            NewPlanScalableMatrixWithUnitPricingPrice
+                    ) = newPlanScalableMatrixWithUnitPricing.validity()
+
+                    override fun visitNewPlanScalableMatrixWithTieredPricing(
+                        newPlanScalableMatrixWithTieredPricing:
+                            NewPlanScalableMatrixWithTieredPricingPrice
+                    ) = newPlanScalableMatrixWithTieredPricing.validity()
+
+                    override fun visitNewPlanCumulativeGroupedBulk(
+                        newPlanCumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
+                    ) = newPlanCumulativeGroupedBulk.validity()
+
+                    override fun unknown(json: JsonValue?) = 0
+                }
+            )
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1928,204 +2066,160 @@ private constructor(
 
                 when (modelType) {
                     "unit" -> {
-                        return Price(
-                            newPlanUnit = deserialize(node, jacksonTypeRef<NewPlanUnitPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanUnitPrice>())?.let {
+                            Price(newPlanUnit = it, _json = json)
+                        } ?: Price(_json = json)
                     }
                     "package" -> {
-                        return Price(
-                            newPlanPackage =
-                                deserialize(node, jacksonTypeRef<NewPlanPackagePrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanPackagePrice>())?.let {
+                            Price(newPlanPackage = it, _json = json)
+                        } ?: Price(_json = json)
                     }
                     "matrix" -> {
-                        return Price(
-                            newPlanMatrix = deserialize(node, jacksonTypeRef<NewPlanMatrixPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanMatrixPrice>())?.let {
+                            Price(newPlanMatrix = it, _json = json)
+                        } ?: Price(_json = json)
                     }
                     "tiered" -> {
-                        return Price(
-                            newPlanTiered = deserialize(node, jacksonTypeRef<NewPlanTieredPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanTieredPrice>())?.let {
+                            Price(newPlanTiered = it, _json = json)
+                        } ?: Price(_json = json)
                     }
                     "tiered_bps" -> {
-                        return Price(
-                            newPlanTieredBps =
-                                deserialize(node, jacksonTypeRef<NewPlanTieredBpsPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanTieredBpsPrice>())?.let {
+                            Price(newPlanTieredBps = it, _json = json)
+                        } ?: Price(_json = json)
                     }
                     "bps" -> {
-                        return Price(
-                            newPlanBps = deserialize(node, jacksonTypeRef<NewPlanBpsPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanBpsPrice>())?.let {
+                            Price(newPlanBps = it, _json = json)
+                        } ?: Price(_json = json)
                     }
                     "bulk_bps" -> {
-                        return Price(
-                            newPlanBulkBps =
-                                deserialize(node, jacksonTypeRef<NewPlanBulkBpsPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanBulkBpsPrice>())?.let {
+                            Price(newPlanBulkBps = it, _json = json)
+                        } ?: Price(_json = json)
                     }
                     "bulk" -> {
-                        return Price(
-                            newPlanBulk = deserialize(node, jacksonTypeRef<NewPlanBulkPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanBulkPrice>())?.let {
+                            Price(newPlanBulk = it, _json = json)
+                        } ?: Price(_json = json)
                     }
                     "threshold_total_amount" -> {
-                        return Price(
-                            newPlanThresholdTotalAmount =
-                                deserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanThresholdTotalAmountPrice>(),
-                                ),
-                            _json = json,
-                        )
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanThresholdTotalAmountPrice>(),
+                            )
+                            ?.let { Price(newPlanThresholdTotalAmount = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "tiered_package" -> {
-                        return Price(
-                            newPlanTieredPackage =
-                                deserialize(node, jacksonTypeRef<NewPlanTieredPackagePrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanTieredPackagePrice>())
+                            ?.let { Price(newPlanTieredPackage = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "tiered_with_minimum" -> {
-                        return Price(
-                            newPlanTieredWithMinimum =
-                                deserialize(node, jacksonTypeRef<NewPlanTieredWithMinimumPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanTieredWithMinimumPrice>())
+                            ?.let { Price(newPlanTieredWithMinimum = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "unit_with_percent" -> {
-                        return Price(
-                            newPlanUnitWithPercent =
-                                deserialize(node, jacksonTypeRef<NewPlanUnitWithPercentPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanUnitWithPercentPrice>())
+                            ?.let { Price(newPlanUnitWithPercent = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "package_with_allocation" -> {
-                        return Price(
-                            newPlanPackageWithAllocation =
-                                deserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanPackageWithAllocationPrice>(),
-                                ),
-                            _json = json,
-                        )
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanPackageWithAllocationPrice>(),
+                            )
+                            ?.let { Price(newPlanPackageWithAllocation = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "tiered_with_proration" -> {
-                        return Price(
-                            newPlanTierWithProration =
-                                deserialize(node, jacksonTypeRef<NewPlanTierWithProrationPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanTierWithProrationPrice>())
+                            ?.let { Price(newPlanTierWithProration = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "unit_with_proration" -> {
-                        return Price(
-                            newPlanUnitWithProration =
-                                deserialize(node, jacksonTypeRef<NewPlanUnitWithProrationPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanUnitWithProrationPrice>())
+                            ?.let { Price(newPlanUnitWithProration = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "grouped_allocation" -> {
-                        return Price(
-                            newPlanGroupedAllocation =
-                                deserialize(node, jacksonTypeRef<NewPlanGroupedAllocationPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanGroupedAllocationPrice>())
+                            ?.let { Price(newPlanGroupedAllocation = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "grouped_with_prorated_minimum" -> {
-                        return Price(
-                            newPlanGroupedWithProratedMinimum =
-                                deserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanGroupedWithProratedMinimumPrice>(),
-                                ),
-                            _json = json,
-                        )
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanGroupedWithProratedMinimumPrice>(),
+                            )
+                            ?.let { Price(newPlanGroupedWithProratedMinimum = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "grouped_with_metered_minimum" -> {
-                        return Price(
-                            newPlanGroupedWithMeteredMinimum =
-                                deserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanGroupedWithMeteredMinimumPrice>(),
-                                ),
-                            _json = json,
-                        )
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanGroupedWithMeteredMinimumPrice>(),
+                            )
+                            ?.let { Price(newPlanGroupedWithMeteredMinimum = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "matrix_with_display_name" -> {
-                        return Price(
-                            newPlanMatrixWithDisplayName =
-                                deserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanMatrixWithDisplayNamePrice>(),
-                                ),
-                            _json = json,
-                        )
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanMatrixWithDisplayNamePrice>(),
+                            )
+                            ?.let { Price(newPlanMatrixWithDisplayName = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "bulk_with_proration" -> {
-                        return Price(
-                            newPlanBulkWithProration =
-                                deserialize(node, jacksonTypeRef<NewPlanBulkWithProrationPrice>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewPlanBulkWithProrationPrice>())
+                            ?.let { Price(newPlanBulkWithProration = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "grouped_tiered_package" -> {
-                        return Price(
-                            newPlanGroupedTieredPackage =
-                                deserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanGroupedTieredPackagePrice>(),
-                                ),
-                            _json = json,
-                        )
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanGroupedTieredPackagePrice>(),
+                            )
+                            ?.let { Price(newPlanGroupedTieredPackage = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "max_group_tiered_package" -> {
-                        return Price(
-                            newPlanMaxGroupTieredPackage =
-                                deserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanMaxGroupTieredPackagePrice>(),
-                                ),
-                            _json = json,
-                        )
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanMaxGroupTieredPackagePrice>(),
+                            )
+                            ?.let { Price(newPlanMaxGroupTieredPackage = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "scalable_matrix_with_unit_pricing" -> {
-                        return Price(
-                            newPlanScalableMatrixWithUnitPricing =
-                                deserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanScalableMatrixWithUnitPricingPrice>(),
-                                ),
-                            _json = json,
-                        )
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanScalableMatrixWithUnitPricingPrice>(),
+                            )
+                            ?.let { Price(newPlanScalableMatrixWithUnitPricing = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                     "scalable_matrix_with_tiered_pricing" -> {
-                        return Price(
-                            newPlanScalableMatrixWithTieredPricing =
-                                deserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanScalableMatrixWithTieredPricingPrice>(),
-                                ),
-                            _json = json,
-                        )
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanScalableMatrixWithTieredPricingPrice>(),
+                            )
+                            ?.let {
+                                Price(newPlanScalableMatrixWithTieredPricing = it, _json = json)
+                            } ?: Price(_json = json)
                     }
                     "cumulative_grouped_bulk" -> {
-                        return Price(
-                            newPlanCumulativeGroupedBulk =
-                                deserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanCumulativeGroupedBulkPrice>(),
-                                ),
-                            _json = json,
-                        )
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanCumulativeGroupedBulkPrice>(),
+                            )
+                            ?.let { Price(newPlanCumulativeGroupedBulk = it, _json = json) }
+                            ?: Price(_json = json)
                     }
                 }
 
@@ -2935,9 +3029,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 unitConfig().validate()
                 billableMetricId()
@@ -2952,6 +3046,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (unitConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -3067,6 +3192,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -3162,6 +3314,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -3309,6 +3488,22 @@ private constructor(
                     unitAmount()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = (if (unitAmount.asKnown() == null) 0 else 1)
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -3506,9 +3701,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -3604,6 +3817,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -3815,9 +4055,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -3913,6 +4171,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -4017,6 +4302,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -4800,9 +5104,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 packageConfig().validate()
                 billableMetricId()
@@ -4817,6 +5121,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (packageConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -4932,6 +5267,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -5027,6 +5389,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -5222,6 +5611,24 @@ private constructor(
                     packageSize()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (packageAmount.asKnown() == null) 0 else 1) +
+                        (if (packageSize.asKnown() == null) 0 else 1)
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -5419,9 +5826,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -5517,6 +5942,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -5728,9 +6180,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -5826,6 +6296,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -5930,6 +6427,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -6713,10 +7229,10 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
                 matrixConfig().validate()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -6730,6 +7246,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (matrixConfig.asKnown()?.validity() ?: 0) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -6844,6 +7391,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -7108,6 +7682,25 @@ private constructor(
                     validated = true
                 }
 
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (defaultUnitAmount.asKnown() == null) 0 else 1) +
+                        (dimensions.asKnown()?.sumOf { (if (it == null) 0 else 1).toInt() } ?: 0) +
+                        (matrixValues.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+
                 class MatrixValue
                 private constructor(
                     private val dimensionValues: JsonField<List<String?>>,
@@ -7309,6 +7902,24 @@ private constructor(
                         validated = true
                     }
 
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (dimensionValues.asKnown()?.sumOf { (if (it == null) 0 else 1).toInt() }
+                            ?: 0) + (if (unitAmount.asKnown() == null) 0 else 1)
+
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
                             return true
@@ -7427,6 +8038,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -7619,9 +8257,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -7717,6 +8373,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -7928,9 +8611,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -8026,6 +8727,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -8130,6 +8858,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -8913,9 +9660,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 tieredConfig().validate()
                 billableMetricId()
@@ -8930,6 +9677,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (tieredConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -9045,6 +9823,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -9140,6 +9945,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -9297,6 +10129,23 @@ private constructor(
                     tiers().forEach { it.validate() }
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (tiers.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
                 class Tier
                 private constructor(
@@ -9525,6 +10374,25 @@ private constructor(
                         validated = true
                     }
 
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (if (firstUnit.asKnown() == null) 0 else 1) +
+                            (if (unitAmount.asKnown() == null) 0 else 1) +
+                            (if (lastUnit.asKnown() == null) 0 else 1)
+
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
                             return true
@@ -9739,9 +10607,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -9837,6 +10723,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -10048,9 +10961,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -10146,6 +11077,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -10250,6 +11208,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -11035,9 +12012,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 tieredBpsConfig().validate()
                 billableMetricId()
@@ -11052,6 +12029,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (tieredBpsConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -11167,6 +12175,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -11262,6 +12297,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -11423,6 +12485,23 @@ private constructor(
                     tiers().forEach { it.validate() }
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (tiers.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
                 class Tier
                 private constructor(
@@ -11681,6 +12760,26 @@ private constructor(
                         validated = true
                     }
 
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (if (bps.asKnown() == null) 0 else 1) +
+                            (if (minimumAmount.asKnown() == null) 0 else 1) +
+                            (if (maximumAmount.asKnown() == null) 0 else 1) +
+                            (if (perUnitMaximum.asKnown() == null) 0 else 1)
+
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
                             return true
@@ -11895,9 +12994,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -11993,6 +13110,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -12204,9 +13348,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -12302,6 +13464,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -12406,6 +13595,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -13189,9 +14397,9 @@ private constructor(
                 }
 
                 bpsConfig().validate()
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -13205,6 +14413,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (bpsConfig.asKnown()?.validity() ?: 0) +
+                    (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             class BpsConfig
             private constructor(
@@ -13374,6 +14613,24 @@ private constructor(
                     validated = true
                 }
 
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (bps.asKnown() == null) 0 else 1) +
+                        (if (perUnitMaximum.asKnown() == null) 0 else 1)
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -13506,6 +14763,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -13601,6 +14885,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -13793,9 +15104,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -13891,6 +15220,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -14102,9 +15458,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -14200,6 +15574,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -14304,6 +15705,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -15088,9 +16508,9 @@ private constructor(
                 }
 
                 bulkBpsConfig().validate()
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -15104,6 +16524,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (bulkBpsConfig.asKnown()?.validity() ?: 0) +
+                    (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             class BulkBpsConfig
             private constructor(
@@ -15252,6 +16703,23 @@ private constructor(
                     tiers().forEach { it.validate() }
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (tiers.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
                 class Tier
                 private constructor(
@@ -15466,6 +16934,25 @@ private constructor(
                         validated = true
                     }
 
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (if (bps.asKnown() == null) 0 else 1) +
+                            (if (maximumAmount.asKnown() == null) 0 else 1) +
+                            (if (perUnitMaximum.asKnown() == null) 0 else 1)
+
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
                             return true
@@ -15616,6 +17103,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -15711,6 +17225,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -15903,9 +17444,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -16001,6 +17560,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -16212,9 +17798,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -16310,6 +17914,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -16414,6 +18045,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -17197,9 +18847,9 @@ private constructor(
                 }
 
                 bulkConfig().validate()
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -17213,6 +18863,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (bulkConfig.asKnown()?.validity() ?: 0) +
+                    (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             class BulkConfig
             private constructor(
@@ -17357,6 +19038,23 @@ private constructor(
                     tiers().forEach { it.validate() }
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (tiers.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
                 class Tier
                 private constructor(
@@ -17542,6 +19240,24 @@ private constructor(
                         validated = true
                     }
 
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (if (unitAmount.asKnown() == null) 0 else 1) +
+                            (if (maximumUnits.asKnown() == null) 0 else 1)
+
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
                             return true
@@ -17692,6 +19408,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -17787,6 +19530,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -17979,9 +19749,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -18077,6 +19865,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -18288,9 +20103,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -18386,6 +20219,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -18490,6 +20350,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -19285,9 +21164,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 thresholdTotalAmountConfig().validate()
                 billableMetricId()
@@ -19302,6 +21181,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (thresholdTotalAmountConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -19417,6 +21327,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -19513,6 +21450,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -19599,6 +21563,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -19796,9 +21779,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -19894,6 +21895,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -20105,9 +22133,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -20203,6 +22249,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -20307,6 +22380,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -21095,9 +23187,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 tieredPackageConfig().validate()
                 billableMetricId()
@@ -21112,6 +23204,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (tieredPackageConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -21227,6 +23350,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -21323,6 +23473,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -21408,6 +23585,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -21605,9 +23801,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -21703,6 +23917,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -21914,9 +24155,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -22012,6 +24271,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -22116,6 +24402,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -22907,9 +25212,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 tieredWithMinimumConfig().validate()
                 billableMetricId()
@@ -22924,6 +25229,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (tieredWithMinimumConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -23039,6 +25375,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -23135,6 +25498,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -23220,6 +25610,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -23417,9 +25826,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -23515,6 +25942,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -23726,9 +26180,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -23824,6 +26296,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -23928,6 +26427,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -24718,9 +27236,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 unitWithPercentConfig().validate()
                 billableMetricId()
@@ -24735,6 +27253,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (unitWithPercentConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -24850,6 +27399,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -24946,6 +27522,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -25031,6 +27634,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -25228,9 +27850,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -25326,6 +27966,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -25537,9 +28204,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -25635,6 +28320,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -25739,6 +28451,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -26534,9 +29265,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 packageWithAllocationConfig().validate()
                 billableMetricId()
@@ -26551,6 +29282,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (packageWithAllocationConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -26666,6 +29428,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -26762,6 +29551,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -26848,6 +29664,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -27045,9 +29880,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -27143,6 +29996,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -27354,9 +30234,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -27452,6 +30350,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -27556,6 +30481,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -28348,9 +31292,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 tieredWithProrationConfig().validate()
                 billableMetricId()
@@ -28365,6 +31309,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (tieredWithProrationConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -28480,6 +31455,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -28576,6 +31578,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -28662,6 +31691,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -28859,9 +31907,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -28957,6 +32023,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -29168,9 +32261,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -29266,6 +32377,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -29370,6 +32508,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -30161,9 +33318,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 unitWithProrationConfig().validate()
                 billableMetricId()
@@ -30178,6 +33335,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (unitWithProrationConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -30293,6 +33481,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -30389,6 +33604,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -30474,6 +33716,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -30671,9 +33932,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -30769,6 +34048,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -30980,9 +34286,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -31078,6 +34402,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -31182,6 +34533,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -31973,10 +35343,10 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 groupedAllocationConfig().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -31990,6 +35360,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (groupedAllocationConfig.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -32105,6 +35506,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -32190,6 +35618,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -32291,6 +35738,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -32483,9 +35957,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -32581,6 +36073,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -32792,9 +36311,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -32890,6 +36427,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -32994,6 +36558,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -33796,10 +37379,10 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 groupedWithProratedMinimumConfig().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -33813,6 +37396,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (groupedWithProratedMinimumConfig.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -33928,6 +37542,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -34015,6 +37656,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -34116,6 +37776,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -34308,9 +37995,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -34406,6 +38111,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -34617,9 +38349,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -34715,6 +38465,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -34819,6 +38596,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -35618,10 +39414,10 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 groupedWithMeteredMinimumConfig().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -35635,6 +39431,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (groupedWithMeteredMinimumConfig.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -35750,6 +39577,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -35837,6 +39691,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -35938,6 +39811,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -36130,9 +40030,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -36228,6 +40146,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -36439,9 +40384,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -36537,6 +40500,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -36641,6 +40631,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -37436,10 +41445,10 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
                 matrixWithDisplayNameConfig().validate()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -37453,6 +41462,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (matrixWithDisplayNameConfig.asKnown()?.validity() ?: 0) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -37568,6 +41608,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -37654,6 +41721,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -37755,6 +41841,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -37947,9 +42060,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -38045,6 +42176,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -38256,9 +42414,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -38354,6 +42530,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -38458,6 +42661,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -39250,9 +43472,9 @@ private constructor(
                 }
 
                 bulkWithProrationConfig().validate()
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -39266,6 +43488,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (bulkWithProrationConfig.asKnown()?.validity() ?: 0) +
+                    (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             class BulkWithProrationConfig
             @JsonCreator
@@ -39339,6 +43592,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -39472,6 +43744,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -39567,6 +43866,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -39759,9 +44085,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -39857,6 +44201,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -40068,9 +44439,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -40166,6 +44555,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -40270,6 +44686,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -41065,10 +45500,10 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 groupedTieredPackageConfig().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -41082,6 +45517,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (groupedTieredPackageConfig.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -41197,6 +45663,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -41283,6 +45776,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -41384,6 +45896,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -41576,9 +46115,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -41674,6 +46231,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -41885,9 +46469,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -41983,6 +46585,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -42087,6 +46716,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -42882,10 +47530,10 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
                 maxGroupTieredPackageConfig().validate()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -42899,6 +47547,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (maxGroupTieredPackageConfig.asKnown()?.validity() ?: 0) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -43014,6 +47693,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -43100,6 +47806,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -43201,6 +47926,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -43393,9 +48145,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -43491,6 +48261,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -43702,9 +48499,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -43800,6 +48615,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -43904,6 +48746,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -44718,9 +49579,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 scalableMatrixWithUnitPricingConfig().validate()
                 billableMetricId()
@@ -44735,6 +49596,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (scalableMatrixWithUnitPricingConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -44850,6 +49742,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -44946,6 +49865,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -45033,6 +49979,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -45230,9 +50195,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -45328,6 +50311,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -45539,9 +50549,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -45637,6 +50665,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -45741,6 +50796,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -46557,9 +51631,9 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 scalableMatrixWithTieredPricingConfig().validate()
                 billableMetricId()
@@ -46574,6 +51648,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (scalableMatrixWithTieredPricingConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -46689,6 +51794,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -46788,6 +51920,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -46876,6 +52035,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -47073,9 +52251,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -47171,6 +52367,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -47382,9 +52605,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -47480,6 +52721,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -47584,6 +52852,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -48379,10 +53666,10 @@ private constructor(
                     return@apply
                 }
 
-                cadence()
+                cadence().validate()
                 cumulativeGroupedBulkConfig().validate()
                 itemId()
-                modelType()
+                modelType().validate()
                 name()
                 billableMetricId()
                 billedInAdvance()
@@ -48396,6 +53683,37 @@ private constructor(
                 metadata()?.validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (cumulativeGroupedBulkConfig.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (modelType.asKnown()?.validity() ?: 0) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
 
             /** The cadence to bill for this price on. */
             class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -48511,6 +53829,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -48597,6 +53942,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -48698,6 +54062,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ModelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -48890,9 +54281,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -48988,6 +54397,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -49199,9 +54635,27 @@ private constructor(
                     }
 
                     duration()
-                    durationUnit()
+                    durationUnit().validate()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
 
                 /** The unit of billing period duration. */
                 class DurationUnit
@@ -49297,6 +54751,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -49401,6 +54882,25 @@ private constructor(
 
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -49508,6 +55008,23 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -49612,6 +55129,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -2,6 +2,8 @@
 
 package com.withorb.api.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.withorb.api.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -58,5 +60,40 @@ internal class AlertTest {
             .isEqualTo(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
         assertThat(alert.thresholds()).containsExactly(Alert.Threshold.builder().value(0.0).build())
         assertThat(alert.type()).isEqualTo(Alert.Type.CREDIT_BALANCE_DEPLETED)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val alert =
+            Alert.builder()
+                .id("XuxCbt7x9L82yyeF")
+                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .currency("currency")
+                .customer(
+                    Alert.Customer.builder()
+                        .id("id")
+                        .externalCustomerId("external_customer_id")
+                        .build()
+                )
+                .enabled(true)
+                .metric(Alert.Metric.builder().id("id").build())
+                .plan(
+                    Alert.Plan.builder()
+                        .id("m2t5akQeh2obwxeU")
+                        .externalPlanId("m2t5akQeh2obwxeU")
+                        .name("Example plan")
+                        .planVersion("plan_version")
+                        .build()
+                )
+                .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
+                .addThreshold(Alert.Threshold.builder().value(0.0).build())
+                .type(Alert.Type.CREDIT_BALANCE_DEPLETED)
+                .build()
+
+        val roundtrippedAlert =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(alert), jacksonTypeRef<Alert>())
+
+        assertThat(roundtrippedAlert).isEqualTo(alert)
     }
 }

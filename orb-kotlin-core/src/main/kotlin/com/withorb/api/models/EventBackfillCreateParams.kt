@@ -896,6 +896,29 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (timeframeEnd.asKnown() == null) 0 else 1) +
+                (if (timeframeStart.asKnown() == null) 0 else 1) +
+                (if (closeTime.asKnown() == null) 0 else 1) +
+                (if (customerId.asKnown() == null) 0 else 1) +
+                (if (deprecationFilter.asKnown() == null) 0 else 1) +
+                (if (externalCustomerId.asKnown() == null) 0 else 1) +
+                (if (replaceExistingEvents.asKnown() == null) 0 else 1)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
