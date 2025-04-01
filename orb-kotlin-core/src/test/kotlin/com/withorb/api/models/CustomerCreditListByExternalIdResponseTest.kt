@@ -2,6 +2,8 @@
 
 package com.withorb.api.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.withorb.api.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -32,5 +34,29 @@ internal class CustomerCreditListByExternalIdResponseTest {
             .isEqualTo("per_unit_cost_basis")
         assertThat(customerCreditListByExternalIdResponse.status())
             .isEqualTo(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val customerCreditListByExternalIdResponse =
+            CustomerCreditListByExternalIdResponse.builder()
+                .id("id")
+                .balance(0.0)
+                .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .maximumInitialBalance(0.0)
+                .perUnitCostBasis("per_unit_cost_basis")
+                .status(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
+                .build()
+
+        val roundtrippedCustomerCreditListByExternalIdResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(customerCreditListByExternalIdResponse),
+                jacksonTypeRef<CustomerCreditListByExternalIdResponse>(),
+            )
+
+        assertThat(roundtrippedCustomerCreditListByExternalIdResponse)
+            .isEqualTo(customerCreditListByExternalIdResponse)
     }
 }

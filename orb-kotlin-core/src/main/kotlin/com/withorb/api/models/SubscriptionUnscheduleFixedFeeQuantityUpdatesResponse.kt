@@ -1348,10 +1348,50 @@ private constructor(
         priceIntervals().forEach { it.validate() }
         redeemedCoupon()?.validate()
         startDate()
-        status()
+        status().validate()
         trialInfo().validate()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: OrbInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (id.asKnown() == null) 0 else 1) +
+            (if (activePlanPhaseOrder.asKnown() == null) 0 else 1) +
+            (adjustmentIntervals.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (autoCollection.asKnown() == null) 0 else 1) +
+            (billingCycleAnchorConfiguration.asKnown()?.validity() ?: 0) +
+            (if (billingCycleDay.asKnown() == null) 0 else 1) +
+            (if (createdAt.asKnown() == null) 0 else 1) +
+            (if (currentBillingPeriodEndDate.asKnown() == null) 0 else 1) +
+            (if (currentBillingPeriodStartDate.asKnown() == null) 0 else 1) +
+            (customer.asKnown()?.validity() ?: 0) +
+            (if (defaultInvoiceMemo.asKnown() == null) 0 else 1) +
+            (discountIntervals.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (endDate.asKnown() == null) 0 else 1) +
+            (fixedFeeQuantitySchedule.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (invoicingThreshold.asKnown() == null) 0 else 1) +
+            (maximumIntervals.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (metadata.asKnown()?.validity() ?: 0) +
+            (minimumIntervals.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (netTerms.asKnown() == null) 0 else 1) +
+            (plan.asKnown()?.validity() ?: 0) +
+            (priceIntervals.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (redeemedCoupon.asKnown()?.validity() ?: 0) +
+            (if (startDate.asKnown() == null) 0 else 1) +
+            (status.asKnown()?.validity() ?: 0) +
+            (trialInfo.asKnown()?.validity() ?: 0)
 
     class AdjustmentInterval
     private constructor(
@@ -1688,6 +1728,27 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (id.asKnown() == null) 0 else 1) +
+                (adjustment.asKnown()?.validity() ?: 0) +
+                (appliesToPriceIntervalIds.asKnown()?.size ?: 0) +
+                (if (endDate.asKnown() == null) 0 else 1) +
+                (if (startDate.asKnown() == null) 0 else 1)
+
         @JsonDeserialize(using = Adjustment.Deserializer::class)
         @JsonSerialize(using = Adjustment.Serializer::class)
         class Adjustment
@@ -1739,8 +1800,8 @@ private constructor(
 
             fun _json(): JsonValue? = _json
 
-            fun <T> accept(visitor: Visitor<T>): T {
-                return when {
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
                     planPhaseUsageDiscount != null ->
                         visitor.visitPlanPhaseUsageDiscount(planPhaseUsageDiscount)
                     planPhaseAmountDiscount != null ->
@@ -1751,7 +1812,6 @@ private constructor(
                     planPhaseMaximum != null -> visitor.visitPlanPhaseMaximum(planPhaseMaximum)
                     else -> visitor.unknown(_json)
                 }
-            }
 
             private var validated: Boolean = false
 
@@ -1795,6 +1855,47 @@ private constructor(
                 )
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitPlanPhaseUsageDiscount(
+                            planPhaseUsageDiscount: PlanPhaseUsageDiscountAdjustment
+                        ) = planPhaseUsageDiscount.validity()
+
+                        override fun visitPlanPhaseAmountDiscount(
+                            planPhaseAmountDiscount: PlanPhaseAmountDiscountAdjustment
+                        ) = planPhaseAmountDiscount.validity()
+
+                        override fun visitPlanPhasePercentageDiscount(
+                            planPhasePercentageDiscount: PlanPhasePercentageDiscountAdjustment
+                        ) = planPhasePercentageDiscount.validity()
+
+                        override fun visitPlanPhaseMinimum(
+                            planPhaseMinimum: PlanPhaseMinimumAdjustment
+                        ) = planPhaseMinimum.validity()
+
+                        override fun visitPlanPhaseMaximum(
+                            planPhaseMaximum: PlanPhaseMaximumAdjustment
+                        ) = planPhaseMaximum.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1886,48 +1987,44 @@ private constructor(
 
                     when (adjustmentType) {
                         "usage_discount" -> {
-                            return Adjustment(
-                                planPhaseUsageDiscount =
-                                    deserialize(
-                                        node,
-                                        jacksonTypeRef<PlanPhaseUsageDiscountAdjustment>(),
-                                    ),
-                                _json = json,
-                            )
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<PlanPhaseUsageDiscountAdjustment>(),
+                                )
+                                ?.let { Adjustment(planPhaseUsageDiscount = it, _json = json) }
+                                ?: Adjustment(_json = json)
                         }
                         "amount_discount" -> {
-                            return Adjustment(
-                                planPhaseAmountDiscount =
-                                    deserialize(
-                                        node,
-                                        jacksonTypeRef<PlanPhaseAmountDiscountAdjustment>(),
-                                    ),
-                                _json = json,
-                            )
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<PlanPhaseAmountDiscountAdjustment>(),
+                                )
+                                ?.let { Adjustment(planPhaseAmountDiscount = it, _json = json) }
+                                ?: Adjustment(_json = json)
                         }
                         "percentage_discount" -> {
-                            return Adjustment(
-                                planPhasePercentageDiscount =
-                                    deserialize(
-                                        node,
-                                        jacksonTypeRef<PlanPhasePercentageDiscountAdjustment>(),
-                                    ),
-                                _json = json,
-                            )
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<PlanPhasePercentageDiscountAdjustment>(),
+                                )
+                                ?.let { Adjustment(planPhasePercentageDiscount = it, _json = json) }
+                                ?: Adjustment(_json = json)
                         }
                         "minimum" -> {
-                            return Adjustment(
-                                planPhaseMinimum =
-                                    deserialize(node, jacksonTypeRef<PlanPhaseMinimumAdjustment>()),
-                                _json = json,
-                            )
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<PlanPhaseMinimumAdjustment>(),
+                                )
+                                ?.let { Adjustment(planPhaseMinimum = it, _json = json) }
+                                ?: Adjustment(_json = json)
                         }
                         "maximum" -> {
-                            return Adjustment(
-                                planPhaseMaximum =
-                                    deserialize(node, jacksonTypeRef<PlanPhaseMaximumAdjustment>()),
-                                _json = json,
-                            )
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<PlanPhaseMaximumAdjustment>(),
+                                )
+                                ?.let { Adjustment(planPhaseMaximum = it, _json = json) }
+                                ?: Adjustment(_json = json)
                         }
                     }
 
@@ -2375,7 +2472,7 @@ private constructor(
                     }
 
                     id()
-                    adjustmentType()
+                    adjustmentType().validate()
                     appliesToPriceIds()
                     isInvoiceLevel()
                     planPhaseOrder()
@@ -2383,6 +2480,29 @@ private constructor(
                     usageDiscount()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (id.asKnown() == null) 0 else 1) +
+                        (adjustmentType.asKnown()?.validity() ?: 0) +
+                        (appliesToPriceIds.asKnown()?.size ?: 0) +
+                        (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
+                        (if (planPhaseOrder.asKnown() == null) 0 else 1) +
+                        (if (reason.asKnown() == null) 0 else 1) +
+                        (if (usageDiscount.asKnown() == null) 0 else 1)
 
                 class AdjustmentType
                 @JsonCreator
@@ -2471,6 +2591,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): AdjustmentType = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -2919,7 +3066,7 @@ private constructor(
                     }
 
                     id()
-                    adjustmentType()
+                    adjustmentType().validate()
                     amountDiscount()
                     appliesToPriceIds()
                     isInvoiceLevel()
@@ -2927,6 +3074,29 @@ private constructor(
                     reason()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (id.asKnown() == null) 0 else 1) +
+                        (adjustmentType.asKnown()?.validity() ?: 0) +
+                        (if (amountDiscount.asKnown() == null) 0 else 1) +
+                        (appliesToPriceIds.asKnown()?.size ?: 0) +
+                        (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
+                        (if (planPhaseOrder.asKnown() == null) 0 else 1) +
+                        (if (reason.asKnown() == null) 0 else 1)
 
                 class AdjustmentType
                 @JsonCreator
@@ -3015,6 +3185,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): AdjustmentType = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -3466,7 +3663,7 @@ private constructor(
                     }
 
                     id()
-                    adjustmentType()
+                    adjustmentType().validate()
                     appliesToPriceIds()
                     isInvoiceLevel()
                     percentageDiscount()
@@ -3474,6 +3671,29 @@ private constructor(
                     reason()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (id.asKnown() == null) 0 else 1) +
+                        (adjustmentType.asKnown()?.validity() ?: 0) +
+                        (appliesToPriceIds.asKnown()?.size ?: 0) +
+                        (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
+                        (if (percentageDiscount.asKnown() == null) 0 else 1) +
+                        (if (planPhaseOrder.asKnown() == null) 0 else 1) +
+                        (if (reason.asKnown() == null) 0 else 1)
 
                 class AdjustmentType
                 @JsonCreator
@@ -3562,6 +3782,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): AdjustmentType = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -4048,7 +4295,7 @@ private constructor(
                     }
 
                     id()
-                    adjustmentType()
+                    adjustmentType().validate()
                     appliesToPriceIds()
                     isInvoiceLevel()
                     itemId()
@@ -4057,6 +4304,30 @@ private constructor(
                     reason()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (id.asKnown() == null) 0 else 1) +
+                        (adjustmentType.asKnown()?.validity() ?: 0) +
+                        (appliesToPriceIds.asKnown()?.size ?: 0) +
+                        (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
+                        (if (itemId.asKnown() == null) 0 else 1) +
+                        (if (minimumAmount.asKnown() == null) 0 else 1) +
+                        (if (planPhaseOrder.asKnown() == null) 0 else 1) +
+                        (if (reason.asKnown() == null) 0 else 1)
 
                 class AdjustmentType
                 @JsonCreator
@@ -4145,6 +4416,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): AdjustmentType = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -4592,7 +4890,7 @@ private constructor(
                     }
 
                     id()
-                    adjustmentType()
+                    adjustmentType().validate()
                     appliesToPriceIds()
                     isInvoiceLevel()
                     maximumAmount()
@@ -4600,6 +4898,29 @@ private constructor(
                     reason()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (id.asKnown() == null) 0 else 1) +
+                        (adjustmentType.asKnown()?.validity() ?: 0) +
+                        (appliesToPriceIds.asKnown()?.size ?: 0) +
+                        (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
+                        (if (maximumAmount.asKnown() == null) 0 else 1) +
+                        (if (planPhaseOrder.asKnown() == null) 0 else 1) +
+                        (if (reason.asKnown() == null) 0 else 1)
 
                 class AdjustmentType
                 @JsonCreator
@@ -4688,6 +5009,33 @@ private constructor(
                     fun asString(): String =
                         _value().asString()
                             ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): AdjustmentType = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -4961,6 +5309,25 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (day.asKnown() == null) 0 else 1) +
+                (if (month.asKnown() == null) 0 else 1) +
+                (if (year.asKnown() == null) 0 else 1)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -5009,14 +5376,13 @@ private constructor(
 
         fun _json(): JsonValue? = _json
 
-        fun <T> accept(visitor: Visitor<T>): T {
-            return when {
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
                 amount != null -> visitor.visitAmount(amount)
                 percentage != null -> visitor.visitPercentage(percentage)
                 usage != null -> visitor.visitUsage(usage)
                 else -> visitor.unknown(_json)
             }
-        }
 
         private var validated: Boolean = false
 
@@ -5042,6 +5408,34 @@ private constructor(
             )
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            accept(
+                object : Visitor<Int> {
+                    override fun visitAmount(amount: AmountDiscountInterval) = amount.validity()
+
+                    override fun visitPercentage(percentage: PercentageDiscountInterval) =
+                        percentage.validity()
+
+                    override fun visitUsage(usage: UsageDiscountInterval) = usage.validity()
+
+                    override fun unknown(json: JsonValue?) = 0
+                }
+            )
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -5107,23 +5501,19 @@ private constructor(
 
                 when (discountType) {
                     "amount" -> {
-                        return DiscountInterval(
-                            amount = deserialize(node, jacksonTypeRef<AmountDiscountInterval>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<AmountDiscountInterval>())?.let {
+                            DiscountInterval(amount = it, _json = json)
+                        } ?: DiscountInterval(_json = json)
                     }
                     "percentage" -> {
-                        return DiscountInterval(
-                            percentage =
-                                deserialize(node, jacksonTypeRef<PercentageDiscountInterval>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<PercentageDiscountInterval>())
+                            ?.let { DiscountInterval(percentage = it, _json = json) }
+                            ?: DiscountInterval(_json = json)
                     }
                     "usage" -> {
-                        return DiscountInterval(
-                            usage = deserialize(node, jacksonTypeRef<UsageDiscountInterval>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<UsageDiscountInterval>())?.let {
+                            DiscountInterval(usage = it, _json = json)
+                        } ?: DiscountInterval(_json = json)
                     }
                 }
 
@@ -5533,11 +5923,33 @@ private constructor(
                 amountDiscount()
                 appliesToPriceIds()
                 appliesToPriceIntervalIds()
-                discountType()
+                discountType().validate()
                 endDate()
                 startDate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (amountDiscount.asKnown() == null) 0 else 1) +
+                    (appliesToPriceIds.asKnown()?.size ?: 0) +
+                    (appliesToPriceIntervalIds.asKnown()?.size ?: 0) +
+                    (discountType.asKnown()?.validity() ?: 0) +
+                    (if (endDate.asKnown() == null) 0 else 1) +
+                    (if (startDate.asKnown() == null) 0 else 1)
 
             class DiscountType
             @JsonCreator
@@ -5623,6 +6035,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): DiscountType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -6043,12 +6482,34 @@ private constructor(
 
                 appliesToPriceIds()
                 appliesToPriceIntervalIds()
-                discountType()
+                discountType().validate()
                 endDate()
                 percentageDiscount()
                 startDate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (appliesToPriceIds.asKnown()?.size ?: 0) +
+                    (appliesToPriceIntervalIds.asKnown()?.size ?: 0) +
+                    (discountType.asKnown()?.validity() ?: 0) +
+                    (if (endDate.asKnown() == null) 0 else 1) +
+                    (if (percentageDiscount.asKnown() == null) 0 else 1) +
+                    (if (startDate.asKnown() == null) 0 else 1)
 
             class DiscountType
             @JsonCreator
@@ -6134,6 +6595,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): DiscountType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -6553,12 +7041,34 @@ private constructor(
 
                 appliesToPriceIds()
                 appliesToPriceIntervalIds()
-                discountType()
+                discountType().validate()
                 endDate()
                 startDate()
                 usageDiscount()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (appliesToPriceIds.asKnown()?.size ?: 0) +
+                    (appliesToPriceIntervalIds.asKnown()?.size ?: 0) +
+                    (discountType.asKnown()?.validity() ?: 0) +
+                    (if (endDate.asKnown() == null) 0 else 1) +
+                    (if (startDate.asKnown() == null) 0 else 1) +
+                    (if (usageDiscount.asKnown() == null) 0 else 1)
 
             class DiscountType
             @JsonCreator
@@ -6644,6 +7154,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): DiscountType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -6904,6 +7441,26 @@ private constructor(
             startDate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (endDate.asKnown() == null) 0 else 1) +
+                (if (priceId.asKnown() == null) 0 else 1) +
+                (if (quantity.asKnown() == null) 0 else 1) +
+                (if (startDate.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -7261,6 +7818,27 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (appliesToPriceIds.asKnown()?.size ?: 0) +
+                (appliesToPriceIntervalIds.asKnown()?.size ?: 0) +
+                (if (endDate.asKnown() == null) 0 else 1) +
+                (if (maximumAmount.asKnown() == null) 0 else 1) +
+                (if (startDate.asKnown() == null) 0 else 1)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -7348,6 +7926,23 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -7703,6 +8298,27 @@ private constructor(
             startDate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (appliesToPriceIds.asKnown()?.size ?: 0) +
+                (appliesToPriceIntervalIds.asKnown()?.size ?: 0) +
+                (if (endDate.asKnown() == null) 0 else 1) +
+                (if (minimumAmount.asKnown() == null) 0 else 1) +
+                (if (startDate.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -8452,6 +9068,32 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (id.asKnown() == null) 0 else 1) +
+                (if (billingCycleDay.asKnown() == null) 0 else 1) +
+                (if (currentBillingPeriodEndDate.asKnown() == null) 0 else 1) +
+                (if (currentBillingPeriodStartDate.asKnown() == null) 0 else 1) +
+                (if (endDate.asKnown() == null) 0 else 1) +
+                (if (filter.asKnown() == null) 0 else 1) +
+                (fixedFeeQuantityTransitions.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (price.asKnown()?.validity() ?: 0) +
+                (if (startDate.asKnown() == null) 0 else 1) +
+                (usageCustomerIds.asKnown()?.size ?: 0)
+
         class FixedFeeQuantityTransition
         private constructor(
             private val effectiveDate: JsonField<OffsetDateTime>,
@@ -8656,6 +9298,25 @@ private constructor(
                 quantity()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (effectiveDate.asKnown() == null) 0 else 1) +
+                    (if (priceId.asKnown() == null) 0 else 1) +
+                    (if (quantity.asKnown() == null) 0 else 1)
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -8889,6 +9550,25 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (couponId.asKnown() == null) 0 else 1) +
+                (if (endDate.asKnown() == null) 0 else 1) +
+                (if (startDate.asKnown() == null) 0 else 1)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -8996,6 +9676,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -9130,6 +9837,22 @@ private constructor(
             endDate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = (if (endDate.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

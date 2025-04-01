@@ -151,6 +151,21 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: OrbInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int = (data.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+
     /**
      * The [Event](/core-concepts#event) resource represents a usage event that has been created for
      * a customer. Events are the core of Orb's usage-based billing model, and are used to calculate
@@ -519,6 +534,28 @@ private constructor(
             timestamp()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (id.asKnown() == null) 0 else 1) +
+                (if (customerId.asKnown() == null) 0 else 1) +
+                (if (deprecated.asKnown() == null) 0 else 1) +
+                (if (eventName.asKnown() == null) 0 else 1) +
+                (if (externalCustomerId.asKnown() == null) 0 else 1) +
+                (if (timestamp.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
