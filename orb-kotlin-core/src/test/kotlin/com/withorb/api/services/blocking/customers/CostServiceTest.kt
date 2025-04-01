@@ -22,7 +22,7 @@ internal class CostServiceTest {
                 .build()
         val costService = client.customers().costs()
 
-        val cost =
+        val costs =
             costService.list(
                 CustomerCostListParams.builder()
                     .customerId("customer_id")
@@ -33,7 +33,7 @@ internal class CostServiceTest {
                     .build()
             )
 
-        cost.validate()
+        costs.validate()
     }
 
     @Test
