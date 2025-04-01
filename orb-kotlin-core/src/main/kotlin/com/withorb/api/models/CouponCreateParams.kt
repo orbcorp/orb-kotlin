@@ -713,6 +713,26 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (discount.asKnown()?.validity() ?: 0) +
+                (if (redemptionCode.asKnown() == null) 0 else 1) +
+                (if (durationInMonths.asKnown() == null) 0 else 1) +
+                (if (maxRedemptions.asKnown() == null) 0 else 1)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -756,13 +776,12 @@ private constructor(
 
         fun _json(): JsonValue? = _json
 
-        fun <T> accept(visitor: Visitor<T>): T {
-            return when {
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
                 newCouponPercentage != null -> visitor.visitNewCouponPercentage(newCouponPercentage)
                 newCouponAmount != null -> visitor.visitNewCouponAmount(newCouponAmount)
                 else -> visitor.unknown(_json)
             }
-        }
 
         private var validated: Boolean = false
 
@@ -786,6 +805,34 @@ private constructor(
             )
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            accept(
+                object : Visitor<Int> {
+                    override fun visitNewCouponPercentage(
+                        newCouponPercentage: NewCouponPercentageDiscount
+                    ) = newCouponPercentage.validity()
+
+                    override fun visitNewCouponAmount(newCouponAmount: NewCouponAmountDiscount) =
+                        newCouponAmount.validity()
+
+                    override fun unknown(json: JsonValue?) = 0
+                }
+            )
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -846,18 +893,14 @@ private constructor(
 
                 when (discountType) {
                     "percentage" -> {
-                        return Discount(
-                            newCouponPercentage =
-                                deserialize(node, jacksonTypeRef<NewCouponPercentageDiscount>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewCouponPercentageDiscount>())
+                            ?.let { Discount(newCouponPercentage = it, _json = json) }
+                            ?: Discount(_json = json)
                     }
                     "amount" -> {
-                        return Discount(
-                            newCouponAmount =
-                                deserialize(node, jacksonTypeRef<NewCouponAmountDiscount>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<NewCouponAmountDiscount>())
+                            ?.let { Discount(newCouponAmount = it, _json = json) }
+                            ?: Discount(_json = json)
                     }
                 }
 
@@ -1053,10 +1096,28 @@ private constructor(
                     return@apply
                 }
 
-                discountType()
+                discountType().validate()
                 percentageDiscount()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (discountType.asKnown()?.validity() ?: 0) +
+                    (if (percentageDiscount.asKnown() == null) 0 else 1)
 
             class DiscountType
             @JsonCreator
@@ -1142,6 +1203,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): DiscountType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -1345,9 +1433,27 @@ private constructor(
                 }
 
                 amountDiscount()
-                discountType()
+                discountType().validate()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (amountDiscount.asKnown() == null) 0 else 1) +
+                    (discountType.asKnown()?.validity() ?: 0)
 
             class DiscountType
             @JsonCreator
@@ -1433,6 +1539,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): DiscountType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {

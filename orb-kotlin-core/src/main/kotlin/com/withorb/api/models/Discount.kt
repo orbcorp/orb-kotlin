@@ -53,15 +53,14 @@ private constructor(
 
     fun _json(): JsonValue? = _json
 
-    fun <T> accept(visitor: Visitor<T>): T {
-        return when {
+    fun <T> accept(visitor: Visitor<T>): T =
+        when {
             percentage != null -> visitor.visitPercentage(percentage)
             trial != null -> visitor.visitTrial(trial)
             usage != null -> visitor.visitUsage(usage)
             amount != null -> visitor.visitAmount(amount)
             else -> visitor.unknown(_json)
         }
-    }
 
     private var validated: Boolean = false
 
@@ -91,6 +90,34 @@ private constructor(
         )
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: OrbInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        accept(
+            object : Visitor<Int> {
+                override fun visitPercentage(percentage: PercentageDiscount) = percentage.validity()
+
+                override fun visitTrial(trial: TrialDiscount) = trial.validity()
+
+                override fun visitUsage(usage: UsageDiscount) = usage.validity()
+
+                override fun visitAmount(amount: AmountDiscount) = amount.validity()
+
+                override fun unknown(json: JsonValue?) = 0
+            }
+        )
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -156,28 +183,24 @@ private constructor(
 
             when (discountType) {
                 "percentage" -> {
-                    return Discount(
-                        percentage = deserialize(node, jacksonTypeRef<PercentageDiscount>()),
-                        _json = json,
-                    )
+                    return tryDeserialize(node, jacksonTypeRef<PercentageDiscount>())?.let {
+                        Discount(percentage = it, _json = json)
+                    } ?: Discount(_json = json)
                 }
                 "trial" -> {
-                    return Discount(
-                        trial = deserialize(node, jacksonTypeRef<TrialDiscount>()),
-                        _json = json,
-                    )
+                    return tryDeserialize(node, jacksonTypeRef<TrialDiscount>())?.let {
+                        Discount(trial = it, _json = json)
+                    } ?: Discount(_json = json)
                 }
                 "usage" -> {
-                    return Discount(
-                        usage = deserialize(node, jacksonTypeRef<UsageDiscount>()),
-                        _json = json,
-                    )
+                    return tryDeserialize(node, jacksonTypeRef<UsageDiscount>())?.let {
+                        Discount(usage = it, _json = json)
+                    } ?: Discount(_json = json)
                 }
                 "amount" -> {
-                    return Discount(
-                        amount = deserialize(node, jacksonTypeRef<AmountDiscount>()),
-                        _json = json,
-                    )
+                    return tryDeserialize(node, jacksonTypeRef<AmountDiscount>())?.let {
+                        Discount(amount = it, _json = json)
+                    } ?: Discount(_json = json)
                 }
             }
 

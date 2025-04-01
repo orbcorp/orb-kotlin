@@ -554,12 +554,38 @@ private constructor(
         eventsIngested()
         replaceExistingEvents()
         revertedAt()
-        status()
+        status().validate()
         timeframeEnd()
         timeframeStart()
         deprecationFilter()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: OrbInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (id.asKnown() == null) 0 else 1) +
+            (if (closeTime.asKnown() == null) 0 else 1) +
+            (if (createdAt.asKnown() == null) 0 else 1) +
+            (if (customerId.asKnown() == null) 0 else 1) +
+            (if (eventsIngested.asKnown() == null) 0 else 1) +
+            (if (replaceExistingEvents.asKnown() == null) 0 else 1) +
+            (if (revertedAt.asKnown() == null) 0 else 1) +
+            (status.asKnown()?.validity() ?: 0) +
+            (if (timeframeEnd.asKnown() == null) 0 else 1) +
+            (if (timeframeStart.asKnown() == null) 0 else 1) +
+            (if (deprecationFilter.asKnown() == null) 0 else 1)
 
     /** The status of the backfill. */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -657,6 +683,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

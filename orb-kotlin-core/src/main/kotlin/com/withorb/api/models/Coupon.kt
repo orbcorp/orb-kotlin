@@ -435,6 +435,28 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: OrbInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (id.asKnown() == null) 0 else 1) +
+            (if (archivedAt.asKnown() == null) 0 else 1) +
+            (discount.asKnown()?.validity() ?: 0) +
+            (if (durationInMonths.asKnown() == null) 0 else 1) +
+            (if (maxRedemptions.asKnown() == null) 0 else 1) +
+            (if (redemptionCode.asKnown() == null) 0 else 1) +
+            (if (timesRedeemed.asKnown() == null) 0 else 1)
+
     @JsonDeserialize(using = Discount.Deserializer::class)
     @JsonSerialize(using = Discount.Serializer::class)
     class Discount
@@ -458,13 +480,12 @@ private constructor(
 
         fun _json(): JsonValue? = _json
 
-        fun <T> accept(visitor: Visitor<T>): T {
-            return when {
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
                 percentage != null -> visitor.visitPercentage(percentage)
                 amount != null -> visitor.visitAmount(amount)
                 else -> visitor.unknown(_json)
             }
-        }
 
         private var validated: Boolean = false
 
@@ -486,6 +507,32 @@ private constructor(
             )
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            accept(
+                object : Visitor<Int> {
+                    override fun visitPercentage(percentage: PercentageDiscount) =
+                        percentage.validity()
+
+                    override fun visitAmount(amount: AmountDiscount) = amount.validity()
+
+                    override fun unknown(json: JsonValue?) = 0
+                }
+            )
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -544,16 +591,14 @@ private constructor(
 
                 when (discountType) {
                     "percentage" -> {
-                        return Discount(
-                            percentage = deserialize(node, jacksonTypeRef<PercentageDiscount>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<PercentageDiscount>())?.let {
+                            Discount(percentage = it, _json = json)
+                        } ?: Discount(_json = json)
                     }
                     "amount" -> {
-                        return Discount(
-                            amount = deserialize(node, jacksonTypeRef<AmountDiscount>()),
-                            _json = json,
-                        )
+                        return tryDeserialize(node, jacksonTypeRef<AmountDiscount>())?.let {
+                            Discount(amount = it, _json = json)
+                        } ?: Discount(_json = json)
                     }
                 }
 
