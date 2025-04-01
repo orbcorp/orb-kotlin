@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.45 (2025-04-01)
+
+Full Changelog: [v0.1.0-alpha.44...v0.1.0-alpha.45](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.44...v0.1.0-alpha.45)
+
+### Bug Fixes
+
+* pluralize `list` response variables ([#339](https://github.com/orbcorp/orb-kotlin/issues/339)) ([0c2a6e5](https://github.com/orbcorp/orb-kotlin/commit/0c2a6e52d57e1c9ac7cb8431a1d722bfa9ff49b3))
+
 ## 0.1.0-alpha.44 (2025-03-31)
 
 Full Changelog: [v0.1.0-alpha.43...v0.1.0-alpha.44](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.43...v0.1.0-alpha.44)
