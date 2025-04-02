@@ -95,6 +95,15 @@ private constructor(
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [priceId]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** Price for which the updates should be cleared. Must be a fixed fee. */
         fun priceId(priceId: String) = apply { body.priceId(priceId) }
 
@@ -245,7 +254,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

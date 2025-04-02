@@ -104,6 +104,16 @@ private constructor(
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [allowInvoiceCreditOrVoid]
+         * - [effectiveDate]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * If false, this request will fail if it would void an issued invoice or create a credit
          * note. Consider using this as a safety mechanism if you do not expect existing invoices to
          * be changed.
@@ -286,7 +296,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
