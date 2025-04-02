@@ -46,14 +46,13 @@ private constructor(
 
     fun _json(): JsonValue? = _json
 
-    fun <T> accept(visitor: Visitor<T>): T {
-        return when {
+    fun <T> accept(visitor: Visitor<T>): T =
+        when {
             percentage != null -> visitor.visitPercentage(percentage)
             amount != null -> visitor.visitAmount(amount)
             trial != null -> visitor.visitTrial(trial)
             else -> visitor.unknown(_json)
         }
-    }
 
     private var validated: Boolean = false
 
@@ -79,6 +78,32 @@ private constructor(
         )
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: OrbInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        accept(
+            object : Visitor<Int> {
+                override fun visitPercentage(percentage: PercentageDiscount) = percentage.validity()
+
+                override fun visitAmount(amount: AmountDiscount) = amount.validity()
+
+                override fun visitTrial(trial: TrialDiscount) = trial.validity()
+
+                override fun unknown(json: JsonValue?) = 0
+            }
+        )
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -145,22 +170,19 @@ private constructor(
 
             when (discountType) {
                 "percentage" -> {
-                    return InvoiceLevelDiscount(
-                        percentage = deserialize(node, jacksonTypeRef<PercentageDiscount>()),
-                        _json = json,
-                    )
+                    return tryDeserialize(node, jacksonTypeRef<PercentageDiscount>())?.let {
+                        InvoiceLevelDiscount(percentage = it, _json = json)
+                    } ?: InvoiceLevelDiscount(_json = json)
                 }
                 "amount" -> {
-                    return InvoiceLevelDiscount(
-                        amount = deserialize(node, jacksonTypeRef<AmountDiscount>()),
-                        _json = json,
-                    )
+                    return tryDeserialize(node, jacksonTypeRef<AmountDiscount>())?.let {
+                        InvoiceLevelDiscount(amount = it, _json = json)
+                    } ?: InvoiceLevelDiscount(_json = json)
                 }
                 "trial" -> {
-                    return InvoiceLevelDiscount(
-                        trial = deserialize(node, jacksonTypeRef<TrialDiscount>()),
-                        _json = json,
-                    )
+                    return tryDeserialize(node, jacksonTypeRef<TrialDiscount>())?.let {
+                        InvoiceLevelDiscount(trial = it, _json = json)
+                    } ?: InvoiceLevelDiscount(_json = json)
                 }
             }
 

@@ -2,6 +2,8 @@
 
 package com.withorb.api.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.withorb.api.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -50,5 +52,38 @@ internal class CustomerBalanceTransactionListResponseTest {
         assertThat(customerBalanceTransactionListResponse.startingBalance()).isEqualTo("33.00")
         assertThat(customerBalanceTransactionListResponse.type())
             .isEqualTo(CustomerBalanceTransactionListResponse.Type.INCREMENT)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val customerBalanceTransactionListResponse =
+            CustomerBalanceTransactionListResponse.builder()
+                .id("cgZa3SXcsPTVyC4Y")
+                .action(CustomerBalanceTransactionListResponse.Action.APPLIED_TO_INVOICE)
+                .amount("11.00")
+                .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
+                .creditNote(
+                    CustomerBalanceTransactionListResponse.CreditNote.builder().id("id").build()
+                )
+                .description("An optional description")
+                .endingBalance("22.00")
+                .invoice(
+                    CustomerBalanceTransactionListResponse.Invoice.builder()
+                        .id("gXcsPTVyC4YZa3Sc")
+                        .build()
+                )
+                .startingBalance("33.00")
+                .type(CustomerBalanceTransactionListResponse.Type.INCREMENT)
+                .build()
+
+        val roundtrippedCustomerBalanceTransactionListResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(customerBalanceTransactionListResponse),
+                jacksonTypeRef<CustomerBalanceTransactionListResponse>(),
+            )
+
+        assertThat(roundtrippedCustomerBalanceTransactionListResponse)
+            .isEqualTo(customerBalanceTransactionListResponse)
     }
 }

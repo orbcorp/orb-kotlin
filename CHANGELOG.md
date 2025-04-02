@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.0-alpha.46 (2025-04-02)
+
+Full Changelog: [v0.1.0-alpha.45...v0.1.0-alpha.46](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.45...v0.1.0-alpha.46)
+
+### Features
+
+* **client:** add enum validation method ([038d1aa](https://github.com/orbcorp/orb-kotlin/commit/038d1aaafd8735f4ceb4a0091a6df06f8ab72ffc))
+* **client:** make union deserialization more robust ([#342](https://github.com/orbcorp/orb-kotlin/issues/342)) ([038d1aa](https://github.com/orbcorp/orb-kotlin/commit/038d1aaafd8735f4ceb4a0091a6df06f8ab72ffc))
+
+
+### Chores
+
+* **client:** remove unnecessary json state from some query param classes ([038d1aa](https://github.com/orbcorp/orb-kotlin/commit/038d1aaafd8735f4ceb4a0091a6df06f8ab72ffc))
+* **internal:** add invalid json deserialization tests ([038d1aa](https://github.com/orbcorp/orb-kotlin/commit/038d1aaafd8735f4ceb4a0091a6df06f8ab72ffc))
+* **internal:** add json roundtripping tests ([038d1aa](https://github.com/orbcorp/orb-kotlin/commit/038d1aaafd8735f4ceb4a0091a6df06f8ab72ffc))
+* **internal:** codegen related update ([#344](https://github.com/orbcorp/orb-kotlin/issues/344)) ([d3aa837](https://github.com/orbcorp/orb-kotlin/commit/d3aa837e735a13d5aa57e13caabf9d75c2053706))
+
 ## 0.1.0-alpha.45 (2025-04-01)
 
 Full Changelog: [v0.1.0-alpha.44...v0.1.0-alpha.45](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.44...v0.1.0-alpha.45)

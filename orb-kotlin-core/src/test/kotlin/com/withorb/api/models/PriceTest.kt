@@ -2,10 +2,16 @@
 
 package com.withorb.api.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.jsonMapper
+import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 
 internal class PriceTest {
 
@@ -37,6 +43,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -72,6 +79,12 @@ internal class PriceTest {
                 .planPhaseOrder(0L)
                 .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                 .unitConfig(Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build())
+                .dimensionalPriceConfiguration(
+                    Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofUnit(unit)
@@ -107,6 +120,93 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofUnitRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofUnit(
+                Price.UnitPrice.builder()
+                    .id("id")
+                    .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())
+                    .billingCycleConfiguration(
+                        Price.UnitPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.UnitPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.UnitPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.UnitPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.UnitPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.UnitPrice.ModelType.UNIT)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                    .unitConfig(
+                        Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofPackagePrice() {
         val packagePrice =
             Price.PackagePrice.builder()
@@ -134,6 +234,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -176,6 +277,12 @@ internal class PriceTest {
                 )
                 .planPhaseOrder(0L)
                 .priceType(Price.PackagePrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.PackagePrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofPackagePrice(packagePrice)
@@ -211,6 +318,96 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofPackagePriceRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofPackagePrice(
+                Price.PackagePrice.builder()
+                    .id("id")
+                    .billableMetric(Price.PackagePrice.BillableMetric.builder().id("id").build())
+                    .billingCycleConfiguration(
+                        Price.PackagePrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.PackagePrice.BillingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.PackagePrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.PackagePrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.PackagePrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.PackagePrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.PackagePrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.PackagePrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.PackagePrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.PackagePrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.PackagePrice.ModelType.PACKAGE)
+                    .name("name")
+                    .packageConfig(
+                        Price.PackagePrice.PackageConfig.builder()
+                            .packageAmount("package_amount")
+                            .packageSize(0L)
+                            .build()
+                    )
+                    .planPhaseOrder(0L)
+                    .priceType(Price.PackagePrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.PackagePrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofMatrix() {
         val matrix =
             Price.MatrixPrice.builder()
@@ -238,6 +435,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -286,6 +484,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.MatrixPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.MatrixPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofMatrix(matrix)
@@ -321,6 +525,102 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofMatrixRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofMatrix(
+                Price.MatrixPrice.builder()
+                    .id("id")
+                    .billableMetric(Price.MatrixPrice.BillableMetric.builder().id("id").build())
+                    .billingCycleConfiguration(
+                        Price.MatrixPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.MatrixPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.MatrixPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.MatrixPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.MatrixPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.MatrixPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.MatrixPrice.Item.builder().id("id").name("name").build())
+                    .matrixConfig(
+                        Price.MatrixPrice.MatrixConfig.builder()
+                            .defaultUnitAmount("default_unit_amount")
+                            .addDimension("string")
+                            .addMatrixValue(
+                                Price.MatrixPrice.MatrixConfig.MatrixValue.builder()
+                                    .addDimensionValue("string")
+                                    .unitAmount("unit_amount")
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .maximum(
+                        Price.MatrixPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.MatrixPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.MatrixPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.MatrixPrice.ModelType.MATRIX)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.MatrixPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.MatrixPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofTiered() {
         val tiered =
             Price.TieredPrice.builder()
@@ -348,6 +648,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -390,8 +691,15 @@ internal class PriceTest {
                             Price.TieredPrice.TieredConfig.Tier.builder()
                                 .firstUnit(0.0)
                                 .unitAmount("unit_amount")
+                                .lastUnit(0.0)
                                 .build()
                         )
+                        .build()
+                )
+                .dimensionalPriceConfiguration(
+                    Price.TieredPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
                 )
                 .build()
@@ -429,6 +737,101 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofTieredRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofTiered(
+                Price.TieredPrice.builder()
+                    .id("id")
+                    .billableMetric(Price.TieredPrice.BillableMetric.builder().id("id").build())
+                    .billingCycleConfiguration(
+                        Price.TieredPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.TieredPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.TieredPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.TieredPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.TieredPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.TieredPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.TieredPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.TieredPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.TieredPrice.ModelType.TIERED)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.TieredPrice.PriceType.USAGE_PRICE)
+                    .tieredConfig(
+                        Price.TieredPrice.TieredConfig.builder()
+                            .addTier(
+                                Price.TieredPrice.TieredConfig.Tier.builder()
+                                    .firstUnit(0.0)
+                                    .unitAmount("unit_amount")
+                                    .lastUnit(0.0)
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.TieredPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofTieredBps() {
         val tieredBps =
             Price.TieredBpsPrice.builder()
@@ -458,6 +861,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -500,8 +904,16 @@ internal class PriceTest {
                             Price.TieredBpsPrice.TieredBpsConfig.Tier.builder()
                                 .bps(0.0)
                                 .minimumAmount("minimum_amount")
+                                .maximumAmount("maximum_amount")
+                                .perUnitMaximum("per_unit_maximum")
                                 .build()
                         )
+                        .build()
+                )
+                .dimensionalPriceConfiguration(
+                    Price.TieredBpsPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
                 )
                 .build()
@@ -539,6 +951,102 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofTieredBpsRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofTieredBps(
+                Price.TieredBpsPrice.builder()
+                    .id("id")
+                    .billableMetric(Price.TieredBpsPrice.BillableMetric.builder().id("id").build())
+                    .billingCycleConfiguration(
+                        Price.TieredBpsPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredBpsPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.TieredBpsPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.TieredBpsPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.TieredBpsPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredBpsPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.TieredBpsPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.TieredBpsPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.TieredBpsPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.TieredBpsPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.TieredBpsPrice.ModelType.TIERED_BPS)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.TieredBpsPrice.PriceType.USAGE_PRICE)
+                    .tieredBpsConfig(
+                        Price.TieredBpsPrice.TieredBpsConfig.builder()
+                            .addTier(
+                                Price.TieredBpsPrice.TieredBpsConfig.Tier.builder()
+                                    .bps(0.0)
+                                    .minimumAmount("minimum_amount")
+                                    .maximumAmount("maximum_amount")
+                                    .perUnitMaximum("per_unit_maximum")
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.TieredBpsPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofBps() {
         val bps =
             Price.BpsPrice.builder()
@@ -550,7 +1058,12 @@ internal class PriceTest {
                         .durationUnit(Price.BpsPrice.BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .bpsConfig(Price.BpsPrice.BpsConfig.builder().bps(0.0).build())
+                .bpsConfig(
+                    Price.BpsPrice.BpsConfig.builder()
+                        .bps(0.0)
+                        .perUnitMaximum("per_unit_maximum")
+                        .build()
+                )
                 .cadence(Price.BpsPrice.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -567,6 +1080,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -601,6 +1115,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.BpsPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.BpsPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofBps(bps)
@@ -636,6 +1156,94 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofBpsRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofBps(
+                Price.BpsPrice.builder()
+                    .id("id")
+                    .billableMetric(Price.BpsPrice.BillableMetric.builder().id("id").build())
+                    .billingCycleConfiguration(
+                        Price.BpsPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(Price.BpsPrice.BillingCycleConfiguration.DurationUnit.DAY)
+                            .build()
+                    )
+                    .bpsConfig(
+                        Price.BpsPrice.BpsConfig.builder()
+                            .bps(0.0)
+                            .perUnitMaximum("per_unit_maximum")
+                            .build()
+                    )
+                    .cadence(Price.BpsPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.BpsPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.BpsPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.BpsPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.BpsPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.BpsPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.BpsPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.BpsPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.BpsPrice.ModelType.BPS)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.BpsPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.BpsPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofBulkBps() {
         val bulkBps =
             Price.BulkBpsPrice.builder()
@@ -649,7 +1257,13 @@ internal class PriceTest {
                 )
                 .bulkBpsConfig(
                     Price.BulkBpsPrice.BulkBpsConfig.builder()
-                        .addTier(Price.BulkBpsPrice.BulkBpsConfig.Tier.builder().bps(0.0).build())
+                        .addTier(
+                            Price.BulkBpsPrice.BulkBpsConfig.Tier.builder()
+                                .bps(0.0)
+                                .maximumAmount("maximum_amount")
+                                .perUnitMaximum("per_unit_maximum")
+                                .build()
+                        )
                         .build()
                 )
                 .cadence(Price.BulkBpsPrice.Cadence.ONE_TIME)
@@ -668,6 +1282,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -704,6 +1319,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.BulkBpsPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.BulkBpsPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofBulkBps(bulkBps)
@@ -739,6 +1360,101 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofBulkBpsRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofBulkBps(
+                Price.BulkBpsPrice.builder()
+                    .id("id")
+                    .billableMetric(Price.BulkBpsPrice.BillableMetric.builder().id("id").build())
+                    .billingCycleConfiguration(
+                        Price.BulkBpsPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.BulkBpsPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .bulkBpsConfig(
+                        Price.BulkBpsPrice.BulkBpsConfig.builder()
+                            .addTier(
+                                Price.BulkBpsPrice.BulkBpsConfig.Tier.builder()
+                                    .bps(0.0)
+                                    .maximumAmount("maximum_amount")
+                                    .perUnitMaximum("per_unit_maximum")
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .cadence(Price.BulkBpsPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.BulkBpsPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.BulkBpsPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.BulkBpsPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.BulkBpsPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.BulkBpsPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.BulkBpsPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.BulkBpsPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.BulkBpsPrice.ModelType.BULK_BPS)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.BulkBpsPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.BulkBpsPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofBulk() {
         val bulk =
             Price.BulkPrice.builder()
@@ -755,6 +1471,7 @@ internal class PriceTest {
                         .addTier(
                             Price.BulkPrice.BulkConfig.Tier.builder()
                                 .unitAmount("unit_amount")
+                                .maximumUnits(0.0)
                                 .build()
                         )
                         .build()
@@ -775,6 +1492,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -809,6 +1527,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.BulkPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.BulkPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofBulk(bulk)
@@ -844,6 +1568,100 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofBulkRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofBulk(
+                Price.BulkPrice.builder()
+                    .id("id")
+                    .billableMetric(Price.BulkPrice.BillableMetric.builder().id("id").build())
+                    .billingCycleConfiguration(
+                        Price.BulkPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.BulkPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .bulkConfig(
+                        Price.BulkPrice.BulkConfig.builder()
+                            .addTier(
+                                Price.BulkPrice.BulkConfig.Tier.builder()
+                                    .unitAmount("unit_amount")
+                                    .maximumUnits(0.0)
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .cadence(Price.BulkPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.BulkPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.BulkPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.BulkPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.BulkPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.BulkPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.BulkPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.BulkPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.BulkPrice.ModelType.BULK)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.BulkPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.BulkPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofThresholdTotalAmount() {
         val thresholdTotalAmount =
             Price.ThresholdTotalAmountPrice.builder()
@@ -876,6 +1694,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -918,6 +1737,12 @@ internal class PriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
+                .dimensionalPriceConfiguration(
+                    Price.ThresholdTotalAmountPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofThresholdTotalAmount(thresholdTotalAmount)
@@ -953,6 +1778,103 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofThresholdTotalAmountRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofThresholdTotalAmount(
+                Price.ThresholdTotalAmountPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.ThresholdTotalAmountPrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.ThresholdTotalAmountPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.ThresholdTotalAmountPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.ThresholdTotalAmountPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.ThresholdTotalAmountPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.ThresholdTotalAmountPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.ThresholdTotalAmountPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.ThresholdTotalAmountPrice.Item.builder().id("id").name("name").build()
+                    )
+                    .maximum(
+                        Price.ThresholdTotalAmountPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.ThresholdTotalAmountPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.ThresholdTotalAmountPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.ThresholdTotalAmountPrice.ModelType.THRESHOLD_TOTAL_AMOUNT)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.ThresholdTotalAmountPrice.PriceType.USAGE_PRICE)
+                    .thresholdTotalAmountConfig(
+                        Price.ThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.ThresholdTotalAmountPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofTieredPackage() {
         val tieredPackage =
             Price.TieredPackagePrice.builder()
@@ -982,6 +1904,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -1023,6 +1946,12 @@ internal class PriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
+                .dimensionalPriceConfiguration(
+                    Price.TieredPackagePrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofTieredPackage(tieredPackage)
@@ -1058,6 +1987,98 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofTieredPackageRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofTieredPackage(
+                Price.TieredPackagePrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.TieredPackagePrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.TieredPackagePrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredPackagePrice.BillingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.TieredPackagePrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.TieredPackagePrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.TieredPackagePrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredPackagePrice.InvoicingCycleConfiguration.DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.TieredPackagePrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.TieredPackagePrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.TieredPackagePrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.TieredPackagePrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.TieredPackagePrice.ModelType.TIERED_PACKAGE)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.TieredPackagePrice.PriceType.USAGE_PRICE)
+                    .tieredPackageConfig(
+                        Price.TieredPackagePrice.TieredPackageConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.TieredPackagePrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofGroupedTiered() {
         val groupedTiered =
             Price.GroupedTieredPrice.builder()
@@ -1087,6 +2108,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -1128,6 +2150,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.GroupedTieredPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.GroupedTieredPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofGroupedTiered(groupedTiered)
@@ -1163,6 +2191,98 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofGroupedTieredRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofGroupedTiered(
+                Price.GroupedTieredPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.GroupedTieredPrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.GroupedTieredPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.GroupedTieredPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.GroupedTieredPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.GroupedTieredPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .groupedTieredConfig(
+                        Price.GroupedTieredPrice.GroupedTieredConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .invoicingCycleConfiguration(
+                        Price.GroupedTieredPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.GroupedTieredPrice.InvoicingCycleConfiguration.DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.GroupedTieredPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.GroupedTieredPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.GroupedTieredPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.GroupedTieredPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.GroupedTieredPrice.ModelType.GROUPED_TIERED)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.GroupedTieredPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.GroupedTieredPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofTieredWithMinimum() {
         val tieredWithMinimum =
             Price.TieredWithMinimumPrice.builder()
@@ -1194,6 +2314,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -1236,6 +2357,12 @@ internal class PriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
+                .dimensionalPriceConfiguration(
+                    Price.TieredWithMinimumPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofTieredWithMinimum(tieredWithMinimum)
@@ -1268,6 +2395,100 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithUnitPricing()).isNull()
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
+    }
+
+    @Test
+    fun ofTieredWithMinimumRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofTieredWithMinimum(
+                Price.TieredWithMinimumPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.TieredWithMinimumPrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.TieredWithMinimumPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredWithMinimumPrice.BillingCycleConfiguration.DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.TieredWithMinimumPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.TieredWithMinimumPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.TieredWithMinimumPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredWithMinimumPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.TieredWithMinimumPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.TieredWithMinimumPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.TieredWithMinimumPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.TieredWithMinimumPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.TieredWithMinimumPrice.ModelType.TIERED_WITH_MINIMUM)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.TieredWithMinimumPrice.PriceType.USAGE_PRICE)
+                    .tieredWithMinimumConfig(
+                        Price.TieredWithMinimumPrice.TieredWithMinimumConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.TieredWithMinimumPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
     }
 
     @Test
@@ -1304,6 +2525,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -1351,6 +2573,12 @@ internal class PriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
+                .dimensionalPriceConfiguration(
+                    Price.TieredPackageWithMinimumPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)
@@ -1386,6 +2614,110 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofTieredPackageWithMinimumRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofTieredPackageWithMinimum(
+                Price.TieredPackageWithMinimumPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.TieredPackageWithMinimumPrice.BillableMetric.builder()
+                            .id("id")
+                            .build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.TieredPackageWithMinimumPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredPackageWithMinimumPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.TieredPackageWithMinimumPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.TieredPackageWithMinimumPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.TieredPackageWithMinimumPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredPackageWithMinimumPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.TieredPackageWithMinimumPrice.Item.builder()
+                            .id("id")
+                            .name("name")
+                            .build()
+                    )
+                    .maximum(
+                        Price.TieredPackageWithMinimumPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.TieredPackageWithMinimumPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.TieredPackageWithMinimumPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(
+                        Price.TieredPackageWithMinimumPrice.ModelType.TIERED_PACKAGE_WITH_MINIMUM
+                    )
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.TieredPackageWithMinimumPrice.PriceType.USAGE_PRICE)
+                    .tieredPackageWithMinimumConfig(
+                        Price.TieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.TieredPackageWithMinimumPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofPackageWithAllocation() {
         val packageWithAllocation =
             Price.PackageWithAllocationPrice.builder()
@@ -1418,6 +2750,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -1461,6 +2794,12 @@ internal class PriceTest {
                 )
                 .planPhaseOrder(0L)
                 .priceType(Price.PackageWithAllocationPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.PackageWithAllocationPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofPackageWithAllocation(packageWithAllocation)
@@ -1496,6 +2835,106 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofPackageWithAllocationRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofPackageWithAllocation(
+                Price.PackageWithAllocationPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.PackageWithAllocationPrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.PackageWithAllocationPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.PackageWithAllocationPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.PackageWithAllocationPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.PackageWithAllocationPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.PackageWithAllocationPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.PackageWithAllocationPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.PackageWithAllocationPrice.Item.builder()
+                            .id("id")
+                            .name("name")
+                            .build()
+                    )
+                    .maximum(
+                        Price.PackageWithAllocationPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.PackageWithAllocationPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.PackageWithAllocationPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.PackageWithAllocationPrice.ModelType.PACKAGE_WITH_ALLOCATION)
+                    .name("name")
+                    .packageWithAllocationConfig(
+                        Price.PackageWithAllocationPrice.PackageWithAllocationConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .planPhaseOrder(0L)
+                    .priceType(Price.PackageWithAllocationPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.PackageWithAllocationPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofUnitWithPercent() {
         val unitWithPercent =
             Price.UnitWithPercentPrice.builder()
@@ -1527,6 +2966,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -1568,6 +3008,12 @@ internal class PriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
+                .dimensionalPriceConfiguration(
+                    Price.UnitWithPercentPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofUnitWithPercent(unitWithPercent)
@@ -1603,6 +3049,99 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofUnitWithPercentRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofUnitWithPercent(
+                Price.UnitWithPercentPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.UnitWithPercentPrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.UnitWithPercentPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.UnitWithPercentPrice.BillingCycleConfiguration.DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.UnitWithPercentPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.UnitWithPercentPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.UnitWithPercentPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.UnitWithPercentPrice.InvoicingCycleConfiguration.DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.UnitWithPercentPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.UnitWithPercentPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.UnitWithPercentPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.UnitWithPercentPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.UnitWithPercentPrice.ModelType.UNIT_WITH_PERCENT)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.UnitWithPercentPrice.PriceType.USAGE_PRICE)
+                    .unitWithPercentConfig(
+                        Price.UnitWithPercentPrice.UnitWithPercentConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.UnitWithPercentPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofMatrixWithAllocation() {
         val matrixWithAllocation =
             Price.MatrixWithAllocationPrice.builder()
@@ -1635,6 +3174,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -1686,6 +3226,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.MatrixWithAllocationPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.MatrixWithAllocationPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofMatrixWithAllocation(matrixWithAllocation)
@@ -1721,6 +3267,113 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofMatrixWithAllocationRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofMatrixWithAllocation(
+                Price.MatrixWithAllocationPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.MatrixWithAllocationPrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.MatrixWithAllocationPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.MatrixWithAllocationPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.MatrixWithAllocationPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.MatrixWithAllocationPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.MatrixWithAllocationPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.MatrixWithAllocationPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.MatrixWithAllocationPrice.Item.builder().id("id").name("name").build()
+                    )
+                    .matrixWithAllocationConfig(
+                        Price.MatrixWithAllocationPrice.MatrixWithAllocationConfig.builder()
+                            .allocation(0.0)
+                            .defaultUnitAmount("default_unit_amount")
+                            .addDimension("string")
+                            .addMatrixValue(
+                                Price.MatrixWithAllocationPrice.MatrixWithAllocationConfig
+                                    .MatrixValue
+                                    .builder()
+                                    .addDimensionValue("string")
+                                    .unitAmount("unit_amount")
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .maximum(
+                        Price.MatrixWithAllocationPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.MatrixWithAllocationPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.MatrixWithAllocationPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.MatrixWithAllocationPrice.ModelType.MATRIX_WITH_ALLOCATION)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.MatrixWithAllocationPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.MatrixWithAllocationPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofTieredWithProration() {
         val tieredWithProration =
             Price.TieredWithProrationPrice.builder()
@@ -1753,6 +3406,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -1795,6 +3449,12 @@ internal class PriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
+                .dimensionalPriceConfiguration(
+                    Price.TieredWithProrationPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofTieredWithProration(tieredWithProration)
@@ -1830,6 +3490,103 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofTieredWithProrationRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofTieredWithProration(
+                Price.TieredWithProrationPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.TieredWithProrationPrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.TieredWithProrationPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredWithProrationPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.TieredWithProrationPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.TieredWithProrationPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.TieredWithProrationPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.TieredWithProrationPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.TieredWithProrationPrice.Item.builder().id("id").name("name").build()
+                    )
+                    .maximum(
+                        Price.TieredWithProrationPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.TieredWithProrationPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.TieredWithProrationPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.TieredWithProrationPrice.ModelType.TIERED_WITH_PRORATION)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.TieredWithProrationPrice.PriceType.USAGE_PRICE)
+                    .tieredWithProrationConfig(
+                        Price.TieredWithProrationPrice.TieredWithProrationConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.TieredWithProrationPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofUnitWithProration() {
         val unitWithProration =
             Price.UnitWithProrationPrice.builder()
@@ -1861,6 +3618,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -1903,6 +3661,12 @@ internal class PriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
+                .dimensionalPriceConfiguration(
+                    Price.UnitWithProrationPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofUnitWithProration(unitWithProration)
@@ -1938,6 +3702,100 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofUnitWithProrationRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofUnitWithProration(
+                Price.UnitWithProrationPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.UnitWithProrationPrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.UnitWithProrationPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.UnitWithProrationPrice.BillingCycleConfiguration.DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.UnitWithProrationPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.UnitWithProrationPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.UnitWithProrationPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.UnitWithProrationPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.UnitWithProrationPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.UnitWithProrationPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.UnitWithProrationPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.UnitWithProrationPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.UnitWithProrationPrice.ModelType.UNIT_WITH_PRORATION)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.UnitWithProrationPrice.PriceType.USAGE_PRICE)
+                    .unitWithProrationConfig(
+                        Price.UnitWithProrationPrice.UnitWithProrationConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.UnitWithProrationPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofGroupedAllocation() {
         val groupedAllocation =
             Price.GroupedAllocationPrice.builder()
@@ -1969,6 +3827,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -2011,6 +3870,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.GroupedAllocationPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.GroupedAllocationPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofGroupedAllocation(groupedAllocation)
@@ -2043,6 +3908,100 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithUnitPricing()).isNull()
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
+    }
+
+    @Test
+    fun ofGroupedAllocationRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofGroupedAllocation(
+                Price.GroupedAllocationPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.GroupedAllocationPrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.GroupedAllocationPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.GroupedAllocationPrice.BillingCycleConfiguration.DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.GroupedAllocationPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.GroupedAllocationPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .groupedAllocationConfig(
+                        Price.GroupedAllocationPrice.GroupedAllocationConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .invoicingCycleConfiguration(
+                        Price.GroupedAllocationPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.GroupedAllocationPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.GroupedAllocationPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.GroupedAllocationPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.GroupedAllocationPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.GroupedAllocationPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.GroupedAllocationPrice.ModelType.GROUPED_ALLOCATION)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.GroupedAllocationPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.GroupedAllocationPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
     }
 
     @Test
@@ -2079,6 +4038,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -2129,6 +4089,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.GroupedWithProratedMinimumPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.GroupedWithProratedMinimumPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)
@@ -2161,6 +4127,113 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithUnitPricing()).isNull()
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
+    }
+
+    @Test
+    fun ofGroupedWithProratedMinimumRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofGroupedWithProratedMinimum(
+                Price.GroupedWithProratedMinimumPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.GroupedWithProratedMinimumPrice.BillableMetric.builder()
+                            .id("id")
+                            .build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.GroupedWithProratedMinimumPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.GroupedWithProratedMinimumPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.GroupedWithProratedMinimumPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.GroupedWithProratedMinimumPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .groupedWithProratedMinimumConfig(
+                        Price.GroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig
+                            .builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .invoicingCycleConfiguration(
+                        Price.GroupedWithProratedMinimumPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.GroupedWithProratedMinimumPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.GroupedWithProratedMinimumPrice.Item.builder()
+                            .id("id")
+                            .name("name")
+                            .build()
+                    )
+                    .maximum(
+                        Price.GroupedWithProratedMinimumPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.GroupedWithProratedMinimumPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.GroupedWithProratedMinimumPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(
+                        Price.GroupedWithProratedMinimumPrice.ModelType
+                            .GROUPED_WITH_PRORATED_MINIMUM
+                    )
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.GroupedWithProratedMinimumPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.GroupedWithProratedMinimumPrice.DimensionalPriceConfiguration
+                            .builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
     }
 
     @Test
@@ -2197,6 +4270,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -2247,6 +4321,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.GroupedWithMeteredMinimumPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.GroupedWithMeteredMinimumPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)
@@ -2282,6 +4362,111 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofGroupedWithMeteredMinimumRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofGroupedWithMeteredMinimum(
+                Price.GroupedWithMeteredMinimumPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.GroupedWithMeteredMinimumPrice.BillableMetric.builder()
+                            .id("id")
+                            .build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.GroupedWithMeteredMinimumPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.GroupedWithMeteredMinimumPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.GroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.GroupedWithMeteredMinimumPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .groupedWithMeteredMinimumConfig(
+                        Price.GroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
+                            .builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .invoicingCycleConfiguration(
+                        Price.GroupedWithMeteredMinimumPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.GroupedWithMeteredMinimumPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.GroupedWithMeteredMinimumPrice.Item.builder()
+                            .id("id")
+                            .name("name")
+                            .build()
+                    )
+                    .maximum(
+                        Price.GroupedWithMeteredMinimumPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.GroupedWithMeteredMinimumPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.GroupedWithMeteredMinimumPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(
+                        Price.GroupedWithMeteredMinimumPrice.ModelType.GROUPED_WITH_METERED_MINIMUM
+                    )
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.GroupedWithMeteredMinimumPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.GroupedWithMeteredMinimumPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofMatrixWithDisplayName() {
         val matrixWithDisplayName =
             Price.MatrixWithDisplayNamePrice.builder()
@@ -2314,6 +4499,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -2357,6 +4543,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.MatrixWithDisplayNamePrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.MatrixWithDisplayNamePrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofMatrixWithDisplayName(matrixWithDisplayName)
@@ -2389,6 +4581,106 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithUnitPricing()).isNull()
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
+    }
+
+    @Test
+    fun ofMatrixWithDisplayNameRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofMatrixWithDisplayName(
+                Price.MatrixWithDisplayNamePrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.MatrixWithDisplayNamePrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.MatrixWithDisplayNamePrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.MatrixWithDisplayNamePrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.MatrixWithDisplayNamePrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.MatrixWithDisplayNamePrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.MatrixWithDisplayNamePrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.MatrixWithDisplayNamePrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.MatrixWithDisplayNamePrice.Item.builder()
+                            .id("id")
+                            .name("name")
+                            .build()
+                    )
+                    .matrixWithDisplayNameConfig(
+                        Price.MatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .maximum(
+                        Price.MatrixWithDisplayNamePrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.MatrixWithDisplayNamePrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.MatrixWithDisplayNamePrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.MatrixWithDisplayNamePrice.ModelType.MATRIX_WITH_DISPLAY_NAME)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.MatrixWithDisplayNamePrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.MatrixWithDisplayNamePrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
     }
 
     @Test
@@ -2428,6 +4720,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -2465,6 +4758,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.BulkWithProrationPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.BulkWithProrationPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofBulkWithProration(bulkWithProration)
@@ -2500,6 +4799,100 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofBulkWithProrationRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofBulkWithProration(
+                Price.BulkWithProrationPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.BulkWithProrationPrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.BulkWithProrationPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.BulkWithProrationPrice.BillingCycleConfiguration.DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .bulkWithProrationConfig(
+                        Price.BulkWithProrationPrice.BulkWithProrationConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .cadence(Price.BulkWithProrationPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.BulkWithProrationPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.BulkWithProrationPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.BulkWithProrationPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(Price.BulkWithProrationPrice.Item.builder().id("id").name("name").build())
+                    .maximum(
+                        Price.BulkWithProrationPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.BulkWithProrationPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.BulkWithProrationPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.BulkWithProrationPrice.ModelType.BULK_WITH_PRORATION)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.BulkWithProrationPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.BulkWithProrationPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofGroupedTieredPackage() {
         val groupedTieredPackage =
             Price.GroupedTieredPackagePrice.builder()
@@ -2532,6 +4925,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -2574,6 +4968,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.GroupedTieredPackagePrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.GroupedTieredPackagePrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofGroupedTieredPackage(groupedTieredPackage)
@@ -2609,6 +5009,103 @@ internal class PriceTest {
     }
 
     @Test
+    fun ofGroupedTieredPackageRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofGroupedTieredPackage(
+                Price.GroupedTieredPackagePrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.GroupedTieredPackagePrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.GroupedTieredPackagePrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.GroupedTieredPackagePrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.GroupedTieredPackagePrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.GroupedTieredPackagePrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .groupedTieredPackageConfig(
+                        Price.GroupedTieredPackagePrice.GroupedTieredPackageConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .invoicingCycleConfiguration(
+                        Price.GroupedTieredPackagePrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.GroupedTieredPackagePrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.GroupedTieredPackagePrice.Item.builder().id("id").name("name").build()
+                    )
+                    .maximum(
+                        Price.GroupedTieredPackagePrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.GroupedTieredPackagePrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.GroupedTieredPackagePrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.GroupedTieredPackagePrice.ModelType.GROUPED_TIERED_PACKAGE)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.GroupedTieredPackagePrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.GroupedTieredPackagePrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
     fun ofMaxGroupTieredPackage() {
         val maxGroupTieredPackage =
             Price.MaxGroupTieredPackagePrice.builder()
@@ -2641,6 +5138,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -2684,6 +5182,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.MaxGroupTieredPackagePrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.MaxGroupTieredPackagePrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofMaxGroupTieredPackage(maxGroupTieredPackage)
@@ -2716,6 +5220,106 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithUnitPricing()).isNull()
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
+    }
+
+    @Test
+    fun ofMaxGroupTieredPackageRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofMaxGroupTieredPackage(
+                Price.MaxGroupTieredPackagePrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.MaxGroupTieredPackagePrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.MaxGroupTieredPackagePrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.MaxGroupTieredPackagePrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.MaxGroupTieredPackagePrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.MaxGroupTieredPackagePrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.MaxGroupTieredPackagePrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.MaxGroupTieredPackagePrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.MaxGroupTieredPackagePrice.Item.builder()
+                            .id("id")
+                            .name("name")
+                            .build()
+                    )
+                    .maxGroupTieredPackageConfig(
+                        Price.MaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .maximum(
+                        Price.MaxGroupTieredPackagePrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.MaxGroupTieredPackagePrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.MaxGroupTieredPackagePrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.MaxGroupTieredPackagePrice.ModelType.MAX_GROUP_TIERED_PACKAGE)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.MaxGroupTieredPackagePrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.MaxGroupTieredPackagePrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
     }
 
     @Test
@@ -2754,6 +5358,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -2806,6 +5411,12 @@ internal class PriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
+                .dimensionalPriceConfiguration(
+                    Price.ScalableMatrixWithUnitPricingPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)
@@ -2838,6 +5449,114 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithUnitPricing()).isEqualTo(scalableMatrixWithUnitPricing)
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
+    }
+
+    @Test
+    fun ofScalableMatrixWithUnitPricingRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofScalableMatrixWithUnitPricing(
+                Price.ScalableMatrixWithUnitPricingPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.ScalableMatrixWithUnitPricingPrice.BillableMetric.builder()
+                            .id("id")
+                            .build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.ScalableMatrixWithUnitPricingPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.ScalableMatrixWithUnitPricingPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.ScalableMatrixWithUnitPricingPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.ScalableMatrixWithUnitPricingPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.ScalableMatrixWithUnitPricingPrice.InvoicingCycleConfiguration
+                            .builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.ScalableMatrixWithUnitPricingPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.ScalableMatrixWithUnitPricingPrice.Item.builder()
+                            .id("id")
+                            .name("name")
+                            .build()
+                    )
+                    .maximum(
+                        Price.ScalableMatrixWithUnitPricingPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.ScalableMatrixWithUnitPricingPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.ScalableMatrixWithUnitPricingPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(
+                        Price.ScalableMatrixWithUnitPricingPrice.ModelType
+                            .SCALABLE_MATRIX_WITH_UNIT_PRICING
+                    )
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.ScalableMatrixWithUnitPricingPrice.PriceType.USAGE_PRICE)
+                    .scalableMatrixWithUnitPricingConfig(
+                        Price.ScalableMatrixWithUnitPricingPrice.ScalableMatrixWithUnitPricingConfig
+                            .builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.ScalableMatrixWithUnitPricingPrice.DimensionalPriceConfiguration
+                            .builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
     }
 
     @Test
@@ -2876,6 +5595,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -2928,6 +5648,13 @@ internal class PriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
+                .dimensionalPriceConfiguration(
+                    Price.ScalableMatrixWithTieredPricingPrice.DimensionalPriceConfiguration
+                        .builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)
@@ -2961,6 +5688,117 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing())
             .isEqualTo(scalableMatrixWithTieredPricing)
         assertThat(price.cumulativeGroupedBulk()).isNull()
+    }
+
+    @Test
+    fun ofScalableMatrixWithTieredPricingRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofScalableMatrixWithTieredPricing(
+                Price.ScalableMatrixWithTieredPricingPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.ScalableMatrixWithTieredPricingPrice.BillableMetric.builder()
+                            .id("id")
+                            .build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.ScalableMatrixWithTieredPricingPrice.BillingCycleConfiguration
+                            .builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.ScalableMatrixWithTieredPricingPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.ScalableMatrixWithTieredPricingPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.ScalableMatrixWithTieredPricingPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.ScalableMatrixWithTieredPricingPrice.InvoicingCycleConfiguration
+                            .builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.ScalableMatrixWithTieredPricingPrice
+                                    .InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.ScalableMatrixWithTieredPricingPrice.Item.builder()
+                            .id("id")
+                            .name("name")
+                            .build()
+                    )
+                    .maximum(
+                        Price.ScalableMatrixWithTieredPricingPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.ScalableMatrixWithTieredPricingPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.ScalableMatrixWithTieredPricingPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(
+                        Price.ScalableMatrixWithTieredPricingPrice.ModelType
+                            .SCALABLE_MATRIX_WITH_TIERED_PRICING
+                    )
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.ScalableMatrixWithTieredPricingPrice.PriceType.USAGE_PRICE)
+                    .scalableMatrixWithTieredPricingConfig(
+                        Price.ScalableMatrixWithTieredPricingPrice
+                            .ScalableMatrixWithTieredPricingConfig
+                            .builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        Price.ScalableMatrixWithTieredPricingPrice.DimensionalPriceConfiguration
+                            .builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
     }
 
     @Test
@@ -3001,6 +5839,7 @@ internal class PriceTest {
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .reason("reason")
                         .build()
                 )
                 .externalPriceId("external_price_id")
@@ -3039,6 +5878,12 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.CumulativeGroupedBulkPrice.PriceType.USAGE_PRICE)
+                .dimensionalPriceConfiguration(
+                    Price.CumulativeGroupedBulkPrice.DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
                 .build()
 
         val price = Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk)
@@ -3071,5 +5916,122 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithUnitPricing()).isNull()
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isEqualTo(cumulativeGroupedBulk)
+    }
+
+    @Test
+    fun ofCumulativeGroupedBulkRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofCumulativeGroupedBulk(
+                Price.CumulativeGroupedBulkPrice.builder()
+                    .id("id")
+                    .billableMetric(
+                        Price.CumulativeGroupedBulkPrice.BillableMetric.builder().id("id").build()
+                    )
+                    .billingCycleConfiguration(
+                        Price.CumulativeGroupedBulkPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.CumulativeGroupedBulkPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .cadence(Price.CumulativeGroupedBulkPrice.Cadence.ONE_TIME)
+                    .conversionRate(0.0)
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Price.CumulativeGroupedBulkPrice.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .build()
+                    )
+                    .cumulativeGroupedBulkConfig(
+                        Price.CumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        Price.CumulativeGroupedBulkPrice.InvoicingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                Price.CumulativeGroupedBulkPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .item(
+                        Price.CumulativeGroupedBulkPrice.Item.builder()
+                            .id("id")
+                            .name("name")
+                            .build()
+                    )
+                    .maximum(
+                        Price.CumulativeGroupedBulkPrice.Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.CumulativeGroupedBulkPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Price.CumulativeGroupedBulkPrice.Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .modelType(Price.CumulativeGroupedBulkPrice.ModelType.CUMULATIVE_GROUPED_BULK)
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.CumulativeGroupedBulkPrice.PriceType.USAGE_PRICE)
+                    .dimensionalPriceConfiguration(
+                        Price.CumulativeGroupedBulkPrice.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    enum class IncompatibleJsonShapeTestCase(val value: JsonValue) {
+        BOOLEAN(JsonValue.from(false)),
+        STRING(JsonValue.from("invalid")),
+        INTEGER(JsonValue.from(-1)),
+        FLOAT(JsonValue.from(3.14)),
+        ARRAY(JsonValue.from(listOf("invalid", "array"))),
+    }
+
+    @ParameterizedTest
+    @EnumSource
+    fun incompatibleJsonShapeDeserializesToUnknown(testCase: IncompatibleJsonShapeTestCase) {
+        val price = jsonMapper().convertValue(testCase.value, jacksonTypeRef<Price>())
+
+        val e = assertThrows<OrbInvalidDataException> { price.validate() }
+        assertThat(e).hasMessageStartingWith("Unknown ")
     }
 }

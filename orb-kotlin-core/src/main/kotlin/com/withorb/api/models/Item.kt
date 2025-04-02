@@ -263,6 +263,25 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: OrbInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (id.asKnown() == null) 0 else 1) +
+            (if (createdAt.asKnown() == null) 0 else 1) +
+            (externalConnections.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (name.asKnown() == null) 0 else 1)
+
     class ExternalConnection
     private constructor(
         private val externalConnectionName: JsonField<ExternalConnectionName>,
@@ -428,10 +447,28 @@ private constructor(
                 return@apply
             }
 
-            externalConnectionName()
+            externalConnectionName().validate()
             externalEntityId()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (externalConnectionName.asKnown()?.validity() ?: 0) +
+                (if (externalEntityId.asKnown() == null) 0 else 1)
 
         class ExternalConnectionName
         @JsonCreator
@@ -554,6 +591,33 @@ private constructor(
              */
             fun asString(): String =
                 _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): ExternalConnectionName = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
