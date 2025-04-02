@@ -160,6 +160,20 @@ private constructor(
             additionalQueryParams = invoiceLineItemCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [endDate]
+         * - [invoiceId]
+         * - [name]
+         * - [quantity]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** The total amount in the invoice's currency to add to the line item. */
         fun amount(amount: String) = apply { body.amount(amount) }
 
@@ -374,7 +388,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 

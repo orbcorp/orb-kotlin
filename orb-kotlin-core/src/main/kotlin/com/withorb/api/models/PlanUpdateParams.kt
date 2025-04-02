@@ -106,6 +106,16 @@ private constructor(
         fun planId(planId: String) = apply { this.planId = planId }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [externalPlanId]
+         * - [metadata]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * An optional user-defined ID for this plan resource, used throughout the system as an
          * alias for this Plan. Use this field to identify a plan by an existing identifier in your
          * system.
@@ -277,7 +287,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

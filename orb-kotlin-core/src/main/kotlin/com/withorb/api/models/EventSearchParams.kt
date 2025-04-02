@@ -126,6 +126,17 @@ private constructor(
         }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [eventIds]
+         * - [timeframeEnd]
+         * - [timeframeStart]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * This is an explicit array of IDs to filter by. Note that an event's ID is the
          * idempotency_key that was originally used for ingestion, and this only supports events
          * that have not been amended. Values in this array will be treated case sensitively.
@@ -321,7 +332,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 

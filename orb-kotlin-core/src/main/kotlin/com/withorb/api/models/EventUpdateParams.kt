@@ -178,6 +178,20 @@ private constructor(
 
         fun eventId(eventId: String) = apply { this.eventId = eventId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [eventName]
+         * - [properties]
+         * - [timestamp]
+         * - [customerId]
+         * - [externalCustomerId]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** A name to meaningfully identify the action or event type. */
         fun eventName(eventName: String) = apply { body.eventName(eventName) }
 
@@ -381,7 +395,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
