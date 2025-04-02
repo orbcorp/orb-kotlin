@@ -452,6 +452,20 @@ private constructor(
 
         fun customerId(customerId: String) = apply { this.customerId = customerId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountingSyncConfiguration]
+         * - [additionalEmails]
+         * - [autoCollection]
+         * - [billingAddress]
+         * - [currency]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         fun accountingSyncConfiguration(accountingSyncConfiguration: AccountingSyncConfiguration?) =
             apply {
                 body.accountingSyncConfiguration(accountingSyncConfiguration)
@@ -1018,7 +1032,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
