@@ -469,6 +469,20 @@ private constructor(
         }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [email]
+         * - [name]
+         * - [accountingSyncConfiguration]
+         * - [additionalEmails]
+         * - [autoCollection]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * A valid customer email, to be used for notifications. When Orb triggers payment through a
          * payment gateway, this email will be used for any automatically issued receipts.
          */
@@ -1050,7 +1064,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 

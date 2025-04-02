@@ -170,6 +170,17 @@ private constructor(
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [cancelOption]
+         * - [allowInvoiceCreditOrVoid]
+         * - [cancellationDate]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** Determines the timing of subscription cancellation */
         fun cancelOption(cancelOption: CancelOption) = apply { body.cancelOption(cancelOption) }
 
@@ -370,7 +381,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

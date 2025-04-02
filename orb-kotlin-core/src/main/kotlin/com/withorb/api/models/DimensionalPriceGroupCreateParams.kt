@@ -149,6 +149,20 @@ private constructor(
                     dimensionalPriceGroupCreateParams.additionalQueryParams.toBuilder()
             }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [billableMetricId]
+         * - [dimensions]
+         * - [name]
+         * - [externalDimensionalPriceGroupId]
+         * - [metadata]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         fun billableMetricId(billableMetricId: String) = apply {
             body.billableMetricId(billableMetricId)
         }
@@ -364,7 +378,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 

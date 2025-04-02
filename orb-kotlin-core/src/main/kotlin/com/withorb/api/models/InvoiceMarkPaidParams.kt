@@ -118,6 +118,17 @@ private constructor(
 
         fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [paymentReceivedDate]
+         * - [externalId]
+         * - [notes]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** A date string to specify the date of the payment. */
         fun paymentReceivedDate(paymentReceivedDate: LocalDate) = apply {
             body.paymentReceivedDate(paymentReceivedDate)
@@ -296,7 +307,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
