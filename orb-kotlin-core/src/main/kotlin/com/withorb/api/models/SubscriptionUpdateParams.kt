@@ -157,6 +157,20 @@ private constructor(
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [autoCollection]
+         * - [defaultInvoiceMemo]
+         * - [invoicingThreshold]
+         * - [metadata]
+         * - [netTerms]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * Determines whether issued invoices for this subscription will automatically be charged
          * with the saved payment method on the due date. This property defaults to the plan's
          * behavior.
@@ -396,7 +410,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

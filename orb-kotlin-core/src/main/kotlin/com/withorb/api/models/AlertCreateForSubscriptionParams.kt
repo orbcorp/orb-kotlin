@@ -131,6 +131,17 @@ private constructor(
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [thresholds]
+         * - [type]
+         * - [metricId]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** The thresholds that define the values at which the alert will be triggered. */
         fun thresholds(thresholds: List<Threshold>) = apply { body.thresholds(thresholds) }
 
@@ -314,7 +325,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

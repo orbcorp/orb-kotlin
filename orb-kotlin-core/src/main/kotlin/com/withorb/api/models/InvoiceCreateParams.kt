@@ -226,6 +226,20 @@ private constructor(
         }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [currency]
+         * - [invoiceDate]
+         * - [lineItems]
+         * - [netTerms]
+         * - [customerId]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * An ISO 4217 currency string. Must be the same as the customer's currency if it is set.
          */
         fun currency(currency: String) = apply { body.currency(currency) }
@@ -543,7 +557,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 

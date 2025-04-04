@@ -209,6 +209,20 @@ private constructor(
 
         fun customerId(customerId: String) = apply { this.customerId = customerId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [currency]
+         * - [invoiceSettings]
+         * - [perUnitCostBasis]
+         * - [threshold]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** The amount to increment when the threshold is reached. */
         fun amount(amount: String) = apply { body.amount(amount) }
 
@@ -479,7 +493,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

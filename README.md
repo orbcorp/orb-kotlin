@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/0.1.0-alpha.46)
+[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/0.1.0-alpha.47)
 
 <!-- x-release-please-end -->
 
@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.withorb.com](https://docs.witho
 ### Gradle
 
 ```kotlin
-implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.46")
+implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.47")
 ```
 
 ### Maven
@@ -28,7 +28,7 @@ implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.46")
 <dependency>
   <groupId>com.withorb.api</groupId>
   <artifactId>orb-kotlin</artifactId>
-  <version>0.1.0-alpha.46</version>
+  <version>0.1.0-alpha.47</version>
 </dependency>
 ```
 
@@ -440,6 +440,20 @@ val complexValue: JsonValue = JsonValue.from(mapOf(
     3, 4
   )
 ))
+```
+
+Normally a `Builder` class's `build` method will throw [`IllegalStateException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html) if any required parameter or property is unset.
+
+To forcibly omit a required parameter or property, pass [`JsonMissing`](orb-kotlin-core/src/main/kotlin/com/withorb/api/core/Values.kt):
+
+```kotlin
+import com.withorb.api.core.JsonMissing
+import com.withorb.api.models.CustomerCreateParams
+
+val params: CustomerCreateParams = CustomerCreateParams.builder()
+    .name("x")
+    .email(JsonMissing.of())
+    .build()
 ```
 
 ### Response properties
