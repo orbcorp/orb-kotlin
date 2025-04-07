@@ -273,9 +273,7 @@ internal class CustomerServiceTest {
         val customerService = client.customers()
 
         customerService.syncPaymentMethodsFromGateway(
-            CustomerSyncPaymentMethodsFromGatewayParams.builder()
-                .externalCustomerId("external_customer_id")
-                .build()
+            CustomerSyncPaymentMethodsFromGatewayParams.builder().customerId("customer_id").build()
         )
     }
 
@@ -290,7 +288,7 @@ internal class CustomerServiceTest {
 
         customerService.syncPaymentMethodsFromGatewayByExternalCustomerId(
             CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams.builder()
-                .customerId("customer_id")
+                .externalCustomerId("external_customer_id")
                 .build()
         )
     }
