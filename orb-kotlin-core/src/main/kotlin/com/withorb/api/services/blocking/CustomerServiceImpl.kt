@@ -93,8 +93,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
         params: CustomerSyncPaymentMethodsFromGatewayParams,
         requestOptions: RequestOptions,
     ) {
-        // post
-        // /customers/external_customer_id/{external_customer_id}/sync_payment_methods_from_gateway
+        // post /customers/{customer_id}/sync_payment_methods_from_gateway
         withRawResponse().syncPaymentMethodsFromGateway(params, requestOptions)
     }
 
@@ -102,7 +101,8 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
         params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
         requestOptions: RequestOptions,
     ) {
-        // post /customers/{customer_id}/sync_payment_methods_from_gateway
+        // post
+        // /customers/external_customer_id/{external_customer_id}/sync_payment_methods_from_gateway
         withRawResponse().syncPaymentMethodsFromGatewayByExternalCustomerId(params, requestOptions)
     }
 
@@ -301,7 +301,6 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "customers",
-                        "external_customer_id",
                         params._pathParam(0),
                         "sync_payment_methods_from_gateway",
                     )
@@ -327,6 +326,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "customers",
+                        "external_customer_id",
                         params._pathParam(0),
                         "sync_payment_methods_from_gateway",
                     )
