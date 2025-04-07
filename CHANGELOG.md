@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.1.0-alpha.47 (2025-04-07)
+
+Full Changelog: [v0.1.0-alpha.46...v0.1.0-alpha.47](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.46...v0.1.0-alpha.47)
+
+### Features
+
+* **client:** expose request body setter and getter ([#346](https://github.com/orbcorp/orb-kotlin/issues/346)) ([0e0965d](https://github.com/orbcorp/orb-kotlin/commit/0e0965d8c2195326d430cdb8c11804d972995663))
+
+
+### Bug Fixes
+
+* **api:** naming for sync_payment_methods methods ([#351](https://github.com/orbcorp/orb-kotlin/issues/351)) ([00120a1](https://github.com/orbcorp/orb-kotlin/commit/00120a145d3e4cc29e56c2da60bb4ec2330ee131))
+
+
+### Chores
+
+* **internal:** codegen related update ([#348](https://github.com/orbcorp/orb-kotlin/issues/348)) ([7900ed7](https://github.com/orbcorp/orb-kotlin/commit/7900ed75a3763aae4bcce5875835068cc5c39f5e))
+
+
+### Documentation
+
+* add comments to `JsonField` classes ([#349](https://github.com/orbcorp/orb-kotlin/issues/349)) ([7e440ba](https://github.com/orbcorp/orb-kotlin/commit/7e440ba16b1455d2a3c6e35eb0ac1d259fd9d391))
+* document how to forcibly omit required field ([51cb762](https://github.com/orbcorp/orb-kotlin/commit/51cb76259150387df200996952cc29c4bce048a6))
+* swap examples used in readme ([#350](https://github.com/orbcorp/orb-kotlin/issues/350)) ([51cb762](https://github.com/orbcorp/orb-kotlin/commit/51cb76259150387df200996952cc29c4bce048a6))
+
 ## 0.1.0-alpha.46 (2025-04-02)
 
 Full Changelog: [v0.1.0-alpha.45...v0.1.0-alpha.46](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.45...v0.1.0-alpha.46)
