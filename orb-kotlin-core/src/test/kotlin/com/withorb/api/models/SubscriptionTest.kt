@@ -188,6 +188,9 @@ internal class SubscriptionTest {
                         .build()
                 )
                 .netTerms(0L)
+                .pendingSubscriptionChange(
+                    Subscription.PendingSubscriptionChange.builder().id("id").build()
+                )
                 .plan(
                     Plan.builder()
                         .id("id")
@@ -687,6 +690,8 @@ internal class SubscriptionTest {
                     .build()
             )
         assertThat(subscription.netTerms()).isEqualTo(0L)
+        assertThat(subscription.pendingSubscriptionChange())
+            .isEqualTo(Subscription.PendingSubscriptionChange.builder().id("id").build())
         assertThat(subscription.plan())
             .isEqualTo(
                 Plan.builder()
@@ -1176,6 +1181,9 @@ internal class SubscriptionTest {
                         .build()
                 )
                 .netTerms(0L)
+                .pendingSubscriptionChange(
+                    Subscription.PendingSubscriptionChange.builder().id("id").build()
+                )
                 .plan(
                     Plan.builder()
                         .id("id")

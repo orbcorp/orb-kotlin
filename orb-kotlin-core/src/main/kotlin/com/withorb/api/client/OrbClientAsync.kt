@@ -14,6 +14,7 @@ import com.withorb.api.services.async.ItemServiceAsync
 import com.withorb.api.services.async.MetricServiceAsync
 import com.withorb.api.services.async.PlanServiceAsync
 import com.withorb.api.services.async.PriceServiceAsync
+import com.withorb.api.services.async.SubscriptionChangeServiceAsync
 import com.withorb.api.services.async.SubscriptionServiceAsync
 import com.withorb.api.services.async.TopLevelServiceAsync
 
@@ -74,6 +75,8 @@ interface OrbClientAsync {
 
     fun dimensionalPriceGroups(): DimensionalPriceGroupServiceAsync
 
+    fun subscriptionChanges(): SubscriptionChangeServiceAsync
+
     /**
      * Closes this client, relinquishing any underlying resources.
      *
@@ -117,5 +120,7 @@ interface OrbClientAsync {
         fun alerts(): AlertServiceAsync.WithRawResponse
 
         fun dimensionalPriceGroups(): DimensionalPriceGroupServiceAsync.WithRawResponse
+
+        fun subscriptionChanges(): SubscriptionChangeServiceAsync.WithRawResponse
     }
 }

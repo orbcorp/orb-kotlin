@@ -197,6 +197,9 @@ internal class SubscriptionsTest {
                                 .build()
                         )
                         .netTerms(0L)
+                        .pendingSubscriptionChange(
+                            Subscription.PendingSubscriptionChange.builder().id("id").build()
+                        )
                         .plan(
                             Plan.builder()
                                 .id("id")
@@ -731,6 +734,9 @@ internal class SubscriptionsTest {
                             .build()
                     )
                     .netTerms(0L)
+                    .pendingSubscriptionChange(
+                        Subscription.PendingSubscriptionChange.builder().id("id").build()
+                    )
                     .plan(
                         Plan.builder()
                             .id("id")
@@ -1251,6 +1257,9 @@ internal class SubscriptionsTest {
                                 .build()
                         )
                         .netTerms(0L)
+                        .pendingSubscriptionChange(
+                            Subscription.PendingSubscriptionChange.builder().id("id").build()
+                        )
                         .plan(
                             Plan.builder()
                                 .id("id")

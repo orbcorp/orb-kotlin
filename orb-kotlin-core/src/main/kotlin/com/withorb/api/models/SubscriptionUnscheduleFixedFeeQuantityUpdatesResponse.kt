@@ -50,12 +50,14 @@ private constructor(
     private val metadata: JsonField<Metadata>,
     private val minimumIntervals: JsonField<List<MinimumInterval>>,
     private val netTerms: JsonField<Long>,
+    private val pendingSubscriptionChange: JsonField<PendingSubscriptionChange>,
     private val plan: JsonField<Plan>,
     private val priceIntervals: JsonField<List<PriceInterval>>,
     private val redeemedCoupon: JsonField<RedeemedCoupon>,
     private val startDate: JsonField<OffsetDateTime>,
     private val status: JsonField<Status>,
     private val trialInfo: JsonField<TrialInfo>,
+    private val changedResources: JsonField<ChangedResources>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -111,6 +113,9 @@ private constructor(
         @ExcludeMissing
         minimumIntervals: JsonField<List<MinimumInterval>> = JsonMissing.of(),
         @JsonProperty("net_terms") @ExcludeMissing netTerms: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("pending_subscription_change")
+        @ExcludeMissing
+        pendingSubscriptionChange: JsonField<PendingSubscriptionChange> = JsonMissing.of(),
         @JsonProperty("plan") @ExcludeMissing plan: JsonField<Plan> = JsonMissing.of(),
         @JsonProperty("price_intervals")
         @ExcludeMissing
@@ -125,6 +130,9 @@ private constructor(
         @JsonProperty("trial_info")
         @ExcludeMissing
         trialInfo: JsonField<TrialInfo> = JsonMissing.of(),
+        @JsonProperty("changed_resources")
+        @ExcludeMissing
+        changedResources: JsonField<ChangedResources> = JsonMissing.of(),
     ) : this(
         id,
         activePlanPhaseOrder,
@@ -145,12 +153,14 @@ private constructor(
         metadata,
         minimumIntervals,
         netTerms,
+        pendingSubscriptionChange,
         plan,
         priceIntervals,
         redeemedCoupon,
         startDate,
         status,
         trialInfo,
+        changedResources,
         mutableMapOf(),
     )
 
@@ -334,6 +344,15 @@ private constructor(
     fun netTerms(): Long = netTerms.getRequired("net_terms")
 
     /**
+     * A pending subscription change if one exists on this subscription.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun pendingSubscriptionChange(): PendingSubscriptionChange? =
+        pendingSubscriptionChange.getNullable("pending_subscription_change")
+
+    /**
      * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
      * to by a customer. Plans define the billing behavior of the subscription. You can see more
      * about how to configure prices in the [Price resource](/reference/price).
@@ -376,6 +395,16 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun trialInfo(): TrialInfo = trialInfo.getRequired("trial_info")
+
+    /**
+     * The resources that were changed as part of this operation. Only present when fetched through
+     * the subscription changes API or if the `include_changed_resources` parameter was passed in
+     * the request.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun changedResources(): ChangedResources? = changedResources.getNullable("changed_resources")
 
     /**
      * Returns the raw JSON value of [id].
@@ -552,6 +581,17 @@ private constructor(
     @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
 
     /**
+     * Returns the raw JSON value of [pendingSubscriptionChange].
+     *
+     * Unlike [pendingSubscriptionChange], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("pending_subscription_change")
+    @ExcludeMissing
+    fun _pendingSubscriptionChange(): JsonField<PendingSubscriptionChange> =
+        pendingSubscriptionChange
+
+    /**
      * Returns the raw JSON value of [plan].
      *
      * Unlike [plan], this method doesn't throw if the JSON field has an unexpected type.
@@ -599,6 +639,16 @@ private constructor(
      */
     @JsonProperty("trial_info") @ExcludeMissing fun _trialInfo(): JsonField<TrialInfo> = trialInfo
 
+    /**
+     * Returns the raw JSON value of [changedResources].
+     *
+     * Unlike [changedResources], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("changed_resources")
+    @ExcludeMissing
+    fun _changedResources(): JsonField<ChangedResources> = changedResources
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -638,6 +688,7 @@ private constructor(
          * .metadata()
          * .minimumIntervals()
          * .netTerms()
+         * .pendingSubscriptionChange()
          * .plan()
          * .priceIntervals()
          * .redeemedCoupon()
@@ -673,12 +724,14 @@ private constructor(
         private var metadata: JsonField<Metadata>? = null
         private var minimumIntervals: JsonField<MutableList<MinimumInterval>>? = null
         private var netTerms: JsonField<Long>? = null
+        private var pendingSubscriptionChange: JsonField<PendingSubscriptionChange>? = null
         private var plan: JsonField<Plan>? = null
         private var priceIntervals: JsonField<MutableList<PriceInterval>>? = null
         private var redeemedCoupon: JsonField<RedeemedCoupon>? = null
         private var startDate: JsonField<OffsetDateTime>? = null
         private var status: JsonField<Status>? = null
         private var trialInfo: JsonField<TrialInfo>? = null
+        private var changedResources: JsonField<ChangedResources> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
@@ -726,6 +779,8 @@ private constructor(
                     it.toMutableList()
                 }
             netTerms = subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.netTerms
+            pendingSubscriptionChange =
+                subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.pendingSubscriptionChange
             plan = subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.plan
             priceIntervals =
                 subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.priceIntervals.map {
@@ -735,6 +790,8 @@ private constructor(
             startDate = subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.startDate
             status = subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.status
             trialInfo = subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.trialInfo
+            changedResources =
+                subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.changedResources
             additionalProperties =
                 subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.additionalProperties
                     .toMutableMap()
@@ -1141,6 +1198,21 @@ private constructor(
          */
         fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
+        /** A pending subscription change if one exists on this subscription. */
+        fun pendingSubscriptionChange(pendingSubscriptionChange: PendingSubscriptionChange?) =
+            pendingSubscriptionChange(JsonField.ofNullable(pendingSubscriptionChange))
+
+        /**
+         * Sets [Builder.pendingSubscriptionChange] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.pendingSubscriptionChange] with a well-typed
+         * [PendingSubscriptionChange] value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
+         */
+        fun pendingSubscriptionChange(
+            pendingSubscriptionChange: JsonField<PendingSubscriptionChange>
+        ) = apply { this.pendingSubscriptionChange = pendingSubscriptionChange }
+
         /**
          * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
          * subscribed to by a customer. Plans define the billing behavior of the subscription. You
@@ -1230,6 +1302,25 @@ private constructor(
          */
         fun trialInfo(trialInfo: JsonField<TrialInfo>) = apply { this.trialInfo = trialInfo }
 
+        /**
+         * The resources that were changed as part of this operation. Only present when fetched
+         * through the subscription changes API or if the `include_changed_resources` parameter was
+         * passed in the request.
+         */
+        fun changedResources(changedResources: ChangedResources?) =
+            changedResources(JsonField.ofNullable(changedResources))
+
+        /**
+         * Sets [Builder.changedResources] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.changedResources] with a well-typed [ChangedResources]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun changedResources(changedResources: JsonField<ChangedResources>) = apply {
+            this.changedResources = changedResources
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1275,6 +1366,7 @@ private constructor(
          * .metadata()
          * .minimumIntervals()
          * .netTerms()
+         * .pendingSubscriptionChange()
          * .plan()
          * .priceIntervals()
          * .redeemedCoupon()
@@ -1308,12 +1400,14 @@ private constructor(
                 checkRequired("metadata", metadata),
                 checkRequired("minimumIntervals", minimumIntervals).map { it.toImmutable() },
                 checkRequired("netTerms", netTerms),
+                checkRequired("pendingSubscriptionChange", pendingSubscriptionChange),
                 checkRequired("plan", plan),
                 checkRequired("priceIntervals", priceIntervals).map { it.toImmutable() },
                 checkRequired("redeemedCoupon", redeemedCoupon),
                 checkRequired("startDate", startDate),
                 checkRequired("status", status),
                 checkRequired("trialInfo", trialInfo),
+                changedResources,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1344,12 +1438,14 @@ private constructor(
         metadata().validate()
         minimumIntervals().forEach { it.validate() }
         netTerms()
+        pendingSubscriptionChange()?.validate()
         plan().validate()
         priceIntervals().forEach { it.validate() }
         redeemedCoupon()?.validate()
         startDate()
         status().validate()
         trialInfo().validate()
+        changedResources()?.validate()
         validated = true
     }
 
@@ -1386,12 +1482,14 @@ private constructor(
             (metadata.asKnown()?.validity() ?: 0) +
             (minimumIntervals.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (netTerms.asKnown() == null) 0 else 1) +
+            (pendingSubscriptionChange.asKnown()?.validity() ?: 0) +
             (plan.asKnown()?.validity() ?: 0) +
             (priceIntervals.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (redeemedCoupon.asKnown()?.validity() ?: 0) +
             (if (startDate.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0) +
-            (trialInfo.asKnown()?.validity() ?: 0)
+            (trialInfo.asKnown()?.validity() ?: 0) +
+            (changedResources.asKnown()?.validity() ?: 0)
 
     class AdjustmentInterval
     private constructor(
@@ -8338,6 +8436,162 @@ private constructor(
             "MinimumInterval{appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, endDate=$endDate, minimumAmount=$minimumAmount, startDate=$startDate, additionalProperties=$additionalProperties}"
     }
 
+    /** A pending subscription change if one exists on this subscription. */
+    class PendingSubscriptionChange
+    private constructor(
+        private val id: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of()
+        ) : this(id, mutableMapOf())
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun id(): String = id.getRequired("id")
+
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [PendingSubscriptionChange].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [PendingSubscriptionChange]. */
+        class Builder internal constructor() {
+
+            private var id: JsonField<String>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(pendingSubscriptionChange: PendingSubscriptionChange) = apply {
+                id = pendingSubscriptionChange.id
+                additionalProperties = pendingSubscriptionChange.additionalProperties.toMutableMap()
+            }
+
+            fun id(id: String) = id(JsonField.of(id))
+
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun id(id: JsonField<String>) = apply { this.id = id }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [PendingSubscriptionChange].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): PendingSubscriptionChange =
+                PendingSubscriptionChange(
+                    checkRequired("id", id),
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): PendingSubscriptionChange = apply {
+            if (validated) {
+                return@apply
+            }
+
+            id()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = (if (id.asKnown() == null) 0 else 1)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is PendingSubscriptionChange && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(id, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "PendingSubscriptionChange{id=$id, additionalProperties=$additionalProperties}"
+    }
+
     /**
      * The Price Interval resource represents a period of time for which a price will bill on a
      * subscription. A subscription’s price intervals define its billing behavior.
@@ -9872,20 +10126,381 @@ private constructor(
             "TrialInfo{endDate=$endDate, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * The resources that were changed as part of this operation. Only present when fetched through
+     * the subscription changes API or if the `include_changed_resources` parameter was passed in
+     * the request.
+     */
+    class ChangedResources
+    private constructor(
+        private val createdCreditNotes: JsonField<List<CreditNote>>,
+        private val createdInvoices: JsonField<List<Invoice>>,
+        private val voidedCreditNotes: JsonField<List<CreditNote>>,
+        private val voidedInvoices: JsonField<List<Invoice>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("created_credit_notes")
+            @ExcludeMissing
+            createdCreditNotes: JsonField<List<CreditNote>> = JsonMissing.of(),
+            @JsonProperty("created_invoices")
+            @ExcludeMissing
+            createdInvoices: JsonField<List<Invoice>> = JsonMissing.of(),
+            @JsonProperty("voided_credit_notes")
+            @ExcludeMissing
+            voidedCreditNotes: JsonField<List<CreditNote>> = JsonMissing.of(),
+            @JsonProperty("voided_invoices")
+            @ExcludeMissing
+            voidedInvoices: JsonField<List<Invoice>> = JsonMissing.of(),
+        ) : this(
+            createdCreditNotes,
+            createdInvoices,
+            voidedCreditNotes,
+            voidedInvoices,
+            mutableMapOf(),
+        )
+
+        /**
+         * The credit notes that were created as part of this operation.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun createdCreditNotes(): List<CreditNote> =
+            createdCreditNotes.getRequired("created_credit_notes")
+
+        /**
+         * The invoices that were created as part of this operation.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun createdInvoices(): List<Invoice> = createdInvoices.getRequired("created_invoices")
+
+        /**
+         * The credit notes that were voided as part of this operation.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun voidedCreditNotes(): List<CreditNote> =
+            voidedCreditNotes.getRequired("voided_credit_notes")
+
+        /**
+         * The invoices that were voided as part of this operation.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun voidedInvoices(): List<Invoice> = voidedInvoices.getRequired("voided_invoices")
+
+        /**
+         * Returns the raw JSON value of [createdCreditNotes].
+         *
+         * Unlike [createdCreditNotes], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("created_credit_notes")
+        @ExcludeMissing
+        fun _createdCreditNotes(): JsonField<List<CreditNote>> = createdCreditNotes
+
+        /**
+         * Returns the raw JSON value of [createdInvoices].
+         *
+         * Unlike [createdInvoices], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("created_invoices")
+        @ExcludeMissing
+        fun _createdInvoices(): JsonField<List<Invoice>> = createdInvoices
+
+        /**
+         * Returns the raw JSON value of [voidedCreditNotes].
+         *
+         * Unlike [voidedCreditNotes], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("voided_credit_notes")
+        @ExcludeMissing
+        fun _voidedCreditNotes(): JsonField<List<CreditNote>> = voidedCreditNotes
+
+        /**
+         * Returns the raw JSON value of [voidedInvoices].
+         *
+         * Unlike [voidedInvoices], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("voided_invoices")
+        @ExcludeMissing
+        fun _voidedInvoices(): JsonField<List<Invoice>> = voidedInvoices
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [ChangedResources].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .createdCreditNotes()
+             * .createdInvoices()
+             * .voidedCreditNotes()
+             * .voidedInvoices()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [ChangedResources]. */
+        class Builder internal constructor() {
+
+            private var createdCreditNotes: JsonField<MutableList<CreditNote>>? = null
+            private var createdInvoices: JsonField<MutableList<Invoice>>? = null
+            private var voidedCreditNotes: JsonField<MutableList<CreditNote>>? = null
+            private var voidedInvoices: JsonField<MutableList<Invoice>>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(changedResources: ChangedResources) = apply {
+                createdCreditNotes = changedResources.createdCreditNotes.map { it.toMutableList() }
+                createdInvoices = changedResources.createdInvoices.map { it.toMutableList() }
+                voidedCreditNotes = changedResources.voidedCreditNotes.map { it.toMutableList() }
+                voidedInvoices = changedResources.voidedInvoices.map { it.toMutableList() }
+                additionalProperties = changedResources.additionalProperties.toMutableMap()
+            }
+
+            /** The credit notes that were created as part of this operation. */
+            fun createdCreditNotes(createdCreditNotes: List<CreditNote>) =
+                createdCreditNotes(JsonField.of(createdCreditNotes))
+
+            /**
+             * Sets [Builder.createdCreditNotes] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.createdCreditNotes] with a well-typed
+             * `List<CreditNote>` value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
+             */
+            fun createdCreditNotes(createdCreditNotes: JsonField<List<CreditNote>>) = apply {
+                this.createdCreditNotes = createdCreditNotes.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [CreditNote] to [createdCreditNotes].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addCreatedCreditNote(createdCreditNote: CreditNote) = apply {
+                createdCreditNotes =
+                    (createdCreditNotes ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("createdCreditNotes", it).add(createdCreditNote)
+                    }
+            }
+
+            /** The invoices that were created as part of this operation. */
+            fun createdInvoices(createdInvoices: List<Invoice>) =
+                createdInvoices(JsonField.of(createdInvoices))
+
+            /**
+             * Sets [Builder.createdInvoices] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.createdInvoices] with a well-typed `List<Invoice>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun createdInvoices(createdInvoices: JsonField<List<Invoice>>) = apply {
+                this.createdInvoices = createdInvoices.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Invoice] to [createdInvoices].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addCreatedInvoice(createdInvoice: Invoice) = apply {
+                createdInvoices =
+                    (createdInvoices ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("createdInvoices", it).add(createdInvoice)
+                    }
+            }
+
+            /** The credit notes that were voided as part of this operation. */
+            fun voidedCreditNotes(voidedCreditNotes: List<CreditNote>) =
+                voidedCreditNotes(JsonField.of(voidedCreditNotes))
+
+            /**
+             * Sets [Builder.voidedCreditNotes] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.voidedCreditNotes] with a well-typed
+             * `List<CreditNote>` value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
+             */
+            fun voidedCreditNotes(voidedCreditNotes: JsonField<List<CreditNote>>) = apply {
+                this.voidedCreditNotes = voidedCreditNotes.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [CreditNote] to [voidedCreditNotes].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addVoidedCreditNote(voidedCreditNote: CreditNote) = apply {
+                voidedCreditNotes =
+                    (voidedCreditNotes ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("voidedCreditNotes", it).add(voidedCreditNote)
+                    }
+            }
+
+            /** The invoices that were voided as part of this operation. */
+            fun voidedInvoices(voidedInvoices: List<Invoice>) =
+                voidedInvoices(JsonField.of(voidedInvoices))
+
+            /**
+             * Sets [Builder.voidedInvoices] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.voidedInvoices] with a well-typed `List<Invoice>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun voidedInvoices(voidedInvoices: JsonField<List<Invoice>>) = apply {
+                this.voidedInvoices = voidedInvoices.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Invoice] to [voidedInvoices].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addVoidedInvoice(voidedInvoice: Invoice) = apply {
+                voidedInvoices =
+                    (voidedInvoices ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("voidedInvoices", it).add(voidedInvoice)
+                    }
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [ChangedResources].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .createdCreditNotes()
+             * .createdInvoices()
+             * .voidedCreditNotes()
+             * .voidedInvoices()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): ChangedResources =
+                ChangedResources(
+                    checkRequired("createdCreditNotes", createdCreditNotes).map {
+                        it.toImmutable()
+                    },
+                    checkRequired("createdInvoices", createdInvoices).map { it.toImmutable() },
+                    checkRequired("voidedCreditNotes", voidedCreditNotes).map { it.toImmutable() },
+                    checkRequired("voidedInvoices", voidedInvoices).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): ChangedResources = apply {
+            if (validated) {
+                return@apply
+            }
+
+            createdCreditNotes().forEach { it.validate() }
+            createdInvoices().forEach { it.validate() }
+            voidedCreditNotes().forEach { it.validate() }
+            voidedInvoices().forEach { it.validate() }
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (createdCreditNotes.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (createdInvoices.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (voidedCreditNotes.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (voidedInvoices.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is ChangedResources && createdCreditNotes == other.createdCreditNotes && createdInvoices == other.createdInvoices && voidedCreditNotes == other.voidedCreditNotes && voidedInvoices == other.voidedInvoices && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(createdCreditNotes, createdInvoices, voidedCreditNotes, voidedInvoices, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "ChangedResources{createdCreditNotes=$createdCreditNotes, createdInvoices=$createdInvoices, voidedCreditNotes=$voidedCreditNotes, voidedInvoices=$voidedInvoices, additionalProperties=$additionalProperties}"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse && id == other.id && activePlanPhaseOrder == other.activePlanPhaseOrder && adjustmentIntervals == other.adjustmentIntervals && autoCollection == other.autoCollection && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && billingCycleDay == other.billingCycleDay && createdAt == other.createdAt && currentBillingPeriodEndDate == other.currentBillingPeriodEndDate && currentBillingPeriodStartDate == other.currentBillingPeriodStartDate && customer == other.customer && defaultInvoiceMemo == other.defaultInvoiceMemo && discountIntervals == other.discountIntervals && endDate == other.endDate && fixedFeeQuantitySchedule == other.fixedFeeQuantitySchedule && invoicingThreshold == other.invoicingThreshold && maximumIntervals == other.maximumIntervals && metadata == other.metadata && minimumIntervals == other.minimumIntervals && netTerms == other.netTerms && plan == other.plan && priceIntervals == other.priceIntervals && redeemedCoupon == other.redeemedCoupon && startDate == other.startDate && status == other.status && trialInfo == other.trialInfo && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse && id == other.id && activePlanPhaseOrder == other.activePlanPhaseOrder && adjustmentIntervals == other.adjustmentIntervals && autoCollection == other.autoCollection && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && billingCycleDay == other.billingCycleDay && createdAt == other.createdAt && currentBillingPeriodEndDate == other.currentBillingPeriodEndDate && currentBillingPeriodStartDate == other.currentBillingPeriodStartDate && customer == other.customer && defaultInvoiceMemo == other.defaultInvoiceMemo && discountIntervals == other.discountIntervals && endDate == other.endDate && fixedFeeQuantitySchedule == other.fixedFeeQuantitySchedule && invoicingThreshold == other.invoicingThreshold && maximumIntervals == other.maximumIntervals && metadata == other.metadata && minimumIntervals == other.minimumIntervals && netTerms == other.netTerms && pendingSubscriptionChange == other.pendingSubscriptionChange && plan == other.plan && priceIntervals == other.priceIntervals && redeemedCoupon == other.redeemedCoupon && startDate == other.startDate && status == other.status && trialInfo == other.trialInfo && changedResources == other.changedResources && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, activePlanPhaseOrder, adjustmentIntervals, autoCollection, billingCycleAnchorConfiguration, billingCycleDay, createdAt, currentBillingPeriodEndDate, currentBillingPeriodStartDate, customer, defaultInvoiceMemo, discountIntervals, endDate, fixedFeeQuantitySchedule, invoicingThreshold, maximumIntervals, metadata, minimumIntervals, netTerms, plan, priceIntervals, redeemedCoupon, startDate, status, trialInfo, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, activePlanPhaseOrder, adjustmentIntervals, autoCollection, billingCycleAnchorConfiguration, billingCycleDay, createdAt, currentBillingPeriodEndDate, currentBillingPeriodStartDate, customer, defaultInvoiceMemo, discountIntervals, endDate, fixedFeeQuantitySchedule, invoicingThreshold, maximumIntervals, metadata, minimumIntervals, netTerms, pendingSubscriptionChange, plan, priceIntervals, redeemedCoupon, startDate, status, trialInfo, changedResources, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse{id=$id, activePlanPhaseOrder=$activePlanPhaseOrder, adjustmentIntervals=$adjustmentIntervals, autoCollection=$autoCollection, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, billingCycleDay=$billingCycleDay, createdAt=$createdAt, currentBillingPeriodEndDate=$currentBillingPeriodEndDate, currentBillingPeriodStartDate=$currentBillingPeriodStartDate, customer=$customer, defaultInvoiceMemo=$defaultInvoiceMemo, discountIntervals=$discountIntervals, endDate=$endDate, fixedFeeQuantitySchedule=$fixedFeeQuantitySchedule, invoicingThreshold=$invoicingThreshold, maximumIntervals=$maximumIntervals, metadata=$metadata, minimumIntervals=$minimumIntervals, netTerms=$netTerms, plan=$plan, priceIntervals=$priceIntervals, redeemedCoupon=$redeemedCoupon, startDate=$startDate, status=$status, trialInfo=$trialInfo, additionalProperties=$additionalProperties}"
+        "SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse{id=$id, activePlanPhaseOrder=$activePlanPhaseOrder, adjustmentIntervals=$adjustmentIntervals, autoCollection=$autoCollection, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, billingCycleDay=$billingCycleDay, createdAt=$createdAt, currentBillingPeriodEndDate=$currentBillingPeriodEndDate, currentBillingPeriodStartDate=$currentBillingPeriodStartDate, customer=$customer, defaultInvoiceMemo=$defaultInvoiceMemo, discountIntervals=$discountIntervals, endDate=$endDate, fixedFeeQuantitySchedule=$fixedFeeQuantitySchedule, invoicingThreshold=$invoicingThreshold, maximumIntervals=$maximumIntervals, metadata=$metadata, minimumIntervals=$minimumIntervals, netTerms=$netTerms, pendingSubscriptionChange=$pendingSubscriptionChange, plan=$plan, priceIntervals=$priceIntervals, redeemedCoupon=$redeemedCoupon, startDate=$startDate, status=$status, trialInfo=$trialInfo, changedResources=$changedResources, additionalProperties=$additionalProperties}"
 }
