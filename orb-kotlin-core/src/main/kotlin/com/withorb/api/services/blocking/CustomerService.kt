@@ -233,8 +233,8 @@ interface CustomerService {
 
         /**
          * Returns a raw HTTP response for `post
-         * /customers/external_customer_id/{external_customer_id}/sync_payment_methods_from_gateway`,
-         * but is otherwise the same as [CustomerService.syncPaymentMethodsFromGateway].
+         * /customers/{customer_id}/sync_payment_methods_from_gateway`, but is otherwise the same as
+         * [CustomerService.syncPaymentMethodsFromGateway].
          */
         @MustBeClosed
         fun syncPaymentMethodsFromGateway(
@@ -244,7 +244,8 @@ interface CustomerService {
 
         /**
          * Returns a raw HTTP response for `post
-         * /customers/{customer_id}/sync_payment_methods_from_gateway`, but is otherwise the same as
+         * /customers/external_customer_id/{external_customer_id}/sync_payment_methods_from_gateway`,
+         * but is otherwise the same as
          * [CustomerService.syncPaymentMethodsFromGatewayByExternalCustomerId].
          */
         @MustBeClosed
