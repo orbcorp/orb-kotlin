@@ -14,6 +14,7 @@ import com.withorb.api.services.blocking.ItemService
 import com.withorb.api.services.blocking.MetricService
 import com.withorb.api.services.blocking.PlanService
 import com.withorb.api.services.blocking.PriceService
+import com.withorb.api.services.blocking.SubscriptionChangeService
 import com.withorb.api.services.blocking.SubscriptionService
 import com.withorb.api.services.blocking.TopLevelService
 
@@ -74,6 +75,8 @@ interface OrbClient {
 
     fun dimensionalPriceGroups(): DimensionalPriceGroupService
 
+    fun subscriptionChanges(): SubscriptionChangeService
+
     /**
      * Closes this client, relinquishing any underlying resources.
      *
@@ -117,5 +120,7 @@ interface OrbClient {
         fun alerts(): AlertService.WithRawResponse
 
         fun dimensionalPriceGroups(): DimensionalPriceGroupService.WithRawResponse
+
+        fun subscriptionChanges(): SubscriptionChangeService.WithRawResponse
     }
 }

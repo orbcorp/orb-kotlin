@@ -10183,7 +10183,7 @@ private constructor(
                     ) : this(firstUnit, unitAmount, lastUnit, mutableMapOf())
 
                     /**
-                     * Inclusive tier starting value
+                     * Exclusive tier starting value
                      *
                      * @throws OrbInvalidDataException if the JSON field has an unexpected type or
                      *   is unexpectedly missing or null (e.g. if the server responded with an
@@ -10201,7 +10201,7 @@ private constructor(
                     fun unitAmount(): String = unitAmount.getRequired("unit_amount")
 
                     /**
-                     * Exclusive tier ending value. If null, this is treated as the last tier
+                     * Inclusive tier ending value. If null, this is treated as the last tier
                      *
                      * @throws OrbInvalidDataException if the JSON field has an unexpected type
                      *   (e.g. if the server responded with an unexpected value).
@@ -10280,7 +10280,7 @@ private constructor(
                             additionalProperties = tier.additionalProperties.toMutableMap()
                         }
 
-                        /** Inclusive tier starting value */
+                        /** Exclusive tier starting value */
                         fun firstUnit(firstUnit: Double) = firstUnit(JsonField.of(firstUnit))
 
                         /**
@@ -10309,7 +10309,7 @@ private constructor(
                         }
 
                         /**
-                         * Exclusive tier ending value. If null, this is treated as the last tier
+                         * Inclusive tier ending value. If null, this is treated as the last tier
                          */
                         fun lastUnit(lastUnit: Double?) = lastUnit(JsonField.ofNullable(lastUnit))
 
@@ -12552,7 +12552,7 @@ private constructor(
                     fun bps(): Double = bps.getRequired("bps")
 
                     /**
-                     * Inclusive tier starting value
+                     * Exclusive tier starting value
                      *
                      * @throws OrbInvalidDataException if the JSON field has an unexpected type or
                      *   is unexpectedly missing or null (e.g. if the server responded with an
@@ -12561,7 +12561,7 @@ private constructor(
                     fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
 
                     /**
-                     * Exclusive tier ending value
+                     * Inclusive tier ending value
                      *
                      * @throws OrbInvalidDataException if the JSON field has an unexpected type
                      *   (e.g. if the server responded with an unexpected value).
@@ -12670,7 +12670,7 @@ private constructor(
                          */
                         fun bps(bps: JsonField<Double>) = apply { this.bps = bps }
 
-                        /** Inclusive tier starting value */
+                        /** Exclusive tier starting value */
                         fun minimumAmount(minimumAmount: String) =
                             minimumAmount(JsonField.of(minimumAmount))
 
@@ -12685,7 +12685,7 @@ private constructor(
                             this.minimumAmount = minimumAmount
                         }
 
-                        /** Exclusive tier ending value */
+                        /** Inclusive tier ending value */
                         fun maximumAmount(maximumAmount: String?) =
                             maximumAmount(JsonField.ofNullable(maximumAmount))
 
