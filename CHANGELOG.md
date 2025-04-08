@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.48 (2025-04-08)
+
+Full Changelog: [v0.1.0-alpha.47...v0.1.0-alpha.48](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.47...v0.1.0-alpha.48)
+
+### Features
+
+* **api:** api update ([#353](https://github.com/orbcorp/orb-kotlin/issues/353)) ([b00256b](https://github.com/orbcorp/orb-kotlin/commit/b00256bbcda888cbdcff459cbf220a76e220db77))
+
+
+### Chores
+
+* **internal:** codegen related update ([#355](https://github.com/orbcorp/orb-kotlin/issues/355)) ([0aa609b](https://github.com/orbcorp/orb-kotlin/commit/0aa609b297a73a0ccac2b0e3c6a7e858ff29c4cd))
+* **tests:** improve enum examples ([#356](https://github.com/orbcorp/orb-kotlin/issues/356)) ([ae58eec](https://github.com/orbcorp/orb-kotlin/commit/ae58eec92adfd28b5ffe1a031acbf9d474f1e1d3))
+
 ## 0.1.0-alpha.47 (2025-04-07)
 
 Full Changelog: [v0.1.0-alpha.46...v0.1.0-alpha.47](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.46...v0.1.0-alpha.47)
