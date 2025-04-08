@@ -28,6 +28,8 @@ import com.withorb.api.services.blocking.PlanService
 import com.withorb.api.services.blocking.PlanServiceImpl
 import com.withorb.api.services.blocking.PriceService
 import com.withorb.api.services.blocking.PriceServiceImpl
+import com.withorb.api.services.blocking.SubscriptionChangeService
+import com.withorb.api.services.blocking.SubscriptionChangeServiceImpl
 import com.withorb.api.services.blocking.SubscriptionService
 import com.withorb.api.services.blocking.SubscriptionServiceImpl
 import com.withorb.api.services.blocking.TopLevelService
@@ -92,6 +94,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
         DimensionalPriceGroupServiceImpl(clientOptionsWithUserAgent)
     }
 
+    private val subscriptionChanges: SubscriptionChangeService by lazy {
+        SubscriptionChangeServiceImpl(clientOptionsWithUserAgent)
+    }
+
     private val webhooks: WebhookService by lazy { WebhookServiceImpl(clientOptions) }
 
     override fun async(): OrbClientAsync = async
@@ -127,6 +133,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
     override fun dimensionalPriceGroups(): DimensionalPriceGroupService = dimensionalPriceGroups
 
     override fun webhooks(): WebhookService = webhooks
+
+    override fun subscriptionChanges(): SubscriptionChangeService = subscriptionChanges
 
     override fun close() = clientOptions.httpClient.close()
 
@@ -189,6 +197,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
             DimensionalPriceGroupServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val subscriptionChanges: SubscriptionChangeService.WithRawResponse by lazy {
+            SubscriptionChangeServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun topLevel(): TopLevelService.WithRawResponse = topLevel
 
         override fun coupons(): CouponService.WithRawResponse = coupons
@@ -217,5 +229,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
         override fun dimensionalPriceGroups(): DimensionalPriceGroupService.WithRawResponse =
             dimensionalPriceGroups
+
+        override fun subscriptionChanges(): SubscriptionChangeService.WithRawResponse =
+            subscriptionChanges
     }
 }
