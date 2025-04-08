@@ -20,8 +20,7 @@ internal class SubscriptionPriceIntervalsParamsTest {
                         SubscriptionPriceIntervalsParams.Add.AllocationPrice.builder()
                             .amount("10.00")
                             .cadence(
-                                SubscriptionPriceIntervalsParams.Add.AllocationPrice.Cadence
-                                    .ONE_TIME
+                                SubscriptionPriceIntervalsParams.Add.AllocationPrice.Cadence.MONTHLY
                             )
                             .currency("USD")
                             .expiresAtEndOfCadence(true)
@@ -180,7 +179,7 @@ internal class SubscriptionPriceIntervalsParamsTest {
                                 .amount("10.00")
                                 .cadence(
                                     SubscriptionPriceIntervalsParams.Add.AllocationPrice.Cadence
-                                        .ONE_TIME
+                                        .MONTHLY
                                 )
                                 .currency("USD")
                                 .expiresAtEndOfCadence(true)
@@ -328,8 +327,7 @@ internal class SubscriptionPriceIntervalsParamsTest {
                         SubscriptionPriceIntervalsParams.Add.AllocationPrice.builder()
                             .amount("10.00")
                             .cadence(
-                                SubscriptionPriceIntervalsParams.Add.AllocationPrice.Cadence
-                                    .ONE_TIME
+                                SubscriptionPriceIntervalsParams.Add.AllocationPrice.Cadence.MONTHLY
                             )
                             .currency("USD")
                             .expiresAtEndOfCadence(true)
