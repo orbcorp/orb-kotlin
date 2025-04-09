@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.1.0-alpha.49 (2025-04-09)
+
+Full Changelog: [v0.1.0-alpha.48...v0.1.0-alpha.49](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.48...v0.1.0-alpha.49)
+
+### Features
+
+* **client:** make pagination robust to missing data ([e76e6f6](https://github.com/orbcorp/orb-kotlin/commit/e76e6f602f037f089cd883783ed573e02c6d34fe))
+* **client:** support setting base URL via env var ([#358](https://github.com/orbcorp/orb-kotlin/issues/358)) ([2962455](https://github.com/orbcorp/orb-kotlin/commit/29624552c433d8718e1089117c4b8cf1c8a15514))
+
+
+### Bug Fixes
+
+* **client:** bump to better jackson version ([#361](https://github.com/orbcorp/orb-kotlin/issues/361)) ([dbbfe02](https://github.com/orbcorp/orb-kotlin/commit/dbbfe023113e5b7d7fadfeb719b0003bc8e7ec41))
+
+
+### Chores
+
+* **internal:** expand CI branch coverage ([#360](https://github.com/orbcorp/orb-kotlin/issues/360)) ([4593485](https://github.com/orbcorp/orb-kotlin/commit/45934857136f96f860a1711dca75c5ce297a9108))
+* **internal:** reduce CI branch coverage ([befcc29](https://github.com/orbcorp/orb-kotlin/commit/befcc29550433af21a2e59efcc19b2fc3c29449e))
+
+
+### Documentation
+
+* add comments for page methods ([e76e6f6](https://github.com/orbcorp/orb-kotlin/commit/e76e6f602f037f089cd883783ed573e02c6d34fe))
+
+
+### Refactors
+
+* **client:** deduplicate page response classes ([#362](https://github.com/orbcorp/orb-kotlin/issues/362)) ([e76e6f6](https://github.com/orbcorp/orb-kotlin/commit/e76e6f602f037f089cd883783ed573e02c6d34fe))
+* **client:** migrate pages to builder pattern ([#363](https://github.com/orbcorp/orb-kotlin/issues/363)) ([4664294](https://github.com/orbcorp/orb-kotlin/commit/4664294ce2ac294208008451e6d2bc9cf51a438c))
+
 ## 0.1.0-alpha.48 (2025-04-08)
 
 Full Changelog: [v0.1.0-alpha.47...v0.1.0-alpha.48](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.47...v0.1.0-alpha.48)
