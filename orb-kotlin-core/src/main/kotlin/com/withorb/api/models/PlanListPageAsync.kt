@@ -2,26 +2,19 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.PlanServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/**
- * This endpoint returns a list of all [plans](/core-concepts#plan-and-price) for an account in a
- * list format. The list of plans is ordered starting from the most recently created plan. The
- * response also includes [`pagination_metadata`](/api-reference/pagination), which lets the caller
- * retrieve the next page of results if they exist.
- */
+/** @see [PlanServiceAsync.list] */
 class PlanListPageAsync
 private constructor(
-    private val plansService: PlanServiceAsync,
+    private val service: PlanServiceAsync,
     private val params: PlanListParams,
     private val response: PlanListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): PlanListPageResponse = response
 
     /**
      * Delegates to [PlanListPageResponse], but gracefully handles missing data.
@@ -37,19 +30,6 @@ private constructor(
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PlanListPageAsync && plansService == other.plansService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(plansService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "PlanListPageAsync{plansService=$plansService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean =
         data().isNotEmpty() &&
@@ -70,19 +50,74 @@ private constructor(
             .build()
     }
 
-    suspend fun getNextPage(): PlanListPageAsync? {
-        return getNextPageParams()?.let { plansService.list(it) }
-    }
+    suspend fun getNextPage(): PlanListPageAsync? = getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): PlanListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): PlanListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            plansService: PlanServiceAsync,
-            params: PlanListParams,
-            response: PlanListPageResponse,
-        ) = PlanListPageAsync(plansService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [PlanListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [PlanListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: PlanServiceAsync? = null
+        private var params: PlanListParams? = null
+        private var response: PlanListPageResponse? = null
+
+        internal fun from(planListPageAsync: PlanListPageAsync) = apply {
+            service = planListPageAsync.service
+            params = planListPageAsync.params
+            response = planListPageAsync.response
+        }
+
+        fun service(service: PlanServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: PlanListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: PlanListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [PlanListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): PlanListPageAsync =
+            PlanListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: PlanListPageAsync) : Flow<Plan> {
@@ -99,4 +134,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PlanListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "PlanListPageAsync{service=$service, params=$params, response=$response}"
 }

@@ -144,7 +144,11 @@ class MetricServiceAsyncImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        MetricListPageAsync.of(MetricServiceAsyncImpl(clientOptions), params, it)
+                        MetricListPageAsync.builder()
+                            .service(MetricServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

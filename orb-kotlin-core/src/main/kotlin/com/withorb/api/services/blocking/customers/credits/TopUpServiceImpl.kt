@@ -138,7 +138,11 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
                         }
                     }
                     .let {
-                        CustomerCreditTopUpListPage.of(TopUpServiceImpl(clientOptions), params, it)
+                        CustomerCreditTopUpListPage.builder()
+                            .service(TopUpServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
@@ -260,11 +264,11 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
                         }
                     }
                     .let {
-                        CustomerCreditTopUpListByExternalIdPage.of(
-                            TopUpServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerCreditTopUpListByExternalIdPage.builder()
+                            .service(TopUpServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

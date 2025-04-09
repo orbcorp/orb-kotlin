@@ -93,11 +93,11 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
                         }
                     }
                     .let {
-                        CustomerCreditLedgerListPage.of(
-                            LedgerServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerCreditLedgerListPage.builder()
+                            .service(LedgerServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
@@ -199,11 +199,11 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
                         }
                     }
                     .let {
-                        CustomerCreditLedgerListByExternalIdPage.of(
-                            LedgerServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerCreditLedgerListByExternalIdPage.builder()
+                            .service(LedgerServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

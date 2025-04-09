@@ -2,22 +2,17 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.MetricService
 import java.util.Objects
 
-/**
- * This endpoint is used to fetch [metric](/core-concepts##metric) details given a metric
- * identifier. It returns information about the metrics including its name, description, and item.
- */
+/** @see [MetricService.list] */
 class MetricListPage
 private constructor(
-    private val metricsService: MetricService,
+    private val service: MetricService,
     private val params: MetricListParams,
     private val response: MetricListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): MetricListPageResponse = response
 
     /**
      * Delegates to [MetricListPageResponse], but gracefully handles missing data.
@@ -33,19 +28,6 @@ private constructor(
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is MetricListPage && metricsService == other.metricsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(metricsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "MetricListPage{metricsService=$metricsService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean =
         data().isNotEmpty() &&
@@ -66,19 +48,74 @@ private constructor(
             .build()
     }
 
-    fun getNextPage(): MetricListPage? {
-        return getNextPageParams()?.let { metricsService.list(it) }
-    }
+    fun getNextPage(): MetricListPage? = getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): MetricListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): MetricListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            metricsService: MetricService,
-            params: MetricListParams,
-            response: MetricListPageResponse,
-        ) = MetricListPage(metricsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [MetricListPage].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [MetricListPage]. */
+    class Builder internal constructor() {
+
+        private var service: MetricService? = null
+        private var params: MetricListParams? = null
+        private var response: MetricListPageResponse? = null
+
+        internal fun from(metricListPage: MetricListPage) = apply {
+            service = metricListPage.service
+            params = metricListPage.params
+            response = metricListPage.response
+        }
+
+        fun service(service: MetricService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: MetricListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: MetricListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [MetricListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): MetricListPage =
+            MetricListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: MetricListPage) : Sequence<BillableMetric> {
@@ -95,4 +132,16 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is MetricListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() = "MetricListPage{service=$service, params=$params, response=$response}"
 }

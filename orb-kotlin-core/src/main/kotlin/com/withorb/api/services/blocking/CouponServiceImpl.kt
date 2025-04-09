@@ -118,7 +118,13 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
                             it.validate()
                         }
                     }
-                    .let { CouponListPage.of(CouponServiceImpl(clientOptions), params, it) }
+                    .let {
+                        CouponListPage.builder()
+                            .service(CouponServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

@@ -128,7 +128,11 @@ class CouponServiceAsyncImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        CouponListPageAsync.of(CouponServiceAsyncImpl(clientOptions), params, it)
+                        CouponListPageAsync.builder()
+                            .service(CouponServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

@@ -2,25 +2,19 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.SubscriptionServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/**
- * This endpoint returns a [paginated](/api-reference/pagination) list of all plans associated with
- * a subscription along with their start and end dates. This list contains the subscription's
- * initial plan along with past and future plan changes.
- */
+/** @see [SubscriptionServiceAsync.fetchSchedule] */
 class SubscriptionFetchSchedulePageAsync
 private constructor(
-    private val subscriptionsService: SubscriptionServiceAsync,
+    private val service: SubscriptionServiceAsync,
     private val params: SubscriptionFetchScheduleParams,
     private val response: SubscriptionFetchSchedulePageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): SubscriptionFetchSchedulePageResponse = response
 
     /**
      * Delegates to [SubscriptionFetchSchedulePageResponse], but gracefully handles missing data.
@@ -37,19 +31,6 @@ private constructor(
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SubscriptionFetchSchedulePageAsync && subscriptionsService == other.subscriptionsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "SubscriptionFetchSchedulePageAsync{subscriptionsService=$subscriptionsService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean =
         data().isNotEmpty() &&
@@ -70,19 +51,79 @@ private constructor(
             .build()
     }
 
-    suspend fun getNextPage(): SubscriptionFetchSchedulePageAsync? {
-        return getNextPageParams()?.let { subscriptionsService.fetchSchedule(it) }
-    }
+    suspend fun getNextPage(): SubscriptionFetchSchedulePageAsync? =
+        getNextPageParams()?.let { service.fetchSchedule(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): SubscriptionFetchScheduleParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): SubscriptionFetchSchedulePageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            subscriptionsService: SubscriptionServiceAsync,
-            params: SubscriptionFetchScheduleParams,
-            response: SubscriptionFetchSchedulePageResponse,
-        ) = SubscriptionFetchSchedulePageAsync(subscriptionsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [SubscriptionFetchSchedulePageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [SubscriptionFetchSchedulePageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: SubscriptionServiceAsync? = null
+        private var params: SubscriptionFetchScheduleParams? = null
+        private var response: SubscriptionFetchSchedulePageResponse? = null
+
+        internal fun from(subscriptionFetchSchedulePageAsync: SubscriptionFetchSchedulePageAsync) =
+            apply {
+                service = subscriptionFetchSchedulePageAsync.service
+                params = subscriptionFetchSchedulePageAsync.params
+                response = subscriptionFetchSchedulePageAsync.response
+            }
+
+        fun service(service: SubscriptionServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: SubscriptionFetchScheduleParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: SubscriptionFetchSchedulePageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [SubscriptionFetchSchedulePageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): SubscriptionFetchSchedulePageAsync =
+            SubscriptionFetchSchedulePageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: SubscriptionFetchSchedulePageAsync) :
@@ -100,4 +141,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SubscriptionFetchSchedulePageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "SubscriptionFetchSchedulePageAsync{service=$service, params=$params, response=$response}"
 }

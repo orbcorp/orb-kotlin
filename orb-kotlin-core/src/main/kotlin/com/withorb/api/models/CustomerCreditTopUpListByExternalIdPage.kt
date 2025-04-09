@@ -2,19 +2,17 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.customers.credits.TopUpService
 import java.util.Objects
 
-/** List top-ups by external ID */
+/** @see [TopUpService.listByExternalId] */
 class CustomerCreditTopUpListByExternalIdPage
 private constructor(
-    private val topUpsService: TopUpService,
+    private val service: TopUpService,
     private val params: CustomerCreditTopUpListByExternalIdParams,
     private val response: CustomerCreditTopUpListByExternalIdPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): CustomerCreditTopUpListByExternalIdPageResponse = response
 
     /**
      * Delegates to [CustomerCreditTopUpListByExternalIdPageResponse], but gracefully handles
@@ -33,19 +31,6 @@ private constructor(
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerCreditTopUpListByExternalIdPage && topUpsService == other.topUpsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(topUpsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "CustomerCreditTopUpListByExternalIdPage{topUpsService=$topUpsService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean =
         data().isNotEmpty() &&
@@ -66,19 +51,82 @@ private constructor(
             .build()
     }
 
-    fun getNextPage(): CustomerCreditTopUpListByExternalIdPage? {
-        return getNextPageParams()?.let { topUpsService.listByExternalId(it) }
-    }
+    fun getNextPage(): CustomerCreditTopUpListByExternalIdPage? =
+        getNextPageParams()?.let { service.listByExternalId(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): CustomerCreditTopUpListByExternalIdParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): CustomerCreditTopUpListByExternalIdPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            topUpsService: TopUpService,
-            params: CustomerCreditTopUpListByExternalIdParams,
-            response: CustomerCreditTopUpListByExternalIdPageResponse,
-        ) = CustomerCreditTopUpListByExternalIdPage(topUpsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CustomerCreditTopUpListByExternalIdPage].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [CustomerCreditTopUpListByExternalIdPage]. */
+    class Builder internal constructor() {
+
+        private var service: TopUpService? = null
+        private var params: CustomerCreditTopUpListByExternalIdParams? = null
+        private var response: CustomerCreditTopUpListByExternalIdPageResponse? = null
+
+        internal fun from(
+            customerCreditTopUpListByExternalIdPage: CustomerCreditTopUpListByExternalIdPage
+        ) = apply {
+            service = customerCreditTopUpListByExternalIdPage.service
+            params = customerCreditTopUpListByExternalIdPage.params
+            response = customerCreditTopUpListByExternalIdPage.response
+        }
+
+        fun service(service: TopUpService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: CustomerCreditTopUpListByExternalIdParams) = apply {
+            this.params = params
+        }
+
+        /** The response that this page was parsed from. */
+        fun response(response: CustomerCreditTopUpListByExternalIdPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [CustomerCreditTopUpListByExternalIdPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CustomerCreditTopUpListByExternalIdPage =
+            CustomerCreditTopUpListByExternalIdPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: CustomerCreditTopUpListByExternalIdPage) :
@@ -96,4 +144,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreditTopUpListByExternalIdPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "CustomerCreditTopUpListByExternalIdPage{service=$service, params=$params, response=$response}"
 }

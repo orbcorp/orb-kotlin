@@ -254,7 +254,11 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
                         }
                     }
                     .let {
-                        SubscriptionListPage.of(SubscriptionServiceImpl(clientOptions), params, it)
+                        SubscriptionListPage.builder()
+                            .service(SubscriptionServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
@@ -365,11 +369,11 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
                         }
                     }
                     .let {
-                        SubscriptionFetchSchedulePage.of(
-                            SubscriptionServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        SubscriptionFetchSchedulePage.builder()
+                            .service(SubscriptionServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

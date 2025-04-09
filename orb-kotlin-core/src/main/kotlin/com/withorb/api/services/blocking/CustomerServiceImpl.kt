@@ -216,7 +216,13 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                             it.validate()
                         }
                     }
-                    .let { CustomerListPage.of(CustomerServiceImpl(clientOptions), params, it) }
+                    .let {
+                        CustomerListPage.builder()
+                            .service(CustomerServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

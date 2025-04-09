@@ -105,7 +105,13 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
                             it.validate()
                         }
                     }
-                    .let { CreditNoteListPage.of(CreditNoteServiceImpl(clientOptions), params, it) }
+                    .let {
+                        CreditNoteListPage.builder()
+                            .service(CreditNoteServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 
