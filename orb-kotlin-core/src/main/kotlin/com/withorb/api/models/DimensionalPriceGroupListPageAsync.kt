@@ -2,21 +2,19 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.DimensionalPriceGroupServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/** List dimensional price groups */
+/** @see [DimensionalPriceGroupServiceAsync.list] */
 class DimensionalPriceGroupListPageAsync
 private constructor(
-    private val dimensionalPriceGroupsService: DimensionalPriceGroupServiceAsync,
+    private val service: DimensionalPriceGroupServiceAsync,
     private val params: DimensionalPriceGroupListParams,
     private val response: DimensionalPriceGroups,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): DimensionalPriceGroups = response
 
     /**
      * Delegates to [DimensionalPriceGroups], but gracefully handles missing data.
@@ -32,19 +30,6 @@ private constructor(
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DimensionalPriceGroupListPageAsync && dimensionalPriceGroupsService == other.dimensionalPriceGroupsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(dimensionalPriceGroupsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "DimensionalPriceGroupListPageAsync{dimensionalPriceGroupsService=$dimensionalPriceGroupsService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean =
         data().isNotEmpty() &&
@@ -65,19 +50,77 @@ private constructor(
             .build()
     }
 
-    suspend fun getNextPage(): DimensionalPriceGroupListPageAsync? {
-        return getNextPageParams()?.let { dimensionalPriceGroupsService.list(it) }
-    }
+    suspend fun getNextPage(): DimensionalPriceGroupListPageAsync? =
+        getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): DimensionalPriceGroupListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): DimensionalPriceGroups = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            dimensionalPriceGroupsService: DimensionalPriceGroupServiceAsync,
-            params: DimensionalPriceGroupListParams,
-            response: DimensionalPriceGroups,
-        ) = DimensionalPriceGroupListPageAsync(dimensionalPriceGroupsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [DimensionalPriceGroupListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [DimensionalPriceGroupListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: DimensionalPriceGroupServiceAsync? = null
+        private var params: DimensionalPriceGroupListParams? = null
+        private var response: DimensionalPriceGroups? = null
+
+        internal fun from(dimensionalPriceGroupListPageAsync: DimensionalPriceGroupListPageAsync) =
+            apply {
+                service = dimensionalPriceGroupListPageAsync.service
+                params = dimensionalPriceGroupListPageAsync.params
+                response = dimensionalPriceGroupListPageAsync.response
+            }
+
+        fun service(service: DimensionalPriceGroupServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: DimensionalPriceGroupListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: DimensionalPriceGroups) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [DimensionalPriceGroupListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): DimensionalPriceGroupListPageAsync =
+            DimensionalPriceGroupListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: DimensionalPriceGroupListPageAsync) :
@@ -95,4 +138,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DimensionalPriceGroupListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "DimensionalPriceGroupListPageAsync{service=$service, params=$params, response=$response}"
 }

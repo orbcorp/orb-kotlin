@@ -102,11 +102,11 @@ internal constructor(private val clientOptions: ClientOptions) : BalanceTransact
                         }
                     }
                     .let {
-                        CustomerBalanceTransactionListPageAsync.of(
-                            BalanceTransactionServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerBalanceTransactionListPageAsync.builder()
+                            .service(BalanceTransactionServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

@@ -109,11 +109,11 @@ class CreditNoteServiceAsyncImpl internal constructor(private val clientOptions:
                         }
                     }
                     .let {
-                        CreditNoteListPageAsync.of(
-                            CreditNoteServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CreditNoteListPageAsync.builder()
+                            .service(CreditNoteServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

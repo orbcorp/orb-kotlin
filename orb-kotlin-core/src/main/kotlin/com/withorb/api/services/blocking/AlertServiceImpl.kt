@@ -159,7 +159,13 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
                             it.validate()
                         }
                     }
-                    .let { AlertListPage.of(AlertServiceImpl(clientOptions), params, it) }
+                    .let {
+                        AlertListPage.builder()
+                            .service(AlertServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

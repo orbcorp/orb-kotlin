@@ -97,7 +97,13 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
                             it.validate()
                         }
                     }
-                    .let { CustomerCreditListPage.of(CreditServiceImpl(clientOptions), params, it) }
+                    .let {
+                        CustomerCreditListPage.builder()
+                            .service(CreditServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 
@@ -131,11 +137,11 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
                         }
                     }
                     .let {
-                        CustomerCreditListByExternalIdPage.of(
-                            CreditServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerCreditListByExternalIdPage.builder()
+                            .service(CreditServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

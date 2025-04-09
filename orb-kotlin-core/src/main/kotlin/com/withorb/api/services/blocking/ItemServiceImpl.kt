@@ -130,7 +130,13 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
                             it.validate()
                         }
                     }
-                    .let { ItemListPage.of(ItemServiceImpl(clientOptions), params, it) }
+                    .let {
+                        ItemListPage.builder()
+                            .service(ItemServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

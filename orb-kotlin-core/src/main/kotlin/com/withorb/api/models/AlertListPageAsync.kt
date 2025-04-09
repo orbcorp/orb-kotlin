@@ -2,31 +2,19 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.AlertServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/**
- * This endpoint returns a list of alerts within Orb.
- *
- * The request must specify one of `customer_id`, `external_customer_id`, or `subscription_id`.
- *
- * If querying by subscripion_id, the endpoint will return the subscription level alerts as well as
- * the plan level alerts associated with the subscription.
- *
- * The list of alerts is ordered starting from the most recently created alert. This endpoint
- * follows Orb's [standardized pagination format](/api-reference/pagination).
- */
+/** @see [AlertServiceAsync.list] */
 class AlertListPageAsync
 private constructor(
-    private val alertsService: AlertServiceAsync,
+    private val service: AlertServiceAsync,
     private val params: AlertListParams,
     private val response: AlertListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): AlertListPageResponse = response
 
     /**
      * Delegates to [AlertListPageResponse], but gracefully handles missing data.
@@ -42,19 +30,6 @@ private constructor(
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AlertListPageAsync && alertsService == other.alertsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(alertsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "AlertListPageAsync{alertsService=$alertsService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean =
         data().isNotEmpty() &&
@@ -75,19 +50,74 @@ private constructor(
             .build()
     }
 
-    suspend fun getNextPage(): AlertListPageAsync? {
-        return getNextPageParams()?.let { alertsService.list(it) }
-    }
+    suspend fun getNextPage(): AlertListPageAsync? = getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): AlertListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): AlertListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            alertsService: AlertServiceAsync,
-            params: AlertListParams,
-            response: AlertListPageResponse,
-        ) = AlertListPageAsync(alertsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [AlertListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [AlertListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: AlertServiceAsync? = null
+        private var params: AlertListParams? = null
+        private var response: AlertListPageResponse? = null
+
+        internal fun from(alertListPageAsync: AlertListPageAsync) = apply {
+            service = alertListPageAsync.service
+            params = alertListPageAsync.params
+            response = alertListPageAsync.response
+        }
+
+        fun service(service: AlertServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: AlertListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: AlertListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [AlertListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): AlertListPageAsync =
+            AlertListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: AlertListPageAsync) : Flow<Alert> {
@@ -104,4 +134,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AlertListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "AlertListPageAsync{service=$service, params=$params, response=$response}"
 }
