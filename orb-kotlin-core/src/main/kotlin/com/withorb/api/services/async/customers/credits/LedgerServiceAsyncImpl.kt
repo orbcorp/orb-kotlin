@@ -93,11 +93,11 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        CustomerCreditLedgerListPageAsync.of(
-                            LedgerServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerCreditLedgerListPageAsync.builder()
+                            .service(LedgerServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
@@ -199,11 +199,11 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        CustomerCreditLedgerListByExternalIdPageAsync.of(
-                            LedgerServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerCreditLedgerListByExternalIdPageAsync.builder()
+                            .service(LedgerServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

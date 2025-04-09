@@ -141,11 +141,11 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
                         }
                     }
                     .let {
-                        CustomerCreditTopUpListPageAsync.of(
-                            TopUpServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerCreditTopUpListPageAsync.builder()
+                            .service(TopUpServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
@@ -267,11 +267,11 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
                         }
                     }
                     .let {
-                        CustomerCreditTopUpListByExternalIdPageAsync.of(
-                            TopUpServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerCreditTopUpListByExternalIdPageAsync.builder()
+                            .service(TopUpServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

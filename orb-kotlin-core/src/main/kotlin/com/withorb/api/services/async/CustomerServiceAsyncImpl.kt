@@ -226,11 +226,11 @@ class CustomerServiceAsyncImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        CustomerListPageAsync.of(
-                            CustomerServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerListPageAsync.builder()
+                            .service(CustomerServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

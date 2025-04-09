@@ -2,46 +2,19 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.customers.BalanceTransactionServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/**
- * ## The customer balance
- *
- * The customer balance is an amount in the customer's currency, which Orb automatically applies to
- * subsequent invoices. This balance can be adjusted manually via Orb's webapp on the customer
- * details page. You can use this balance to provide a fixed mid-period credit to the customer.
- * Commonly, this is done due to system downtime/SLA violation, or an adhoc adjustment discussed
- * with the customer.
- *
- * If the balance is a positive value at the time of invoicing, it represents that the customer has
- * credit that should be used to offset the amount due on the next issued invoice. In this case, Orb
- * will automatically reduce the next invoice by the balance amount, and roll over any remaining
- * balance if the invoice is fully discounted.
- *
- * If the balance is a negative value at the time of invoicing, Orb will increase the invoice's
- * amount due with a positive adjustment, and reset the balance to 0.
- *
- * This endpoint retrieves all customer balance transactions in reverse chronological order for a
- * single customer, providing a complete audit trail of all adjustments and invoice applications.
- *
- * ## Eligibility
- *
- * The customer balance can only be applied to invoices or adjusted manually if invoices are not
- * synced to a separate invoicing provider. If a payment gateway such as Stripe is used, the balance
- * will be applied to the invoice before forwarding payment to the gateway.
- */
+/** @see [BalanceTransactionServiceAsync.list] */
 class CustomerBalanceTransactionListPageAsync
 private constructor(
-    private val balanceTransactionsService: BalanceTransactionServiceAsync,
+    private val service: BalanceTransactionServiceAsync,
     private val params: CustomerBalanceTransactionListParams,
     private val response: CustomerBalanceTransactionListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): CustomerBalanceTransactionListPageResponse = response
 
     /**
      * Delegates to [CustomerBalanceTransactionListPageResponse], but gracefully handles missing
@@ -60,19 +33,6 @@ private constructor(
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerBalanceTransactionListPageAsync && balanceTransactionsService == other.balanceTransactionsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(balanceTransactionsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "CustomerBalanceTransactionListPageAsync{balanceTransactionsService=$balanceTransactionsService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean =
         data().isNotEmpty() &&
@@ -93,19 +53,80 @@ private constructor(
             .build()
     }
 
-    suspend fun getNextPage(): CustomerBalanceTransactionListPageAsync? {
-        return getNextPageParams()?.let { balanceTransactionsService.list(it) }
-    }
+    suspend fun getNextPage(): CustomerBalanceTransactionListPageAsync? =
+        getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): CustomerBalanceTransactionListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): CustomerBalanceTransactionListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            balanceTransactionsService: BalanceTransactionServiceAsync,
-            params: CustomerBalanceTransactionListParams,
-            response: CustomerBalanceTransactionListPageResponse,
-        ) = CustomerBalanceTransactionListPageAsync(balanceTransactionsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CustomerBalanceTransactionListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [CustomerBalanceTransactionListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: BalanceTransactionServiceAsync? = null
+        private var params: CustomerBalanceTransactionListParams? = null
+        private var response: CustomerBalanceTransactionListPageResponse? = null
+
+        internal fun from(
+            customerBalanceTransactionListPageAsync: CustomerBalanceTransactionListPageAsync
+        ) = apply {
+            service = customerBalanceTransactionListPageAsync.service
+            params = customerBalanceTransactionListPageAsync.params
+            response = customerBalanceTransactionListPageAsync.response
+        }
+
+        fun service(service: BalanceTransactionServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: CustomerBalanceTransactionListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: CustomerBalanceTransactionListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [CustomerBalanceTransactionListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CustomerBalanceTransactionListPageAsync =
+            CustomerBalanceTransactionListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: CustomerBalanceTransactionListPageAsync) :
@@ -125,4 +146,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerBalanceTransactionListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "CustomerBalanceTransactionListPageAsync{service=$service, params=$params, response=$response}"
 }

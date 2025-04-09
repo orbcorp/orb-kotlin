@@ -2,21 +2,19 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.ItemServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/** This endpoint returns a list of all Items, ordered in descending order by creation time. */
+/** @see [ItemServiceAsync.list] */
 class ItemListPageAsync
 private constructor(
-    private val itemsService: ItemServiceAsync,
+    private val service: ItemServiceAsync,
     private val params: ItemListParams,
     private val response: ItemListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): ItemListPageResponse = response
 
     /**
      * Delegates to [ItemListPageResponse], but gracefully handles missing data.
@@ -32,19 +30,6 @@ private constructor(
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ItemListPageAsync && itemsService == other.itemsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(itemsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "ItemListPageAsync{itemsService=$itemsService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean =
         data().isNotEmpty() &&
@@ -65,19 +50,74 @@ private constructor(
             .build()
     }
 
-    suspend fun getNextPage(): ItemListPageAsync? {
-        return getNextPageParams()?.let { itemsService.list(it) }
-    }
+    suspend fun getNextPage(): ItemListPageAsync? = getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ItemListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): ItemListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            itemsService: ItemServiceAsync,
-            params: ItemListParams,
-            response: ItemListPageResponse,
-        ) = ItemListPageAsync(itemsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [ItemListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [ItemListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: ItemServiceAsync? = null
+        private var params: ItemListParams? = null
+        private var response: ItemListPageResponse? = null
+
+        internal fun from(itemListPageAsync: ItemListPageAsync) = apply {
+            service = itemListPageAsync.service
+            params = itemListPageAsync.params
+            response = itemListPageAsync.response
+        }
+
+        fun service(service: ItemServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ItemListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: ItemListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [ItemListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ItemListPageAsync =
+            ItemListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: ItemListPageAsync) : Flow<Item> {
@@ -94,4 +134,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ItemListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "ItemListPageAsync{service=$service, params=$params, response=$response}"
 }

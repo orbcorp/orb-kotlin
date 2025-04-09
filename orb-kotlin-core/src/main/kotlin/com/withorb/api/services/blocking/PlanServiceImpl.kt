@@ -144,7 +144,13 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
                             it.validate()
                         }
                     }
-                    .let { PlanListPage.of(PlanServiceImpl(clientOptions), params, it) }
+                    .let {
+                        PlanListPage.builder()
+                            .service(PlanServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

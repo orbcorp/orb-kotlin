@@ -2,24 +2,19 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.PriceServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/**
- * This endpoint is used to list all add-on prices created using the
- * [price creation endpoint](/api-reference/price/create-price).
- */
+/** @see [PriceServiceAsync.list] */
 class PriceListPageAsync
 private constructor(
-    private val pricesService: PriceServiceAsync,
+    private val service: PriceServiceAsync,
     private val params: PriceListParams,
     private val response: PriceListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): PriceListPageResponse = response
 
     /**
      * Delegates to [PriceListPageResponse], but gracefully handles missing data.
@@ -35,19 +30,6 @@ private constructor(
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PriceListPageAsync && pricesService == other.pricesService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(pricesService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "PriceListPageAsync{pricesService=$pricesService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean =
         data().isNotEmpty() &&
@@ -68,19 +50,74 @@ private constructor(
             .build()
     }
 
-    suspend fun getNextPage(): PriceListPageAsync? {
-        return getNextPageParams()?.let { pricesService.list(it) }
-    }
+    suspend fun getNextPage(): PriceListPageAsync? = getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): PriceListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): PriceListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            pricesService: PriceServiceAsync,
-            params: PriceListParams,
-            response: PriceListPageResponse,
-        ) = PriceListPageAsync(pricesService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [PriceListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [PriceListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: PriceServiceAsync? = null
+        private var params: PriceListParams? = null
+        private var response: PriceListPageResponse? = null
+
+        internal fun from(priceListPageAsync: PriceListPageAsync) = apply {
+            service = priceListPageAsync.service
+            params = priceListPageAsync.params
+            response = priceListPageAsync.response
+        }
+
+        fun service(service: PriceServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: PriceListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: PriceListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [PriceListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): PriceListPageAsync =
+            PriceListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: PriceListPageAsync) : Flow<Price> {
@@ -97,4 +134,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PriceListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "PriceListPageAsync{service=$service, params=$params, response=$response}"
 }

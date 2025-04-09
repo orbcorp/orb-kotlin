@@ -158,7 +158,13 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
                             it.validate()
                         }
                     }
-                    .let { PriceListPageAsync.of(PriceServiceAsyncImpl(clientOptions), params, it) }
+                    .let {
+                        PriceListPageAsync.builder()
+                            .service(PriceServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

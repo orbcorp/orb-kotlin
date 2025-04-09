@@ -129,7 +129,11 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
                         }
                     }
                     .let {
-                        EventBackfillListPage.of(BackfillServiceImpl(clientOptions), params, it)
+                        EventBackfillListPage.builder()
+                            .service(BackfillServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
