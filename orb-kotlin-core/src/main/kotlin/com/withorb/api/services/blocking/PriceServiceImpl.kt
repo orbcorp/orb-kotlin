@@ -21,6 +21,7 @@ import com.withorb.api.models.PriceEvaluateParams
 import com.withorb.api.models.PriceEvaluateResponse
 import com.withorb.api.models.PriceFetchParams
 import com.withorb.api.models.PriceListPage
+import com.withorb.api.models.PriceListPageResponse
 import com.withorb.api.models.PriceListParams
 import com.withorb.api.models.PriceUpdateParams
 import com.withorb.api.services.blocking.prices.ExternalPriceIdService
@@ -129,8 +130,8 @@ class PriceServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val listHandler: Handler<PriceListPage.Response> =
-            jsonHandler<PriceListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<PriceListPageResponse> =
+            jsonHandler<PriceListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

@@ -24,6 +24,7 @@ import com.withorb.api.models.SubscriptionFetchCostsParams
 import com.withorb.api.models.SubscriptionFetchCostsResponse
 import com.withorb.api.models.SubscriptionFetchParams
 import com.withorb.api.models.SubscriptionFetchSchedulePage
+import com.withorb.api.models.SubscriptionFetchSchedulePageResponse
 import com.withorb.api.models.SubscriptionFetchScheduleParams
 import com.withorb.api.models.SubscriptionFetchUsageParams
 import com.withorb.api.models.SubscriptionListPage
@@ -46,6 +47,7 @@ import com.withorb.api.models.SubscriptionUpdateParams
 import com.withorb.api.models.SubscriptionUpdateTrialParams
 import com.withorb.api.models.SubscriptionUpdateTrialResponse
 import com.withorb.api.models.SubscriptionUsage
+import com.withorb.api.models.Subscriptions
 
 class SubscriptionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     SubscriptionService {
@@ -228,9 +230,8 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val listHandler: Handler<SubscriptionListPage.Response> =
-            jsonHandler<SubscriptionListPage.Response>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val listHandler: Handler<Subscriptions> =
+            jsonHandler<Subscriptions>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun list(
             params: SubscriptionListParams,
@@ -339,8 +340,8 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val fetchScheduleHandler: Handler<SubscriptionFetchSchedulePage.Response> =
-            jsonHandler<SubscriptionFetchSchedulePage.Response>(clientOptions.jsonMapper)
+        private val fetchScheduleHandler: Handler<SubscriptionFetchSchedulePageResponse> =
+            jsonHandler<SubscriptionFetchSchedulePageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun fetchSchedule(

@@ -22,6 +22,7 @@ import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceFetchUpcomingResponse
 import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceListPageAsync
+import com.withorb.api.models.InvoiceListPageResponse
 import com.withorb.api.models.InvoiceListParams
 import com.withorb.api.models.InvoiceMarkPaidParams
 import com.withorb.api.models.InvoicePayParams
@@ -153,8 +154,8 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val listHandler: Handler<InvoiceListPageAsync.Response> =
-            jsonHandler<InvoiceListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<InvoiceListPageResponse> =
+            jsonHandler<InvoiceListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(

@@ -21,6 +21,7 @@ import com.withorb.api.models.PriceEvaluateParams
 import com.withorb.api.models.PriceEvaluateResponse
 import com.withorb.api.models.PriceFetchParams
 import com.withorb.api.models.PriceListPageAsync
+import com.withorb.api.models.PriceListPageResponse
 import com.withorb.api.models.PriceListParams
 import com.withorb.api.models.PriceUpdateParams
 import com.withorb.api.services.async.prices.ExternalPriceIdServiceAsync
@@ -133,8 +134,8 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val listHandler: Handler<PriceListPageAsync.Response> =
-            jsonHandler<PriceListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<PriceListPageResponse> =
+            jsonHandler<PriceListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(

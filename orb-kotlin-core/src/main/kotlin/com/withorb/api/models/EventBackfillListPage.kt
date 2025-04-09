@@ -2,17 +2,7 @@
 
 package com.withorb.api.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
-import com.withorb.api.core.JsonValue
-import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.services.blocking.events.BackfillService
-import java.util.Collections
 import java.util.Objects
 
 /**
@@ -27,14 +17,27 @@ class EventBackfillListPage
 private constructor(
     private val backfillsService: BackfillService,
     private val params: EventBackfillListParams,
-    private val response: Response,
+    private val response: EventBackfillListPageResponse,
 ) {
 
-    fun response(): Response = response
+    /** Returns the response that this page was parsed from. */
+    fun response(): EventBackfillListPageResponse = response
 
-    fun data(): List<EventBackfillListResponse> = response().data()
+    /**
+     * Delegates to [EventBackfillListPageResponse], but gracefully handles missing data.
+     *
+     * @see [EventBackfillListPageResponse.data]
+     */
+    fun data(): List<EventBackfillListResponse> =
+        response._data().getNullable("data") ?: emptyList()
 
-    fun paginationMetadata(): PaginationMetadata = response().paginationMetadata()
+    /**
+     * Delegates to [EventBackfillListPageResponse], but gracefully handles missing data.
+     *
+     * @see [EventBackfillListPageResponse.paginationMetadata]
+     */
+    fun paginationMetadata(): PaginationMetadata? =
+        response._paginationMetadata().getNullable("pagination_metadata")
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -49,22 +52,22 @@ private constructor(
     override fun toString() =
         "EventBackfillListPage{backfillsService=$backfillsService, params=$params, response=$response}"
 
-    fun hasNextPage(): Boolean {
-        if (data().isEmpty()) {
-            return false
-        }
-
-        return paginationMetadata().nextCursor() != null
-    }
+    fun hasNextPage(): Boolean =
+        data().isNotEmpty() &&
+            paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") } != null
 
     fun getNextPageParams(): EventBackfillListParams? {
         if (!hasNextPage()) {
             return null
         }
 
-        return EventBackfillListParams.builder()
-            .from(params)
-            .apply { paginationMetadata().nextCursor()?.let { this.cursor(it) } }
+        return params
+            .toBuilder()
+            .apply {
+                paginationMetadata()
+                    ?.let { it._nextCursor().getNullable("next_cursor") }
+                    ?.let { cursor(it) }
+            }
             .build()
     }
 
@@ -79,122 +82,8 @@ private constructor(
         fun of(
             backfillsService: BackfillService,
             params: EventBackfillListParams,
-            response: Response,
+            response: EventBackfillListPageResponse,
         ) = EventBackfillListPage(backfillsService, params, response)
-    }
-
-    class Response(
-        private val data: JsonField<List<EventBackfillListResponse>>,
-        private val paginationMetadata: JsonField<PaginationMetadata>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
-
-        @JsonCreator
-        private constructor(
-            @JsonProperty("data")
-            data: JsonField<List<EventBackfillListResponse>> = JsonMissing.of(),
-            @JsonProperty("pagination_metadata")
-            paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
-        ) : this(data, paginationMetadata, mutableMapOf())
-
-        fun data(): List<EventBackfillListResponse> = data.getNullable("data") ?: listOf()
-
-        fun paginationMetadata(): PaginationMetadata =
-            paginationMetadata.getRequired("pagination_metadata")
-
-        @JsonProperty("data") fun _data(): JsonField<List<EventBackfillListResponse>>? = data
-
-        @JsonProperty("pagination_metadata")
-        fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        private var validated: Boolean = false
-
-        fun validate(): Response = apply {
-            if (validated) {
-                return@apply
-            }
-
-            data().map { it.validate() }
-            paginationMetadata().validate()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: OrbInvalidDataException) {
-                false
-            }
-
-        fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Response && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(data, paginationMetadata, additionalProperties) /* spotless:on */
-
-        override fun toString() =
-            "Response{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [EventBackfillListPage].
-             */
-            fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var data: JsonField<List<EventBackfillListResponse>> = JsonMissing.of()
-            private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(page: Response) = apply {
-                this.data = page.data
-                this.paginationMetadata = page.paginationMetadata
-                this.additionalProperties.putAll(page.additionalProperties)
-            }
-
-            fun data(data: List<EventBackfillListResponse>) = data(JsonField.of(data))
-
-            fun data(data: JsonField<List<EventBackfillListResponse>>) = apply { this.data = data }
-
-            fun paginationMetadata(paginationMetadata: PaginationMetadata) =
-                paginationMetadata(JsonField.of(paginationMetadata))
-
-            fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply {
-                this.paginationMetadata = paginationMetadata
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            /**
-             * Returns an immutable instance of [Response].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Response =
-                Response(data, paginationMetadata, additionalProperties.toMutableMap())
-        }
     }
 
     class AutoPager(private val firstPage: EventBackfillListPage) :
