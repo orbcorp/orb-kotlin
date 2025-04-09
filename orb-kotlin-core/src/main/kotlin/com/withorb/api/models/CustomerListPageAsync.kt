@@ -2,27 +2,19 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.CustomerServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/**
- * This endpoint returns a list of all customers for an account. The list of customers is ordered
- * starting from the most recently created customer. This endpoint follows Orb's
- * [standardized pagination format](/api-reference/pagination).
- *
- * See [Customer](/core-concepts##customer) for an overview of the customer model.
- */
+/** @see [CustomerServiceAsync.list] */
 class CustomerListPageAsync
 private constructor(
-    private val customersService: CustomerServiceAsync,
+    private val service: CustomerServiceAsync,
     private val params: CustomerListParams,
     private val response: CustomerListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): CustomerListPageResponse = response
 
     /**
      * Delegates to [CustomerListPageResponse], but gracefully handles missing data.
@@ -38,19 +30,6 @@ private constructor(
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerListPageAsync && customersService == other.customersService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customersService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "CustomerListPageAsync{customersService=$customersService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean =
         data().isNotEmpty() &&
@@ -71,19 +50,75 @@ private constructor(
             .build()
     }
 
-    suspend fun getNextPage(): CustomerListPageAsync? {
-        return getNextPageParams()?.let { customersService.list(it) }
-    }
+    suspend fun getNextPage(): CustomerListPageAsync? =
+        getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): CustomerListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): CustomerListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            customersService: CustomerServiceAsync,
-            params: CustomerListParams,
-            response: CustomerListPageResponse,
-        ) = CustomerListPageAsync(customersService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [CustomerListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [CustomerListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: CustomerServiceAsync? = null
+        private var params: CustomerListParams? = null
+        private var response: CustomerListPageResponse? = null
+
+        internal fun from(customerListPageAsync: CustomerListPageAsync) = apply {
+            service = customerListPageAsync.service
+            params = customerListPageAsync.params
+            response = customerListPageAsync.response
+        }
+
+        fun service(service: CustomerServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: CustomerListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: CustomerListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [CustomerListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CustomerListPageAsync =
+            CustomerListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: CustomerListPageAsync) : Flow<Customer> {
@@ -100,4 +135,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "CustomerListPageAsync{service=$service, params=$params, response=$response}"
 }

@@ -129,11 +129,11 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        EventBackfillListPageAsync.of(
-                            BackfillServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        EventBackfillListPageAsync.builder()
+                            .service(BackfillServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

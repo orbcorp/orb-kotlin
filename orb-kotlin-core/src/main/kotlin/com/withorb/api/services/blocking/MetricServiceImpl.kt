@@ -137,7 +137,13 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
                             it.validate()
                         }
                     }
-                    .let { MetricListPage.of(MetricServiceImpl(clientOptions), params, it) }
+                    .let {
+                        MetricListPage.builder()
+                            .service(MetricServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

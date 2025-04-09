@@ -2,28 +2,17 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.SubscriptionService
 import java.util.Objects
 
-/**
- * This endpoint returns a list of all subscriptions for an account as a
- * [paginated](/api-reference/pagination) list, ordered starting from the most recently created
- * subscription. For a full discussion of the subscription resource, see
- * [Subscription](/core-concepts##subscription).
- *
- * Subscriptions can be filtered for a specific customer by using either the customer_id or
- * external_customer_id query parameters. To filter subscriptions for multiple customers, use the
- * customer_id[] or external_customer_id[] query parameters.
- */
+/** @see [SubscriptionService.list] */
 class SubscriptionListPage
 private constructor(
-    private val subscriptionsService: SubscriptionService,
+    private val service: SubscriptionService,
     private val params: SubscriptionListParams,
     private val response: Subscriptions,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): Subscriptions = response
 
     /**
      * Delegates to [Subscriptions], but gracefully handles missing data.
@@ -39,19 +28,6 @@ private constructor(
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SubscriptionListPage && subscriptionsService == other.subscriptionsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "SubscriptionListPage{subscriptionsService=$subscriptionsService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean =
         data().isNotEmpty() &&
@@ -72,19 +48,74 @@ private constructor(
             .build()
     }
 
-    fun getNextPage(): SubscriptionListPage? {
-        return getNextPageParams()?.let { subscriptionsService.list(it) }
-    }
+    fun getNextPage(): SubscriptionListPage? = getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): SubscriptionListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): Subscriptions = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            subscriptionsService: SubscriptionService,
-            params: SubscriptionListParams,
-            response: Subscriptions,
-        ) = SubscriptionListPage(subscriptionsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [SubscriptionListPage].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [SubscriptionListPage]. */
+    class Builder internal constructor() {
+
+        private var service: SubscriptionService? = null
+        private var params: SubscriptionListParams? = null
+        private var response: Subscriptions? = null
+
+        internal fun from(subscriptionListPage: SubscriptionListPage) = apply {
+            service = subscriptionListPage.service
+            params = subscriptionListPage.params
+            response = subscriptionListPage.response
+        }
+
+        fun service(service: SubscriptionService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: SubscriptionListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: Subscriptions) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [SubscriptionListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): SubscriptionListPage =
+            SubscriptionListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: SubscriptionListPage) : Sequence<Subscription> {
@@ -101,4 +132,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SubscriptionListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "SubscriptionListPage{service=$service, params=$params, response=$response}"
 }

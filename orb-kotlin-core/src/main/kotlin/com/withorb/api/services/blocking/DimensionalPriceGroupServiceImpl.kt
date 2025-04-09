@@ -154,11 +154,11 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
                         }
                     }
                     .let {
-                        DimensionalPriceGroupListPage.of(
-                            DimensionalPriceGroupServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        DimensionalPriceGroupListPage.builder()
+                            .service(DimensionalPriceGroupServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

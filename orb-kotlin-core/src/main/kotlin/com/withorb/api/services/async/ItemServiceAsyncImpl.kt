@@ -134,7 +134,13 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
                             it.validate()
                         }
                     }
-                    .let { ItemListPageAsync.of(ItemServiceAsyncImpl(clientOptions), params, it) }
+                    .let {
+                        ItemListPageAsync.builder()
+                            .service(ItemServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

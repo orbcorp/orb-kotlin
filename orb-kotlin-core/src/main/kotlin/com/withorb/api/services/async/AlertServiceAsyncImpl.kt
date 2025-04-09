@@ -168,7 +168,13 @@ class AlertServiceAsyncImpl internal constructor(private val clientOptions: Clie
                             it.validate()
                         }
                     }
-                    .let { AlertListPageAsync.of(AlertServiceAsyncImpl(clientOptions), params, it) }
+                    .let {
+                        AlertListPageAsync.builder()
+                            .service(AlertServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

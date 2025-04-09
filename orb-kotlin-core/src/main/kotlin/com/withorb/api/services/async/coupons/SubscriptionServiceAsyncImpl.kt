@@ -63,11 +63,11 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
                         }
                     }
                     .let {
-                        CouponSubscriptionListPageAsync.of(
-                            SubscriptionServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CouponSubscriptionListPageAsync.builder()
+                            .service(SubscriptionServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

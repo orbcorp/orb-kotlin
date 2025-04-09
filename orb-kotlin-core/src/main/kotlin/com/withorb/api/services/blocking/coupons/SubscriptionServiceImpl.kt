@@ -63,11 +63,11 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
                         }
                     }
                     .let {
-                        CouponSubscriptionListPage.of(
-                            SubscriptionServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CouponSubscriptionListPage.builder()
+                            .service(SubscriptionServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

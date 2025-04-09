@@ -98,11 +98,11 @@ class CreditServiceAsyncImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        CustomerCreditListPageAsync.of(
-                            CreditServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerCreditListPageAsync.builder()
+                            .service(CreditServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
@@ -137,11 +137,11 @@ class CreditServiceAsyncImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        CustomerCreditListByExternalIdPageAsync.of(
-                            CreditServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CustomerCreditListByExternalIdPageAsync.builder()
+                            .service(CreditServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
