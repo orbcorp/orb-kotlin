@@ -15,8 +15,10 @@ import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.models.CustomerCreditListByExternalIdPage
+import com.withorb.api.models.CustomerCreditListByExternalIdPageResponse
 import com.withorb.api.models.CustomerCreditListByExternalIdParams
 import com.withorb.api.models.CustomerCreditListPage
+import com.withorb.api.models.CustomerCreditListPageResponse
 import com.withorb.api.models.CustomerCreditListParams
 import com.withorb.api.services.blocking.customers.credits.LedgerService
 import com.withorb.api.services.blocking.customers.credits.LedgerServiceImpl
@@ -71,8 +73,8 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
 
         override fun topUps(): TopUpService.WithRawResponse = topUps
 
-        private val listHandler: Handler<CustomerCreditListPage.Response> =
-            jsonHandler<CustomerCreditListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CustomerCreditListPageResponse> =
+            jsonHandler<CustomerCreditListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -99,8 +101,8 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
             }
         }
 
-        private val listByExternalIdHandler: Handler<CustomerCreditListByExternalIdPage.Response> =
-            jsonHandler<CustomerCreditListByExternalIdPage.Response>(clientOptions.jsonMapper)
+        private val listByExternalIdHandler: Handler<CustomerCreditListByExternalIdPageResponse> =
+            jsonHandler<CustomerCreditListByExternalIdPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun listByExternalId(

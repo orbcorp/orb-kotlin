@@ -20,6 +20,7 @@ import com.withorb.api.models.CouponArchiveParams
 import com.withorb.api.models.CouponCreateParams
 import com.withorb.api.models.CouponFetchParams
 import com.withorb.api.models.CouponListPageAsync
+import com.withorb.api.models.CouponListPageResponse
 import com.withorb.api.models.CouponListParams
 import com.withorb.api.services.async.coupons.SubscriptionServiceAsync
 import com.withorb.api.services.async.coupons.SubscriptionServiceAsyncImpl
@@ -102,8 +103,8 @@ class CouponServiceAsyncImpl internal constructor(private val clientOptions: Cli
             }
         }
 
-        private val listHandler: Handler<CouponListPageAsync.Response> =
-            jsonHandler<CouponListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CouponListPageResponse> =
+            jsonHandler<CouponListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(

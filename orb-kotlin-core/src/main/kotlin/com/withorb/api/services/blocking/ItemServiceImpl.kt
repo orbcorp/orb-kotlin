@@ -19,6 +19,7 @@ import com.withorb.api.models.Item
 import com.withorb.api.models.ItemCreateParams
 import com.withorb.api.models.ItemFetchParams
 import com.withorb.api.models.ItemListPage
+import com.withorb.api.models.ItemListPageResponse
 import com.withorb.api.models.ItemListParams
 import com.withorb.api.models.ItemUpdateParams
 
@@ -105,8 +106,8 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val listHandler: Handler<ItemListPage.Response> =
-            jsonHandler<ItemListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<ItemListPageResponse> =
+            jsonHandler<ItemListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

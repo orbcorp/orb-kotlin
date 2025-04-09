@@ -22,6 +22,7 @@ import com.withorb.api.models.AlertCreateForSubscriptionParams
 import com.withorb.api.models.AlertDisableParams
 import com.withorb.api.models.AlertEnableParams
 import com.withorb.api.models.AlertListPageAsync
+import com.withorb.api.models.AlertListPageResponse
 import com.withorb.api.models.AlertListParams
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
@@ -143,8 +144,8 @@ class AlertServiceAsyncImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val listHandler: Handler<AlertListPageAsync.Response> =
-            jsonHandler<AlertListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<AlertListPageResponse> =
+            jsonHandler<AlertListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(

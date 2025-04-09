@@ -24,6 +24,7 @@ import com.withorb.api.models.SubscriptionFetchCostsParams
 import com.withorb.api.models.SubscriptionFetchCostsResponse
 import com.withorb.api.models.SubscriptionFetchParams
 import com.withorb.api.models.SubscriptionFetchSchedulePageAsync
+import com.withorb.api.models.SubscriptionFetchSchedulePageResponse
 import com.withorb.api.models.SubscriptionFetchScheduleParams
 import com.withorb.api.models.SubscriptionFetchUsageParams
 import com.withorb.api.models.SubscriptionListPageAsync
@@ -46,6 +47,7 @@ import com.withorb.api.models.SubscriptionUpdateParams
 import com.withorb.api.models.SubscriptionUpdateTrialParams
 import com.withorb.api.models.SubscriptionUpdateTrialResponse
 import com.withorb.api.models.SubscriptionUsage
+import com.withorb.api.models.Subscriptions
 
 class SubscriptionServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     SubscriptionServiceAsync {
@@ -228,9 +230,8 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val listHandler: Handler<SubscriptionListPageAsync.Response> =
-            jsonHandler<SubscriptionListPageAsync.Response>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val listHandler: Handler<Subscriptions> =
+            jsonHandler<Subscriptions>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun list(
             params: SubscriptionListParams,
@@ -343,8 +344,8 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             }
         }
 
-        private val fetchScheduleHandler: Handler<SubscriptionFetchSchedulePageAsync.Response> =
-            jsonHandler<SubscriptionFetchSchedulePageAsync.Response>(clientOptions.jsonMapper)
+        private val fetchScheduleHandler: Handler<SubscriptionFetchSchedulePageResponse> =
+            jsonHandler<SubscriptionFetchSchedulePageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun fetchSchedule(

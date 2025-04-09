@@ -18,6 +18,7 @@ import com.withorb.api.core.prepare
 import com.withorb.api.models.CustomerBalanceTransactionCreateParams
 import com.withorb.api.models.CustomerBalanceTransactionCreateResponse
 import com.withorb.api.models.CustomerBalanceTransactionListPage
+import com.withorb.api.models.CustomerBalanceTransactionListPageResponse
 import com.withorb.api.models.CustomerBalanceTransactionListParams
 
 class BalanceTransactionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -76,8 +77,8 @@ class BalanceTransactionServiceImpl internal constructor(private val clientOptio
             }
         }
 
-        private val listHandler: Handler<CustomerBalanceTransactionListPage.Response> =
-            jsonHandler<CustomerBalanceTransactionListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CustomerBalanceTransactionListPageResponse> =
+            jsonHandler<CustomerBalanceTransactionListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

@@ -16,6 +16,7 @@ import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.models.CouponSubscriptionListPage
 import com.withorb.api.models.CouponSubscriptionListParams
+import com.withorb.api.models.Subscriptions
 
 class SubscriptionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     SubscriptionService {
@@ -38,9 +39,8 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
-        private val listHandler: Handler<CouponSubscriptionListPage.Response> =
-            jsonHandler<CouponSubscriptionListPage.Response>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val listHandler: Handler<Subscriptions> =
+            jsonHandler<Subscriptions>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun list(
             params: CouponSubscriptionListParams,

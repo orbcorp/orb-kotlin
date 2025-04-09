@@ -22,6 +22,7 @@ import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceFetchUpcomingResponse
 import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceListPage
+import com.withorb.api.models.InvoiceListPageResponse
 import com.withorb.api.models.InvoiceListParams
 import com.withorb.api.models.InvoiceMarkPaidParams
 import com.withorb.api.models.InvoicePayParams
@@ -135,8 +136,8 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val listHandler: Handler<InvoiceListPage.Response> =
-            jsonHandler<InvoiceListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<InvoiceListPageResponse> =
+            jsonHandler<InvoiceListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

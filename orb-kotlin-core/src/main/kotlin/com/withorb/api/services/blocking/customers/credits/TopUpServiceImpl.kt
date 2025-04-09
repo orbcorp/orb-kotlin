@@ -24,8 +24,10 @@ import com.withorb.api.models.CustomerCreditTopUpCreateResponse
 import com.withorb.api.models.CustomerCreditTopUpDeleteByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpDeleteParams
 import com.withorb.api.models.CustomerCreditTopUpListByExternalIdPage
+import com.withorb.api.models.CustomerCreditTopUpListByExternalIdPageResponse
 import com.withorb.api.models.CustomerCreditTopUpListByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpListPage
+import com.withorb.api.models.CustomerCreditTopUpListPageResponse
 import com.withorb.api.models.CustomerCreditTopUpListParams
 
 class TopUpServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -111,8 +113,8 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val listHandler: Handler<CustomerCreditTopUpListPage.Response> =
-            jsonHandler<CustomerCreditTopUpListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CustomerCreditTopUpListPageResponse> =
+            jsonHandler<CustomerCreditTopUpListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -227,8 +229,8 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
         }
 
         private val listByExternalIdHandler:
-            Handler<CustomerCreditTopUpListByExternalIdPage.Response> =
-            jsonHandler<CustomerCreditTopUpListByExternalIdPage.Response>(clientOptions.jsonMapper)
+            Handler<CustomerCreditTopUpListByExternalIdPageResponse> =
+            jsonHandler<CustomerCreditTopUpListByExternalIdPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun listByExternalId(
