@@ -20,8 +20,10 @@ import com.withorb.api.models.CustomerCreditLedgerCreateEntryByExternalIdRespons
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryParams
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryResponse
 import com.withorb.api.models.CustomerCreditLedgerListByExternalIdPage
+import com.withorb.api.models.CustomerCreditLedgerListByExternalIdPageResponse
 import com.withorb.api.models.CustomerCreditLedgerListByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerListPage
+import com.withorb.api.models.CustomerCreditLedgerListPageResponse
 import com.withorb.api.models.CustomerCreditLedgerListParams
 
 class LedgerServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -66,8 +68,8 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
-        private val listHandler: Handler<CustomerCreditLedgerListPage.Response> =
-            jsonHandler<CustomerCreditLedgerListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CustomerCreditLedgerListPageResponse> =
+            jsonHandler<CustomerCreditLedgerListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -166,8 +168,8 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
         }
 
         private val listByExternalIdHandler:
-            Handler<CustomerCreditLedgerListByExternalIdPage.Response> =
-            jsonHandler<CustomerCreditLedgerListByExternalIdPage.Response>(clientOptions.jsonMapper)
+            Handler<CustomerCreditLedgerListByExternalIdPageResponse> =
+            jsonHandler<CustomerCreditLedgerListByExternalIdPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun listByExternalId(

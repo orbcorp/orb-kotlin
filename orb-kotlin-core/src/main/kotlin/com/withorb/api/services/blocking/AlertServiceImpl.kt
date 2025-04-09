@@ -22,6 +22,7 @@ import com.withorb.api.models.AlertCreateForSubscriptionParams
 import com.withorb.api.models.AlertDisableParams
 import com.withorb.api.models.AlertEnableParams
 import com.withorb.api.models.AlertListPage
+import com.withorb.api.models.AlertListPageResponse
 import com.withorb.api.models.AlertListParams
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
@@ -134,8 +135,8 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val listHandler: Handler<AlertListPage.Response> =
-            jsonHandler<AlertListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<AlertListPageResponse> =
+            jsonHandler<AlertListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

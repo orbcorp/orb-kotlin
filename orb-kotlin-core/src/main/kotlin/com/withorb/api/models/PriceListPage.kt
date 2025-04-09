@@ -2,17 +2,7 @@
 
 package com.withorb.api.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
-import com.withorb.api.core.JsonValue
-import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.services.blocking.PriceService
-import java.util.Collections
 import java.util.Objects
 
 /**
@@ -23,14 +13,26 @@ class PriceListPage
 private constructor(
     private val pricesService: PriceService,
     private val params: PriceListParams,
-    private val response: Response,
+    private val response: PriceListPageResponse,
 ) {
 
-    fun response(): Response = response
+    /** Returns the response that this page was parsed from. */
+    fun response(): PriceListPageResponse = response
 
-    fun data(): List<Price> = response().data()
+    /**
+     * Delegates to [PriceListPageResponse], but gracefully handles missing data.
+     *
+     * @see [PriceListPageResponse.data]
+     */
+    fun data(): List<Price> = response._data().getNullable("data") ?: emptyList()
 
-    fun paginationMetadata(): PaginationMetadata = response().paginationMetadata()
+    /**
+     * Delegates to [PriceListPageResponse], but gracefully handles missing data.
+     *
+     * @see [PriceListPageResponse.paginationMetadata]
+     */
+    fun paginationMetadata(): PaginationMetadata? =
+        response._paginationMetadata().getNullable("pagination_metadata")
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -45,22 +47,22 @@ private constructor(
     override fun toString() =
         "PriceListPage{pricesService=$pricesService, params=$params, response=$response}"
 
-    fun hasNextPage(): Boolean {
-        if (data().isEmpty()) {
-            return false
-        }
-
-        return paginationMetadata().nextCursor() != null
-    }
+    fun hasNextPage(): Boolean =
+        data().isNotEmpty() &&
+            paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") } != null
 
     fun getNextPageParams(): PriceListParams? {
         if (!hasNextPage()) {
             return null
         }
 
-        return PriceListParams.builder()
-            .from(params)
-            .apply { paginationMetadata().nextCursor()?.let { this.cursor(it) } }
+        return params
+            .toBuilder()
+            .apply {
+                paginationMetadata()
+                    ?.let { it._nextCursor().getNullable("next_cursor") }
+                    ?.let { cursor(it) }
+            }
             .build()
     }
 
@@ -72,119 +74,11 @@ private constructor(
 
     companion object {
 
-        fun of(pricesService: PriceService, params: PriceListParams, response: Response) =
-            PriceListPage(pricesService, params, response)
-    }
-
-    class Response(
-        private val data: JsonField<List<Price>>,
-        private val paginationMetadata: JsonField<PaginationMetadata>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
-
-        @JsonCreator
-        private constructor(
-            @JsonProperty("data") data: JsonField<List<Price>> = JsonMissing.of(),
-            @JsonProperty("pagination_metadata")
-            paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
-        ) : this(data, paginationMetadata, mutableMapOf())
-
-        fun data(): List<Price> = data.getNullable("data") ?: listOf()
-
-        fun paginationMetadata(): PaginationMetadata =
-            paginationMetadata.getRequired("pagination_metadata")
-
-        @JsonProperty("data") fun _data(): JsonField<List<Price>>? = data
-
-        @JsonProperty("pagination_metadata")
-        fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        private var validated: Boolean = false
-
-        fun validate(): Response = apply {
-            if (validated) {
-                return@apply
-            }
-
-            data().map { it.validate() }
-            paginationMetadata().validate()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: OrbInvalidDataException) {
-                false
-            }
-
-        fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Response && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(data, paginationMetadata, additionalProperties) /* spotless:on */
-
-        override fun toString() =
-            "Response{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
-
-        companion object {
-
-            /** Returns a mutable builder for constructing an instance of [PriceListPage]. */
-            fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var data: JsonField<List<Price>> = JsonMissing.of()
-            private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(page: Response) = apply {
-                this.data = page.data
-                this.paginationMetadata = page.paginationMetadata
-                this.additionalProperties.putAll(page.additionalProperties)
-            }
-
-            fun data(data: List<Price>) = data(JsonField.of(data))
-
-            fun data(data: JsonField<List<Price>>) = apply { this.data = data }
-
-            fun paginationMetadata(paginationMetadata: PaginationMetadata) =
-                paginationMetadata(JsonField.of(paginationMetadata))
-
-            fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply {
-                this.paginationMetadata = paginationMetadata
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            /**
-             * Returns an immutable instance of [Response].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Response =
-                Response(data, paginationMetadata, additionalProperties.toMutableMap())
-        }
+        fun of(
+            pricesService: PriceService,
+            params: PriceListParams,
+            response: PriceListPageResponse,
+        ) = PriceListPage(pricesService, params, response)
     }
 
     class AutoPager(private val firstPage: PriceListPage) : Sequence<Price> {

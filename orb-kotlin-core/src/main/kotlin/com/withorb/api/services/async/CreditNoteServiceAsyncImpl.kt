@@ -19,6 +19,7 @@ import com.withorb.api.models.CreditNote
 import com.withorb.api.models.CreditNoteCreateParams
 import com.withorb.api.models.CreditNoteFetchParams
 import com.withorb.api.models.CreditNoteListPageAsync
+import com.withorb.api.models.CreditNoteListPageResponse
 import com.withorb.api.models.CreditNoteListParams
 
 class CreditNoteServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -83,8 +84,8 @@ class CreditNoteServiceAsyncImpl internal constructor(private val clientOptions:
             }
         }
 
-        private val listHandler: Handler<CreditNoteListPageAsync.Response> =
-            jsonHandler<CreditNoteListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CreditNoteListPageResponse> =
+            jsonHandler<CreditNoteListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(

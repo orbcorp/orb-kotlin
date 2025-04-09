@@ -20,6 +20,7 @@ import com.withorb.api.models.DimensionalPriceGroupCreateParams
 import com.withorb.api.models.DimensionalPriceGroupListPage
 import com.withorb.api.models.DimensionalPriceGroupListParams
 import com.withorb.api.models.DimensionalPriceGroupRetrieveParams
+import com.withorb.api.models.DimensionalPriceGroups
 import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdService
 import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdServiceImpl
 
@@ -128,8 +129,8 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
             }
         }
 
-        private val listHandler: Handler<DimensionalPriceGroupListPage.Response> =
-            jsonHandler<DimensionalPriceGroupListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<DimensionalPriceGroups> =
+            jsonHandler<DimensionalPriceGroups>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
