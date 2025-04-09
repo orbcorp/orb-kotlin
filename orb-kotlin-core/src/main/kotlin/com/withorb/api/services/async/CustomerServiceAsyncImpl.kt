@@ -23,6 +23,7 @@ import com.withorb.api.models.CustomerDeleteParams
 import com.withorb.api.models.CustomerFetchByExternalIdParams
 import com.withorb.api.models.CustomerFetchParams
 import com.withorb.api.models.CustomerListPageAsync
+import com.withorb.api.models.CustomerListPageResponse
 import com.withorb.api.models.CustomerListParams
 import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams
 import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayParams
@@ -200,8 +201,8 @@ class CustomerServiceAsyncImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val listHandler: Handler<CustomerListPageAsync.Response> =
-            jsonHandler<CustomerListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CustomerListPageResponse> =
+            jsonHandler<CustomerListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(

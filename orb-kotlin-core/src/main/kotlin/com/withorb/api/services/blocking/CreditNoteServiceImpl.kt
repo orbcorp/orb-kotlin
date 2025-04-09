@@ -19,6 +19,7 @@ import com.withorb.api.models.CreditNote
 import com.withorb.api.models.CreditNoteCreateParams
 import com.withorb.api.models.CreditNoteFetchParams
 import com.withorb.api.models.CreditNoteListPage
+import com.withorb.api.models.CreditNoteListPageResponse
 import com.withorb.api.models.CreditNoteListParams
 
 class CreditNoteServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -80,8 +81,8 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val listHandler: Handler<CreditNoteListPage.Response> =
-            jsonHandler<CreditNoteListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CreditNoteListPageResponse> =
+            jsonHandler<CreditNoteListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

@@ -19,6 +19,7 @@ import com.withorb.api.models.BillableMetric
 import com.withorb.api.models.MetricCreateParams
 import com.withorb.api.models.MetricFetchParams
 import com.withorb.api.models.MetricListPage
+import com.withorb.api.models.MetricListPageResponse
 import com.withorb.api.models.MetricListParams
 import com.withorb.api.models.MetricUpdateParams
 
@@ -112,8 +113,8 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
             }
         }
 
-        private val listHandler: Handler<MetricListPage.Response> =
-            jsonHandler<MetricListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<MetricListPageResponse> =
+            jsonHandler<MetricListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

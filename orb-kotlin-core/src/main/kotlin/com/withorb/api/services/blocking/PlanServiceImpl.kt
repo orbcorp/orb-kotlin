@@ -19,6 +19,7 @@ import com.withorb.api.models.Plan
 import com.withorb.api.models.PlanCreateParams
 import com.withorb.api.models.PlanFetchParams
 import com.withorb.api.models.PlanListPage
+import com.withorb.api.models.PlanListPageResponse
 import com.withorb.api.models.PlanListParams
 import com.withorb.api.models.PlanUpdateParams
 import com.withorb.api.services.blocking.plans.ExternalPlanIdService
@@ -119,8 +120,8 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val listHandler: Handler<PlanListPage.Response> =
-            jsonHandler<PlanListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<PlanListPageResponse> =
+            jsonHandler<PlanListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

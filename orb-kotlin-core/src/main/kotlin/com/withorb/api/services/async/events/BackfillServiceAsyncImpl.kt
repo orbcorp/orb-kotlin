@@ -22,6 +22,7 @@ import com.withorb.api.models.EventBackfillCreateResponse
 import com.withorb.api.models.EventBackfillFetchParams
 import com.withorb.api.models.EventBackfillFetchResponse
 import com.withorb.api.models.EventBackfillListPageAsync
+import com.withorb.api.models.EventBackfillListPageResponse
 import com.withorb.api.models.EventBackfillListParams
 import com.withorb.api.models.EventBackfillRevertParams
 import com.withorb.api.models.EventBackfillRevertResponse
@@ -103,8 +104,8 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val listHandler: Handler<EventBackfillListPageAsync.Response> =
-            jsonHandler<EventBackfillListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<EventBackfillListPageResponse> =
+            jsonHandler<EventBackfillListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(

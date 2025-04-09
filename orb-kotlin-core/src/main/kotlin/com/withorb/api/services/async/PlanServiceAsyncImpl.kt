@@ -19,6 +19,7 @@ import com.withorb.api.models.Plan
 import com.withorb.api.models.PlanCreateParams
 import com.withorb.api.models.PlanFetchParams
 import com.withorb.api.models.PlanListPageAsync
+import com.withorb.api.models.PlanListPageResponse
 import com.withorb.api.models.PlanListParams
 import com.withorb.api.models.PlanUpdateParams
 import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsync
@@ -123,8 +124,8 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val listHandler: Handler<PlanListPageAsync.Response> =
-            jsonHandler<PlanListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<PlanListPageResponse> =
+            jsonHandler<PlanListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(

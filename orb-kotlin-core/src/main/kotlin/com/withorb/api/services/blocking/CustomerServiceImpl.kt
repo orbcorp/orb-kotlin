@@ -23,6 +23,7 @@ import com.withorb.api.models.CustomerDeleteParams
 import com.withorb.api.models.CustomerFetchByExternalIdParams
 import com.withorb.api.models.CustomerFetchParams
 import com.withorb.api.models.CustomerListPage
+import com.withorb.api.models.CustomerListPageResponse
 import com.withorb.api.models.CustomerListParams
 import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams
 import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayParams
@@ -191,8 +192,8 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val listHandler: Handler<CustomerListPage.Response> =
-            jsonHandler<CustomerListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CustomerListPageResponse> =
+            jsonHandler<CustomerListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

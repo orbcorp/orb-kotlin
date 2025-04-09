@@ -20,8 +20,10 @@ import com.withorb.api.models.CustomerCreditLedgerCreateEntryByExternalIdRespons
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryParams
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryResponse
 import com.withorb.api.models.CustomerCreditLedgerListByExternalIdPageAsync
+import com.withorb.api.models.CustomerCreditLedgerListByExternalIdPageResponse
 import com.withorb.api.models.CustomerCreditLedgerListByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerListPageAsync
+import com.withorb.api.models.CustomerCreditLedgerListPageResponse
 import com.withorb.api.models.CustomerCreditLedgerListParams
 
 class LedgerServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -66,8 +68,8 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
-        private val listHandler: Handler<CustomerCreditLedgerListPageAsync.Response> =
-            jsonHandler<CustomerCreditLedgerListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CustomerCreditLedgerListPageResponse> =
+            jsonHandler<CustomerCreditLedgerListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(
@@ -166,10 +168,8 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
         }
 
         private val listByExternalIdHandler:
-            Handler<CustomerCreditLedgerListByExternalIdPageAsync.Response> =
-            jsonHandler<CustomerCreditLedgerListByExternalIdPageAsync.Response>(
-                    clientOptions.jsonMapper
-                )
+            Handler<CustomerCreditLedgerListByExternalIdPageResponse> =
+            jsonHandler<CustomerCreditLedgerListByExternalIdPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun listByExternalId(
