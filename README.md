@@ -361,6 +361,42 @@ val client: OrbClient = OrbOkHttpClient.builder()
     .build()
 ```
 
+### Custom HTTP client
+
+The SDK consists of three artifacts:
+
+- `orb-kotlin-core`
+  - Contains core SDK logic
+  - Does not depend on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`OrbClient`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClient.kt), [`OrbClientAsync`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientAsync.kt), [`OrbClientImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientImpl.kt), and [`OrbClientAsyncImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientAsyncImpl.kt), all of which can work with any HTTP client
+- `orb-kotlin-client-okhttp`
+  - Depends on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`OrbOkHttpClient`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClient.kt) and [`OrbOkHttpClientAsync`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClientAsync.kt), which provide a way to construct [`OrbClientImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientImpl.kt) and [`OrbClientAsyncImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientAsyncImpl.kt), respectively, using OkHttp
+- `orb-kotlin`
+  - Depends on and exposes the APIs of both `orb-kotlin-core` and `orb-kotlin-client-okhttp`
+  - Does not have its own logic
+
+This structure allows replacing the SDK's default HTTP client without pulling in unnecessary dependencies.
+
+#### Customized [`OkHttpClient`](https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.html)
+
+> [!TIP]
+> Try the available [network options](#network-options) before replacing the default client.
+
+To use a customized `OkHttpClient`:
+
+1. Replace your [`orb-kotlin` dependency](#installation) with `orb-kotlin-core`
+2. Copy `orb-kotlin-client-okhttp`'s [`OkHttpClient`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OkHttpClient.kt) class into your code and customize it
+3. Construct [`OrbClientImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientImpl.kt) or [`OrbClientAsyncImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientAsyncImpl.kt), similarly to [`OrbOkHttpClient`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClient.kt) or [`OrbOkHttpClientAsync`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClientAsync.kt), using your customized client
+
+### Completely custom HTTP client
+
+To use a completely custom HTTP client:
+
+1. Replace your [`orb-kotlin` dependency](#installation) with `orb-kotlin-core`
+2. Write a class that implements the [`HttpClient`](orb-kotlin-core/src/main/kotlin/com/withorb/api/core/http/HttpClient.kt) interface
+3. Construct [`OrbClientImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientImpl.kt) or [`OrbClientAsyncImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientAsyncImpl.kt), similarly to [`OrbOkHttpClient`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClient.kt) or [`OrbOkHttpClientAsync`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClientAsync.kt), using your new client class
+
 ## Undocumented API functionality
 
 The SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.
