@@ -27,9 +27,20 @@ interface ItemServiceAsync {
 
     /** This endpoint can be used to update properties on the Item. */
     suspend fun update(
+        itemId: String,
+        params: ItemUpdateParams = ItemUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Item = update(params.toBuilder().itemId(itemId).build(), requestOptions)
+
+    /** @see [update] */
+    suspend fun update(
         params: ItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item
+
+    /** @see [update] */
+    suspend fun update(itemId: String, requestOptions: RequestOptions): Item =
+        update(itemId, ItemUpdateParams.none(), requestOptions)
 
     /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
     suspend fun list(
@@ -43,9 +54,20 @@ interface ItemServiceAsync {
 
     /** This endpoint returns an item identified by its item_id. */
     suspend fun fetch(
+        itemId: String,
+        params: ItemFetchParams = ItemFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Item = fetch(params.toBuilder().itemId(itemId).build(), requestOptions)
+
+    /** @see [fetch] */
+    suspend fun fetch(
         params: ItemFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item
+
+    /** @see [fetch] */
+    suspend fun fetch(itemId: String, requestOptions: RequestOptions): Item =
+        fetch(itemId, ItemFetchParams.none(), requestOptions)
 
     /** A view of [ItemServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -66,9 +88,22 @@ interface ItemServiceAsync {
          */
         @MustBeClosed
         suspend fun update(
+            itemId: String,
+            params: ItemUpdateParams = ItemUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Item> = update(params.toBuilder().itemId(itemId).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
             params: ItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item>
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(itemId: String, requestOptions: RequestOptions): HttpResponseFor<Item> =
+            update(itemId, ItemUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /items`, but is otherwise the same as
@@ -91,8 +126,21 @@ interface ItemServiceAsync {
          */
         @MustBeClosed
         suspend fun fetch(
+            itemId: String,
+            params: ItemFetchParams = ItemFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Item> = fetch(params.toBuilder().itemId(itemId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
             params: ItemFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(itemId: String, requestOptions: RequestOptions): HttpResponseFor<Item> =
+            fetch(itemId, ItemFetchParams.none(), requestOptions)
     }
 }

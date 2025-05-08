@@ -8,15 +8,11 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.models.SubscriptionCancelParams
 import com.withorb.api.models.SubscriptionCreateParams
 import com.withorb.api.models.SubscriptionFetchCostsParams
-import com.withorb.api.models.SubscriptionFetchParams
-import com.withorb.api.models.SubscriptionFetchScheduleParams
 import com.withorb.api.models.SubscriptionFetchUsageParams
 import com.withorb.api.models.SubscriptionPriceIntervalsParams
 import com.withorb.api.models.SubscriptionSchedulePlanChangeParams
 import com.withorb.api.models.SubscriptionTriggerPhaseParams
-import com.withorb.api.models.SubscriptionUnscheduleCancellationParams
 import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
-import com.withorb.api.models.SubscriptionUnschedulePendingPlanChangesParams
 import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityParams
 import com.withorb.api.models.SubscriptionUpdateParams
 import com.withorb.api.models.SubscriptionUpdateTrialParams
@@ -398,10 +394,7 @@ internal class SubscriptionServiceAsyncTest {
                 .build()
         val subscriptionServiceAsync = client.subscriptions()
 
-        val subscription =
-            subscriptionServiceAsync.fetch(
-                SubscriptionFetchParams.builder().subscriptionId("subscription_id").build()
-            )
+        val subscription = subscriptionServiceAsync.fetch("subscription_id")
 
         subscription.validate()
     }
@@ -438,10 +431,7 @@ internal class SubscriptionServiceAsyncTest {
                 .build()
         val subscriptionServiceAsync = client.subscriptions()
 
-        val page =
-            subscriptionServiceAsync.fetchSchedule(
-                SubscriptionFetchScheduleParams.builder().subscriptionId("subscription_id").build()
-            )
+        val page = subscriptionServiceAsync.fetchSchedule("subscription_id")
 
         page.response().validate()
     }
@@ -966,12 +956,7 @@ internal class SubscriptionServiceAsyncTest {
                 .build()
         val subscriptionServiceAsync = client.subscriptions()
 
-        val response =
-            subscriptionServiceAsync.unscheduleCancellation(
-                SubscriptionUnscheduleCancellationParams.builder()
-                    .subscriptionId("subscription_id")
-                    .build()
-            )
+        val response = subscriptionServiceAsync.unscheduleCancellation("subscription_id")
 
         response.validate()
     }
@@ -1005,12 +990,7 @@ internal class SubscriptionServiceAsyncTest {
                 .build()
         val subscriptionServiceAsync = client.subscriptions()
 
-        val response =
-            subscriptionServiceAsync.unschedulePendingPlanChanges(
-                SubscriptionUnschedulePendingPlanChangesParams.builder()
-                    .subscriptionId("subscription_id")
-                    .build()
-            )
+        val response = subscriptionServiceAsync.unschedulePendingPlanChanges("subscription_id")
 
         response.validate()
     }

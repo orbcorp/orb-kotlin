@@ -7,7 +7,6 @@ import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.PriceCreateParams
 import com.withorb.api.models.PriceEvaluateParams
-import com.withorb.api.models.PriceFetchParams
 import com.withorb.api.models.PriceUpdateParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -156,7 +155,7 @@ internal class PriceServiceAsyncTest {
                 .build()
         val priceServiceAsync = client.prices()
 
-        val price = priceServiceAsync.fetch(PriceFetchParams.builder().priceId("price_id").build())
+        val price = priceServiceAsync.fetch("price_id")
 
         price.validate()
     }

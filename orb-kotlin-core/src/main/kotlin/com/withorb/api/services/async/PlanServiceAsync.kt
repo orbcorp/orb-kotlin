@@ -35,9 +35,20 @@ interface PlanServiceAsync {
      * Other fields on a customer are currently immutable.
      */
     suspend fun update(
+        planId: String,
+        params: PlanUpdateParams = PlanUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Plan = update(params.toBuilder().planId(planId).build(), requestOptions)
+
+    /** @see [update] */
+    suspend fun update(
         params: PlanUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
+
+    /** @see [update] */
+    suspend fun update(planId: String, requestOptions: RequestOptions): Plan =
+        update(planId, PlanUpdateParams.none(), requestOptions)
 
     /**
      * This endpoint returns a list of all [plans](/core-concepts#plan-and-price) for an account in
@@ -73,9 +84,20 @@ interface PlanServiceAsync {
      * prices refer to all prices across all phases.
      */
     suspend fun fetch(
+        planId: String,
+        params: PlanFetchParams = PlanFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Plan = fetch(params.toBuilder().planId(planId).build(), requestOptions)
+
+    /** @see [fetch] */
+    suspend fun fetch(
         params: PlanFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
+
+    /** @see [fetch] */
+    suspend fun fetch(planId: String, requestOptions: RequestOptions): Plan =
+        fetch(planId, PlanFetchParams.none(), requestOptions)
 
     /** A view of [PlanServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -98,9 +120,22 @@ interface PlanServiceAsync {
          */
         @MustBeClosed
         suspend fun update(
+            planId: String,
+            params: PlanUpdateParams = PlanUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Plan> = update(params.toBuilder().planId(planId).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
             params: PlanUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan>
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(planId: String, requestOptions: RequestOptions): HttpResponseFor<Plan> =
+            update(planId, PlanUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /plans`, but is otherwise the same as
@@ -123,8 +158,21 @@ interface PlanServiceAsync {
          */
         @MustBeClosed
         suspend fun fetch(
+            planId: String,
+            params: PlanFetchParams = PlanFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Plan> = fetch(params.toBuilder().planId(planId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
             params: PlanFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(planId: String, requestOptions: RequestOptions): HttpResponseFor<Plan> =
+            fetch(planId, PlanFetchParams.none(), requestOptions)
     }
 }

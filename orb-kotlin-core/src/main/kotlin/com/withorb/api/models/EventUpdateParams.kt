@@ -60,13 +60,13 @@ import java.util.Objects
  */
 class EventUpdateParams
 private constructor(
-    private val eventId: String,
+    private val eventId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun eventId(): String = eventId
+    fun eventId(): String? = eventId
 
     /**
      * A name to meaningfully identify the action or event type.
@@ -152,7 +152,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .eventId()
          * .eventName()
          * .properties()
          * .timestamp()
@@ -176,7 +175,7 @@ private constructor(
             additionalQueryParams = eventUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun eventId(eventId: String) = apply { this.eventId = eventId }
+        fun eventId(eventId: String?) = apply { this.eventId = eventId }
 
         /**
          * Sets the entire request body.
@@ -378,7 +377,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .eventId()
          * .eventName()
          * .properties()
          * .timestamp()
@@ -388,7 +386,7 @@ private constructor(
          */
         fun build(): EventUpdateParams =
             EventUpdateParams(
-                checkRequired("eventId", eventId),
+                eventId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -399,7 +397,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> eventId
+            0 -> eventId ?: ""
             else -> ""
         }
 

@@ -26,13 +26,13 @@ import java.util.Objects
  */
 class SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
 private constructor(
-    private val subscriptionId: String,
+    private val subscriptionId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun subscriptionId(): String = subscriptionId
+    fun subscriptionId(): String? = subscriptionId
 
     /**
      * Price for which the updates should be cleared. Must be a fixed fee.
@@ -65,7 +65,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .subscriptionId()
          * .priceId()
          * ```
          */
@@ -93,7 +92,7 @@ private constructor(
                     .toBuilder()
         }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String?) = apply { this.subscriptionId = subscriptionId }
 
         /**
          * Sets the entire request body.
@@ -239,7 +238,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .subscriptionId()
          * .priceId()
          * ```
          *
@@ -247,7 +245,7 @@ private constructor(
          */
         fun build(): SubscriptionUnscheduleFixedFeeQuantityUpdatesParams =
             SubscriptionUnscheduleFixedFeeQuantityUpdatesParams(
-                checkRequired("subscriptionId", subscriptionId),
+                subscriptionId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -258,7 +256,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> subscriptionId
+            0 -> subscriptionId ?: ""
             else -> ""
         }
 

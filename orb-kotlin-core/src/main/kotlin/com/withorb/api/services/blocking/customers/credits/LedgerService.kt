@@ -101,9 +101,21 @@ interface LedgerService {
      * be added to the ledger to indicate the adjustment of credits.
      */
     fun list(
+        customerId: String,
+        params: CustomerCreditLedgerListParams = CustomerCreditLedgerListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreditLedgerListPage =
+        list(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
         params: CustomerCreditLedgerListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditLedgerListPage
+
+    /** @see [list] */
+    fun list(customerId: String, requestOptions: RequestOptions): CustomerCreditLedgerListPage =
+        list(customerId, CustomerCreditLedgerListParams.none(), requestOptions)
 
     /**
      * This endpoint allows you to create a new ledger entry for a specified customer's balance.
@@ -208,6 +220,14 @@ interface LedgerService {
      * decremented from, and `amount` indicates how many credits to return to the customer, up to
      * the block's initial balance.
      */
+    fun createEntry(
+        customerId: String,
+        params: CustomerCreditLedgerCreateEntryParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreditLedgerCreateEntryResponse =
+        createEntry(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+    /** @see [createEntry] */
     fun createEntry(
         params: CustomerCreditLedgerCreateEntryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -317,6 +337,17 @@ interface LedgerService {
      * the block's initial balance.
      */
     fun createEntryByExternalId(
+        externalCustomerId: String,
+        params: CustomerCreditLedgerCreateEntryByExternalIdParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreditLedgerCreateEntryByExternalIdResponse =
+        createEntryByExternalId(
+            params.toBuilder().externalCustomerId(externalCustomerId).build(),
+            requestOptions,
+        )
+
+    /** @see [createEntryByExternalId] */
+    fun createEntryByExternalId(
         params: CustomerCreditLedgerCreateEntryByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditLedgerCreateEntryByExternalIdResponse
@@ -401,9 +432,32 @@ interface LedgerService {
      * be added to the ledger to indicate the adjustment of credits.
      */
     fun listByExternalId(
+        externalCustomerId: String,
+        params: CustomerCreditLedgerListByExternalIdParams =
+            CustomerCreditLedgerListByExternalIdParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreditLedgerListByExternalIdPage =
+        listByExternalId(
+            params.toBuilder().externalCustomerId(externalCustomerId).build(),
+            requestOptions,
+        )
+
+    /** @see [listByExternalId] */
+    fun listByExternalId(
         params: CustomerCreditLedgerListByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditLedgerListByExternalIdPage
+
+    /** @see [listByExternalId] */
+    fun listByExternalId(
+        externalCustomerId: String,
+        requestOptions: RequestOptions,
+    ): CustomerCreditLedgerListByExternalIdPage =
+        listByExternalId(
+            externalCustomerId,
+            CustomerCreditLedgerListByExternalIdParams.none(),
+            requestOptions,
+        )
 
     /** A view of [LedgerService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -414,14 +468,40 @@ interface LedgerService {
          */
         @MustBeClosed
         fun list(
+            customerId: String,
+            params: CustomerCreditLedgerListParams = CustomerCreditLedgerListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditLedgerListPage> =
+            list(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
             params: CustomerCreditLedgerListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCreditLedgerListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            customerId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditLedgerListPage> =
+            list(customerId, CustomerCreditLedgerListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /customers/{customer_id}/credits/ledger_entry`, but
          * is otherwise the same as [LedgerService.createEntry].
          */
+        @MustBeClosed
+        fun createEntry(
+            customerId: String,
+            params: CustomerCreditLedgerCreateEntryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditLedgerCreateEntryResponse> =
+            createEntry(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+        /** @see [createEntry] */
         @MustBeClosed
         fun createEntry(
             params: CustomerCreditLedgerCreateEntryParams,
@@ -435,6 +515,18 @@ interface LedgerService {
          */
         @MustBeClosed
         fun createEntryByExternalId(
+            externalCustomerId: String,
+            params: CustomerCreditLedgerCreateEntryByExternalIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditLedgerCreateEntryByExternalIdResponse> =
+            createEntryByExternalId(
+                params.toBuilder().externalCustomerId(externalCustomerId).build(),
+                requestOptions,
+            )
+
+        /** @see [createEntryByExternalId] */
+        @MustBeClosed
+        fun createEntryByExternalId(
             params: CustomerCreditLedgerCreateEntryByExternalIdParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCreditLedgerCreateEntryByExternalIdResponse>
@@ -446,8 +538,33 @@ interface LedgerService {
          */
         @MustBeClosed
         fun listByExternalId(
+            externalCustomerId: String,
+            params: CustomerCreditLedgerListByExternalIdParams =
+                CustomerCreditLedgerListByExternalIdParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditLedgerListByExternalIdPage> =
+            listByExternalId(
+                params.toBuilder().externalCustomerId(externalCustomerId).build(),
+                requestOptions,
+            )
+
+        /** @see [listByExternalId] */
+        @MustBeClosed
+        fun listByExternalId(
             params: CustomerCreditLedgerListByExternalIdParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCreditLedgerListByExternalIdPage>
+
+        /** @see [listByExternalId] */
+        @MustBeClosed
+        fun listByExternalId(
+            externalCustomerId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditLedgerListByExternalIdPage> =
+            listByExternalId(
+                externalCustomerId,
+                CustomerCreditLedgerListByExternalIdParams.none(),
+                requestOptions,
+            )
     }
 }

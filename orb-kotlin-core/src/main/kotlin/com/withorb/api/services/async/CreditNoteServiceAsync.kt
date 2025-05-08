@@ -43,9 +43,20 @@ interface CreditNoteServiceAsync {
      * identifier.
      */
     suspend fun fetch(
+        creditNoteId: String,
+        params: CreditNoteFetchParams = CreditNoteFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CreditNote = fetch(params.toBuilder().creditNoteId(creditNoteId).build(), requestOptions)
+
+    /** @see [fetch] */
+    suspend fun fetch(
         params: CreditNoteFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditNote
+
+    /** @see [fetch] */
+    suspend fun fetch(creditNoteId: String, requestOptions: RequestOptions): CreditNote =
+        fetch(creditNoteId, CreditNoteFetchParams.none(), requestOptions)
 
     /**
      * A view of [CreditNoteServiceAsync] that provides access to raw HTTP responses for each
@@ -84,8 +95,25 @@ interface CreditNoteServiceAsync {
          */
         @MustBeClosed
         suspend fun fetch(
+            creditNoteId: String,
+            params: CreditNoteFetchParams = CreditNoteFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CreditNote> =
+            fetch(params.toBuilder().creditNoteId(creditNoteId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
             params: CreditNoteFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CreditNote>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
+            creditNoteId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CreditNote> =
+            fetch(creditNoteId, CreditNoteFetchParams.none(), requestOptions)
     }
 }

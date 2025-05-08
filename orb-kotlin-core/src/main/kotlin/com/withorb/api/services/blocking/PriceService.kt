@@ -46,9 +46,20 @@ interface PriceService {
      * the metadata value, it will clear any existing metadata for that price.
      */
     fun update(
+        priceId: String,
+        params: PriceUpdateParams = PriceUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = update(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
         params: PriceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
+
+    /** @see [update] */
+    fun update(priceId: String, requestOptions: RequestOptions): Price =
+        update(priceId, PriceUpdateParams.none(), requestOptions)
 
     /**
      * This endpoint is used to list all add-on prices created using the
@@ -83,15 +94,33 @@ interface PriceService {
      * endpoint because it employs a JSON body rather than query parameters.
      */
     fun evaluate(
+        priceId: String,
+        params: PriceEvaluateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PriceEvaluateResponse = evaluate(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+    /** @see [evaluate] */
+    fun evaluate(
         params: PriceEvaluateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PriceEvaluateResponse
 
     /** This endpoint returns a price given an identifier. */
     fun fetch(
+        priceId: String,
+        params: PriceFetchParams = PriceFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = fetch(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+    /** @see [fetch] */
+    fun fetch(
         params: PriceFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
+
+    /** @see [fetch] */
+    fun fetch(priceId: String, requestOptions: RequestOptions): Price =
+        fetch(priceId, PriceFetchParams.none(), requestOptions)
 
     /** A view of [PriceService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -114,9 +143,23 @@ interface PriceService {
          */
         @MustBeClosed
         fun update(
+            priceId: String,
+            params: PriceUpdateParams = PriceUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            update(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
             params: PriceUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(priceId: String, requestOptions: RequestOptions): HttpResponseFor<Price> =
+            update(priceId, PriceUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /prices`, but is otherwise the same as
@@ -139,6 +182,15 @@ interface PriceService {
          */
         @MustBeClosed
         fun evaluate(
+            priceId: String,
+            params: PriceEvaluateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PriceEvaluateResponse> =
+            evaluate(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+        /** @see [evaluate] */
+        @MustBeClosed
+        fun evaluate(
             params: PriceEvaluateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PriceEvaluateResponse>
@@ -149,8 +201,22 @@ interface PriceService {
          */
         @MustBeClosed
         fun fetch(
+            priceId: String,
+            params: PriceFetchParams = PriceFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            fetch(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        fun fetch(
             params: PriceFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        fun fetch(priceId: String, requestOptions: RequestOptions): HttpResponseFor<Price> =
+            fetch(priceId, PriceFetchParams.none(), requestOptions)
     }
 }

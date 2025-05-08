@@ -31,13 +31,13 @@ import java.util.Objects
  */
 class AlertCreateForCustomerParams
 private constructor(
-    private val customerId: String,
+    private val customerId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun customerId(): String = customerId
+    fun customerId(): String? = customerId
 
     /**
      * The case sensitive currency or custom pricing unit to use for this alert.
@@ -99,7 +99,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .customerId()
          * .currency()
          * .type()
          * ```
@@ -122,7 +121,7 @@ private constructor(
             additionalQueryParams = alertCreateForCustomerParams.additionalQueryParams.toBuilder()
         }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
         /**
          * Sets the entire request body.
@@ -302,7 +301,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .customerId()
          * .currency()
          * .type()
          * ```
@@ -311,7 +309,7 @@ private constructor(
          */
         fun build(): AlertCreateForCustomerParams =
             AlertCreateForCustomerParams(
-                checkRequired("customerId", customerId),
+                customerId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -322,7 +320,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> customerId
+            0 -> customerId ?: ""
             else -> ""
         }
 

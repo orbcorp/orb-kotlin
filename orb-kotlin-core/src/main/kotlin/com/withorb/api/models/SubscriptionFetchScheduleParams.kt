@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.time.OffsetDateTime
@@ -17,7 +16,7 @@ import java.util.Objects
  */
 class SubscriptionFetchScheduleParams
 private constructor(
-    private val subscriptionId: String,
+    private val subscriptionId: String?,
     private val cursor: String?,
     private val limit: Long?,
     private val startDateGt: OffsetDateTime?,
@@ -28,7 +27,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun subscriptionId(): String = subscriptionId
+    fun subscriptionId(): String? = subscriptionId
 
     /**
      * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
@@ -55,14 +54,11 @@ private constructor(
 
     companion object {
 
+        fun none(): SubscriptionFetchScheduleParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [SubscriptionFetchScheduleParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .subscriptionId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -94,7 +90,7 @@ private constructor(
                     subscriptionFetchScheduleParams.additionalQueryParams.toBuilder()
             }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String?) = apply { this.subscriptionId = subscriptionId }
 
         /**
          * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
@@ -222,17 +218,10 @@ private constructor(
          * Returns an immutable instance of [SubscriptionFetchScheduleParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .subscriptionId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): SubscriptionFetchScheduleParams =
             SubscriptionFetchScheduleParams(
-                checkRequired("subscriptionId", subscriptionId),
+                subscriptionId,
                 cursor,
                 limit,
                 startDateGt,
@@ -246,7 +235,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> subscriptionId
+            0 -> subscriptionId ?: ""
             else -> ""
         }
 

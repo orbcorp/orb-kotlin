@@ -17,9 +17,35 @@ interface ExternalDimensionalPriceGroupIdServiceAsync {
 
     /** Fetch dimensional price group by external ID */
     suspend fun retrieve(
+        externalDimensionalPriceGroupId: String,
+        params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams =
+            DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DimensionalPriceGroup =
+        retrieve(
+            params
+                .toBuilder()
+                .externalDimensionalPriceGroupId(externalDimensionalPriceGroupId)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroup
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
+        externalDimensionalPriceGroupId: String,
+        requestOptions: RequestOptions,
+    ): DimensionalPriceGroup =
+        retrieve(
+            externalDimensionalPriceGroupId,
+            DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [ExternalDimensionalPriceGroupIdServiceAsync] that provides access to raw HTTP
@@ -34,8 +60,36 @@ interface ExternalDimensionalPriceGroupIdServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            externalDimensionalPriceGroupId: String,
+            params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams =
+                DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroup> =
+            retrieve(
+                params
+                    .toBuilder()
+                    .externalDimensionalPriceGroupId(externalDimensionalPriceGroupId)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DimensionalPriceGroup>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            externalDimensionalPriceGroupId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DimensionalPriceGroup> =
+            retrieve(
+                externalDimensionalPriceGroupId,
+                DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.none(),
+                requestOptions,
+            )
     }
 }

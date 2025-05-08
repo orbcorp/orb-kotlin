@@ -136,13 +136,13 @@ import java.util.Objects
  */
 class CustomerCreditLedgerCreateEntryByExternalIdParams
 private constructor(
-    private val externalCustomerId: String,
+    private val externalCustomerId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun externalCustomerId(): String = externalCustomerId
+    fun externalCustomerId(): String? = externalCustomerId
 
     fun body(): Body = body
 
@@ -160,7 +160,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .externalCustomerId()
          * .body()
          * ```
          */
@@ -188,7 +187,7 @@ private constructor(
                 customerCreditLedgerCreateEntryByExternalIdParams.additionalQueryParams.toBuilder()
         }
 
-        fun externalCustomerId(externalCustomerId: String) = apply {
+        fun externalCustomerId(externalCustomerId: String?) = apply {
             this.externalCustomerId = externalCustomerId
         }
 
@@ -388,7 +387,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .externalCustomerId()
          * .body()
          * ```
          *
@@ -396,7 +394,7 @@ private constructor(
          */
         fun build(): CustomerCreditLedgerCreateEntryByExternalIdParams =
             CustomerCreditLedgerCreateEntryByExternalIdParams(
-                checkRequired("externalCustomerId", externalCustomerId),
+                externalCustomerId,
                 checkRequired("body", body),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -407,7 +405,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalCustomerId
+            0 -> externalCustomerId ?: ""
             else -> ""
         }
 

@@ -5,6 +5,7 @@ package com.withorb.api.services.async
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
 import com.withorb.api.core.handlers.withErrorHandler
@@ -210,6 +211,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Subscription> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -271,6 +275,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionCancelParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionCancelResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -298,6 +305,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionFetchParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Subscription> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -325,6 +335,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionFetchCostsParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionFetchCostsResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -352,6 +365,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionFetchScheduleParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionFetchSchedulePageAsync> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -385,6 +401,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionFetchUsageParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionUsage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -412,6 +431,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionPriceIntervalsParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionPriceIntervalsResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -440,6 +462,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionSchedulePlanChangeParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionSchedulePlanChangeResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -468,6 +493,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionTriggerPhaseParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionTriggerPhaseResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -497,6 +525,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionUnscheduleCancellationParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionUnscheduleCancellationResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -532,6 +563,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -565,6 +599,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionUnschedulePendingPlanChangesParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionUnschedulePendingPlanChangesResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -598,6 +635,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionUpdateFixedFeeQuantityParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionUpdateFixedFeeQuantityResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -630,6 +670,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             params: SubscriptionUpdateTrialParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionUpdateTrialResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subscriptionId", params.subscriptionId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

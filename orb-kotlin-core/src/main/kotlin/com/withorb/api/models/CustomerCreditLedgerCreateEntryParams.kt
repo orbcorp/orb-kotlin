@@ -136,13 +136,13 @@ import java.util.Objects
  */
 class CustomerCreditLedgerCreateEntryParams
 private constructor(
-    private val customerId: String,
+    private val customerId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun customerId(): String = customerId
+    fun customerId(): String? = customerId
 
     fun body(): Body = body
 
@@ -160,7 +160,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .customerId()
          * .body()
          * ```
          */
@@ -185,7 +184,7 @@ private constructor(
                 customerCreditLedgerCreateEntryParams.additionalQueryParams.toBuilder()
         }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
         fun body(body: Body) = apply { this.body = body }
 
@@ -383,7 +382,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .customerId()
          * .body()
          * ```
          *
@@ -391,7 +389,7 @@ private constructor(
          */
         fun build(): CustomerCreditLedgerCreateEntryParams =
             CustomerCreditLedgerCreateEntryParams(
-                checkRequired("customerId", customerId),
+                customerId,
                 checkRequired("body", body),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -402,7 +400,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> customerId
+            0 -> customerId ?: ""
             else -> ""
         }
 

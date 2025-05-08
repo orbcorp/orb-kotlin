@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -26,12 +25,12 @@ import java.util.Objects
  */
 class PlanExternalPlanIdFetchParams
 private constructor(
-    private val externalPlanId: String,
+    private val externalPlanId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun externalPlanId(): String = externalPlanId
+    fun externalPlanId(): String? = externalPlanId
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -41,14 +40,11 @@ private constructor(
 
     companion object {
 
+        fun none(): PlanExternalPlanIdFetchParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [PlanExternalPlanIdFetchParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalPlanId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -66,7 +62,7 @@ private constructor(
             additionalQueryParams = planExternalPlanIdFetchParams.additionalQueryParams.toBuilder()
         }
 
-        fun externalPlanId(externalPlanId: String) = apply { this.externalPlanId = externalPlanId }
+        fun externalPlanId(externalPlanId: String?) = apply { this.externalPlanId = externalPlanId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -170,17 +166,10 @@ private constructor(
          * Returns an immutable instance of [PlanExternalPlanIdFetchParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalPlanId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PlanExternalPlanIdFetchParams =
             PlanExternalPlanIdFetchParams(
-                checkRequired("externalPlanId", externalPlanId),
+                externalPlanId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -188,7 +177,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalPlanId
+            0 -> externalPlanId ?: ""
             else -> ""
         }
 

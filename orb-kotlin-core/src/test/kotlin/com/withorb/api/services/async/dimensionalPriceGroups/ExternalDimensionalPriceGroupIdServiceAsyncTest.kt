@@ -4,7 +4,6 @@ package com.withorb.api.services.async.dimensionalPriceGroups
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
-import com.withorb.api.models.DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -23,9 +22,7 @@ internal class ExternalDimensionalPriceGroupIdServiceAsyncTest {
 
         val dimensionalPriceGroup =
             externalDimensionalPriceGroupIdServiceAsync.retrieve(
-                DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.builder()
-                    .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
-                    .build()
+                "external_dimensional_price_group_id"
             )
 
         dimensionalPriceGroup.validate()

@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -14,12 +13,12 @@ import java.util.Objects
  */
 class CouponFetchParams
 private constructor(
-    private val couponId: String,
+    private val couponId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun couponId(): String = couponId
+    fun couponId(): String? = couponId
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -29,14 +28,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [CouponFetchParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .couponId()
-         * ```
-         */
+        fun none(): CouponFetchParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [CouponFetchParams]. */
         fun builder() = Builder()
     }
 
@@ -53,7 +47,7 @@ private constructor(
             additionalQueryParams = couponFetchParams.additionalQueryParams.toBuilder()
         }
 
-        fun couponId(couponId: String) = apply { this.couponId = couponId }
+        fun couponId(couponId: String?) = apply { this.couponId = couponId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -157,25 +151,14 @@ private constructor(
          * Returns an immutable instance of [CouponFetchParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .couponId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): CouponFetchParams =
-            CouponFetchParams(
-                checkRequired("couponId", couponId),
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
-            )
+            CouponFetchParams(couponId, additionalHeaders.build(), additionalQueryParams.build())
     }
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> couponId
+            0 -> couponId ?: ""
             else -> ""
         }
 

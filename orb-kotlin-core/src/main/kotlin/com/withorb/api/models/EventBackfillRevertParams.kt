@@ -4,7 +4,6 @@ package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
@@ -20,13 +19,13 @@ import java.util.Objects
  */
 class EventBackfillRevertParams
 private constructor(
-    private val backfillId: String,
+    private val backfillId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
-    fun backfillId(): String = backfillId
+    fun backfillId(): String? = backfillId
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -38,13 +37,10 @@ private constructor(
 
     companion object {
 
+        fun none(): EventBackfillRevertParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [EventBackfillRevertParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .backfillId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -65,7 +61,7 @@ private constructor(
                 eventBackfillRevertParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun backfillId(backfillId: String) = apply { this.backfillId = backfillId }
+        fun backfillId(backfillId: String?) = apply { this.backfillId = backfillId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -191,17 +187,10 @@ private constructor(
          * Returns an immutable instance of [EventBackfillRevertParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .backfillId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): EventBackfillRevertParams =
             EventBackfillRevertParams(
-                checkRequired("backfillId", backfillId),
+                backfillId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -212,7 +201,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> backfillId
+            0 -> backfillId ?: ""
             else -> ""
         }
 

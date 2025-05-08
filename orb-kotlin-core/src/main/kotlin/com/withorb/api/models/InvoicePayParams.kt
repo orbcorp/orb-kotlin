@@ -4,7 +4,6 @@ package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
@@ -16,13 +15,13 @@ import java.util.Objects
  */
 class InvoicePayParams
 private constructor(
-    private val invoiceId: String,
+    private val invoiceId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
-    fun invoiceId(): String = invoiceId
+    fun invoiceId(): String? = invoiceId
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -34,14 +33,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [InvoicePayParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .invoiceId()
-         * ```
-         */
+        fun none(): InvoicePayParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [InvoicePayParams]. */
         fun builder() = Builder()
     }
 
@@ -60,7 +54,7 @@ private constructor(
             additionalBodyProperties = invoicePayParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
+        fun invoiceId(invoiceId: String?) = apply { this.invoiceId = invoiceId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -186,17 +180,10 @@ private constructor(
          * Returns an immutable instance of [InvoicePayParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .invoiceId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): InvoicePayParams =
             InvoicePayParams(
-                checkRequired("invoiceId", invoiceId),
+                invoiceId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -207,7 +194,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> invoiceId
+            0 -> invoiceId ?: ""
             else -> ""
         }
 

@@ -24,13 +24,13 @@ import java.util.Objects
 /** This endpoint can be used to update properties on the Item. */
 class ItemUpdateParams
 private constructor(
-    private val itemId: String,
+    private val itemId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun itemId(): String = itemId
+    fun itemId(): String? = itemId
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
@@ -69,14 +69,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [ItemUpdateParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .itemId()
-         * ```
-         */
+        fun none(): ItemUpdateParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [ItemUpdateParams]. */
         fun builder() = Builder()
     }
 
@@ -95,7 +90,7 @@ private constructor(
             additionalQueryParams = itemUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun itemId(itemId: String) = apply { this.itemId = itemId }
+        fun itemId(itemId: String?) = apply { this.itemId = itemId }
 
         /**
          * Sets the entire request body.
@@ -262,17 +257,10 @@ private constructor(
          * Returns an immutable instance of [ItemUpdateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .itemId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): ItemUpdateParams =
             ItemUpdateParams(
-                checkRequired("itemId", itemId),
+                itemId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -283,7 +271,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> itemId
+            0 -> itemId ?: ""
             else -> ""
         }
 

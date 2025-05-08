@@ -4,7 +4,6 @@ package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
@@ -20,13 +19,13 @@ import java.util.Objects
  */
 class CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams
 private constructor(
-    private val externalCustomerId: String,
+    private val externalCustomerId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
-    fun externalCustomerId(): String = externalCustomerId
+    fun externalCustomerId(): String? = externalCustomerId
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -38,14 +37,12 @@ private constructor(
 
     companion object {
 
+        fun none(): CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams =
+            builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalCustomerId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -77,7 +74,7 @@ private constructor(
                     .toMutableMap()
         }
 
-        fun externalCustomerId(externalCustomerId: String) = apply {
+        fun externalCustomerId(externalCustomerId: String?) = apply {
             this.externalCustomerId = externalCustomerId
         }
 
@@ -206,17 +203,10 @@ private constructor(
          * [CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalCustomerId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams =
             CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams(
-                checkRequired("externalCustomerId", externalCustomerId),
+                externalCustomerId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -227,7 +217,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalCustomerId
+            0 -> externalCustomerId ?: ""
             else -> ""
         }
 

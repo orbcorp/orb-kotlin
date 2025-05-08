@@ -23,9 +23,21 @@ interface ExternalPlanIdServiceAsync {
      * Other fields on a customer are currently immutable.
      */
     suspend fun update(
+        otherExternalPlanId: String,
+        params: PlanExternalPlanIdUpdateParams = PlanExternalPlanIdUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Plan =
+        update(params.toBuilder().otherExternalPlanId(otherExternalPlanId).build(), requestOptions)
+
+    /** @see [update] */
+    suspend fun update(
         params: PlanExternalPlanIdUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
+
+    /** @see [update] */
+    suspend fun update(otherExternalPlanId: String, requestOptions: RequestOptions): Plan =
+        update(otherExternalPlanId, PlanExternalPlanIdUpdateParams.none(), requestOptions)
 
     /**
      * This endpoint is used to fetch [plan](/core-concepts##plan-and-price) details given an
@@ -45,9 +57,20 @@ interface ExternalPlanIdServiceAsync {
      * [Price schema](/core-concepts#plan-and-price). "
      */
     suspend fun fetch(
+        externalPlanId: String,
+        params: PlanExternalPlanIdFetchParams = PlanExternalPlanIdFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Plan = fetch(params.toBuilder().externalPlanId(externalPlanId).build(), requestOptions)
+
+    /** @see [fetch] */
+    suspend fun fetch(
         params: PlanExternalPlanIdFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
+
+    /** @see [fetch] */
+    suspend fun fetch(externalPlanId: String, requestOptions: RequestOptions): Plan =
+        fetch(externalPlanId, PlanExternalPlanIdFetchParams.none(), requestOptions)
 
     /**
      * A view of [ExternalPlanIdServiceAsync] that provides access to raw HTTP responses for each
@@ -61,9 +84,29 @@ interface ExternalPlanIdServiceAsync {
          */
         @MustBeClosed
         suspend fun update(
+            otherExternalPlanId: String,
+            params: PlanExternalPlanIdUpdateParams = PlanExternalPlanIdUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Plan> =
+            update(
+                params.toBuilder().otherExternalPlanId(otherExternalPlanId).build(),
+                requestOptions,
+            )
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
             params: PlanExternalPlanIdUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan>
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
+            otherExternalPlanId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Plan> =
+            update(otherExternalPlanId, PlanExternalPlanIdUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /plans/external_plan_id/{external_plan_id}`, but is
@@ -71,8 +114,25 @@ interface ExternalPlanIdServiceAsync {
          */
         @MustBeClosed
         suspend fun fetch(
+            externalPlanId: String,
+            params: PlanExternalPlanIdFetchParams = PlanExternalPlanIdFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Plan> =
+            fetch(params.toBuilder().externalPlanId(externalPlanId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
             params: PlanExternalPlanIdFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
+            externalPlanId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Plan> =
+            fetch(externalPlanId, PlanExternalPlanIdFetchParams.none(), requestOptions)
     }
 }

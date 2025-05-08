@@ -7,8 +7,6 @@ import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryParams
-import com.withorb.api.models.CustomerCreditLedgerListByExternalIdParams
-import com.withorb.api.models.CustomerCreditLedgerListParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -25,10 +23,7 @@ internal class LedgerServiceAsyncTest {
                 .build()
         val ledgerServiceAsync = client.customers().credits().ledger()
 
-        val page =
-            ledgerServiceAsync.list(
-                CustomerCreditLedgerListParams.builder().customerId("customer_id").build()
-            )
+        val page = ledgerServiceAsync.list("customer_id")
 
         page.response().validate()
     }
@@ -142,12 +137,7 @@ internal class LedgerServiceAsyncTest {
                 .build()
         val ledgerServiceAsync = client.customers().credits().ledger()
 
-        val page =
-            ledgerServiceAsync.listByExternalId(
-                CustomerCreditLedgerListByExternalIdParams.builder()
-                    .externalCustomerId("external_customer_id")
-                    .build()
-            )
+        val page = ledgerServiceAsync.listByExternalId("external_customer_id")
 
         page.response().validate()
     }

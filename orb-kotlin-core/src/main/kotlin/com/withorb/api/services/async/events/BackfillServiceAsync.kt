@@ -81,15 +81,45 @@ interface BackfillServiceAsync {
      * updates are complete, the backfill's status will transition to `reflected`.
      */
     suspend fun close(
+        backfillId: String,
+        params: EventBackfillCloseParams = EventBackfillCloseParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EventBackfillCloseResponse =
+        close(params.toBuilder().backfillId(backfillId).build(), requestOptions)
+
+    /** @see [close] */
+    suspend fun close(
         params: EventBackfillCloseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillCloseResponse
 
+    /** @see [close] */
+    suspend fun close(
+        backfillId: String,
+        requestOptions: RequestOptions,
+    ): EventBackfillCloseResponse =
+        close(backfillId, EventBackfillCloseParams.none(), requestOptions)
+
     /** This endpoint is used to fetch a backfill given an identifier. */
+    suspend fun fetch(
+        backfillId: String,
+        params: EventBackfillFetchParams = EventBackfillFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EventBackfillFetchResponse =
+        fetch(params.toBuilder().backfillId(backfillId).build(), requestOptions)
+
+    /** @see [fetch] */
     suspend fun fetch(
         params: EventBackfillFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillFetchResponse
+
+    /** @see [fetch] */
+    suspend fun fetch(
+        backfillId: String,
+        requestOptions: RequestOptions,
+    ): EventBackfillFetchResponse =
+        fetch(backfillId, EventBackfillFetchParams.none(), requestOptions)
 
     /**
      * Reverting a backfill undoes all the effects of closing the backfill. If the backfill is
@@ -100,9 +130,24 @@ interface BackfillServiceAsync {
      * backfill and it will immediately transition to `reverted`.
      */
     suspend fun revert(
+        backfillId: String,
+        params: EventBackfillRevertParams = EventBackfillRevertParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EventBackfillRevertResponse =
+        revert(params.toBuilder().backfillId(backfillId).build(), requestOptions)
+
+    /** @see [revert] */
+    suspend fun revert(
         params: EventBackfillRevertParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillRevertResponse
+
+    /** @see [revert] */
+    suspend fun revert(
+        backfillId: String,
+        requestOptions: RequestOptions,
+    ): EventBackfillRevertResponse =
+        revert(backfillId, EventBackfillRevertParams.none(), requestOptions)
 
     /**
      * A view of [BackfillServiceAsync] that provides access to raw HTTP responses for each method.
@@ -142,9 +187,26 @@ interface BackfillServiceAsync {
          */
         @MustBeClosed
         suspend fun close(
+            backfillId: String,
+            params: EventBackfillCloseParams = EventBackfillCloseParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EventBackfillCloseResponse> =
+            close(params.toBuilder().backfillId(backfillId).build(), requestOptions)
+
+        /** @see [close] */
+        @MustBeClosed
+        suspend fun close(
             params: EventBackfillCloseParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventBackfillCloseResponse>
+
+        /** @see [close] */
+        @MustBeClosed
+        suspend fun close(
+            backfillId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EventBackfillCloseResponse> =
+            close(backfillId, EventBackfillCloseParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /events/backfills/{backfill_id}`, but is otherwise
@@ -152,9 +214,26 @@ interface BackfillServiceAsync {
          */
         @MustBeClosed
         suspend fun fetch(
+            backfillId: String,
+            params: EventBackfillFetchParams = EventBackfillFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EventBackfillFetchResponse> =
+            fetch(params.toBuilder().backfillId(backfillId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
             params: EventBackfillFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventBackfillFetchResponse>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
+            backfillId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EventBackfillFetchResponse> =
+            fetch(backfillId, EventBackfillFetchParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /events/backfills/{backfill_id}/revert`, but is
@@ -162,8 +241,25 @@ interface BackfillServiceAsync {
          */
         @MustBeClosed
         suspend fun revert(
+            backfillId: String,
+            params: EventBackfillRevertParams = EventBackfillRevertParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EventBackfillRevertResponse> =
+            revert(params.toBuilder().backfillId(backfillId).build(), requestOptions)
+
+        /** @see [revert] */
+        @MustBeClosed
+        suspend fun revert(
             params: EventBackfillRevertParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventBackfillRevertResponse>
+
+        /** @see [revert] */
+        @MustBeClosed
+        suspend fun revert(
+            backfillId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EventBackfillRevertResponse> =
+            revert(backfillId, EventBackfillRevertParams.none(), requestOptions)
     }
 }

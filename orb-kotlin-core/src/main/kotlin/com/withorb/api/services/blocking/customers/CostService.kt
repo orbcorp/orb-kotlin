@@ -128,9 +128,21 @@ interface CostService {
      * `secondary_grouping_value` available.
      */
     fun list(
+        customerId: String,
+        params: CustomerCostListParams = CustomerCostListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCostListResponse =
+        list(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
         params: CustomerCostListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCostListResponse
+
+    /** @see [list] */
+    fun list(customerId: String, requestOptions: RequestOptions): CustomerCostListResponse =
+        list(customerId, CustomerCostListParams.none(), requestOptions)
 
     /**
      * This endpoint is used to fetch a day-by-day snapshot of a customer's costs in Orb, calculated
@@ -243,9 +255,31 @@ interface CostService {
      * `secondary_grouping_value` available.
      */
     fun listByExternalId(
+        externalCustomerId: String,
+        params: CustomerCostListByExternalIdParams = CustomerCostListByExternalIdParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCostListByExternalIdResponse =
+        listByExternalId(
+            params.toBuilder().externalCustomerId(externalCustomerId).build(),
+            requestOptions,
+        )
+
+    /** @see [listByExternalId] */
+    fun listByExternalId(
         params: CustomerCostListByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCostListByExternalIdResponse
+
+    /** @see [listByExternalId] */
+    fun listByExternalId(
+        externalCustomerId: String,
+        requestOptions: RequestOptions,
+    ): CustomerCostListByExternalIdResponse =
+        listByExternalId(
+            externalCustomerId,
+            CustomerCostListByExternalIdParams.none(),
+            requestOptions,
+        )
 
     /** A view of [CostService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -256,9 +290,26 @@ interface CostService {
          */
         @MustBeClosed
         fun list(
+            customerId: String,
+            params: CustomerCostListParams = CustomerCostListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCostListResponse> =
+            list(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
             params: CustomerCostListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCostListResponse>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            customerId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCostListResponse> =
+            list(customerId, CustomerCostListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get
@@ -267,8 +318,32 @@ interface CostService {
          */
         @MustBeClosed
         fun listByExternalId(
+            externalCustomerId: String,
+            params: CustomerCostListByExternalIdParams = CustomerCostListByExternalIdParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCostListByExternalIdResponse> =
+            listByExternalId(
+                params.toBuilder().externalCustomerId(externalCustomerId).build(),
+                requestOptions,
+            )
+
+        /** @see [listByExternalId] */
+        @MustBeClosed
+        fun listByExternalId(
             params: CustomerCostListByExternalIdParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCostListByExternalIdResponse>
+
+        /** @see [listByExternalId] */
+        @MustBeClosed
+        fun listByExternalId(
+            externalCustomerId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCostListByExternalIdResponse> =
+            listByExternalId(
+                externalCustomerId,
+                CustomerCostListByExternalIdParams.none(),
+                requestOptions,
+            )
     }
 }

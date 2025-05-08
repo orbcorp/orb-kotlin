@@ -100,13 +100,13 @@ import java.util.Objects
  */
 class SubscriptionPriceIntervalsParams
 private constructor(
-    private val subscriptionId: String,
+    private val subscriptionId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun subscriptionId(): String = subscriptionId
+    fun subscriptionId(): String? = subscriptionId
 
     /**
      * A list of price intervals to add to the subscription.
@@ -196,14 +196,11 @@ private constructor(
 
     companion object {
 
+        fun none(): SubscriptionPriceIntervalsParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [SubscriptionPriceIntervalsParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .subscriptionId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -225,7 +222,7 @@ private constructor(
                     subscriptionPriceIntervalsParams.additionalQueryParams.toBuilder()
             }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String?) = apply { this.subscriptionId = subscriptionId }
 
         /**
          * Sets the entire request body.
@@ -476,17 +473,10 @@ private constructor(
          * Returns an immutable instance of [SubscriptionPriceIntervalsParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .subscriptionId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): SubscriptionPriceIntervalsParams =
             SubscriptionPriceIntervalsParams(
-                checkRequired("subscriptionId", subscriptionId),
+                subscriptionId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -497,7 +487,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> subscriptionId
+            0 -> subscriptionId ?: ""
             else -> ""
         }
 
