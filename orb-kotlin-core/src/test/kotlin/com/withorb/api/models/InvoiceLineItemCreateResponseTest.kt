@@ -21,11 +21,6 @@ internal class InvoiceLineItemCreateResponseTest {
                     InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
                         .builder()
                         .id("id")
-                        .adjustmentType(
-                            InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
-                                .AdjustmentType
-                                .USAGE_DISCOUNT
-                        )
                         .amount("amount")
                         .addAppliesToPriceId("string")
                         .isInvoiceLevel(true)
@@ -124,7 +119,6 @@ internal class InvoiceLineItemCreateResponseTest {
                                 .build()
                         )
                         .minimumAmount("minimum_amount")
-                        .modelType(Price.UnitPrice.ModelType.UNIT)
                         .name("name")
                         .planPhaseOrder(0L)
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -159,9 +153,6 @@ internal class InvoiceLineItemCreateResponseTest {
                         )
                         .name("Tier One")
                         .quantity(5.0)
-                        .type(
-                            InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.Type.MATRIX
-                        )
                         .build()
                 )
                 .subtotal("9.00")
@@ -183,11 +174,6 @@ internal class InvoiceLineItemCreateResponseTest {
                     InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
                         .builder()
                         .id("id")
-                        .adjustmentType(
-                            InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
-                                .AdjustmentType
-                                .USAGE_DISCOUNT
-                        )
                         .amount("amount")
                         .addAppliesToPriceId("string")
                         .isInvoiceLevel(true)
@@ -295,7 +281,6 @@ internal class InvoiceLineItemCreateResponseTest {
                                 .build()
                         )
                         .minimumAmount("minimum_amount")
-                        .modelType(Price.UnitPrice.ModelType.UNIT)
                         .name("name")
                         .planPhaseOrder(0L)
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -334,9 +319,6 @@ internal class InvoiceLineItemCreateResponseTest {
                         )
                         .name("Tier One")
                         .quantity(5.0)
-                        .type(
-                            InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.Type.MATRIX
-                        )
                         .build()
                 )
             )
@@ -363,11 +345,6 @@ internal class InvoiceLineItemCreateResponseTest {
                     InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
                         .builder()
                         .id("id")
-                        .adjustmentType(
-                            InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
-                                .AdjustmentType
-                                .USAGE_DISCOUNT
-                        )
                         .amount("amount")
                         .addAppliesToPriceId("string")
                         .isInvoiceLevel(true)
@@ -466,7 +443,6 @@ internal class InvoiceLineItemCreateResponseTest {
                                 .build()
                         )
                         .minimumAmount("minimum_amount")
-                        .modelType(Price.UnitPrice.ModelType.UNIT)
                         .name("name")
                         .planPhaseOrder(0L)
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -501,9 +477,6 @@ internal class InvoiceLineItemCreateResponseTest {
                         )
                         .name("Tier One")
                         .quantity(5.0)
-                        .type(
-                            InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.Type.MATRIX
-                        )
                         .build()
                 )
                 .subtotal("9.00")

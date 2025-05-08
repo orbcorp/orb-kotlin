@@ -43,9 +43,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                     CustomerCreditLedgerCreateEntryResponse.IncrementLedgerEntry.EntryStatus
                         .COMMITTED
                 )
-                .entryType(
-                    CustomerCreditLedgerCreateEntryResponse.IncrementLedgerEntry.EntryType.INCREMENT
-                )
                 .ledgerSequenceNumber(0L)
                 .metadata(
                     CustomerCreditLedgerCreateEntryResponse.IncrementLedgerEntry.Metadata.builder()
@@ -99,10 +96,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                         CustomerCreditLedgerCreateEntryResponse.IncrementLedgerEntry.EntryStatus
                             .COMMITTED
                     )
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryResponse.IncrementLedgerEntry.EntryType
-                            .INCREMENT
-                    )
                     .ledgerSequenceNumber(0L)
                     .metadata(
                         CustomerCreditLedgerCreateEntryResponse.IncrementLedgerEntry.Metadata
@@ -151,9 +144,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                 .entryStatus(
                     CustomerCreditLedgerCreateEntryResponse.DecrementLedgerEntry.EntryStatus
                         .COMMITTED
-                )
-                .entryType(
-                    CustomerCreditLedgerCreateEntryResponse.DecrementLedgerEntry.EntryType.DECREMENT
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
@@ -211,10 +201,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                         CustomerCreditLedgerCreateEntryResponse.DecrementLedgerEntry.EntryStatus
                             .COMMITTED
                     )
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryResponse.DecrementLedgerEntry.EntryType
-                            .DECREMENT
-                    )
                     .ledgerSequenceNumber(0L)
                     .metadata(
                         CustomerCreditLedgerCreateEntryResponse.DecrementLedgerEntry.Metadata
@@ -267,10 +253,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                 .entryStatus(
                     CustomerCreditLedgerCreateEntryResponse.ExpirationChangeLedgerEntry.EntryStatus
                         .COMMITTED
-                )
-                .entryType(
-                    CustomerCreditLedgerCreateEntryResponse.ExpirationChangeLedgerEntry.EntryType
-                        .EXPIRATION_CHANGE
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
@@ -331,11 +313,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                             .EntryStatus
                             .COMMITTED
                     )
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryResponse.ExpirationChangeLedgerEntry
-                            .EntryType
-                            .EXPIRATION_CHANGE
-                    )
                     .ledgerSequenceNumber(0L)
                     .metadata(
                         CustomerCreditLedgerCreateEntryResponse.ExpirationChangeLedgerEntry.Metadata
@@ -386,10 +363,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                 .entryStatus(
                     CustomerCreditLedgerCreateEntryResponse.CreditBlockExpiryLedgerEntry.EntryStatus
                         .COMMITTED
-                )
-                .entryType(
-                    CustomerCreditLedgerCreateEntryResponse.CreditBlockExpiryLedgerEntry.EntryType
-                        .CREDIT_BLOCK_EXPIRY
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
@@ -450,11 +423,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                             .EntryStatus
                             .COMMITTED
                     )
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryResponse.CreditBlockExpiryLedgerEntry
-                            .EntryType
-                            .CREDIT_BLOCK_EXPIRY
-                    )
                     .ledgerSequenceNumber(0L)
                     .metadata(
                         CustomerCreditLedgerCreateEntryResponse.CreditBlockExpiryLedgerEntry
@@ -503,7 +471,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                 .entryStatus(
                     CustomerCreditLedgerCreateEntryResponse.VoidLedgerEntry.EntryStatus.COMMITTED
                 )
-                .entryType(CustomerCreditLedgerCreateEntryResponse.VoidLedgerEntry.EntryType.VOID)
                 .ledgerSequenceNumber(0L)
                 .metadata(
                     CustomerCreditLedgerCreateEntryResponse.VoidLedgerEntry.Metadata.builder()
@@ -558,9 +525,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                         CustomerCreditLedgerCreateEntryResponse.VoidLedgerEntry.EntryStatus
                             .COMMITTED
                     )
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryResponse.VoidLedgerEntry.EntryType.VOID
-                    )
                     .ledgerSequenceNumber(0L)
                     .metadata(
                         CustomerCreditLedgerCreateEntryResponse.VoidLedgerEntry.Metadata.builder()
@@ -611,10 +575,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                 .entryStatus(
                     CustomerCreditLedgerCreateEntryResponse.VoidInitiatedLedgerEntry.EntryStatus
                         .COMMITTED
-                )
-                .entryType(
-                    CustomerCreditLedgerCreateEntryResponse.VoidInitiatedLedgerEntry.EntryType
-                        .VOID_INITIATED
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
@@ -675,10 +635,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                         CustomerCreditLedgerCreateEntryResponse.VoidInitiatedLedgerEntry.EntryStatus
                             .COMMITTED
                     )
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryResponse.VoidInitiatedLedgerEntry.EntryType
-                            .VOID_INITIATED
-                    )
                     .ledgerSequenceNumber(0L)
                     .metadata(
                         CustomerCreditLedgerCreateEntryResponse.VoidInitiatedLedgerEntry.Metadata
@@ -730,9 +686,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                 .entryStatus(
                     CustomerCreditLedgerCreateEntryResponse.AmendmentLedgerEntry.EntryStatus
                         .COMMITTED
-                )
-                .entryType(
-                    CustomerCreditLedgerCreateEntryResponse.AmendmentLedgerEntry.EntryType.AMENDMENT
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
@@ -786,10 +739,6 @@ internal class CustomerCreditLedgerCreateEntryResponseTest {
                     .entryStatus(
                         CustomerCreditLedgerCreateEntryResponse.AmendmentLedgerEntry.EntryStatus
                             .COMMITTED
-                    )
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryResponse.AmendmentLedgerEntry.EntryType
-                            .AMENDMENT
                     )
                     .ledgerSequenceNumber(0L)
                     .metadata(

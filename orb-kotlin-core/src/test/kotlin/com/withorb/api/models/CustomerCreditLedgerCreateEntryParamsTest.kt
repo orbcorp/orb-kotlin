@@ -18,12 +18,6 @@ internal class CustomerCreditLedgerCreateEntryParamsTest {
                     .AddIncrementCreditLedgerEntryRequestParams
                     .builder()
                     .amount(0.0)
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryParams.Body
-                            .AddIncrementCreditLedgerEntryRequestParams
-                            .EntryType
-                            .INCREMENT
-                    )
                     .currency("currency")
                     .description("description")
                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -76,12 +70,6 @@ internal class CustomerCreditLedgerCreateEntryParamsTest {
                         .AddIncrementCreditLedgerEntryRequestParams
                         .builder()
                         .amount(0.0)
-                        .entryType(
-                            CustomerCreditLedgerCreateEntryParams.Body
-                                .AddIncrementCreditLedgerEntryRequestParams
-                                .EntryType
-                                .INCREMENT
-                        )
                         .currency("currency")
                         .description("description")
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -120,12 +108,6 @@ internal class CustomerCreditLedgerCreateEntryParamsTest {
                             .AddIncrementCreditLedgerEntryRequestParams
                             .builder()
                             .amount(0.0)
-                            .entryType(
-                                CustomerCreditLedgerCreateEntryParams.Body
-                                    .AddIncrementCreditLedgerEntryRequestParams
-                                    .EntryType
-                                    .INCREMENT
-                            )
                             .currency("currency")
                             .description("description")
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -173,12 +155,6 @@ internal class CustomerCreditLedgerCreateEntryParamsTest {
                             .AddIncrementCreditLedgerEntryRequestParams
                             .builder()
                             .amount(0.0)
-                            .entryType(
-                                CustomerCreditLedgerCreateEntryParams.Body
-                                    .AddIncrementCreditLedgerEntryRequestParams
-                                    .EntryType
-                                    .INCREMENT
-                            )
                             .build()
                     )
             )

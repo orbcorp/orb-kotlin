@@ -17,7 +17,6 @@ internal class PlanCreateParamsTest {
                 PlanCreateParams.Price.NewPlanUnitPrice.builder()
                     .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
                     .itemId("item_id")
-                    .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                     .name("Annual fee")
                     .unitConfig(
                         PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
@@ -81,7 +80,6 @@ internal class PlanCreateParamsTest {
                     PlanCreateParams.Price.NewPlanUnitPrice.builder()
                         .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
                         .itemId("item_id")
-                        .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
                         .unitConfig(
                             PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
@@ -147,7 +145,6 @@ internal class PlanCreateParamsTest {
                     PlanCreateParams.Price.NewPlanUnitPrice.builder()
                         .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
                         .itemId("item_id")
-                        .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
                         .unitConfig(
                             PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
@@ -215,7 +212,6 @@ internal class PlanCreateParamsTest {
                     PlanCreateParams.Price.NewPlanUnitPrice.builder()
                         .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
                         .itemId("item_id")
-                        .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
                         .unitConfig(
                             PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
@@ -236,7 +232,6 @@ internal class PlanCreateParamsTest {
                     PlanCreateParams.Price.NewPlanUnitPrice.builder()
                         .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
                         .itemId("item_id")
-                        .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
                         .unitConfig(
                             PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()

@@ -207,23 +207,12 @@ private constructor(
          * Alias for calling [body] with the following:
          * ```kotlin
          * Body.AddIncrementCreditLedgerEntryRequestParams.builder()
-         *     .entryType(CustomerCreditLedgerCreateEntryParams.Body.AddIncrementCreditLedgerEntryRequestParams.EntryType.INCREMENT)
          *     .amount(amount)
          *     .build()
          * ```
          */
         fun addIncrementCreditLedgerEntryRequestParamsBody(amount: Double) =
-            body(
-                Body.AddIncrementCreditLedgerEntryRequestParams.builder()
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryParams.Body
-                            .AddIncrementCreditLedgerEntryRequestParams
-                            .EntryType
-                            .INCREMENT
-                    )
-                    .amount(amount)
-                    .build()
-            )
+            body(Body.AddIncrementCreditLedgerEntryRequestParams.builder().amount(amount).build())
 
         /**
          * Alias for calling [body] with
@@ -243,23 +232,12 @@ private constructor(
          * Alias for calling [body] with the following:
          * ```kotlin
          * Body.AddDecrementCreditLedgerEntryRequestParams.builder()
-         *     .entryType(CustomerCreditLedgerCreateEntryParams.Body.AddDecrementCreditLedgerEntryRequestParams.EntryType.DECREMENT)
          *     .amount(amount)
          *     .build()
          * ```
          */
         fun addDecrementCreditLedgerEntryRequestParamsBody(amount: Double) =
-            body(
-                Body.AddDecrementCreditLedgerEntryRequestParams.builder()
-                    .entryType(
-                        CustomerCreditLedgerCreateEntryParams.Body
-                            .AddDecrementCreditLedgerEntryRequestParams
-                            .EntryType
-                            .DECREMENT
-                    )
-                    .amount(amount)
-                    .build()
-            )
+            body(Body.AddDecrementCreditLedgerEntryRequestParams.builder().amount(amount).build())
 
         /**
          * Alias for calling [body] with
@@ -831,7 +809,7 @@ private constructor(
         class AddIncrementCreditLedgerEntryRequestParams
         private constructor(
             private val amount: JsonField<Double>,
-            private val entryType: JsonField<EntryType>,
+            private val entryType: JsonValue,
             private val currency: JsonField<String>,
             private val description: JsonField<String>,
             private val effectiveDate: JsonField<OffsetDateTime>,
@@ -847,9 +825,7 @@ private constructor(
                 @JsonProperty("amount")
                 @ExcludeMissing
                 amount: JsonField<Double> = JsonMissing.of(),
-                @JsonProperty("entry_type")
-                @ExcludeMissing
-                entryType: JsonField<EntryType> = JsonMissing.of(),
+                @JsonProperty("entry_type") @ExcludeMissing entryType: JsonValue = JsonMissing.of(),
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
@@ -895,11 +871,15 @@ private constructor(
             fun amount(): Double = amount.getRequired("amount")
 
             /**
-             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("increment")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
              */
-            fun entryType(): EntryType = entryType.getRequired("entry_type")
+            @JsonProperty("entry_type") @ExcludeMissing fun _entryType(): JsonValue = entryType
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
@@ -973,16 +953,6 @@ private constructor(
              * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
-
-            /**
-             * Returns the raw JSON value of [entryType].
-             *
-             * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("entry_type")
-            @ExcludeMissing
-            fun _entryType(): JsonField<EntryType> = entryType
 
             /**
              * Returns the raw JSON value of [currency].
@@ -1073,7 +1043,6 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .amount()
-                 * .entryType()
                  * ```
                  */
                 fun builder() = Builder()
@@ -1083,7 +1052,7 @@ private constructor(
             class Builder internal constructor() {
 
                 private var amount: JsonField<Double>? = null
-                private var entryType: JsonField<EntryType>? = null
+                private var entryType: JsonValue = JsonValue.from("increment")
                 private var currency: JsonField<String> = JsonMissing.of()
                 private var description: JsonField<String> = JsonMissing.of()
                 private var effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -1126,18 +1095,19 @@ private constructor(
                  */
                 fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
-                fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
                 /**
-                 * Sets [Builder.entryType] to an arbitrary JSON value.
+                 * Sets the field to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.entryType] with a well-typed [EntryType] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("increment")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
                  */
-                fun entryType(entryType: JsonField<EntryType>) = apply {
-                    this.entryType = entryType
-                }
+                fun entryType(entryType: JsonValue) = apply { this.entryType = entryType }
 
                 /**
                  * The currency or custom pricing unit to use for this ledger entry. If this is a
@@ -1289,7 +1259,6 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .amount()
-                 * .entryType()
                  * ```
                  *
                  * @throws IllegalStateException if any required field is unset.
@@ -1297,7 +1266,7 @@ private constructor(
                 fun build(): AddIncrementCreditLedgerEntryRequestParams =
                     AddIncrementCreditLedgerEntryRequestParams(
                         checkRequired("amount", amount),
-                        checkRequired("entryType", entryType),
+                        entryType,
                         currency,
                         description,
                         effectiveDate,
@@ -1317,7 +1286,11 @@ private constructor(
                 }
 
                 amount()
-                entryType().validate()
+                _entryType().let {
+                    if (it != JsonValue.from("increment")) {
+                        throw OrbInvalidDataException("'entryType' is invalid, received $it")
+                    }
+                }
                 currency()
                 description()
                 effectiveDate()
@@ -1344,7 +1317,7 @@ private constructor(
              */
             internal fun validity(): Int =
                 (if (amount.asKnown() == null) 0 else 1) +
-                    (entryType.asKnown()?.validity() ?: 0) +
+                    entryType.let { if (it == JsonValue.from("increment")) 1 else 0 } +
                     (if (currency.asKnown() == null) 0 else 1) +
                     (if (description.asKnown() == null) 0 else 1) +
                     (if (effectiveDate.asKnown() == null) 0 else 1) +
@@ -1352,129 +1325,6 @@ private constructor(
                     (invoiceSettings.asKnown()?.validity() ?: 0) +
                     (metadata.asKnown()?.validity() ?: 0) +
                     (if (perUnitCostBasis.asKnown() == null) 0 else 1)
-
-            class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    val INCREMENT = of("increment")
-
-                    fun of(value: String) = EntryType(JsonField.of(value))
-                }
-
-                /** An enum containing [EntryType]'s known values. */
-                enum class Known {
-                    INCREMENT
-                }
-
-                /**
-                 * An enum containing [EntryType]'s known values, as well as an [_UNKNOWN] member.
-                 *
-                 * An instance of [EntryType] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    INCREMENT,
-                    /**
-                     * An enum member indicating that [EntryType] was instantiated with an unknown
-                     * value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        INCREMENT -> Value.INCREMENT
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 *   member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        INCREMENT -> Known.INCREMENT
-                        else -> throw OrbInvalidDataException("Unknown EntryType: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value does not have the
-                 *   expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
-
-                private var validated: Boolean = false
-
-                fun validate(): EntryType = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: OrbInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
 
             /**
              * Passing `invoice_settings` automatically generates an invoice for the newly added
@@ -1918,7 +1768,7 @@ private constructor(
         class AddDecrementCreditLedgerEntryRequestParams
         private constructor(
             private val amount: JsonField<Double>,
-            private val entryType: JsonField<EntryType>,
+            private val entryType: JsonValue,
             private val currency: JsonField<String>,
             private val description: JsonField<String>,
             private val metadata: JsonField<Metadata>,
@@ -1930,9 +1780,7 @@ private constructor(
                 @JsonProperty("amount")
                 @ExcludeMissing
                 amount: JsonField<Double> = JsonMissing.of(),
-                @JsonProperty("entry_type")
-                @ExcludeMissing
-                entryType: JsonField<EntryType> = JsonMissing.of(),
+                @JsonProperty("entry_type") @ExcludeMissing entryType: JsonValue = JsonMissing.of(),
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
@@ -1955,11 +1803,15 @@ private constructor(
             fun amount(): Double = amount.getRequired("amount")
 
             /**
-             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("decrement")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
              */
-            fun entryType(): EntryType = entryType.getRequired("entry_type")
+            @JsonProperty("entry_type") @ExcludeMissing fun _entryType(): JsonValue = entryType
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
@@ -1996,16 +1848,6 @@ private constructor(
              * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
-
-            /**
-             * Returns the raw JSON value of [entryType].
-             *
-             * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("entry_type")
-            @ExcludeMissing
-            fun _entryType(): JsonField<EntryType> = entryType
 
             /**
              * Returns the raw JSON value of [currency].
@@ -2056,7 +1898,6 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .amount()
-                 * .entryType()
                  * ```
                  */
                 fun builder() = Builder()
@@ -2066,7 +1907,7 @@ private constructor(
             class Builder internal constructor() {
 
                 private var amount: JsonField<Double>? = null
-                private var entryType: JsonField<EntryType>? = null
+                private var entryType: JsonValue = JsonValue.from("decrement")
                 private var currency: JsonField<String> = JsonMissing.of()
                 private var description: JsonField<String> = JsonMissing.of()
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -2101,18 +1942,19 @@ private constructor(
                  */
                 fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
-                fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
                 /**
-                 * Sets [Builder.entryType] to an arbitrary JSON value.
+                 * Sets the field to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.entryType] with a well-typed [EntryType] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("decrement")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
                  */
-                fun entryType(entryType: JsonField<EntryType>) = apply {
-                    this.entryType = entryType
-                }
+                fun entryType(entryType: JsonValue) = apply { this.entryType = entryType }
 
                 /**
                  * The currency or custom pricing unit to use for this ledger entry. If this is a
@@ -2194,7 +2036,6 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .amount()
-                 * .entryType()
                  * ```
                  *
                  * @throws IllegalStateException if any required field is unset.
@@ -2202,7 +2043,7 @@ private constructor(
                 fun build(): AddDecrementCreditLedgerEntryRequestParams =
                     AddDecrementCreditLedgerEntryRequestParams(
                         checkRequired("amount", amount),
-                        checkRequired("entryType", entryType),
+                        entryType,
                         currency,
                         description,
                         metadata,
@@ -2218,7 +2059,11 @@ private constructor(
                 }
 
                 amount()
-                entryType().validate()
+                _entryType().let {
+                    if (it != JsonValue.from("decrement")) {
+                        throw OrbInvalidDataException("'entryType' is invalid, received $it")
+                    }
+                }
                 currency()
                 description()
                 metadata()?.validate()
@@ -2241,133 +2086,10 @@ private constructor(
              */
             internal fun validity(): Int =
                 (if (amount.asKnown() == null) 0 else 1) +
-                    (entryType.asKnown()?.validity() ?: 0) +
+                    entryType.let { if (it == JsonValue.from("decrement")) 1 else 0 } +
                     (if (currency.asKnown() == null) 0 else 1) +
                     (if (description.asKnown() == null) 0 else 1) +
                     (metadata.asKnown()?.validity() ?: 0)
-
-            class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    val DECREMENT = of("decrement")
-
-                    fun of(value: String) = EntryType(JsonField.of(value))
-                }
-
-                /** An enum containing [EntryType]'s known values. */
-                enum class Known {
-                    DECREMENT
-                }
-
-                /**
-                 * An enum containing [EntryType]'s known values, as well as an [_UNKNOWN] member.
-                 *
-                 * An instance of [EntryType] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    DECREMENT,
-                    /**
-                     * An enum member indicating that [EntryType] was instantiated with an unknown
-                     * value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        DECREMENT -> Value.DECREMENT
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 *   member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        DECREMENT -> Known.DECREMENT
-                        else -> throw OrbInvalidDataException("Unknown EntryType: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value does not have the
-                 *   expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
-
-                private var validated: Boolean = false
-
-                fun validate(): EntryType = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: OrbInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -2498,7 +2220,7 @@ private constructor(
 
         class AddExpirationChangeCreditLedgerEntryRequestParams
         private constructor(
-            private val entryType: JsonField<EntryType>,
+            private val entryType: JsonValue,
             private val expiryDate: JsonField<OffsetDateTime>,
             private val targetExpiryDate: JsonField<LocalDate>,
             private val amount: JsonField<Double>,
@@ -2511,9 +2233,7 @@ private constructor(
 
             @JsonCreator
             private constructor(
-                @JsonProperty("entry_type")
-                @ExcludeMissing
-                entryType: JsonField<EntryType> = JsonMissing.of(),
+                @JsonProperty("entry_type") @ExcludeMissing entryType: JsonValue = JsonMissing.of(),
                 @JsonProperty("expiry_date")
                 @ExcludeMissing
                 expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -2548,11 +2268,15 @@ private constructor(
             )
 
             /**
-             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("expiration_change")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
              */
-            fun entryType(): EntryType = entryType.getRequired("entry_type")
+            @JsonProperty("entry_type") @ExcludeMissing fun _entryType(): JsonValue = entryType
 
             /**
              * An ISO 8601 format date that identifies the origination credit block to expire
@@ -2618,16 +2342,6 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun metadata(): Metadata? = metadata.getNullable("metadata")
-
-            /**
-             * Returns the raw JSON value of [entryType].
-             *
-             * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("entry_type")
-            @ExcludeMissing
-            fun _entryType(): JsonField<EntryType> = entryType
 
             /**
              * Returns the raw JSON value of [expiryDate].
@@ -2711,7 +2425,6 @@ private constructor(
                  *
                  * The following fields are required:
                  * ```kotlin
-                 * .entryType()
                  * .expiryDate()
                  * .targetExpiryDate()
                  * ```
@@ -2722,7 +2435,7 @@ private constructor(
             /** A builder for [AddExpirationChangeCreditLedgerEntryRequestParams]. */
             class Builder internal constructor() {
 
-                private var entryType: JsonField<EntryType>? = null
+                private var entryType: JsonValue = JsonValue.from("expiration_change")
                 private var expiryDate: JsonField<OffsetDateTime>? = null
                 private var targetExpiryDate: JsonField<LocalDate>? = null
                 private var amount: JsonField<Double> = JsonMissing.of()
@@ -2750,18 +2463,19 @@ private constructor(
                             .toMutableMap()
                 }
 
-                fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
                 /**
-                 * Sets [Builder.entryType] to an arbitrary JSON value.
+                 * Sets the field to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.entryType] with a well-typed [EntryType] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("expiration_change")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
                  */
-                fun entryType(entryType: JsonField<EntryType>) = apply {
-                    this.entryType = entryType
-                }
+                fun entryType(entryType: JsonValue) = apply { this.entryType = entryType }
 
                 /**
                  * An ISO 8601 format date that identifies the origination credit block to expire
@@ -2916,7 +2630,6 @@ private constructor(
                  *
                  * The following fields are required:
                  * ```kotlin
-                 * .entryType()
                  * .expiryDate()
                  * .targetExpiryDate()
                  * ```
@@ -2925,7 +2638,7 @@ private constructor(
                  */
                 fun build(): AddExpirationChangeCreditLedgerEntryRequestParams =
                     AddExpirationChangeCreditLedgerEntryRequestParams(
-                        checkRequired("entryType", entryType),
+                        entryType,
                         checkRequired("expiryDate", expiryDate),
                         checkRequired("targetExpiryDate", targetExpiryDate),
                         amount,
@@ -2944,7 +2657,11 @@ private constructor(
                     return@apply
                 }
 
-                entryType().validate()
+                _entryType().let {
+                    if (it != JsonValue.from("expiration_change")) {
+                        throw OrbInvalidDataException("'entryType' is invalid, received $it")
+                    }
+                }
                 expiryDate()
                 targetExpiryDate()
                 amount()
@@ -2970,7 +2687,7 @@ private constructor(
              * Used for best match union deserialization.
              */
             internal fun validity(): Int =
-                (entryType.asKnown()?.validity() ?: 0) +
+                entryType.let { if (it == JsonValue.from("expiration_change")) 1 else 0 } +
                     (if (expiryDate.asKnown() == null) 0 else 1) +
                     (if (targetExpiryDate.asKnown() == null) 0 else 1) +
                     (if (amount.asKnown() == null) 0 else 1) +
@@ -2978,129 +2695,6 @@ private constructor(
                     (if (currency.asKnown() == null) 0 else 1) +
                     (if (description.asKnown() == null) 0 else 1) +
                     (metadata.asKnown()?.validity() ?: 0)
-
-            class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    val EXPIRATION_CHANGE = of("expiration_change")
-
-                    fun of(value: String) = EntryType(JsonField.of(value))
-                }
-
-                /** An enum containing [EntryType]'s known values. */
-                enum class Known {
-                    EXPIRATION_CHANGE
-                }
-
-                /**
-                 * An enum containing [EntryType]'s known values, as well as an [_UNKNOWN] member.
-                 *
-                 * An instance of [EntryType] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    EXPIRATION_CHANGE,
-                    /**
-                     * An enum member indicating that [EntryType] was instantiated with an unknown
-                     * value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        EXPIRATION_CHANGE -> Value.EXPIRATION_CHANGE
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 *   member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        EXPIRATION_CHANGE -> Known.EXPIRATION_CHANGE
-                        else -> throw OrbInvalidDataException("Unknown EntryType: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value does not have the
-                 *   expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
-
-                private var validated: Boolean = false
-
-                fun validate(): EntryType = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: OrbInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -3233,7 +2827,7 @@ private constructor(
         private constructor(
             private val amount: JsonField<Double>,
             private val blockId: JsonField<String>,
-            private val entryType: JsonField<EntryType>,
+            private val entryType: JsonValue,
             private val currency: JsonField<String>,
             private val description: JsonField<String>,
             private val metadata: JsonField<Metadata>,
@@ -3249,9 +2843,7 @@ private constructor(
                 @JsonProperty("block_id")
                 @ExcludeMissing
                 blockId: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("entry_type")
-                @ExcludeMissing
-                entryType: JsonField<EntryType> = JsonMissing.of(),
+                @JsonProperty("entry_type") @ExcludeMissing entryType: JsonValue = JsonMissing.of(),
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
@@ -3295,11 +2887,15 @@ private constructor(
             fun blockId(): String = blockId.getRequired("block_id")
 
             /**
-             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("void")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
              */
-            fun entryType(): EntryType = entryType.getRequired("entry_type")
+            @JsonProperty("entry_type") @ExcludeMissing fun _entryType(): JsonValue = entryType
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
@@ -3351,16 +2947,6 @@ private constructor(
              * Unlike [blockId], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("block_id") @ExcludeMissing fun _blockId(): JsonField<String> = blockId
-
-            /**
-             * Returns the raw JSON value of [entryType].
-             *
-             * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("entry_type")
-            @ExcludeMissing
-            fun _entryType(): JsonField<EntryType> = entryType
 
             /**
              * Returns the raw JSON value of [currency].
@@ -3422,7 +3008,6 @@ private constructor(
                  * ```kotlin
                  * .amount()
                  * .blockId()
-                 * .entryType()
                  * ```
                  */
                 fun builder() = Builder()
@@ -3433,7 +3018,7 @@ private constructor(
 
                 private var amount: JsonField<Double>? = null
                 private var blockId: JsonField<String>? = null
-                private var entryType: JsonField<EntryType>? = null
+                private var entryType: JsonValue = JsonValue.from("void")
                 private var currency: JsonField<String> = JsonMissing.of()
                 private var description: JsonField<String> = JsonMissing.of()
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -3481,18 +3066,19 @@ private constructor(
                  */
                 fun blockId(blockId: JsonField<String>) = apply { this.blockId = blockId }
 
-                fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
                 /**
-                 * Sets [Builder.entryType] to an arbitrary JSON value.
+                 * Sets the field to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.entryType] with a well-typed [EntryType] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("void")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
                  */
-                fun entryType(entryType: JsonField<EntryType>) = apply {
-                    this.entryType = entryType
-                }
+                fun entryType(entryType: JsonValue) = apply { this.entryType = entryType }
 
                 /**
                  * The currency or custom pricing unit to use for this ledger entry. If this is a
@@ -3590,7 +3176,6 @@ private constructor(
                  * ```kotlin
                  * .amount()
                  * .blockId()
-                 * .entryType()
                  * ```
                  *
                  * @throws IllegalStateException if any required field is unset.
@@ -3599,7 +3184,7 @@ private constructor(
                     AddVoidCreditLedgerEntryRequestParams(
                         checkRequired("amount", amount),
                         checkRequired("blockId", blockId),
-                        checkRequired("entryType", entryType),
+                        entryType,
                         currency,
                         description,
                         metadata,
@@ -3617,7 +3202,11 @@ private constructor(
 
                 amount()
                 blockId()
-                entryType().validate()
+                _entryType().let {
+                    if (it != JsonValue.from("void")) {
+                        throw OrbInvalidDataException("'entryType' is invalid, received $it")
+                    }
+                }
                 currency()
                 description()
                 metadata()?.validate()
@@ -3642,134 +3231,11 @@ private constructor(
             internal fun validity(): Int =
                 (if (amount.asKnown() == null) 0 else 1) +
                     (if (blockId.asKnown() == null) 0 else 1) +
-                    (entryType.asKnown()?.validity() ?: 0) +
+                    entryType.let { if (it == JsonValue.from("void")) 1 else 0 } +
                     (if (currency.asKnown() == null) 0 else 1) +
                     (if (description.asKnown() == null) 0 else 1) +
                     (metadata.asKnown()?.validity() ?: 0) +
                     (voidReason.asKnown()?.validity() ?: 0)
-
-            class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    val VOID = of("void")
-
-                    fun of(value: String) = EntryType(JsonField.of(value))
-                }
-
-                /** An enum containing [EntryType]'s known values. */
-                enum class Known {
-                    VOID
-                }
-
-                /**
-                 * An enum containing [EntryType]'s known values, as well as an [_UNKNOWN] member.
-                 *
-                 * An instance of [EntryType] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    VOID,
-                    /**
-                     * An enum member indicating that [EntryType] was instantiated with an unknown
-                     * value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        VOID -> Value.VOID
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 *   member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        VOID -> Known.VOID
-                        else -> throw OrbInvalidDataException("Unknown EntryType: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value does not have the
-                 *   expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
-
-                private var validated: Boolean = false
-
-                fun validate(): EntryType = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: OrbInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -4027,7 +3493,7 @@ private constructor(
         private constructor(
             private val amount: JsonField<Double>,
             private val blockId: JsonField<String>,
-            private val entryType: JsonField<EntryType>,
+            private val entryType: JsonValue,
             private val currency: JsonField<String>,
             private val description: JsonField<String>,
             private val metadata: JsonField<Metadata>,
@@ -4042,9 +3508,7 @@ private constructor(
                 @JsonProperty("block_id")
                 @ExcludeMissing
                 blockId: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("entry_type")
-                @ExcludeMissing
-                entryType: JsonField<EntryType> = JsonMissing.of(),
+                @JsonProperty("entry_type") @ExcludeMissing entryType: JsonValue = JsonMissing.of(),
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
@@ -4076,11 +3540,15 @@ private constructor(
             fun blockId(): String = blockId.getRequired("block_id")
 
             /**
-             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("amendment")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
              */
-            fun entryType(): EntryType = entryType.getRequired("entry_type")
+            @JsonProperty("entry_type") @ExcludeMissing fun _entryType(): JsonValue = entryType
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
@@ -4124,16 +3592,6 @@ private constructor(
              * Unlike [blockId], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("block_id") @ExcludeMissing fun _blockId(): JsonField<String> = blockId
-
-            /**
-             * Returns the raw JSON value of [entryType].
-             *
-             * Unlike [entryType], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("entry_type")
-            @ExcludeMissing
-            fun _entryType(): JsonField<EntryType> = entryType
 
             /**
              * Returns the raw JSON value of [currency].
@@ -4185,7 +3643,6 @@ private constructor(
                  * ```kotlin
                  * .amount()
                  * .blockId()
-                 * .entryType()
                  * ```
                  */
                 fun builder() = Builder()
@@ -4196,7 +3653,7 @@ private constructor(
 
                 private var amount: JsonField<Double>? = null
                 private var blockId: JsonField<String>? = null
-                private var entryType: JsonField<EntryType>? = null
+                private var entryType: JsonValue = JsonValue.from("amendment")
                 private var currency: JsonField<String> = JsonMissing.of()
                 private var description: JsonField<String> = JsonMissing.of()
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -4244,18 +3701,19 @@ private constructor(
                  */
                 fun blockId(blockId: JsonField<String>) = apply { this.blockId = blockId }
 
-                fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
                 /**
-                 * Sets [Builder.entryType] to an arbitrary JSON value.
+                 * Sets the field to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.entryType] with a well-typed [EntryType] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("amendment")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
                  */
-                fun entryType(entryType: JsonField<EntryType>) = apply {
-                    this.entryType = entryType
-                }
+                fun entryType(entryType: JsonValue) = apply { this.entryType = entryType }
 
                 /**
                  * The currency or custom pricing unit to use for this ledger entry. If this is a
@@ -4338,7 +3796,6 @@ private constructor(
                  * ```kotlin
                  * .amount()
                  * .blockId()
-                 * .entryType()
                  * ```
                  *
                  * @throws IllegalStateException if any required field is unset.
@@ -4347,7 +3804,7 @@ private constructor(
                     AddAmendmentCreditLedgerEntryRequestParams(
                         checkRequired("amount", amount),
                         checkRequired("blockId", blockId),
-                        checkRequired("entryType", entryType),
+                        entryType,
                         currency,
                         description,
                         metadata,
@@ -4364,7 +3821,11 @@ private constructor(
 
                 amount()
                 blockId()
-                entryType().validate()
+                _entryType().let {
+                    if (it != JsonValue.from("amendment")) {
+                        throw OrbInvalidDataException("'entryType' is invalid, received $it")
+                    }
+                }
                 currency()
                 description()
                 metadata()?.validate()
@@ -4388,133 +3849,10 @@ private constructor(
             internal fun validity(): Int =
                 (if (amount.asKnown() == null) 0 else 1) +
                     (if (blockId.asKnown() == null) 0 else 1) +
-                    (entryType.asKnown()?.validity() ?: 0) +
+                    entryType.let { if (it == JsonValue.from("amendment")) 1 else 0 } +
                     (if (currency.asKnown() == null) 0 else 1) +
                     (if (description.asKnown() == null) 0 else 1) +
                     (metadata.asKnown()?.validity() ?: 0)
-
-            class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    val AMENDMENT = of("amendment")
-
-                    fun of(value: String) = EntryType(JsonField.of(value))
-                }
-
-                /** An enum containing [EntryType]'s known values. */
-                enum class Known {
-                    AMENDMENT
-                }
-
-                /**
-                 * An enum containing [EntryType]'s known values, as well as an [_UNKNOWN] member.
-                 *
-                 * An instance of [EntryType] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    AMENDMENT,
-                    /**
-                     * An enum member indicating that [EntryType] was instantiated with an unknown
-                     * value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        AMENDMENT -> Value.AMENDMENT
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 *   member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        AMENDMENT -> Known.AMENDMENT
-                        else -> throw OrbInvalidDataException("Unknown EntryType: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value does not have the
-                 *   expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
-
-                private var validated: Boolean = false
-
-                fun validate(): EntryType = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: OrbInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by

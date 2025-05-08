@@ -118,12 +118,6 @@ internal class InvoiceListPageResponseTest {
                                     Invoice.LineItem.Adjustment.MonetaryUsageDiscountAdjustment
                                         .builder()
                                         .id("id")
-                                        .adjustmentType(
-                                            Invoice.LineItem.Adjustment
-                                                .MonetaryUsageDiscountAdjustment
-                                                .AdjustmentType
-                                                .USAGE_DISCOUNT
-                                        )
                                         .amount("amount")
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
@@ -240,7 +234,6 @@ internal class InvoiceListPageResponseTest {
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -280,10 +273,6 @@ internal class InvoiceListPageResponseTest {
                                         )
                                         .name("Tier One")
                                         .quantity(5.0)
-                                        .type(
-                                            Invoice.LineItem.SubLineItem.MatrixSubLineItem.Type
-                                                .MATRIX
-                                        )
                                         .build()
                                 )
                                 .subtotal("9.00")
@@ -455,11 +444,6 @@ internal class InvoiceListPageResponseTest {
                                 Invoice.LineItem.Adjustment.MonetaryUsageDiscountAdjustment
                                     .builder()
                                     .id("id")
-                                    .adjustmentType(
-                                        Invoice.LineItem.Adjustment.MonetaryUsageDiscountAdjustment
-                                            .AdjustmentType
-                                            .USAGE_DISCOUNT
-                                    )
                                     .amount("amount")
                                     .addAppliesToPriceId("string")
                                     .isInvoiceLevel(true)
@@ -568,7 +552,6 @@ internal class InvoiceListPageResponseTest {
                                             .build()
                                     )
                                     .minimumAmount("minimum_amount")
-                                    .modelType(Price.UnitPrice.ModelType.UNIT)
                                     .name("name")
                                     .planPhaseOrder(0L)
                                     .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -605,9 +588,6 @@ internal class InvoiceListPageResponseTest {
                                     )
                                     .name("Tier One")
                                     .quantity(5.0)
-                                    .type(
-                                        Invoice.LineItem.SubLineItem.MatrixSubLineItem.Type.MATRIX
-                                    )
                                     .build()
                             )
                             .subtotal("9.00")
@@ -786,12 +766,6 @@ internal class InvoiceListPageResponseTest {
                                     Invoice.LineItem.Adjustment.MonetaryUsageDiscountAdjustment
                                         .builder()
                                         .id("id")
-                                        .adjustmentType(
-                                            Invoice.LineItem.Adjustment
-                                                .MonetaryUsageDiscountAdjustment
-                                                .AdjustmentType
-                                                .USAGE_DISCOUNT
-                                        )
                                         .amount("amount")
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
@@ -908,7 +882,6 @@ internal class InvoiceListPageResponseTest {
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -948,10 +921,6 @@ internal class InvoiceListPageResponseTest {
                                         )
                                         .name("Tier One")
                                         .quantity(5.0)
-                                        .type(
-                                            Invoice.LineItem.SubLineItem.MatrixSubLineItem.Type
-                                                .MATRIX
-                                        )
                                         .build()
                                 )
                                 .subtotal("9.00")

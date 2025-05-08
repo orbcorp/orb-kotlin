@@ -15,7 +15,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.withorb.api.core.BaseDeserializer
 import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
@@ -170,7 +169,6 @@ private constructor(
          * Alias for calling [discount] with the following:
          * ```kotlin
          * Discount.NewCouponPercentageDiscount.builder()
-         *     .discountType(CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType.PERCENTAGE)
          *     .percentageDiscount(percentageDiscount)
          *     .build()
          * ```
@@ -188,7 +186,6 @@ private constructor(
          * Alias for calling [discount] with the following:
          * ```kotlin
          * Discount.NewCouponAmountDiscount.builder()
-         *     .discountType(CouponCreateParams.Discount.NewCouponAmountDiscount.DiscountType.AMOUNT)
          *     .amountDiscount(amountDiscount)
          *     .build()
          * ```
@@ -564,7 +561,6 @@ private constructor(
              * Alias for calling [discount] with the following:
              * ```kotlin
              * Discount.NewCouponPercentageDiscount.builder()
-             *     .discountType(CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType.PERCENTAGE)
              *     .percentageDiscount(percentageDiscount)
              *     .build()
              * ```
@@ -572,10 +568,6 @@ private constructor(
             fun newCouponPercentageDiscount(percentageDiscount: Double) =
                 discount(
                     Discount.NewCouponPercentageDiscount.builder()
-                        .discountType(
-                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                .PERCENTAGE
-                        )
                         .percentageDiscount(percentageDiscount)
                         .build()
                 )
@@ -588,7 +580,6 @@ private constructor(
              * Alias for calling [discount] with the following:
              * ```kotlin
              * Discount.NewCouponAmountDiscount.builder()
-             *     .discountType(CouponCreateParams.Discount.NewCouponAmountDiscount.DiscountType.AMOUNT)
              *     .amountDiscount(amountDiscount)
              *     .build()
              * ```
@@ -596,9 +587,6 @@ private constructor(
             fun newCouponAmountDiscount(amountDiscount: String) =
                 discount(
                     Discount.NewCouponAmountDiscount.builder()
-                        .discountType(
-                            CouponCreateParams.Discount.NewCouponAmountDiscount.DiscountType.AMOUNT
-                        )
                         .amountDiscount(amountDiscount)
                         .build()
                 )
@@ -939,7 +927,7 @@ private constructor(
 
         class NewCouponPercentageDiscount
         private constructor(
-            private val discountType: JsonField<DiscountType>,
+            private val discountType: JsonValue,
             private val percentageDiscount: JsonField<Double>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
@@ -948,18 +936,24 @@ private constructor(
             private constructor(
                 @JsonProperty("discount_type")
                 @ExcludeMissing
-                discountType: JsonField<DiscountType> = JsonMissing.of(),
+                discountType: JsonValue = JsonMissing.of(),
                 @JsonProperty("percentage_discount")
                 @ExcludeMissing
                 percentageDiscount: JsonField<Double> = JsonMissing.of(),
             ) : this(discountType, percentageDiscount, mutableMapOf())
 
             /**
-             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("percentage")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
              */
-            fun discountType(): DiscountType = discountType.getRequired("discount_type")
+            @JsonProperty("discount_type")
+            @ExcludeMissing
+            fun _discountType(): JsonValue = discountType
 
             /**
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -967,16 +961,6 @@ private constructor(
              *   value).
              */
             fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
-
-            /**
-             * Returns the raw JSON value of [discountType].
-             *
-             * Unlike [discountType], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("discount_type")
-            @ExcludeMissing
-            fun _discountType(): JsonField<DiscountType> = discountType
 
             /**
              * Returns the raw JSON value of [percentageDiscount].
@@ -1008,7 +992,6 @@ private constructor(
                  *
                  * The following fields are required:
                  * ```kotlin
-                 * .discountType()
                  * .percentageDiscount()
                  * ```
                  */
@@ -1018,7 +1001,7 @@ private constructor(
             /** A builder for [NewCouponPercentageDiscount]. */
             class Builder internal constructor() {
 
-                private var discountType: JsonField<DiscountType>? = null
+                private var discountType: JsonValue = JsonValue.from("percentage")
                 private var percentageDiscount: JsonField<Double>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1030,17 +1013,19 @@ private constructor(
                             newCouponPercentageDiscount.additionalProperties.toMutableMap()
                     }
 
-                fun discountType(discountType: DiscountType) =
-                    discountType(JsonField.of(discountType))
-
                 /**
-                 * Sets [Builder.discountType] to an arbitrary JSON value.
+                 * Sets the field to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.discountType] with a well-typed [DiscountType]
-                 * value instead. This method is primarily for setting the field to an undocumented
-                 * or not yet supported value.
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("percentage")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
                  */
-                fun discountType(discountType: JsonField<DiscountType>) = apply {
+                fun discountType(discountType: JsonValue) = apply {
                     this.discountType = discountType
                 }
 
@@ -1087,7 +1072,6 @@ private constructor(
                  *
                  * The following fields are required:
                  * ```kotlin
-                 * .discountType()
                  * .percentageDiscount()
                  * ```
                  *
@@ -1095,7 +1079,7 @@ private constructor(
                  */
                 fun build(): NewCouponPercentageDiscount =
                     NewCouponPercentageDiscount(
-                        checkRequired("discountType", discountType),
+                        discountType,
                         checkRequired("percentageDiscount", percentageDiscount),
                         additionalProperties.toMutableMap(),
                     )
@@ -1108,7 +1092,11 @@ private constructor(
                     return@apply
                 }
 
-                discountType().validate()
+                _discountType().let {
+                    if (it != JsonValue.from("percentage")) {
+                        throw OrbInvalidDataException("'discountType' is invalid, received $it")
+                    }
+                }
                 percentageDiscount()
                 validated = true
             }
@@ -1128,133 +1116,8 @@ private constructor(
              * Used for best match union deserialization.
              */
             internal fun validity(): Int =
-                (discountType.asKnown()?.validity() ?: 0) +
+                discountType.let { if (it == JsonValue.from("percentage")) 1 else 0 } +
                     (if (percentageDiscount.asKnown() == null) 0 else 1)
-
-            class DiscountType
-            @JsonCreator
-            private constructor(private val value: JsonField<String>) : Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    val PERCENTAGE = of("percentage")
-
-                    fun of(value: String) = DiscountType(JsonField.of(value))
-                }
-
-                /** An enum containing [DiscountType]'s known values. */
-                enum class Known {
-                    PERCENTAGE
-                }
-
-                /**
-                 * An enum containing [DiscountType]'s known values, as well as an [_UNKNOWN]
-                 * member.
-                 *
-                 * An instance of [DiscountType] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    PERCENTAGE,
-                    /**
-                     * An enum member indicating that [DiscountType] was instantiated with an
-                     * unknown value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        PERCENTAGE -> Value.PERCENTAGE
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 *   member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        PERCENTAGE -> Known.PERCENTAGE
-                        else -> throw OrbInvalidDataException("Unknown DiscountType: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value does not have the
-                 *   expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
-
-                private var validated: Boolean = false
-
-                fun validate(): DiscountType = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: OrbInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1277,7 +1140,7 @@ private constructor(
         class NewCouponAmountDiscount
         private constructor(
             private val amountDiscount: JsonField<String>,
-            private val discountType: JsonField<DiscountType>,
+            private val discountType: JsonValue,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -1288,7 +1151,7 @@ private constructor(
                 amountDiscount: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("discount_type")
                 @ExcludeMissing
-                discountType: JsonField<DiscountType> = JsonMissing.of(),
+                discountType: JsonValue = JsonMissing.of(),
             ) : this(amountDiscount, discountType, mutableMapOf())
 
             /**
@@ -1299,11 +1162,17 @@ private constructor(
             fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
 
             /**
-             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("amount")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
              */
-            fun discountType(): DiscountType = discountType.getRequired("discount_type")
+            @JsonProperty("discount_type")
+            @ExcludeMissing
+            fun _discountType(): JsonValue = discountType
 
             /**
              * Returns the raw JSON value of [amountDiscount].
@@ -1314,16 +1183,6 @@ private constructor(
             @JsonProperty("amount_discount")
             @ExcludeMissing
             fun _amountDiscount(): JsonField<String> = amountDiscount
-
-            /**
-             * Returns the raw JSON value of [discountType].
-             *
-             * Unlike [discountType], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("discount_type")
-            @ExcludeMissing
-            fun _discountType(): JsonField<DiscountType> = discountType
 
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -1346,7 +1205,6 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .amountDiscount()
-                 * .discountType()
                  * ```
                  */
                 fun builder() = Builder()
@@ -1356,7 +1214,7 @@ private constructor(
             class Builder internal constructor() {
 
                 private var amountDiscount: JsonField<String>? = null
-                private var discountType: JsonField<DiscountType>? = null
+                private var discountType: JsonValue = JsonValue.from("amount")
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newCouponAmountDiscount: NewCouponAmountDiscount) = apply {
@@ -1380,17 +1238,19 @@ private constructor(
                     this.amountDiscount = amountDiscount
                 }
 
-                fun discountType(discountType: DiscountType) =
-                    discountType(JsonField.of(discountType))
-
                 /**
-                 * Sets [Builder.discountType] to an arbitrary JSON value.
+                 * Sets the field to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.discountType] with a well-typed [DiscountType]
-                 * value instead. This method is primarily for setting the field to an undocumented
-                 * or not yet supported value.
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("amount")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
                  */
-                fun discountType(discountType: JsonField<DiscountType>) = apply {
+                fun discountType(discountType: JsonValue) = apply {
                     this.discountType = discountType
                 }
 
@@ -1424,7 +1284,6 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .amountDiscount()
-                 * .discountType()
                  * ```
                  *
                  * @throws IllegalStateException if any required field is unset.
@@ -1432,7 +1291,7 @@ private constructor(
                 fun build(): NewCouponAmountDiscount =
                     NewCouponAmountDiscount(
                         checkRequired("amountDiscount", amountDiscount),
-                        checkRequired("discountType", discountType),
+                        discountType,
                         additionalProperties.toMutableMap(),
                     )
             }
@@ -1445,7 +1304,11 @@ private constructor(
                 }
 
                 amountDiscount()
-                discountType().validate()
+                _discountType().let {
+                    if (it != JsonValue.from("amount")) {
+                        throw OrbInvalidDataException("'discountType' is invalid, received $it")
+                    }
+                }
                 validated = true
             }
 
@@ -1465,132 +1328,7 @@ private constructor(
              */
             internal fun validity(): Int =
                 (if (amountDiscount.asKnown() == null) 0 else 1) +
-                    (discountType.asKnown()?.validity() ?: 0)
-
-            class DiscountType
-            @JsonCreator
-            private constructor(private val value: JsonField<String>) : Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    val AMOUNT = of("amount")
-
-                    fun of(value: String) = DiscountType(JsonField.of(value))
-                }
-
-                /** An enum containing [DiscountType]'s known values. */
-                enum class Known {
-                    AMOUNT
-                }
-
-                /**
-                 * An enum containing [DiscountType]'s known values, as well as an [_UNKNOWN]
-                 * member.
-                 *
-                 * An instance of [DiscountType] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    AMOUNT,
-                    /**
-                     * An enum member indicating that [DiscountType] was instantiated with an
-                     * unknown value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        AMOUNT -> Value.AMOUNT
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value is a not a known
-                 *   member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        AMOUNT -> Known.AMOUNT
-                        else -> throw OrbInvalidDataException("Unknown DiscountType: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws OrbInvalidDataException if this class instance's value does not have the
-                 *   expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
-
-                private var validated: Boolean = false
-
-                fun validate(): DiscountType = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: OrbInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
+                    discountType.let { if (it == JsonValue.from("amount")) 1 else 0 }
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {

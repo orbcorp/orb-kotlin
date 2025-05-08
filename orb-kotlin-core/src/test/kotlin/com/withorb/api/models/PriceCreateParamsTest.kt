@@ -16,7 +16,6 @@ internal class PriceCreateParamsTest {
                     .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
                     .currency("currency")
                     .itemId("item_id")
-                    .modelType(PriceCreateParams.Body.NewFloatingUnitPrice.ModelType.UNIT)
                     .name("Annual fee")
                     .unitConfig(
                         PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
@@ -72,7 +71,6 @@ internal class PriceCreateParamsTest {
                         .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
                         .currency("currency")
                         .itemId("item_id")
-                        .modelType(PriceCreateParams.Body.NewFloatingUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
                         .unitConfig(
                             PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
@@ -127,7 +125,6 @@ internal class PriceCreateParamsTest {
                         .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
                         .currency("currency")
                         .itemId("item_id")
-                        .modelType(PriceCreateParams.Body.NewFloatingUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
                         .unitConfig(
                             PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
@@ -183,7 +180,6 @@ internal class PriceCreateParamsTest {
                         .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
                         .currency("currency")
                         .itemId("item_id")
-                        .modelType(PriceCreateParams.Body.NewFloatingUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
                         .unitConfig(
                             PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
@@ -203,7 +199,6 @@ internal class PriceCreateParamsTest {
                         .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
                         .currency("currency")
                         .itemId("item_id")
-                        .modelType(PriceCreateParams.Body.NewFloatingUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
                         .unitConfig(
                             PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
