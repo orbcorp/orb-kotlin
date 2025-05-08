@@ -5,7 +5,6 @@ package com.withorb.api.services.blocking
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
-import com.withorb.api.models.EventDeprecateParams
 import com.withorb.api.models.EventIngestParams
 import com.withorb.api.models.EventSearchParams
 import com.withorb.api.models.EventUpdateParams
@@ -49,8 +48,7 @@ internal class EventServiceTest {
                 .build()
         val eventService = client.events()
 
-        val response =
-            eventService.deprecate(EventDeprecateParams.builder().eventId("event_id").build())
+        val response = eventService.deprecate("event_id")
 
         response.validate()
     }

@@ -23,13 +23,13 @@ import java.util.Objects
 /** This endpoint updates the thresholds of an alert. */
 class AlertUpdateParams
 private constructor(
-    private val alertConfigurationId: String,
+    private val alertConfigurationId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun alertConfigurationId(): String = alertConfigurationId
+    fun alertConfigurationId(): String? = alertConfigurationId
 
     /**
      * The thresholds that define the values at which the alert will be triggered.
@@ -61,7 +61,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .alertConfigurationId()
          * .thresholds()
          * ```
          */
@@ -83,7 +82,7 @@ private constructor(
             additionalQueryParams = alertUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun alertConfigurationId(alertConfigurationId: String) = apply {
+        fun alertConfigurationId(alertConfigurationId: String?) = apply {
             this.alertConfigurationId = alertConfigurationId
         }
 
@@ -241,7 +240,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .alertConfigurationId()
          * .thresholds()
          * ```
          *
@@ -249,7 +247,7 @@ private constructor(
          */
         fun build(): AlertUpdateParams =
             AlertUpdateParams(
-                checkRequired("alertConfigurationId", alertConfigurationId),
+                alertConfigurationId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -260,7 +258,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> alertConfigurationId
+            0 -> alertConfigurationId ?: ""
             else -> ""
         }
 

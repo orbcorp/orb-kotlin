@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -27,12 +26,12 @@ import java.util.Objects
  */
 class PlanFetchParams
 private constructor(
-    private val planId: String,
+    private val planId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun planId(): String = planId
+    fun planId(): String? = planId
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -42,14 +41,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [PlanFetchParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .planId()
-         * ```
-         */
+        fun none(): PlanFetchParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [PlanFetchParams]. */
         fun builder() = Builder()
     }
 
@@ -66,7 +60,7 @@ private constructor(
             additionalQueryParams = planFetchParams.additionalQueryParams.toBuilder()
         }
 
-        fun planId(planId: String) = apply { this.planId = planId }
+        fun planId(planId: String?) = apply { this.planId = planId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -170,25 +164,14 @@ private constructor(
          * Returns an immutable instance of [PlanFetchParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .planId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PlanFetchParams =
-            PlanFetchParams(
-                checkRequired("planId", planId),
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
-            )
+            PlanFetchParams(planId, additionalHeaders.build(), additionalQueryParams.build())
     }
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> planId
+            0 -> planId ?: ""
             else -> ""
         }
 

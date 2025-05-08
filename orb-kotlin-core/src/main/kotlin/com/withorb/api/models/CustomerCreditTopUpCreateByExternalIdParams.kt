@@ -30,13 +30,13 @@ import java.util.Objects
  */
 class CustomerCreditTopUpCreateByExternalIdParams
 private constructor(
-    private val externalCustomerId: String,
+    private val externalCustomerId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun externalCustomerId(): String = externalCustomerId
+    fun externalCustomerId(): String? = externalCustomerId
 
     /**
      * The amount to increment when the threshold is reached.
@@ -179,7 +179,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .externalCustomerId()
          * .amount()
          * .currency()
          * .invoiceSettings()
@@ -209,7 +208,7 @@ private constructor(
                 customerCreditTopUpCreateByExternalIdParams.additionalQueryParams.toBuilder()
         }
 
-        fun externalCustomerId(externalCustomerId: String) = apply {
+        fun externalCustomerId(externalCustomerId: String?) = apply {
             this.externalCustomerId = externalCustomerId
         }
 
@@ -478,7 +477,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .externalCustomerId()
          * .amount()
          * .currency()
          * .invoiceSettings()
@@ -490,7 +488,7 @@ private constructor(
          */
         fun build(): CustomerCreditTopUpCreateByExternalIdParams =
             CustomerCreditTopUpCreateByExternalIdParams(
-                checkRequired("externalCustomerId", externalCustomerId),
+                externalCustomerId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -501,7 +499,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalCustomerId
+            0 -> externalCustomerId ?: ""
             else -> ""
         }
 

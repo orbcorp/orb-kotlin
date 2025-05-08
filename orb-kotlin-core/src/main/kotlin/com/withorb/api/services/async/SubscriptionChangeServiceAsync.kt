@@ -30,9 +30,27 @@ interface SubscriptionChangeServiceAsync {
      * response.
      */
     suspend fun retrieve(
+        subscriptionChangeId: String,
+        params: SubscriptionChangeRetrieveParams = SubscriptionChangeRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionChangeRetrieveResponse =
+        retrieve(
+            params.toBuilder().subscriptionChangeId(subscriptionChangeId).build(),
+            requestOptions,
+        )
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: SubscriptionChangeRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionChangeRetrieveResponse
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
+        subscriptionChangeId: String,
+        requestOptions: RequestOptions,
+    ): SubscriptionChangeRetrieveResponse =
+        retrieve(subscriptionChangeId, SubscriptionChangeRetrieveParams.none(), requestOptions)
 
     /**
      * Apply a subscription change to perform the intended action. If a positive amount is passed
@@ -40,9 +58,24 @@ interface SubscriptionChangeServiceAsync {
      * immediately if they only contain in-advance fees.
      */
     suspend fun apply(
+        subscriptionChangeId: String,
+        params: SubscriptionChangeApplyParams = SubscriptionChangeApplyParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionChangeApplyResponse =
+        apply(params.toBuilder().subscriptionChangeId(subscriptionChangeId).build(), requestOptions)
+
+    /** @see [apply] */
+    suspend fun apply(
         params: SubscriptionChangeApplyParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionChangeApplyResponse
+
+    /** @see [apply] */
+    suspend fun apply(
+        subscriptionChangeId: String,
+        requestOptions: RequestOptions,
+    ): SubscriptionChangeApplyResponse =
+        apply(subscriptionChangeId, SubscriptionChangeApplyParams.none(), requestOptions)
 
     /**
      * Cancel a subscription change. The change can no longer be applied. A subscription can only
@@ -50,9 +83,27 @@ interface SubscriptionChangeServiceAsync {
      * creating a new one.
      */
     suspend fun cancel(
+        subscriptionChangeId: String,
+        params: SubscriptionChangeCancelParams = SubscriptionChangeCancelParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionChangeCancelResponse =
+        cancel(
+            params.toBuilder().subscriptionChangeId(subscriptionChangeId).build(),
+            requestOptions,
+        )
+
+    /** @see [cancel] */
+    suspend fun cancel(
         params: SubscriptionChangeCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionChangeCancelResponse
+
+    /** @see [cancel] */
+    suspend fun cancel(
+        subscriptionChangeId: String,
+        requestOptions: RequestOptions,
+    ): SubscriptionChangeCancelResponse =
+        cancel(subscriptionChangeId, SubscriptionChangeCancelParams.none(), requestOptions)
 
     /**
      * A view of [SubscriptionChangeServiceAsync] that provides access to raw HTTP responses for
@@ -66,9 +117,29 @@ interface SubscriptionChangeServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            subscriptionChangeId: String,
+            params: SubscriptionChangeRetrieveParams = SubscriptionChangeRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionChangeRetrieveResponse> =
+            retrieve(
+                params.toBuilder().subscriptionChangeId(subscriptionChangeId).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: SubscriptionChangeRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionChangeRetrieveResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            subscriptionChangeId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionChangeRetrieveResponse> =
+            retrieve(subscriptionChangeId, SubscriptionChangeRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post
@@ -77,9 +148,29 @@ interface SubscriptionChangeServiceAsync {
          */
         @MustBeClosed
         suspend fun apply(
+            subscriptionChangeId: String,
+            params: SubscriptionChangeApplyParams = SubscriptionChangeApplyParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionChangeApplyResponse> =
+            apply(
+                params.toBuilder().subscriptionChangeId(subscriptionChangeId).build(),
+                requestOptions,
+            )
+
+        /** @see [apply] */
+        @MustBeClosed
+        suspend fun apply(
             params: SubscriptionChangeApplyParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionChangeApplyResponse>
+
+        /** @see [apply] */
+        @MustBeClosed
+        suspend fun apply(
+            subscriptionChangeId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionChangeApplyResponse> =
+            apply(subscriptionChangeId, SubscriptionChangeApplyParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post
@@ -88,8 +179,28 @@ interface SubscriptionChangeServiceAsync {
          */
         @MustBeClosed
         suspend fun cancel(
+            subscriptionChangeId: String,
+            params: SubscriptionChangeCancelParams = SubscriptionChangeCancelParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionChangeCancelResponse> =
+            cancel(
+                params.toBuilder().subscriptionChangeId(subscriptionChangeId).build(),
+                requestOptions,
+            )
+
+        /** @see [cancel] */
+        @MustBeClosed
+        suspend fun cancel(
             params: SubscriptionChangeCancelParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionChangeCancelResponse>
+
+        /** @see [cancel] */
+        @MustBeClosed
+        suspend fun cancel(
+            subscriptionChangeId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionChangeCancelResponse> =
+            cancel(subscriptionChangeId, SubscriptionChangeCancelParams.none(), requestOptions)
     }
 }

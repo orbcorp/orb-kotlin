@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -15,12 +14,12 @@ import java.util.Objects
  */
 class PriceExternalPriceIdFetchParams
 private constructor(
-    private val externalPriceId: String,
+    private val externalPriceId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun externalPriceId(): String = externalPriceId
+    fun externalPriceId(): String? = externalPriceId
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -30,14 +29,11 @@ private constructor(
 
     companion object {
 
+        fun none(): PriceExternalPriceIdFetchParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [PriceExternalPriceIdFetchParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalPriceId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -57,7 +53,7 @@ private constructor(
                     priceExternalPriceIdFetchParams.additionalQueryParams.toBuilder()
             }
 
-        fun externalPriceId(externalPriceId: String) = apply {
+        fun externalPriceId(externalPriceId: String?) = apply {
             this.externalPriceId = externalPriceId
         }
 
@@ -163,17 +159,10 @@ private constructor(
          * Returns an immutable instance of [PriceExternalPriceIdFetchParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalPriceId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PriceExternalPriceIdFetchParams =
             PriceExternalPriceIdFetchParams(
-                checkRequired("externalPriceId", externalPriceId),
+                externalPriceId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -181,7 +170,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalPriceId
+            0 -> externalPriceId ?: ""
             else -> ""
         }
 

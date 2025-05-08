@@ -6,11 +6,6 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.CustomerCreateParams
-import com.withorb.api.models.CustomerDeleteParams
-import com.withorb.api.models.CustomerFetchByExternalIdParams
-import com.withorb.api.models.CustomerFetchParams
-import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams
-import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayParams
 import com.withorb.api.models.CustomerUpdateByExternalIdParams
 import com.withorb.api.models.CustomerUpdateParams
 import org.junit.jupiter.api.Test
@@ -216,7 +211,7 @@ internal class CustomerServiceTest {
                 .build()
         val customerService = client.customers()
 
-        customerService.delete(CustomerDeleteParams.builder().customerId("customer_id").build())
+        customerService.delete("customer_id")
     }
 
     @Test
@@ -228,8 +223,7 @@ internal class CustomerServiceTest {
                 .build()
         val customerService = client.customers()
 
-        val customer =
-            customerService.fetch(CustomerFetchParams.builder().customerId("customer_id").build())
+        val customer = customerService.fetch("customer_id")
 
         customer.validate()
     }
@@ -243,12 +237,7 @@ internal class CustomerServiceTest {
                 .build()
         val customerService = client.customers()
 
-        val customer =
-            customerService.fetchByExternalId(
-                CustomerFetchByExternalIdParams.builder()
-                    .externalCustomerId("external_customer_id")
-                    .build()
-            )
+        val customer = customerService.fetchByExternalId("external_customer_id")
 
         customer.validate()
     }
@@ -262,9 +251,7 @@ internal class CustomerServiceTest {
                 .build()
         val customerService = client.customers()
 
-        customerService.syncPaymentMethodsFromGateway(
-            CustomerSyncPaymentMethodsFromGatewayParams.builder().customerId("customer_id").build()
-        )
+        customerService.syncPaymentMethodsFromGateway("customer_id")
     }
 
     @Test
@@ -276,11 +263,7 @@ internal class CustomerServiceTest {
                 .build()
         val customerService = client.customers()
 
-        customerService.syncPaymentMethodsFromGatewayByExternalCustomerId(
-            CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams.builder()
-                .externalCustomerId("external_customer_id")
-                .build()
-        )
+        customerService.syncPaymentMethodsFromGatewayByExternalCustomerId("external_customer_id")
     }
 
     @Test

@@ -5,6 +5,7 @@ package com.withorb.api.services.blocking.customers.credits
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
 import com.withorb.api.core.handlers.withErrorHandler
@@ -76,6 +77,9 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
             params: CustomerCreditLedgerListParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CustomerCreditLedgerListPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("customerId", params.customerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -110,6 +114,9 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
             params: CustomerCreditLedgerCreateEntryParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CustomerCreditLedgerCreateEntryResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("customerId", params.customerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -141,6 +148,9 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
             params: CustomerCreditLedgerCreateEntryByExternalIdParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CustomerCreditLedgerCreateEntryByExternalIdResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalCustomerId", params.externalCustomerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -176,6 +186,9 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
             params: CustomerCreditLedgerListByExternalIdParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CustomerCreditLedgerListByExternalIdPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalCustomerId", params.externalCustomerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

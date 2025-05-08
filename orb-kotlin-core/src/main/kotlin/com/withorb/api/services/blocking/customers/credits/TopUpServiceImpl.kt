@@ -5,6 +5,7 @@ package com.withorb.api.services.blocking.customers.credits
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.emptyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
@@ -93,6 +94,9 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             params: CustomerCreditTopUpCreateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CustomerCreditTopUpCreateResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("customerId", params.customerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -121,6 +125,9 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             params: CustomerCreditTopUpListParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CustomerCreditTopUpListPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("customerId", params.customerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -153,6 +160,9 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             params: CustomerCreditTopUpDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("topUpId", params.topUpId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -180,6 +190,9 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             params: CustomerCreditTopUpCreateByExternalIdParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CustomerCreditTopUpCreateByExternalIdResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalCustomerId", params.externalCustomerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -213,6 +226,9 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             params: CustomerCreditTopUpDeleteByExternalIdParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("topUpId", params.topUpId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -241,6 +257,9 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             params: CustomerCreditTopUpListByExternalIdParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CustomerCreditTopUpListByExternalIdPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalCustomerId", params.externalCustomerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

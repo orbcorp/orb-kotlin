@@ -6,13 +6,10 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.InvoiceCreateParams
-import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceMarkPaidParams
-import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
-import com.withorb.api.models.InvoiceVoidParams
 import com.withorb.api.models.PercentageDiscount
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -123,8 +120,7 @@ internal class InvoiceServiceTest {
                 .build()
         val invoiceService = client.invoices()
 
-        val invoice =
-            invoiceService.fetch(InvoiceFetchParams.builder().invoiceId("invoice_id").build())
+        val invoice = invoiceService.fetch("invoice_id")
 
         invoice.validate()
     }
@@ -194,7 +190,7 @@ internal class InvoiceServiceTest {
                 .build()
         val invoiceService = client.invoices()
 
-        val invoice = invoiceService.pay(InvoicePayParams.builder().invoiceId("invoice_id").build())
+        val invoice = invoiceService.pay("invoice_id")
 
         invoice.validate()
     }
@@ -208,8 +204,7 @@ internal class InvoiceServiceTest {
                 .build()
         val invoiceService = client.invoices()
 
-        val invoice =
-            invoiceService.void(InvoiceVoidParams.builder().invoiceId("invoice_id").build())
+        val invoice = invoiceService.void("invoice_id")
 
         invoice.validate()
     }

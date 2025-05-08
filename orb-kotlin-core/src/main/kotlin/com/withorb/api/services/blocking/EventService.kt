@@ -69,6 +69,13 @@ interface EventService {
      *   endpoint.
      */
     fun update(
+        eventId: String,
+        params: EventUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EventUpdateResponse = update(params.toBuilder().eventId(eventId).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
         params: EventUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventUpdateResponse
@@ -110,9 +117,21 @@ interface EventService {
      *   endpoint.
      */
     fun deprecate(
+        eventId: String,
+        params: EventDeprecateParams = EventDeprecateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EventDeprecateResponse =
+        deprecate(params.toBuilder().eventId(eventId).build(), requestOptions)
+
+    /** @see [deprecate] */
+    fun deprecate(
         params: EventDeprecateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventDeprecateResponse
+
+    /** @see [deprecate] */
+    fun deprecate(eventId: String, requestOptions: RequestOptions): EventDeprecateResponse =
+        deprecate(eventId, EventDeprecateParams.none(), requestOptions)
 
     /**
      * Orb's event ingestion model and API is designed around two core principles:
@@ -344,6 +363,15 @@ interface EventService {
          */
         @MustBeClosed
         fun update(
+            eventId: String,
+            params: EventUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EventUpdateResponse> =
+            update(params.toBuilder().eventId(eventId).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
             params: EventUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventUpdateResponse>
@@ -354,9 +382,26 @@ interface EventService {
          */
         @MustBeClosed
         fun deprecate(
+            eventId: String,
+            params: EventDeprecateParams = EventDeprecateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EventDeprecateResponse> =
+            deprecate(params.toBuilder().eventId(eventId).build(), requestOptions)
+
+        /** @see [deprecate] */
+        @MustBeClosed
+        fun deprecate(
             params: EventDeprecateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventDeprecateResponse>
+
+        /** @see [deprecate] */
+        @MustBeClosed
+        fun deprecate(
+            eventId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EventDeprecateResponse> =
+            deprecate(eventId, EventDeprecateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /ingest`, but is otherwise the same as

@@ -33,9 +33,24 @@ interface CreditServiceAsync {
      * `currency` to an ISO 4217 string.
      */
     suspend fun list(
+        customerId: String,
+        params: CustomerCreditListParams = CustomerCreditListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreditListPageAsync =
+        list(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: CustomerCreditListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditListPageAsync
+
+    /** @see [list] */
+    suspend fun list(
+        customerId: String,
+        requestOptions: RequestOptions,
+    ): CustomerCreditListPageAsync =
+        list(customerId, CustomerCreditListParams.none(), requestOptions)
 
     /**
      * Returns a paginated list of unexpired, non-zero credit blocks for a customer.
@@ -47,9 +62,31 @@ interface CreditServiceAsync {
      * `currency` to an ISO 4217 string.
      */
     suspend fun listByExternalId(
+        externalCustomerId: String,
+        params: CustomerCreditListByExternalIdParams = CustomerCreditListByExternalIdParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreditListByExternalIdPageAsync =
+        listByExternalId(
+            params.toBuilder().externalCustomerId(externalCustomerId).build(),
+            requestOptions,
+        )
+
+    /** @see [listByExternalId] */
+    suspend fun listByExternalId(
         params: CustomerCreditListByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditListByExternalIdPageAsync
+
+    /** @see [listByExternalId] */
+    suspend fun listByExternalId(
+        externalCustomerId: String,
+        requestOptions: RequestOptions,
+    ): CustomerCreditListByExternalIdPageAsync =
+        listByExternalId(
+            externalCustomerId,
+            CustomerCreditListByExternalIdParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [CreditServiceAsync] that provides access to raw HTTP responses for each method.
@@ -66,9 +103,26 @@ interface CreditServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            customerId: String,
+            params: CustomerCreditListParams = CustomerCreditListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditListPageAsync> =
+            list(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: CustomerCreditListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCreditListPageAsync>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            customerId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditListPageAsync> =
+            list(customerId, CustomerCreditListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get
@@ -77,8 +131,33 @@ interface CreditServiceAsync {
          */
         @MustBeClosed
         suspend fun listByExternalId(
+            externalCustomerId: String,
+            params: CustomerCreditListByExternalIdParams =
+                CustomerCreditListByExternalIdParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditListByExternalIdPageAsync> =
+            listByExternalId(
+                params.toBuilder().externalCustomerId(externalCustomerId).build(),
+                requestOptions,
+            )
+
+        /** @see [listByExternalId] */
+        @MustBeClosed
+        suspend fun listByExternalId(
             params: CustomerCreditListByExternalIdParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCreditListByExternalIdPageAsync>
+
+        /** @see [listByExternalId] */
+        @MustBeClosed
+        suspend fun listByExternalId(
+            externalCustomerId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditListByExternalIdPageAsync> =
+            listByExternalId(
+                externalCustomerId,
+                CustomerCreditListByExternalIdParams.none(),
+                requestOptions,
+            )
     }
 }

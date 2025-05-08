@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -11,12 +10,12 @@ import java.util.Objects
 /** This endpoint returns a price given an identifier. */
 class PriceFetchParams
 private constructor(
-    private val priceId: String,
+    private val priceId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun priceId(): String = priceId
+    fun priceId(): String? = priceId
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,14 +25,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [PriceFetchParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .priceId()
-         * ```
-         */
+        fun none(): PriceFetchParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [PriceFetchParams]. */
         fun builder() = Builder()
     }
 
@@ -50,7 +44,7 @@ private constructor(
             additionalQueryParams = priceFetchParams.additionalQueryParams.toBuilder()
         }
 
-        fun priceId(priceId: String) = apply { this.priceId = priceId }
+        fun priceId(priceId: String?) = apply { this.priceId = priceId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -154,25 +148,14 @@ private constructor(
          * Returns an immutable instance of [PriceFetchParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .priceId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PriceFetchParams =
-            PriceFetchParams(
-                checkRequired("priceId", priceId),
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
-            )
+            PriceFetchParams(priceId, additionalHeaders.build(), additionalQueryParams.build())
     }
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> priceId
+            0 -> priceId ?: ""
             else -> ""
         }
 

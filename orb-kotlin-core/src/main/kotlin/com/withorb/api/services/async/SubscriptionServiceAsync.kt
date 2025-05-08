@@ -296,9 +296,21 @@ interface SubscriptionServiceAsync {
      * `invoicing_threshold`, and `default_invoice_memo` properties on a subscription.
      */
     suspend fun update(
+        subscriptionId: String,
+        params: SubscriptionUpdateParams = SubscriptionUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Subscription =
+        update(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+    /** @see [update] */
+    suspend fun update(
         params: SubscriptionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Subscription
+
+    /** @see [update] */
+    suspend fun update(subscriptionId: String, requestOptions: RequestOptions): Subscription =
+        update(subscriptionId, SubscriptionUpdateParams.none(), requestOptions)
 
     /**
      * This endpoint returns a list of all subscriptions for an account as a
@@ -373,6 +385,14 @@ interface SubscriptionServiceAsync {
      * on [cancellation behaviors](/product-catalog/creating-subscriptions#cancellation-behaviors).
      */
     suspend fun cancel(
+        subscriptionId: String,
+        params: SubscriptionCancelParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionCancelResponse =
+        cancel(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+    /** @see [cancel] */
+    suspend fun cancel(
         params: SubscriptionCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionCancelResponse
@@ -382,9 +402,21 @@ interface SubscriptionServiceAsync {
      * identifier.
      */
     suspend fun fetch(
+        subscriptionId: String,
+        params: SubscriptionFetchParams = SubscriptionFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Subscription =
+        fetch(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+    /** @see [fetch] */
+    suspend fun fetch(
         params: SubscriptionFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Subscription
+
+    /** @see [fetch] */
+    suspend fun fetch(subscriptionId: String, requestOptions: RequestOptions): Subscription =
+        fetch(subscriptionId, SubscriptionFetchParams.none(), requestOptions)
 
     /**
      * This endpoint is used to fetch a day-by-day snapshot of a subscription's costs in Orb,
@@ -398,9 +430,24 @@ interface SubscriptionServiceAsync {
      * customer's subscription has started and stopped on the same day).
      */
     suspend fun fetchCosts(
+        subscriptionId: String,
+        params: SubscriptionFetchCostsParams = SubscriptionFetchCostsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionFetchCostsResponse =
+        fetchCosts(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+    /** @see [fetchCosts] */
+    suspend fun fetchCosts(
         params: SubscriptionFetchCostsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionFetchCostsResponse
+
+    /** @see [fetchCosts] */
+    suspend fun fetchCosts(
+        subscriptionId: String,
+        requestOptions: RequestOptions,
+    ): SubscriptionFetchCostsResponse =
+        fetchCosts(subscriptionId, SubscriptionFetchCostsParams.none(), requestOptions)
 
     /**
      * This endpoint returns a [paginated](/api-reference/pagination) list of all plans associated
@@ -408,9 +455,24 @@ interface SubscriptionServiceAsync {
      * subscription's initial plan along with past and future plan changes.
      */
     suspend fun fetchSchedule(
+        subscriptionId: String,
+        params: SubscriptionFetchScheduleParams = SubscriptionFetchScheduleParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionFetchSchedulePageAsync =
+        fetchSchedule(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+    /** @see [fetchSchedule] */
+    suspend fun fetchSchedule(
         params: SubscriptionFetchScheduleParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionFetchSchedulePageAsync
+
+    /** @see [fetchSchedule] */
+    suspend fun fetchSchedule(
+        subscriptionId: String,
+        requestOptions: RequestOptions,
+    ): SubscriptionFetchSchedulePageAsync =
+        fetchSchedule(subscriptionId, SubscriptionFetchScheduleParams.none(), requestOptions)
 
     /**
      * This endpoint is used to fetch a subscription's usage in Orb. Especially when combined with
@@ -590,9 +652,24 @@ interface SubscriptionServiceAsync {
      * - `second_dimension_value`: `aws`
      */
     suspend fun fetchUsage(
+        subscriptionId: String,
+        params: SubscriptionFetchUsageParams = SubscriptionFetchUsageParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionUsage =
+        fetchUsage(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+    /** @see [fetchUsage] */
+    suspend fun fetchUsage(
         params: SubscriptionFetchUsageParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionUsage
+
+    /** @see [fetchUsage] */
+    suspend fun fetchUsage(
+        subscriptionId: String,
+        requestOptions: RequestOptions,
+    ): SubscriptionUsage =
+        fetchUsage(subscriptionId, SubscriptionFetchUsageParams.none(), requestOptions)
 
     /**
      * This endpoint is used to add and edit subscription
@@ -662,9 +739,24 @@ interface SubscriptionServiceAsync {
      * intervals.
      */
     suspend fun priceIntervals(
+        subscriptionId: String,
+        params: SubscriptionPriceIntervalsParams = SubscriptionPriceIntervalsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionPriceIntervalsResponse =
+        priceIntervals(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+    /** @see [priceIntervals] */
+    suspend fun priceIntervals(
         params: SubscriptionPriceIntervalsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionPriceIntervalsResponse
+
+    /** @see [priceIntervals] */
+    suspend fun priceIntervals(
+        subscriptionId: String,
+        requestOptions: RequestOptions,
+    ): SubscriptionPriceIntervalsResponse =
+        priceIntervals(subscriptionId, SubscriptionPriceIntervalsParams.none(), requestOptions)
 
     /**
      * This endpoint can be used to change an existing subscription's plan. It returns the
@@ -833,6 +925,17 @@ interface SubscriptionServiceAsync {
      * [Modifying subscriptions](/product-catalog/modifying-subscriptions#prorations-for-in-advance-fees).
      */
     suspend fun schedulePlanChange(
+        subscriptionId: String,
+        params: SubscriptionSchedulePlanChangeParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionSchedulePlanChangeResponse =
+        schedulePlanChange(
+            params.toBuilder().subscriptionId(subscriptionId).build(),
+            requestOptions,
+        )
+
+    /** @see [schedulePlanChange] */
+    suspend fun schedulePlanChange(
         params: SubscriptionSchedulePlanChangeParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionSchedulePlanChangeResponse
@@ -841,9 +944,24 @@ interface SubscriptionServiceAsync {
      * Manually trigger a phase, effective the given date (or the current time, if not specified).
      */
     suspend fun triggerPhase(
+        subscriptionId: String,
+        params: SubscriptionTriggerPhaseParams = SubscriptionTriggerPhaseParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionTriggerPhaseResponse =
+        triggerPhase(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+    /** @see [triggerPhase] */
+    suspend fun triggerPhase(
         params: SubscriptionTriggerPhaseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionTriggerPhaseResponse
+
+    /** @see [triggerPhase] */
+    suspend fun triggerPhase(
+        subscriptionId: String,
+        requestOptions: RequestOptions,
+    ): SubscriptionTriggerPhaseResponse =
+        triggerPhase(subscriptionId, SubscriptionTriggerPhaseParams.none(), requestOptions)
 
     /**
      * This endpoint can be used to unschedule any pending cancellations for a subscription.
@@ -853,9 +971,32 @@ interface SubscriptionServiceAsync {
      * currently scheduled cancellation time.
      */
     suspend fun unscheduleCancellation(
+        subscriptionId: String,
+        params: SubscriptionUnscheduleCancellationParams =
+            SubscriptionUnscheduleCancellationParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionUnscheduleCancellationResponse =
+        unscheduleCancellation(
+            params.toBuilder().subscriptionId(subscriptionId).build(),
+            requestOptions,
+        )
+
+    /** @see [unscheduleCancellation] */
+    suspend fun unscheduleCancellation(
         params: SubscriptionUnscheduleCancellationParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionUnscheduleCancellationResponse
+
+    /** @see [unscheduleCancellation] */
+    suspend fun unscheduleCancellation(
+        subscriptionId: String,
+        requestOptions: RequestOptions,
+    ): SubscriptionUnscheduleCancellationResponse =
+        unscheduleCancellation(
+            subscriptionId,
+            SubscriptionUnscheduleCancellationParams.none(),
+            requestOptions,
+        )
 
     /**
      * This endpoint can be used to clear scheduled updates to the quantity for a fixed fee.
@@ -863,6 +1004,17 @@ interface SubscriptionServiceAsync {
      * If there are no updates scheduled, a request validation error will be returned with a 400
      * status code.
      */
+    suspend fun unscheduleFixedFeeQuantityUpdates(
+        subscriptionId: String,
+        params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse =
+        unscheduleFixedFeeQuantityUpdates(
+            params.toBuilder().subscriptionId(subscriptionId).build(),
+            requestOptions,
+        )
+
+    /** @see [unscheduleFixedFeeQuantityUpdates] */
     suspend fun unscheduleFixedFeeQuantityUpdates(
         params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -872,9 +1024,32 @@ interface SubscriptionServiceAsync {
      * This endpoint can be used to unschedule any pending plan changes on an existing subscription.
      */
     suspend fun unschedulePendingPlanChanges(
+        subscriptionId: String,
+        params: SubscriptionUnschedulePendingPlanChangesParams =
+            SubscriptionUnschedulePendingPlanChangesParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionUnschedulePendingPlanChangesResponse =
+        unschedulePendingPlanChanges(
+            params.toBuilder().subscriptionId(subscriptionId).build(),
+            requestOptions,
+        )
+
+    /** @see [unschedulePendingPlanChanges] */
+    suspend fun unschedulePendingPlanChanges(
         params: SubscriptionUnschedulePendingPlanChangesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionUnschedulePendingPlanChangesResponse
+
+    /** @see [unschedulePendingPlanChanges] */
+    suspend fun unschedulePendingPlanChanges(
+        subscriptionId: String,
+        requestOptions: RequestOptions,
+    ): SubscriptionUnschedulePendingPlanChangesResponse =
+        unschedulePendingPlanChanges(
+            subscriptionId,
+            SubscriptionUnschedulePendingPlanChangesParams.none(),
+            requestOptions,
+        )
 
     /**
      * This endpoint can be used to update the quantity for a fixed fee.
@@ -890,6 +1065,17 @@ interface SubscriptionServiceAsync {
      * If the fee is an in-advance fixed fee, it will also issue an immediate invoice for the
      * difference for the remainder of the billing period.
      */
+    suspend fun updateFixedFeeQuantity(
+        subscriptionId: String,
+        params: SubscriptionUpdateFixedFeeQuantityParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionUpdateFixedFeeQuantityResponse =
+        updateFixedFeeQuantity(
+            params.toBuilder().subscriptionId(subscriptionId).build(),
+            requestOptions,
+        )
+
+    /** @see [updateFixedFeeQuantity] */
     suspend fun updateFixedFeeQuantity(
         params: SubscriptionUpdateFixedFeeQuantityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -913,6 +1099,14 @@ interface SubscriptionServiceAsync {
      * scheduled or an add-on price was added, that change will be pushed back by the same amount of
      * time the trial is extended).
      */
+    suspend fun updateTrial(
+        subscriptionId: String,
+        params: SubscriptionUpdateTrialParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionUpdateTrialResponse =
+        updateTrial(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+    /** @see [updateTrial] */
     suspend fun updateTrial(
         params: SubscriptionUpdateTrialParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -947,9 +1141,26 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun update(
+            subscriptionId: String,
+            params: SubscriptionUpdateParams = SubscriptionUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Subscription> =
+            update(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
             params: SubscriptionUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Subscription>
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
+            subscriptionId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Subscription> =
+            update(subscriptionId, SubscriptionUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /subscriptions`, but is otherwise the same as
@@ -974,6 +1185,15 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun cancel(
+            subscriptionId: String,
+            params: SubscriptionCancelParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionCancelResponse> =
+            cancel(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+        /** @see [cancel] */
+        @MustBeClosed
+        suspend fun cancel(
             params: SubscriptionCancelParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionCancelResponse>
@@ -984,9 +1204,26 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun fetch(
+            subscriptionId: String,
+            params: SubscriptionFetchParams = SubscriptionFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Subscription> =
+            fetch(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
             params: SubscriptionFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Subscription>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
+            subscriptionId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Subscription> =
+            fetch(subscriptionId, SubscriptionFetchParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /subscriptions/{subscription_id}/costs`, but is
@@ -994,9 +1231,26 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun fetchCosts(
+            subscriptionId: String,
+            params: SubscriptionFetchCostsParams = SubscriptionFetchCostsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionFetchCostsResponse> =
+            fetchCosts(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+        /** @see [fetchCosts] */
+        @MustBeClosed
+        suspend fun fetchCosts(
             params: SubscriptionFetchCostsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionFetchCostsResponse>
+
+        /** @see [fetchCosts] */
+        @MustBeClosed
+        suspend fun fetchCosts(
+            subscriptionId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionFetchCostsResponse> =
+            fetchCosts(subscriptionId, SubscriptionFetchCostsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /subscriptions/{subscription_id}/schedule`, but is
@@ -1004,9 +1258,26 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun fetchSchedule(
+            subscriptionId: String,
+            params: SubscriptionFetchScheduleParams = SubscriptionFetchScheduleParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionFetchSchedulePageAsync> =
+            fetchSchedule(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+        /** @see [fetchSchedule] */
+        @MustBeClosed
+        suspend fun fetchSchedule(
             params: SubscriptionFetchScheduleParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionFetchSchedulePageAsync>
+
+        /** @see [fetchSchedule] */
+        @MustBeClosed
+        suspend fun fetchSchedule(
+            subscriptionId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionFetchSchedulePageAsync> =
+            fetchSchedule(subscriptionId, SubscriptionFetchScheduleParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /subscriptions/{subscription_id}/usage`, but is
@@ -1014,9 +1285,26 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun fetchUsage(
+            subscriptionId: String,
+            params: SubscriptionFetchUsageParams = SubscriptionFetchUsageParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionUsage> =
+            fetchUsage(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+        /** @see [fetchUsage] */
+        @MustBeClosed
+        suspend fun fetchUsage(
             params: SubscriptionFetchUsageParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionUsage>
+
+        /** @see [fetchUsage] */
+        @MustBeClosed
+        suspend fun fetchUsage(
+            subscriptionId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionUsage> =
+            fetchUsage(subscriptionId, SubscriptionFetchUsageParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /subscriptions/{subscription_id}/price_intervals`,
@@ -1024,15 +1312,47 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun priceIntervals(
+            subscriptionId: String,
+            params: SubscriptionPriceIntervalsParams = SubscriptionPriceIntervalsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionPriceIntervalsResponse> =
+            priceIntervals(
+                params.toBuilder().subscriptionId(subscriptionId).build(),
+                requestOptions,
+            )
+
+        /** @see [priceIntervals] */
+        @MustBeClosed
+        suspend fun priceIntervals(
             params: SubscriptionPriceIntervalsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionPriceIntervalsResponse>
+
+        /** @see [priceIntervals] */
+        @MustBeClosed
+        suspend fun priceIntervals(
+            subscriptionId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionPriceIntervalsResponse> =
+            priceIntervals(subscriptionId, SubscriptionPriceIntervalsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post
          * /subscriptions/{subscription_id}/schedule_plan_change`, but is otherwise the same as
          * [SubscriptionServiceAsync.schedulePlanChange].
          */
+        @MustBeClosed
+        suspend fun schedulePlanChange(
+            subscriptionId: String,
+            params: SubscriptionSchedulePlanChangeParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionSchedulePlanChangeResponse> =
+            schedulePlanChange(
+                params.toBuilder().subscriptionId(subscriptionId).build(),
+                requestOptions,
+            )
+
+        /** @see [schedulePlanChange] */
         @MustBeClosed
         suspend fun schedulePlanChange(
             params: SubscriptionSchedulePlanChangeParams,
@@ -1045,9 +1365,26 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun triggerPhase(
+            subscriptionId: String,
+            params: SubscriptionTriggerPhaseParams = SubscriptionTriggerPhaseParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionTriggerPhaseResponse> =
+            triggerPhase(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+        /** @see [triggerPhase] */
+        @MustBeClosed
+        suspend fun triggerPhase(
             params: SubscriptionTriggerPhaseParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionTriggerPhaseResponse>
+
+        /** @see [triggerPhase] */
+        @MustBeClosed
+        suspend fun triggerPhase(
+            subscriptionId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionTriggerPhaseResponse> =
+            triggerPhase(subscriptionId, SubscriptionTriggerPhaseParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post
@@ -1056,15 +1393,52 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun unscheduleCancellation(
+            subscriptionId: String,
+            params: SubscriptionUnscheduleCancellationParams =
+                SubscriptionUnscheduleCancellationParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionUnscheduleCancellationResponse> =
+            unscheduleCancellation(
+                params.toBuilder().subscriptionId(subscriptionId).build(),
+                requestOptions,
+            )
+
+        /** @see [unscheduleCancellation] */
+        @MustBeClosed
+        suspend fun unscheduleCancellation(
             params: SubscriptionUnscheduleCancellationParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionUnscheduleCancellationResponse>
+
+        /** @see [unscheduleCancellation] */
+        @MustBeClosed
+        suspend fun unscheduleCancellation(
+            subscriptionId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionUnscheduleCancellationResponse> =
+            unscheduleCancellation(
+                subscriptionId,
+                SubscriptionUnscheduleCancellationParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post
          * /subscriptions/{subscription_id}/unschedule_fixed_fee_quantity_updates`, but is otherwise
          * the same as [SubscriptionServiceAsync.unscheduleFixedFeeQuantityUpdates].
          */
+        @MustBeClosed
+        suspend fun unscheduleFixedFeeQuantityUpdates(
+            subscriptionId: String,
+            params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse> =
+            unscheduleFixedFeeQuantityUpdates(
+                params.toBuilder().subscriptionId(subscriptionId).build(),
+                requestOptions,
+            )
+
+        /** @see [unscheduleFixedFeeQuantityUpdates] */
         @MustBeClosed
         suspend fun unscheduleFixedFeeQuantityUpdates(
             params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
@@ -1078,15 +1452,52 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun unschedulePendingPlanChanges(
+            subscriptionId: String,
+            params: SubscriptionUnschedulePendingPlanChangesParams =
+                SubscriptionUnschedulePendingPlanChangesParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionUnschedulePendingPlanChangesResponse> =
+            unschedulePendingPlanChanges(
+                params.toBuilder().subscriptionId(subscriptionId).build(),
+                requestOptions,
+            )
+
+        /** @see [unschedulePendingPlanChanges] */
+        @MustBeClosed
+        suspend fun unschedulePendingPlanChanges(
             params: SubscriptionUnschedulePendingPlanChangesParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionUnschedulePendingPlanChangesResponse>
+
+        /** @see [unschedulePendingPlanChanges] */
+        @MustBeClosed
+        suspend fun unschedulePendingPlanChanges(
+            subscriptionId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionUnschedulePendingPlanChangesResponse> =
+            unschedulePendingPlanChanges(
+                subscriptionId,
+                SubscriptionUnschedulePendingPlanChangesParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post
          * /subscriptions/{subscription_id}/update_fixed_fee_quantity`, but is otherwise the same as
          * [SubscriptionServiceAsync.updateFixedFeeQuantity].
          */
+        @MustBeClosed
+        suspend fun updateFixedFeeQuantity(
+            subscriptionId: String,
+            params: SubscriptionUpdateFixedFeeQuantityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionUpdateFixedFeeQuantityResponse> =
+            updateFixedFeeQuantity(
+                params.toBuilder().subscriptionId(subscriptionId).build(),
+                requestOptions,
+            )
+
+        /** @see [updateFixedFeeQuantity] */
         @MustBeClosed
         suspend fun updateFixedFeeQuantity(
             params: SubscriptionUpdateFixedFeeQuantityParams,
@@ -1097,6 +1508,15 @@ interface SubscriptionServiceAsync {
          * Returns a raw HTTP response for `post /subscriptions/{subscription_id}/update_trial`, but
          * is otherwise the same as [SubscriptionServiceAsync.updateTrial].
          */
+        @MustBeClosed
+        suspend fun updateTrial(
+            subscriptionId: String,
+            params: SubscriptionUpdateTrialParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionUpdateTrialResponse> =
+            updateTrial(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+        /** @see [updateTrial] */
         @MustBeClosed
         suspend fun updateTrial(
             params: SubscriptionUpdateTrialParams,

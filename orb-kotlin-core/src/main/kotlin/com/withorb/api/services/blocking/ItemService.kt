@@ -27,9 +27,20 @@ interface ItemService {
 
     /** This endpoint can be used to update properties on the Item. */
     fun update(
+        itemId: String,
+        params: ItemUpdateParams = ItemUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Item = update(params.toBuilder().itemId(itemId).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
         params: ItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item
+
+    /** @see [update] */
+    fun update(itemId: String, requestOptions: RequestOptions): Item =
+        update(itemId, ItemUpdateParams.none(), requestOptions)
 
     /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
     fun list(
@@ -42,7 +53,18 @@ interface ItemService {
         list(ItemListParams.none(), requestOptions)
 
     /** This endpoint returns an item identified by its item_id. */
+    fun fetch(
+        itemId: String,
+        params: ItemFetchParams = ItemFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Item = fetch(params.toBuilder().itemId(itemId).build(), requestOptions)
+
+    /** @see [fetch] */
     fun fetch(params: ItemFetchParams, requestOptions: RequestOptions = RequestOptions.none()): Item
+
+    /** @see [fetch] */
+    fun fetch(itemId: String, requestOptions: RequestOptions): Item =
+        fetch(itemId, ItemFetchParams.none(), requestOptions)
 
     /** A view of [ItemService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -63,9 +85,22 @@ interface ItemService {
          */
         @MustBeClosed
         fun update(
+            itemId: String,
+            params: ItemUpdateParams = ItemUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Item> = update(params.toBuilder().itemId(itemId).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
             params: ItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(itemId: String, requestOptions: RequestOptions): HttpResponseFor<Item> =
+            update(itemId, ItemUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /items`, but is otherwise the same as
@@ -88,8 +123,21 @@ interface ItemService {
          */
         @MustBeClosed
         fun fetch(
+            itemId: String,
+            params: ItemFetchParams = ItemFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Item> = fetch(params.toBuilder().itemId(itemId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        fun fetch(
             params: ItemFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        fun fetch(itemId: String, requestOptions: RequestOptions): HttpResponseFor<Item> =
+            fetch(itemId, ItemFetchParams.none(), requestOptions)
     }
 }

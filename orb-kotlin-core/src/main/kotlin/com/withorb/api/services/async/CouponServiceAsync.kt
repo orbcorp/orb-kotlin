@@ -54,18 +54,40 @@ interface CouponServiceAsync {
      * redemption code can be reused for a different coupon.
      */
     suspend fun archive(
+        couponId: String,
+        params: CouponArchiveParams = CouponArchiveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Coupon = archive(params.toBuilder().couponId(couponId).build(), requestOptions)
+
+    /** @see [archive] */
+    suspend fun archive(
         params: CouponArchiveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon
+
+    /** @see [archive] */
+    suspend fun archive(couponId: String, requestOptions: RequestOptions): Coupon =
+        archive(couponId, CouponArchiveParams.none(), requestOptions)
 
     /**
      * This endpoint retrieves a coupon by its ID. To fetch coupons by their redemption code, use
      * the [List coupons](list-coupons) endpoint with the redemption_code parameter.
      */
     suspend fun fetch(
+        couponId: String,
+        params: CouponFetchParams = CouponFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Coupon = fetch(params.toBuilder().couponId(couponId).build(), requestOptions)
+
+    /** @see [fetch] */
+    suspend fun fetch(
         params: CouponFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon
+
+    /** @see [fetch] */
+    suspend fun fetch(couponId: String, requestOptions: RequestOptions): Coupon =
+        fetch(couponId, CouponFetchParams.none(), requestOptions)
 
     /**
      * A view of [CouponServiceAsync] that provides access to raw HTTP responses for each method.
@@ -105,9 +127,25 @@ interface CouponServiceAsync {
          */
         @MustBeClosed
         suspend fun archive(
+            couponId: String,
+            params: CouponArchiveParams = CouponArchiveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Coupon> =
+            archive(params.toBuilder().couponId(couponId).build(), requestOptions)
+
+        /** @see [archive] */
+        @MustBeClosed
+        suspend fun archive(
             params: CouponArchiveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Coupon>
+
+        /** @see [archive] */
+        @MustBeClosed
+        suspend fun archive(
+            couponId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Coupon> = archive(couponId, CouponArchiveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /coupons/{coupon_id}`, but is otherwise the same as
@@ -115,8 +153,24 @@ interface CouponServiceAsync {
          */
         @MustBeClosed
         suspend fun fetch(
+            couponId: String,
+            params: CouponFetchParams = CouponFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Coupon> =
+            fetch(params.toBuilder().couponId(couponId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
             params: CouponFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Coupon>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
+            couponId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Coupon> = fetch(couponId, CouponFetchParams.none(), requestOptions)
     }
 }

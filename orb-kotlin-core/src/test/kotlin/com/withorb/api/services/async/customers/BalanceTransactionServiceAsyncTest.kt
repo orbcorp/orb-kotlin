@@ -5,7 +5,6 @@ package com.withorb.api.services.async.customers
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.CustomerBalanceTransactionCreateParams
-import com.withorb.api.models.CustomerBalanceTransactionListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -43,10 +42,7 @@ internal class BalanceTransactionServiceAsyncTest {
                 .build()
         val balanceTransactionServiceAsync = client.customers().balanceTransactions()
 
-        val page =
-            balanceTransactionServiceAsync.list(
-                CustomerBalanceTransactionListParams.builder().customerId("customer_id").build()
-            )
+        val page = balanceTransactionServiceAsync.list("customer_id")
 
         page.response().validate()
     }

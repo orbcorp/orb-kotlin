@@ -4,7 +4,6 @@ package com.withorb.api.services.async.coupons
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
-import com.withorb.api.models.CouponSubscriptionListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -20,10 +19,7 @@ internal class SubscriptionServiceAsyncTest {
                 .build()
         val subscriptionServiceAsync = client.coupons().subscriptions()
 
-        val page =
-            subscriptionServiceAsync.list(
-                CouponSubscriptionListParams.builder().couponId("coupon_id").build()
-            )
+        val page = subscriptionServiceAsync.list("coupon_id")
 
         page.response().validate()
     }

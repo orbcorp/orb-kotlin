@@ -5,7 +5,6 @@ package com.withorb.api.services.blocking
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.models.ItemCreateParams
-import com.withorb.api.models.ItemFetchParams
 import com.withorb.api.models.ItemUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -78,7 +77,7 @@ internal class ItemServiceTest {
                 .build()
         val itemService = client.items()
 
-        val item = itemService.fetch(ItemFetchParams.builder().itemId("item_id").build())
+        val item = itemService.fetch("item_id")
 
         item.validate()
     }

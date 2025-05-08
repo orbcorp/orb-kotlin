@@ -11,7 +11,6 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
@@ -25,13 +24,13 @@ import java.util.Objects
  */
 class PriceExternalPriceIdUpdateParams
 private constructor(
-    private val externalPriceId: String,
+    private val externalPriceId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun externalPriceId(): String = externalPriceId
+    fun externalPriceId(): String? = externalPriceId
 
     /**
      * User-specified key/value pairs for the resource. Individual keys can be removed by setting
@@ -60,14 +59,11 @@ private constructor(
 
     companion object {
 
+        fun none(): PriceExternalPriceIdUpdateParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [PriceExternalPriceIdUpdateParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalPriceId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -89,7 +85,7 @@ private constructor(
                     priceExternalPriceIdUpdateParams.additionalQueryParams.toBuilder()
             }
 
-        fun externalPriceId(externalPriceId: String) = apply {
+        fun externalPriceId(externalPriceId: String?) = apply {
             this.externalPriceId = externalPriceId
         }
 
@@ -239,17 +235,10 @@ private constructor(
          * Returns an immutable instance of [PriceExternalPriceIdUpdateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalPriceId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PriceExternalPriceIdUpdateParams =
             PriceExternalPriceIdUpdateParams(
-                checkRequired("externalPriceId", externalPriceId),
+                externalPriceId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -260,7 +249,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalPriceId
+            0 -> externalPriceId ?: ""
             else -> ""
         }
 

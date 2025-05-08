@@ -5,6 +5,7 @@ package com.withorb.api.services.async
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
 import com.withorb.api.core.handlers.withErrorHandler
@@ -90,6 +91,9 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: ItemUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Item> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("itemId", params.itemId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -151,6 +155,9 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: ItemFetchParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Item> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("itemId", params.itemId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

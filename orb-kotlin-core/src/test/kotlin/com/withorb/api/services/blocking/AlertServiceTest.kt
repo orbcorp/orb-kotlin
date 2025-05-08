@@ -9,7 +9,6 @@ import com.withorb.api.models.AlertCreateForExternalCustomerParams
 import com.withorb.api.models.AlertCreateForSubscriptionParams
 import com.withorb.api.models.AlertDisableParams
 import com.withorb.api.models.AlertEnableParams
-import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -27,7 +26,7 @@ internal class AlertServiceTest {
                 .build()
         val alertService = client.alerts()
 
-        val alert = alertService.retrieve(AlertRetrieveParams.builder().alertId("alert_id").build())
+        val alert = alertService.retrieve("alert_id")
 
         alert.validate()
     }

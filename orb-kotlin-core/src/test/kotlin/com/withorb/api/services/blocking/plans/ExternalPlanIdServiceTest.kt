@@ -5,7 +5,6 @@ package com.withorb.api.services.blocking.plans
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
-import com.withorb.api.models.PlanExternalPlanIdFetchParams
 import com.withorb.api.models.PlanExternalPlanIdUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -47,10 +46,7 @@ internal class ExternalPlanIdServiceTest {
                 .build()
         val externalPlanIdService = client.plans().externalPlanId()
 
-        val plan =
-            externalPlanIdService.fetch(
-                PlanExternalPlanIdFetchParams.builder().externalPlanId("external_plan_id").build()
-            )
+        val plan = externalPlanIdService.fetch("external_plan_id")
 
         plan.validate()
     }

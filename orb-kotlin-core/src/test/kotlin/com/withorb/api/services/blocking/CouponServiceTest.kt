@@ -4,9 +4,7 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.CouponArchiveParams
 import com.withorb.api.models.CouponCreateParams
-import com.withorb.api.models.CouponFetchParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -58,8 +56,7 @@ internal class CouponServiceTest {
                 .build()
         val couponService = client.coupons()
 
-        val coupon =
-            couponService.archive(CouponArchiveParams.builder().couponId("coupon_id").build())
+        val coupon = couponService.archive("coupon_id")
 
         coupon.validate()
     }
@@ -73,7 +70,7 @@ internal class CouponServiceTest {
                 .build()
         val couponService = client.coupons()
 
-        val coupon = couponService.fetch(CouponFetchParams.builder().couponId("coupon_id").build())
+        val coupon = couponService.fetch("coupon_id")
 
         coupon.validate()
     }

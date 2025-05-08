@@ -5,6 +5,7 @@ package com.withorb.api.services.blocking
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
 import com.withorb.api.core.handlers.withErrorHandler
@@ -93,6 +94,9 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
             params: MetricUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillableMetric> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("metricId", params.metricId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -154,6 +158,9 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
             params: MetricFetchParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillableMetric> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("metricId", params.metricId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

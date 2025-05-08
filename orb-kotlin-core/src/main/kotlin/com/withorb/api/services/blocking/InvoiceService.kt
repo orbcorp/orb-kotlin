@@ -38,9 +38,20 @@ interface InvoiceService {
      * `metadata` can be modified regardless of invoice state.
      */
     fun update(
+        invoiceId: String,
+        params: InvoiceUpdateParams = InvoiceUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice = update(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
         params: InvoiceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
+
+    /** @see [update] */
+    fun update(invoiceId: String, requestOptions: RequestOptions): Invoice =
+        update(invoiceId, InvoiceUpdateParams.none(), requestOptions)
 
     /**
      * This endpoint returns a list of all [`Invoice`](/core-concepts#invoice)s for an account in a
@@ -69,9 +80,20 @@ interface InvoiceService {
      * This endpoint is used to fetch an [`Invoice`](/core-concepts#invoice) given an identifier.
      */
     fun fetch(
+        invoiceId: String,
+        params: InvoiceFetchParams = InvoiceFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice = fetch(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+    /** @see [fetch] */
+    fun fetch(
         params: InvoiceFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
+
+    /** @see [fetch] */
+    fun fetch(invoiceId: String, requestOptions: RequestOptions): Invoice =
+        fetch(invoiceId, InvoiceFetchParams.none(), requestOptions)
 
     /**
      * This endpoint can be used to fetch the upcoming [invoice](/core-concepts#invoice) for the
@@ -90,14 +112,32 @@ interface InvoiceService {
      * to external providers, etc).
      */
     fun issue(
+        invoiceId: String,
+        params: InvoiceIssueParams = InvoiceIssueParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice = issue(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+    /** @see [issue] */
+    fun issue(
         params: InvoiceIssueParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
+
+    /** @see [issue] */
+    fun issue(invoiceId: String, requestOptions: RequestOptions): Invoice =
+        issue(invoiceId, InvoiceIssueParams.none(), requestOptions)
 
     /**
      * This endpoint allows an invoice's status to be set the `paid` status. This can only be done
      * to invoices that are in the `issued` status.
      */
+    fun markPaid(
+        invoiceId: String,
+        params: InvoiceMarkPaidParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice = markPaid(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+    /** @see [markPaid] */
     fun markPaid(
         params: InvoiceMarkPaidParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -108,9 +148,20 @@ interface InvoiceService {
      * This action can only be taken on invoices with status "issued".
      */
     fun pay(
+        invoiceId: String,
+        params: InvoicePayParams = InvoicePayParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice = pay(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+    /** @see [pay] */
+    fun pay(
         params: InvoicePayParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
+
+    /** @see [pay] */
+    fun pay(invoiceId: String, requestOptions: RequestOptions): Invoice =
+        pay(invoiceId, InvoicePayParams.none(), requestOptions)
 
     /**
      * This endpoint allows an invoice's status to be set the `void` status. This can only be done
@@ -125,9 +176,20 @@ interface InvoiceService {
      * disabled.
      */
     fun void(
+        invoiceId: String,
+        params: InvoiceVoidParams = InvoiceVoidParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice = void(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+    /** @see [void] */
+    fun void(
         params: InvoiceVoidParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
+
+    /** @see [void] */
+    fun void(invoiceId: String, requestOptions: RequestOptions): Invoice =
+        void(invoiceId, InvoiceVoidParams.none(), requestOptions)
 
     /** A view of [InvoiceService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -148,9 +210,23 @@ interface InvoiceService {
          */
         @MustBeClosed
         fun update(
+            invoiceId: String,
+            params: InvoiceUpdateParams = InvoiceUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice> =
+            update(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
             params: InvoiceUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(invoiceId: String, requestOptions: RequestOptions): HttpResponseFor<Invoice> =
+            update(invoiceId, InvoiceUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /invoices`, but is otherwise the same as
@@ -173,9 +249,23 @@ interface InvoiceService {
          */
         @MustBeClosed
         fun fetch(
+            invoiceId: String,
+            params: InvoiceFetchParams = InvoiceFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice> =
+            fetch(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        fun fetch(
             params: InvoiceFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        fun fetch(invoiceId: String, requestOptions: RequestOptions): HttpResponseFor<Invoice> =
+            fetch(invoiceId, InvoiceFetchParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /invoices/upcoming`, but is otherwise the same as
@@ -193,14 +283,37 @@ interface InvoiceService {
          */
         @MustBeClosed
         fun issue(
+            invoiceId: String,
+            params: InvoiceIssueParams = InvoiceIssueParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice> =
+            issue(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+        /** @see [issue] */
+        @MustBeClosed
+        fun issue(
             params: InvoiceIssueParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
+
+        /** @see [issue] */
+        @MustBeClosed
+        fun issue(invoiceId: String, requestOptions: RequestOptions): HttpResponseFor<Invoice> =
+            issue(invoiceId, InvoiceIssueParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /invoices/{invoice_id}/mark_paid`, but is otherwise
          * the same as [InvoiceService.markPaid].
          */
+        @MustBeClosed
+        fun markPaid(
+            invoiceId: String,
+            params: InvoiceMarkPaidParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice> =
+            markPaid(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+        /** @see [markPaid] */
         @MustBeClosed
         fun markPaid(
             params: InvoiceMarkPaidParams,
@@ -213,9 +326,23 @@ interface InvoiceService {
          */
         @MustBeClosed
         fun pay(
+            invoiceId: String,
+            params: InvoicePayParams = InvoicePayParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice> =
+            pay(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+        /** @see [pay] */
+        @MustBeClosed
+        fun pay(
             params: InvoicePayParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
+
+        /** @see [pay] */
+        @MustBeClosed
+        fun pay(invoiceId: String, requestOptions: RequestOptions): HttpResponseFor<Invoice> =
+            pay(invoiceId, InvoicePayParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /invoices/{invoice_id}/void`, but is otherwise the
@@ -223,8 +350,22 @@ interface InvoiceService {
          */
         @MustBeClosed
         fun void(
+            invoiceId: String,
+            params: InvoiceVoidParams = InvoiceVoidParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice> =
+            void(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+        /** @see [void] */
+        @MustBeClosed
+        fun void(
             params: InvoiceVoidParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
+
+        /** @see [void] */
+        @MustBeClosed
+        fun void(invoiceId: String, requestOptions: RequestOptions): HttpResponseFor<Invoice> =
+            void(invoiceId, InvoiceVoidParams.none(), requestOptions)
     }
 }

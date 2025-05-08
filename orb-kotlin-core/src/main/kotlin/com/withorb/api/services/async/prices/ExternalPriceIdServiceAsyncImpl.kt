@@ -5,6 +5,7 @@ package com.withorb.api.services.async.prices
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
 import com.withorb.api.core.handlers.withErrorHandler
@@ -54,6 +55,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
             params: PriceExternalPriceIdUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Price> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalPriceId", params.externalPriceId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -81,6 +85,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
             params: PriceExternalPriceIdFetchParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Price> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalPriceId", params.externalPriceId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

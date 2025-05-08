@@ -5,6 +5,7 @@ package com.withorb.api.services.async
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.emptyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
@@ -181,6 +182,9 @@ class CustomerServiceAsyncImpl internal constructor(private val clientOptions: C
             params: CustomerUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Customer> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("customerId", params.customerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -241,6 +245,9 @@ class CustomerServiceAsyncImpl internal constructor(private val clientOptions: C
             params: CustomerDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("customerId", params.customerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -260,6 +267,9 @@ class CustomerServiceAsyncImpl internal constructor(private val clientOptions: C
             params: CustomerFetchParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Customer> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("customerId", params.customerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -286,6 +296,9 @@ class CustomerServiceAsyncImpl internal constructor(private val clientOptions: C
             params: CustomerFetchByExternalIdParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Customer> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalCustomerId", params.externalCustomerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -312,6 +325,9 @@ class CustomerServiceAsyncImpl internal constructor(private val clientOptions: C
             params: CustomerSyncPaymentMethodsFromGatewayParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("customerId", params.customerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -337,6 +353,9 @@ class CustomerServiceAsyncImpl internal constructor(private val clientOptions: C
             params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalCustomerId", params.externalCustomerId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -363,6 +382,9 @@ class CustomerServiceAsyncImpl internal constructor(private val clientOptions: C
             params: CustomerUpdateByExternalIdParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Customer> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
