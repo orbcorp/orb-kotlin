@@ -32,14 +32,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .PlanPhaseUsageDiscountAdjustment
                                         .builder()
                                         .id("id")
-                                        .adjustmentType(
-                                            SubscriptionChangeApplyResponse.Subscription
-                                                .AdjustmentInterval
-                                                .Adjustment
-                                                .PlanPhaseUsageDiscountAdjustment
-                                                .AdjustmentType
-                                                .USAGE_DISCOUNT
-                                        )
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
                                         .planPhaseOrder(0L)
@@ -165,12 +157,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                 .amountDiscount("amount_discount")
                                 .addAppliesToPriceId("string")
                                 .addAppliesToPriceIntervalId("string")
-                                .discountType(
-                                    SubscriptionChangeApplyResponse.Subscription.DiscountInterval
-                                        .AmountDiscountInterval
-                                        .DiscountType
-                                        .AMOUNT
-                                )
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
@@ -222,11 +208,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                 .addAdjustment(
                                     Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                                         .id("id")
-                                        .adjustmentType(
-                                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment
-                                                .AdjustmentType
-                                                .USAGE_DISCOUNT
-                                        )
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
                                         .planPhaseOrder(0L)
@@ -392,7 +373,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -530,7 +510,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -788,12 +767,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .MonetaryUsageDiscountAdjustment
                                                         .builder()
                                                         .id("id")
-                                                        .adjustmentType(
-                                                            Invoice.LineItem.Adjustment
-                                                                .MonetaryUsageDiscountAdjustment
-                                                                .AdjustmentType
-                                                                .USAGE_DISCOUNT
-                                                        )
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .isInvoiceLevel(true)
@@ -933,7 +906,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .minimumAmount("minimum_amount")
-                                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                                         .name("name")
                                                         .planPhaseOrder(0L)
                                                         .priceType(
@@ -985,12 +957,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         )
                                                         .name("Tier One")
                                                         .quantity(5.0)
-                                                        .type(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
-                                                                .Type
-                                                                .MATRIX
-                                                        )
                                                         .build()
                                                 )
                                                 .subtotal("9.00")
@@ -1295,12 +1261,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .MonetaryUsageDiscountAdjustment
                                                         .builder()
                                                         .id("id")
-                                                        .adjustmentType(
-                                                            Invoice.LineItem.Adjustment
-                                                                .MonetaryUsageDiscountAdjustment
-                                                                .AdjustmentType
-                                                                .USAGE_DISCOUNT
-                                                        )
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .isInvoiceLevel(true)
@@ -1440,7 +1400,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .minimumAmount("minimum_amount")
-                                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                                         .name("name")
                                                         .planPhaseOrder(0L)
                                                         .priceType(
@@ -1492,12 +1451,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         )
                                                         .name("Tier One")
                                                         .quantity(5.0)
-                                                        .type(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
-                                                                .Type
-                                                                .MATRIX
-                                                        )
                                                         .build()
                                                 )
                                                 .subtotal("9.00")
@@ -1610,14 +1563,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                     .PlanPhaseUsageDiscountAdjustment
                                     .builder()
                                     .id("id")
-                                    .adjustmentType(
-                                        SubscriptionChangeApplyResponse.Subscription
-                                            .AdjustmentInterval
-                                            .Adjustment
-                                            .PlanPhaseUsageDiscountAdjustment
-                                            .AdjustmentType
-                                            .USAGE_DISCOUNT
-                                    )
                                     .addAppliesToPriceId("string")
                                     .isInvoiceLevel(true)
                                     .planPhaseOrder(0L)
@@ -1738,12 +1683,6 @@ internal class SubscriptionChangeApplyResponseTest {
                             .amountDiscount("amount_discount")
                             .addAppliesToPriceId("string")
                             .addAppliesToPriceIntervalId("string")
-                            .discountType(
-                                SubscriptionChangeApplyResponse.Subscription.DiscountInterval
-                                    .AmountDiscountInterval
-                                    .DiscountType
-                                    .AMOUNT
-                            )
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
@@ -1795,11 +1734,6 @@ internal class SubscriptionChangeApplyResponseTest {
                             .addAdjustment(
                                 Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                                     .id("id")
-                                    .adjustmentType(
-                                        Plan.Adjustment.PlanPhaseUsageDiscountAdjustment
-                                            .AdjustmentType
-                                            .USAGE_DISCOUNT
-                                    )
                                     .addAppliesToPriceId("string")
                                     .isInvoiceLevel(true)
                                     .planPhaseOrder(0L)
@@ -1957,7 +1891,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                             .build()
                                     )
                                     .minimumAmount("minimum_amount")
-                                    .modelType(Price.UnitPrice.ModelType.UNIT)
                                     .name("name")
                                     .planPhaseOrder(0L)
                                     .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -2083,7 +2016,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                             .build()
                                     )
                                     .minimumAmount("minimum_amount")
-                                    .modelType(Price.UnitPrice.ModelType.UNIT)
                                     .name("name")
                                     .planPhaseOrder(0L)
                                     .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -2324,12 +2256,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     .MonetaryUsageDiscountAdjustment
                                                     .builder()
                                                     .id("id")
-                                                    .adjustmentType(
-                                                        Invoice.LineItem.Adjustment
-                                                            .MonetaryUsageDiscountAdjustment
-                                                            .AdjustmentType
-                                                            .USAGE_DISCOUNT
-                                                    )
                                                     .amount("amount")
                                                     .addAppliesToPriceId("string")
                                                     .isInvoiceLevel(true)
@@ -2459,7 +2385,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                             .build()
                                                     )
                                                     .minimumAmount("minimum_amount")
-                                                    .modelType(Price.UnitPrice.ModelType.UNIT)
                                                     .name("name")
                                                     .planPhaseOrder(0L)
                                                     .priceType(
@@ -2509,12 +2434,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     )
                                                     .name("Tier One")
                                                     .quantity(5.0)
-                                                    .type(
-                                                        Invoice.LineItem.SubLineItem
-                                                            .MatrixSubLineItem
-                                                            .Type
-                                                            .MATRIX
-                                                    )
                                                     .build()
                                             )
                                             .subtotal("9.00")
@@ -2799,12 +2718,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     .MonetaryUsageDiscountAdjustment
                                                     .builder()
                                                     .id("id")
-                                                    .adjustmentType(
-                                                        Invoice.LineItem.Adjustment
-                                                            .MonetaryUsageDiscountAdjustment
-                                                            .AdjustmentType
-                                                            .USAGE_DISCOUNT
-                                                    )
                                                     .amount("amount")
                                                     .addAppliesToPriceId("string")
                                                     .isInvoiceLevel(true)
@@ -2934,7 +2847,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                             .build()
                                                     )
                                                     .minimumAmount("minimum_amount")
-                                                    .modelType(Price.UnitPrice.ModelType.UNIT)
                                                     .name("name")
                                                     .planPhaseOrder(0L)
                                                     .priceType(
@@ -2984,12 +2896,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     )
                                                     .name("Tier One")
                                                     .quantity(5.0)
-                                                    .type(
-                                                        Invoice.LineItem.SubLineItem
-                                                            .MatrixSubLineItem
-                                                            .Type
-                                                            .MATRIX
-                                                    )
                                                     .build()
                                             )
                                             .subtotal("9.00")
@@ -3102,14 +3008,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .PlanPhaseUsageDiscountAdjustment
                                         .builder()
                                         .id("id")
-                                        .adjustmentType(
-                                            SubscriptionChangeApplyResponse.Subscription
-                                                .AdjustmentInterval
-                                                .Adjustment
-                                                .PlanPhaseUsageDiscountAdjustment
-                                                .AdjustmentType
-                                                .USAGE_DISCOUNT
-                                        )
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
                                         .planPhaseOrder(0L)
@@ -3235,12 +3133,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                 .amountDiscount("amount_discount")
                                 .addAppliesToPriceId("string")
                                 .addAppliesToPriceIntervalId("string")
-                                .discountType(
-                                    SubscriptionChangeApplyResponse.Subscription.DiscountInterval
-                                        .AmountDiscountInterval
-                                        .DiscountType
-                                        .AMOUNT
-                                )
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
@@ -3292,11 +3184,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                 .addAdjustment(
                                     Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                                         .id("id")
-                                        .adjustmentType(
-                                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment
-                                                .AdjustmentType
-                                                .USAGE_DISCOUNT
-                                        )
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
                                         .planPhaseOrder(0L)
@@ -3462,7 +3349,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -3600,7 +3486,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -3858,12 +3743,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .MonetaryUsageDiscountAdjustment
                                                         .builder()
                                                         .id("id")
-                                                        .adjustmentType(
-                                                            Invoice.LineItem.Adjustment
-                                                                .MonetaryUsageDiscountAdjustment
-                                                                .AdjustmentType
-                                                                .USAGE_DISCOUNT
-                                                        )
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .isInvoiceLevel(true)
@@ -4003,7 +3882,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .minimumAmount("minimum_amount")
-                                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                                         .name("name")
                                                         .planPhaseOrder(0L)
                                                         .priceType(
@@ -4055,12 +3933,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         )
                                                         .name("Tier One")
                                                         .quantity(5.0)
-                                                        .type(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
-                                                                .Type
-                                                                .MATRIX
-                                                        )
                                                         .build()
                                                 )
                                                 .subtotal("9.00")
@@ -4365,12 +4237,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .MonetaryUsageDiscountAdjustment
                                                         .builder()
                                                         .id("id")
-                                                        .adjustmentType(
-                                                            Invoice.LineItem.Adjustment
-                                                                .MonetaryUsageDiscountAdjustment
-                                                                .AdjustmentType
-                                                                .USAGE_DISCOUNT
-                                                        )
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .isInvoiceLevel(true)
@@ -4510,7 +4376,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .minimumAmount("minimum_amount")
-                                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                                         .name("name")
                                                         .planPhaseOrder(0L)
                                                         .priceType(
@@ -4562,12 +4427,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         )
                                                         .name("Tier One")
                                                         .quantity(5.0)
-                                                        .type(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
-                                                                .Type
-                                                                .MATRIX
-                                                        )
                                                         .build()
                                                 )
                                                 .subtotal("9.00")

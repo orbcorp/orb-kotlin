@@ -33,10 +33,6 @@ internal class CouponCreateParamsTest {
             .isEqualTo(
                 CouponCreateParams.Discount.ofNewCouponPercentage(
                     CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                        .discountType(
-                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                .PERCENTAGE
-                        )
                         .percentageDiscount(0.0)
                         .build()
                 )
@@ -60,10 +56,6 @@ internal class CouponCreateParamsTest {
             .isEqualTo(
                 CouponCreateParams.Discount.ofNewCouponPercentage(
                     CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                        .discountType(
-                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                .PERCENTAGE
-                        )
                         .percentageDiscount(0.0)
                         .build()
                 )

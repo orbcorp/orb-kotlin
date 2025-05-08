@@ -41,10 +41,6 @@ internal class CustomerCreditLedgerListPageResponseTest {
                             CustomerCreditLedgerListResponse.IncrementLedgerEntry.EntryStatus
                                 .COMMITTED
                         )
-                        .entryType(
-                            CustomerCreditLedgerListResponse.IncrementLedgerEntry.EntryType
-                                .INCREMENT
-                        )
                         .ledgerSequenceNumber(0L)
                         .metadata(
                             CustomerCreditLedgerListResponse.IncrementLedgerEntry.Metadata.builder()
@@ -86,10 +82,6 @@ internal class CustomerCreditLedgerListPageResponseTest {
                         .entryStatus(
                             CustomerCreditLedgerListResponse.IncrementLedgerEntry.EntryStatus
                                 .COMMITTED
-                        )
-                        .entryType(
-                            CustomerCreditLedgerListResponse.IncrementLedgerEntry.EntryType
-                                .INCREMENT
                         )
                         .ledgerSequenceNumber(0L)
                         .metadata(
@@ -135,10 +127,6 @@ internal class CustomerCreditLedgerListPageResponseTest {
                         .entryStatus(
                             CustomerCreditLedgerListResponse.IncrementLedgerEntry.EntryStatus
                                 .COMMITTED
-                        )
-                        .entryType(
-                            CustomerCreditLedgerListResponse.IncrementLedgerEntry.EntryType
-                                .INCREMENT
                         )
                         .ledgerSequenceNumber(0L)
                         .metadata(

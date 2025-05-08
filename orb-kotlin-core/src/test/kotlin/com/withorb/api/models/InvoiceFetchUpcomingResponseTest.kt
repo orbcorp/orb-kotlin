@@ -117,12 +117,6 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 .MonetaryUsageDiscountAdjustment
                                 .builder()
                                 .id("id")
-                                .adjustmentType(
-                                    InvoiceFetchUpcomingResponse.LineItem.Adjustment
-                                        .MonetaryUsageDiscountAdjustment
-                                        .AdjustmentType
-                                        .USAGE_DISCOUNT
-                                )
                                 .amount("amount")
                                 .addAppliesToPriceId("string")
                                 .isInvoiceLevel(true)
@@ -225,7 +219,6 @@ internal class InvoiceFetchUpcomingResponseTest {
                                         .build()
                                 )
                                 .minimumAmount("minimum_amount")
-                                .modelType(Price.UnitPrice.ModelType.UNIT)
                                 .name("name")
                                 .planPhaseOrder(0L)
                                 .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -267,12 +260,6 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 )
                                 .name("Tier One")
                                 .quantity(5.0)
-                                .type(
-                                    InvoiceFetchUpcomingResponse.LineItem.SubLineItem
-                                        .MatrixSubLineItem
-                                        .Type
-                                        .MATRIX
-                                )
                                 .build()
                         )
                         .subtotal("9.00")
@@ -462,12 +449,6 @@ internal class InvoiceFetchUpcomingResponseTest {
                             .MonetaryUsageDiscountAdjustment
                             .builder()
                             .id("id")
-                            .adjustmentType(
-                                InvoiceFetchUpcomingResponse.LineItem.Adjustment
-                                    .MonetaryUsageDiscountAdjustment
-                                    .AdjustmentType
-                                    .USAGE_DISCOUNT
-                            )
                             .amount("amount")
                             .addAppliesToPriceId("string")
                             .isInvoiceLevel(true)
@@ -568,7 +549,6 @@ internal class InvoiceFetchUpcomingResponseTest {
                                     .build()
                             )
                             .minimumAmount("minimum_amount")
-                            .modelType(Price.UnitPrice.ModelType.UNIT)
                             .name("name")
                             .planPhaseOrder(0L)
                             .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -608,11 +588,6 @@ internal class InvoiceFetchUpcomingResponseTest {
                             )
                             .name("Tier One")
                             .quantity(5.0)
-                            .type(
-                                InvoiceFetchUpcomingResponse.LineItem.SubLineItem.MatrixSubLineItem
-                                    .Type
-                                    .MATRIX
-                            )
                             .build()
                     )
                     .subtotal("9.00")
@@ -805,12 +780,6 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 .MonetaryUsageDiscountAdjustment
                                 .builder()
                                 .id("id")
-                                .adjustmentType(
-                                    InvoiceFetchUpcomingResponse.LineItem.Adjustment
-                                        .MonetaryUsageDiscountAdjustment
-                                        .AdjustmentType
-                                        .USAGE_DISCOUNT
-                                )
                                 .amount("amount")
                                 .addAppliesToPriceId("string")
                                 .isInvoiceLevel(true)
@@ -913,7 +882,6 @@ internal class InvoiceFetchUpcomingResponseTest {
                                         .build()
                                 )
                                 .minimumAmount("minimum_amount")
-                                .modelType(Price.UnitPrice.ModelType.UNIT)
                                 .name("name")
                                 .planPhaseOrder(0L)
                                 .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -955,12 +923,6 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 )
                                 .name("Tier One")
                                 .quantity(5.0)
-                                .type(
-                                    InvoiceFetchUpcomingResponse.LineItem.SubLineItem
-                                        .MatrixSubLineItem
-                                        .Type
-                                        .MATRIX
-                                )
                                 .build()
                         )
                         .subtotal("9.00")

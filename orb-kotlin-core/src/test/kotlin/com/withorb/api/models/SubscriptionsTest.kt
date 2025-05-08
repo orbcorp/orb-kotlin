@@ -27,12 +27,6 @@ internal class SubscriptionsTest {
                                         .PlanPhaseUsageDiscountAdjustment
                                         .builder()
                                         .id("id")
-                                        .adjustmentType(
-                                            Subscription.AdjustmentInterval.Adjustment
-                                                .PlanPhaseUsageDiscountAdjustment
-                                                .AdjustmentType
-                                                .USAGE_DISCOUNT
-                                        )
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
                                         .planPhaseOrder(0L)
@@ -154,11 +148,6 @@ internal class SubscriptionsTest {
                                 .amountDiscount("amount_discount")
                                 .addAppliesToPriceId("string")
                                 .addAppliesToPriceIntervalId("string")
-                                .discountType(
-                                    Subscription.DiscountInterval.AmountDiscountInterval
-                                        .DiscountType
-                                        .AMOUNT
-                                )
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
@@ -206,11 +195,6 @@ internal class SubscriptionsTest {
                                 .addAdjustment(
                                     Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                                         .id("id")
-                                        .adjustmentType(
-                                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment
-                                                .AdjustmentType
-                                                .USAGE_DISCOUNT
-                                        )
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
                                         .planPhaseOrder(0L)
@@ -376,7 +360,6 @@ internal class SubscriptionsTest {
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -512,7 +495,6 @@ internal class SubscriptionsTest {
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -569,12 +551,6 @@ internal class SubscriptionsTest {
                                     .PlanPhaseUsageDiscountAdjustment
                                     .builder()
                                     .id("id")
-                                    .adjustmentType(
-                                        Subscription.AdjustmentInterval.Adjustment
-                                            .PlanPhaseUsageDiscountAdjustment
-                                            .AdjustmentType
-                                            .USAGE_DISCOUNT
-                                    )
                                     .addAppliesToPriceId("string")
                                     .isInvoiceLevel(true)
                                     .planPhaseOrder(0L)
@@ -692,10 +668,6 @@ internal class SubscriptionsTest {
                             .amountDiscount("amount_discount")
                             .addAppliesToPriceId("string")
                             .addAppliesToPriceIntervalId("string")
-                            .discountType(
-                                Subscription.DiscountInterval.AmountDiscountInterval.DiscountType
-                                    .AMOUNT
-                            )
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
@@ -743,11 +715,6 @@ internal class SubscriptionsTest {
                             .addAdjustment(
                                 Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                                     .id("id")
-                                    .adjustmentType(
-                                        Plan.Adjustment.PlanPhaseUsageDiscountAdjustment
-                                            .AdjustmentType
-                                            .USAGE_DISCOUNT
-                                    )
                                     .addAppliesToPriceId("string")
                                     .isInvoiceLevel(true)
                                     .planPhaseOrder(0L)
@@ -905,7 +872,6 @@ internal class SubscriptionsTest {
                                             .build()
                                     )
                                     .minimumAmount("minimum_amount")
-                                    .modelType(Price.UnitPrice.ModelType.UNIT)
                                     .name("name")
                                     .planPhaseOrder(0L)
                                     .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -1029,7 +995,6 @@ internal class SubscriptionsTest {
                                             .build()
                                     )
                                     .minimumAmount("minimum_amount")
-                                    .modelType(Price.UnitPrice.ModelType.UNIT)
                                     .name("name")
                                     .planPhaseOrder(0L)
                                     .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -1087,12 +1052,6 @@ internal class SubscriptionsTest {
                                         .PlanPhaseUsageDiscountAdjustment
                                         .builder()
                                         .id("id")
-                                        .adjustmentType(
-                                            Subscription.AdjustmentInterval.Adjustment
-                                                .PlanPhaseUsageDiscountAdjustment
-                                                .AdjustmentType
-                                                .USAGE_DISCOUNT
-                                        )
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
                                         .planPhaseOrder(0L)
@@ -1214,11 +1173,6 @@ internal class SubscriptionsTest {
                                 .amountDiscount("amount_discount")
                                 .addAppliesToPriceId("string")
                                 .addAppliesToPriceIntervalId("string")
-                                .discountType(
-                                    Subscription.DiscountInterval.AmountDiscountInterval
-                                        .DiscountType
-                                        .AMOUNT
-                                )
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
@@ -1266,11 +1220,6 @@ internal class SubscriptionsTest {
                                 .addAdjustment(
                                     Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                                         .id("id")
-                                        .adjustmentType(
-                                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment
-                                                .AdjustmentType
-                                                .USAGE_DISCOUNT
-                                        )
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
                                         .planPhaseOrder(0L)
@@ -1436,7 +1385,6 @@ internal class SubscriptionsTest {
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -1572,7 +1520,6 @@ internal class SubscriptionsTest {
                                                 .build()
                                         )
                                         .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
                                         .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)

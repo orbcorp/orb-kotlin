@@ -19,10 +19,6 @@ internal class PlanTest {
                 .addAdjustment(
                     Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                         .id("id")
-                        .adjustmentType(
-                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.AdjustmentType
-                                .USAGE_DISCOUNT
-                        )
                         .addAppliesToPriceId("string")
                         .isInvoiceLevel(true)
                         .planPhaseOrder(0L)
@@ -168,7 +164,6 @@ internal class PlanTest {
                                 .build()
                         )
                         .minimumAmount("minimum_amount")
-                        .modelType(Price.UnitPrice.ModelType.UNIT)
                         .name("name")
                         .planPhaseOrder(0L)
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -206,10 +201,6 @@ internal class PlanTest {
                 Plan.Adjustment.ofPlanPhaseUsageDiscount(
                     Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                         .id("id")
-                        .adjustmentType(
-                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.AdjustmentType
-                                .USAGE_DISCOUNT
-                        )
                         .addAppliesToPriceId("string")
                         .isInvoiceLevel(true)
                         .planPhaseOrder(0L)
@@ -366,7 +357,6 @@ internal class PlanTest {
                                 .build()
                         )
                         .minimumAmount("minimum_amount")
-                        .modelType(Price.UnitPrice.ModelType.UNIT)
                         .name("name")
                         .planPhaseOrder(0L)
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
@@ -410,10 +400,6 @@ internal class PlanTest {
                 .addAdjustment(
                     Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                         .id("id")
-                        .adjustmentType(
-                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.AdjustmentType
-                                .USAGE_DISCOUNT
-                        )
                         .addAppliesToPriceId("string")
                         .isInvoiceLevel(true)
                         .planPhaseOrder(0L)
@@ -559,7 +545,6 @@ internal class PlanTest {
                                 .build()
                         )
                         .minimumAmount("minimum_amount")
-                        .modelType(Price.UnitPrice.ModelType.UNIT)
                         .name("name")
                         .planPhaseOrder(0L)
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
