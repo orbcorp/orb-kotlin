@@ -1029,17 +1029,17 @@ private constructor(
         }
 
         /** Alias for calling [addDiscountInterval] with `DiscountInterval.ofAmount(amount)`. */
-        fun addDiscountInterval(amount: DiscountInterval.AmountDiscountInterval) =
+        fun addDiscountInterval(amount: DiscountInterval.Amount) =
             addDiscountInterval(DiscountInterval.ofAmount(amount))
 
         /**
          * Alias for calling [addDiscountInterval] with `DiscountInterval.ofPercentage(percentage)`.
          */
-        fun addDiscountInterval(percentage: DiscountInterval.PercentageDiscountInterval) =
+        fun addDiscountInterval(percentage: DiscountInterval.Percentage) =
             addDiscountInterval(DiscountInterval.ofPercentage(percentage))
 
         /** Alias for calling [addDiscountInterval] with `DiscountInterval.ofUsage(usage)`. */
-        fun addDiscountInterval(usage: DiscountInterval.UsageDiscountInterval) =
+        fun addDiscountInterval(usage: DiscountInterval.Usage) =
             addDiscountInterval(DiscountInterval.ofUsage(usage))
 
         /** The date Orb stops billing for this subscription. */
@@ -1656,41 +1656,28 @@ private constructor(
                 this.adjustment = adjustment
             }
 
+            /** Alias for calling [adjustment] with `Adjustment.ofUsageDiscount(usageDiscount)`. */
+            fun adjustment(usageDiscount: Adjustment.UsageDiscount) =
+                adjustment(Adjustment.ofUsageDiscount(usageDiscount))
+
             /**
-             * Alias for calling [adjustment] with
-             * `Adjustment.ofPlanPhaseUsageDiscount(planPhaseUsageDiscount)`.
+             * Alias for calling [adjustment] with `Adjustment.ofAmountDiscount(amountDiscount)`.
              */
-            fun adjustment(planPhaseUsageDiscount: Adjustment.PlanPhaseUsageDiscountAdjustment) =
-                adjustment(Adjustment.ofPlanPhaseUsageDiscount(planPhaseUsageDiscount))
+            fun adjustment(amountDiscount: Adjustment.AmountDiscount) =
+                adjustment(Adjustment.ofAmountDiscount(amountDiscount))
 
             /**
              * Alias for calling [adjustment] with
-             * `Adjustment.ofPlanPhaseAmountDiscount(planPhaseAmountDiscount)`.
+             * `Adjustment.ofPercentageDiscount(percentageDiscount)`.
              */
-            fun adjustment(planPhaseAmountDiscount: Adjustment.PlanPhaseAmountDiscountAdjustment) =
-                adjustment(Adjustment.ofPlanPhaseAmountDiscount(planPhaseAmountDiscount))
+            fun adjustment(percentageDiscount: Adjustment.PercentageDiscount) =
+                adjustment(Adjustment.ofPercentageDiscount(percentageDiscount))
 
-            /**
-             * Alias for calling [adjustment] with
-             * `Adjustment.ofPlanPhasePercentageDiscount(planPhasePercentageDiscount)`.
-             */
-            fun adjustment(
-                planPhasePercentageDiscount: Adjustment.PlanPhasePercentageDiscountAdjustment
-            ) = adjustment(Adjustment.ofPlanPhasePercentageDiscount(planPhasePercentageDiscount))
+            /** Alias for calling [adjustment] with `Adjustment.ofMinimum(minimum)`. */
+            fun adjustment(minimum: Adjustment.Minimum) = adjustment(Adjustment.ofMinimum(minimum))
 
-            /**
-             * Alias for calling [adjustment] with
-             * `Adjustment.ofPlanPhaseMinimum(planPhaseMinimum)`.
-             */
-            fun adjustment(planPhaseMinimum: Adjustment.PlanPhaseMinimumAdjustment) =
-                adjustment(Adjustment.ofPlanPhaseMinimum(planPhaseMinimum))
-
-            /**
-             * Alias for calling [adjustment] with
-             * `Adjustment.ofPlanPhaseMaximum(planPhaseMaximum)`.
-             */
-            fun adjustment(planPhaseMaximum: Adjustment.PlanPhaseMaximumAdjustment) =
-                adjustment(Adjustment.ofPlanPhaseMaximum(planPhaseMaximum))
+            /** Alias for calling [adjustment] with `Adjustment.ofMaximum(maximum)`. */
+            fun adjustment(maximum: Adjustment.Maximum) = adjustment(Adjustment.ofMaximum(maximum))
 
             /** The price interval IDs that this adjustment applies to. */
             fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: List<String>) =
@@ -1835,63 +1822,55 @@ private constructor(
         @JsonSerialize(using = Adjustment.Serializer::class)
         class Adjustment
         private constructor(
-            private val planPhaseUsageDiscount: PlanPhaseUsageDiscountAdjustment? = null,
-            private val planPhaseAmountDiscount: PlanPhaseAmountDiscountAdjustment? = null,
-            private val planPhasePercentageDiscount: PlanPhasePercentageDiscountAdjustment? = null,
-            private val planPhaseMinimum: PlanPhaseMinimumAdjustment? = null,
-            private val planPhaseMaximum: PlanPhaseMaximumAdjustment? = null,
+            private val usageDiscount: UsageDiscount? = null,
+            private val amountDiscount: AmountDiscount? = null,
+            private val percentageDiscount: PercentageDiscount? = null,
+            private val minimum: Minimum? = null,
+            private val maximum: Maximum? = null,
             private val _json: JsonValue? = null,
         ) {
 
-            fun planPhaseUsageDiscount(): PlanPhaseUsageDiscountAdjustment? = planPhaseUsageDiscount
+            fun usageDiscount(): UsageDiscount? = usageDiscount
 
-            fun planPhaseAmountDiscount(): PlanPhaseAmountDiscountAdjustment? =
-                planPhaseAmountDiscount
+            fun amountDiscount(): AmountDiscount? = amountDiscount
 
-            fun planPhasePercentageDiscount(): PlanPhasePercentageDiscountAdjustment? =
-                planPhasePercentageDiscount
+            fun percentageDiscount(): PercentageDiscount? = percentageDiscount
 
-            fun planPhaseMinimum(): PlanPhaseMinimumAdjustment? = planPhaseMinimum
+            fun minimum(): Minimum? = minimum
 
-            fun planPhaseMaximum(): PlanPhaseMaximumAdjustment? = planPhaseMaximum
+            fun maximum(): Maximum? = maximum
 
-            fun isPlanPhaseUsageDiscount(): Boolean = planPhaseUsageDiscount != null
+            fun isUsageDiscount(): Boolean = usageDiscount != null
 
-            fun isPlanPhaseAmountDiscount(): Boolean = planPhaseAmountDiscount != null
+            fun isAmountDiscount(): Boolean = amountDiscount != null
 
-            fun isPlanPhasePercentageDiscount(): Boolean = planPhasePercentageDiscount != null
+            fun isPercentageDiscount(): Boolean = percentageDiscount != null
 
-            fun isPlanPhaseMinimum(): Boolean = planPhaseMinimum != null
+            fun isMinimum(): Boolean = minimum != null
 
-            fun isPlanPhaseMaximum(): Boolean = planPhaseMaximum != null
+            fun isMaximum(): Boolean = maximum != null
 
-            fun asPlanPhaseUsageDiscount(): PlanPhaseUsageDiscountAdjustment =
-                planPhaseUsageDiscount.getOrThrow("planPhaseUsageDiscount")
+            fun asUsageDiscount(): UsageDiscount = usageDiscount.getOrThrow("usageDiscount")
 
-            fun asPlanPhaseAmountDiscount(): PlanPhaseAmountDiscountAdjustment =
-                planPhaseAmountDiscount.getOrThrow("planPhaseAmountDiscount")
+            fun asAmountDiscount(): AmountDiscount = amountDiscount.getOrThrow("amountDiscount")
 
-            fun asPlanPhasePercentageDiscount(): PlanPhasePercentageDiscountAdjustment =
-                planPhasePercentageDiscount.getOrThrow("planPhasePercentageDiscount")
+            fun asPercentageDiscount(): PercentageDiscount =
+                percentageDiscount.getOrThrow("percentageDiscount")
 
-            fun asPlanPhaseMinimum(): PlanPhaseMinimumAdjustment =
-                planPhaseMinimum.getOrThrow("planPhaseMinimum")
+            fun asMinimum(): Minimum = minimum.getOrThrow("minimum")
 
-            fun asPlanPhaseMaximum(): PlanPhaseMaximumAdjustment =
-                planPhaseMaximum.getOrThrow("planPhaseMaximum")
+            fun asMaximum(): Maximum = maximum.getOrThrow("maximum")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T =
                 when {
-                    planPhaseUsageDiscount != null ->
-                        visitor.visitPlanPhaseUsageDiscount(planPhaseUsageDiscount)
-                    planPhaseAmountDiscount != null ->
-                        visitor.visitPlanPhaseAmountDiscount(planPhaseAmountDiscount)
-                    planPhasePercentageDiscount != null ->
-                        visitor.visitPlanPhasePercentageDiscount(planPhasePercentageDiscount)
-                    planPhaseMinimum != null -> visitor.visitPlanPhaseMinimum(planPhaseMinimum)
-                    planPhaseMaximum != null -> visitor.visitPlanPhaseMaximum(planPhaseMaximum)
+                    usageDiscount != null -> visitor.visitUsageDiscount(usageDiscount)
+                    amountDiscount != null -> visitor.visitAmountDiscount(amountDiscount)
+                    percentageDiscount != null ->
+                        visitor.visitPercentageDiscount(percentageDiscount)
+                    minimum != null -> visitor.visitMinimum(minimum)
+                    maximum != null -> visitor.visitMaximum(maximum)
                     else -> visitor.unknown(_json)
                 }
 
@@ -1904,34 +1883,26 @@ private constructor(
 
                 accept(
                     object : Visitor<Unit> {
-                        override fun visitPlanPhaseUsageDiscount(
-                            planPhaseUsageDiscount: PlanPhaseUsageDiscountAdjustment
-                        ) {
-                            planPhaseUsageDiscount.validate()
+                        override fun visitUsageDiscount(usageDiscount: UsageDiscount) {
+                            usageDiscount.validate()
                         }
 
-                        override fun visitPlanPhaseAmountDiscount(
-                            planPhaseAmountDiscount: PlanPhaseAmountDiscountAdjustment
-                        ) {
-                            planPhaseAmountDiscount.validate()
+                        override fun visitAmountDiscount(amountDiscount: AmountDiscount) {
+                            amountDiscount.validate()
                         }
 
-                        override fun visitPlanPhasePercentageDiscount(
-                            planPhasePercentageDiscount: PlanPhasePercentageDiscountAdjustment
+                        override fun visitPercentageDiscount(
+                            percentageDiscount: PercentageDiscount
                         ) {
-                            planPhasePercentageDiscount.validate()
+                            percentageDiscount.validate()
                         }
 
-                        override fun visitPlanPhaseMinimum(
-                            planPhaseMinimum: PlanPhaseMinimumAdjustment
-                        ) {
-                            planPhaseMinimum.validate()
+                        override fun visitMinimum(minimum: Minimum) {
+                            minimum.validate()
                         }
 
-                        override fun visitPlanPhaseMaximum(
-                            planPhaseMaximum: PlanPhaseMaximumAdjustment
-                        ) {
-                            planPhaseMaximum.validate()
+                        override fun visitMaximum(maximum: Maximum) {
+                            maximum.validate()
                         }
                     }
                 )
@@ -1955,25 +1926,19 @@ private constructor(
             internal fun validity(): Int =
                 accept(
                     object : Visitor<Int> {
-                        override fun visitPlanPhaseUsageDiscount(
-                            planPhaseUsageDiscount: PlanPhaseUsageDiscountAdjustment
-                        ) = planPhaseUsageDiscount.validity()
+                        override fun visitUsageDiscount(usageDiscount: UsageDiscount) =
+                            usageDiscount.validity()
 
-                        override fun visitPlanPhaseAmountDiscount(
-                            planPhaseAmountDiscount: PlanPhaseAmountDiscountAdjustment
-                        ) = planPhaseAmountDiscount.validity()
+                        override fun visitAmountDiscount(amountDiscount: AmountDiscount) =
+                            amountDiscount.validity()
 
-                        override fun visitPlanPhasePercentageDiscount(
-                            planPhasePercentageDiscount: PlanPhasePercentageDiscountAdjustment
-                        ) = planPhasePercentageDiscount.validity()
+                        override fun visitPercentageDiscount(
+                            percentageDiscount: PercentageDiscount
+                        ) = percentageDiscount.validity()
 
-                        override fun visitPlanPhaseMinimum(
-                            planPhaseMinimum: PlanPhaseMinimumAdjustment
-                        ) = planPhaseMinimum.validity()
+                        override fun visitMinimum(minimum: Minimum) = minimum.validity()
 
-                        override fun visitPlanPhaseMaximum(
-                            planPhaseMaximum: PlanPhaseMaximumAdjustment
-                        ) = planPhaseMaximum.validity()
+                        override fun visitMaximum(maximum: Maximum) = maximum.validity()
 
                         override fun unknown(json: JsonValue?) = 0
                     }
@@ -1984,44 +1949,37 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Adjustment && planPhaseUsageDiscount == other.planPhaseUsageDiscount && planPhaseAmountDiscount == other.planPhaseAmountDiscount && planPhasePercentageDiscount == other.planPhasePercentageDiscount && planPhaseMinimum == other.planPhaseMinimum && planPhaseMaximum == other.planPhaseMaximum /* spotless:on */
+                return /* spotless:off */ other is Adjustment && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount && percentageDiscount == other.percentageDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(planPhaseUsageDiscount, planPhaseAmountDiscount, planPhasePercentageDiscount, planPhaseMinimum, planPhaseMaximum) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum) /* spotless:on */
 
             override fun toString(): String =
                 when {
-                    planPhaseUsageDiscount != null ->
-                        "Adjustment{planPhaseUsageDiscount=$planPhaseUsageDiscount}"
-                    planPhaseAmountDiscount != null ->
-                        "Adjustment{planPhaseAmountDiscount=$planPhaseAmountDiscount}"
-                    planPhasePercentageDiscount != null ->
-                        "Adjustment{planPhasePercentageDiscount=$planPhasePercentageDiscount}"
-                    planPhaseMinimum != null -> "Adjustment{planPhaseMinimum=$planPhaseMinimum}"
-                    planPhaseMaximum != null -> "Adjustment{planPhaseMaximum=$planPhaseMaximum}"
+                    usageDiscount != null -> "Adjustment{usageDiscount=$usageDiscount}"
+                    amountDiscount != null -> "Adjustment{amountDiscount=$amountDiscount}"
+                    percentageDiscount != null ->
+                        "Adjustment{percentageDiscount=$percentageDiscount}"
+                    minimum != null -> "Adjustment{minimum=$minimum}"
+                    maximum != null -> "Adjustment{maximum=$maximum}"
                     _json != null -> "Adjustment{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Adjustment")
                 }
 
             companion object {
 
-                fun ofPlanPhaseUsageDiscount(
-                    planPhaseUsageDiscount: PlanPhaseUsageDiscountAdjustment
-                ) = Adjustment(planPhaseUsageDiscount = planPhaseUsageDiscount)
+                fun ofUsageDiscount(usageDiscount: UsageDiscount) =
+                    Adjustment(usageDiscount = usageDiscount)
 
-                fun ofPlanPhaseAmountDiscount(
-                    planPhaseAmountDiscount: PlanPhaseAmountDiscountAdjustment
-                ) = Adjustment(planPhaseAmountDiscount = planPhaseAmountDiscount)
+                fun ofAmountDiscount(amountDiscount: AmountDiscount) =
+                    Adjustment(amountDiscount = amountDiscount)
 
-                fun ofPlanPhasePercentageDiscount(
-                    planPhasePercentageDiscount: PlanPhasePercentageDiscountAdjustment
-                ) = Adjustment(planPhasePercentageDiscount = planPhasePercentageDiscount)
+                fun ofPercentageDiscount(percentageDiscount: PercentageDiscount) =
+                    Adjustment(percentageDiscount = percentageDiscount)
 
-                fun ofPlanPhaseMinimum(planPhaseMinimum: PlanPhaseMinimumAdjustment) =
-                    Adjustment(planPhaseMinimum = planPhaseMinimum)
+                fun ofMinimum(minimum: Minimum) = Adjustment(minimum = minimum)
 
-                fun ofPlanPhaseMaximum(planPhaseMaximum: PlanPhaseMaximumAdjustment) =
-                    Adjustment(planPhaseMaximum = planPhaseMaximum)
+                fun ofMaximum(maximum: Maximum) = Adjustment(maximum = maximum)
             }
 
             /**
@@ -2030,21 +1988,15 @@ private constructor(
              */
             interface Visitor<out T> {
 
-                fun visitPlanPhaseUsageDiscount(
-                    planPhaseUsageDiscount: PlanPhaseUsageDiscountAdjustment
-                ): T
+                fun visitUsageDiscount(usageDiscount: UsageDiscount): T
 
-                fun visitPlanPhaseAmountDiscount(
-                    planPhaseAmountDiscount: PlanPhaseAmountDiscountAdjustment
-                ): T
+                fun visitAmountDiscount(amountDiscount: AmountDiscount): T
 
-                fun visitPlanPhasePercentageDiscount(
-                    planPhasePercentageDiscount: PlanPhasePercentageDiscountAdjustment
-                ): T
+                fun visitPercentageDiscount(percentageDiscount: PercentageDiscount): T
 
-                fun visitPlanPhaseMinimum(planPhaseMinimum: PlanPhaseMinimumAdjustment): T
+                fun visitMinimum(minimum: Minimum): T
 
-                fun visitPlanPhaseMaximum(planPhaseMaximum: PlanPhaseMaximumAdjustment): T
+                fun visitMaximum(maximum: Maximum): T
 
                 /**
                  * Maps an unknown variant of [Adjustment] to a value of type [T].
@@ -2069,44 +2021,29 @@ private constructor(
 
                     when (adjustmentType) {
                         "usage_discount" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<PlanPhaseUsageDiscountAdjustment>(),
-                                )
-                                ?.let { Adjustment(planPhaseUsageDiscount = it, _json = json) }
-                                ?: Adjustment(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<UsageDiscount>())?.let {
+                                Adjustment(usageDiscount = it, _json = json)
+                            } ?: Adjustment(_json = json)
                         }
                         "amount_discount" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<PlanPhaseAmountDiscountAdjustment>(),
-                                )
-                                ?.let { Adjustment(planPhaseAmountDiscount = it, _json = json) }
-                                ?: Adjustment(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<AmountDiscount>())?.let {
+                                Adjustment(amountDiscount = it, _json = json)
+                            } ?: Adjustment(_json = json)
                         }
                         "percentage_discount" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<PlanPhasePercentageDiscountAdjustment>(),
-                                )
-                                ?.let { Adjustment(planPhasePercentageDiscount = it, _json = json) }
-                                ?: Adjustment(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<PercentageDiscount>())?.let {
+                                Adjustment(percentageDiscount = it, _json = json)
+                            } ?: Adjustment(_json = json)
                         }
                         "minimum" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<PlanPhaseMinimumAdjustment>(),
-                                )
-                                ?.let { Adjustment(planPhaseMinimum = it, _json = json) }
-                                ?: Adjustment(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Minimum>())?.let {
+                                Adjustment(minimum = it, _json = json)
+                            } ?: Adjustment(_json = json)
                         }
                         "maximum" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<PlanPhaseMaximumAdjustment>(),
-                                )
-                                ?.let { Adjustment(planPhaseMaximum = it, _json = json) }
-                                ?: Adjustment(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Maximum>())?.let {
+                                Adjustment(maximum = it, _json = json)
+                            } ?: Adjustment(_json = json)
                         }
                     }
 
@@ -2122,23 +2059,19 @@ private constructor(
                     provider: SerializerProvider,
                 ) {
                     when {
-                        value.planPhaseUsageDiscount != null ->
-                            generator.writeObject(value.planPhaseUsageDiscount)
-                        value.planPhaseAmountDiscount != null ->
-                            generator.writeObject(value.planPhaseAmountDiscount)
-                        value.planPhasePercentageDiscount != null ->
-                            generator.writeObject(value.planPhasePercentageDiscount)
-                        value.planPhaseMinimum != null ->
-                            generator.writeObject(value.planPhaseMinimum)
-                        value.planPhaseMaximum != null ->
-                            generator.writeObject(value.planPhaseMaximum)
+                        value.usageDiscount != null -> generator.writeObject(value.usageDiscount)
+                        value.amountDiscount != null -> generator.writeObject(value.amountDiscount)
+                        value.percentageDiscount != null ->
+                            generator.writeObject(value.percentageDiscount)
+                        value.minimum != null -> generator.writeObject(value.minimum)
+                        value.maximum != null -> generator.writeObject(value.maximum)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid Adjustment")
                     }
                 }
             }
 
-            class PlanPhaseUsageDiscountAdjustment
+            class UsageDiscount
             private constructor(
                 private val id: JsonField<String>,
                 private val adjustmentType: JsonValue,
@@ -2318,8 +2251,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [PlanPhaseUsageDiscountAdjustment].
+                     * Returns a mutable builder for constructing an instance of [UsageDiscount].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -2334,7 +2266,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [PlanPhaseUsageDiscountAdjustment]. */
+                /** A builder for [UsageDiscount]. */
                 class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
@@ -2346,21 +2278,16 @@ private constructor(
                     private var usageDiscount: JsonField<Double>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        planPhaseUsageDiscountAdjustment: PlanPhaseUsageDiscountAdjustment
-                    ) = apply {
-                        id = planPhaseUsageDiscountAdjustment.id
-                        adjustmentType = planPhaseUsageDiscountAdjustment.adjustmentType
+                    internal fun from(usageDiscount: UsageDiscount) = apply {
+                        id = usageDiscount.id
+                        adjustmentType = usageDiscount.adjustmentType
                         appliesToPriceIds =
-                            planPhaseUsageDiscountAdjustment.appliesToPriceIds.map {
-                                it.toMutableList()
-                            }
-                        isInvoiceLevel = planPhaseUsageDiscountAdjustment.isInvoiceLevel
-                        planPhaseOrder = planPhaseUsageDiscountAdjustment.planPhaseOrder
-                        reason = planPhaseUsageDiscountAdjustment.reason
-                        usageDiscount = planPhaseUsageDiscountAdjustment.usageDiscount
-                        additionalProperties =
-                            planPhaseUsageDiscountAdjustment.additionalProperties.toMutableMap()
+                            usageDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        isInvoiceLevel = usageDiscount.isInvoiceLevel
+                        planPhaseOrder = usageDiscount.planPhaseOrder
+                        reason = usageDiscount.reason
+                        this.usageDiscount = usageDiscount.usageDiscount
+                        additionalProperties = usageDiscount.additionalProperties.toMutableMap()
                     }
 
                     fun id(id: String) = id(JsonField.of(id))
@@ -2511,7 +2438,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [PlanPhaseUsageDiscountAdjustment].
+                     * Returns an immutable instance of [UsageDiscount].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -2527,8 +2454,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): PlanPhaseUsageDiscountAdjustment =
-                        PlanPhaseUsageDiscountAdjustment(
+                    fun build(): UsageDiscount =
+                        UsageDiscount(
                             checkRequired("id", id),
                             adjustmentType,
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
@@ -2544,7 +2471,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): PlanPhaseUsageDiscountAdjustment = apply {
+                fun validate(): UsageDiscount = apply {
                     if (validated) {
                         return@apply
                     }
@@ -2595,7 +2522,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is PlanPhaseUsageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && planPhaseOrder == other.planPhaseOrder && reason == other.reason && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is UsageDiscount && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && planPhaseOrder == other.planPhaseOrder && reason == other.reason && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -2605,10 +2532,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "PlanPhaseUsageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
+                    "UsageDiscount{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
             }
 
-            class PlanPhaseAmountDiscountAdjustment
+            class AmountDiscount
             private constructor(
                 private val id: JsonField<String>,
                 private val adjustmentType: JsonValue,
@@ -2788,8 +2715,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [PlanPhaseAmountDiscountAdjustment].
+                     * Returns a mutable builder for constructing an instance of [AmountDiscount].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -2804,7 +2730,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [PlanPhaseAmountDiscountAdjustment]. */
+                /** A builder for [AmountDiscount]. */
                 class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
@@ -2816,21 +2742,16 @@ private constructor(
                     private var reason: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        planPhaseAmountDiscountAdjustment: PlanPhaseAmountDiscountAdjustment
-                    ) = apply {
-                        id = planPhaseAmountDiscountAdjustment.id
-                        adjustmentType = planPhaseAmountDiscountAdjustment.adjustmentType
-                        amountDiscount = planPhaseAmountDiscountAdjustment.amountDiscount
+                    internal fun from(amountDiscount: AmountDiscount) = apply {
+                        id = amountDiscount.id
+                        adjustmentType = amountDiscount.adjustmentType
+                        this.amountDiscount = amountDiscount.amountDiscount
                         appliesToPriceIds =
-                            planPhaseAmountDiscountAdjustment.appliesToPriceIds.map {
-                                it.toMutableList()
-                            }
-                        isInvoiceLevel = planPhaseAmountDiscountAdjustment.isInvoiceLevel
-                        planPhaseOrder = planPhaseAmountDiscountAdjustment.planPhaseOrder
-                        reason = planPhaseAmountDiscountAdjustment.reason
-                        additionalProperties =
-                            planPhaseAmountDiscountAdjustment.additionalProperties.toMutableMap()
+                            amountDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        isInvoiceLevel = amountDiscount.isInvoiceLevel
+                        planPhaseOrder = amountDiscount.planPhaseOrder
+                        reason = amountDiscount.reason
+                        additionalProperties = amountDiscount.additionalProperties.toMutableMap()
                     }
 
                     fun id(id: String) = id(JsonField.of(id))
@@ -2981,7 +2902,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [PlanPhaseAmountDiscountAdjustment].
+                     * Returns an immutable instance of [AmountDiscount].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -2997,8 +2918,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): PlanPhaseAmountDiscountAdjustment =
-                        PlanPhaseAmountDiscountAdjustment(
+                    fun build(): AmountDiscount =
+                        AmountDiscount(
                             checkRequired("id", id),
                             adjustmentType,
                             checkRequired("amountDiscount", amountDiscount),
@@ -3014,7 +2935,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): PlanPhaseAmountDiscountAdjustment = apply {
+                fun validate(): AmountDiscount = apply {
                     if (validated) {
                         return@apply
                     }
@@ -3065,7 +2986,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is PlanPhaseAmountDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is AmountDiscount && id == other.id && adjustmentType == other.adjustmentType && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -3075,10 +2996,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "PlanPhaseAmountDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
+                    "AmountDiscount{id=$id, adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
-            class PlanPhasePercentageDiscountAdjustment
+            class PercentageDiscount
             private constructor(
                 private val id: JsonField<String>,
                 private val adjustmentType: JsonValue,
@@ -3260,7 +3181,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [PlanPhasePercentageDiscountAdjustment].
+                     * [PercentageDiscount].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -3275,7 +3196,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [PlanPhasePercentageDiscountAdjustment]. */
+                /** A builder for [PercentageDiscount]. */
                 class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
@@ -3287,23 +3208,17 @@ private constructor(
                     private var reason: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        planPhasePercentageDiscountAdjustment: PlanPhasePercentageDiscountAdjustment
-                    ) = apply {
-                        id = planPhasePercentageDiscountAdjustment.id
-                        adjustmentType = planPhasePercentageDiscountAdjustment.adjustmentType
+                    internal fun from(percentageDiscount: PercentageDiscount) = apply {
+                        id = percentageDiscount.id
+                        adjustmentType = percentageDiscount.adjustmentType
                         appliesToPriceIds =
-                            planPhasePercentageDiscountAdjustment.appliesToPriceIds.map {
-                                it.toMutableList()
-                            }
-                        isInvoiceLevel = planPhasePercentageDiscountAdjustment.isInvoiceLevel
-                        percentageDiscount =
-                            planPhasePercentageDiscountAdjustment.percentageDiscount
-                        planPhaseOrder = planPhasePercentageDiscountAdjustment.planPhaseOrder
-                        reason = planPhasePercentageDiscountAdjustment.reason
+                            percentageDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        isInvoiceLevel = percentageDiscount.isInvoiceLevel
+                        this.percentageDiscount = percentageDiscount.percentageDiscount
+                        planPhaseOrder = percentageDiscount.planPhaseOrder
+                        reason = percentageDiscount.reason
                         additionalProperties =
-                            planPhasePercentageDiscountAdjustment.additionalProperties
-                                .toMutableMap()
+                            percentageDiscount.additionalProperties.toMutableMap()
                     }
 
                     fun id(id: String) = id(JsonField.of(id))
@@ -3454,7 +3369,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [PlanPhasePercentageDiscountAdjustment].
+                     * Returns an immutable instance of [PercentageDiscount].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -3470,8 +3385,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): PlanPhasePercentageDiscountAdjustment =
-                        PlanPhasePercentageDiscountAdjustment(
+                    fun build(): PercentageDiscount =
+                        PercentageDiscount(
                             checkRequired("id", id),
                             adjustmentType,
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
@@ -3487,7 +3402,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): PlanPhasePercentageDiscountAdjustment = apply {
+                fun validate(): PercentageDiscount = apply {
                     if (validated) {
                         return@apply
                     }
@@ -3538,7 +3453,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is PlanPhasePercentageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && percentageDiscount == other.percentageDiscount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is PercentageDiscount && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && percentageDiscount == other.percentageDiscount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -3548,10 +3463,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "PlanPhasePercentageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
+                    "PercentageDiscount{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
-            class PlanPhaseMinimumAdjustment
+            class Minimum
             private constructor(
                 private val id: JsonField<String>,
                 private val adjustmentType: JsonValue,
@@ -3753,8 +3668,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [PlanPhaseMinimumAdjustment].
+                     * Returns a mutable builder for constructing an instance of [Minimum].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -3770,7 +3684,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [PlanPhaseMinimumAdjustment]. */
+                /** A builder for [Minimum]. */
                 class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
@@ -3783,22 +3697,17 @@ private constructor(
                     private var reason: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(planPhaseMinimumAdjustment: PlanPhaseMinimumAdjustment) =
-                        apply {
-                            id = planPhaseMinimumAdjustment.id
-                            adjustmentType = planPhaseMinimumAdjustment.adjustmentType
-                            appliesToPriceIds =
-                                planPhaseMinimumAdjustment.appliesToPriceIds.map {
-                                    it.toMutableList()
-                                }
-                            isInvoiceLevel = planPhaseMinimumAdjustment.isInvoiceLevel
-                            itemId = planPhaseMinimumAdjustment.itemId
-                            minimumAmount = planPhaseMinimumAdjustment.minimumAmount
-                            planPhaseOrder = planPhaseMinimumAdjustment.planPhaseOrder
-                            reason = planPhaseMinimumAdjustment.reason
-                            additionalProperties =
-                                planPhaseMinimumAdjustment.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(minimum: Minimum) = apply {
+                        id = minimum.id
+                        adjustmentType = minimum.adjustmentType
+                        appliesToPriceIds = minimum.appliesToPriceIds.map { it.toMutableList() }
+                        isInvoiceLevel = minimum.isInvoiceLevel
+                        itemId = minimum.itemId
+                        minimumAmount = minimum.minimumAmount
+                        planPhaseOrder = minimum.planPhaseOrder
+                        reason = minimum.reason
+                        additionalProperties = minimum.additionalProperties.toMutableMap()
+                    }
 
                     fun id(id: String) = id(JsonField.of(id))
 
@@ -3960,7 +3869,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [PlanPhaseMinimumAdjustment].
+                     * Returns an immutable instance of [Minimum].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -3977,8 +3886,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): PlanPhaseMinimumAdjustment =
-                        PlanPhaseMinimumAdjustment(
+                    fun build(): Minimum =
+                        Minimum(
                             checkRequired("id", id),
                             adjustmentType,
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
@@ -3995,7 +3904,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): PlanPhaseMinimumAdjustment = apply {
+                fun validate(): Minimum = apply {
                     if (validated) {
                         return@apply
                     }
@@ -4046,7 +3955,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is PlanPhaseMinimumAdjustment && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Minimum && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -4056,10 +3965,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "PlanPhaseMinimumAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
+                    "Minimum{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
-            class PlanPhaseMaximumAdjustment
+            class Maximum
             private constructor(
                 private val id: JsonField<String>,
                 private val adjustmentType: JsonValue,
@@ -4239,8 +4148,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [PlanPhaseMaximumAdjustment].
+                     * Returns a mutable builder for constructing an instance of [Maximum].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -4255,7 +4163,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [PlanPhaseMaximumAdjustment]. */
+                /** A builder for [Maximum]. */
                 class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
@@ -4267,21 +4175,16 @@ private constructor(
                     private var reason: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(planPhaseMaximumAdjustment: PlanPhaseMaximumAdjustment) =
-                        apply {
-                            id = planPhaseMaximumAdjustment.id
-                            adjustmentType = planPhaseMaximumAdjustment.adjustmentType
-                            appliesToPriceIds =
-                                planPhaseMaximumAdjustment.appliesToPriceIds.map {
-                                    it.toMutableList()
-                                }
-                            isInvoiceLevel = planPhaseMaximumAdjustment.isInvoiceLevel
-                            maximumAmount = planPhaseMaximumAdjustment.maximumAmount
-                            planPhaseOrder = planPhaseMaximumAdjustment.planPhaseOrder
-                            reason = planPhaseMaximumAdjustment.reason
-                            additionalProperties =
-                                planPhaseMaximumAdjustment.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(maximum: Maximum) = apply {
+                        id = maximum.id
+                        adjustmentType = maximum.adjustmentType
+                        appliesToPriceIds = maximum.appliesToPriceIds.map { it.toMutableList() }
+                        isInvoiceLevel = maximum.isInvoiceLevel
+                        maximumAmount = maximum.maximumAmount
+                        planPhaseOrder = maximum.planPhaseOrder
+                        reason = maximum.reason
+                        additionalProperties = maximum.additionalProperties.toMutableMap()
+                    }
 
                     fun id(id: String) = id(JsonField.of(id))
 
@@ -4431,7 +4334,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [PlanPhaseMaximumAdjustment].
+                     * Returns an immutable instance of [Maximum].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -4447,8 +4350,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): PlanPhaseMaximumAdjustment =
-                        PlanPhaseMaximumAdjustment(
+                    fun build(): Maximum =
+                        Maximum(
                             checkRequired("id", id),
                             adjustmentType,
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
@@ -4464,7 +4367,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): PlanPhaseMaximumAdjustment = apply {
+                fun validate(): Maximum = apply {
                     if (validated) {
                         return@apply
                     }
@@ -4513,7 +4416,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is PlanPhaseMaximumAdjustment && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && maximumAmount == other.maximumAmount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Maximum && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && maximumAmount == other.maximumAmount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -4523,7 +4426,7 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "PlanPhaseMaximumAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, maximumAmount=$maximumAmount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
+                    "Maximum{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, maximumAmount=$maximumAmount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
             }
         }
 
@@ -4808,17 +4711,17 @@ private constructor(
     @JsonSerialize(using = DiscountInterval.Serializer::class)
     class DiscountInterval
     private constructor(
-        private val amount: AmountDiscountInterval? = null,
-        private val percentage: PercentageDiscountInterval? = null,
-        private val usage: UsageDiscountInterval? = null,
+        private val amount: Amount? = null,
+        private val percentage: Percentage? = null,
+        private val usage: Usage? = null,
         private val _json: JsonValue? = null,
     ) {
 
-        fun amount(): AmountDiscountInterval? = amount
+        fun amount(): Amount? = amount
 
-        fun percentage(): PercentageDiscountInterval? = percentage
+        fun percentage(): Percentage? = percentage
 
-        fun usage(): UsageDiscountInterval? = usage
+        fun usage(): Usage? = usage
 
         fun isAmount(): Boolean = amount != null
 
@@ -4826,11 +4729,11 @@ private constructor(
 
         fun isUsage(): Boolean = usage != null
 
-        fun asAmount(): AmountDiscountInterval = amount.getOrThrow("amount")
+        fun asAmount(): Amount = amount.getOrThrow("amount")
 
-        fun asPercentage(): PercentageDiscountInterval = percentage.getOrThrow("percentage")
+        fun asPercentage(): Percentage = percentage.getOrThrow("percentage")
 
-        fun asUsage(): UsageDiscountInterval = usage.getOrThrow("usage")
+        fun asUsage(): Usage = usage.getOrThrow("usage")
 
         fun _json(): JsonValue? = _json
 
@@ -4851,15 +4754,15 @@ private constructor(
 
             accept(
                 object : Visitor<Unit> {
-                    override fun visitAmount(amount: AmountDiscountInterval) {
+                    override fun visitAmount(amount: Amount) {
                         amount.validate()
                     }
 
-                    override fun visitPercentage(percentage: PercentageDiscountInterval) {
+                    override fun visitPercentage(percentage: Percentage) {
                         percentage.validate()
                     }
 
-                    override fun visitUsage(usage: UsageDiscountInterval) {
+                    override fun visitUsage(usage: Usage) {
                         usage.validate()
                     }
                 }
@@ -4884,12 +4787,11 @@ private constructor(
         internal fun validity(): Int =
             accept(
                 object : Visitor<Int> {
-                    override fun visitAmount(amount: AmountDiscountInterval) = amount.validity()
+                    override fun visitAmount(amount: Amount) = amount.validity()
 
-                    override fun visitPercentage(percentage: PercentageDiscountInterval) =
-                        percentage.validity()
+                    override fun visitPercentage(percentage: Percentage) = percentage.validity()
 
-                    override fun visitUsage(usage: UsageDiscountInterval) = usage.validity()
+                    override fun visitUsage(usage: Usage) = usage.validity()
 
                     override fun unknown(json: JsonValue?) = 0
                 }
@@ -4916,12 +4818,11 @@ private constructor(
 
         companion object {
 
-            fun ofAmount(amount: AmountDiscountInterval) = DiscountInterval(amount = amount)
+            fun ofAmount(amount: Amount) = DiscountInterval(amount = amount)
 
-            fun ofPercentage(percentage: PercentageDiscountInterval) =
-                DiscountInterval(percentage = percentage)
+            fun ofPercentage(percentage: Percentage) = DiscountInterval(percentage = percentage)
 
-            fun ofUsage(usage: UsageDiscountInterval) = DiscountInterval(usage = usage)
+            fun ofUsage(usage: Usage) = DiscountInterval(usage = usage)
         }
 
         /**
@@ -4930,11 +4831,11 @@ private constructor(
          */
         interface Visitor<out T> {
 
-            fun visitAmount(amount: AmountDiscountInterval): T
+            fun visitAmount(amount: Amount): T
 
-            fun visitPercentage(percentage: PercentageDiscountInterval): T
+            fun visitPercentage(percentage: Percentage): T
 
-            fun visitUsage(usage: UsageDiscountInterval): T
+            fun visitUsage(usage: Usage): T
 
             /**
              * Maps an unknown variant of [DiscountInterval] to a value of type [T].
@@ -4959,17 +4860,17 @@ private constructor(
 
                 when (discountType) {
                     "amount" -> {
-                        return tryDeserialize(node, jacksonTypeRef<AmountDiscountInterval>())?.let {
+                        return tryDeserialize(node, jacksonTypeRef<Amount>())?.let {
                             DiscountInterval(amount = it, _json = json)
                         } ?: DiscountInterval(_json = json)
                     }
                     "percentage" -> {
-                        return tryDeserialize(node, jacksonTypeRef<PercentageDiscountInterval>())
-                            ?.let { DiscountInterval(percentage = it, _json = json) }
-                            ?: DiscountInterval(_json = json)
+                        return tryDeserialize(node, jacksonTypeRef<Percentage>())?.let {
+                            DiscountInterval(percentage = it, _json = json)
+                        } ?: DiscountInterval(_json = json)
                     }
                     "usage" -> {
-                        return tryDeserialize(node, jacksonTypeRef<UsageDiscountInterval>())?.let {
+                        return tryDeserialize(node, jacksonTypeRef<Usage>())?.let {
                             DiscountInterval(usage = it, _json = json)
                         } ?: DiscountInterval(_json = json)
                     }
@@ -4996,7 +4897,7 @@ private constructor(
             }
         }
 
-        class AmountDiscountInterval
+        class Amount
         private constructor(
             private val amountDiscount: JsonField<String>,
             private val appliesToPriceIds: JsonField<List<String>>,
@@ -5160,8 +5061,7 @@ private constructor(
             companion object {
 
                 /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [AmountDiscountInterval].
+                 * Returns a mutable builder for constructing an instance of [Amount].
                  *
                  * The following fields are required:
                  * ```kotlin
@@ -5175,7 +5075,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            /** A builder for [AmountDiscountInterval]. */
+            /** A builder for [Amount]. */
             class Builder internal constructor() {
 
                 private var amountDiscount: JsonField<String>? = null
@@ -5186,17 +5086,15 @@ private constructor(
                 private var startDate: JsonField<OffsetDateTime>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(amountDiscountInterval: AmountDiscountInterval) = apply {
-                    amountDiscount = amountDiscountInterval.amountDiscount
-                    appliesToPriceIds =
-                        amountDiscountInterval.appliesToPriceIds.map { it.toMutableList() }
+                internal fun from(amount: Amount) = apply {
+                    amountDiscount = amount.amountDiscount
+                    appliesToPriceIds = amount.appliesToPriceIds.map { it.toMutableList() }
                     appliesToPriceIntervalIds =
-                        amountDiscountInterval.appliesToPriceIntervalIds.map { it.toMutableList() }
-                    discountType = amountDiscountInterval.discountType
-                    endDate = amountDiscountInterval.endDate
-                    startDate = amountDiscountInterval.startDate
-                    additionalProperties =
-                        amountDiscountInterval.additionalProperties.toMutableMap()
+                        amount.appliesToPriceIntervalIds.map { it.toMutableList() }
+                    discountType = amount.discountType
+                    endDate = amount.endDate
+                    startDate = amount.startDate
+                    additionalProperties = amount.additionalProperties.toMutableMap()
                 }
 
                 /** Only available if discount_type is `amount`. */
@@ -5336,7 +5234,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [AmountDiscountInterval].
+                 * Returns an immutable instance of [Amount].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -5351,8 +5249,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): AmountDiscountInterval =
-                    AmountDiscountInterval(
+                fun build(): Amount =
+                    Amount(
                         checkRequired("amountDiscount", amountDiscount),
                         checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                             it.toImmutable()
@@ -5369,7 +5267,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): AmountDiscountInterval = apply {
+            fun validate(): Amount = apply {
                 if (validated) {
                     return@apply
                 }
@@ -5414,7 +5312,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AmountDiscountInterval && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && discountType == other.discountType && endDate == other.endDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Amount && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && discountType == other.discountType && endDate == other.endDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -5424,10 +5322,10 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AmountDiscountInterval{amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, discountType=$discountType, endDate=$endDate, startDate=$startDate, additionalProperties=$additionalProperties}"
+                "Amount{amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, discountType=$discountType, endDate=$endDate, startDate=$startDate, additionalProperties=$additionalProperties}"
         }
 
-        class PercentageDiscountInterval
+        class Percentage
         private constructor(
             private val appliesToPriceIds: JsonField<List<String>>,
             private val appliesToPriceIntervalIds: JsonField<List<String>>,
@@ -5591,8 +5489,7 @@ private constructor(
             companion object {
 
                 /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [PercentageDiscountInterval].
+                 * Returns a mutable builder for constructing an instance of [Percentage].
                  *
                  * The following fields are required:
                  * ```kotlin
@@ -5606,7 +5503,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            /** A builder for [PercentageDiscountInterval]. */
+            /** A builder for [Percentage]. */
             class Builder internal constructor() {
 
                 private var appliesToPriceIds: JsonField<MutableList<String>>? = null
@@ -5617,19 +5514,15 @@ private constructor(
                 private var startDate: JsonField<OffsetDateTime>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(percentageDiscountInterval: PercentageDiscountInterval) = apply {
-                    appliesToPriceIds =
-                        percentageDiscountInterval.appliesToPriceIds.map { it.toMutableList() }
+                internal fun from(percentage: Percentage) = apply {
+                    appliesToPriceIds = percentage.appliesToPriceIds.map { it.toMutableList() }
                     appliesToPriceIntervalIds =
-                        percentageDiscountInterval.appliesToPriceIntervalIds.map {
-                            it.toMutableList()
-                        }
-                    discountType = percentageDiscountInterval.discountType
-                    endDate = percentageDiscountInterval.endDate
-                    percentageDiscount = percentageDiscountInterval.percentageDiscount
-                    startDate = percentageDiscountInterval.startDate
-                    additionalProperties =
-                        percentageDiscountInterval.additionalProperties.toMutableMap()
+                        percentage.appliesToPriceIntervalIds.map { it.toMutableList() }
+                    discountType = percentage.discountType
+                    endDate = percentage.endDate
+                    percentageDiscount = percentage.percentageDiscount
+                    startDate = percentage.startDate
+                    additionalProperties = percentage.additionalProperties.toMutableMap()
                 }
 
                 /** The price ids that this discount interval applies to. */
@@ -5771,7 +5664,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [PercentageDiscountInterval].
+                 * Returns an immutable instance of [Percentage].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -5786,8 +5679,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): PercentageDiscountInterval =
-                    PercentageDiscountInterval(
+                fun build(): Percentage =
+                    Percentage(
                         checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                             it.toImmutable()
                         },
@@ -5804,7 +5697,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): PercentageDiscountInterval = apply {
+            fun validate(): Percentage = apply {
                 if (validated) {
                     return@apply
                 }
@@ -5849,7 +5742,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is PercentageDiscountInterval && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && discountType == other.discountType && endDate == other.endDate && percentageDiscount == other.percentageDiscount && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Percentage && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && discountType == other.discountType && endDate == other.endDate && percentageDiscount == other.percentageDiscount && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -5859,10 +5752,10 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "PercentageDiscountInterval{appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, discountType=$discountType, endDate=$endDate, percentageDiscount=$percentageDiscount, startDate=$startDate, additionalProperties=$additionalProperties}"
+                "Percentage{appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, discountType=$discountType, endDate=$endDate, percentageDiscount=$percentageDiscount, startDate=$startDate, additionalProperties=$additionalProperties}"
         }
 
-        class UsageDiscountInterval
+        class Usage
         private constructor(
             private val appliesToPriceIds: JsonField<List<String>>,
             private val appliesToPriceIntervalIds: JsonField<List<String>>,
@@ -6027,8 +5920,7 @@ private constructor(
             companion object {
 
                 /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [UsageDiscountInterval].
+                 * Returns a mutable builder for constructing an instance of [Usage].
                  *
                  * The following fields are required:
                  * ```kotlin
@@ -6042,7 +5934,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            /** A builder for [UsageDiscountInterval]. */
+            /** A builder for [Usage]. */
             class Builder internal constructor() {
 
                 private var appliesToPriceIds: JsonField<MutableList<String>>? = null
@@ -6053,16 +5945,15 @@ private constructor(
                 private var usageDiscount: JsonField<Double>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(usageDiscountInterval: UsageDiscountInterval) = apply {
-                    appliesToPriceIds =
-                        usageDiscountInterval.appliesToPriceIds.map { it.toMutableList() }
+                internal fun from(usage: Usage) = apply {
+                    appliesToPriceIds = usage.appliesToPriceIds.map { it.toMutableList() }
                     appliesToPriceIntervalIds =
-                        usageDiscountInterval.appliesToPriceIntervalIds.map { it.toMutableList() }
-                    discountType = usageDiscountInterval.discountType
-                    endDate = usageDiscountInterval.endDate
-                    startDate = usageDiscountInterval.startDate
-                    usageDiscount = usageDiscountInterval.usageDiscount
-                    additionalProperties = usageDiscountInterval.additionalProperties.toMutableMap()
+                        usage.appliesToPriceIntervalIds.map { it.toMutableList() }
+                    discountType = usage.discountType
+                    endDate = usage.endDate
+                    startDate = usage.startDate
+                    usageDiscount = usage.usageDiscount
+                    additionalProperties = usage.additionalProperties.toMutableMap()
                 }
 
                 /** The price ids that this discount interval applies to. */
@@ -6205,7 +6096,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [UsageDiscountInterval].
+                 * Returns an immutable instance of [Usage].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -6220,8 +6111,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): UsageDiscountInterval =
-                    UsageDiscountInterval(
+                fun build(): Usage =
+                    Usage(
                         checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                             it.toImmutable()
                         },
@@ -6238,7 +6129,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): UsageDiscountInterval = apply {
+            fun validate(): Usage = apply {
                 if (validated) {
                     return@apply
                 }
@@ -6283,7 +6174,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is UsageDiscountInterval && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && discountType == other.discountType && endDate == other.endDate && startDate == other.startDate && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Usage && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && discountType == other.discountType && endDate == other.endDate && startDate == other.startDate && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -6293,7 +6184,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "UsageDiscountInterval{appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, discountType=$discountType, endDate=$endDate, startDate=$startDate, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
+                "Usage{appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, discountType=$discountType, endDate=$endDate, startDate=$startDate, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
         }
     }
 
@@ -8044,142 +7935,142 @@ private constructor(
             fun price(price: JsonField<Price>) = apply { this.price = price }
 
             /** Alias for calling [price] with `Price.ofUnit(unit)`. */
-            fun price(unit: Price.UnitPrice) = price(Price.ofUnit(unit))
+            fun price(unit: Price.Unit) = price(Price.ofUnit(unit))
 
-            /** Alias for calling [price] with `Price.ofPackagePrice(packagePrice)`. */
-            fun price(packagePrice: Price.PackagePrice) = price(Price.ofPackagePrice(packagePrice))
+            /** Alias for calling [price] with `Price.ofPackage(package_)`. */
+            fun price(package_: Price.Package) = price(Price.ofPackage(package_))
 
             /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
-            fun price(matrix: Price.MatrixPrice) = price(Price.ofMatrix(matrix))
+            fun price(matrix: Price.Matrix) = price(Price.ofMatrix(matrix))
 
             /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
-            fun price(tiered: Price.TieredPrice) = price(Price.ofTiered(tiered))
+            fun price(tiered: Price.Tiered) = price(Price.ofTiered(tiered))
 
             /** Alias for calling [price] with `Price.ofTieredBps(tieredBps)`. */
-            fun price(tieredBps: Price.TieredBpsPrice) = price(Price.ofTieredBps(tieredBps))
+            fun price(tieredBps: Price.TieredBps) = price(Price.ofTieredBps(tieredBps))
 
             /** Alias for calling [price] with `Price.ofBps(bps)`. */
-            fun price(bps: Price.BpsPrice) = price(Price.ofBps(bps))
+            fun price(bps: Price.Bps) = price(Price.ofBps(bps))
 
             /** Alias for calling [price] with `Price.ofBulkBps(bulkBps)`. */
-            fun price(bulkBps: Price.BulkBpsPrice) = price(Price.ofBulkBps(bulkBps))
+            fun price(bulkBps: Price.BulkBps) = price(Price.ofBulkBps(bulkBps))
 
             /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
-            fun price(bulk: Price.BulkPrice) = price(Price.ofBulk(bulk))
+            fun price(bulk: Price.Bulk) = price(Price.ofBulk(bulk))
 
             /**
              * Alias for calling [price] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
              */
-            fun price(thresholdTotalAmount: Price.ThresholdTotalAmountPrice) =
+            fun price(thresholdTotalAmount: Price.ThresholdTotalAmount) =
                 price(Price.ofThresholdTotalAmount(thresholdTotalAmount))
 
             /** Alias for calling [price] with `Price.ofTieredPackage(tieredPackage)`. */
-            fun price(tieredPackage: Price.TieredPackagePrice) =
+            fun price(tieredPackage: Price.TieredPackage) =
                 price(Price.ofTieredPackage(tieredPackage))
 
             /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
-            fun price(groupedTiered: Price.GroupedTieredPrice) =
+            fun price(groupedTiered: Price.GroupedTiered) =
                 price(Price.ofGroupedTiered(groupedTiered))
 
             /** Alias for calling [price] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
-            fun price(tieredWithMinimum: Price.TieredWithMinimumPrice) =
+            fun price(tieredWithMinimum: Price.TieredWithMinimum) =
                 price(Price.ofTieredWithMinimum(tieredWithMinimum))
 
             /**
              * Alias for calling [price] with
              * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
              */
-            fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimumPrice) =
+            fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimum) =
                 price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
             /**
              * Alias for calling [price] with
              * `Price.ofPackageWithAllocation(packageWithAllocation)`.
              */
-            fun price(packageWithAllocation: Price.PackageWithAllocationPrice) =
+            fun price(packageWithAllocation: Price.PackageWithAllocation) =
                 price(Price.ofPackageWithAllocation(packageWithAllocation))
 
             /** Alias for calling [price] with `Price.ofUnitWithPercent(unitWithPercent)`. */
-            fun price(unitWithPercent: Price.UnitWithPercentPrice) =
+            fun price(unitWithPercent: Price.UnitWithPercent) =
                 price(Price.ofUnitWithPercent(unitWithPercent))
 
             /**
              * Alias for calling [price] with `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
              */
-            fun price(matrixWithAllocation: Price.MatrixWithAllocationPrice) =
+            fun price(matrixWithAllocation: Price.MatrixWithAllocation) =
                 price(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
             /**
              * Alias for calling [price] with `Price.ofTieredWithProration(tieredWithProration)`.
              */
-            fun price(tieredWithProration: Price.TieredWithProrationPrice) =
+            fun price(tieredWithProration: Price.TieredWithProration) =
                 price(Price.ofTieredWithProration(tieredWithProration))
 
             /** Alias for calling [price] with `Price.ofUnitWithProration(unitWithProration)`. */
-            fun price(unitWithProration: Price.UnitWithProrationPrice) =
+            fun price(unitWithProration: Price.UnitWithProration) =
                 price(Price.ofUnitWithProration(unitWithProration))
 
             /** Alias for calling [price] with `Price.ofGroupedAllocation(groupedAllocation)`. */
-            fun price(groupedAllocation: Price.GroupedAllocationPrice) =
+            fun price(groupedAllocation: Price.GroupedAllocation) =
                 price(Price.ofGroupedAllocation(groupedAllocation))
 
             /**
              * Alias for calling [price] with
              * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
              */
-            fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimumPrice) =
+            fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimum) =
                 price(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
 
             /**
              * Alias for calling [price] with
              * `Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)`.
              */
-            fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimumPrice) =
+            fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimum) =
                 price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
             /**
              * Alias for calling [price] with
              * `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
              */
-            fun price(matrixWithDisplayName: Price.MatrixWithDisplayNamePrice) =
+            fun price(matrixWithDisplayName: Price.MatrixWithDisplayName) =
                 price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
 
             /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
-            fun price(bulkWithProration: Price.BulkWithProrationPrice) =
+            fun price(bulkWithProration: Price.BulkWithProration) =
                 price(Price.ofBulkWithProration(bulkWithProration))
 
             /**
              * Alias for calling [price] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
              */
-            fun price(groupedTieredPackage: Price.GroupedTieredPackagePrice) =
+            fun price(groupedTieredPackage: Price.GroupedTieredPackage) =
                 price(Price.ofGroupedTieredPackage(groupedTieredPackage))
 
             /**
              * Alias for calling [price] with
              * `Price.ofMaxGroupTieredPackage(maxGroupTieredPackage)`.
              */
-            fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) =
+            fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackage) =
                 price(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
             /**
              * Alias for calling [price] with
              * `Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)`.
              */
-            fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricingPrice) =
+            fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricing) =
                 price(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
 
             /**
              * Alias for calling [price] with
              * `Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)`.
              */
-            fun price(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice) =
+            fun price(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricing) =
                 price(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
 
             /**
              * Alias for calling [price] with
              * `Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk)`.
              */
-            fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulkPrice) =
+            fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
                 price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
             /**

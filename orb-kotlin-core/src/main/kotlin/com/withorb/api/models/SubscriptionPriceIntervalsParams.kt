@@ -1279,75 +1279,50 @@ private constructor(
                     }
             }
 
-            /**
-             * Alias for calling [addDiscount] with
-             * `Discount.ofAmountDiscountCreationParams(amountDiscountCreationParams)`.
-             */
-            fun addDiscount(amountDiscountCreationParams: Discount.AmountDiscountCreationParams) =
-                addDiscount(Discount.ofAmountDiscountCreationParams(amountDiscountCreationParams))
+            /** Alias for calling [addDiscount] with `Discount.ofAmount(amount)`. */
+            fun addDiscount(amount: Discount.Amount) = addDiscount(Discount.ofAmount(amount))
 
             /**
              * Alias for calling [addDiscount] with the following:
              * ```kotlin
-             * Discount.AmountDiscountCreationParams.builder()
+             * Discount.Amount.builder()
              *     .amountDiscount(amountDiscount)
              *     .build()
              * ```
              */
-            fun addAmountDiscountCreationParamsDiscount(amountDiscount: Double) =
-                addDiscount(
-                    Discount.AmountDiscountCreationParams.builder()
-                        .amountDiscount(amountDiscount)
-                        .build()
-                )
+            fun addAmountDiscount(amountDiscount: Double) =
+                addDiscount(Discount.Amount.builder().amountDiscount(amountDiscount).build())
 
-            /**
-             * Alias for calling [addDiscount] with
-             * `Discount.ofPercentageDiscountCreationParams(percentageDiscountCreationParams)`.
-             */
-            fun addDiscount(
-                percentageDiscountCreationParams: Discount.PercentageDiscountCreationParams
-            ) =
-                addDiscount(
-                    Discount.ofPercentageDiscountCreationParams(percentageDiscountCreationParams)
-                )
+            /** Alias for calling [addDiscount] with `Discount.ofPercentage(percentage)`. */
+            fun addDiscount(percentage: Discount.Percentage) =
+                addDiscount(Discount.ofPercentage(percentage))
 
             /**
              * Alias for calling [addDiscount] with the following:
              * ```kotlin
-             * Discount.PercentageDiscountCreationParams.builder()
+             * Discount.Percentage.builder()
              *     .percentageDiscount(percentageDiscount)
              *     .build()
              * ```
              */
-            fun addPercentageDiscountCreationParamsDiscount(percentageDiscount: Double) =
+            fun addPercentageDiscount(percentageDiscount: Double) =
                 addDiscount(
-                    Discount.PercentageDiscountCreationParams.builder()
-                        .percentageDiscount(percentageDiscount)
-                        .build()
+                    Discount.Percentage.builder().percentageDiscount(percentageDiscount).build()
                 )
 
-            /**
-             * Alias for calling [addDiscount] with
-             * `Discount.ofUsageDiscountCreationParams(usageDiscountCreationParams)`.
-             */
-            fun addDiscount(usageDiscountCreationParams: Discount.UsageDiscountCreationParams) =
-                addDiscount(Discount.ofUsageDiscountCreationParams(usageDiscountCreationParams))
+            /** Alias for calling [addDiscount] with `Discount.ofUsage(usage)`. */
+            fun addDiscount(usage: Discount.Usage) = addDiscount(Discount.ofUsage(usage))
 
             /**
              * Alias for calling [addDiscount] with the following:
              * ```kotlin
-             * Discount.UsageDiscountCreationParams.builder()
+             * Discount.Usage.builder()
              *     .usageDiscount(usageDiscount)
              *     .build()
              * ```
              */
-            fun addUsageDiscountCreationParamsDiscount(usageDiscount: Double) =
-                addDiscount(
-                    Discount.UsageDiscountCreationParams.builder()
-                        .usageDiscount(usageDiscount)
-                        .build()
-                )
+            fun addUsageDiscount(usageDiscount: Double) =
+                addDiscount(Discount.Usage.builder().usageDiscount(usageDiscount).build())
 
             /**
              * The end date of the price interval. This is the date that the price will stop billing
@@ -1501,215 +1476,144 @@ private constructor(
              */
             fun price(price: JsonField<Price>) = apply { this.price = price }
 
-            /** Alias for calling [price] with `Price.ofNewFloatingUnit(newFloatingUnit)`. */
-            fun price(newFloatingUnit: Price.NewFloatingUnitPrice) =
-                price(Price.ofNewFloatingUnit(newFloatingUnit))
+            /** Alias for calling [price] with `Price.ofUnit(unit)`. */
+            fun price(unit: Price.Unit) = price(Price.ofUnit(unit))
 
-            /** Alias for calling [price] with `Price.ofNewFloatingPackage(newFloatingPackage)`. */
-            fun price(newFloatingPackage: Price.NewFloatingPackagePrice) =
-                price(Price.ofNewFloatingPackage(newFloatingPackage))
+            /** Alias for calling [price] with `Price.ofPackage(package_)`. */
+            fun price(package_: Price.Package) = price(Price.ofPackage(package_))
 
-            /** Alias for calling [price] with `Price.ofNewFloatingMatrix(newFloatingMatrix)`. */
-            fun price(newFloatingMatrix: Price.NewFloatingMatrixPrice) =
-                price(Price.ofNewFloatingMatrix(newFloatingMatrix))
+            /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
+            fun price(matrix: Price.Matrix) = price(Price.ofMatrix(matrix))
+
+            /**
+             * Alias for calling [price] with `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
+             */
+            fun price(matrixWithAllocation: Price.MatrixWithAllocation) =
+                price(Price.ofMatrixWithAllocation(matrixWithAllocation))
+
+            /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
+            fun price(tiered: Price.Tiered) = price(Price.ofTiered(tiered))
+
+            /** Alias for calling [price] with `Price.ofTieredBps(tieredBps)`. */
+            fun price(tieredBps: Price.TieredBps) = price(Price.ofTieredBps(tieredBps))
+
+            /** Alias for calling [price] with `Price.ofBps(bps)`. */
+            fun price(bps: Price.Bps) = price(Price.ofBps(bps))
+
+            /** Alias for calling [price] with `Price.ofBulkBps(bulkBps)`. */
+            fun price(bulkBps: Price.BulkBps) = price(Price.ofBulkBps(bulkBps))
+
+            /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
+            fun price(bulk: Price.Bulk) = price(Price.ofBulk(bulk))
+
+            /**
+             * Alias for calling [price] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
+             */
+            fun price(thresholdTotalAmount: Price.ThresholdTotalAmount) =
+                price(Price.ofThresholdTotalAmount(thresholdTotalAmount))
+
+            /** Alias for calling [price] with `Price.ofTieredPackage(tieredPackage)`. */
+            fun price(tieredPackage: Price.TieredPackage) =
+                price(Price.ofTieredPackage(tieredPackage))
+
+            /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
+            fun price(groupedTiered: Price.GroupedTiered) =
+                price(Price.ofGroupedTiered(groupedTiered))
 
             /**
              * Alias for calling [price] with
-             * `Price.ofNewFloatingMatrixWithAllocation(newFloatingMatrixWithAllocation)`.
+             * `Price.ofMaxGroupTieredPackage(maxGroupTieredPackage)`.
              */
-            fun price(newFloatingMatrixWithAllocation: Price.NewFloatingMatrixWithAllocationPrice) =
-                price(Price.ofNewFloatingMatrixWithAllocation(newFloatingMatrixWithAllocation))
+            fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackage) =
+                price(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
-            /** Alias for calling [price] with `Price.ofNewFloatingTiered(newFloatingTiered)`. */
-            fun price(newFloatingTiered: Price.NewFloatingTieredPrice) =
-                price(Price.ofNewFloatingTiered(newFloatingTiered))
-
-            /**
-             * Alias for calling [price] with `Price.ofNewFloatingTieredBps(newFloatingTieredBps)`.
-             */
-            fun price(newFloatingTieredBps: Price.NewFloatingTieredBpsPrice) =
-                price(Price.ofNewFloatingTieredBps(newFloatingTieredBps))
-
-            /** Alias for calling [price] with `Price.ofNewFloatingBps(newFloatingBps)`. */
-            fun price(newFloatingBps: Price.NewFloatingBpsPrice) =
-                price(Price.ofNewFloatingBps(newFloatingBps))
-
-            /** Alias for calling [price] with `Price.ofNewFloatingBulkBps(newFloatingBulkBps)`. */
-            fun price(newFloatingBulkBps: Price.NewFloatingBulkBpsPrice) =
-                price(Price.ofNewFloatingBulkBps(newFloatingBulkBps))
-
-            /** Alias for calling [price] with `Price.ofNewFloatingBulk(newFloatingBulk)`. */
-            fun price(newFloatingBulk: Price.NewFloatingBulkPrice) =
-                price(Price.ofNewFloatingBulk(newFloatingBulk))
+            /** Alias for calling [price] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
+            fun price(tieredWithMinimum: Price.TieredWithMinimum) =
+                price(Price.ofTieredWithMinimum(tieredWithMinimum))
 
             /**
              * Alias for calling [price] with
-             * `Price.ofNewFloatingThresholdTotalAmount(newFloatingThresholdTotalAmount)`.
+             * `Price.ofPackageWithAllocation(packageWithAllocation)`.
              */
-            fun price(newFloatingThresholdTotalAmount: Price.NewFloatingThresholdTotalAmountPrice) =
-                price(Price.ofNewFloatingThresholdTotalAmount(newFloatingThresholdTotalAmount))
+            fun price(packageWithAllocation: Price.PackageWithAllocation) =
+                price(Price.ofPackageWithAllocation(packageWithAllocation))
 
             /**
              * Alias for calling [price] with
-             * `Price.ofNewFloatingTieredPackage(newFloatingTieredPackage)`.
+             * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
              */
-            fun price(newFloatingTieredPackage: Price.NewFloatingTieredPackagePrice) =
-                price(Price.ofNewFloatingTieredPackage(newFloatingTieredPackage))
+            fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimum) =
+                price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
+
+            /** Alias for calling [price] with `Price.ofUnitWithPercent(unitWithPercent)`. */
+            fun price(unitWithPercent: Price.UnitWithPercent) =
+                price(Price.ofUnitWithPercent(unitWithPercent))
+
+            /**
+             * Alias for calling [price] with `Price.ofTieredWithProration(tieredWithProration)`.
+             */
+            fun price(tieredWithProration: Price.TieredWithProration) =
+                price(Price.ofTieredWithProration(tieredWithProration))
+
+            /** Alias for calling [price] with `Price.ofUnitWithProration(unitWithProration)`. */
+            fun price(unitWithProration: Price.UnitWithProration) =
+                price(Price.ofUnitWithProration(unitWithProration))
+
+            /** Alias for calling [price] with `Price.ofGroupedAllocation(groupedAllocation)`. */
+            fun price(groupedAllocation: Price.GroupedAllocation) =
+                price(Price.ofGroupedAllocation(groupedAllocation))
 
             /**
              * Alias for calling [price] with
-             * `Price.ofNewFloatingGroupedTiered(newFloatingGroupedTiered)`.
+             * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
              */
-            fun price(newFloatingGroupedTiered: Price.NewFloatingGroupedTieredPrice) =
-                price(Price.ofNewFloatingGroupedTiered(newFloatingGroupedTiered))
+            fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimum) =
+                price(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
 
             /**
              * Alias for calling [price] with
-             * `Price.ofNewFloatingMaxGroupTieredPackage(newFloatingMaxGroupTieredPackage)`.
+             * `Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)`.
              */
-            fun price(
-                newFloatingMaxGroupTieredPackage: Price.NewFloatingMaxGroupTieredPackagePrice
-            ) = price(Price.ofNewFloatingMaxGroupTieredPackage(newFloatingMaxGroupTieredPackage))
+            fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimum) =
+                price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
             /**
              * Alias for calling [price] with
-             * `Price.ofNewFloatingTieredWithMinimum(newFloatingTieredWithMinimum)`.
+             * `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
              */
-            fun price(newFloatingTieredWithMinimum: Price.NewFloatingTieredWithMinimumPrice) =
-                price(Price.ofNewFloatingTieredWithMinimum(newFloatingTieredWithMinimum))
+            fun price(matrixWithDisplayName: Price.MatrixWithDisplayName) =
+                price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
+
+            /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
+            fun price(bulkWithProration: Price.BulkWithProration) =
+                price(Price.ofBulkWithProration(bulkWithProration))
+
+            /**
+             * Alias for calling [price] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
+             */
+            fun price(groupedTieredPackage: Price.GroupedTieredPackage) =
+                price(Price.ofGroupedTieredPackage(groupedTieredPackage))
 
             /**
              * Alias for calling [price] with
-             * `Price.ofNewFloatingPackageWithAllocation(newFloatingPackageWithAllocation)`.
+             * `Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)`.
              */
-            fun price(
-                newFloatingPackageWithAllocation: Price.NewFloatingPackageWithAllocationPrice
-            ) = price(Price.ofNewFloatingPackageWithAllocation(newFloatingPackageWithAllocation))
+            fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricing) =
+                price(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
 
             /**
              * Alias for calling [price] with
-             * `Price.ofNewFloatingTieredPackageWithMinimum(newFloatingTieredPackageWithMinimum)`.
+             * `Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)`.
              */
-            fun price(
-                newFloatingTieredPackageWithMinimum: Price.NewFloatingTieredPackageWithMinimumPrice
-            ) =
-                price(
-                    Price.ofNewFloatingTieredPackageWithMinimum(newFloatingTieredPackageWithMinimum)
-                )
+            fun price(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricing) =
+                price(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
 
             /**
              * Alias for calling [price] with
-             * `Price.ofNewFloatingUnitWithPercent(newFloatingUnitWithPercent)`.
+             * `Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk)`.
              */
-            fun price(newFloatingUnitWithPercent: Price.NewFloatingUnitWithPercentPrice) =
-                price(Price.ofNewFloatingUnitWithPercent(newFloatingUnitWithPercent))
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofNewFloatingTieredWithProration(newFloatingTieredWithProration)`.
-             */
-            fun price(newFloatingTieredWithProration: Price.NewFloatingTieredWithProrationPrice) =
-                price(Price.ofNewFloatingTieredWithProration(newFloatingTieredWithProration))
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofNewFloatingUnitWithProration(newFloatingUnitWithProration)`.
-             */
-            fun price(newFloatingUnitWithProration: Price.NewFloatingUnitWithProrationPrice) =
-                price(Price.ofNewFloatingUnitWithProration(newFloatingUnitWithProration))
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofNewFloatingGroupedAllocation(newFloatingGroupedAllocation)`.
-             */
-            fun price(newFloatingGroupedAllocation: Price.NewFloatingGroupedAllocationPrice) =
-                price(Price.ofNewFloatingGroupedAllocation(newFloatingGroupedAllocation))
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofNewFloatingGroupedWithProratedMinimum(newFloatingGroupedWithProratedMinimum)`.
-             */
-            fun price(
-                newFloatingGroupedWithProratedMinimum:
-                    Price.NewFloatingGroupedWithProratedMinimumPrice
-            ) =
-                price(
-                    Price.ofNewFloatingGroupedWithProratedMinimum(
-                        newFloatingGroupedWithProratedMinimum
-                    )
-                )
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofNewFloatingGroupedWithMeteredMinimum(newFloatingGroupedWithMeteredMinimum)`.
-             */
-            fun price(
-                newFloatingGroupedWithMeteredMinimum:
-                    Price.NewFloatingGroupedWithMeteredMinimumPrice
-            ) =
-                price(
-                    Price.ofNewFloatingGroupedWithMeteredMinimum(
-                        newFloatingGroupedWithMeteredMinimum
-                    )
-                )
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofNewFloatingMatrixWithDisplayName(newFloatingMatrixWithDisplayName)`.
-             */
-            fun price(
-                newFloatingMatrixWithDisplayName: Price.NewFloatingMatrixWithDisplayNamePrice
-            ) = price(Price.ofNewFloatingMatrixWithDisplayName(newFloatingMatrixWithDisplayName))
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofNewFloatingBulkWithProration(newFloatingBulkWithProration)`.
-             */
-            fun price(newFloatingBulkWithProration: Price.NewFloatingBulkWithProrationPrice) =
-                price(Price.ofNewFloatingBulkWithProration(newFloatingBulkWithProration))
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofNewFloatingGroupedTieredPackage(newFloatingGroupedTieredPackage)`.
-             */
-            fun price(newFloatingGroupedTieredPackage: Price.NewFloatingGroupedTieredPackagePrice) =
-                price(Price.ofNewFloatingGroupedTieredPackage(newFloatingGroupedTieredPackage))
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofNewFloatingScalableMatrixWithUnitPricing(newFloatingScalableMatrixWithUnitPricing)`.
-             */
-            fun price(
-                newFloatingScalableMatrixWithUnitPricing:
-                    Price.NewFloatingScalableMatrixWithUnitPricingPrice
-            ) =
-                price(
-                    Price.ofNewFloatingScalableMatrixWithUnitPricing(
-                        newFloatingScalableMatrixWithUnitPricing
-                    )
-                )
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofNewFloatingScalableMatrixWithTieredPricing(newFloatingScalableMatrixWithTieredPricing)`.
-             */
-            fun price(
-                newFloatingScalableMatrixWithTieredPricing:
-                    Price.NewFloatingScalableMatrixWithTieredPricingPrice
-            ) =
-                price(
-                    Price.ofNewFloatingScalableMatrixWithTieredPricing(
-                        newFloatingScalableMatrixWithTieredPricing
-                    )
-                )
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofNewFloatingCumulativeGroupedBulk(newFloatingCumulativeGroupedBulk)`.
-             */
-            fun price(
-                newFloatingCumulativeGroupedBulk: Price.NewFloatingCumulativeGroupedBulkPrice
-            ) = price(Price.ofNewFloatingCumulativeGroupedBulk(newFloatingCumulativeGroupedBulk))
+            fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
+                price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
             /** The id of the price to add to the subscription. */
             fun priceId(priceId: String?) = priceId(JsonField.ofNullable(priceId))
@@ -2497,49 +2401,37 @@ private constructor(
         @JsonSerialize(using = Discount.Serializer::class)
         class Discount
         private constructor(
-            private val amountDiscountCreationParams: AmountDiscountCreationParams? = null,
-            private val percentageDiscountCreationParams: PercentageDiscountCreationParams? = null,
-            private val usageDiscountCreationParams: UsageDiscountCreationParams? = null,
+            private val amount: Amount? = null,
+            private val percentage: Percentage? = null,
+            private val usage: Usage? = null,
             private val _json: JsonValue? = null,
         ) {
 
-            fun amountDiscountCreationParams(): AmountDiscountCreationParams? =
-                amountDiscountCreationParams
+            fun amount(): Amount? = amount
 
-            fun percentageDiscountCreationParams(): PercentageDiscountCreationParams? =
-                percentageDiscountCreationParams
+            fun percentage(): Percentage? = percentage
 
-            fun usageDiscountCreationParams(): UsageDiscountCreationParams? =
-                usageDiscountCreationParams
+            fun usage(): Usage? = usage
 
-            fun isAmountDiscountCreationParams(): Boolean = amountDiscountCreationParams != null
+            fun isAmount(): Boolean = amount != null
 
-            fun isPercentageDiscountCreationParams(): Boolean =
-                percentageDiscountCreationParams != null
+            fun isPercentage(): Boolean = percentage != null
 
-            fun isUsageDiscountCreationParams(): Boolean = usageDiscountCreationParams != null
+            fun isUsage(): Boolean = usage != null
 
-            fun asAmountDiscountCreationParams(): AmountDiscountCreationParams =
-                amountDiscountCreationParams.getOrThrow("amountDiscountCreationParams")
+            fun asAmount(): Amount = amount.getOrThrow("amount")
 
-            fun asPercentageDiscountCreationParams(): PercentageDiscountCreationParams =
-                percentageDiscountCreationParams.getOrThrow("percentageDiscountCreationParams")
+            fun asPercentage(): Percentage = percentage.getOrThrow("percentage")
 
-            fun asUsageDiscountCreationParams(): UsageDiscountCreationParams =
-                usageDiscountCreationParams.getOrThrow("usageDiscountCreationParams")
+            fun asUsage(): Usage = usage.getOrThrow("usage")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T =
                 when {
-                    amountDiscountCreationParams != null ->
-                        visitor.visitAmountDiscountCreationParams(amountDiscountCreationParams)
-                    percentageDiscountCreationParams != null ->
-                        visitor.visitPercentageDiscountCreationParams(
-                            percentageDiscountCreationParams
-                        )
-                    usageDiscountCreationParams != null ->
-                        visitor.visitUsageDiscountCreationParams(usageDiscountCreationParams)
+                    amount != null -> visitor.visitAmount(amount)
+                    percentage != null -> visitor.visitPercentage(percentage)
+                    usage != null -> visitor.visitUsage(usage)
                     else -> visitor.unknown(_json)
                 }
 
@@ -2552,22 +2444,16 @@ private constructor(
 
                 accept(
                     object : Visitor<Unit> {
-                        override fun visitAmountDiscountCreationParams(
-                            amountDiscountCreationParams: AmountDiscountCreationParams
-                        ) {
-                            amountDiscountCreationParams.validate()
+                        override fun visitAmount(amount: Amount) {
+                            amount.validate()
                         }
 
-                        override fun visitPercentageDiscountCreationParams(
-                            percentageDiscountCreationParams: PercentageDiscountCreationParams
-                        ) {
-                            percentageDiscountCreationParams.validate()
+                        override fun visitPercentage(percentage: Percentage) {
+                            percentage.validate()
                         }
 
-                        override fun visitUsageDiscountCreationParams(
-                            usageDiscountCreationParams: UsageDiscountCreationParams
-                        ) {
-                            usageDiscountCreationParams.validate()
+                        override fun visitUsage(usage: Usage) {
+                            usage.validate()
                         }
                     }
                 )
@@ -2591,17 +2477,11 @@ private constructor(
             internal fun validity(): Int =
                 accept(
                     object : Visitor<Int> {
-                        override fun visitAmountDiscountCreationParams(
-                            amountDiscountCreationParams: AmountDiscountCreationParams
-                        ) = amountDiscountCreationParams.validity()
+                        override fun visitAmount(amount: Amount) = amount.validity()
 
-                        override fun visitPercentageDiscountCreationParams(
-                            percentageDiscountCreationParams: PercentageDiscountCreationParams
-                        ) = percentageDiscountCreationParams.validity()
+                        override fun visitPercentage(percentage: Percentage) = percentage.validity()
 
-                        override fun visitUsageDiscountCreationParams(
-                            usageDiscountCreationParams: UsageDiscountCreationParams
-                        ) = usageDiscountCreationParams.validity()
+                        override fun visitUsage(usage: Usage) = usage.validity()
 
                         override fun unknown(json: JsonValue?) = 0
                     }
@@ -2612,36 +2492,27 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Discount && amountDiscountCreationParams == other.amountDiscountCreationParams && percentageDiscountCreationParams == other.percentageDiscountCreationParams && usageDiscountCreationParams == other.usageDiscountCreationParams /* spotless:on */
+                return /* spotless:off */ other is Discount && amount == other.amount && percentage == other.percentage && usage == other.usage /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(amountDiscountCreationParams, percentageDiscountCreationParams, usageDiscountCreationParams) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, percentage, usage) /* spotless:on */
 
             override fun toString(): String =
                 when {
-                    amountDiscountCreationParams != null ->
-                        "Discount{amountDiscountCreationParams=$amountDiscountCreationParams}"
-                    percentageDiscountCreationParams != null ->
-                        "Discount{percentageDiscountCreationParams=$percentageDiscountCreationParams}"
-                    usageDiscountCreationParams != null ->
-                        "Discount{usageDiscountCreationParams=$usageDiscountCreationParams}"
+                    amount != null -> "Discount{amount=$amount}"
+                    percentage != null -> "Discount{percentage=$percentage}"
+                    usage != null -> "Discount{usage=$usage}"
                     _json != null -> "Discount{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Discount")
                 }
 
             companion object {
 
-                fun ofAmountDiscountCreationParams(
-                    amountDiscountCreationParams: AmountDiscountCreationParams
-                ) = Discount(amountDiscountCreationParams = amountDiscountCreationParams)
+                fun ofAmount(amount: Amount) = Discount(amount = amount)
 
-                fun ofPercentageDiscountCreationParams(
-                    percentageDiscountCreationParams: PercentageDiscountCreationParams
-                ) = Discount(percentageDiscountCreationParams = percentageDiscountCreationParams)
+                fun ofPercentage(percentage: Percentage) = Discount(percentage = percentage)
 
-                fun ofUsageDiscountCreationParams(
-                    usageDiscountCreationParams: UsageDiscountCreationParams
-                ) = Discount(usageDiscountCreationParams = usageDiscountCreationParams)
+                fun ofUsage(usage: Usage) = Discount(usage = usage)
             }
 
             /**
@@ -2650,17 +2521,11 @@ private constructor(
              */
             interface Visitor<out T> {
 
-                fun visitAmountDiscountCreationParams(
-                    amountDiscountCreationParams: AmountDiscountCreationParams
-                ): T
+                fun visitAmount(amount: Amount): T
 
-                fun visitPercentageDiscountCreationParams(
-                    percentageDiscountCreationParams: PercentageDiscountCreationParams
-                ): T
+                fun visitPercentage(percentage: Percentage): T
 
-                fun visitUsageDiscountCreationParams(
-                    usageDiscountCreationParams: UsageDiscountCreationParams
-                ): T
+                fun visitUsage(usage: Usage): T
 
                 /**
                  * Maps an unknown variant of [Discount] to a value of type [T].
@@ -2685,29 +2550,19 @@ private constructor(
 
                     when (discountType) {
                         "amount" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<AmountDiscountCreationParams>(),
-                                )
-                                ?.let { Discount(amountDiscountCreationParams = it, _json = json) }
-                                ?: Discount(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Amount>())?.let {
+                                Discount(amount = it, _json = json)
+                            } ?: Discount(_json = json)
                         }
                         "percentage" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<PercentageDiscountCreationParams>(),
-                                )
-                                ?.let {
-                                    Discount(percentageDiscountCreationParams = it, _json = json)
-                                } ?: Discount(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Percentage>())?.let {
+                                Discount(percentage = it, _json = json)
+                            } ?: Discount(_json = json)
                         }
                         "usage" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<UsageDiscountCreationParams>(),
-                                )
-                                ?.let { Discount(usageDiscountCreationParams = it, _json = json) }
-                                ?: Discount(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Usage>())?.let {
+                                Discount(usage = it, _json = json)
+                            } ?: Discount(_json = json)
                         }
                     }
 
@@ -2723,19 +2578,16 @@ private constructor(
                     provider: SerializerProvider,
                 ) {
                     when {
-                        value.amountDiscountCreationParams != null ->
-                            generator.writeObject(value.amountDiscountCreationParams)
-                        value.percentageDiscountCreationParams != null ->
-                            generator.writeObject(value.percentageDiscountCreationParams)
-                        value.usageDiscountCreationParams != null ->
-                            generator.writeObject(value.usageDiscountCreationParams)
+                        value.amount != null -> generator.writeObject(value.amount)
+                        value.percentage != null -> generator.writeObject(value.percentage)
+                        value.usage != null -> generator.writeObject(value.usage)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid Discount")
                     }
                 }
             }
 
-            class AmountDiscountCreationParams
+            class Amount
             private constructor(
                 private val amountDiscount: JsonField<Double>,
                 private val discountType: JsonValue,
@@ -2799,8 +2651,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [AmountDiscountCreationParams].
+                     * Returns a mutable builder for constructing an instance of [Amount].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -2810,20 +2661,18 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [AmountDiscountCreationParams]. */
+                /** A builder for [Amount]. */
                 class Builder internal constructor() {
 
                     private var amountDiscount: JsonField<Double>? = null
                     private var discountType: JsonValue = JsonValue.from("amount")
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(amountDiscountCreationParams: AmountDiscountCreationParams) =
-                        apply {
-                            amountDiscount = amountDiscountCreationParams.amountDiscount
-                            discountType = amountDiscountCreationParams.discountType
-                            additionalProperties =
-                                amountDiscountCreationParams.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(amount: Amount) = apply {
+                        amountDiscount = amount.amountDiscount
+                        discountType = amount.discountType
+                        additionalProperties = amount.additionalProperties.toMutableMap()
+                    }
 
                     /** Only available if discount_type is `amount`. */
                     fun amountDiscount(amountDiscount: Double) =
@@ -2879,7 +2728,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [AmountDiscountCreationParams].
+                     * Returns an immutable instance of [Amount].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -2890,8 +2739,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): AmountDiscountCreationParams =
-                        AmountDiscountCreationParams(
+                    fun build(): Amount =
+                        Amount(
                             checkRequired("amountDiscount", amountDiscount),
                             discountType,
                             additionalProperties.toMutableMap(),
@@ -2900,7 +2749,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): AmountDiscountCreationParams = apply {
+                fun validate(): Amount = apply {
                     if (validated) {
                         return@apply
                     }
@@ -2937,7 +2786,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is AmountDiscountCreationParams && amountDiscount == other.amountDiscount && discountType == other.discountType && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Amount && amountDiscount == other.amountDiscount && discountType == other.discountType && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -2947,10 +2796,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "AmountDiscountCreationParams{amountDiscount=$amountDiscount, discountType=$discountType, additionalProperties=$additionalProperties}"
+                    "Amount{amountDiscount=$amountDiscount, discountType=$discountType, additionalProperties=$additionalProperties}"
             }
 
-            class PercentageDiscountCreationParams
+            class Percentage
             private constructor(
                 private val discountType: JsonValue,
                 private val percentageDiscount: JsonField<Double>,
@@ -3016,8 +2865,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [PercentageDiscountCreationParams].
+                     * Returns a mutable builder for constructing an instance of [Percentage].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -3027,20 +2875,17 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [PercentageDiscountCreationParams]. */
+                /** A builder for [Percentage]. */
                 class Builder internal constructor() {
 
                     private var discountType: JsonValue = JsonValue.from("percentage")
                     private var percentageDiscount: JsonField<Double>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        percentageDiscountCreationParams: PercentageDiscountCreationParams
-                    ) = apply {
-                        discountType = percentageDiscountCreationParams.discountType
-                        percentageDiscount = percentageDiscountCreationParams.percentageDiscount
-                        additionalProperties =
-                            percentageDiscountCreationParams.additionalProperties.toMutableMap()
+                    internal fun from(percentage: Percentage) = apply {
+                        discountType = percentage.discountType
+                        percentageDiscount = percentage.percentageDiscount
+                        additionalProperties = percentage.additionalProperties.toMutableMap()
                     }
 
                     /**
@@ -3100,7 +2945,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [PercentageDiscountCreationParams].
+                     * Returns an immutable instance of [Percentage].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -3111,8 +2956,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): PercentageDiscountCreationParams =
-                        PercentageDiscountCreationParams(
+                    fun build(): Percentage =
+                        Percentage(
                             discountType,
                             checkRequired("percentageDiscount", percentageDiscount),
                             additionalProperties.toMutableMap(),
@@ -3121,7 +2966,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): PercentageDiscountCreationParams = apply {
+                fun validate(): Percentage = apply {
                     if (validated) {
                         return@apply
                     }
@@ -3158,7 +3003,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is PercentageDiscountCreationParams && discountType == other.discountType && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Percentage && discountType == other.discountType && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -3168,10 +3013,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "PercentageDiscountCreationParams{discountType=$discountType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
+                    "Percentage{discountType=$discountType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
             }
 
-            class UsageDiscountCreationParams
+            class Usage
             private constructor(
                 private val discountType: JsonValue,
                 private val usageDiscount: JsonField<Double>,
@@ -3236,8 +3081,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [UsageDiscountCreationParams].
+                     * Returns a mutable builder for constructing an instance of [Usage].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -3247,20 +3091,18 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [UsageDiscountCreationParams]. */
+                /** A builder for [Usage]. */
                 class Builder internal constructor() {
 
                     private var discountType: JsonValue = JsonValue.from("usage")
                     private var usageDiscount: JsonField<Double>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(usageDiscountCreationParams: UsageDiscountCreationParams) =
-                        apply {
-                            discountType = usageDiscountCreationParams.discountType
-                            usageDiscount = usageDiscountCreationParams.usageDiscount
-                            additionalProperties =
-                                usageDiscountCreationParams.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(usage: Usage) = apply {
+                        discountType = usage.discountType
+                        usageDiscount = usage.usageDiscount
+                        additionalProperties = usage.additionalProperties.toMutableMap()
+                    }
 
                     /**
                      * Sets the field to an arbitrary JSON value.
@@ -3319,7 +3161,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [UsageDiscountCreationParams].
+                     * Returns an immutable instance of [Usage].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -3330,8 +3172,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): UsageDiscountCreationParams =
-                        UsageDiscountCreationParams(
+                    fun build(): Usage =
+                        Usage(
                             discountType,
                             checkRequired("usageDiscount", usageDiscount),
                             additionalProperties.toMutableMap(),
@@ -3340,7 +3182,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): UsageDiscountCreationParams = apply {
+                fun validate(): Usage = apply {
                     if (validated) {
                         return@apply
                     }
@@ -3377,7 +3219,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is UsageDiscountCreationParams && discountType == other.discountType && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Usage && discountType == other.discountType && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -3387,7 +3229,7 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "UsageDiscountCreationParams{discountType=$discountType, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
+                    "Usage{discountType=$discountType, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
             }
         }
 
@@ -3791,377 +3633,273 @@ private constructor(
         @JsonSerialize(using = Price.Serializer::class)
         class Price
         private constructor(
-            private val newFloatingUnit: NewFloatingUnitPrice? = null,
-            private val newFloatingPackage: NewFloatingPackagePrice? = null,
-            private val newFloatingMatrix: NewFloatingMatrixPrice? = null,
-            private val newFloatingMatrixWithAllocation: NewFloatingMatrixWithAllocationPrice? =
-                null,
-            private val newFloatingTiered: NewFloatingTieredPrice? = null,
-            private val newFloatingTieredBps: NewFloatingTieredBpsPrice? = null,
-            private val newFloatingBps: NewFloatingBpsPrice? = null,
-            private val newFloatingBulkBps: NewFloatingBulkBpsPrice? = null,
-            private val newFloatingBulk: NewFloatingBulkPrice? = null,
-            private val newFloatingThresholdTotalAmount: NewFloatingThresholdTotalAmountPrice? =
-                null,
-            private val newFloatingTieredPackage: NewFloatingTieredPackagePrice? = null,
-            private val newFloatingGroupedTiered: NewFloatingGroupedTieredPrice? = null,
-            private val newFloatingMaxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice? =
-                null,
-            private val newFloatingTieredWithMinimum: NewFloatingTieredWithMinimumPrice? = null,
-            private val newFloatingPackageWithAllocation: NewFloatingPackageWithAllocationPrice? =
-                null,
-            private val newFloatingTieredPackageWithMinimum:
-                NewFloatingTieredPackageWithMinimumPrice? =
-                null,
-            private val newFloatingUnitWithPercent: NewFloatingUnitWithPercentPrice? = null,
-            private val newFloatingTieredWithProration: NewFloatingTieredWithProrationPrice? = null,
-            private val newFloatingUnitWithProration: NewFloatingUnitWithProrationPrice? = null,
-            private val newFloatingGroupedAllocation: NewFloatingGroupedAllocationPrice? = null,
-            private val newFloatingGroupedWithProratedMinimum:
-                NewFloatingGroupedWithProratedMinimumPrice? =
-                null,
-            private val newFloatingGroupedWithMeteredMinimum:
-                NewFloatingGroupedWithMeteredMinimumPrice? =
-                null,
-            private val newFloatingMatrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice? =
-                null,
-            private val newFloatingBulkWithProration: NewFloatingBulkWithProrationPrice? = null,
-            private val newFloatingGroupedTieredPackage: NewFloatingGroupedTieredPackagePrice? =
-                null,
-            private val newFloatingScalableMatrixWithUnitPricing:
-                NewFloatingScalableMatrixWithUnitPricingPrice? =
-                null,
-            private val newFloatingScalableMatrixWithTieredPricing:
-                NewFloatingScalableMatrixWithTieredPricingPrice? =
-                null,
-            private val newFloatingCumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice? =
-                null,
+            private val unit: Unit? = null,
+            private val package_: Package? = null,
+            private val matrix: Matrix? = null,
+            private val matrixWithAllocation: MatrixWithAllocation? = null,
+            private val tiered: Tiered? = null,
+            private val tieredBps: TieredBps? = null,
+            private val bps: Bps? = null,
+            private val bulkBps: BulkBps? = null,
+            private val bulk: Bulk? = null,
+            private val thresholdTotalAmount: ThresholdTotalAmount? = null,
+            private val tieredPackage: TieredPackage? = null,
+            private val groupedTiered: GroupedTiered? = null,
+            private val maxGroupTieredPackage: MaxGroupTieredPackage? = null,
+            private val tieredWithMinimum: TieredWithMinimum? = null,
+            private val packageWithAllocation: PackageWithAllocation? = null,
+            private val tieredPackageWithMinimum: TieredPackageWithMinimum? = null,
+            private val unitWithPercent: UnitWithPercent? = null,
+            private val tieredWithProration: TieredWithProration? = null,
+            private val unitWithProration: UnitWithProration? = null,
+            private val groupedAllocation: GroupedAllocation? = null,
+            private val groupedWithProratedMinimum: GroupedWithProratedMinimum? = null,
+            private val groupedWithMeteredMinimum: GroupedWithMeteredMinimum? = null,
+            private val matrixWithDisplayName: MatrixWithDisplayName? = null,
+            private val bulkWithProration: BulkWithProration? = null,
+            private val groupedTieredPackage: GroupedTieredPackage? = null,
+            private val scalableMatrixWithUnitPricing: ScalableMatrixWithUnitPricing? = null,
+            private val scalableMatrixWithTieredPricing: ScalableMatrixWithTieredPricing? = null,
+            private val cumulativeGroupedBulk: CumulativeGroupedBulk? = null,
             private val _json: JsonValue? = null,
         ) {
 
-            fun newFloatingUnit(): NewFloatingUnitPrice? = newFloatingUnit
+            fun unit(): Unit? = unit
 
-            fun newFloatingPackage(): NewFloatingPackagePrice? = newFloatingPackage
+            fun package_(): Package? = package_
 
-            fun newFloatingMatrix(): NewFloatingMatrixPrice? = newFloatingMatrix
+            fun matrix(): Matrix? = matrix
 
-            fun newFloatingMatrixWithAllocation(): NewFloatingMatrixWithAllocationPrice? =
-                newFloatingMatrixWithAllocation
+            fun matrixWithAllocation(): MatrixWithAllocation? = matrixWithAllocation
 
-            fun newFloatingTiered(): NewFloatingTieredPrice? = newFloatingTiered
+            fun tiered(): Tiered? = tiered
 
-            fun newFloatingTieredBps(): NewFloatingTieredBpsPrice? = newFloatingTieredBps
+            fun tieredBps(): TieredBps? = tieredBps
 
-            fun newFloatingBps(): NewFloatingBpsPrice? = newFloatingBps
+            fun bps(): Bps? = bps
 
-            fun newFloatingBulkBps(): NewFloatingBulkBpsPrice? = newFloatingBulkBps
+            fun bulkBps(): BulkBps? = bulkBps
 
-            fun newFloatingBulk(): NewFloatingBulkPrice? = newFloatingBulk
+            fun bulk(): Bulk? = bulk
 
-            fun newFloatingThresholdTotalAmount(): NewFloatingThresholdTotalAmountPrice? =
-                newFloatingThresholdTotalAmount
+            fun thresholdTotalAmount(): ThresholdTotalAmount? = thresholdTotalAmount
 
-            fun newFloatingTieredPackage(): NewFloatingTieredPackagePrice? =
-                newFloatingTieredPackage
+            fun tieredPackage(): TieredPackage? = tieredPackage
 
-            fun newFloatingGroupedTiered(): NewFloatingGroupedTieredPrice? =
-                newFloatingGroupedTiered
+            fun groupedTiered(): GroupedTiered? = groupedTiered
 
-            fun newFloatingMaxGroupTieredPackage(): NewFloatingMaxGroupTieredPackagePrice? =
-                newFloatingMaxGroupTieredPackage
+            fun maxGroupTieredPackage(): MaxGroupTieredPackage? = maxGroupTieredPackage
 
-            fun newFloatingTieredWithMinimum(): NewFloatingTieredWithMinimumPrice? =
-                newFloatingTieredWithMinimum
+            fun tieredWithMinimum(): TieredWithMinimum? = tieredWithMinimum
 
-            fun newFloatingPackageWithAllocation(): NewFloatingPackageWithAllocationPrice? =
-                newFloatingPackageWithAllocation
+            fun packageWithAllocation(): PackageWithAllocation? = packageWithAllocation
 
-            fun newFloatingTieredPackageWithMinimum(): NewFloatingTieredPackageWithMinimumPrice? =
-                newFloatingTieredPackageWithMinimum
+            fun tieredPackageWithMinimum(): TieredPackageWithMinimum? = tieredPackageWithMinimum
 
-            fun newFloatingUnitWithPercent(): NewFloatingUnitWithPercentPrice? =
-                newFloatingUnitWithPercent
+            fun unitWithPercent(): UnitWithPercent? = unitWithPercent
 
-            fun newFloatingTieredWithProration(): NewFloatingTieredWithProrationPrice? =
-                newFloatingTieredWithProration
+            fun tieredWithProration(): TieredWithProration? = tieredWithProration
 
-            fun newFloatingUnitWithProration(): NewFloatingUnitWithProrationPrice? =
-                newFloatingUnitWithProration
+            fun unitWithProration(): UnitWithProration? = unitWithProration
 
-            fun newFloatingGroupedAllocation(): NewFloatingGroupedAllocationPrice? =
-                newFloatingGroupedAllocation
+            fun groupedAllocation(): GroupedAllocation? = groupedAllocation
 
-            fun newFloatingGroupedWithProratedMinimum():
-                NewFloatingGroupedWithProratedMinimumPrice? = newFloatingGroupedWithProratedMinimum
+            fun groupedWithProratedMinimum(): GroupedWithProratedMinimum? =
+                groupedWithProratedMinimum
 
-            fun newFloatingGroupedWithMeteredMinimum(): NewFloatingGroupedWithMeteredMinimumPrice? =
-                newFloatingGroupedWithMeteredMinimum
+            fun groupedWithMeteredMinimum(): GroupedWithMeteredMinimum? = groupedWithMeteredMinimum
 
-            fun newFloatingMatrixWithDisplayName(): NewFloatingMatrixWithDisplayNamePrice? =
-                newFloatingMatrixWithDisplayName
+            fun matrixWithDisplayName(): MatrixWithDisplayName? = matrixWithDisplayName
 
-            fun newFloatingBulkWithProration(): NewFloatingBulkWithProrationPrice? =
-                newFloatingBulkWithProration
+            fun bulkWithProration(): BulkWithProration? = bulkWithProration
 
-            fun newFloatingGroupedTieredPackage(): NewFloatingGroupedTieredPackagePrice? =
-                newFloatingGroupedTieredPackage
+            fun groupedTieredPackage(): GroupedTieredPackage? = groupedTieredPackage
 
-            fun newFloatingScalableMatrixWithUnitPricing():
-                NewFloatingScalableMatrixWithUnitPricingPrice? =
-                newFloatingScalableMatrixWithUnitPricing
+            fun scalableMatrixWithUnitPricing(): ScalableMatrixWithUnitPricing? =
+                scalableMatrixWithUnitPricing
 
-            fun newFloatingScalableMatrixWithTieredPricing():
-                NewFloatingScalableMatrixWithTieredPricingPrice? =
-                newFloatingScalableMatrixWithTieredPricing
+            fun scalableMatrixWithTieredPricing(): ScalableMatrixWithTieredPricing? =
+                scalableMatrixWithTieredPricing
 
-            fun newFloatingCumulativeGroupedBulk(): NewFloatingCumulativeGroupedBulkPrice? =
-                newFloatingCumulativeGroupedBulk
+            fun cumulativeGroupedBulk(): CumulativeGroupedBulk? = cumulativeGroupedBulk
 
-            fun isNewFloatingUnit(): Boolean = newFloatingUnit != null
+            fun isUnit(): Boolean = unit != null
 
-            fun isNewFloatingPackage(): Boolean = newFloatingPackage != null
+            fun isPackage(): Boolean = package_ != null
 
-            fun isNewFloatingMatrix(): Boolean = newFloatingMatrix != null
+            fun isMatrix(): Boolean = matrix != null
 
-            fun isNewFloatingMatrixWithAllocation(): Boolean =
-                newFloatingMatrixWithAllocation != null
+            fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
 
-            fun isNewFloatingTiered(): Boolean = newFloatingTiered != null
+            fun isTiered(): Boolean = tiered != null
 
-            fun isNewFloatingTieredBps(): Boolean = newFloatingTieredBps != null
+            fun isTieredBps(): Boolean = tieredBps != null
 
-            fun isNewFloatingBps(): Boolean = newFloatingBps != null
+            fun isBps(): Boolean = bps != null
 
-            fun isNewFloatingBulkBps(): Boolean = newFloatingBulkBps != null
+            fun isBulkBps(): Boolean = bulkBps != null
 
-            fun isNewFloatingBulk(): Boolean = newFloatingBulk != null
+            fun isBulk(): Boolean = bulk != null
 
-            fun isNewFloatingThresholdTotalAmount(): Boolean =
-                newFloatingThresholdTotalAmount != null
+            fun isThresholdTotalAmount(): Boolean = thresholdTotalAmount != null
 
-            fun isNewFloatingTieredPackage(): Boolean = newFloatingTieredPackage != null
+            fun isTieredPackage(): Boolean = tieredPackage != null
 
-            fun isNewFloatingGroupedTiered(): Boolean = newFloatingGroupedTiered != null
+            fun isGroupedTiered(): Boolean = groupedTiered != null
 
-            fun isNewFloatingMaxGroupTieredPackage(): Boolean =
-                newFloatingMaxGroupTieredPackage != null
+            fun isMaxGroupTieredPackage(): Boolean = maxGroupTieredPackage != null
 
-            fun isNewFloatingTieredWithMinimum(): Boolean = newFloatingTieredWithMinimum != null
+            fun isTieredWithMinimum(): Boolean = tieredWithMinimum != null
 
-            fun isNewFloatingPackageWithAllocation(): Boolean =
-                newFloatingPackageWithAllocation != null
+            fun isPackageWithAllocation(): Boolean = packageWithAllocation != null
 
-            fun isNewFloatingTieredPackageWithMinimum(): Boolean =
-                newFloatingTieredPackageWithMinimum != null
+            fun isTieredPackageWithMinimum(): Boolean = tieredPackageWithMinimum != null
 
-            fun isNewFloatingUnitWithPercent(): Boolean = newFloatingUnitWithPercent != null
+            fun isUnitWithPercent(): Boolean = unitWithPercent != null
 
-            fun isNewFloatingTieredWithProration(): Boolean = newFloatingTieredWithProration != null
+            fun isTieredWithProration(): Boolean = tieredWithProration != null
 
-            fun isNewFloatingUnitWithProration(): Boolean = newFloatingUnitWithProration != null
+            fun isUnitWithProration(): Boolean = unitWithProration != null
 
-            fun isNewFloatingGroupedAllocation(): Boolean = newFloatingGroupedAllocation != null
+            fun isGroupedAllocation(): Boolean = groupedAllocation != null
 
-            fun isNewFloatingGroupedWithProratedMinimum(): Boolean =
-                newFloatingGroupedWithProratedMinimum != null
+            fun isGroupedWithProratedMinimum(): Boolean = groupedWithProratedMinimum != null
 
-            fun isNewFloatingGroupedWithMeteredMinimum(): Boolean =
-                newFloatingGroupedWithMeteredMinimum != null
+            fun isGroupedWithMeteredMinimum(): Boolean = groupedWithMeteredMinimum != null
 
-            fun isNewFloatingMatrixWithDisplayName(): Boolean =
-                newFloatingMatrixWithDisplayName != null
+            fun isMatrixWithDisplayName(): Boolean = matrixWithDisplayName != null
 
-            fun isNewFloatingBulkWithProration(): Boolean = newFloatingBulkWithProration != null
+            fun isBulkWithProration(): Boolean = bulkWithProration != null
 
-            fun isNewFloatingGroupedTieredPackage(): Boolean =
-                newFloatingGroupedTieredPackage != null
+            fun isGroupedTieredPackage(): Boolean = groupedTieredPackage != null
 
-            fun isNewFloatingScalableMatrixWithUnitPricing(): Boolean =
-                newFloatingScalableMatrixWithUnitPricing != null
+            fun isScalableMatrixWithUnitPricing(): Boolean = scalableMatrixWithUnitPricing != null
 
-            fun isNewFloatingScalableMatrixWithTieredPricing(): Boolean =
-                newFloatingScalableMatrixWithTieredPricing != null
+            fun isScalableMatrixWithTieredPricing(): Boolean =
+                scalableMatrixWithTieredPricing != null
 
-            fun isNewFloatingCumulativeGroupedBulk(): Boolean =
-                newFloatingCumulativeGroupedBulk != null
+            fun isCumulativeGroupedBulk(): Boolean = cumulativeGroupedBulk != null
 
-            fun asNewFloatingUnit(): NewFloatingUnitPrice =
-                newFloatingUnit.getOrThrow("newFloatingUnit")
+            fun asUnit(): Unit = unit.getOrThrow("unit")
 
-            fun asNewFloatingPackage(): NewFloatingPackagePrice =
-                newFloatingPackage.getOrThrow("newFloatingPackage")
+            fun asPackage(): Package = package_.getOrThrow("package_")
 
-            fun asNewFloatingMatrix(): NewFloatingMatrixPrice =
-                newFloatingMatrix.getOrThrow("newFloatingMatrix")
+            fun asMatrix(): Matrix = matrix.getOrThrow("matrix")
 
-            fun asNewFloatingMatrixWithAllocation(): NewFloatingMatrixWithAllocationPrice =
-                newFloatingMatrixWithAllocation.getOrThrow("newFloatingMatrixWithAllocation")
+            fun asMatrixWithAllocation(): MatrixWithAllocation =
+                matrixWithAllocation.getOrThrow("matrixWithAllocation")
 
-            fun asNewFloatingTiered(): NewFloatingTieredPrice =
-                newFloatingTiered.getOrThrow("newFloatingTiered")
+            fun asTiered(): Tiered = tiered.getOrThrow("tiered")
 
-            fun asNewFloatingTieredBps(): NewFloatingTieredBpsPrice =
-                newFloatingTieredBps.getOrThrow("newFloatingTieredBps")
+            fun asTieredBps(): TieredBps = tieredBps.getOrThrow("tieredBps")
 
-            fun asNewFloatingBps(): NewFloatingBpsPrice =
-                newFloatingBps.getOrThrow("newFloatingBps")
+            fun asBps(): Bps = bps.getOrThrow("bps")
 
-            fun asNewFloatingBulkBps(): NewFloatingBulkBpsPrice =
-                newFloatingBulkBps.getOrThrow("newFloatingBulkBps")
+            fun asBulkBps(): BulkBps = bulkBps.getOrThrow("bulkBps")
 
-            fun asNewFloatingBulk(): NewFloatingBulkPrice =
-                newFloatingBulk.getOrThrow("newFloatingBulk")
+            fun asBulk(): Bulk = bulk.getOrThrow("bulk")
 
-            fun asNewFloatingThresholdTotalAmount(): NewFloatingThresholdTotalAmountPrice =
-                newFloatingThresholdTotalAmount.getOrThrow("newFloatingThresholdTotalAmount")
+            fun asThresholdTotalAmount(): ThresholdTotalAmount =
+                thresholdTotalAmount.getOrThrow("thresholdTotalAmount")
 
-            fun asNewFloatingTieredPackage(): NewFloatingTieredPackagePrice =
-                newFloatingTieredPackage.getOrThrow("newFloatingTieredPackage")
+            fun asTieredPackage(): TieredPackage = tieredPackage.getOrThrow("tieredPackage")
 
-            fun asNewFloatingGroupedTiered(): NewFloatingGroupedTieredPrice =
-                newFloatingGroupedTiered.getOrThrow("newFloatingGroupedTiered")
+            fun asGroupedTiered(): GroupedTiered = groupedTiered.getOrThrow("groupedTiered")
 
-            fun asNewFloatingMaxGroupTieredPackage(): NewFloatingMaxGroupTieredPackagePrice =
-                newFloatingMaxGroupTieredPackage.getOrThrow("newFloatingMaxGroupTieredPackage")
+            fun asMaxGroupTieredPackage(): MaxGroupTieredPackage =
+                maxGroupTieredPackage.getOrThrow("maxGroupTieredPackage")
 
-            fun asNewFloatingTieredWithMinimum(): NewFloatingTieredWithMinimumPrice =
-                newFloatingTieredWithMinimum.getOrThrow("newFloatingTieredWithMinimum")
+            fun asTieredWithMinimum(): TieredWithMinimum =
+                tieredWithMinimum.getOrThrow("tieredWithMinimum")
 
-            fun asNewFloatingPackageWithAllocation(): NewFloatingPackageWithAllocationPrice =
-                newFloatingPackageWithAllocation.getOrThrow("newFloatingPackageWithAllocation")
+            fun asPackageWithAllocation(): PackageWithAllocation =
+                packageWithAllocation.getOrThrow("packageWithAllocation")
 
-            fun asNewFloatingTieredPackageWithMinimum(): NewFloatingTieredPackageWithMinimumPrice =
-                newFloatingTieredPackageWithMinimum.getOrThrow(
-                    "newFloatingTieredPackageWithMinimum"
-                )
+            fun asTieredPackageWithMinimum(): TieredPackageWithMinimum =
+                tieredPackageWithMinimum.getOrThrow("tieredPackageWithMinimum")
 
-            fun asNewFloatingUnitWithPercent(): NewFloatingUnitWithPercentPrice =
-                newFloatingUnitWithPercent.getOrThrow("newFloatingUnitWithPercent")
+            fun asUnitWithPercent(): UnitWithPercent = unitWithPercent.getOrThrow("unitWithPercent")
 
-            fun asNewFloatingTieredWithProration(): NewFloatingTieredWithProrationPrice =
-                newFloatingTieredWithProration.getOrThrow("newFloatingTieredWithProration")
+            fun asTieredWithProration(): TieredWithProration =
+                tieredWithProration.getOrThrow("tieredWithProration")
 
-            fun asNewFloatingUnitWithProration(): NewFloatingUnitWithProrationPrice =
-                newFloatingUnitWithProration.getOrThrow("newFloatingUnitWithProration")
+            fun asUnitWithProration(): UnitWithProration =
+                unitWithProration.getOrThrow("unitWithProration")
 
-            fun asNewFloatingGroupedAllocation(): NewFloatingGroupedAllocationPrice =
-                newFloatingGroupedAllocation.getOrThrow("newFloatingGroupedAllocation")
+            fun asGroupedAllocation(): GroupedAllocation =
+                groupedAllocation.getOrThrow("groupedAllocation")
 
-            fun asNewFloatingGroupedWithProratedMinimum():
-                NewFloatingGroupedWithProratedMinimumPrice =
-                newFloatingGroupedWithProratedMinimum.getOrThrow(
-                    "newFloatingGroupedWithProratedMinimum"
-                )
+            fun asGroupedWithProratedMinimum(): GroupedWithProratedMinimum =
+                groupedWithProratedMinimum.getOrThrow("groupedWithProratedMinimum")
 
-            fun asNewFloatingGroupedWithMeteredMinimum():
-                NewFloatingGroupedWithMeteredMinimumPrice =
-                newFloatingGroupedWithMeteredMinimum.getOrThrow(
-                    "newFloatingGroupedWithMeteredMinimum"
-                )
+            fun asGroupedWithMeteredMinimum(): GroupedWithMeteredMinimum =
+                groupedWithMeteredMinimum.getOrThrow("groupedWithMeteredMinimum")
 
-            fun asNewFloatingMatrixWithDisplayName(): NewFloatingMatrixWithDisplayNamePrice =
-                newFloatingMatrixWithDisplayName.getOrThrow("newFloatingMatrixWithDisplayName")
+            fun asMatrixWithDisplayName(): MatrixWithDisplayName =
+                matrixWithDisplayName.getOrThrow("matrixWithDisplayName")
 
-            fun asNewFloatingBulkWithProration(): NewFloatingBulkWithProrationPrice =
-                newFloatingBulkWithProration.getOrThrow("newFloatingBulkWithProration")
+            fun asBulkWithProration(): BulkWithProration =
+                bulkWithProration.getOrThrow("bulkWithProration")
 
-            fun asNewFloatingGroupedTieredPackage(): NewFloatingGroupedTieredPackagePrice =
-                newFloatingGroupedTieredPackage.getOrThrow("newFloatingGroupedTieredPackage")
+            fun asGroupedTieredPackage(): GroupedTieredPackage =
+                groupedTieredPackage.getOrThrow("groupedTieredPackage")
 
-            fun asNewFloatingScalableMatrixWithUnitPricing():
-                NewFloatingScalableMatrixWithUnitPricingPrice =
-                newFloatingScalableMatrixWithUnitPricing.getOrThrow(
-                    "newFloatingScalableMatrixWithUnitPricing"
-                )
+            fun asScalableMatrixWithUnitPricing(): ScalableMatrixWithUnitPricing =
+                scalableMatrixWithUnitPricing.getOrThrow("scalableMatrixWithUnitPricing")
 
-            fun asNewFloatingScalableMatrixWithTieredPricing():
-                NewFloatingScalableMatrixWithTieredPricingPrice =
-                newFloatingScalableMatrixWithTieredPricing.getOrThrow(
-                    "newFloatingScalableMatrixWithTieredPricing"
-                )
+            fun asScalableMatrixWithTieredPricing(): ScalableMatrixWithTieredPricing =
+                scalableMatrixWithTieredPricing.getOrThrow("scalableMatrixWithTieredPricing")
 
-            fun asNewFloatingCumulativeGroupedBulk(): NewFloatingCumulativeGroupedBulkPrice =
-                newFloatingCumulativeGroupedBulk.getOrThrow("newFloatingCumulativeGroupedBulk")
+            fun asCumulativeGroupedBulk(): CumulativeGroupedBulk =
+                cumulativeGroupedBulk.getOrThrow("cumulativeGroupedBulk")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T =
                 when {
-                    newFloatingUnit != null -> visitor.visitNewFloatingUnit(newFloatingUnit)
-                    newFloatingPackage != null ->
-                        visitor.visitNewFloatingPackage(newFloatingPackage)
-                    newFloatingMatrix != null -> visitor.visitNewFloatingMatrix(newFloatingMatrix)
-                    newFloatingMatrixWithAllocation != null ->
-                        visitor.visitNewFloatingMatrixWithAllocation(
-                            newFloatingMatrixWithAllocation
+                    unit != null -> visitor.visitUnit(unit)
+                    package_ != null -> visitor.visitPackage(package_)
+                    matrix != null -> visitor.visitMatrix(matrix)
+                    matrixWithAllocation != null ->
+                        visitor.visitMatrixWithAllocation(matrixWithAllocation)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    tieredBps != null -> visitor.visitTieredBps(tieredBps)
+                    bps != null -> visitor.visitBps(bps)
+                    bulkBps != null -> visitor.visitBulkBps(bulkBps)
+                    bulk != null -> visitor.visitBulk(bulk)
+                    thresholdTotalAmount != null ->
+                        visitor.visitThresholdTotalAmount(thresholdTotalAmount)
+                    tieredPackage != null -> visitor.visitTieredPackage(tieredPackage)
+                    groupedTiered != null -> visitor.visitGroupedTiered(groupedTiered)
+                    maxGroupTieredPackage != null ->
+                        visitor.visitMaxGroupTieredPackage(maxGroupTieredPackage)
+                    tieredWithMinimum != null -> visitor.visitTieredWithMinimum(tieredWithMinimum)
+                    packageWithAllocation != null ->
+                        visitor.visitPackageWithAllocation(packageWithAllocation)
+                    tieredPackageWithMinimum != null ->
+                        visitor.visitTieredPackageWithMinimum(tieredPackageWithMinimum)
+                    unitWithPercent != null -> visitor.visitUnitWithPercent(unitWithPercent)
+                    tieredWithProration != null ->
+                        visitor.visitTieredWithProration(tieredWithProration)
+                    unitWithProration != null -> visitor.visitUnitWithProration(unitWithProration)
+                    groupedAllocation != null -> visitor.visitGroupedAllocation(groupedAllocation)
+                    groupedWithProratedMinimum != null ->
+                        visitor.visitGroupedWithProratedMinimum(groupedWithProratedMinimum)
+                    groupedWithMeteredMinimum != null ->
+                        visitor.visitGroupedWithMeteredMinimum(groupedWithMeteredMinimum)
+                    matrixWithDisplayName != null ->
+                        visitor.visitMatrixWithDisplayName(matrixWithDisplayName)
+                    bulkWithProration != null -> visitor.visitBulkWithProration(bulkWithProration)
+                    groupedTieredPackage != null ->
+                        visitor.visitGroupedTieredPackage(groupedTieredPackage)
+                    scalableMatrixWithUnitPricing != null ->
+                        visitor.visitScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)
+                    scalableMatrixWithTieredPricing != null ->
+                        visitor.visitScalableMatrixWithTieredPricing(
+                            scalableMatrixWithTieredPricing
                         )
-                    newFloatingTiered != null -> visitor.visitNewFloatingTiered(newFloatingTiered)
-                    newFloatingTieredBps != null ->
-                        visitor.visitNewFloatingTieredBps(newFloatingTieredBps)
-                    newFloatingBps != null -> visitor.visitNewFloatingBps(newFloatingBps)
-                    newFloatingBulkBps != null ->
-                        visitor.visitNewFloatingBulkBps(newFloatingBulkBps)
-                    newFloatingBulk != null -> visitor.visitNewFloatingBulk(newFloatingBulk)
-                    newFloatingThresholdTotalAmount != null ->
-                        visitor.visitNewFloatingThresholdTotalAmount(
-                            newFloatingThresholdTotalAmount
-                        )
-                    newFloatingTieredPackage != null ->
-                        visitor.visitNewFloatingTieredPackage(newFloatingTieredPackage)
-                    newFloatingGroupedTiered != null ->
-                        visitor.visitNewFloatingGroupedTiered(newFloatingGroupedTiered)
-                    newFloatingMaxGroupTieredPackage != null ->
-                        visitor.visitNewFloatingMaxGroupTieredPackage(
-                            newFloatingMaxGroupTieredPackage
-                        )
-                    newFloatingTieredWithMinimum != null ->
-                        visitor.visitNewFloatingTieredWithMinimum(newFloatingTieredWithMinimum)
-                    newFloatingPackageWithAllocation != null ->
-                        visitor.visitNewFloatingPackageWithAllocation(
-                            newFloatingPackageWithAllocation
-                        )
-                    newFloatingTieredPackageWithMinimum != null ->
-                        visitor.visitNewFloatingTieredPackageWithMinimum(
-                            newFloatingTieredPackageWithMinimum
-                        )
-                    newFloatingUnitWithPercent != null ->
-                        visitor.visitNewFloatingUnitWithPercent(newFloatingUnitWithPercent)
-                    newFloatingTieredWithProration != null ->
-                        visitor.visitNewFloatingTieredWithProration(newFloatingTieredWithProration)
-                    newFloatingUnitWithProration != null ->
-                        visitor.visitNewFloatingUnitWithProration(newFloatingUnitWithProration)
-                    newFloatingGroupedAllocation != null ->
-                        visitor.visitNewFloatingGroupedAllocation(newFloatingGroupedAllocation)
-                    newFloatingGroupedWithProratedMinimum != null ->
-                        visitor.visitNewFloatingGroupedWithProratedMinimum(
-                            newFloatingGroupedWithProratedMinimum
-                        )
-                    newFloatingGroupedWithMeteredMinimum != null ->
-                        visitor.visitNewFloatingGroupedWithMeteredMinimum(
-                            newFloatingGroupedWithMeteredMinimum
-                        )
-                    newFloatingMatrixWithDisplayName != null ->
-                        visitor.visitNewFloatingMatrixWithDisplayName(
-                            newFloatingMatrixWithDisplayName
-                        )
-                    newFloatingBulkWithProration != null ->
-                        visitor.visitNewFloatingBulkWithProration(newFloatingBulkWithProration)
-                    newFloatingGroupedTieredPackage != null ->
-                        visitor.visitNewFloatingGroupedTieredPackage(
-                            newFloatingGroupedTieredPackage
-                        )
-                    newFloatingScalableMatrixWithUnitPricing != null ->
-                        visitor.visitNewFloatingScalableMatrixWithUnitPricing(
-                            newFloatingScalableMatrixWithUnitPricing
-                        )
-                    newFloatingScalableMatrixWithTieredPricing != null ->
-                        visitor.visitNewFloatingScalableMatrixWithTieredPricing(
-                            newFloatingScalableMatrixWithTieredPricing
-                        )
-                    newFloatingCumulativeGroupedBulk != null ->
-                        visitor.visitNewFloatingCumulativeGroupedBulk(
-                            newFloatingCumulativeGroupedBulk
-                        )
+                    cumulativeGroupedBulk != null ->
+                        visitor.visitCumulativeGroupedBulk(cumulativeGroupedBulk)
                     else -> visitor.unknown(_json)
                 }
 
@@ -4174,171 +3912,142 @@ private constructor(
 
                 accept(
                     object : Visitor<Unit> {
-                        override fun visitNewFloatingUnit(newFloatingUnit: NewFloatingUnitPrice) {
-                            newFloatingUnit.validate()
+                        override fun visitUnit(unit: Unit) {
+                            unit.validate()
                         }
 
-                        override fun visitNewFloatingPackage(
-                            newFloatingPackage: NewFloatingPackagePrice
+                        override fun visitPackage(package_: Package) {
+                            package_.validate()
+                        }
+
+                        override fun visitMatrix(matrix: Matrix) {
+                            matrix.validate()
+                        }
+
+                        override fun visitMatrixWithAllocation(
+                            matrixWithAllocation: MatrixWithAllocation
                         ) {
-                            newFloatingPackage.validate()
+                            matrixWithAllocation.validate()
                         }
 
-                        override fun visitNewFloatingMatrix(
-                            newFloatingMatrix: NewFloatingMatrixPrice
+                        override fun visitTiered(tiered: Tiered) {
+                            tiered.validate()
+                        }
+
+                        override fun visitTieredBps(tieredBps: TieredBps) {
+                            tieredBps.validate()
+                        }
+
+                        override fun visitBps(bps: Bps) {
+                            bps.validate()
+                        }
+
+                        override fun visitBulkBps(bulkBps: BulkBps) {
+                            bulkBps.validate()
+                        }
+
+                        override fun visitBulk(bulk: Bulk) {
+                            bulk.validate()
+                        }
+
+                        override fun visitThresholdTotalAmount(
+                            thresholdTotalAmount: ThresholdTotalAmount
                         ) {
-                            newFloatingMatrix.validate()
+                            thresholdTotalAmount.validate()
                         }
 
-                        override fun visitNewFloatingMatrixWithAllocation(
-                            newFloatingMatrixWithAllocation: NewFloatingMatrixWithAllocationPrice
+                        override fun visitTieredPackage(tieredPackage: TieredPackage) {
+                            tieredPackage.validate()
+                        }
+
+                        override fun visitGroupedTiered(groupedTiered: GroupedTiered) {
+                            groupedTiered.validate()
+                        }
+
+                        override fun visitMaxGroupTieredPackage(
+                            maxGroupTieredPackage: MaxGroupTieredPackage
                         ) {
-                            newFloatingMatrixWithAllocation.validate()
+                            maxGroupTieredPackage.validate()
                         }
 
-                        override fun visitNewFloatingTiered(
-                            newFloatingTiered: NewFloatingTieredPrice
+                        override fun visitTieredWithMinimum(tieredWithMinimum: TieredWithMinimum) {
+                            tieredWithMinimum.validate()
+                        }
+
+                        override fun visitPackageWithAllocation(
+                            packageWithAllocation: PackageWithAllocation
                         ) {
-                            newFloatingTiered.validate()
+                            packageWithAllocation.validate()
                         }
 
-                        override fun visitNewFloatingTieredBps(
-                            newFloatingTieredBps: NewFloatingTieredBpsPrice
+                        override fun visitTieredPackageWithMinimum(
+                            tieredPackageWithMinimum: TieredPackageWithMinimum
                         ) {
-                            newFloatingTieredBps.validate()
+                            tieredPackageWithMinimum.validate()
                         }
 
-                        override fun visitNewFloatingBps(newFloatingBps: NewFloatingBpsPrice) {
-                            newFloatingBps.validate()
+                        override fun visitUnitWithPercent(unitWithPercent: UnitWithPercent) {
+                            unitWithPercent.validate()
                         }
 
-                        override fun visitNewFloatingBulkBps(
-                            newFloatingBulkBps: NewFloatingBulkBpsPrice
+                        override fun visitTieredWithProration(
+                            tieredWithProration: TieredWithProration
                         ) {
-                            newFloatingBulkBps.validate()
+                            tieredWithProration.validate()
                         }
 
-                        override fun visitNewFloatingBulk(newFloatingBulk: NewFloatingBulkPrice) {
-                            newFloatingBulk.validate()
+                        override fun visitUnitWithProration(unitWithProration: UnitWithProration) {
+                            unitWithProration.validate()
                         }
 
-                        override fun visitNewFloatingThresholdTotalAmount(
-                            newFloatingThresholdTotalAmount: NewFloatingThresholdTotalAmountPrice
+                        override fun visitGroupedAllocation(groupedAllocation: GroupedAllocation) {
+                            groupedAllocation.validate()
+                        }
+
+                        override fun visitGroupedWithProratedMinimum(
+                            groupedWithProratedMinimum: GroupedWithProratedMinimum
                         ) {
-                            newFloatingThresholdTotalAmount.validate()
+                            groupedWithProratedMinimum.validate()
                         }
 
-                        override fun visitNewFloatingTieredPackage(
-                            newFloatingTieredPackage: NewFloatingTieredPackagePrice
+                        override fun visitGroupedWithMeteredMinimum(
+                            groupedWithMeteredMinimum: GroupedWithMeteredMinimum
                         ) {
-                            newFloatingTieredPackage.validate()
+                            groupedWithMeteredMinimum.validate()
                         }
 
-                        override fun visitNewFloatingGroupedTiered(
-                            newFloatingGroupedTiered: NewFloatingGroupedTieredPrice
+                        override fun visitMatrixWithDisplayName(
+                            matrixWithDisplayName: MatrixWithDisplayName
                         ) {
-                            newFloatingGroupedTiered.validate()
+                            matrixWithDisplayName.validate()
                         }
 
-                        override fun visitNewFloatingMaxGroupTieredPackage(
-                            newFloatingMaxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
-                        ) {
-                            newFloatingMaxGroupTieredPackage.validate()
+                        override fun visitBulkWithProration(bulkWithProration: BulkWithProration) {
+                            bulkWithProration.validate()
                         }
 
-                        override fun visitNewFloatingTieredWithMinimum(
-                            newFloatingTieredWithMinimum: NewFloatingTieredWithMinimumPrice
+                        override fun visitGroupedTieredPackage(
+                            groupedTieredPackage: GroupedTieredPackage
                         ) {
-                            newFloatingTieredWithMinimum.validate()
+                            groupedTieredPackage.validate()
                         }
 
-                        override fun visitNewFloatingPackageWithAllocation(
-                            newFloatingPackageWithAllocation: NewFloatingPackageWithAllocationPrice
+                        override fun visitScalableMatrixWithUnitPricing(
+                            scalableMatrixWithUnitPricing: ScalableMatrixWithUnitPricing
                         ) {
-                            newFloatingPackageWithAllocation.validate()
+                            scalableMatrixWithUnitPricing.validate()
                         }
 
-                        override fun visitNewFloatingTieredPackageWithMinimum(
-                            newFloatingTieredPackageWithMinimum:
-                                NewFloatingTieredPackageWithMinimumPrice
+                        override fun visitScalableMatrixWithTieredPricing(
+                            scalableMatrixWithTieredPricing: ScalableMatrixWithTieredPricing
                         ) {
-                            newFloatingTieredPackageWithMinimum.validate()
+                            scalableMatrixWithTieredPricing.validate()
                         }
 
-                        override fun visitNewFloatingUnitWithPercent(
-                            newFloatingUnitWithPercent: NewFloatingUnitWithPercentPrice
+                        override fun visitCumulativeGroupedBulk(
+                            cumulativeGroupedBulk: CumulativeGroupedBulk
                         ) {
-                            newFloatingUnitWithPercent.validate()
-                        }
-
-                        override fun visitNewFloatingTieredWithProration(
-                            newFloatingTieredWithProration: NewFloatingTieredWithProrationPrice
-                        ) {
-                            newFloatingTieredWithProration.validate()
-                        }
-
-                        override fun visitNewFloatingUnitWithProration(
-                            newFloatingUnitWithProration: NewFloatingUnitWithProrationPrice
-                        ) {
-                            newFloatingUnitWithProration.validate()
-                        }
-
-                        override fun visitNewFloatingGroupedAllocation(
-                            newFloatingGroupedAllocation: NewFloatingGroupedAllocationPrice
-                        ) {
-                            newFloatingGroupedAllocation.validate()
-                        }
-
-                        override fun visitNewFloatingGroupedWithProratedMinimum(
-                            newFloatingGroupedWithProratedMinimum:
-                                NewFloatingGroupedWithProratedMinimumPrice
-                        ) {
-                            newFloatingGroupedWithProratedMinimum.validate()
-                        }
-
-                        override fun visitNewFloatingGroupedWithMeteredMinimum(
-                            newFloatingGroupedWithMeteredMinimum:
-                                NewFloatingGroupedWithMeteredMinimumPrice
-                        ) {
-                            newFloatingGroupedWithMeteredMinimum.validate()
-                        }
-
-                        override fun visitNewFloatingMatrixWithDisplayName(
-                            newFloatingMatrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice
-                        ) {
-                            newFloatingMatrixWithDisplayName.validate()
-                        }
-
-                        override fun visitNewFloatingBulkWithProration(
-                            newFloatingBulkWithProration: NewFloatingBulkWithProrationPrice
-                        ) {
-                            newFloatingBulkWithProration.validate()
-                        }
-
-                        override fun visitNewFloatingGroupedTieredPackage(
-                            newFloatingGroupedTieredPackage: NewFloatingGroupedTieredPackagePrice
-                        ) {
-                            newFloatingGroupedTieredPackage.validate()
-                        }
-
-                        override fun visitNewFloatingScalableMatrixWithUnitPricing(
-                            newFloatingScalableMatrixWithUnitPricing:
-                                NewFloatingScalableMatrixWithUnitPricingPrice
-                        ) {
-                            newFloatingScalableMatrixWithUnitPricing.validate()
-                        }
-
-                        override fun visitNewFloatingScalableMatrixWithTieredPricing(
-                            newFloatingScalableMatrixWithTieredPricing:
-                                NewFloatingScalableMatrixWithTieredPricingPrice
-                        ) {
-                            newFloatingScalableMatrixWithTieredPricing.validate()
-                        }
-
-                        override fun visitNewFloatingCumulativeGroupedBulk(
-                            newFloatingCumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice
-                        ) {
-                            newFloatingCumulativeGroupedBulk.validate()
+                            cumulativeGroupedBulk.validate()
                         }
                     }
                 )
@@ -4362,119 +4071,94 @@ private constructor(
             internal fun validity(): Int =
                 accept(
                     object : Visitor<Int> {
-                        override fun visitNewFloatingUnit(newFloatingUnit: NewFloatingUnitPrice) =
-                            newFloatingUnit.validity()
+                        override fun visitUnit(unit: Unit) = unit.validity()
 
-                        override fun visitNewFloatingPackage(
-                            newFloatingPackage: NewFloatingPackagePrice
-                        ) = newFloatingPackage.validity()
+                        override fun visitPackage(package_: Package) = package_.validity()
 
-                        override fun visitNewFloatingMatrix(
-                            newFloatingMatrix: NewFloatingMatrixPrice
-                        ) = newFloatingMatrix.validity()
+                        override fun visitMatrix(matrix: Matrix) = matrix.validity()
 
-                        override fun visitNewFloatingMatrixWithAllocation(
-                            newFloatingMatrixWithAllocation: NewFloatingMatrixWithAllocationPrice
-                        ) = newFloatingMatrixWithAllocation.validity()
+                        override fun visitMatrixWithAllocation(
+                            matrixWithAllocation: MatrixWithAllocation
+                        ) = matrixWithAllocation.validity()
 
-                        override fun visitNewFloatingTiered(
-                            newFloatingTiered: NewFloatingTieredPrice
-                        ) = newFloatingTiered.validity()
+                        override fun visitTiered(tiered: Tiered) = tiered.validity()
 
-                        override fun visitNewFloatingTieredBps(
-                            newFloatingTieredBps: NewFloatingTieredBpsPrice
-                        ) = newFloatingTieredBps.validity()
+                        override fun visitTieredBps(tieredBps: TieredBps) = tieredBps.validity()
 
-                        override fun visitNewFloatingBps(newFloatingBps: NewFloatingBpsPrice) =
-                            newFloatingBps.validity()
+                        override fun visitBps(bps: Bps) = bps.validity()
 
-                        override fun visitNewFloatingBulkBps(
-                            newFloatingBulkBps: NewFloatingBulkBpsPrice
-                        ) = newFloatingBulkBps.validity()
+                        override fun visitBulkBps(bulkBps: BulkBps) = bulkBps.validity()
 
-                        override fun visitNewFloatingBulk(newFloatingBulk: NewFloatingBulkPrice) =
-                            newFloatingBulk.validity()
+                        override fun visitBulk(bulk: Bulk) = bulk.validity()
 
-                        override fun visitNewFloatingThresholdTotalAmount(
-                            newFloatingThresholdTotalAmount: NewFloatingThresholdTotalAmountPrice
-                        ) = newFloatingThresholdTotalAmount.validity()
+                        override fun visitThresholdTotalAmount(
+                            thresholdTotalAmount: ThresholdTotalAmount
+                        ) = thresholdTotalAmount.validity()
 
-                        override fun visitNewFloatingTieredPackage(
-                            newFloatingTieredPackage: NewFloatingTieredPackagePrice
-                        ) = newFloatingTieredPackage.validity()
+                        override fun visitTieredPackage(tieredPackage: TieredPackage) =
+                            tieredPackage.validity()
 
-                        override fun visitNewFloatingGroupedTiered(
-                            newFloatingGroupedTiered: NewFloatingGroupedTieredPrice
-                        ) = newFloatingGroupedTiered.validity()
+                        override fun visitGroupedTiered(groupedTiered: GroupedTiered) =
+                            groupedTiered.validity()
 
-                        override fun visitNewFloatingMaxGroupTieredPackage(
-                            newFloatingMaxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
-                        ) = newFloatingMaxGroupTieredPackage.validity()
+                        override fun visitMaxGroupTieredPackage(
+                            maxGroupTieredPackage: MaxGroupTieredPackage
+                        ) = maxGroupTieredPackage.validity()
 
-                        override fun visitNewFloatingTieredWithMinimum(
-                            newFloatingTieredWithMinimum: NewFloatingTieredWithMinimumPrice
-                        ) = newFloatingTieredWithMinimum.validity()
+                        override fun visitTieredWithMinimum(tieredWithMinimum: TieredWithMinimum) =
+                            tieredWithMinimum.validity()
 
-                        override fun visitNewFloatingPackageWithAllocation(
-                            newFloatingPackageWithAllocation: NewFloatingPackageWithAllocationPrice
-                        ) = newFloatingPackageWithAllocation.validity()
+                        override fun visitPackageWithAllocation(
+                            packageWithAllocation: PackageWithAllocation
+                        ) = packageWithAllocation.validity()
 
-                        override fun visitNewFloatingTieredPackageWithMinimum(
-                            newFloatingTieredPackageWithMinimum:
-                                NewFloatingTieredPackageWithMinimumPrice
-                        ) = newFloatingTieredPackageWithMinimum.validity()
+                        override fun visitTieredPackageWithMinimum(
+                            tieredPackageWithMinimum: TieredPackageWithMinimum
+                        ) = tieredPackageWithMinimum.validity()
 
-                        override fun visitNewFloatingUnitWithPercent(
-                            newFloatingUnitWithPercent: NewFloatingUnitWithPercentPrice
-                        ) = newFloatingUnitWithPercent.validity()
+                        override fun visitUnitWithPercent(unitWithPercent: UnitWithPercent) =
+                            unitWithPercent.validity()
 
-                        override fun visitNewFloatingTieredWithProration(
-                            newFloatingTieredWithProration: NewFloatingTieredWithProrationPrice
-                        ) = newFloatingTieredWithProration.validity()
+                        override fun visitTieredWithProration(
+                            tieredWithProration: TieredWithProration
+                        ) = tieredWithProration.validity()
 
-                        override fun visitNewFloatingUnitWithProration(
-                            newFloatingUnitWithProration: NewFloatingUnitWithProrationPrice
-                        ) = newFloatingUnitWithProration.validity()
+                        override fun visitUnitWithProration(unitWithProration: UnitWithProration) =
+                            unitWithProration.validity()
 
-                        override fun visitNewFloatingGroupedAllocation(
-                            newFloatingGroupedAllocation: NewFloatingGroupedAllocationPrice
-                        ) = newFloatingGroupedAllocation.validity()
+                        override fun visitGroupedAllocation(groupedAllocation: GroupedAllocation) =
+                            groupedAllocation.validity()
 
-                        override fun visitNewFloatingGroupedWithProratedMinimum(
-                            newFloatingGroupedWithProratedMinimum:
-                                NewFloatingGroupedWithProratedMinimumPrice
-                        ) = newFloatingGroupedWithProratedMinimum.validity()
+                        override fun visitGroupedWithProratedMinimum(
+                            groupedWithProratedMinimum: GroupedWithProratedMinimum
+                        ) = groupedWithProratedMinimum.validity()
 
-                        override fun visitNewFloatingGroupedWithMeteredMinimum(
-                            newFloatingGroupedWithMeteredMinimum:
-                                NewFloatingGroupedWithMeteredMinimumPrice
-                        ) = newFloatingGroupedWithMeteredMinimum.validity()
+                        override fun visitGroupedWithMeteredMinimum(
+                            groupedWithMeteredMinimum: GroupedWithMeteredMinimum
+                        ) = groupedWithMeteredMinimum.validity()
 
-                        override fun visitNewFloatingMatrixWithDisplayName(
-                            newFloatingMatrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice
-                        ) = newFloatingMatrixWithDisplayName.validity()
+                        override fun visitMatrixWithDisplayName(
+                            matrixWithDisplayName: MatrixWithDisplayName
+                        ) = matrixWithDisplayName.validity()
 
-                        override fun visitNewFloatingBulkWithProration(
-                            newFloatingBulkWithProration: NewFloatingBulkWithProrationPrice
-                        ) = newFloatingBulkWithProration.validity()
+                        override fun visitBulkWithProration(bulkWithProration: BulkWithProration) =
+                            bulkWithProration.validity()
 
-                        override fun visitNewFloatingGroupedTieredPackage(
-                            newFloatingGroupedTieredPackage: NewFloatingGroupedTieredPackagePrice
-                        ) = newFloatingGroupedTieredPackage.validity()
+                        override fun visitGroupedTieredPackage(
+                            groupedTieredPackage: GroupedTieredPackage
+                        ) = groupedTieredPackage.validity()
 
-                        override fun visitNewFloatingScalableMatrixWithUnitPricing(
-                            newFloatingScalableMatrixWithUnitPricing:
-                                NewFloatingScalableMatrixWithUnitPricingPrice
-                        ) = newFloatingScalableMatrixWithUnitPricing.validity()
+                        override fun visitScalableMatrixWithUnitPricing(
+                            scalableMatrixWithUnitPricing: ScalableMatrixWithUnitPricing
+                        ) = scalableMatrixWithUnitPricing.validity()
 
-                        override fun visitNewFloatingScalableMatrixWithTieredPricing(
-                            newFloatingScalableMatrixWithTieredPricing:
-                                NewFloatingScalableMatrixWithTieredPricingPrice
-                        ) = newFloatingScalableMatrixWithTieredPricing.validity()
+                        override fun visitScalableMatrixWithTieredPricing(
+                            scalableMatrixWithTieredPricing: ScalableMatrixWithTieredPricing
+                        ) = scalableMatrixWithTieredPricing.validity()
 
-                        override fun visitNewFloatingCumulativeGroupedBulk(
-                            newFloatingCumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice
-                        ) = newFloatingCumulativeGroupedBulk.validity()
+                        override fun visitCumulativeGroupedBulk(
+                            cumulativeGroupedBulk: CumulativeGroupedBulk
+                        ) = cumulativeGroupedBulk.validity()
 
                         override fun unknown(json: JsonValue?) = 0
                     }
@@ -4485,189 +4169,138 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Price && newFloatingUnit == other.newFloatingUnit && newFloatingPackage == other.newFloatingPackage && newFloatingMatrix == other.newFloatingMatrix && newFloatingMatrixWithAllocation == other.newFloatingMatrixWithAllocation && newFloatingTiered == other.newFloatingTiered && newFloatingTieredBps == other.newFloatingTieredBps && newFloatingBps == other.newFloatingBps && newFloatingBulkBps == other.newFloatingBulkBps && newFloatingBulk == other.newFloatingBulk && newFloatingThresholdTotalAmount == other.newFloatingThresholdTotalAmount && newFloatingTieredPackage == other.newFloatingTieredPackage && newFloatingGroupedTiered == other.newFloatingGroupedTiered && newFloatingMaxGroupTieredPackage == other.newFloatingMaxGroupTieredPackage && newFloatingTieredWithMinimum == other.newFloatingTieredWithMinimum && newFloatingPackageWithAllocation == other.newFloatingPackageWithAllocation && newFloatingTieredPackageWithMinimum == other.newFloatingTieredPackageWithMinimum && newFloatingUnitWithPercent == other.newFloatingUnitWithPercent && newFloatingTieredWithProration == other.newFloatingTieredWithProration && newFloatingUnitWithProration == other.newFloatingUnitWithProration && newFloatingGroupedAllocation == other.newFloatingGroupedAllocation && newFloatingGroupedWithProratedMinimum == other.newFloatingGroupedWithProratedMinimum && newFloatingGroupedWithMeteredMinimum == other.newFloatingGroupedWithMeteredMinimum && newFloatingMatrixWithDisplayName == other.newFloatingMatrixWithDisplayName && newFloatingBulkWithProration == other.newFloatingBulkWithProration && newFloatingGroupedTieredPackage == other.newFloatingGroupedTieredPackage && newFloatingScalableMatrixWithUnitPricing == other.newFloatingScalableMatrixWithUnitPricing && newFloatingScalableMatrixWithTieredPricing == other.newFloatingScalableMatrixWithTieredPricing && newFloatingCumulativeGroupedBulk == other.newFloatingCumulativeGroupedBulk /* spotless:on */
+                return /* spotless:off */ other is Price && unit == other.unit && package_ == other.package_ && matrix == other.matrix && matrixWithAllocation == other.matrixWithAllocation && tiered == other.tiered && tieredBps == other.tieredBps && bps == other.bps && bulkBps == other.bulkBps && bulk == other.bulk && thresholdTotalAmount == other.thresholdTotalAmount && tieredPackage == other.tieredPackage && groupedTiered == other.groupedTiered && maxGroupTieredPackage == other.maxGroupTieredPackage && tieredWithMinimum == other.tieredWithMinimum && packageWithAllocation == other.packageWithAllocation && tieredPackageWithMinimum == other.tieredPackageWithMinimum && unitWithPercent == other.unitWithPercent && tieredWithProration == other.tieredWithProration && unitWithProration == other.unitWithProration && groupedAllocation == other.groupedAllocation && groupedWithProratedMinimum == other.groupedWithProratedMinimum && groupedWithMeteredMinimum == other.groupedWithMeteredMinimum && matrixWithDisplayName == other.matrixWithDisplayName && bulkWithProration == other.bulkWithProration && groupedTieredPackage == other.groupedTieredPackage && scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing && scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing && cumulativeGroupedBulk == other.cumulativeGroupedBulk /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(newFloatingUnit, newFloatingPackage, newFloatingMatrix, newFloatingMatrixWithAllocation, newFloatingTiered, newFloatingTieredBps, newFloatingBps, newFloatingBulkBps, newFloatingBulk, newFloatingThresholdTotalAmount, newFloatingTieredPackage, newFloatingGroupedTiered, newFloatingMaxGroupTieredPackage, newFloatingTieredWithMinimum, newFloatingPackageWithAllocation, newFloatingTieredPackageWithMinimum, newFloatingUnitWithPercent, newFloatingTieredWithProration, newFloatingUnitWithProration, newFloatingGroupedAllocation, newFloatingGroupedWithProratedMinimum, newFloatingGroupedWithMeteredMinimum, newFloatingMatrixWithDisplayName, newFloatingBulkWithProration, newFloatingGroupedTieredPackage, newFloatingScalableMatrixWithUnitPricing, newFloatingScalableMatrixWithTieredPricing, newFloatingCumulativeGroupedBulk) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, package_, matrix, matrixWithAllocation, tiered, tieredBps, bps, bulkBps, bulk, thresholdTotalAmount, tieredPackage, groupedTiered, maxGroupTieredPackage, tieredWithMinimum, packageWithAllocation, tieredPackageWithMinimum, unitWithPercent, tieredWithProration, unitWithProration, groupedAllocation, groupedWithProratedMinimum, groupedWithMeteredMinimum, matrixWithDisplayName, bulkWithProration, groupedTieredPackage, scalableMatrixWithUnitPricing, scalableMatrixWithTieredPricing, cumulativeGroupedBulk) /* spotless:on */
 
             override fun toString(): String =
                 when {
-                    newFloatingUnit != null -> "Price{newFloatingUnit=$newFloatingUnit}"
-                    newFloatingPackage != null -> "Price{newFloatingPackage=$newFloatingPackage}"
-                    newFloatingMatrix != null -> "Price{newFloatingMatrix=$newFloatingMatrix}"
-                    newFloatingMatrixWithAllocation != null ->
-                        "Price{newFloatingMatrixWithAllocation=$newFloatingMatrixWithAllocation}"
-                    newFloatingTiered != null -> "Price{newFloatingTiered=$newFloatingTiered}"
-                    newFloatingTieredBps != null ->
-                        "Price{newFloatingTieredBps=$newFloatingTieredBps}"
-                    newFloatingBps != null -> "Price{newFloatingBps=$newFloatingBps}"
-                    newFloatingBulkBps != null -> "Price{newFloatingBulkBps=$newFloatingBulkBps}"
-                    newFloatingBulk != null -> "Price{newFloatingBulk=$newFloatingBulk}"
-                    newFloatingThresholdTotalAmount != null ->
-                        "Price{newFloatingThresholdTotalAmount=$newFloatingThresholdTotalAmount}"
-                    newFloatingTieredPackage != null ->
-                        "Price{newFloatingTieredPackage=$newFloatingTieredPackage}"
-                    newFloatingGroupedTiered != null ->
-                        "Price{newFloatingGroupedTiered=$newFloatingGroupedTiered}"
-                    newFloatingMaxGroupTieredPackage != null ->
-                        "Price{newFloatingMaxGroupTieredPackage=$newFloatingMaxGroupTieredPackage}"
-                    newFloatingTieredWithMinimum != null ->
-                        "Price{newFloatingTieredWithMinimum=$newFloatingTieredWithMinimum}"
-                    newFloatingPackageWithAllocation != null ->
-                        "Price{newFloatingPackageWithAllocation=$newFloatingPackageWithAllocation}"
-                    newFloatingTieredPackageWithMinimum != null ->
-                        "Price{newFloatingTieredPackageWithMinimum=$newFloatingTieredPackageWithMinimum}"
-                    newFloatingUnitWithPercent != null ->
-                        "Price{newFloatingUnitWithPercent=$newFloatingUnitWithPercent}"
-                    newFloatingTieredWithProration != null ->
-                        "Price{newFloatingTieredWithProration=$newFloatingTieredWithProration}"
-                    newFloatingUnitWithProration != null ->
-                        "Price{newFloatingUnitWithProration=$newFloatingUnitWithProration}"
-                    newFloatingGroupedAllocation != null ->
-                        "Price{newFloatingGroupedAllocation=$newFloatingGroupedAllocation}"
-                    newFloatingGroupedWithProratedMinimum != null ->
-                        "Price{newFloatingGroupedWithProratedMinimum=$newFloatingGroupedWithProratedMinimum}"
-                    newFloatingGroupedWithMeteredMinimum != null ->
-                        "Price{newFloatingGroupedWithMeteredMinimum=$newFloatingGroupedWithMeteredMinimum}"
-                    newFloatingMatrixWithDisplayName != null ->
-                        "Price{newFloatingMatrixWithDisplayName=$newFloatingMatrixWithDisplayName}"
-                    newFloatingBulkWithProration != null ->
-                        "Price{newFloatingBulkWithProration=$newFloatingBulkWithProration}"
-                    newFloatingGroupedTieredPackage != null ->
-                        "Price{newFloatingGroupedTieredPackage=$newFloatingGroupedTieredPackage}"
-                    newFloatingScalableMatrixWithUnitPricing != null ->
-                        "Price{newFloatingScalableMatrixWithUnitPricing=$newFloatingScalableMatrixWithUnitPricing}"
-                    newFloatingScalableMatrixWithTieredPricing != null ->
-                        "Price{newFloatingScalableMatrixWithTieredPricing=$newFloatingScalableMatrixWithTieredPricing}"
-                    newFloatingCumulativeGroupedBulk != null ->
-                        "Price{newFloatingCumulativeGroupedBulk=$newFloatingCumulativeGroupedBulk}"
+                    unit != null -> "Price{unit=$unit}"
+                    package_ != null -> "Price{package_=$package_}"
+                    matrix != null -> "Price{matrix=$matrix}"
+                    matrixWithAllocation != null ->
+                        "Price{matrixWithAllocation=$matrixWithAllocation}"
+                    tiered != null -> "Price{tiered=$tiered}"
+                    tieredBps != null -> "Price{tieredBps=$tieredBps}"
+                    bps != null -> "Price{bps=$bps}"
+                    bulkBps != null -> "Price{bulkBps=$bulkBps}"
+                    bulk != null -> "Price{bulk=$bulk}"
+                    thresholdTotalAmount != null ->
+                        "Price{thresholdTotalAmount=$thresholdTotalAmount}"
+                    tieredPackage != null -> "Price{tieredPackage=$tieredPackage}"
+                    groupedTiered != null -> "Price{groupedTiered=$groupedTiered}"
+                    maxGroupTieredPackage != null ->
+                        "Price{maxGroupTieredPackage=$maxGroupTieredPackage}"
+                    tieredWithMinimum != null -> "Price{tieredWithMinimum=$tieredWithMinimum}"
+                    packageWithAllocation != null ->
+                        "Price{packageWithAllocation=$packageWithAllocation}"
+                    tieredPackageWithMinimum != null ->
+                        "Price{tieredPackageWithMinimum=$tieredPackageWithMinimum}"
+                    unitWithPercent != null -> "Price{unitWithPercent=$unitWithPercent}"
+                    tieredWithProration != null -> "Price{tieredWithProration=$tieredWithProration}"
+                    unitWithProration != null -> "Price{unitWithProration=$unitWithProration}"
+                    groupedAllocation != null -> "Price{groupedAllocation=$groupedAllocation}"
+                    groupedWithProratedMinimum != null ->
+                        "Price{groupedWithProratedMinimum=$groupedWithProratedMinimum}"
+                    groupedWithMeteredMinimum != null ->
+                        "Price{groupedWithMeteredMinimum=$groupedWithMeteredMinimum}"
+                    matrixWithDisplayName != null ->
+                        "Price{matrixWithDisplayName=$matrixWithDisplayName}"
+                    bulkWithProration != null -> "Price{bulkWithProration=$bulkWithProration}"
+                    groupedTieredPackage != null ->
+                        "Price{groupedTieredPackage=$groupedTieredPackage}"
+                    scalableMatrixWithUnitPricing != null ->
+                        "Price{scalableMatrixWithUnitPricing=$scalableMatrixWithUnitPricing}"
+                    scalableMatrixWithTieredPricing != null ->
+                        "Price{scalableMatrixWithTieredPricing=$scalableMatrixWithTieredPricing}"
+                    cumulativeGroupedBulk != null ->
+                        "Price{cumulativeGroupedBulk=$cumulativeGroupedBulk}"
                     _json != null -> "Price{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Price")
                 }
 
             companion object {
 
-                fun ofNewFloatingUnit(newFloatingUnit: NewFloatingUnitPrice) =
-                    Price(newFloatingUnit = newFloatingUnit)
+                fun ofUnit(unit: Unit) = Price(unit = unit)
 
-                fun ofNewFloatingPackage(newFloatingPackage: NewFloatingPackagePrice) =
-                    Price(newFloatingPackage = newFloatingPackage)
+                fun ofPackage(package_: Package) = Price(package_ = package_)
 
-                fun ofNewFloatingMatrix(newFloatingMatrix: NewFloatingMatrixPrice) =
-                    Price(newFloatingMatrix = newFloatingMatrix)
+                fun ofMatrix(matrix: Matrix) = Price(matrix = matrix)
 
-                fun ofNewFloatingMatrixWithAllocation(
-                    newFloatingMatrixWithAllocation: NewFloatingMatrixWithAllocationPrice
-                ) = Price(newFloatingMatrixWithAllocation = newFloatingMatrixWithAllocation)
+                fun ofMatrixWithAllocation(matrixWithAllocation: MatrixWithAllocation) =
+                    Price(matrixWithAllocation = matrixWithAllocation)
 
-                fun ofNewFloatingTiered(newFloatingTiered: NewFloatingTieredPrice) =
-                    Price(newFloatingTiered = newFloatingTiered)
+                fun ofTiered(tiered: Tiered) = Price(tiered = tiered)
 
-                fun ofNewFloatingTieredBps(newFloatingTieredBps: NewFloatingTieredBpsPrice) =
-                    Price(newFloatingTieredBps = newFloatingTieredBps)
+                fun ofTieredBps(tieredBps: TieredBps) = Price(tieredBps = tieredBps)
 
-                fun ofNewFloatingBps(newFloatingBps: NewFloatingBpsPrice) =
-                    Price(newFloatingBps = newFloatingBps)
+                fun ofBps(bps: Bps) = Price(bps = bps)
 
-                fun ofNewFloatingBulkBps(newFloatingBulkBps: NewFloatingBulkBpsPrice) =
-                    Price(newFloatingBulkBps = newFloatingBulkBps)
+                fun ofBulkBps(bulkBps: BulkBps) = Price(bulkBps = bulkBps)
 
-                fun ofNewFloatingBulk(newFloatingBulk: NewFloatingBulkPrice) =
-                    Price(newFloatingBulk = newFloatingBulk)
+                fun ofBulk(bulk: Bulk) = Price(bulk = bulk)
 
-                fun ofNewFloatingThresholdTotalAmount(
-                    newFloatingThresholdTotalAmount: NewFloatingThresholdTotalAmountPrice
-                ) = Price(newFloatingThresholdTotalAmount = newFloatingThresholdTotalAmount)
+                fun ofThresholdTotalAmount(thresholdTotalAmount: ThresholdTotalAmount) =
+                    Price(thresholdTotalAmount = thresholdTotalAmount)
 
-                fun ofNewFloatingTieredPackage(
-                    newFloatingTieredPackage: NewFloatingTieredPackagePrice
-                ) = Price(newFloatingTieredPackage = newFloatingTieredPackage)
+                fun ofTieredPackage(tieredPackage: TieredPackage) =
+                    Price(tieredPackage = tieredPackage)
 
-                fun ofNewFloatingGroupedTiered(
-                    newFloatingGroupedTiered: NewFloatingGroupedTieredPrice
-                ) = Price(newFloatingGroupedTiered = newFloatingGroupedTiered)
+                fun ofGroupedTiered(groupedTiered: GroupedTiered) =
+                    Price(groupedTiered = groupedTiered)
 
-                fun ofNewFloatingMaxGroupTieredPackage(
-                    newFloatingMaxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
-                ) = Price(newFloatingMaxGroupTieredPackage = newFloatingMaxGroupTieredPackage)
+                fun ofMaxGroupTieredPackage(maxGroupTieredPackage: MaxGroupTieredPackage) =
+                    Price(maxGroupTieredPackage = maxGroupTieredPackage)
 
-                fun ofNewFloatingTieredWithMinimum(
-                    newFloatingTieredWithMinimum: NewFloatingTieredWithMinimumPrice
-                ) = Price(newFloatingTieredWithMinimum = newFloatingTieredWithMinimum)
+                fun ofTieredWithMinimum(tieredWithMinimum: TieredWithMinimum) =
+                    Price(tieredWithMinimum = tieredWithMinimum)
 
-                fun ofNewFloatingPackageWithAllocation(
-                    newFloatingPackageWithAllocation: NewFloatingPackageWithAllocationPrice
-                ) = Price(newFloatingPackageWithAllocation = newFloatingPackageWithAllocation)
+                fun ofPackageWithAllocation(packageWithAllocation: PackageWithAllocation) =
+                    Price(packageWithAllocation = packageWithAllocation)
 
-                fun ofNewFloatingTieredPackageWithMinimum(
-                    newFloatingTieredPackageWithMinimum: NewFloatingTieredPackageWithMinimumPrice
-                ) = Price(newFloatingTieredPackageWithMinimum = newFloatingTieredPackageWithMinimum)
+                fun ofTieredPackageWithMinimum(tieredPackageWithMinimum: TieredPackageWithMinimum) =
+                    Price(tieredPackageWithMinimum = tieredPackageWithMinimum)
 
-                fun ofNewFloatingUnitWithPercent(
-                    newFloatingUnitWithPercent: NewFloatingUnitWithPercentPrice
-                ) = Price(newFloatingUnitWithPercent = newFloatingUnitWithPercent)
+                fun ofUnitWithPercent(unitWithPercent: UnitWithPercent) =
+                    Price(unitWithPercent = unitWithPercent)
 
-                fun ofNewFloatingTieredWithProration(
-                    newFloatingTieredWithProration: NewFloatingTieredWithProrationPrice
-                ) = Price(newFloatingTieredWithProration = newFloatingTieredWithProration)
+                fun ofTieredWithProration(tieredWithProration: TieredWithProration) =
+                    Price(tieredWithProration = tieredWithProration)
 
-                fun ofNewFloatingUnitWithProration(
-                    newFloatingUnitWithProration: NewFloatingUnitWithProrationPrice
-                ) = Price(newFloatingUnitWithProration = newFloatingUnitWithProration)
+                fun ofUnitWithProration(unitWithProration: UnitWithProration) =
+                    Price(unitWithProration = unitWithProration)
 
-                fun ofNewFloatingGroupedAllocation(
-                    newFloatingGroupedAllocation: NewFloatingGroupedAllocationPrice
-                ) = Price(newFloatingGroupedAllocation = newFloatingGroupedAllocation)
+                fun ofGroupedAllocation(groupedAllocation: GroupedAllocation) =
+                    Price(groupedAllocation = groupedAllocation)
 
-                fun ofNewFloatingGroupedWithProratedMinimum(
-                    newFloatingGroupedWithProratedMinimum:
-                        NewFloatingGroupedWithProratedMinimumPrice
-                ) =
-                    Price(
-                        newFloatingGroupedWithProratedMinimum =
-                            newFloatingGroupedWithProratedMinimum
-                    )
+                fun ofGroupedWithProratedMinimum(
+                    groupedWithProratedMinimum: GroupedWithProratedMinimum
+                ) = Price(groupedWithProratedMinimum = groupedWithProratedMinimum)
 
-                fun ofNewFloatingGroupedWithMeteredMinimum(
-                    newFloatingGroupedWithMeteredMinimum: NewFloatingGroupedWithMeteredMinimumPrice
-                ) =
-                    Price(
-                        newFloatingGroupedWithMeteredMinimum = newFloatingGroupedWithMeteredMinimum
-                    )
+                fun ofGroupedWithMeteredMinimum(
+                    groupedWithMeteredMinimum: GroupedWithMeteredMinimum
+                ) = Price(groupedWithMeteredMinimum = groupedWithMeteredMinimum)
 
-                fun ofNewFloatingMatrixWithDisplayName(
-                    newFloatingMatrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice
-                ) = Price(newFloatingMatrixWithDisplayName = newFloatingMatrixWithDisplayName)
+                fun ofMatrixWithDisplayName(matrixWithDisplayName: MatrixWithDisplayName) =
+                    Price(matrixWithDisplayName = matrixWithDisplayName)
 
-                fun ofNewFloatingBulkWithProration(
-                    newFloatingBulkWithProration: NewFloatingBulkWithProrationPrice
-                ) = Price(newFloatingBulkWithProration = newFloatingBulkWithProration)
+                fun ofBulkWithProration(bulkWithProration: BulkWithProration) =
+                    Price(bulkWithProration = bulkWithProration)
 
-                fun ofNewFloatingGroupedTieredPackage(
-                    newFloatingGroupedTieredPackage: NewFloatingGroupedTieredPackagePrice
-                ) = Price(newFloatingGroupedTieredPackage = newFloatingGroupedTieredPackage)
+                fun ofGroupedTieredPackage(groupedTieredPackage: GroupedTieredPackage) =
+                    Price(groupedTieredPackage = groupedTieredPackage)
 
-                fun ofNewFloatingScalableMatrixWithUnitPricing(
-                    newFloatingScalableMatrixWithUnitPricing:
-                        NewFloatingScalableMatrixWithUnitPricingPrice
-                ) =
-                    Price(
-                        newFloatingScalableMatrixWithUnitPricing =
-                            newFloatingScalableMatrixWithUnitPricing
-                    )
+                fun ofScalableMatrixWithUnitPricing(
+                    scalableMatrixWithUnitPricing: ScalableMatrixWithUnitPricing
+                ) = Price(scalableMatrixWithUnitPricing = scalableMatrixWithUnitPricing)
 
-                fun ofNewFloatingScalableMatrixWithTieredPricing(
-                    newFloatingScalableMatrixWithTieredPricing:
-                        NewFloatingScalableMatrixWithTieredPricingPrice
-                ) =
-                    Price(
-                        newFloatingScalableMatrixWithTieredPricing =
-                            newFloatingScalableMatrixWithTieredPricing
-                    )
+                fun ofScalableMatrixWithTieredPricing(
+                    scalableMatrixWithTieredPricing: ScalableMatrixWithTieredPricing
+                ) = Price(scalableMatrixWithTieredPricing = scalableMatrixWithTieredPricing)
 
-                fun ofNewFloatingCumulativeGroupedBulk(
-                    newFloatingCumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice
-                ) = Price(newFloatingCumulativeGroupedBulk = newFloatingCumulativeGroupedBulk)
+                fun ofCumulativeGroupedBulk(cumulativeGroupedBulk: CumulativeGroupedBulk) =
+                    Price(cumulativeGroupedBulk = cumulativeGroupedBulk)
             }
 
             /**
@@ -4675,104 +4308,71 @@ private constructor(
              */
             interface Visitor<out T> {
 
-                fun visitNewFloatingUnit(newFloatingUnit: NewFloatingUnitPrice): T
+                fun visitUnit(unit: Unit): T
 
-                fun visitNewFloatingPackage(newFloatingPackage: NewFloatingPackagePrice): T
+                fun visitPackage(package_: Package): T
 
-                fun visitNewFloatingMatrix(newFloatingMatrix: NewFloatingMatrixPrice): T
+                fun visitMatrix(matrix: Matrix): T
 
-                fun visitNewFloatingMatrixWithAllocation(
-                    newFloatingMatrixWithAllocation: NewFloatingMatrixWithAllocationPrice
+                fun visitMatrixWithAllocation(matrixWithAllocation: MatrixWithAllocation): T
+
+                fun visitTiered(tiered: Tiered): T
+
+                fun visitTieredBps(tieredBps: TieredBps): T
+
+                fun visitBps(bps: Bps): T
+
+                fun visitBulkBps(bulkBps: BulkBps): T
+
+                fun visitBulk(bulk: Bulk): T
+
+                fun visitThresholdTotalAmount(thresholdTotalAmount: ThresholdTotalAmount): T
+
+                fun visitTieredPackage(tieredPackage: TieredPackage): T
+
+                fun visitGroupedTiered(groupedTiered: GroupedTiered): T
+
+                fun visitMaxGroupTieredPackage(maxGroupTieredPackage: MaxGroupTieredPackage): T
+
+                fun visitTieredWithMinimum(tieredWithMinimum: TieredWithMinimum): T
+
+                fun visitPackageWithAllocation(packageWithAllocation: PackageWithAllocation): T
+
+                fun visitTieredPackageWithMinimum(
+                    tieredPackageWithMinimum: TieredPackageWithMinimum
                 ): T
 
-                fun visitNewFloatingTiered(newFloatingTiered: NewFloatingTieredPrice): T
+                fun visitUnitWithPercent(unitWithPercent: UnitWithPercent): T
 
-                fun visitNewFloatingTieredBps(newFloatingTieredBps: NewFloatingTieredBpsPrice): T
+                fun visitTieredWithProration(tieredWithProration: TieredWithProration): T
 
-                fun visitNewFloatingBps(newFloatingBps: NewFloatingBpsPrice): T
+                fun visitUnitWithProration(unitWithProration: UnitWithProration): T
 
-                fun visitNewFloatingBulkBps(newFloatingBulkBps: NewFloatingBulkBpsPrice): T
+                fun visitGroupedAllocation(groupedAllocation: GroupedAllocation): T
 
-                fun visitNewFloatingBulk(newFloatingBulk: NewFloatingBulkPrice): T
-
-                fun visitNewFloatingThresholdTotalAmount(
-                    newFloatingThresholdTotalAmount: NewFloatingThresholdTotalAmountPrice
+                fun visitGroupedWithProratedMinimum(
+                    groupedWithProratedMinimum: GroupedWithProratedMinimum
                 ): T
 
-                fun visitNewFloatingTieredPackage(
-                    newFloatingTieredPackage: NewFloatingTieredPackagePrice
+                fun visitGroupedWithMeteredMinimum(
+                    groupedWithMeteredMinimum: GroupedWithMeteredMinimum
                 ): T
 
-                fun visitNewFloatingGroupedTiered(
-                    newFloatingGroupedTiered: NewFloatingGroupedTieredPrice
+                fun visitMatrixWithDisplayName(matrixWithDisplayName: MatrixWithDisplayName): T
+
+                fun visitBulkWithProration(bulkWithProration: BulkWithProration): T
+
+                fun visitGroupedTieredPackage(groupedTieredPackage: GroupedTieredPackage): T
+
+                fun visitScalableMatrixWithUnitPricing(
+                    scalableMatrixWithUnitPricing: ScalableMatrixWithUnitPricing
                 ): T
 
-                fun visitNewFloatingMaxGroupTieredPackage(
-                    newFloatingMaxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
+                fun visitScalableMatrixWithTieredPricing(
+                    scalableMatrixWithTieredPricing: ScalableMatrixWithTieredPricing
                 ): T
 
-                fun visitNewFloatingTieredWithMinimum(
-                    newFloatingTieredWithMinimum: NewFloatingTieredWithMinimumPrice
-                ): T
-
-                fun visitNewFloatingPackageWithAllocation(
-                    newFloatingPackageWithAllocation: NewFloatingPackageWithAllocationPrice
-                ): T
-
-                fun visitNewFloatingTieredPackageWithMinimum(
-                    newFloatingTieredPackageWithMinimum: NewFloatingTieredPackageWithMinimumPrice
-                ): T
-
-                fun visitNewFloatingUnitWithPercent(
-                    newFloatingUnitWithPercent: NewFloatingUnitWithPercentPrice
-                ): T
-
-                fun visitNewFloatingTieredWithProration(
-                    newFloatingTieredWithProration: NewFloatingTieredWithProrationPrice
-                ): T
-
-                fun visitNewFloatingUnitWithProration(
-                    newFloatingUnitWithProration: NewFloatingUnitWithProrationPrice
-                ): T
-
-                fun visitNewFloatingGroupedAllocation(
-                    newFloatingGroupedAllocation: NewFloatingGroupedAllocationPrice
-                ): T
-
-                fun visitNewFloatingGroupedWithProratedMinimum(
-                    newFloatingGroupedWithProratedMinimum:
-                        NewFloatingGroupedWithProratedMinimumPrice
-                ): T
-
-                fun visitNewFloatingGroupedWithMeteredMinimum(
-                    newFloatingGroupedWithMeteredMinimum: NewFloatingGroupedWithMeteredMinimumPrice
-                ): T
-
-                fun visitNewFloatingMatrixWithDisplayName(
-                    newFloatingMatrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice
-                ): T
-
-                fun visitNewFloatingBulkWithProration(
-                    newFloatingBulkWithProration: NewFloatingBulkWithProrationPrice
-                ): T
-
-                fun visitNewFloatingGroupedTieredPackage(
-                    newFloatingGroupedTieredPackage: NewFloatingGroupedTieredPackagePrice
-                ): T
-
-                fun visitNewFloatingScalableMatrixWithUnitPricing(
-                    newFloatingScalableMatrixWithUnitPricing:
-                        NewFloatingScalableMatrixWithUnitPricingPrice
-                ): T
-
-                fun visitNewFloatingScalableMatrixWithTieredPricing(
-                    newFloatingScalableMatrixWithTieredPricing:
-                        NewFloatingScalableMatrixWithTieredPricingPrice
-                ): T
-
-                fun visitNewFloatingCumulativeGroupedBulk(
-                    newFloatingCumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice
-                ): T
+                fun visitCumulativeGroupedBulk(cumulativeGroupedBulk: CumulativeGroupedBulk): T
 
                 /**
                  * Maps an unknown variant of [Price] to a value of type [T].
@@ -4797,216 +4397,152 @@ private constructor(
 
                     when (modelType) {
                         "unit" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewFloatingUnitPrice>())
-                                ?.let { Price(newFloatingUnit = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Unit>())?.let {
+                                Price(unit = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "package" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewFloatingPackagePrice>())
-                                ?.let { Price(newFloatingPackage = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Package>())?.let {
+                                Price(package_ = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "matrix" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewFloatingMatrixPrice>())
-                                ?.let { Price(newFloatingMatrix = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Matrix>())?.let {
+                                Price(matrix = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "matrix_with_allocation" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingMatrixWithAllocationPrice>(),
-                                )
-                                ?.let { Price(newFloatingMatrixWithAllocation = it, _json = json) }
+                            return tryDeserialize(node, jacksonTypeRef<MatrixWithAllocation>())
+                                ?.let { Price(matrixWithAllocation = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "tiered" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPrice>())
-                                ?.let { Price(newFloatingTiered = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Tiered>())?.let {
+                                Price(tiered = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "tiered_bps" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewFloatingTieredBpsPrice>())
-                                ?.let { Price(newFloatingTieredBps = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<TieredBps>())?.let {
+                                Price(tieredBps = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "bps" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewFloatingBpsPrice>())
-                                ?.let { Price(newFloatingBps = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Bps>())?.let {
+                                Price(bps = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "bulk_bps" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewFloatingBulkBpsPrice>())
-                                ?.let { Price(newFloatingBulkBps = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<BulkBps>())?.let {
+                                Price(bulkBps = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "bulk" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewFloatingBulkPrice>())
-                                ?.let { Price(newFloatingBulk = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Bulk>())?.let {
+                                Price(bulk = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "threshold_total_amount" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingThresholdTotalAmountPrice>(),
-                                )
-                                ?.let { Price(newFloatingThresholdTotalAmount = it, _json = json) }
+                            return tryDeserialize(node, jacksonTypeRef<ThresholdTotalAmount>())
+                                ?.let { Price(thresholdTotalAmount = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "tiered_package" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingTieredPackagePrice>(),
-                                )
-                                ?.let { Price(newFloatingTieredPackage = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<TieredPackage>())?.let {
+                                Price(tieredPackage = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "grouped_tiered" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingGroupedTieredPrice>(),
-                                )
-                                ?.let { Price(newFloatingGroupedTiered = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<GroupedTiered>())?.let {
+                                Price(groupedTiered = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "max_group_tiered_package" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingMaxGroupTieredPackagePrice>(),
-                                )
-                                ?.let { Price(newFloatingMaxGroupTieredPackage = it, _json = json) }
+                            return tryDeserialize(node, jacksonTypeRef<MaxGroupTieredPackage>())
+                                ?.let { Price(maxGroupTieredPackage = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "tiered_with_minimum" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingTieredWithMinimumPrice>(),
-                                )
-                                ?.let { Price(newFloatingTieredWithMinimum = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<TieredWithMinimum>())?.let {
+                                Price(tieredWithMinimum = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "package_with_allocation" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingPackageWithAllocationPrice>(),
-                                )
-                                ?.let { Price(newFloatingPackageWithAllocation = it, _json = json) }
+                            return tryDeserialize(node, jacksonTypeRef<PackageWithAllocation>())
+                                ?.let { Price(packageWithAllocation = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "tiered_package_with_minimum" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingTieredPackageWithMinimumPrice>(),
-                                )
-                                ?.let {
-                                    Price(newFloatingTieredPackageWithMinimum = it, _json = json)
-                                } ?: Price(_json = json)
-                        }
-                        "unit_with_percent" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingUnitWithPercentPrice>(),
-                                )
-                                ?.let { Price(newFloatingUnitWithPercent = it, _json = json) }
+                            return tryDeserialize(node, jacksonTypeRef<TieredPackageWithMinimum>())
+                                ?.let { Price(tieredPackageWithMinimum = it, _json = json) }
                                 ?: Price(_json = json)
                         }
+                        "unit_with_percent" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitWithPercent>())?.let {
+                                Price(unitWithPercent = it, _json = json)
+                            } ?: Price(_json = json)
+                        }
                         "tiered_with_proration" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingTieredWithProrationPrice>(),
-                                )
-                                ?.let { Price(newFloatingTieredWithProration = it, _json = json) }
+                            return tryDeserialize(node, jacksonTypeRef<TieredWithProration>())
+                                ?.let { Price(tieredWithProration = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "unit_with_proration" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingUnitWithProrationPrice>(),
-                                )
-                                ?.let { Price(newFloatingUnitWithProration = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<UnitWithProration>())?.let {
+                                Price(unitWithProration = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "grouped_allocation" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingGroupedAllocationPrice>(),
-                                )
-                                ?.let { Price(newFloatingGroupedAllocation = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<GroupedAllocation>())?.let {
+                                Price(groupedAllocation = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "grouped_with_prorated_minimum" -> {
                             return tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewFloatingGroupedWithProratedMinimumPrice>(),
+                                    jacksonTypeRef<GroupedWithProratedMinimum>(),
                                 )
-                                ?.let {
-                                    Price(newFloatingGroupedWithProratedMinimum = it, _json = json)
-                                } ?: Price(_json = json)
+                                ?.let { Price(groupedWithProratedMinimum = it, _json = json) }
+                                ?: Price(_json = json)
                         }
                         "grouped_with_metered_minimum" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingGroupedWithMeteredMinimumPrice>(),
-                                )
-                                ?.let {
-                                    Price(newFloatingGroupedWithMeteredMinimum = it, _json = json)
-                                } ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<GroupedWithMeteredMinimum>())
+                                ?.let { Price(groupedWithMeteredMinimum = it, _json = json) }
+                                ?: Price(_json = json)
                         }
                         "matrix_with_display_name" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingMatrixWithDisplayNamePrice>(),
-                                )
-                                ?.let { Price(newFloatingMatrixWithDisplayName = it, _json = json) }
+                            return tryDeserialize(node, jacksonTypeRef<MatrixWithDisplayName>())
+                                ?.let { Price(matrixWithDisplayName = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "bulk_with_proration" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingBulkWithProrationPrice>(),
-                                )
-                                ?.let { Price(newFloatingBulkWithProration = it, _json = json) }
-                                ?: Price(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<BulkWithProration>())?.let {
+                                Price(bulkWithProration = it, _json = json)
+                            } ?: Price(_json = json)
                         }
                         "grouped_tiered_package" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingGroupedTieredPackagePrice>(),
-                                )
-                                ?.let { Price(newFloatingGroupedTieredPackage = it, _json = json) }
+                            return tryDeserialize(node, jacksonTypeRef<GroupedTieredPackage>())
+                                ?.let { Price(groupedTieredPackage = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "scalable_matrix_with_unit_pricing" -> {
                             return tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewFloatingScalableMatrixWithUnitPricingPrice>(),
+                                    jacksonTypeRef<ScalableMatrixWithUnitPricing>(),
                                 )
-                                ?.let {
-                                    Price(
-                                        newFloatingScalableMatrixWithUnitPricing = it,
-                                        _json = json,
-                                    )
-                                } ?: Price(_json = json)
+                                ?.let { Price(scalableMatrixWithUnitPricing = it, _json = json) }
+                                ?: Price(_json = json)
                         }
                         "scalable_matrix_with_tiered_pricing" -> {
                             return tryDeserialize(
                                     node,
-                                    jacksonTypeRef<
-                                        NewFloatingScalableMatrixWithTieredPricingPrice
-                                    >(),
+                                    jacksonTypeRef<ScalableMatrixWithTieredPricing>(),
                                 )
-                                ?.let {
-                                    Price(
-                                        newFloatingScalableMatrixWithTieredPricing = it,
-                                        _json = json,
-                                    )
-                                } ?: Price(_json = json)
+                                ?.let { Price(scalableMatrixWithTieredPricing = it, _json = json) }
+                                ?: Price(_json = json)
                         }
                         "cumulative_grouped_bulk" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewFloatingCumulativeGroupedBulkPrice>(),
-                                )
-                                ?.let { Price(newFloatingCumulativeGroupedBulk = it, _json = json) }
+                            return tryDeserialize(node, jacksonTypeRef<CumulativeGroupedBulk>())
+                                ?.let { Price(cumulativeGroupedBulk = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                     }
@@ -5023,68 +4559,59 @@ private constructor(
                     provider: SerializerProvider,
                 ) {
                     when {
-                        value.newFloatingUnit != null ->
-                            generator.writeObject(value.newFloatingUnit)
-                        value.newFloatingPackage != null ->
-                            generator.writeObject(value.newFloatingPackage)
-                        value.newFloatingMatrix != null ->
-                            generator.writeObject(value.newFloatingMatrix)
-                        value.newFloatingMatrixWithAllocation != null ->
-                            generator.writeObject(value.newFloatingMatrixWithAllocation)
-                        value.newFloatingTiered != null ->
-                            generator.writeObject(value.newFloatingTiered)
-                        value.newFloatingTieredBps != null ->
-                            generator.writeObject(value.newFloatingTieredBps)
-                        value.newFloatingBps != null -> generator.writeObject(value.newFloatingBps)
-                        value.newFloatingBulkBps != null ->
-                            generator.writeObject(value.newFloatingBulkBps)
-                        value.newFloatingBulk != null ->
-                            generator.writeObject(value.newFloatingBulk)
-                        value.newFloatingThresholdTotalAmount != null ->
-                            generator.writeObject(value.newFloatingThresholdTotalAmount)
-                        value.newFloatingTieredPackage != null ->
-                            generator.writeObject(value.newFloatingTieredPackage)
-                        value.newFloatingGroupedTiered != null ->
-                            generator.writeObject(value.newFloatingGroupedTiered)
-                        value.newFloatingMaxGroupTieredPackage != null ->
-                            generator.writeObject(value.newFloatingMaxGroupTieredPackage)
-                        value.newFloatingTieredWithMinimum != null ->
-                            generator.writeObject(value.newFloatingTieredWithMinimum)
-                        value.newFloatingPackageWithAllocation != null ->
-                            generator.writeObject(value.newFloatingPackageWithAllocation)
-                        value.newFloatingTieredPackageWithMinimum != null ->
-                            generator.writeObject(value.newFloatingTieredPackageWithMinimum)
-                        value.newFloatingUnitWithPercent != null ->
-                            generator.writeObject(value.newFloatingUnitWithPercent)
-                        value.newFloatingTieredWithProration != null ->
-                            generator.writeObject(value.newFloatingTieredWithProration)
-                        value.newFloatingUnitWithProration != null ->
-                            generator.writeObject(value.newFloatingUnitWithProration)
-                        value.newFloatingGroupedAllocation != null ->
-                            generator.writeObject(value.newFloatingGroupedAllocation)
-                        value.newFloatingGroupedWithProratedMinimum != null ->
-                            generator.writeObject(value.newFloatingGroupedWithProratedMinimum)
-                        value.newFloatingGroupedWithMeteredMinimum != null ->
-                            generator.writeObject(value.newFloatingGroupedWithMeteredMinimum)
-                        value.newFloatingMatrixWithDisplayName != null ->
-                            generator.writeObject(value.newFloatingMatrixWithDisplayName)
-                        value.newFloatingBulkWithProration != null ->
-                            generator.writeObject(value.newFloatingBulkWithProration)
-                        value.newFloatingGroupedTieredPackage != null ->
-                            generator.writeObject(value.newFloatingGroupedTieredPackage)
-                        value.newFloatingScalableMatrixWithUnitPricing != null ->
-                            generator.writeObject(value.newFloatingScalableMatrixWithUnitPricing)
-                        value.newFloatingScalableMatrixWithTieredPricing != null ->
-                            generator.writeObject(value.newFloatingScalableMatrixWithTieredPricing)
-                        value.newFloatingCumulativeGroupedBulk != null ->
-                            generator.writeObject(value.newFloatingCumulativeGroupedBulk)
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.package_ != null -> generator.writeObject(value.package_)
+                        value.matrix != null -> generator.writeObject(value.matrix)
+                        value.matrixWithAllocation != null ->
+                            generator.writeObject(value.matrixWithAllocation)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value.tieredBps != null -> generator.writeObject(value.tieredBps)
+                        value.bps != null -> generator.writeObject(value.bps)
+                        value.bulkBps != null -> generator.writeObject(value.bulkBps)
+                        value.bulk != null -> generator.writeObject(value.bulk)
+                        value.thresholdTotalAmount != null ->
+                            generator.writeObject(value.thresholdTotalAmount)
+                        value.tieredPackage != null -> generator.writeObject(value.tieredPackage)
+                        value.groupedTiered != null -> generator.writeObject(value.groupedTiered)
+                        value.maxGroupTieredPackage != null ->
+                            generator.writeObject(value.maxGroupTieredPackage)
+                        value.tieredWithMinimum != null ->
+                            generator.writeObject(value.tieredWithMinimum)
+                        value.packageWithAllocation != null ->
+                            generator.writeObject(value.packageWithAllocation)
+                        value.tieredPackageWithMinimum != null ->
+                            generator.writeObject(value.tieredPackageWithMinimum)
+                        value.unitWithPercent != null ->
+                            generator.writeObject(value.unitWithPercent)
+                        value.tieredWithProration != null ->
+                            generator.writeObject(value.tieredWithProration)
+                        value.unitWithProration != null ->
+                            generator.writeObject(value.unitWithProration)
+                        value.groupedAllocation != null ->
+                            generator.writeObject(value.groupedAllocation)
+                        value.groupedWithProratedMinimum != null ->
+                            generator.writeObject(value.groupedWithProratedMinimum)
+                        value.groupedWithMeteredMinimum != null ->
+                            generator.writeObject(value.groupedWithMeteredMinimum)
+                        value.matrixWithDisplayName != null ->
+                            generator.writeObject(value.matrixWithDisplayName)
+                        value.bulkWithProration != null ->
+                            generator.writeObject(value.bulkWithProration)
+                        value.groupedTieredPackage != null ->
+                            generator.writeObject(value.groupedTieredPackage)
+                        value.scalableMatrixWithUnitPricing != null ->
+                            generator.writeObject(value.scalableMatrixWithUnitPricing)
+                        value.scalableMatrixWithTieredPricing != null ->
+                            generator.writeObject(value.scalableMatrixWithTieredPricing)
+                        value.cumulativeGroupedBulk != null ->
+                            generator.writeObject(value.cumulativeGroupedBulk)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid Price")
                     }
                 }
             }
 
-            class NewFloatingUnitPrice
+            class Unit
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -5462,8 +4989,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingUnitPrice].
+                     * Returns a mutable builder for constructing an instance of [Unit].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -5477,7 +5003,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingUnitPrice]. */
+                /** A builder for [Unit]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -5500,25 +5026,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newFloatingUnitPrice: NewFloatingUnitPrice) = apply {
-                        cadence = newFloatingUnitPrice.cadence
-                        currency = newFloatingUnitPrice.currency
-                        itemId = newFloatingUnitPrice.itemId
-                        modelType = newFloatingUnitPrice.modelType
-                        name = newFloatingUnitPrice.name
-                        unitConfig = newFloatingUnitPrice.unitConfig
-                        billableMetricId = newFloatingUnitPrice.billableMetricId
-                        billedInAdvance = newFloatingUnitPrice.billedInAdvance
-                        billingCycleConfiguration = newFloatingUnitPrice.billingCycleConfiguration
-                        conversionRate = newFloatingUnitPrice.conversionRate
-                        externalPriceId = newFloatingUnitPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingUnitPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingUnitPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingUnitPrice.invoicingCycleConfiguration
-                        metadata = newFloatingUnitPrice.metadata
-                        additionalProperties =
-                            newFloatingUnitPrice.additionalProperties.toMutableMap()
+                    internal fun from(unit: Unit) = apply {
+                        cadence = unit.cadence
+                        currency = unit.currency
+                        itemId = unit.itemId
+                        modelType = unit.modelType
+                        name = unit.name
+                        unitConfig = unit.unitConfig
+                        billableMetricId = unit.billableMetricId
+                        billedInAdvance = unit.billedInAdvance
+                        billingCycleConfiguration = unit.billingCycleConfiguration
+                        conversionRate = unit.conversionRate
+                        externalPriceId = unit.externalPriceId
+                        fixedPriceQuantity = unit.fixedPriceQuantity
+                        invoiceGroupingKey = unit.invoiceGroupingKey
+                        invoicingCycleConfiguration = unit.invoicingCycleConfiguration
+                        metadata = unit.metadata
+                        additionalProperties = unit.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -5802,7 +5326,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingUnitPrice].
+                     * Returns an immutable instance of [Unit].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -5817,8 +5341,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingUnitPrice =
-                        NewFloatingUnitPrice(
+                    fun build(): Unit =
+                        Unit(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -5840,7 +5364,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingUnitPrice = apply {
+                fun validate(): Unit = apply {
                     if (validated) {
                         return@apply
                     }
@@ -7052,7 +6576,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingUnitPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && unitConfig == other.unitConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Unit && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && unitConfig == other.unitConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -7062,10 +6586,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingUnitPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, unitConfig=$unitConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "Unit{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, unitConfig=$unitConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingPackagePrice
+            class Package
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -7443,8 +6967,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingPackagePrice].
+                     * Returns a mutable builder for constructing an instance of [Package].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -7458,7 +6981,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingPackagePrice]. */
+                /** A builder for [Package]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -7481,26 +7004,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newFloatingPackagePrice: NewFloatingPackagePrice) = apply {
-                        cadence = newFloatingPackagePrice.cadence
-                        currency = newFloatingPackagePrice.currency
-                        itemId = newFloatingPackagePrice.itemId
-                        modelType = newFloatingPackagePrice.modelType
-                        name = newFloatingPackagePrice.name
-                        packageConfig = newFloatingPackagePrice.packageConfig
-                        billableMetricId = newFloatingPackagePrice.billableMetricId
-                        billedInAdvance = newFloatingPackagePrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingPackagePrice.billingCycleConfiguration
-                        conversionRate = newFloatingPackagePrice.conversionRate
-                        externalPriceId = newFloatingPackagePrice.externalPriceId
-                        fixedPriceQuantity = newFloatingPackagePrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingPackagePrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingPackagePrice.invoicingCycleConfiguration
-                        metadata = newFloatingPackagePrice.metadata
-                        additionalProperties =
-                            newFloatingPackagePrice.additionalProperties.toMutableMap()
+                    internal fun from(package_: Package) = apply {
+                        cadence = package_.cadence
+                        currency = package_.currency
+                        itemId = package_.itemId
+                        modelType = package_.modelType
+                        name = package_.name
+                        packageConfig = package_.packageConfig
+                        billableMetricId = package_.billableMetricId
+                        billedInAdvance = package_.billedInAdvance
+                        billingCycleConfiguration = package_.billingCycleConfiguration
+                        conversionRate = package_.conversionRate
+                        externalPriceId = package_.externalPriceId
+                        fixedPriceQuantity = package_.fixedPriceQuantity
+                        invoiceGroupingKey = package_.invoiceGroupingKey
+                        invoicingCycleConfiguration = package_.invoicingCycleConfiguration
+                        metadata = package_.metadata
+                        additionalProperties = package_.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -7785,7 +7305,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingPackagePrice].
+                     * Returns an immutable instance of [Package].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -7800,8 +7320,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingPackagePrice =
-                        NewFloatingPackagePrice(
+                    fun build(): Package =
+                        Package(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -7823,7 +7343,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingPackagePrice = apply {
+                fun validate(): Package = apply {
                     if (validated) {
                         return@apply
                     }
@@ -9086,7 +8606,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingPackagePrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && packageConfig == other.packageConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Package && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && packageConfig == other.packageConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -9096,10 +8616,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingPackagePrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, packageConfig=$packageConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "Package{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, packageConfig=$packageConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingMatrixPrice
+            class Matrix
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -9477,8 +8997,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingMatrixPrice].
+                     * Returns a mutable builder for constructing an instance of [Matrix].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -9492,7 +9011,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingMatrixPrice]. */
+                /** A builder for [Matrix]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -9515,25 +9034,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newFloatingMatrixPrice: NewFloatingMatrixPrice) = apply {
-                        cadence = newFloatingMatrixPrice.cadence
-                        currency = newFloatingMatrixPrice.currency
-                        itemId = newFloatingMatrixPrice.itemId
-                        matrixConfig = newFloatingMatrixPrice.matrixConfig
-                        modelType = newFloatingMatrixPrice.modelType
-                        name = newFloatingMatrixPrice.name
-                        billableMetricId = newFloatingMatrixPrice.billableMetricId
-                        billedInAdvance = newFloatingMatrixPrice.billedInAdvance
-                        billingCycleConfiguration = newFloatingMatrixPrice.billingCycleConfiguration
-                        conversionRate = newFloatingMatrixPrice.conversionRate
-                        externalPriceId = newFloatingMatrixPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingMatrixPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingMatrixPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingMatrixPrice.invoicingCycleConfiguration
-                        metadata = newFloatingMatrixPrice.metadata
-                        additionalProperties =
-                            newFloatingMatrixPrice.additionalProperties.toMutableMap()
+                    internal fun from(matrix: Matrix) = apply {
+                        cadence = matrix.cadence
+                        currency = matrix.currency
+                        itemId = matrix.itemId
+                        matrixConfig = matrix.matrixConfig
+                        modelType = matrix.modelType
+                        name = matrix.name
+                        billableMetricId = matrix.billableMetricId
+                        billedInAdvance = matrix.billedInAdvance
+                        billingCycleConfiguration = matrix.billingCycleConfiguration
+                        conversionRate = matrix.conversionRate
+                        externalPriceId = matrix.externalPriceId
+                        fixedPriceQuantity = matrix.fixedPriceQuantity
+                        invoiceGroupingKey = matrix.invoiceGroupingKey
+                        invoicingCycleConfiguration = matrix.invoicingCycleConfiguration
+                        metadata = matrix.metadata
+                        additionalProperties = matrix.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -9818,7 +9335,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingMatrixPrice].
+                     * Returns an immutable instance of [Matrix].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -9833,8 +9350,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingMatrixPrice =
-                        NewFloatingMatrixPrice(
+                    fun build(): Matrix =
+                        Matrix(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -9856,7 +9373,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingMatrixPrice = apply {
+                fun validate(): Matrix = apply {
                     if (validated) {
                         return@apply
                     }
@@ -11437,7 +10954,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingMatrixPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && matrixConfig == other.matrixConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Matrix && cadence == other.cadence && currency == other.currency && itemId == other.itemId && matrixConfig == other.matrixConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -11447,10 +10964,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingMatrixPrice{cadence=$cadence, currency=$currency, itemId=$itemId, matrixConfig=$matrixConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "Matrix{cadence=$cadence, currency=$currency, itemId=$itemId, matrixConfig=$matrixConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingMatrixWithAllocationPrice
+            class MatrixWithAllocation
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -11832,7 +11349,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingMatrixWithAllocationPrice].
+                     * [MatrixWithAllocation].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -11846,7 +11363,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingMatrixWithAllocationPrice]. */
+                /** A builder for [MatrixWithAllocation]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -11870,29 +11387,25 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingMatrixWithAllocationPrice: NewFloatingMatrixWithAllocationPrice
-                    ) = apply {
-                        cadence = newFloatingMatrixWithAllocationPrice.cadence
-                        currency = newFloatingMatrixWithAllocationPrice.currency
-                        itemId = newFloatingMatrixWithAllocationPrice.itemId
-                        matrixWithAllocationConfig =
-                            newFloatingMatrixWithAllocationPrice.matrixWithAllocationConfig
-                        modelType = newFloatingMatrixWithAllocationPrice.modelType
-                        name = newFloatingMatrixWithAllocationPrice.name
-                        billableMetricId = newFloatingMatrixWithAllocationPrice.billableMetricId
-                        billedInAdvance = newFloatingMatrixWithAllocationPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingMatrixWithAllocationPrice.billingCycleConfiguration
-                        conversionRate = newFloatingMatrixWithAllocationPrice.conversionRate
-                        externalPriceId = newFloatingMatrixWithAllocationPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingMatrixWithAllocationPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingMatrixWithAllocationPrice.invoiceGroupingKey
+                    internal fun from(matrixWithAllocation: MatrixWithAllocation) = apply {
+                        cadence = matrixWithAllocation.cadence
+                        currency = matrixWithAllocation.currency
+                        itemId = matrixWithAllocation.itemId
+                        matrixWithAllocationConfig = matrixWithAllocation.matrixWithAllocationConfig
+                        modelType = matrixWithAllocation.modelType
+                        name = matrixWithAllocation.name
+                        billableMetricId = matrixWithAllocation.billableMetricId
+                        billedInAdvance = matrixWithAllocation.billedInAdvance
+                        billingCycleConfiguration = matrixWithAllocation.billingCycleConfiguration
+                        conversionRate = matrixWithAllocation.conversionRate
+                        externalPriceId = matrixWithAllocation.externalPriceId
+                        fixedPriceQuantity = matrixWithAllocation.fixedPriceQuantity
+                        invoiceGroupingKey = matrixWithAllocation.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingMatrixWithAllocationPrice.invoicingCycleConfiguration
-                        metadata = newFloatingMatrixWithAllocationPrice.metadata
+                            matrixWithAllocation.invoicingCycleConfiguration
+                        metadata = matrixWithAllocation.metadata
                         additionalProperties =
-                            newFloatingMatrixWithAllocationPrice.additionalProperties.toMutableMap()
+                            matrixWithAllocation.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -12179,7 +11692,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingMatrixWithAllocationPrice].
+                     * Returns an immutable instance of [MatrixWithAllocation].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -12194,8 +11707,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingMatrixWithAllocationPrice =
-                        NewFloatingMatrixWithAllocationPrice(
+                    fun build(): MatrixWithAllocation =
+                        MatrixWithAllocation(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -12217,7 +11730,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingMatrixWithAllocationPrice = apply {
+                fun validate(): MatrixWithAllocation = apply {
                     if (validated) {
                         return@apply
                     }
@@ -13857,7 +13370,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingMatrixWithAllocationPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && matrixWithAllocationConfig == other.matrixWithAllocationConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is MatrixWithAllocation && cadence == other.cadence && currency == other.currency && itemId == other.itemId && matrixWithAllocationConfig == other.matrixWithAllocationConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -13867,10 +13380,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingMatrixWithAllocationPrice{cadence=$cadence, currency=$currency, itemId=$itemId, matrixWithAllocationConfig=$matrixWithAllocationConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "MatrixWithAllocation{cadence=$cadence, currency=$currency, itemId=$itemId, matrixWithAllocationConfig=$matrixWithAllocationConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingTieredPrice
+            class Tiered
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -14248,8 +13761,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingTieredPrice].
+                     * Returns a mutable builder for constructing an instance of [Tiered].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -14263,7 +13775,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingTieredPrice]. */
+                /** A builder for [Tiered]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -14286,25 +13798,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newFloatingTieredPrice: NewFloatingTieredPrice) = apply {
-                        cadence = newFloatingTieredPrice.cadence
-                        currency = newFloatingTieredPrice.currency
-                        itemId = newFloatingTieredPrice.itemId
-                        modelType = newFloatingTieredPrice.modelType
-                        name = newFloatingTieredPrice.name
-                        tieredConfig = newFloatingTieredPrice.tieredConfig
-                        billableMetricId = newFloatingTieredPrice.billableMetricId
-                        billedInAdvance = newFloatingTieredPrice.billedInAdvance
-                        billingCycleConfiguration = newFloatingTieredPrice.billingCycleConfiguration
-                        conversionRate = newFloatingTieredPrice.conversionRate
-                        externalPriceId = newFloatingTieredPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingTieredPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingTieredPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingTieredPrice.invoicingCycleConfiguration
-                        metadata = newFloatingTieredPrice.metadata
-                        additionalProperties =
-                            newFloatingTieredPrice.additionalProperties.toMutableMap()
+                    internal fun from(tiered: Tiered) = apply {
+                        cadence = tiered.cadence
+                        currency = tiered.currency
+                        itemId = tiered.itemId
+                        modelType = tiered.modelType
+                        name = tiered.name
+                        tieredConfig = tiered.tieredConfig
+                        billableMetricId = tiered.billableMetricId
+                        billedInAdvance = tiered.billedInAdvance
+                        billingCycleConfiguration = tiered.billingCycleConfiguration
+                        conversionRate = tiered.conversionRate
+                        externalPriceId = tiered.externalPriceId
+                        fixedPriceQuantity = tiered.fixedPriceQuantity
+                        invoiceGroupingKey = tiered.invoiceGroupingKey
+                        invoicingCycleConfiguration = tiered.invoicingCycleConfiguration
+                        metadata = tiered.metadata
+                        additionalProperties = tiered.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -14589,7 +14099,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingTieredPrice].
+                     * Returns an immutable instance of [Tiered].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -14604,8 +14114,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingTieredPrice =
-                        NewFloatingTieredPrice(
+                    fun build(): Tiered =
+                        Tiered(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -14627,7 +14137,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingTieredPrice = apply {
+                fun validate(): Tiered = apply {
                     if (validated) {
                         return@apply
                     }
@@ -16123,7 +15633,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingTieredPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredConfig == other.tieredConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Tiered && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredConfig == other.tieredConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -16133,10 +15643,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingTieredPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredConfig=$tieredConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "Tiered{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredConfig=$tieredConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingTieredBpsPrice
+            class TieredBps
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -16515,8 +16025,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingTieredBpsPrice].
+                     * Returns a mutable builder for constructing an instance of [TieredBps].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -16530,7 +16039,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingTieredBpsPrice]. */
+                /** A builder for [TieredBps]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -16553,28 +16062,24 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newFloatingTieredBpsPrice: NewFloatingTieredBpsPrice) =
-                        apply {
-                            cadence = newFloatingTieredBpsPrice.cadence
-                            currency = newFloatingTieredBpsPrice.currency
-                            itemId = newFloatingTieredBpsPrice.itemId
-                            modelType = newFloatingTieredBpsPrice.modelType
-                            name = newFloatingTieredBpsPrice.name
-                            tieredBpsConfig = newFloatingTieredBpsPrice.tieredBpsConfig
-                            billableMetricId = newFloatingTieredBpsPrice.billableMetricId
-                            billedInAdvance = newFloatingTieredBpsPrice.billedInAdvance
-                            billingCycleConfiguration =
-                                newFloatingTieredBpsPrice.billingCycleConfiguration
-                            conversionRate = newFloatingTieredBpsPrice.conversionRate
-                            externalPriceId = newFloatingTieredBpsPrice.externalPriceId
-                            fixedPriceQuantity = newFloatingTieredBpsPrice.fixedPriceQuantity
-                            invoiceGroupingKey = newFloatingTieredBpsPrice.invoiceGroupingKey
-                            invoicingCycleConfiguration =
-                                newFloatingTieredBpsPrice.invoicingCycleConfiguration
-                            metadata = newFloatingTieredBpsPrice.metadata
-                            additionalProperties =
-                                newFloatingTieredBpsPrice.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(tieredBps: TieredBps) = apply {
+                        cadence = tieredBps.cadence
+                        currency = tieredBps.currency
+                        itemId = tieredBps.itemId
+                        modelType = tieredBps.modelType
+                        name = tieredBps.name
+                        tieredBpsConfig = tieredBps.tieredBpsConfig
+                        billableMetricId = tieredBps.billableMetricId
+                        billedInAdvance = tieredBps.billedInAdvance
+                        billingCycleConfiguration = tieredBps.billingCycleConfiguration
+                        conversionRate = tieredBps.conversionRate
+                        externalPriceId = tieredBps.externalPriceId
+                        fixedPriceQuantity = tieredBps.fixedPriceQuantity
+                        invoiceGroupingKey = tieredBps.invoiceGroupingKey
+                        invoicingCycleConfiguration = tieredBps.invoicingCycleConfiguration
+                        metadata = tieredBps.metadata
+                        additionalProperties = tieredBps.additionalProperties.toMutableMap()
+                    }
 
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
@@ -16858,7 +16363,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingTieredBpsPrice].
+                     * Returns an immutable instance of [TieredBps].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -16873,8 +16378,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingTieredBpsPrice =
-                        NewFloatingTieredBpsPrice(
+                    fun build(): TieredBps =
+                        TieredBps(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -16896,7 +16401,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingTieredBpsPrice = apply {
+                fun validate(): TieredBps = apply {
                     if (validated) {
                         return@apply
                     }
@@ -18425,7 +17930,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingTieredBpsPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredBpsConfig == other.tieredBpsConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is TieredBps && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredBpsConfig == other.tieredBpsConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -18435,10 +17940,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingTieredBpsPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredBpsConfig=$tieredBpsConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "TieredBps{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredBpsConfig=$tieredBpsConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingBpsPrice
+            class Bps
             private constructor(
                 private val bpsConfig: JsonField<BpsConfig>,
                 private val cadence: JsonField<Cadence>,
@@ -18816,8 +18321,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingBpsPrice].
+                     * Returns a mutable builder for constructing an instance of [Bps].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -18831,7 +18335,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingBpsPrice]. */
+                /** A builder for [Bps]. */
                 class Builder internal constructor() {
 
                     private var bpsConfig: JsonField<BpsConfig>? = null
@@ -18854,25 +18358,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newFloatingBpsPrice: NewFloatingBpsPrice) = apply {
-                        bpsConfig = newFloatingBpsPrice.bpsConfig
-                        cadence = newFloatingBpsPrice.cadence
-                        currency = newFloatingBpsPrice.currency
-                        itemId = newFloatingBpsPrice.itemId
-                        modelType = newFloatingBpsPrice.modelType
-                        name = newFloatingBpsPrice.name
-                        billableMetricId = newFloatingBpsPrice.billableMetricId
-                        billedInAdvance = newFloatingBpsPrice.billedInAdvance
-                        billingCycleConfiguration = newFloatingBpsPrice.billingCycleConfiguration
-                        conversionRate = newFloatingBpsPrice.conversionRate
-                        externalPriceId = newFloatingBpsPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingBpsPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingBpsPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingBpsPrice.invoicingCycleConfiguration
-                        metadata = newFloatingBpsPrice.metadata
-                        additionalProperties =
-                            newFloatingBpsPrice.additionalProperties.toMutableMap()
+                    internal fun from(bps: Bps) = apply {
+                        bpsConfig = bps.bpsConfig
+                        cadence = bps.cadence
+                        currency = bps.currency
+                        itemId = bps.itemId
+                        modelType = bps.modelType
+                        name = bps.name
+                        billableMetricId = bps.billableMetricId
+                        billedInAdvance = bps.billedInAdvance
+                        billingCycleConfiguration = bps.billingCycleConfiguration
+                        conversionRate = bps.conversionRate
+                        externalPriceId = bps.externalPriceId
+                        fixedPriceQuantity = bps.fixedPriceQuantity
+                        invoiceGroupingKey = bps.invoiceGroupingKey
+                        invoicingCycleConfiguration = bps.invoicingCycleConfiguration
+                        metadata = bps.metadata
+                        additionalProperties = bps.additionalProperties.toMutableMap()
                     }
 
                     fun bpsConfig(bpsConfig: BpsConfig) = bpsConfig(JsonField.of(bpsConfig))
@@ -19156,7 +18658,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingBpsPrice].
+                     * Returns an immutable instance of [Bps].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -19171,8 +18673,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingBpsPrice =
-                        NewFloatingBpsPrice(
+                    fun build(): Bps =
+                        Bps(
                             checkRequired("bpsConfig", bpsConfig),
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
@@ -19194,7 +18696,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingBpsPrice = apply {
+                fun validate(): Bps = apply {
                     if (validated) {
                         return@apply
                     }
@@ -20445,7 +19947,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingBpsPrice && bpsConfig == other.bpsConfig && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Bps && bpsConfig == other.bpsConfig && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -20455,10 +19957,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingBpsPrice{bpsConfig=$bpsConfig, cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "Bps{bpsConfig=$bpsConfig, cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingBulkBpsPrice
+            class BulkBps
             private constructor(
                 private val bulkBpsConfig: JsonField<BulkBpsConfig>,
                 private val cadence: JsonField<Cadence>,
@@ -20836,8 +20338,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingBulkBpsPrice].
+                     * Returns a mutable builder for constructing an instance of [BulkBps].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -20851,7 +20352,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingBulkBpsPrice]. */
+                /** A builder for [BulkBps]. */
                 class Builder internal constructor() {
 
                     private var bulkBpsConfig: JsonField<BulkBpsConfig>? = null
@@ -20874,26 +20375,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newFloatingBulkBpsPrice: NewFloatingBulkBpsPrice) = apply {
-                        bulkBpsConfig = newFloatingBulkBpsPrice.bulkBpsConfig
-                        cadence = newFloatingBulkBpsPrice.cadence
-                        currency = newFloatingBulkBpsPrice.currency
-                        itemId = newFloatingBulkBpsPrice.itemId
-                        modelType = newFloatingBulkBpsPrice.modelType
-                        name = newFloatingBulkBpsPrice.name
-                        billableMetricId = newFloatingBulkBpsPrice.billableMetricId
-                        billedInAdvance = newFloatingBulkBpsPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingBulkBpsPrice.billingCycleConfiguration
-                        conversionRate = newFloatingBulkBpsPrice.conversionRate
-                        externalPriceId = newFloatingBulkBpsPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingBulkBpsPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingBulkBpsPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingBulkBpsPrice.invoicingCycleConfiguration
-                        metadata = newFloatingBulkBpsPrice.metadata
-                        additionalProperties =
-                            newFloatingBulkBpsPrice.additionalProperties.toMutableMap()
+                    internal fun from(bulkBps: BulkBps) = apply {
+                        bulkBpsConfig = bulkBps.bulkBpsConfig
+                        cadence = bulkBps.cadence
+                        currency = bulkBps.currency
+                        itemId = bulkBps.itemId
+                        modelType = bulkBps.modelType
+                        name = bulkBps.name
+                        billableMetricId = bulkBps.billableMetricId
+                        billedInAdvance = bulkBps.billedInAdvance
+                        billingCycleConfiguration = bulkBps.billingCycleConfiguration
+                        conversionRate = bulkBps.conversionRate
+                        externalPriceId = bulkBps.externalPriceId
+                        fixedPriceQuantity = bulkBps.fixedPriceQuantity
+                        invoiceGroupingKey = bulkBps.invoiceGroupingKey
+                        invoicingCycleConfiguration = bulkBps.invoicingCycleConfiguration
+                        metadata = bulkBps.metadata
+                        additionalProperties = bulkBps.additionalProperties.toMutableMap()
                     }
 
                     fun bulkBpsConfig(bulkBpsConfig: BulkBpsConfig) =
@@ -21178,7 +20676,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingBulkBpsPrice].
+                     * Returns an immutable instance of [BulkBps].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -21193,8 +20691,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingBulkBpsPrice =
-                        NewFloatingBulkBpsPrice(
+                    fun build(): BulkBps =
+                        BulkBps(
                             checkRequired("bulkBpsConfig", bulkBpsConfig),
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
@@ -21216,7 +20714,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingBulkBpsPrice = apply {
+                fun validate(): BulkBps = apply {
                     if (validated) {
                         return@apply
                     }
@@ -22699,7 +22197,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingBulkBpsPrice && bulkBpsConfig == other.bulkBpsConfig && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is BulkBps && bulkBpsConfig == other.bulkBpsConfig && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -22709,10 +22207,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingBulkBpsPrice{bulkBpsConfig=$bulkBpsConfig, cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "BulkBps{bulkBpsConfig=$bulkBpsConfig, cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingBulkPrice
+            class Bulk
             private constructor(
                 private val bulkConfig: JsonField<BulkConfig>,
                 private val cadence: JsonField<Cadence>,
@@ -23090,8 +22588,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingBulkPrice].
+                     * Returns a mutable builder for constructing an instance of [Bulk].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -23105,7 +22602,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingBulkPrice]. */
+                /** A builder for [Bulk]. */
                 class Builder internal constructor() {
 
                     private var bulkConfig: JsonField<BulkConfig>? = null
@@ -23128,25 +22625,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newFloatingBulkPrice: NewFloatingBulkPrice) = apply {
-                        bulkConfig = newFloatingBulkPrice.bulkConfig
-                        cadence = newFloatingBulkPrice.cadence
-                        currency = newFloatingBulkPrice.currency
-                        itemId = newFloatingBulkPrice.itemId
-                        modelType = newFloatingBulkPrice.modelType
-                        name = newFloatingBulkPrice.name
-                        billableMetricId = newFloatingBulkPrice.billableMetricId
-                        billedInAdvance = newFloatingBulkPrice.billedInAdvance
-                        billingCycleConfiguration = newFloatingBulkPrice.billingCycleConfiguration
-                        conversionRate = newFloatingBulkPrice.conversionRate
-                        externalPriceId = newFloatingBulkPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingBulkPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingBulkPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingBulkPrice.invoicingCycleConfiguration
-                        metadata = newFloatingBulkPrice.metadata
-                        additionalProperties =
-                            newFloatingBulkPrice.additionalProperties.toMutableMap()
+                    internal fun from(bulk: Bulk) = apply {
+                        bulkConfig = bulk.bulkConfig
+                        cadence = bulk.cadence
+                        currency = bulk.currency
+                        itemId = bulk.itemId
+                        modelType = bulk.modelType
+                        name = bulk.name
+                        billableMetricId = bulk.billableMetricId
+                        billedInAdvance = bulk.billedInAdvance
+                        billingCycleConfiguration = bulk.billingCycleConfiguration
+                        conversionRate = bulk.conversionRate
+                        externalPriceId = bulk.externalPriceId
+                        fixedPriceQuantity = bulk.fixedPriceQuantity
+                        invoiceGroupingKey = bulk.invoiceGroupingKey
+                        invoicingCycleConfiguration = bulk.invoicingCycleConfiguration
+                        metadata = bulk.metadata
+                        additionalProperties = bulk.additionalProperties.toMutableMap()
                     }
 
                     fun bulkConfig(bulkConfig: BulkConfig) = bulkConfig(JsonField.of(bulkConfig))
@@ -23430,7 +22925,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingBulkPrice].
+                     * Returns an immutable instance of [Bulk].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -23445,8 +22940,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingBulkPrice =
-                        NewFloatingBulkPrice(
+                    fun build(): Bulk =
+                        Bulk(
                             checkRequired("bulkConfig", bulkConfig),
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
@@ -23468,7 +22963,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingBulkPrice = apply {
+                fun validate(): Bulk = apply {
                     if (validated) {
                         return@apply
                     }
@@ -24916,7 +24411,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingBulkPrice && bulkConfig == other.bulkConfig && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Bulk && bulkConfig == other.bulkConfig && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -24926,10 +24421,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingBulkPrice{bulkConfig=$bulkConfig, cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "Bulk{bulkConfig=$bulkConfig, cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingThresholdTotalAmountPrice
+            class ThresholdTotalAmount
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -25311,7 +24806,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingThresholdTotalAmountPrice].
+                     * [ThresholdTotalAmount].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -25325,7 +24820,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingThresholdTotalAmountPrice]. */
+                /** A builder for [ThresholdTotalAmount]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -25349,29 +24844,25 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingThresholdTotalAmountPrice: NewFloatingThresholdTotalAmountPrice
-                    ) = apply {
-                        cadence = newFloatingThresholdTotalAmountPrice.cadence
-                        currency = newFloatingThresholdTotalAmountPrice.currency
-                        itemId = newFloatingThresholdTotalAmountPrice.itemId
-                        modelType = newFloatingThresholdTotalAmountPrice.modelType
-                        name = newFloatingThresholdTotalAmountPrice.name
-                        thresholdTotalAmountConfig =
-                            newFloatingThresholdTotalAmountPrice.thresholdTotalAmountConfig
-                        billableMetricId = newFloatingThresholdTotalAmountPrice.billableMetricId
-                        billedInAdvance = newFloatingThresholdTotalAmountPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingThresholdTotalAmountPrice.billingCycleConfiguration
-                        conversionRate = newFloatingThresholdTotalAmountPrice.conversionRate
-                        externalPriceId = newFloatingThresholdTotalAmountPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingThresholdTotalAmountPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingThresholdTotalAmountPrice.invoiceGroupingKey
+                    internal fun from(thresholdTotalAmount: ThresholdTotalAmount) = apply {
+                        cadence = thresholdTotalAmount.cadence
+                        currency = thresholdTotalAmount.currency
+                        itemId = thresholdTotalAmount.itemId
+                        modelType = thresholdTotalAmount.modelType
+                        name = thresholdTotalAmount.name
+                        thresholdTotalAmountConfig = thresholdTotalAmount.thresholdTotalAmountConfig
+                        billableMetricId = thresholdTotalAmount.billableMetricId
+                        billedInAdvance = thresholdTotalAmount.billedInAdvance
+                        billingCycleConfiguration = thresholdTotalAmount.billingCycleConfiguration
+                        conversionRate = thresholdTotalAmount.conversionRate
+                        externalPriceId = thresholdTotalAmount.externalPriceId
+                        fixedPriceQuantity = thresholdTotalAmount.fixedPriceQuantity
+                        invoiceGroupingKey = thresholdTotalAmount.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingThresholdTotalAmountPrice.invoicingCycleConfiguration
-                        metadata = newFloatingThresholdTotalAmountPrice.metadata
+                            thresholdTotalAmount.invoicingCycleConfiguration
+                        metadata = thresholdTotalAmount.metadata
                         additionalProperties =
-                            newFloatingThresholdTotalAmountPrice.additionalProperties.toMutableMap()
+                            thresholdTotalAmount.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -25658,7 +25149,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingThresholdTotalAmountPrice].
+                     * Returns an immutable instance of [ThresholdTotalAmount].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -25673,8 +25164,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingThresholdTotalAmountPrice =
-                        NewFloatingThresholdTotalAmountPrice(
+                    fun build(): ThresholdTotalAmount =
+                        ThresholdTotalAmount(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -25696,7 +25187,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingThresholdTotalAmountPrice = apply {
+                fun validate(): ThresholdTotalAmount = apply {
                     if (validated) {
                         return@apply
                     }
@@ -26853,7 +26344,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingThresholdTotalAmountPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && thresholdTotalAmountConfig == other.thresholdTotalAmountConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is ThresholdTotalAmount && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && thresholdTotalAmountConfig == other.thresholdTotalAmountConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -26863,10 +26354,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingThresholdTotalAmountPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "ThresholdTotalAmount{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingTieredPackagePrice
+            class TieredPackage
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -27245,8 +26736,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingTieredPackagePrice].
+                     * Returns a mutable builder for constructing an instance of [TieredPackage].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -27260,7 +26750,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingTieredPackagePrice]. */
+                /** A builder for [TieredPackage]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -27283,28 +26773,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingTieredPackagePrice: NewFloatingTieredPackagePrice
-                    ) = apply {
-                        cadence = newFloatingTieredPackagePrice.cadence
-                        currency = newFloatingTieredPackagePrice.currency
-                        itemId = newFloatingTieredPackagePrice.itemId
-                        modelType = newFloatingTieredPackagePrice.modelType
-                        name = newFloatingTieredPackagePrice.name
-                        tieredPackageConfig = newFloatingTieredPackagePrice.tieredPackageConfig
-                        billableMetricId = newFloatingTieredPackagePrice.billableMetricId
-                        billedInAdvance = newFloatingTieredPackagePrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingTieredPackagePrice.billingCycleConfiguration
-                        conversionRate = newFloatingTieredPackagePrice.conversionRate
-                        externalPriceId = newFloatingTieredPackagePrice.externalPriceId
-                        fixedPriceQuantity = newFloatingTieredPackagePrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingTieredPackagePrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingTieredPackagePrice.invoicingCycleConfiguration
-                        metadata = newFloatingTieredPackagePrice.metadata
-                        additionalProperties =
-                            newFloatingTieredPackagePrice.additionalProperties.toMutableMap()
+                    internal fun from(tieredPackage: TieredPackage) = apply {
+                        cadence = tieredPackage.cadence
+                        currency = tieredPackage.currency
+                        itemId = tieredPackage.itemId
+                        modelType = tieredPackage.modelType
+                        name = tieredPackage.name
+                        tieredPackageConfig = tieredPackage.tieredPackageConfig
+                        billableMetricId = tieredPackage.billableMetricId
+                        billedInAdvance = tieredPackage.billedInAdvance
+                        billingCycleConfiguration = tieredPackage.billingCycleConfiguration
+                        conversionRate = tieredPackage.conversionRate
+                        externalPriceId = tieredPackage.externalPriceId
+                        fixedPriceQuantity = tieredPackage.fixedPriceQuantity
+                        invoiceGroupingKey = tieredPackage.invoiceGroupingKey
+                        invoicingCycleConfiguration = tieredPackage.invoicingCycleConfiguration
+                        metadata = tieredPackage.metadata
+                        additionalProperties = tieredPackage.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -27590,7 +27075,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingTieredPackagePrice].
+                     * Returns an immutable instance of [TieredPackage].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -27605,8 +27090,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingTieredPackagePrice =
-                        NewFloatingTieredPackagePrice(
+                    fun build(): TieredPackage =
+                        TieredPackage(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -27628,7 +27113,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingTieredPackagePrice = apply {
+                fun validate(): TieredPackage = apply {
                     if (validated) {
                         return@apply
                     }
@@ -28782,7 +28267,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingTieredPackagePrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredPackageConfig == other.tieredPackageConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is TieredPackage && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredPackageConfig == other.tieredPackageConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -28792,10 +28277,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingTieredPackagePrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredPackageConfig=$tieredPackageConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "TieredPackage{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredPackageConfig=$tieredPackageConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingGroupedTieredPrice
+            class GroupedTiered
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -29174,8 +28659,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingGroupedTieredPrice].
+                     * Returns a mutable builder for constructing an instance of [GroupedTiered].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -29189,7 +28673,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingGroupedTieredPrice]. */
+                /** A builder for [GroupedTiered]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -29212,28 +28696,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingGroupedTieredPrice: NewFloatingGroupedTieredPrice
-                    ) = apply {
-                        cadence = newFloatingGroupedTieredPrice.cadence
-                        currency = newFloatingGroupedTieredPrice.currency
-                        groupedTieredConfig = newFloatingGroupedTieredPrice.groupedTieredConfig
-                        itemId = newFloatingGroupedTieredPrice.itemId
-                        modelType = newFloatingGroupedTieredPrice.modelType
-                        name = newFloatingGroupedTieredPrice.name
-                        billableMetricId = newFloatingGroupedTieredPrice.billableMetricId
-                        billedInAdvance = newFloatingGroupedTieredPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingGroupedTieredPrice.billingCycleConfiguration
-                        conversionRate = newFloatingGroupedTieredPrice.conversionRate
-                        externalPriceId = newFloatingGroupedTieredPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingGroupedTieredPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingGroupedTieredPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingGroupedTieredPrice.invoicingCycleConfiguration
-                        metadata = newFloatingGroupedTieredPrice.metadata
-                        additionalProperties =
-                            newFloatingGroupedTieredPrice.additionalProperties.toMutableMap()
+                    internal fun from(groupedTiered: GroupedTiered) = apply {
+                        cadence = groupedTiered.cadence
+                        currency = groupedTiered.currency
+                        groupedTieredConfig = groupedTiered.groupedTieredConfig
+                        itemId = groupedTiered.itemId
+                        modelType = groupedTiered.modelType
+                        name = groupedTiered.name
+                        billableMetricId = groupedTiered.billableMetricId
+                        billedInAdvance = groupedTiered.billedInAdvance
+                        billingCycleConfiguration = groupedTiered.billingCycleConfiguration
+                        conversionRate = groupedTiered.conversionRate
+                        externalPriceId = groupedTiered.externalPriceId
+                        fixedPriceQuantity = groupedTiered.fixedPriceQuantity
+                        invoiceGroupingKey = groupedTiered.invoiceGroupingKey
+                        invoicingCycleConfiguration = groupedTiered.invoicingCycleConfiguration
+                        metadata = groupedTiered.metadata
+                        additionalProperties = groupedTiered.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -29519,7 +28998,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingGroupedTieredPrice].
+                     * Returns an immutable instance of [GroupedTiered].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -29534,8 +29013,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingGroupedTieredPrice =
-                        NewFloatingGroupedTieredPrice(
+                    fun build(): GroupedTiered =
+                        GroupedTiered(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("groupedTieredConfig", groupedTieredConfig),
@@ -29557,7 +29036,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingGroupedTieredPrice = apply {
+                fun validate(): GroupedTiered = apply {
                     if (validated) {
                         return@apply
                     }
@@ -30711,7 +30190,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingGroupedTieredPrice && cadence == other.cadence && currency == other.currency && groupedTieredConfig == other.groupedTieredConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is GroupedTiered && cadence == other.cadence && currency == other.currency && groupedTieredConfig == other.groupedTieredConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -30721,10 +30200,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingGroupedTieredPrice{cadence=$cadence, currency=$currency, groupedTieredConfig=$groupedTieredConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "GroupedTiered{cadence=$cadence, currency=$currency, groupedTieredConfig=$groupedTieredConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingMaxGroupTieredPackagePrice
+            class MaxGroupTieredPackage
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -31106,7 +30585,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingMaxGroupTieredPackagePrice].
+                     * [MaxGroupTieredPackage].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -31120,7 +30599,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingMaxGroupTieredPackagePrice]. */
+                /** A builder for [MaxGroupTieredPackage]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -31145,32 +30624,26 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingMaxGroupTieredPackagePrice: NewFloatingMaxGroupTieredPackagePrice
-                    ) = apply {
-                        cadence = newFloatingMaxGroupTieredPackagePrice.cadence
-                        currency = newFloatingMaxGroupTieredPackagePrice.currency
-                        itemId = newFloatingMaxGroupTieredPackagePrice.itemId
+                    internal fun from(maxGroupTieredPackage: MaxGroupTieredPackage) = apply {
+                        cadence = maxGroupTieredPackage.cadence
+                        currency = maxGroupTieredPackage.currency
+                        itemId = maxGroupTieredPackage.itemId
                         maxGroupTieredPackageConfig =
-                            newFloatingMaxGroupTieredPackagePrice.maxGroupTieredPackageConfig
-                        modelType = newFloatingMaxGroupTieredPackagePrice.modelType
-                        name = newFloatingMaxGroupTieredPackagePrice.name
-                        billableMetricId = newFloatingMaxGroupTieredPackagePrice.billableMetricId
-                        billedInAdvance = newFloatingMaxGroupTieredPackagePrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingMaxGroupTieredPackagePrice.billingCycleConfiguration
-                        conversionRate = newFloatingMaxGroupTieredPackagePrice.conversionRate
-                        externalPriceId = newFloatingMaxGroupTieredPackagePrice.externalPriceId
-                        fixedPriceQuantity =
-                            newFloatingMaxGroupTieredPackagePrice.fixedPriceQuantity
-                        invoiceGroupingKey =
-                            newFloatingMaxGroupTieredPackagePrice.invoiceGroupingKey
+                            maxGroupTieredPackage.maxGroupTieredPackageConfig
+                        modelType = maxGroupTieredPackage.modelType
+                        name = maxGroupTieredPackage.name
+                        billableMetricId = maxGroupTieredPackage.billableMetricId
+                        billedInAdvance = maxGroupTieredPackage.billedInAdvance
+                        billingCycleConfiguration = maxGroupTieredPackage.billingCycleConfiguration
+                        conversionRate = maxGroupTieredPackage.conversionRate
+                        externalPriceId = maxGroupTieredPackage.externalPriceId
+                        fixedPriceQuantity = maxGroupTieredPackage.fixedPriceQuantity
+                        invoiceGroupingKey = maxGroupTieredPackage.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingMaxGroupTieredPackagePrice.invoicingCycleConfiguration
-                        metadata = newFloatingMaxGroupTieredPackagePrice.metadata
+                            maxGroupTieredPackage.invoicingCycleConfiguration
+                        metadata = maxGroupTieredPackage.metadata
                         additionalProperties =
-                            newFloatingMaxGroupTieredPackagePrice.additionalProperties
-                                .toMutableMap()
+                            maxGroupTieredPackage.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -31457,7 +30930,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingMaxGroupTieredPackagePrice].
+                     * Returns an immutable instance of [MaxGroupTieredPackage].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -31472,8 +30945,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingMaxGroupTieredPackagePrice =
-                        NewFloatingMaxGroupTieredPackagePrice(
+                    fun build(): MaxGroupTieredPackage =
+                        MaxGroupTieredPackage(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -31498,7 +30971,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingMaxGroupTieredPackagePrice = apply {
+                fun validate(): MaxGroupTieredPackage = apply {
                     if (validated) {
                         return@apply
                     }
@@ -32656,7 +32129,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingMaxGroupTieredPackagePrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && maxGroupTieredPackageConfig == other.maxGroupTieredPackageConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is MaxGroupTieredPackage && cadence == other.cadence && currency == other.currency && itemId == other.itemId && maxGroupTieredPackageConfig == other.maxGroupTieredPackageConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -32666,10 +32139,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingMaxGroupTieredPackagePrice{cadence=$cadence, currency=$currency, itemId=$itemId, maxGroupTieredPackageConfig=$maxGroupTieredPackageConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "MaxGroupTieredPackage{cadence=$cadence, currency=$currency, itemId=$itemId, maxGroupTieredPackageConfig=$maxGroupTieredPackageConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingTieredWithMinimumPrice
+            class TieredWithMinimum
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -33050,7 +32523,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingTieredWithMinimumPrice].
+                     * [TieredWithMinimum].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -33064,7 +32537,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingTieredWithMinimumPrice]. */
+                /** A builder for [TieredWithMinimum]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -33087,29 +32560,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingTieredWithMinimumPrice: NewFloatingTieredWithMinimumPrice
-                    ) = apply {
-                        cadence = newFloatingTieredWithMinimumPrice.cadence
-                        currency = newFloatingTieredWithMinimumPrice.currency
-                        itemId = newFloatingTieredWithMinimumPrice.itemId
-                        modelType = newFloatingTieredWithMinimumPrice.modelType
-                        name = newFloatingTieredWithMinimumPrice.name
-                        tieredWithMinimumConfig =
-                            newFloatingTieredWithMinimumPrice.tieredWithMinimumConfig
-                        billableMetricId = newFloatingTieredWithMinimumPrice.billableMetricId
-                        billedInAdvance = newFloatingTieredWithMinimumPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingTieredWithMinimumPrice.billingCycleConfiguration
-                        conversionRate = newFloatingTieredWithMinimumPrice.conversionRate
-                        externalPriceId = newFloatingTieredWithMinimumPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingTieredWithMinimumPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingTieredWithMinimumPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingTieredWithMinimumPrice.invoicingCycleConfiguration
-                        metadata = newFloatingTieredWithMinimumPrice.metadata
-                        additionalProperties =
-                            newFloatingTieredWithMinimumPrice.additionalProperties.toMutableMap()
+                    internal fun from(tieredWithMinimum: TieredWithMinimum) = apply {
+                        cadence = tieredWithMinimum.cadence
+                        currency = tieredWithMinimum.currency
+                        itemId = tieredWithMinimum.itemId
+                        modelType = tieredWithMinimum.modelType
+                        name = tieredWithMinimum.name
+                        tieredWithMinimumConfig = tieredWithMinimum.tieredWithMinimumConfig
+                        billableMetricId = tieredWithMinimum.billableMetricId
+                        billedInAdvance = tieredWithMinimum.billedInAdvance
+                        billingCycleConfiguration = tieredWithMinimum.billingCycleConfiguration
+                        conversionRate = tieredWithMinimum.conversionRate
+                        externalPriceId = tieredWithMinimum.externalPriceId
+                        fixedPriceQuantity = tieredWithMinimum.fixedPriceQuantity
+                        invoiceGroupingKey = tieredWithMinimum.invoiceGroupingKey
+                        invoicingCycleConfiguration = tieredWithMinimum.invoicingCycleConfiguration
+                        metadata = tieredWithMinimum.metadata
+                        additionalProperties = tieredWithMinimum.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -33394,7 +32861,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingTieredWithMinimumPrice].
+                     * Returns an immutable instance of [TieredWithMinimum].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -33409,8 +32876,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingTieredWithMinimumPrice =
-                        NewFloatingTieredWithMinimumPrice(
+                    fun build(): TieredWithMinimum =
+                        TieredWithMinimum(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -33432,7 +32899,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingTieredWithMinimumPrice = apply {
+                fun validate(): TieredWithMinimum = apply {
                     if (validated) {
                         return@apply
                     }
@@ -34589,7 +34056,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingTieredWithMinimumPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredWithMinimumConfig == other.tieredWithMinimumConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is TieredWithMinimum && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredWithMinimumConfig == other.tieredWithMinimumConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -34599,10 +34066,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingTieredWithMinimumPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredWithMinimumConfig=$tieredWithMinimumConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "TieredWithMinimum{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredWithMinimumConfig=$tieredWithMinimumConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingPackageWithAllocationPrice
+            class PackageWithAllocation
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -34984,7 +34451,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingPackageWithAllocationPrice].
+                     * [PackageWithAllocation].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -34998,7 +34465,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingPackageWithAllocationPrice]. */
+                /** A builder for [PackageWithAllocation]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -35023,32 +34490,26 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingPackageWithAllocationPrice: NewFloatingPackageWithAllocationPrice
-                    ) = apply {
-                        cadence = newFloatingPackageWithAllocationPrice.cadence
-                        currency = newFloatingPackageWithAllocationPrice.currency
-                        itemId = newFloatingPackageWithAllocationPrice.itemId
-                        modelType = newFloatingPackageWithAllocationPrice.modelType
-                        name = newFloatingPackageWithAllocationPrice.name
+                    internal fun from(packageWithAllocation: PackageWithAllocation) = apply {
+                        cadence = packageWithAllocation.cadence
+                        currency = packageWithAllocation.currency
+                        itemId = packageWithAllocation.itemId
+                        modelType = packageWithAllocation.modelType
+                        name = packageWithAllocation.name
                         packageWithAllocationConfig =
-                            newFloatingPackageWithAllocationPrice.packageWithAllocationConfig
-                        billableMetricId = newFloatingPackageWithAllocationPrice.billableMetricId
-                        billedInAdvance = newFloatingPackageWithAllocationPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingPackageWithAllocationPrice.billingCycleConfiguration
-                        conversionRate = newFloatingPackageWithAllocationPrice.conversionRate
-                        externalPriceId = newFloatingPackageWithAllocationPrice.externalPriceId
-                        fixedPriceQuantity =
-                            newFloatingPackageWithAllocationPrice.fixedPriceQuantity
-                        invoiceGroupingKey =
-                            newFloatingPackageWithAllocationPrice.invoiceGroupingKey
+                            packageWithAllocation.packageWithAllocationConfig
+                        billableMetricId = packageWithAllocation.billableMetricId
+                        billedInAdvance = packageWithAllocation.billedInAdvance
+                        billingCycleConfiguration = packageWithAllocation.billingCycleConfiguration
+                        conversionRate = packageWithAllocation.conversionRate
+                        externalPriceId = packageWithAllocation.externalPriceId
+                        fixedPriceQuantity = packageWithAllocation.fixedPriceQuantity
+                        invoiceGroupingKey = packageWithAllocation.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingPackageWithAllocationPrice.invoicingCycleConfiguration
-                        metadata = newFloatingPackageWithAllocationPrice.metadata
+                            packageWithAllocation.invoicingCycleConfiguration
+                        metadata = packageWithAllocation.metadata
                         additionalProperties =
-                            newFloatingPackageWithAllocationPrice.additionalProperties
-                                .toMutableMap()
+                            packageWithAllocation.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -35335,7 +34796,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingPackageWithAllocationPrice].
+                     * Returns an immutable instance of [PackageWithAllocation].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -35350,8 +34811,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingPackageWithAllocationPrice =
-                        NewFloatingPackageWithAllocationPrice(
+                    fun build(): PackageWithAllocation =
+                        PackageWithAllocation(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -35376,7 +34837,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingPackageWithAllocationPrice = apply {
+                fun validate(): PackageWithAllocation = apply {
                     if (validated) {
                         return@apply
                     }
@@ -36534,7 +35995,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingPackageWithAllocationPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && packageWithAllocationConfig == other.packageWithAllocationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is PackageWithAllocation && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && packageWithAllocationConfig == other.packageWithAllocationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -36544,10 +36005,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingPackageWithAllocationPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, packageWithAllocationConfig=$packageWithAllocationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "PackageWithAllocation{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, packageWithAllocationConfig=$packageWithAllocationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingTieredPackageWithMinimumPrice
+            class TieredPackageWithMinimum
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -36930,7 +36391,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingTieredPackageWithMinimumPrice].
+                     * [TieredPackageWithMinimum].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -36944,7 +36405,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingTieredPackageWithMinimumPrice]. */
+                /** A builder for [TieredPackageWithMinimum]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -36969,33 +36430,27 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingTieredPackageWithMinimumPrice:
-                            NewFloatingTieredPackageWithMinimumPrice
-                    ) = apply {
-                        cadence = newFloatingTieredPackageWithMinimumPrice.cadence
-                        currency = newFloatingTieredPackageWithMinimumPrice.currency
-                        itemId = newFloatingTieredPackageWithMinimumPrice.itemId
-                        modelType = newFloatingTieredPackageWithMinimumPrice.modelType
-                        name = newFloatingTieredPackageWithMinimumPrice.name
+                    internal fun from(tieredPackageWithMinimum: TieredPackageWithMinimum) = apply {
+                        cadence = tieredPackageWithMinimum.cadence
+                        currency = tieredPackageWithMinimum.currency
+                        itemId = tieredPackageWithMinimum.itemId
+                        modelType = tieredPackageWithMinimum.modelType
+                        name = tieredPackageWithMinimum.name
                         tieredPackageWithMinimumConfig =
-                            newFloatingTieredPackageWithMinimumPrice.tieredPackageWithMinimumConfig
-                        billableMetricId = newFloatingTieredPackageWithMinimumPrice.billableMetricId
-                        billedInAdvance = newFloatingTieredPackageWithMinimumPrice.billedInAdvance
+                            tieredPackageWithMinimum.tieredPackageWithMinimumConfig
+                        billableMetricId = tieredPackageWithMinimum.billableMetricId
+                        billedInAdvance = tieredPackageWithMinimum.billedInAdvance
                         billingCycleConfiguration =
-                            newFloatingTieredPackageWithMinimumPrice.billingCycleConfiguration
-                        conversionRate = newFloatingTieredPackageWithMinimumPrice.conversionRate
-                        externalPriceId = newFloatingTieredPackageWithMinimumPrice.externalPriceId
-                        fixedPriceQuantity =
-                            newFloatingTieredPackageWithMinimumPrice.fixedPriceQuantity
-                        invoiceGroupingKey =
-                            newFloatingTieredPackageWithMinimumPrice.invoiceGroupingKey
+                            tieredPackageWithMinimum.billingCycleConfiguration
+                        conversionRate = tieredPackageWithMinimum.conversionRate
+                        externalPriceId = tieredPackageWithMinimum.externalPriceId
+                        fixedPriceQuantity = tieredPackageWithMinimum.fixedPriceQuantity
+                        invoiceGroupingKey = tieredPackageWithMinimum.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingTieredPackageWithMinimumPrice.invoicingCycleConfiguration
-                        metadata = newFloatingTieredPackageWithMinimumPrice.metadata
+                            tieredPackageWithMinimum.invoicingCycleConfiguration
+                        metadata = tieredPackageWithMinimum.metadata
                         additionalProperties =
-                            newFloatingTieredPackageWithMinimumPrice.additionalProperties
-                                .toMutableMap()
+                            tieredPackageWithMinimum.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -37284,7 +36739,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingTieredPackageWithMinimumPrice].
+                     * Returns an immutable instance of [TieredPackageWithMinimum].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -37299,8 +36754,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingTieredPackageWithMinimumPrice =
-                        NewFloatingTieredPackageWithMinimumPrice(
+                    fun build(): TieredPackageWithMinimum =
+                        TieredPackageWithMinimum(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -37325,7 +36780,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingTieredPackageWithMinimumPrice = apply {
+                fun validate(): TieredPackageWithMinimum = apply {
                     if (validated) {
                         return@apply
                     }
@@ -38483,7 +37938,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingTieredPackageWithMinimumPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredPackageWithMinimumConfig == other.tieredPackageWithMinimumConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is TieredPackageWithMinimum && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredPackageWithMinimumConfig == other.tieredPackageWithMinimumConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -38493,10 +37948,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingTieredPackageWithMinimumPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredPackageWithMinimumConfig=$tieredPackageWithMinimumConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "TieredPackageWithMinimum{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredPackageWithMinimumConfig=$tieredPackageWithMinimumConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingUnitWithPercentPrice
+            class UnitWithPercent
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -38876,8 +38331,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingUnitWithPercentPrice].
+                     * Returns a mutable builder for constructing an instance of [UnitWithPercent].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -38891,7 +38345,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingUnitWithPercentPrice]. */
+                /** A builder for [UnitWithPercent]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -38914,29 +38368,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingUnitWithPercentPrice: NewFloatingUnitWithPercentPrice
-                    ) = apply {
-                        cadence = newFloatingUnitWithPercentPrice.cadence
-                        currency = newFloatingUnitWithPercentPrice.currency
-                        itemId = newFloatingUnitWithPercentPrice.itemId
-                        modelType = newFloatingUnitWithPercentPrice.modelType
-                        name = newFloatingUnitWithPercentPrice.name
-                        unitWithPercentConfig =
-                            newFloatingUnitWithPercentPrice.unitWithPercentConfig
-                        billableMetricId = newFloatingUnitWithPercentPrice.billableMetricId
-                        billedInAdvance = newFloatingUnitWithPercentPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingUnitWithPercentPrice.billingCycleConfiguration
-                        conversionRate = newFloatingUnitWithPercentPrice.conversionRate
-                        externalPriceId = newFloatingUnitWithPercentPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingUnitWithPercentPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingUnitWithPercentPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingUnitWithPercentPrice.invoicingCycleConfiguration
-                        metadata = newFloatingUnitWithPercentPrice.metadata
-                        additionalProperties =
-                            newFloatingUnitWithPercentPrice.additionalProperties.toMutableMap()
+                    internal fun from(unitWithPercent: UnitWithPercent) = apply {
+                        cadence = unitWithPercent.cadence
+                        currency = unitWithPercent.currency
+                        itemId = unitWithPercent.itemId
+                        modelType = unitWithPercent.modelType
+                        name = unitWithPercent.name
+                        unitWithPercentConfig = unitWithPercent.unitWithPercentConfig
+                        billableMetricId = unitWithPercent.billableMetricId
+                        billedInAdvance = unitWithPercent.billedInAdvance
+                        billingCycleConfiguration = unitWithPercent.billingCycleConfiguration
+                        conversionRate = unitWithPercent.conversionRate
+                        externalPriceId = unitWithPercent.externalPriceId
+                        fixedPriceQuantity = unitWithPercent.fixedPriceQuantity
+                        invoiceGroupingKey = unitWithPercent.invoiceGroupingKey
+                        invoicingCycleConfiguration = unitWithPercent.invoicingCycleConfiguration
+                        metadata = unitWithPercent.metadata
+                        additionalProperties = unitWithPercent.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -39221,7 +38669,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingUnitWithPercentPrice].
+                     * Returns an immutable instance of [UnitWithPercent].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -39236,8 +38684,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingUnitWithPercentPrice =
-                        NewFloatingUnitWithPercentPrice(
+                    fun build(): UnitWithPercent =
+                        UnitWithPercent(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -39259,7 +38707,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingUnitWithPercentPrice = apply {
+                fun validate(): UnitWithPercent = apply {
                     if (validated) {
                         return@apply
                     }
@@ -40413,7 +39861,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingUnitWithPercentPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && unitWithPercentConfig == other.unitWithPercentConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is UnitWithPercent && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && unitWithPercentConfig == other.unitWithPercentConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -40423,10 +39871,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingUnitWithPercentPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, unitWithPercentConfig=$unitWithPercentConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "UnitWithPercent{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, unitWithPercentConfig=$unitWithPercentConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingTieredWithProrationPrice
+            class TieredWithProration
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -40808,7 +40256,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingTieredWithProrationPrice].
+                     * [TieredWithProration].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -40822,7 +40270,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingTieredWithProrationPrice]. */
+                /** A builder for [TieredWithProration]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -40846,29 +40294,25 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingTieredWithProrationPrice: NewFloatingTieredWithProrationPrice
-                    ) = apply {
-                        cadence = newFloatingTieredWithProrationPrice.cadence
-                        currency = newFloatingTieredWithProrationPrice.currency
-                        itemId = newFloatingTieredWithProrationPrice.itemId
-                        modelType = newFloatingTieredWithProrationPrice.modelType
-                        name = newFloatingTieredWithProrationPrice.name
-                        tieredWithProrationConfig =
-                            newFloatingTieredWithProrationPrice.tieredWithProrationConfig
-                        billableMetricId = newFloatingTieredWithProrationPrice.billableMetricId
-                        billedInAdvance = newFloatingTieredWithProrationPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingTieredWithProrationPrice.billingCycleConfiguration
-                        conversionRate = newFloatingTieredWithProrationPrice.conversionRate
-                        externalPriceId = newFloatingTieredWithProrationPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingTieredWithProrationPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingTieredWithProrationPrice.invoiceGroupingKey
+                    internal fun from(tieredWithProration: TieredWithProration) = apply {
+                        cadence = tieredWithProration.cadence
+                        currency = tieredWithProration.currency
+                        itemId = tieredWithProration.itemId
+                        modelType = tieredWithProration.modelType
+                        name = tieredWithProration.name
+                        tieredWithProrationConfig = tieredWithProration.tieredWithProrationConfig
+                        billableMetricId = tieredWithProration.billableMetricId
+                        billedInAdvance = tieredWithProration.billedInAdvance
+                        billingCycleConfiguration = tieredWithProration.billingCycleConfiguration
+                        conversionRate = tieredWithProration.conversionRate
+                        externalPriceId = tieredWithProration.externalPriceId
+                        fixedPriceQuantity = tieredWithProration.fixedPriceQuantity
+                        invoiceGroupingKey = tieredWithProration.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingTieredWithProrationPrice.invoicingCycleConfiguration
-                        metadata = newFloatingTieredWithProrationPrice.metadata
+                            tieredWithProration.invoicingCycleConfiguration
+                        metadata = tieredWithProration.metadata
                         additionalProperties =
-                            newFloatingTieredWithProrationPrice.additionalProperties.toMutableMap()
+                            tieredWithProration.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -41154,7 +40598,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingTieredWithProrationPrice].
+                     * Returns an immutable instance of [TieredWithProration].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -41169,8 +40613,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingTieredWithProrationPrice =
-                        NewFloatingTieredWithProrationPrice(
+                    fun build(): TieredWithProration =
+                        TieredWithProration(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -41192,7 +40636,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingTieredWithProrationPrice = apply {
+                fun validate(): TieredWithProration = apply {
                     if (validated) {
                         return@apply
                     }
@@ -42349,7 +41793,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingTieredWithProrationPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredWithProrationConfig == other.tieredWithProrationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is TieredWithProration && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredWithProrationConfig == other.tieredWithProrationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -42359,10 +41803,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingTieredWithProrationPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredWithProrationConfig=$tieredWithProrationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "TieredWithProration{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, tieredWithProrationConfig=$tieredWithProrationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingUnitWithProrationPrice
+            class UnitWithProration
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -42743,7 +42187,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingUnitWithProrationPrice].
+                     * [UnitWithProration].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -42757,7 +42201,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingUnitWithProrationPrice]. */
+                /** A builder for [UnitWithProration]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -42780,29 +42224,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingUnitWithProrationPrice: NewFloatingUnitWithProrationPrice
-                    ) = apply {
-                        cadence = newFloatingUnitWithProrationPrice.cadence
-                        currency = newFloatingUnitWithProrationPrice.currency
-                        itemId = newFloatingUnitWithProrationPrice.itemId
-                        modelType = newFloatingUnitWithProrationPrice.modelType
-                        name = newFloatingUnitWithProrationPrice.name
-                        unitWithProrationConfig =
-                            newFloatingUnitWithProrationPrice.unitWithProrationConfig
-                        billableMetricId = newFloatingUnitWithProrationPrice.billableMetricId
-                        billedInAdvance = newFloatingUnitWithProrationPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingUnitWithProrationPrice.billingCycleConfiguration
-                        conversionRate = newFloatingUnitWithProrationPrice.conversionRate
-                        externalPriceId = newFloatingUnitWithProrationPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingUnitWithProrationPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingUnitWithProrationPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingUnitWithProrationPrice.invoicingCycleConfiguration
-                        metadata = newFloatingUnitWithProrationPrice.metadata
-                        additionalProperties =
-                            newFloatingUnitWithProrationPrice.additionalProperties.toMutableMap()
+                    internal fun from(unitWithProration: UnitWithProration) = apply {
+                        cadence = unitWithProration.cadence
+                        currency = unitWithProration.currency
+                        itemId = unitWithProration.itemId
+                        modelType = unitWithProration.modelType
+                        name = unitWithProration.name
+                        unitWithProrationConfig = unitWithProration.unitWithProrationConfig
+                        billableMetricId = unitWithProration.billableMetricId
+                        billedInAdvance = unitWithProration.billedInAdvance
+                        billingCycleConfiguration = unitWithProration.billingCycleConfiguration
+                        conversionRate = unitWithProration.conversionRate
+                        externalPriceId = unitWithProration.externalPriceId
+                        fixedPriceQuantity = unitWithProration.fixedPriceQuantity
+                        invoiceGroupingKey = unitWithProration.invoiceGroupingKey
+                        invoicingCycleConfiguration = unitWithProration.invoicingCycleConfiguration
+                        metadata = unitWithProration.metadata
+                        additionalProperties = unitWithProration.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -43087,7 +42525,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingUnitWithProrationPrice].
+                     * Returns an immutable instance of [UnitWithProration].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -43102,8 +42540,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingUnitWithProrationPrice =
-                        NewFloatingUnitWithProrationPrice(
+                    fun build(): UnitWithProration =
+                        UnitWithProration(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -43125,7 +42563,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingUnitWithProrationPrice = apply {
+                fun validate(): UnitWithProration = apply {
                     if (validated) {
                         return@apply
                     }
@@ -44282,7 +43720,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingUnitWithProrationPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && unitWithProrationConfig == other.unitWithProrationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is UnitWithProration && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && unitWithProrationConfig == other.unitWithProrationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -44292,10 +43730,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingUnitWithProrationPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, unitWithProrationConfig=$unitWithProrationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "UnitWithProration{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, unitWithProrationConfig=$unitWithProrationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingGroupedAllocationPrice
+            class GroupedAllocation
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -44676,7 +44114,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingGroupedAllocationPrice].
+                     * [GroupedAllocation].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -44690,7 +44128,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingGroupedAllocationPrice]. */
+                /** A builder for [GroupedAllocation]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -44713,29 +44151,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingGroupedAllocationPrice: NewFloatingGroupedAllocationPrice
-                    ) = apply {
-                        cadence = newFloatingGroupedAllocationPrice.cadence
-                        currency = newFloatingGroupedAllocationPrice.currency
-                        groupedAllocationConfig =
-                            newFloatingGroupedAllocationPrice.groupedAllocationConfig
-                        itemId = newFloatingGroupedAllocationPrice.itemId
-                        modelType = newFloatingGroupedAllocationPrice.modelType
-                        name = newFloatingGroupedAllocationPrice.name
-                        billableMetricId = newFloatingGroupedAllocationPrice.billableMetricId
-                        billedInAdvance = newFloatingGroupedAllocationPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingGroupedAllocationPrice.billingCycleConfiguration
-                        conversionRate = newFloatingGroupedAllocationPrice.conversionRate
-                        externalPriceId = newFloatingGroupedAllocationPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingGroupedAllocationPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingGroupedAllocationPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingGroupedAllocationPrice.invoicingCycleConfiguration
-                        metadata = newFloatingGroupedAllocationPrice.metadata
-                        additionalProperties =
-                            newFloatingGroupedAllocationPrice.additionalProperties.toMutableMap()
+                    internal fun from(groupedAllocation: GroupedAllocation) = apply {
+                        cadence = groupedAllocation.cadence
+                        currency = groupedAllocation.currency
+                        groupedAllocationConfig = groupedAllocation.groupedAllocationConfig
+                        itemId = groupedAllocation.itemId
+                        modelType = groupedAllocation.modelType
+                        name = groupedAllocation.name
+                        billableMetricId = groupedAllocation.billableMetricId
+                        billedInAdvance = groupedAllocation.billedInAdvance
+                        billingCycleConfiguration = groupedAllocation.billingCycleConfiguration
+                        conversionRate = groupedAllocation.conversionRate
+                        externalPriceId = groupedAllocation.externalPriceId
+                        fixedPriceQuantity = groupedAllocation.fixedPriceQuantity
+                        invoiceGroupingKey = groupedAllocation.invoiceGroupingKey
+                        invoicingCycleConfiguration = groupedAllocation.invoicingCycleConfiguration
+                        metadata = groupedAllocation.metadata
+                        additionalProperties = groupedAllocation.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -45020,7 +44452,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingGroupedAllocationPrice].
+                     * Returns an immutable instance of [GroupedAllocation].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -45035,8 +44467,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingGroupedAllocationPrice =
-                        NewFloatingGroupedAllocationPrice(
+                    fun build(): GroupedAllocation =
+                        GroupedAllocation(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("groupedAllocationConfig", groupedAllocationConfig),
@@ -45058,7 +44490,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingGroupedAllocationPrice = apply {
+                fun validate(): GroupedAllocation = apply {
                     if (validated) {
                         return@apply
                     }
@@ -46213,7 +45645,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingGroupedAllocationPrice && cadence == other.cadence && currency == other.currency && groupedAllocationConfig == other.groupedAllocationConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is GroupedAllocation && cadence == other.cadence && currency == other.currency && groupedAllocationConfig == other.groupedAllocationConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -46223,10 +45655,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingGroupedAllocationPrice{cadence=$cadence, currency=$currency, groupedAllocationConfig=$groupedAllocationConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "GroupedAllocation{cadence=$cadence, currency=$currency, groupedAllocationConfig=$groupedAllocationConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingGroupedWithProratedMinimumPrice
+            class GroupedWithProratedMinimum
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -46611,7 +46043,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingGroupedWithProratedMinimumPrice].
+                     * [GroupedWithProratedMinimum].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -46625,7 +46057,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingGroupedWithProratedMinimumPrice]. */
+                /** A builder for [GroupedWithProratedMinimum]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -46651,36 +46083,29 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingGroupedWithProratedMinimumPrice:
-                            NewFloatingGroupedWithProratedMinimumPrice
-                    ) = apply {
-                        cadence = newFloatingGroupedWithProratedMinimumPrice.cadence
-                        currency = newFloatingGroupedWithProratedMinimumPrice.currency
-                        groupedWithProratedMinimumConfig =
-                            newFloatingGroupedWithProratedMinimumPrice
-                                .groupedWithProratedMinimumConfig
-                        itemId = newFloatingGroupedWithProratedMinimumPrice.itemId
-                        modelType = newFloatingGroupedWithProratedMinimumPrice.modelType
-                        name = newFloatingGroupedWithProratedMinimumPrice.name
-                        billableMetricId =
-                            newFloatingGroupedWithProratedMinimumPrice.billableMetricId
-                        billedInAdvance = newFloatingGroupedWithProratedMinimumPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingGroupedWithProratedMinimumPrice.billingCycleConfiguration
-                        conversionRate = newFloatingGroupedWithProratedMinimumPrice.conversionRate
-                        externalPriceId = newFloatingGroupedWithProratedMinimumPrice.externalPriceId
-                        fixedPriceQuantity =
-                            newFloatingGroupedWithProratedMinimumPrice.fixedPriceQuantity
-                        invoiceGroupingKey =
-                            newFloatingGroupedWithProratedMinimumPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingGroupedWithProratedMinimumPrice.invoicingCycleConfiguration
-                        metadata = newFloatingGroupedWithProratedMinimumPrice.metadata
-                        additionalProperties =
-                            newFloatingGroupedWithProratedMinimumPrice.additionalProperties
-                                .toMutableMap()
-                    }
+                    internal fun from(groupedWithProratedMinimum: GroupedWithProratedMinimum) =
+                        apply {
+                            cadence = groupedWithProratedMinimum.cadence
+                            currency = groupedWithProratedMinimum.currency
+                            groupedWithProratedMinimumConfig =
+                                groupedWithProratedMinimum.groupedWithProratedMinimumConfig
+                            itemId = groupedWithProratedMinimum.itemId
+                            modelType = groupedWithProratedMinimum.modelType
+                            name = groupedWithProratedMinimum.name
+                            billableMetricId = groupedWithProratedMinimum.billableMetricId
+                            billedInAdvance = groupedWithProratedMinimum.billedInAdvance
+                            billingCycleConfiguration =
+                                groupedWithProratedMinimum.billingCycleConfiguration
+                            conversionRate = groupedWithProratedMinimum.conversionRate
+                            externalPriceId = groupedWithProratedMinimum.externalPriceId
+                            fixedPriceQuantity = groupedWithProratedMinimum.fixedPriceQuantity
+                            invoiceGroupingKey = groupedWithProratedMinimum.invoiceGroupingKey
+                            invoicingCycleConfiguration =
+                                groupedWithProratedMinimum.invoicingCycleConfiguration
+                            metadata = groupedWithProratedMinimum.metadata
+                            additionalProperties =
+                                groupedWithProratedMinimum.additionalProperties.toMutableMap()
+                        }
 
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
@@ -46972,8 +46397,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of
-                     * [NewFloatingGroupedWithProratedMinimumPrice].
+                     * Returns an immutable instance of [GroupedWithProratedMinimum].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -46988,8 +46412,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingGroupedWithProratedMinimumPrice =
-                        NewFloatingGroupedWithProratedMinimumPrice(
+                    fun build(): GroupedWithProratedMinimum =
+                        GroupedWithProratedMinimum(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired(
@@ -47014,7 +46438,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingGroupedWithProratedMinimumPrice = apply {
+                fun validate(): GroupedWithProratedMinimum = apply {
                     if (validated) {
                         return@apply
                     }
@@ -48172,7 +47596,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingGroupedWithProratedMinimumPrice && cadence == other.cadence && currency == other.currency && groupedWithProratedMinimumConfig == other.groupedWithProratedMinimumConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is GroupedWithProratedMinimum && cadence == other.cadence && currency == other.currency && groupedWithProratedMinimumConfig == other.groupedWithProratedMinimumConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -48182,10 +47606,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingGroupedWithProratedMinimumPrice{cadence=$cadence, currency=$currency, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "GroupedWithProratedMinimum{cadence=$cadence, currency=$currency, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingGroupedWithMeteredMinimumPrice
+            class GroupedWithMeteredMinimum
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -48570,7 +47994,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingGroupedWithMeteredMinimumPrice].
+                     * [GroupedWithMeteredMinimum].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -48584,7 +48008,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingGroupedWithMeteredMinimumPrice]. */
+                /** A builder for [GroupedWithMeteredMinimum]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -48610,36 +48034,29 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingGroupedWithMeteredMinimumPrice:
-                            NewFloatingGroupedWithMeteredMinimumPrice
-                    ) = apply {
-                        cadence = newFloatingGroupedWithMeteredMinimumPrice.cadence
-                        currency = newFloatingGroupedWithMeteredMinimumPrice.currency
-                        groupedWithMeteredMinimumConfig =
-                            newFloatingGroupedWithMeteredMinimumPrice
-                                .groupedWithMeteredMinimumConfig
-                        itemId = newFloatingGroupedWithMeteredMinimumPrice.itemId
-                        modelType = newFloatingGroupedWithMeteredMinimumPrice.modelType
-                        name = newFloatingGroupedWithMeteredMinimumPrice.name
-                        billableMetricId =
-                            newFloatingGroupedWithMeteredMinimumPrice.billableMetricId
-                        billedInAdvance = newFloatingGroupedWithMeteredMinimumPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingGroupedWithMeteredMinimumPrice.billingCycleConfiguration
-                        conversionRate = newFloatingGroupedWithMeteredMinimumPrice.conversionRate
-                        externalPriceId = newFloatingGroupedWithMeteredMinimumPrice.externalPriceId
-                        fixedPriceQuantity =
-                            newFloatingGroupedWithMeteredMinimumPrice.fixedPriceQuantity
-                        invoiceGroupingKey =
-                            newFloatingGroupedWithMeteredMinimumPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingGroupedWithMeteredMinimumPrice.invoicingCycleConfiguration
-                        metadata = newFloatingGroupedWithMeteredMinimumPrice.metadata
-                        additionalProperties =
-                            newFloatingGroupedWithMeteredMinimumPrice.additionalProperties
-                                .toMutableMap()
-                    }
+                    internal fun from(groupedWithMeteredMinimum: GroupedWithMeteredMinimum) =
+                        apply {
+                            cadence = groupedWithMeteredMinimum.cadence
+                            currency = groupedWithMeteredMinimum.currency
+                            groupedWithMeteredMinimumConfig =
+                                groupedWithMeteredMinimum.groupedWithMeteredMinimumConfig
+                            itemId = groupedWithMeteredMinimum.itemId
+                            modelType = groupedWithMeteredMinimum.modelType
+                            name = groupedWithMeteredMinimum.name
+                            billableMetricId = groupedWithMeteredMinimum.billableMetricId
+                            billedInAdvance = groupedWithMeteredMinimum.billedInAdvance
+                            billingCycleConfiguration =
+                                groupedWithMeteredMinimum.billingCycleConfiguration
+                            conversionRate = groupedWithMeteredMinimum.conversionRate
+                            externalPriceId = groupedWithMeteredMinimum.externalPriceId
+                            fixedPriceQuantity = groupedWithMeteredMinimum.fixedPriceQuantity
+                            invoiceGroupingKey = groupedWithMeteredMinimum.invoiceGroupingKey
+                            invoicingCycleConfiguration =
+                                groupedWithMeteredMinimum.invoicingCycleConfiguration
+                            metadata = groupedWithMeteredMinimum.metadata
+                            additionalProperties =
+                                groupedWithMeteredMinimum.additionalProperties.toMutableMap()
+                        }
 
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
@@ -48930,7 +48347,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingGroupedWithMeteredMinimumPrice].
+                     * Returns an immutable instance of [GroupedWithMeteredMinimum].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -48945,8 +48362,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingGroupedWithMeteredMinimumPrice =
-                        NewFloatingGroupedWithMeteredMinimumPrice(
+                    fun build(): GroupedWithMeteredMinimum =
+                        GroupedWithMeteredMinimum(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired(
@@ -48971,7 +48388,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingGroupedWithMeteredMinimumPrice = apply {
+                fun validate(): GroupedWithMeteredMinimum = apply {
                     if (validated) {
                         return@apply
                     }
@@ -50129,7 +49546,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingGroupedWithMeteredMinimumPrice && cadence == other.cadence && currency == other.currency && groupedWithMeteredMinimumConfig == other.groupedWithMeteredMinimumConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is GroupedWithMeteredMinimum && cadence == other.cadence && currency == other.currency && groupedWithMeteredMinimumConfig == other.groupedWithMeteredMinimumConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -50139,10 +49556,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingGroupedWithMeteredMinimumPrice{cadence=$cadence, currency=$currency, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "GroupedWithMeteredMinimum{cadence=$cadence, currency=$currency, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingMatrixWithDisplayNamePrice
+            class MatrixWithDisplayName
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -50524,7 +49941,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingMatrixWithDisplayNamePrice].
+                     * [MatrixWithDisplayName].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -50538,7 +49955,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingMatrixWithDisplayNamePrice]. */
+                /** A builder for [MatrixWithDisplayName]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -50563,32 +49980,26 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingMatrixWithDisplayNamePrice: NewFloatingMatrixWithDisplayNamePrice
-                    ) = apply {
-                        cadence = newFloatingMatrixWithDisplayNamePrice.cadence
-                        currency = newFloatingMatrixWithDisplayNamePrice.currency
-                        itemId = newFloatingMatrixWithDisplayNamePrice.itemId
+                    internal fun from(matrixWithDisplayName: MatrixWithDisplayName) = apply {
+                        cadence = matrixWithDisplayName.cadence
+                        currency = matrixWithDisplayName.currency
+                        itemId = matrixWithDisplayName.itemId
                         matrixWithDisplayNameConfig =
-                            newFloatingMatrixWithDisplayNamePrice.matrixWithDisplayNameConfig
-                        modelType = newFloatingMatrixWithDisplayNamePrice.modelType
-                        name = newFloatingMatrixWithDisplayNamePrice.name
-                        billableMetricId = newFloatingMatrixWithDisplayNamePrice.billableMetricId
-                        billedInAdvance = newFloatingMatrixWithDisplayNamePrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingMatrixWithDisplayNamePrice.billingCycleConfiguration
-                        conversionRate = newFloatingMatrixWithDisplayNamePrice.conversionRate
-                        externalPriceId = newFloatingMatrixWithDisplayNamePrice.externalPriceId
-                        fixedPriceQuantity =
-                            newFloatingMatrixWithDisplayNamePrice.fixedPriceQuantity
-                        invoiceGroupingKey =
-                            newFloatingMatrixWithDisplayNamePrice.invoiceGroupingKey
+                            matrixWithDisplayName.matrixWithDisplayNameConfig
+                        modelType = matrixWithDisplayName.modelType
+                        name = matrixWithDisplayName.name
+                        billableMetricId = matrixWithDisplayName.billableMetricId
+                        billedInAdvance = matrixWithDisplayName.billedInAdvance
+                        billingCycleConfiguration = matrixWithDisplayName.billingCycleConfiguration
+                        conversionRate = matrixWithDisplayName.conversionRate
+                        externalPriceId = matrixWithDisplayName.externalPriceId
+                        fixedPriceQuantity = matrixWithDisplayName.fixedPriceQuantity
+                        invoiceGroupingKey = matrixWithDisplayName.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingMatrixWithDisplayNamePrice.invoicingCycleConfiguration
-                        metadata = newFloatingMatrixWithDisplayNamePrice.metadata
+                            matrixWithDisplayName.invoicingCycleConfiguration
+                        metadata = matrixWithDisplayName.metadata
                         additionalProperties =
-                            newFloatingMatrixWithDisplayNamePrice.additionalProperties
-                                .toMutableMap()
+                            matrixWithDisplayName.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -50875,7 +50286,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingMatrixWithDisplayNamePrice].
+                     * Returns an immutable instance of [MatrixWithDisplayName].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -50890,8 +50301,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingMatrixWithDisplayNamePrice =
-                        NewFloatingMatrixWithDisplayNamePrice(
+                    fun build(): MatrixWithDisplayName =
+                        MatrixWithDisplayName(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -50916,7 +50327,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingMatrixWithDisplayNamePrice = apply {
+                fun validate(): MatrixWithDisplayName = apply {
                     if (validated) {
                         return@apply
                     }
@@ -52074,7 +51485,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingMatrixWithDisplayNamePrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && matrixWithDisplayNameConfig == other.matrixWithDisplayNameConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is MatrixWithDisplayName && cadence == other.cadence && currency == other.currency && itemId == other.itemId && matrixWithDisplayNameConfig == other.matrixWithDisplayNameConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -52084,10 +51495,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingMatrixWithDisplayNamePrice{cadence=$cadence, currency=$currency, itemId=$itemId, matrixWithDisplayNameConfig=$matrixWithDisplayNameConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "MatrixWithDisplayName{cadence=$cadence, currency=$currency, itemId=$itemId, matrixWithDisplayNameConfig=$matrixWithDisplayNameConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingBulkWithProrationPrice
+            class BulkWithProration
             private constructor(
                 private val bulkWithProrationConfig: JsonField<BulkWithProrationConfig>,
                 private val cadence: JsonField<Cadence>,
@@ -52468,7 +51879,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingBulkWithProrationPrice].
+                     * [BulkWithProration].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -52482,7 +51893,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingBulkWithProrationPrice]. */
+                /** A builder for [BulkWithProration]. */
                 class Builder internal constructor() {
 
                     private var bulkWithProrationConfig: JsonField<BulkWithProrationConfig>? = null
@@ -52505,29 +51916,23 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice
-                    ) = apply {
-                        bulkWithProrationConfig =
-                            newFloatingBulkWithProrationPrice.bulkWithProrationConfig
-                        cadence = newFloatingBulkWithProrationPrice.cadence
-                        currency = newFloatingBulkWithProrationPrice.currency
-                        itemId = newFloatingBulkWithProrationPrice.itemId
-                        modelType = newFloatingBulkWithProrationPrice.modelType
-                        name = newFloatingBulkWithProrationPrice.name
-                        billableMetricId = newFloatingBulkWithProrationPrice.billableMetricId
-                        billedInAdvance = newFloatingBulkWithProrationPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingBulkWithProrationPrice.billingCycleConfiguration
-                        conversionRate = newFloatingBulkWithProrationPrice.conversionRate
-                        externalPriceId = newFloatingBulkWithProrationPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingBulkWithProrationPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingBulkWithProrationPrice.invoiceGroupingKey
-                        invoicingCycleConfiguration =
-                            newFloatingBulkWithProrationPrice.invoicingCycleConfiguration
-                        metadata = newFloatingBulkWithProrationPrice.metadata
-                        additionalProperties =
-                            newFloatingBulkWithProrationPrice.additionalProperties.toMutableMap()
+                    internal fun from(bulkWithProration: BulkWithProration) = apply {
+                        bulkWithProrationConfig = bulkWithProration.bulkWithProrationConfig
+                        cadence = bulkWithProration.cadence
+                        currency = bulkWithProration.currency
+                        itemId = bulkWithProration.itemId
+                        modelType = bulkWithProration.modelType
+                        name = bulkWithProration.name
+                        billableMetricId = bulkWithProration.billableMetricId
+                        billedInAdvance = bulkWithProration.billedInAdvance
+                        billingCycleConfiguration = bulkWithProration.billingCycleConfiguration
+                        conversionRate = bulkWithProration.conversionRate
+                        externalPriceId = bulkWithProration.externalPriceId
+                        fixedPriceQuantity = bulkWithProration.fixedPriceQuantity
+                        invoiceGroupingKey = bulkWithProration.invoiceGroupingKey
+                        invoicingCycleConfiguration = bulkWithProration.invoicingCycleConfiguration
+                        metadata = bulkWithProration.metadata
+                        additionalProperties = bulkWithProration.additionalProperties.toMutableMap()
                     }
 
                     fun bulkWithProrationConfig(bulkWithProrationConfig: BulkWithProrationConfig) =
@@ -52812,7 +52217,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingBulkWithProrationPrice].
+                     * Returns an immutable instance of [BulkWithProration].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -52827,8 +52232,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingBulkWithProrationPrice =
-                        NewFloatingBulkWithProrationPrice(
+                    fun build(): BulkWithProration =
+                        BulkWithProration(
                             checkRequired("bulkWithProrationConfig", bulkWithProrationConfig),
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
@@ -52850,7 +52255,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingBulkWithProrationPrice = apply {
+                fun validate(): BulkWithProration = apply {
                     if (validated) {
                         return@apply
                     }
@@ -54007,7 +53412,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingBulkWithProrationPrice && bulkWithProrationConfig == other.bulkWithProrationConfig && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is BulkWithProration && bulkWithProrationConfig == other.bulkWithProrationConfig && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -54017,10 +53422,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingBulkWithProrationPrice{bulkWithProrationConfig=$bulkWithProrationConfig, cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "BulkWithProration{bulkWithProrationConfig=$bulkWithProrationConfig, cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingGroupedTieredPackagePrice
+            class GroupedTieredPackage
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -54402,7 +53807,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingGroupedTieredPackagePrice].
+                     * [GroupedTieredPackage].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -54416,7 +53821,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingGroupedTieredPackagePrice]. */
+                /** A builder for [GroupedTieredPackage]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -54440,29 +53845,25 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingGroupedTieredPackagePrice: NewFloatingGroupedTieredPackagePrice
-                    ) = apply {
-                        cadence = newFloatingGroupedTieredPackagePrice.cadence
-                        currency = newFloatingGroupedTieredPackagePrice.currency
-                        groupedTieredPackageConfig =
-                            newFloatingGroupedTieredPackagePrice.groupedTieredPackageConfig
-                        itemId = newFloatingGroupedTieredPackagePrice.itemId
-                        modelType = newFloatingGroupedTieredPackagePrice.modelType
-                        name = newFloatingGroupedTieredPackagePrice.name
-                        billableMetricId = newFloatingGroupedTieredPackagePrice.billableMetricId
-                        billedInAdvance = newFloatingGroupedTieredPackagePrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingGroupedTieredPackagePrice.billingCycleConfiguration
-                        conversionRate = newFloatingGroupedTieredPackagePrice.conversionRate
-                        externalPriceId = newFloatingGroupedTieredPackagePrice.externalPriceId
-                        fixedPriceQuantity = newFloatingGroupedTieredPackagePrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingGroupedTieredPackagePrice.invoiceGroupingKey
+                    internal fun from(groupedTieredPackage: GroupedTieredPackage) = apply {
+                        cadence = groupedTieredPackage.cadence
+                        currency = groupedTieredPackage.currency
+                        groupedTieredPackageConfig = groupedTieredPackage.groupedTieredPackageConfig
+                        itemId = groupedTieredPackage.itemId
+                        modelType = groupedTieredPackage.modelType
+                        name = groupedTieredPackage.name
+                        billableMetricId = groupedTieredPackage.billableMetricId
+                        billedInAdvance = groupedTieredPackage.billedInAdvance
+                        billingCycleConfiguration = groupedTieredPackage.billingCycleConfiguration
+                        conversionRate = groupedTieredPackage.conversionRate
+                        externalPriceId = groupedTieredPackage.externalPriceId
+                        fixedPriceQuantity = groupedTieredPackage.fixedPriceQuantity
+                        invoiceGroupingKey = groupedTieredPackage.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingGroupedTieredPackagePrice.invoicingCycleConfiguration
-                        metadata = newFloatingGroupedTieredPackagePrice.metadata
+                            groupedTieredPackage.invoicingCycleConfiguration
+                        metadata = groupedTieredPackage.metadata
                         additionalProperties =
-                            newFloatingGroupedTieredPackagePrice.additionalProperties.toMutableMap()
+                            groupedTieredPackage.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -54749,7 +54150,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingGroupedTieredPackagePrice].
+                     * Returns an immutable instance of [GroupedTieredPackage].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -54764,8 +54165,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingGroupedTieredPackagePrice =
-                        NewFloatingGroupedTieredPackagePrice(
+                    fun build(): GroupedTieredPackage =
+                        GroupedTieredPackage(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("groupedTieredPackageConfig", groupedTieredPackageConfig),
@@ -54787,7 +54188,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingGroupedTieredPackagePrice = apply {
+                fun validate(): GroupedTieredPackage = apply {
                     if (validated) {
                         return@apply
                     }
@@ -55944,7 +55345,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingGroupedTieredPackagePrice && cadence == other.cadence && currency == other.currency && groupedTieredPackageConfig == other.groupedTieredPackageConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is GroupedTieredPackage && cadence == other.cadence && currency == other.currency && groupedTieredPackageConfig == other.groupedTieredPackageConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -55954,10 +55355,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingGroupedTieredPackagePrice{cadence=$cadence, currency=$currency, groupedTieredPackageConfig=$groupedTieredPackageConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "GroupedTieredPackage{cadence=$cadence, currency=$currency, groupedTieredPackageConfig=$groupedTieredPackageConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingScalableMatrixWithUnitPricingPrice
+            class ScalableMatrixWithUnitPricing
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -56344,7 +55745,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingScalableMatrixWithUnitPricingPrice].
+                     * [ScalableMatrixWithUnitPricing].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -56358,7 +55759,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingScalableMatrixWithUnitPricingPrice]. */
+                /** A builder for [ScalableMatrixWithUnitPricing]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -56385,38 +55786,28 @@ private constructor(
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
-                        newFloatingScalableMatrixWithUnitPricingPrice:
-                            NewFloatingScalableMatrixWithUnitPricingPrice
+                        scalableMatrixWithUnitPricing: ScalableMatrixWithUnitPricing
                     ) = apply {
-                        cadence = newFloatingScalableMatrixWithUnitPricingPrice.cadence
-                        currency = newFloatingScalableMatrixWithUnitPricingPrice.currency
-                        itemId = newFloatingScalableMatrixWithUnitPricingPrice.itemId
-                        modelType = newFloatingScalableMatrixWithUnitPricingPrice.modelType
-                        name = newFloatingScalableMatrixWithUnitPricingPrice.name
+                        cadence = scalableMatrixWithUnitPricing.cadence
+                        currency = scalableMatrixWithUnitPricing.currency
+                        itemId = scalableMatrixWithUnitPricing.itemId
+                        modelType = scalableMatrixWithUnitPricing.modelType
+                        name = scalableMatrixWithUnitPricing.name
                         scalableMatrixWithUnitPricingConfig =
-                            newFloatingScalableMatrixWithUnitPricingPrice
-                                .scalableMatrixWithUnitPricingConfig
-                        billableMetricId =
-                            newFloatingScalableMatrixWithUnitPricingPrice.billableMetricId
-                        billedInAdvance =
-                            newFloatingScalableMatrixWithUnitPricingPrice.billedInAdvance
+                            scalableMatrixWithUnitPricing.scalableMatrixWithUnitPricingConfig
+                        billableMetricId = scalableMatrixWithUnitPricing.billableMetricId
+                        billedInAdvance = scalableMatrixWithUnitPricing.billedInAdvance
                         billingCycleConfiguration =
-                            newFloatingScalableMatrixWithUnitPricingPrice.billingCycleConfiguration
-                        conversionRate =
-                            newFloatingScalableMatrixWithUnitPricingPrice.conversionRate
-                        externalPriceId =
-                            newFloatingScalableMatrixWithUnitPricingPrice.externalPriceId
-                        fixedPriceQuantity =
-                            newFloatingScalableMatrixWithUnitPricingPrice.fixedPriceQuantity
-                        invoiceGroupingKey =
-                            newFloatingScalableMatrixWithUnitPricingPrice.invoiceGroupingKey
+                            scalableMatrixWithUnitPricing.billingCycleConfiguration
+                        conversionRate = scalableMatrixWithUnitPricing.conversionRate
+                        externalPriceId = scalableMatrixWithUnitPricing.externalPriceId
+                        fixedPriceQuantity = scalableMatrixWithUnitPricing.fixedPriceQuantity
+                        invoiceGroupingKey = scalableMatrixWithUnitPricing.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingScalableMatrixWithUnitPricingPrice
-                                .invoicingCycleConfiguration
-                        metadata = newFloatingScalableMatrixWithUnitPricingPrice.metadata
+                            scalableMatrixWithUnitPricing.invoicingCycleConfiguration
+                        metadata = scalableMatrixWithUnitPricing.metadata
                         additionalProperties =
-                            newFloatingScalableMatrixWithUnitPricingPrice.additionalProperties
-                                .toMutableMap()
+                            scalableMatrixWithUnitPricing.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -56711,8 +56102,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of
-                     * [NewFloatingScalableMatrixWithUnitPricingPrice].
+                     * Returns an immutable instance of [ScalableMatrixWithUnitPricing].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -56727,8 +56117,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingScalableMatrixWithUnitPricingPrice =
-                        NewFloatingScalableMatrixWithUnitPricingPrice(
+                    fun build(): ScalableMatrixWithUnitPricing =
+                        ScalableMatrixWithUnitPricing(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -56753,7 +56143,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingScalableMatrixWithUnitPricingPrice = apply {
+                fun validate(): ScalableMatrixWithUnitPricing = apply {
                     if (validated) {
                         return@apply
                     }
@@ -57912,7 +57302,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingScalableMatrixWithUnitPricingPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && scalableMatrixWithUnitPricingConfig == other.scalableMatrixWithUnitPricingConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is ScalableMatrixWithUnitPricing && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && scalableMatrixWithUnitPricingConfig == other.scalableMatrixWithUnitPricingConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -57922,10 +57312,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingScalableMatrixWithUnitPricingPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithUnitPricingConfig=$scalableMatrixWithUnitPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "ScalableMatrixWithUnitPricing{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithUnitPricingConfig=$scalableMatrixWithUnitPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingScalableMatrixWithTieredPricingPrice
+            class ScalableMatrixWithTieredPricing
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -58312,7 +57702,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingScalableMatrixWithTieredPricingPrice].
+                     * [ScalableMatrixWithTieredPricing].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -58326,7 +57716,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingScalableMatrixWithTieredPricingPrice]. */
+                /** A builder for [ScalableMatrixWithTieredPricing]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -58353,39 +57743,28 @@ private constructor(
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
-                        newFloatingScalableMatrixWithTieredPricingPrice:
-                            NewFloatingScalableMatrixWithTieredPricingPrice
+                        scalableMatrixWithTieredPricing: ScalableMatrixWithTieredPricing
                     ) = apply {
-                        cadence = newFloatingScalableMatrixWithTieredPricingPrice.cadence
-                        currency = newFloatingScalableMatrixWithTieredPricingPrice.currency
-                        itemId = newFloatingScalableMatrixWithTieredPricingPrice.itemId
-                        modelType = newFloatingScalableMatrixWithTieredPricingPrice.modelType
-                        name = newFloatingScalableMatrixWithTieredPricingPrice.name
+                        cadence = scalableMatrixWithTieredPricing.cadence
+                        currency = scalableMatrixWithTieredPricing.currency
+                        itemId = scalableMatrixWithTieredPricing.itemId
+                        modelType = scalableMatrixWithTieredPricing.modelType
+                        name = scalableMatrixWithTieredPricing.name
                         scalableMatrixWithTieredPricingConfig =
-                            newFloatingScalableMatrixWithTieredPricingPrice
-                                .scalableMatrixWithTieredPricingConfig
-                        billableMetricId =
-                            newFloatingScalableMatrixWithTieredPricingPrice.billableMetricId
-                        billedInAdvance =
-                            newFloatingScalableMatrixWithTieredPricingPrice.billedInAdvance
+                            scalableMatrixWithTieredPricing.scalableMatrixWithTieredPricingConfig
+                        billableMetricId = scalableMatrixWithTieredPricing.billableMetricId
+                        billedInAdvance = scalableMatrixWithTieredPricing.billedInAdvance
                         billingCycleConfiguration =
-                            newFloatingScalableMatrixWithTieredPricingPrice
-                                .billingCycleConfiguration
-                        conversionRate =
-                            newFloatingScalableMatrixWithTieredPricingPrice.conversionRate
-                        externalPriceId =
-                            newFloatingScalableMatrixWithTieredPricingPrice.externalPriceId
-                        fixedPriceQuantity =
-                            newFloatingScalableMatrixWithTieredPricingPrice.fixedPriceQuantity
-                        invoiceGroupingKey =
-                            newFloatingScalableMatrixWithTieredPricingPrice.invoiceGroupingKey
+                            scalableMatrixWithTieredPricing.billingCycleConfiguration
+                        conversionRate = scalableMatrixWithTieredPricing.conversionRate
+                        externalPriceId = scalableMatrixWithTieredPricing.externalPriceId
+                        fixedPriceQuantity = scalableMatrixWithTieredPricing.fixedPriceQuantity
+                        invoiceGroupingKey = scalableMatrixWithTieredPricing.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingScalableMatrixWithTieredPricingPrice
-                                .invoicingCycleConfiguration
-                        metadata = newFloatingScalableMatrixWithTieredPricingPrice.metadata
+                            scalableMatrixWithTieredPricing.invoicingCycleConfiguration
+                        metadata = scalableMatrixWithTieredPricing.metadata
                         additionalProperties =
-                            newFloatingScalableMatrixWithTieredPricingPrice.additionalProperties
-                                .toMutableMap()
+                            scalableMatrixWithTieredPricing.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -58680,8 +58059,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of
-                     * [NewFloatingScalableMatrixWithTieredPricingPrice].
+                     * Returns an immutable instance of [ScalableMatrixWithTieredPricing].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -58696,8 +58074,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingScalableMatrixWithTieredPricingPrice =
-                        NewFloatingScalableMatrixWithTieredPricingPrice(
+                    fun build(): ScalableMatrixWithTieredPricing =
+                        ScalableMatrixWithTieredPricing(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
@@ -58722,7 +58100,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingScalableMatrixWithTieredPricingPrice = apply {
+                fun validate(): ScalableMatrixWithTieredPricing = apply {
                     if (validated) {
                         return@apply
                     }
@@ -59885,7 +59263,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingScalableMatrixWithTieredPricingPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && scalableMatrixWithTieredPricingConfig == other.scalableMatrixWithTieredPricingConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is ScalableMatrixWithTieredPricing && cadence == other.cadence && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && scalableMatrixWithTieredPricingConfig == other.scalableMatrixWithTieredPricingConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -59895,10 +59273,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingScalableMatrixWithTieredPricingPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithTieredPricingConfig=$scalableMatrixWithTieredPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "ScalableMatrixWithTieredPricing{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithTieredPricingConfig=$scalableMatrixWithTieredPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
-            class NewFloatingCumulativeGroupedBulkPrice
+            class CumulativeGroupedBulk
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val cumulativeGroupedBulkConfig: JsonField<CumulativeGroupedBulkConfig>,
@@ -60280,7 +59658,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewFloatingCumulativeGroupedBulkPrice].
+                     * [CumulativeGroupedBulk].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -60294,7 +59672,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingCumulativeGroupedBulkPrice]. */
+                /** A builder for [CumulativeGroupedBulk]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
@@ -60319,32 +59697,26 @@ private constructor(
                     private var metadata: JsonField<Metadata> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        newFloatingCumulativeGroupedBulkPrice: NewFloatingCumulativeGroupedBulkPrice
-                    ) = apply {
-                        cadence = newFloatingCumulativeGroupedBulkPrice.cadence
+                    internal fun from(cumulativeGroupedBulk: CumulativeGroupedBulk) = apply {
+                        cadence = cumulativeGroupedBulk.cadence
                         cumulativeGroupedBulkConfig =
-                            newFloatingCumulativeGroupedBulkPrice.cumulativeGroupedBulkConfig
-                        currency = newFloatingCumulativeGroupedBulkPrice.currency
-                        itemId = newFloatingCumulativeGroupedBulkPrice.itemId
-                        modelType = newFloatingCumulativeGroupedBulkPrice.modelType
-                        name = newFloatingCumulativeGroupedBulkPrice.name
-                        billableMetricId = newFloatingCumulativeGroupedBulkPrice.billableMetricId
-                        billedInAdvance = newFloatingCumulativeGroupedBulkPrice.billedInAdvance
-                        billingCycleConfiguration =
-                            newFloatingCumulativeGroupedBulkPrice.billingCycleConfiguration
-                        conversionRate = newFloatingCumulativeGroupedBulkPrice.conversionRate
-                        externalPriceId = newFloatingCumulativeGroupedBulkPrice.externalPriceId
-                        fixedPriceQuantity =
-                            newFloatingCumulativeGroupedBulkPrice.fixedPriceQuantity
-                        invoiceGroupingKey =
-                            newFloatingCumulativeGroupedBulkPrice.invoiceGroupingKey
+                            cumulativeGroupedBulk.cumulativeGroupedBulkConfig
+                        currency = cumulativeGroupedBulk.currency
+                        itemId = cumulativeGroupedBulk.itemId
+                        modelType = cumulativeGroupedBulk.modelType
+                        name = cumulativeGroupedBulk.name
+                        billableMetricId = cumulativeGroupedBulk.billableMetricId
+                        billedInAdvance = cumulativeGroupedBulk.billedInAdvance
+                        billingCycleConfiguration = cumulativeGroupedBulk.billingCycleConfiguration
+                        conversionRate = cumulativeGroupedBulk.conversionRate
+                        externalPriceId = cumulativeGroupedBulk.externalPriceId
+                        fixedPriceQuantity = cumulativeGroupedBulk.fixedPriceQuantity
+                        invoiceGroupingKey = cumulativeGroupedBulk.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingCumulativeGroupedBulkPrice.invoicingCycleConfiguration
-                        metadata = newFloatingCumulativeGroupedBulkPrice.metadata
+                            cumulativeGroupedBulk.invoicingCycleConfiguration
+                        metadata = cumulativeGroupedBulk.metadata
                         additionalProperties =
-                            newFloatingCumulativeGroupedBulkPrice.additionalProperties
-                                .toMutableMap()
+                            cumulativeGroupedBulk.additionalProperties.toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -60631,7 +60003,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewFloatingCumulativeGroupedBulkPrice].
+                     * Returns an immutable instance of [CumulativeGroupedBulk].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -60646,8 +60018,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewFloatingCumulativeGroupedBulkPrice =
-                        NewFloatingCumulativeGroupedBulkPrice(
+                    fun build(): CumulativeGroupedBulk =
+                        CumulativeGroupedBulk(
                             checkRequired("cadence", cadence),
                             checkRequired(
                                 "cumulativeGroupedBulkConfig",
@@ -60672,7 +60044,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingCumulativeGroupedBulkPrice = apply {
+                fun validate(): CumulativeGroupedBulk = apply {
                     if (validated) {
                         return@apply
                     }
@@ -61830,7 +61202,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingCumulativeGroupedBulkPrice && cadence == other.cadence && cumulativeGroupedBulkConfig == other.cumulativeGroupedBulkConfig && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is CumulativeGroupedBulk && cadence == other.cadence && cumulativeGroupedBulkConfig == other.cumulativeGroupedBulkConfig && currency == other.currency && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -61840,7 +61212,7 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingCumulativeGroupedBulkPrice{cadence=$cadence, cumulativeGroupedBulkConfig=$cumulativeGroupedBulkConfig, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "CumulativeGroupedBulk{cadence=$cadence, cumulativeGroupedBulkConfig=$cumulativeGroupedBulkConfig, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
         }
 
@@ -61993,32 +61365,26 @@ private constructor(
 
             /**
              * Alias for calling [adjustment] with
-             * `Adjustment.ofNewPercentageDiscount(newPercentageDiscount)`.
+             * `Adjustment.ofPercentageDiscount(percentageDiscount)`.
              */
-            fun adjustment(newPercentageDiscount: Adjustment.NewPercentageDiscount) =
-                adjustment(Adjustment.ofNewPercentageDiscount(newPercentageDiscount))
+            fun adjustment(percentageDiscount: Adjustment.PercentageDiscount) =
+                adjustment(Adjustment.ofPercentageDiscount(percentageDiscount))
+
+            /** Alias for calling [adjustment] with `Adjustment.ofUsageDiscount(usageDiscount)`. */
+            fun adjustment(usageDiscount: Adjustment.UsageDiscount) =
+                adjustment(Adjustment.ofUsageDiscount(usageDiscount))
 
             /**
-             * Alias for calling [adjustment] with
-             * `Adjustment.ofNewUsageDiscount(newUsageDiscount)`.
+             * Alias for calling [adjustment] with `Adjustment.ofAmountDiscount(amountDiscount)`.
              */
-            fun adjustment(newUsageDiscount: Adjustment.NewUsageDiscount) =
-                adjustment(Adjustment.ofNewUsageDiscount(newUsageDiscount))
+            fun adjustment(amountDiscount: Adjustment.AmountDiscount) =
+                adjustment(Adjustment.ofAmountDiscount(amountDiscount))
 
-            /**
-             * Alias for calling [adjustment] with
-             * `Adjustment.ofNewAmountDiscount(newAmountDiscount)`.
-             */
-            fun adjustment(newAmountDiscount: Adjustment.NewAmountDiscount) =
-                adjustment(Adjustment.ofNewAmountDiscount(newAmountDiscount))
+            /** Alias for calling [adjustment] with `Adjustment.ofMinimum(minimum)`. */
+            fun adjustment(minimum: Adjustment.Minimum) = adjustment(Adjustment.ofMinimum(minimum))
 
-            /** Alias for calling [adjustment] with `Adjustment.ofNewMinimum(newMinimum)`. */
-            fun adjustment(newMinimum: Adjustment.NewMinimum) =
-                adjustment(Adjustment.ofNewMinimum(newMinimum))
-
-            /** Alias for calling [adjustment] with `Adjustment.ofNewMaximum(newMaximum)`. */
-            fun adjustment(newMaximum: Adjustment.NewMaximum) =
-                adjustment(Adjustment.ofNewMaximum(newMaximum))
+            /** Alias for calling [adjustment] with `Adjustment.ofMaximum(maximum)`. */
+            fun adjustment(maximum: Adjustment.Maximum) = adjustment(Adjustment.ofMaximum(maximum))
 
             /**
              * The start date of the adjustment interval. This is the date that the adjustment will
@@ -62152,57 +61518,55 @@ private constructor(
         @JsonSerialize(using = Adjustment.Serializer::class)
         class Adjustment
         private constructor(
-            private val newPercentageDiscount: NewPercentageDiscount? = null,
-            private val newUsageDiscount: NewUsageDiscount? = null,
-            private val newAmountDiscount: NewAmountDiscount? = null,
-            private val newMinimum: NewMinimum? = null,
-            private val newMaximum: NewMaximum? = null,
+            private val percentageDiscount: PercentageDiscount? = null,
+            private val usageDiscount: UsageDiscount? = null,
+            private val amountDiscount: AmountDiscount? = null,
+            private val minimum: Minimum? = null,
+            private val maximum: Maximum? = null,
             private val _json: JsonValue? = null,
         ) {
 
-            fun newPercentageDiscount(): NewPercentageDiscount? = newPercentageDiscount
+            fun percentageDiscount(): PercentageDiscount? = percentageDiscount
 
-            fun newUsageDiscount(): NewUsageDiscount? = newUsageDiscount
+            fun usageDiscount(): UsageDiscount? = usageDiscount
 
-            fun newAmountDiscount(): NewAmountDiscount? = newAmountDiscount
+            fun amountDiscount(): AmountDiscount? = amountDiscount
 
-            fun newMinimum(): NewMinimum? = newMinimum
+            fun minimum(): Minimum? = minimum
 
-            fun newMaximum(): NewMaximum? = newMaximum
+            fun maximum(): Maximum? = maximum
 
-            fun isNewPercentageDiscount(): Boolean = newPercentageDiscount != null
+            fun isPercentageDiscount(): Boolean = percentageDiscount != null
 
-            fun isNewUsageDiscount(): Boolean = newUsageDiscount != null
+            fun isUsageDiscount(): Boolean = usageDiscount != null
 
-            fun isNewAmountDiscount(): Boolean = newAmountDiscount != null
+            fun isAmountDiscount(): Boolean = amountDiscount != null
 
-            fun isNewMinimum(): Boolean = newMinimum != null
+            fun isMinimum(): Boolean = minimum != null
 
-            fun isNewMaximum(): Boolean = newMaximum != null
+            fun isMaximum(): Boolean = maximum != null
 
-            fun asNewPercentageDiscount(): NewPercentageDiscount =
-                newPercentageDiscount.getOrThrow("newPercentageDiscount")
+            fun asPercentageDiscount(): PercentageDiscount =
+                percentageDiscount.getOrThrow("percentageDiscount")
 
-            fun asNewUsageDiscount(): NewUsageDiscount =
-                newUsageDiscount.getOrThrow("newUsageDiscount")
+            fun asUsageDiscount(): UsageDiscount = usageDiscount.getOrThrow("usageDiscount")
 
-            fun asNewAmountDiscount(): NewAmountDiscount =
-                newAmountDiscount.getOrThrow("newAmountDiscount")
+            fun asAmountDiscount(): AmountDiscount = amountDiscount.getOrThrow("amountDiscount")
 
-            fun asNewMinimum(): NewMinimum = newMinimum.getOrThrow("newMinimum")
+            fun asMinimum(): Minimum = minimum.getOrThrow("minimum")
 
-            fun asNewMaximum(): NewMaximum = newMaximum.getOrThrow("newMaximum")
+            fun asMaximum(): Maximum = maximum.getOrThrow("maximum")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T =
                 when {
-                    newPercentageDiscount != null ->
-                        visitor.visitNewPercentageDiscount(newPercentageDiscount)
-                    newUsageDiscount != null -> visitor.visitNewUsageDiscount(newUsageDiscount)
-                    newAmountDiscount != null -> visitor.visitNewAmountDiscount(newAmountDiscount)
-                    newMinimum != null -> visitor.visitNewMinimum(newMinimum)
-                    newMaximum != null -> visitor.visitNewMaximum(newMaximum)
+                    percentageDiscount != null ->
+                        visitor.visitPercentageDiscount(percentageDiscount)
+                    usageDiscount != null -> visitor.visitUsageDiscount(usageDiscount)
+                    amountDiscount != null -> visitor.visitAmountDiscount(amountDiscount)
+                    minimum != null -> visitor.visitMinimum(minimum)
+                    maximum != null -> visitor.visitMaximum(maximum)
                     else -> visitor.unknown(_json)
                 }
 
@@ -62215,26 +61579,26 @@ private constructor(
 
                 accept(
                     object : Visitor<Unit> {
-                        override fun visitNewPercentageDiscount(
-                            newPercentageDiscount: NewPercentageDiscount
+                        override fun visitPercentageDiscount(
+                            percentageDiscount: PercentageDiscount
                         ) {
-                            newPercentageDiscount.validate()
+                            percentageDiscount.validate()
                         }
 
-                        override fun visitNewUsageDiscount(newUsageDiscount: NewUsageDiscount) {
-                            newUsageDiscount.validate()
+                        override fun visitUsageDiscount(usageDiscount: UsageDiscount) {
+                            usageDiscount.validate()
                         }
 
-                        override fun visitNewAmountDiscount(newAmountDiscount: NewAmountDiscount) {
-                            newAmountDiscount.validate()
+                        override fun visitAmountDiscount(amountDiscount: AmountDiscount) {
+                            amountDiscount.validate()
                         }
 
-                        override fun visitNewMinimum(newMinimum: NewMinimum) {
-                            newMinimum.validate()
+                        override fun visitMinimum(minimum: Minimum) {
+                            minimum.validate()
                         }
 
-                        override fun visitNewMaximum(newMaximum: NewMaximum) {
-                            newMaximum.validate()
+                        override fun visitMaximum(maximum: Maximum) {
+                            maximum.validate()
                         }
                     }
                 )
@@ -62258,19 +61622,19 @@ private constructor(
             internal fun validity(): Int =
                 accept(
                     object : Visitor<Int> {
-                        override fun visitNewPercentageDiscount(
-                            newPercentageDiscount: NewPercentageDiscount
-                        ) = newPercentageDiscount.validity()
+                        override fun visitPercentageDiscount(
+                            percentageDiscount: PercentageDiscount
+                        ) = percentageDiscount.validity()
 
-                        override fun visitNewUsageDiscount(newUsageDiscount: NewUsageDiscount) =
-                            newUsageDiscount.validity()
+                        override fun visitUsageDiscount(usageDiscount: UsageDiscount) =
+                            usageDiscount.validity()
 
-                        override fun visitNewAmountDiscount(newAmountDiscount: NewAmountDiscount) =
-                            newAmountDiscount.validity()
+                        override fun visitAmountDiscount(amountDiscount: AmountDiscount) =
+                            amountDiscount.validity()
 
-                        override fun visitNewMinimum(newMinimum: NewMinimum) = newMinimum.validity()
+                        override fun visitMinimum(minimum: Minimum) = minimum.validity()
 
-                        override fun visitNewMaximum(newMaximum: NewMaximum) = newMaximum.validity()
+                        override fun visitMaximum(maximum: Maximum) = maximum.validity()
 
                         override fun unknown(json: JsonValue?) = 0
                     }
@@ -62281,37 +61645,37 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Adjustment && newPercentageDiscount == other.newPercentageDiscount && newUsageDiscount == other.newUsageDiscount && newAmountDiscount == other.newAmountDiscount && newMinimum == other.newMinimum && newMaximum == other.newMaximum /* spotless:on */
+                return /* spotless:off */ other is Adjustment && percentageDiscount == other.percentageDiscount && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(newPercentageDiscount, newUsageDiscount, newAmountDiscount, newMinimum, newMaximum) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentageDiscount, usageDiscount, amountDiscount, minimum, maximum) /* spotless:on */
 
             override fun toString(): String =
                 when {
-                    newPercentageDiscount != null ->
-                        "Adjustment{newPercentageDiscount=$newPercentageDiscount}"
-                    newUsageDiscount != null -> "Adjustment{newUsageDiscount=$newUsageDiscount}"
-                    newAmountDiscount != null -> "Adjustment{newAmountDiscount=$newAmountDiscount}"
-                    newMinimum != null -> "Adjustment{newMinimum=$newMinimum}"
-                    newMaximum != null -> "Adjustment{newMaximum=$newMaximum}"
+                    percentageDiscount != null ->
+                        "Adjustment{percentageDiscount=$percentageDiscount}"
+                    usageDiscount != null -> "Adjustment{usageDiscount=$usageDiscount}"
+                    amountDiscount != null -> "Adjustment{amountDiscount=$amountDiscount}"
+                    minimum != null -> "Adjustment{minimum=$minimum}"
+                    maximum != null -> "Adjustment{maximum=$maximum}"
                     _json != null -> "Adjustment{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Adjustment")
                 }
 
             companion object {
 
-                fun ofNewPercentageDiscount(newPercentageDiscount: NewPercentageDiscount) =
-                    Adjustment(newPercentageDiscount = newPercentageDiscount)
+                fun ofPercentageDiscount(percentageDiscount: PercentageDiscount) =
+                    Adjustment(percentageDiscount = percentageDiscount)
 
-                fun ofNewUsageDiscount(newUsageDiscount: NewUsageDiscount) =
-                    Adjustment(newUsageDiscount = newUsageDiscount)
+                fun ofUsageDiscount(usageDiscount: UsageDiscount) =
+                    Adjustment(usageDiscount = usageDiscount)
 
-                fun ofNewAmountDiscount(newAmountDiscount: NewAmountDiscount) =
-                    Adjustment(newAmountDiscount = newAmountDiscount)
+                fun ofAmountDiscount(amountDiscount: AmountDiscount) =
+                    Adjustment(amountDiscount = amountDiscount)
 
-                fun ofNewMinimum(newMinimum: NewMinimum) = Adjustment(newMinimum = newMinimum)
+                fun ofMinimum(minimum: Minimum) = Adjustment(minimum = minimum)
 
-                fun ofNewMaximum(newMaximum: NewMaximum) = Adjustment(newMaximum = newMaximum)
+                fun ofMaximum(maximum: Maximum) = Adjustment(maximum = maximum)
             }
 
             /**
@@ -62320,15 +61684,15 @@ private constructor(
              */
             interface Visitor<out T> {
 
-                fun visitNewPercentageDiscount(newPercentageDiscount: NewPercentageDiscount): T
+                fun visitPercentageDiscount(percentageDiscount: PercentageDiscount): T
 
-                fun visitNewUsageDiscount(newUsageDiscount: NewUsageDiscount): T
+                fun visitUsageDiscount(usageDiscount: UsageDiscount): T
 
-                fun visitNewAmountDiscount(newAmountDiscount: NewAmountDiscount): T
+                fun visitAmountDiscount(amountDiscount: AmountDiscount): T
 
-                fun visitNewMinimum(newMinimum: NewMinimum): T
+                fun visitMinimum(minimum: Minimum): T
 
-                fun visitNewMaximum(newMaximum: NewMaximum): T
+                fun visitMaximum(maximum: Maximum): T
 
                 /**
                  * Maps an unknown variant of [Adjustment] to a value of type [T].
@@ -62353,28 +61717,28 @@ private constructor(
 
                     when (adjustmentType) {
                         "percentage_discount" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewPercentageDiscount>())
-                                ?.let { Adjustment(newPercentageDiscount = it, _json = json) }
-                                ?: Adjustment(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<PercentageDiscount>())?.let {
+                                Adjustment(percentageDiscount = it, _json = json)
+                            } ?: Adjustment(_json = json)
                         }
                         "usage_discount" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewUsageDiscount>())?.let {
-                                Adjustment(newUsageDiscount = it, _json = json)
+                            return tryDeserialize(node, jacksonTypeRef<UsageDiscount>())?.let {
+                                Adjustment(usageDiscount = it, _json = json)
                             } ?: Adjustment(_json = json)
                         }
                         "amount_discount" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewAmountDiscount>())?.let {
-                                Adjustment(newAmountDiscount = it, _json = json)
+                            return tryDeserialize(node, jacksonTypeRef<AmountDiscount>())?.let {
+                                Adjustment(amountDiscount = it, _json = json)
                             } ?: Adjustment(_json = json)
                         }
                         "minimum" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewMinimum>())?.let {
-                                Adjustment(newMinimum = it, _json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Minimum>())?.let {
+                                Adjustment(minimum = it, _json = json)
                             } ?: Adjustment(_json = json)
                         }
                         "maximum" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewMaximum>())?.let {
-                                Adjustment(newMaximum = it, _json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Maximum>())?.let {
+                                Adjustment(maximum = it, _json = json)
                             } ?: Adjustment(_json = json)
                         }
                     }
@@ -62391,21 +61755,19 @@ private constructor(
                     provider: SerializerProvider,
                 ) {
                     when {
-                        value.newPercentageDiscount != null ->
-                            generator.writeObject(value.newPercentageDiscount)
-                        value.newUsageDiscount != null ->
-                            generator.writeObject(value.newUsageDiscount)
-                        value.newAmountDiscount != null ->
-                            generator.writeObject(value.newAmountDiscount)
-                        value.newMinimum != null -> generator.writeObject(value.newMinimum)
-                        value.newMaximum != null -> generator.writeObject(value.newMaximum)
+                        value.percentageDiscount != null ->
+                            generator.writeObject(value.percentageDiscount)
+                        value.usageDiscount != null -> generator.writeObject(value.usageDiscount)
+                        value.amountDiscount != null -> generator.writeObject(value.amountDiscount)
+                        value.minimum != null -> generator.writeObject(value.minimum)
+                        value.maximum != null -> generator.writeObject(value.maximum)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid Adjustment")
                     }
                 }
             }
 
-            class NewPercentageDiscount
+            class PercentageDiscount
             private constructor(
                 private val adjustmentType: JsonValue,
                 private val appliesToPriceIds: JsonField<List<String>>,
@@ -62522,7 +61884,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [NewPercentageDiscount].
+                     * [PercentageDiscount].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -62533,7 +61895,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewPercentageDiscount]. */
+                /** A builder for [PercentageDiscount]. */
                 class Builder internal constructor() {
 
                     private var adjustmentType: JsonValue = JsonValue.from("percentage_discount")
@@ -62542,14 +61904,14 @@ private constructor(
                     private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newPercentageDiscount: NewPercentageDiscount) = apply {
-                        adjustmentType = newPercentageDiscount.adjustmentType
+                    internal fun from(percentageDiscount: PercentageDiscount) = apply {
+                        adjustmentType = percentageDiscount.adjustmentType
                         appliesToPriceIds =
-                            newPercentageDiscount.appliesToPriceIds.map { it.toMutableList() }
-                        percentageDiscount = newPercentageDiscount.percentageDiscount
-                        isInvoiceLevel = newPercentageDiscount.isInvoiceLevel
+                            percentageDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        this.percentageDiscount = percentageDiscount.percentageDiscount
+                        isInvoiceLevel = percentageDiscount.isInvoiceLevel
                         additionalProperties =
-                            newPercentageDiscount.additionalProperties.toMutableMap()
+                            percentageDiscount.additionalProperties.toMutableMap()
                     }
 
                     /**
@@ -62650,7 +62012,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewPercentageDiscount].
+                     * Returns an immutable instance of [PercentageDiscount].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -62662,8 +62024,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewPercentageDiscount =
-                        NewPercentageDiscount(
+                    fun build(): PercentageDiscount =
+                        PercentageDiscount(
                             adjustmentType,
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                                 it.toImmutable()
@@ -62676,7 +62038,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewPercentageDiscount = apply {
+                fun validate(): PercentageDiscount = apply {
                     if (validated) {
                         return@apply
                     }
@@ -62721,7 +62083,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewPercentageDiscount && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && percentageDiscount == other.percentageDiscount && isInvoiceLevel == other.isInvoiceLevel && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is PercentageDiscount && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && percentageDiscount == other.percentageDiscount && isInvoiceLevel == other.isInvoiceLevel && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -62731,10 +62093,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewPercentageDiscount{adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, percentageDiscount=$percentageDiscount, isInvoiceLevel=$isInvoiceLevel, additionalProperties=$additionalProperties}"
+                    "PercentageDiscount{adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, percentageDiscount=$percentageDiscount, isInvoiceLevel=$isInvoiceLevel, additionalProperties=$additionalProperties}"
             }
 
-            class NewUsageDiscount
+            class UsageDiscount
             private constructor(
                 private val adjustmentType: JsonValue,
                 private val appliesToPriceIds: JsonField<List<String>>,
@@ -62849,7 +62211,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of [NewUsageDiscount].
+                     * Returns a mutable builder for constructing an instance of [UsageDiscount].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -62860,7 +62222,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewUsageDiscount]. */
+                /** A builder for [UsageDiscount]. */
                 class Builder internal constructor() {
 
                     private var adjustmentType: JsonValue = JsonValue.from("usage_discount")
@@ -62869,13 +62231,13 @@ private constructor(
                     private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newUsageDiscount: NewUsageDiscount) = apply {
-                        adjustmentType = newUsageDiscount.adjustmentType
+                    internal fun from(usageDiscount: UsageDiscount) = apply {
+                        adjustmentType = usageDiscount.adjustmentType
                         appliesToPriceIds =
-                            newUsageDiscount.appliesToPriceIds.map { it.toMutableList() }
-                        usageDiscount = newUsageDiscount.usageDiscount
-                        isInvoiceLevel = newUsageDiscount.isInvoiceLevel
-                        additionalProperties = newUsageDiscount.additionalProperties.toMutableMap()
+                            usageDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        this.usageDiscount = usageDiscount.usageDiscount
+                        isInvoiceLevel = usageDiscount.isInvoiceLevel
+                        additionalProperties = usageDiscount.additionalProperties.toMutableMap()
                     }
 
                     /**
@@ -62976,7 +62338,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewUsageDiscount].
+                     * Returns an immutable instance of [UsageDiscount].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -62988,8 +62350,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewUsageDiscount =
-                        NewUsageDiscount(
+                    fun build(): UsageDiscount =
+                        UsageDiscount(
                             adjustmentType,
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                                 it.toImmutable()
@@ -63002,7 +62364,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewUsageDiscount = apply {
+                fun validate(): UsageDiscount = apply {
                     if (validated) {
                         return@apply
                     }
@@ -63045,7 +62407,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewUsageDiscount && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && usageDiscount == other.usageDiscount && isInvoiceLevel == other.isInvoiceLevel && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is UsageDiscount && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && usageDiscount == other.usageDiscount && isInvoiceLevel == other.isInvoiceLevel && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -63055,10 +62417,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewUsageDiscount{adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, usageDiscount=$usageDiscount, isInvoiceLevel=$isInvoiceLevel, additionalProperties=$additionalProperties}"
+                    "UsageDiscount{adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, usageDiscount=$usageDiscount, isInvoiceLevel=$isInvoiceLevel, additionalProperties=$additionalProperties}"
             }
 
-            class NewAmountDiscount
+            class AmountDiscount
             private constructor(
                 private val adjustmentType: JsonValue,
                 private val amountDiscount: JsonField<String>,
@@ -63173,8 +62535,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [NewAmountDiscount].
+                     * Returns a mutable builder for constructing an instance of [AmountDiscount].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -63185,7 +62546,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewAmountDiscount]. */
+                /** A builder for [AmountDiscount]. */
                 class Builder internal constructor() {
 
                     private var adjustmentType: JsonValue = JsonValue.from("amount_discount")
@@ -63194,13 +62555,13 @@ private constructor(
                     private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newAmountDiscount: NewAmountDiscount) = apply {
-                        adjustmentType = newAmountDiscount.adjustmentType
-                        amountDiscount = newAmountDiscount.amountDiscount
+                    internal fun from(amountDiscount: AmountDiscount) = apply {
+                        adjustmentType = amountDiscount.adjustmentType
+                        this.amountDiscount = amountDiscount.amountDiscount
                         appliesToPriceIds =
-                            newAmountDiscount.appliesToPriceIds.map { it.toMutableList() }
-                        isInvoiceLevel = newAmountDiscount.isInvoiceLevel
-                        additionalProperties = newAmountDiscount.additionalProperties.toMutableMap()
+                            amountDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        isInvoiceLevel = amountDiscount.isInvoiceLevel
+                        additionalProperties = amountDiscount.additionalProperties.toMutableMap()
                     }
 
                     /**
@@ -63301,7 +62662,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewAmountDiscount].
+                     * Returns an immutable instance of [AmountDiscount].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -63313,8 +62674,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewAmountDiscount =
-                        NewAmountDiscount(
+                    fun build(): AmountDiscount =
+                        AmountDiscount(
                             adjustmentType,
                             checkRequired("amountDiscount", amountDiscount),
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
@@ -63327,7 +62688,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewAmountDiscount = apply {
+                fun validate(): AmountDiscount = apply {
                     if (validated) {
                         return@apply
                     }
@@ -63370,7 +62731,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewAmountDiscount && adjustmentType == other.adjustmentType && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is AmountDiscount && adjustmentType == other.adjustmentType && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -63380,10 +62741,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewAmountDiscount{adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, additionalProperties=$additionalProperties}"
+                    "AmountDiscount{adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, additionalProperties=$additionalProperties}"
             }
 
-            class NewMinimum
+            class Minimum
             private constructor(
                 private val adjustmentType: JsonValue,
                 private val appliesToPriceIds: JsonField<List<String>>,
@@ -63520,7 +62881,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of [NewMinimum].
+                     * Returns a mutable builder for constructing an instance of [Minimum].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -63532,7 +62893,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewMinimum]. */
+                /** A builder for [Minimum]. */
                 class Builder internal constructor() {
 
                     private var adjustmentType: JsonValue = JsonValue.from("minimum")
@@ -63542,13 +62903,13 @@ private constructor(
                     private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newMinimum: NewMinimum) = apply {
-                        adjustmentType = newMinimum.adjustmentType
-                        appliesToPriceIds = newMinimum.appliesToPriceIds.map { it.toMutableList() }
-                        itemId = newMinimum.itemId
-                        minimumAmount = newMinimum.minimumAmount
-                        isInvoiceLevel = newMinimum.isInvoiceLevel
-                        additionalProperties = newMinimum.additionalProperties.toMutableMap()
+                    internal fun from(minimum: Minimum) = apply {
+                        adjustmentType = minimum.adjustmentType
+                        appliesToPriceIds = minimum.appliesToPriceIds.map { it.toMutableList() }
+                        itemId = minimum.itemId
+                        minimumAmount = minimum.minimumAmount
+                        isInvoiceLevel = minimum.isInvoiceLevel
+                        additionalProperties = minimum.additionalProperties.toMutableMap()
                     }
 
                     /**
@@ -63661,7 +63022,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewMinimum].
+                     * Returns an immutable instance of [Minimum].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -63674,8 +63035,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewMinimum =
-                        NewMinimum(
+                    fun build(): Minimum =
+                        Minimum(
                             adjustmentType,
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                                 it.toImmutable()
@@ -63689,7 +63050,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewMinimum = apply {
+                fun validate(): Minimum = apply {
                     if (validated) {
                         return@apply
                     }
@@ -63734,7 +63095,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewMinimum && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && itemId == other.itemId && minimumAmount == other.minimumAmount && isInvoiceLevel == other.isInvoiceLevel && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Minimum && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && itemId == other.itemId && minimumAmount == other.minimumAmount && isInvoiceLevel == other.isInvoiceLevel && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -63744,10 +63105,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewMinimum{adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, itemId=$itemId, minimumAmount=$minimumAmount, isInvoiceLevel=$isInvoiceLevel, additionalProperties=$additionalProperties}"
+                    "Minimum{adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, itemId=$itemId, minimumAmount=$minimumAmount, isInvoiceLevel=$isInvoiceLevel, additionalProperties=$additionalProperties}"
             }
 
-            class NewMaximum
+            class Maximum
             private constructor(
                 private val adjustmentType: JsonValue,
                 private val appliesToPriceIds: JsonField<List<String>>,
@@ -63862,7 +63223,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of [NewMaximum].
+                     * Returns a mutable builder for constructing an instance of [Maximum].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -63873,7 +63234,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewMaximum]. */
+                /** A builder for [Maximum]. */
                 class Builder internal constructor() {
 
                     private var adjustmentType: JsonValue = JsonValue.from("maximum")
@@ -63882,12 +63243,12 @@ private constructor(
                     private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(newMaximum: NewMaximum) = apply {
-                        adjustmentType = newMaximum.adjustmentType
-                        appliesToPriceIds = newMaximum.appliesToPriceIds.map { it.toMutableList() }
-                        maximumAmount = newMaximum.maximumAmount
-                        isInvoiceLevel = newMaximum.isInvoiceLevel
-                        additionalProperties = newMaximum.additionalProperties.toMutableMap()
+                    internal fun from(maximum: Maximum) = apply {
+                        adjustmentType = maximum.adjustmentType
+                        appliesToPriceIds = maximum.appliesToPriceIds.map { it.toMutableList() }
+                        maximumAmount = maximum.maximumAmount
+                        isInvoiceLevel = maximum.isInvoiceLevel
+                        additionalProperties = maximum.additionalProperties.toMutableMap()
                     }
 
                     /**
@@ -63988,7 +63349,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [NewMaximum].
+                     * Returns an immutable instance of [Maximum].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -64000,8 +63361,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): NewMaximum =
-                        NewMaximum(
+                    fun build(): Maximum =
+                        Maximum(
                             adjustmentType,
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                                 it.toImmutable()
@@ -64014,7 +63375,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewMaximum = apply {
+                fun validate(): Maximum = apply {
                     if (validated) {
                         return@apply
                     }
@@ -64057,7 +63418,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewMaximum && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && maximumAmount == other.maximumAmount && isInvoiceLevel == other.isInvoiceLevel && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Maximum && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && maximumAmount == other.maximumAmount && isInvoiceLevel == other.isInvoiceLevel && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -64067,7 +63428,7 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewMaximum{adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, maximumAmount=$maximumAmount, isInvoiceLevel=$isInvoiceLevel, additionalProperties=$additionalProperties}"
+                    "Maximum{adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, maximumAmount=$maximumAmount, isInvoiceLevel=$isInvoiceLevel, additionalProperties=$additionalProperties}"
             }
         }
 

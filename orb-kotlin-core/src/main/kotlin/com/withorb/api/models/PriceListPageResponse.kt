@@ -127,136 +127,136 @@ private constructor(
         }
 
         /** Alias for calling [addData] with `Price.ofUnit(unit)`. */
-        fun addData(unit: Price.UnitPrice) = addData(Price.ofUnit(unit))
+        fun addData(unit: Price.Unit) = addData(Price.ofUnit(unit))
 
-        /** Alias for calling [addData] with `Price.ofPackagePrice(packagePrice)`. */
-        fun addData(packagePrice: Price.PackagePrice) = addData(Price.ofPackagePrice(packagePrice))
+        /** Alias for calling [addData] with `Price.ofPackage(package_)`. */
+        fun addData(package_: Price.Package) = addData(Price.ofPackage(package_))
 
         /** Alias for calling [addData] with `Price.ofMatrix(matrix)`. */
-        fun addData(matrix: Price.MatrixPrice) = addData(Price.ofMatrix(matrix))
+        fun addData(matrix: Price.Matrix) = addData(Price.ofMatrix(matrix))
 
         /** Alias for calling [addData] with `Price.ofTiered(tiered)`. */
-        fun addData(tiered: Price.TieredPrice) = addData(Price.ofTiered(tiered))
+        fun addData(tiered: Price.Tiered) = addData(Price.ofTiered(tiered))
 
         /** Alias for calling [addData] with `Price.ofTieredBps(tieredBps)`. */
-        fun addData(tieredBps: Price.TieredBpsPrice) = addData(Price.ofTieredBps(tieredBps))
+        fun addData(tieredBps: Price.TieredBps) = addData(Price.ofTieredBps(tieredBps))
 
         /** Alias for calling [addData] with `Price.ofBps(bps)`. */
-        fun addData(bps: Price.BpsPrice) = addData(Price.ofBps(bps))
+        fun addData(bps: Price.Bps) = addData(Price.ofBps(bps))
 
         /** Alias for calling [addData] with `Price.ofBulkBps(bulkBps)`. */
-        fun addData(bulkBps: Price.BulkBpsPrice) = addData(Price.ofBulkBps(bulkBps))
+        fun addData(bulkBps: Price.BulkBps) = addData(Price.ofBulkBps(bulkBps))
 
         /** Alias for calling [addData] with `Price.ofBulk(bulk)`. */
-        fun addData(bulk: Price.BulkPrice) = addData(Price.ofBulk(bulk))
+        fun addData(bulk: Price.Bulk) = addData(Price.ofBulk(bulk))
 
         /**
          * Alias for calling [addData] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
          */
-        fun addData(thresholdTotalAmount: Price.ThresholdTotalAmountPrice) =
+        fun addData(thresholdTotalAmount: Price.ThresholdTotalAmount) =
             addData(Price.ofThresholdTotalAmount(thresholdTotalAmount))
 
         /** Alias for calling [addData] with `Price.ofTieredPackage(tieredPackage)`. */
-        fun addData(tieredPackage: Price.TieredPackagePrice) =
+        fun addData(tieredPackage: Price.TieredPackage) =
             addData(Price.ofTieredPackage(tieredPackage))
 
         /** Alias for calling [addData] with `Price.ofGroupedTiered(groupedTiered)`. */
-        fun addData(groupedTiered: Price.GroupedTieredPrice) =
+        fun addData(groupedTiered: Price.GroupedTiered) =
             addData(Price.ofGroupedTiered(groupedTiered))
 
         /** Alias for calling [addData] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
-        fun addData(tieredWithMinimum: Price.TieredWithMinimumPrice) =
+        fun addData(tieredWithMinimum: Price.TieredWithMinimum) =
             addData(Price.ofTieredWithMinimum(tieredWithMinimum))
 
         /**
          * Alias for calling [addData] with
          * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
          */
-        fun addData(tieredPackageWithMinimum: Price.TieredPackageWithMinimumPrice) =
+        fun addData(tieredPackageWithMinimum: Price.TieredPackageWithMinimum) =
             addData(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
         /**
          * Alias for calling [addData] with `Price.ofPackageWithAllocation(packageWithAllocation)`.
          */
-        fun addData(packageWithAllocation: Price.PackageWithAllocationPrice) =
+        fun addData(packageWithAllocation: Price.PackageWithAllocation) =
             addData(Price.ofPackageWithAllocation(packageWithAllocation))
 
         /** Alias for calling [addData] with `Price.ofUnitWithPercent(unitWithPercent)`. */
-        fun addData(unitWithPercent: Price.UnitWithPercentPrice) =
+        fun addData(unitWithPercent: Price.UnitWithPercent) =
             addData(Price.ofUnitWithPercent(unitWithPercent))
 
         /**
          * Alias for calling [addData] with `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
          */
-        fun addData(matrixWithAllocation: Price.MatrixWithAllocationPrice) =
+        fun addData(matrixWithAllocation: Price.MatrixWithAllocation) =
             addData(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
         /** Alias for calling [addData] with `Price.ofTieredWithProration(tieredWithProration)`. */
-        fun addData(tieredWithProration: Price.TieredWithProrationPrice) =
+        fun addData(tieredWithProration: Price.TieredWithProration) =
             addData(Price.ofTieredWithProration(tieredWithProration))
 
         /** Alias for calling [addData] with `Price.ofUnitWithProration(unitWithProration)`. */
-        fun addData(unitWithProration: Price.UnitWithProrationPrice) =
+        fun addData(unitWithProration: Price.UnitWithProration) =
             addData(Price.ofUnitWithProration(unitWithProration))
 
         /** Alias for calling [addData] with `Price.ofGroupedAllocation(groupedAllocation)`. */
-        fun addData(groupedAllocation: Price.GroupedAllocationPrice) =
+        fun addData(groupedAllocation: Price.GroupedAllocation) =
             addData(Price.ofGroupedAllocation(groupedAllocation))
 
         /**
          * Alias for calling [addData] with
          * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
          */
-        fun addData(groupedWithProratedMinimum: Price.GroupedWithProratedMinimumPrice) =
+        fun addData(groupedWithProratedMinimum: Price.GroupedWithProratedMinimum) =
             addData(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
 
         /**
          * Alias for calling [addData] with
          * `Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)`.
          */
-        fun addData(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimumPrice) =
+        fun addData(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimum) =
             addData(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
         /**
          * Alias for calling [addData] with `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
          */
-        fun addData(matrixWithDisplayName: Price.MatrixWithDisplayNamePrice) =
+        fun addData(matrixWithDisplayName: Price.MatrixWithDisplayName) =
             addData(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
 
         /** Alias for calling [addData] with `Price.ofBulkWithProration(bulkWithProration)`. */
-        fun addData(bulkWithProration: Price.BulkWithProrationPrice) =
+        fun addData(bulkWithProration: Price.BulkWithProration) =
             addData(Price.ofBulkWithProration(bulkWithProration))
 
         /**
          * Alias for calling [addData] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
          */
-        fun addData(groupedTieredPackage: Price.GroupedTieredPackagePrice) =
+        fun addData(groupedTieredPackage: Price.GroupedTieredPackage) =
             addData(Price.ofGroupedTieredPackage(groupedTieredPackage))
 
         /**
          * Alias for calling [addData] with `Price.ofMaxGroupTieredPackage(maxGroupTieredPackage)`.
          */
-        fun addData(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) =
+        fun addData(maxGroupTieredPackage: Price.MaxGroupTieredPackage) =
             addData(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
         /**
          * Alias for calling [addData] with
          * `Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)`.
          */
-        fun addData(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricingPrice) =
+        fun addData(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricing) =
             addData(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
 
         /**
          * Alias for calling [addData] with
          * `Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)`.
          */
-        fun addData(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice) =
+        fun addData(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricing) =
             addData(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
 
         /**
          * Alias for calling [addData] with `Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk)`.
          */
-        fun addData(cumulativeGroupedBulk: Price.CumulativeGroupedBulkPrice) =
+        fun addData(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
             addData(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
         fun paginationMetadata(paginationMetadata: PaginationMetadata) =

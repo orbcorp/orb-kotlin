@@ -23,7 +23,7 @@ internal class CouponServiceTest {
         val coupon =
             couponService.create(
                 CouponCreateParams.builder()
-                    .newCouponPercentageDiscount(0.0)
+                    .percentageDiscount(0.0)
                     .redemptionCode("HALFOFF")
                     .durationInMonths(12L)
                     .maxRedemptions(1L)

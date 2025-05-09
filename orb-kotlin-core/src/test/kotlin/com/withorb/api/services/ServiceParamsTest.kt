@@ -98,7 +98,7 @@ internal class ServiceParamsTest {
                         .build()
                 )
                 .taxConfiguration(
-                    CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                    CustomerCreateParams.TaxConfiguration.Avalara.builder()
                         .taxExempt(true)
                         .taxExemptionCode("tax_exemption_code")
                         .build()

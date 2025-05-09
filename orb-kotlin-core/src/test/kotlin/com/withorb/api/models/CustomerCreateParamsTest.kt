@@ -67,7 +67,7 @@ internal class CustomerCreateParamsTest {
                     .build()
             )
             .taxConfiguration(
-                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                CustomerCreateParams.TaxConfiguration.Avalara.builder()
                     .taxExempt(true)
                     .taxExemptionCode("tax_exemption_code")
                     .build()
@@ -143,7 +143,7 @@ internal class CustomerCreateParamsTest {
                         .build()
                 )
                 .taxConfiguration(
-                    CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                    CustomerCreateParams.TaxConfiguration.Avalara.builder()
                         .taxExempt(true)
                         .taxExemptionCode("tax_exemption_code")
                         .build()
@@ -222,8 +222,8 @@ internal class CustomerCreateParamsTest {
             )
         assertThat(body.taxConfiguration())
             .isEqualTo(
-                CustomerCreateParams.TaxConfiguration.ofNewAvalara(
-                    CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                CustomerCreateParams.TaxConfiguration.ofAvalara(
+                    CustomerCreateParams.TaxConfiguration.Avalara.builder()
                         .taxExempt(true)
                         .taxExemptionCode("tax_exemption_code")
                         .build()

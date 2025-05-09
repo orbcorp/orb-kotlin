@@ -649,156 +649,154 @@ private constructor(
                 fun price(price: JsonField<Price>) = apply { this.price = price }
 
                 /** Alias for calling [price] with `Price.ofUnit(unit)`. */
-                fun price(unit: Price.UnitPrice) = price(Price.ofUnit(unit))
+                fun price(unit: Price.Unit) = price(Price.ofUnit(unit))
 
-                /** Alias for calling [price] with `Price.ofPackagePrice(packagePrice)`. */
-                fun price(packagePrice: Price.PackagePrice) =
-                    price(Price.ofPackagePrice(packagePrice))
+                /** Alias for calling [price] with `Price.ofPackage(package_)`. */
+                fun price(package_: Price.Package) = price(Price.ofPackage(package_))
 
                 /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
-                fun price(matrix: Price.MatrixPrice) = price(Price.ofMatrix(matrix))
+                fun price(matrix: Price.Matrix) = price(Price.ofMatrix(matrix))
 
                 /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
-                fun price(tiered: Price.TieredPrice) = price(Price.ofTiered(tiered))
+                fun price(tiered: Price.Tiered) = price(Price.ofTiered(tiered))
 
                 /** Alias for calling [price] with `Price.ofTieredBps(tieredBps)`. */
-                fun price(tieredBps: Price.TieredBpsPrice) = price(Price.ofTieredBps(tieredBps))
+                fun price(tieredBps: Price.TieredBps) = price(Price.ofTieredBps(tieredBps))
 
                 /** Alias for calling [price] with `Price.ofBps(bps)`. */
-                fun price(bps: Price.BpsPrice) = price(Price.ofBps(bps))
+                fun price(bps: Price.Bps) = price(Price.ofBps(bps))
 
                 /** Alias for calling [price] with `Price.ofBulkBps(bulkBps)`. */
-                fun price(bulkBps: Price.BulkBpsPrice) = price(Price.ofBulkBps(bulkBps))
+                fun price(bulkBps: Price.BulkBps) = price(Price.ofBulkBps(bulkBps))
 
                 /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
-                fun price(bulk: Price.BulkPrice) = price(Price.ofBulk(bulk))
+                fun price(bulk: Price.Bulk) = price(Price.ofBulk(bulk))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
                  */
-                fun price(thresholdTotalAmount: Price.ThresholdTotalAmountPrice) =
+                fun price(thresholdTotalAmount: Price.ThresholdTotalAmount) =
                     price(Price.ofThresholdTotalAmount(thresholdTotalAmount))
 
                 /** Alias for calling [price] with `Price.ofTieredPackage(tieredPackage)`. */
-                fun price(tieredPackage: Price.TieredPackagePrice) =
+                fun price(tieredPackage: Price.TieredPackage) =
                     price(Price.ofTieredPackage(tieredPackage))
 
                 /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
-                fun price(groupedTiered: Price.GroupedTieredPrice) =
+                fun price(groupedTiered: Price.GroupedTiered) =
                     price(Price.ofGroupedTiered(groupedTiered))
 
                 /**
                  * Alias for calling [price] with `Price.ofTieredWithMinimum(tieredWithMinimum)`.
                  */
-                fun price(tieredWithMinimum: Price.TieredWithMinimumPrice) =
+                fun price(tieredWithMinimum: Price.TieredWithMinimum) =
                     price(Price.ofTieredWithMinimum(tieredWithMinimum))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
                  */
-                fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimumPrice) =
+                fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimum) =
                     price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofPackageWithAllocation(packageWithAllocation)`.
                  */
-                fun price(packageWithAllocation: Price.PackageWithAllocationPrice) =
+                fun price(packageWithAllocation: Price.PackageWithAllocation) =
                     price(Price.ofPackageWithAllocation(packageWithAllocation))
 
                 /** Alias for calling [price] with `Price.ofUnitWithPercent(unitWithPercent)`. */
-                fun price(unitWithPercent: Price.UnitWithPercentPrice) =
+                fun price(unitWithPercent: Price.UnitWithPercent) =
                     price(Price.ofUnitWithPercent(unitWithPercent))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
                  */
-                fun price(matrixWithAllocation: Price.MatrixWithAllocationPrice) =
+                fun price(matrixWithAllocation: Price.MatrixWithAllocation) =
                     price(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofTieredWithProration(tieredWithProration)`.
                  */
-                fun price(tieredWithProration: Price.TieredWithProrationPrice) =
+                fun price(tieredWithProration: Price.TieredWithProration) =
                     price(Price.ofTieredWithProration(tieredWithProration))
 
                 /**
                  * Alias for calling [price] with `Price.ofUnitWithProration(unitWithProration)`.
                  */
-                fun price(unitWithProration: Price.UnitWithProrationPrice) =
+                fun price(unitWithProration: Price.UnitWithProration) =
                     price(Price.ofUnitWithProration(unitWithProration))
 
                 /**
                  * Alias for calling [price] with `Price.ofGroupedAllocation(groupedAllocation)`.
                  */
-                fun price(groupedAllocation: Price.GroupedAllocationPrice) =
+                fun price(groupedAllocation: Price.GroupedAllocation) =
                     price(Price.ofGroupedAllocation(groupedAllocation))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
                  */
-                fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimumPrice) =
+                fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimum) =
                     price(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)`.
                  */
-                fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimumPrice) =
+                fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimum) =
                     price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
                  */
-                fun price(matrixWithDisplayName: Price.MatrixWithDisplayNamePrice) =
+                fun price(matrixWithDisplayName: Price.MatrixWithDisplayName) =
                     price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
 
                 /**
                  * Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`.
                  */
-                fun price(bulkWithProration: Price.BulkWithProrationPrice) =
+                fun price(bulkWithProration: Price.BulkWithProration) =
                     price(Price.ofBulkWithProration(bulkWithProration))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
                  */
-                fun price(groupedTieredPackage: Price.GroupedTieredPackagePrice) =
+                fun price(groupedTieredPackage: Price.GroupedTieredPackage) =
                     price(Price.ofGroupedTieredPackage(groupedTieredPackage))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofMaxGroupTieredPackage(maxGroupTieredPackage)`.
                  */
-                fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) =
+                fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackage) =
                     price(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)`.
                  */
-                fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricingPrice) =
+                fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricing) =
                     price(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)`.
                  */
-                fun price(
-                    scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice
-                ) = price(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
+                fun price(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricing) =
+                    price(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
 
                 /**
                  * Alias for calling [price] with
                  * `Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk)`.
                  */
-                fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulkPrice) =
+                fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
                     price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
                 /** The price the cost is associated with */

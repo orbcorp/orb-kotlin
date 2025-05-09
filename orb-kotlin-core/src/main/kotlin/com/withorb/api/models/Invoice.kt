@@ -6725,40 +6725,31 @@ private constructor(
             }
 
             /**
-             * Alias for calling [addAdjustment] with
-             * `Adjustment.ofMonetaryUsageDiscount(monetaryUsageDiscount)`.
+             * Alias for calling [addAdjustment] with `Adjustment.ofUsageDiscount(usageDiscount)`.
              */
-            fun addAdjustment(monetaryUsageDiscount: Adjustment.MonetaryUsageDiscountAdjustment) =
-                addAdjustment(Adjustment.ofMonetaryUsageDiscount(monetaryUsageDiscount))
+            fun addAdjustment(usageDiscount: Adjustment.UsageDiscount) =
+                addAdjustment(Adjustment.ofUsageDiscount(usageDiscount))
+
+            /**
+             * Alias for calling [addAdjustment] with `Adjustment.ofAmountDiscount(amountDiscount)`.
+             */
+            fun addAdjustment(amountDiscount: Adjustment.AmountDiscount) =
+                addAdjustment(Adjustment.ofAmountDiscount(amountDiscount))
 
             /**
              * Alias for calling [addAdjustment] with
-             * `Adjustment.ofMonetaryAmountDiscount(monetaryAmountDiscount)`.
+             * `Adjustment.ofPercentageDiscount(percentageDiscount)`.
              */
-            fun addAdjustment(monetaryAmountDiscount: Adjustment.MonetaryAmountDiscountAdjustment) =
-                addAdjustment(Adjustment.ofMonetaryAmountDiscount(monetaryAmountDiscount))
+            fun addAdjustment(percentageDiscount: Adjustment.PercentageDiscount) =
+                addAdjustment(Adjustment.ofPercentageDiscount(percentageDiscount))
 
-            /**
-             * Alias for calling [addAdjustment] with
-             * `Adjustment.ofMonetaryPercentageDiscount(monetaryPercentageDiscount)`.
-             */
-            fun addAdjustment(
-                monetaryPercentageDiscount: Adjustment.MonetaryPercentageDiscountAdjustment
-            ) = addAdjustment(Adjustment.ofMonetaryPercentageDiscount(monetaryPercentageDiscount))
+            /** Alias for calling [addAdjustment] with `Adjustment.ofMinimum(minimum)`. */
+            fun addAdjustment(minimum: Adjustment.Minimum) =
+                addAdjustment(Adjustment.ofMinimum(minimum))
 
-            /**
-             * Alias for calling [addAdjustment] with
-             * `Adjustment.ofMonetaryMinimum(monetaryMinimum)`.
-             */
-            fun addAdjustment(monetaryMinimum: Adjustment.MonetaryMinimumAdjustment) =
-                addAdjustment(Adjustment.ofMonetaryMinimum(monetaryMinimum))
-
-            /**
-             * Alias for calling [addAdjustment] with
-             * `Adjustment.ofMonetaryMaximum(monetaryMaximum)`.
-             */
-            fun addAdjustment(monetaryMaximum: Adjustment.MonetaryMaximumAdjustment) =
-                addAdjustment(Adjustment.ofMonetaryMaximum(monetaryMaximum))
+            /** Alias for calling [addAdjustment] with `Adjustment.ofMaximum(maximum)`. */
+            fun addAdjustment(maximum: Adjustment.Maximum) =
+                addAdjustment(Adjustment.ofMaximum(maximum))
 
             /**
              * The final amount for a line item after all adjustments and pre paid credits have been
@@ -6984,142 +6975,142 @@ private constructor(
             fun price(price: JsonField<Price>) = apply { this.price = price }
 
             /** Alias for calling [price] with `Price.ofUnit(unit)`. */
-            fun price(unit: Price.UnitPrice) = price(Price.ofUnit(unit))
+            fun price(unit: Price.Unit) = price(Price.ofUnit(unit))
 
-            /** Alias for calling [price] with `Price.ofPackagePrice(packagePrice)`. */
-            fun price(packagePrice: Price.PackagePrice) = price(Price.ofPackagePrice(packagePrice))
+            /** Alias for calling [price] with `Price.ofPackage(package_)`. */
+            fun price(package_: Price.Package) = price(Price.ofPackage(package_))
 
             /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
-            fun price(matrix: Price.MatrixPrice) = price(Price.ofMatrix(matrix))
+            fun price(matrix: Price.Matrix) = price(Price.ofMatrix(matrix))
 
             /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
-            fun price(tiered: Price.TieredPrice) = price(Price.ofTiered(tiered))
+            fun price(tiered: Price.Tiered) = price(Price.ofTiered(tiered))
 
             /** Alias for calling [price] with `Price.ofTieredBps(tieredBps)`. */
-            fun price(tieredBps: Price.TieredBpsPrice) = price(Price.ofTieredBps(tieredBps))
+            fun price(tieredBps: Price.TieredBps) = price(Price.ofTieredBps(tieredBps))
 
             /** Alias for calling [price] with `Price.ofBps(bps)`. */
-            fun price(bps: Price.BpsPrice) = price(Price.ofBps(bps))
+            fun price(bps: Price.Bps) = price(Price.ofBps(bps))
 
             /** Alias for calling [price] with `Price.ofBulkBps(bulkBps)`. */
-            fun price(bulkBps: Price.BulkBpsPrice) = price(Price.ofBulkBps(bulkBps))
+            fun price(bulkBps: Price.BulkBps) = price(Price.ofBulkBps(bulkBps))
 
             /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
-            fun price(bulk: Price.BulkPrice) = price(Price.ofBulk(bulk))
+            fun price(bulk: Price.Bulk) = price(Price.ofBulk(bulk))
 
             /**
              * Alias for calling [price] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
              */
-            fun price(thresholdTotalAmount: Price.ThresholdTotalAmountPrice) =
+            fun price(thresholdTotalAmount: Price.ThresholdTotalAmount) =
                 price(Price.ofThresholdTotalAmount(thresholdTotalAmount))
 
             /** Alias for calling [price] with `Price.ofTieredPackage(tieredPackage)`. */
-            fun price(tieredPackage: Price.TieredPackagePrice) =
+            fun price(tieredPackage: Price.TieredPackage) =
                 price(Price.ofTieredPackage(tieredPackage))
 
             /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
-            fun price(groupedTiered: Price.GroupedTieredPrice) =
+            fun price(groupedTiered: Price.GroupedTiered) =
                 price(Price.ofGroupedTiered(groupedTiered))
 
             /** Alias for calling [price] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
-            fun price(tieredWithMinimum: Price.TieredWithMinimumPrice) =
+            fun price(tieredWithMinimum: Price.TieredWithMinimum) =
                 price(Price.ofTieredWithMinimum(tieredWithMinimum))
 
             /**
              * Alias for calling [price] with
              * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
              */
-            fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimumPrice) =
+            fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimum) =
                 price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
             /**
              * Alias for calling [price] with
              * `Price.ofPackageWithAllocation(packageWithAllocation)`.
              */
-            fun price(packageWithAllocation: Price.PackageWithAllocationPrice) =
+            fun price(packageWithAllocation: Price.PackageWithAllocation) =
                 price(Price.ofPackageWithAllocation(packageWithAllocation))
 
             /** Alias for calling [price] with `Price.ofUnitWithPercent(unitWithPercent)`. */
-            fun price(unitWithPercent: Price.UnitWithPercentPrice) =
+            fun price(unitWithPercent: Price.UnitWithPercent) =
                 price(Price.ofUnitWithPercent(unitWithPercent))
 
             /**
              * Alias for calling [price] with `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
              */
-            fun price(matrixWithAllocation: Price.MatrixWithAllocationPrice) =
+            fun price(matrixWithAllocation: Price.MatrixWithAllocation) =
                 price(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
             /**
              * Alias for calling [price] with `Price.ofTieredWithProration(tieredWithProration)`.
              */
-            fun price(tieredWithProration: Price.TieredWithProrationPrice) =
+            fun price(tieredWithProration: Price.TieredWithProration) =
                 price(Price.ofTieredWithProration(tieredWithProration))
 
             /** Alias for calling [price] with `Price.ofUnitWithProration(unitWithProration)`. */
-            fun price(unitWithProration: Price.UnitWithProrationPrice) =
+            fun price(unitWithProration: Price.UnitWithProration) =
                 price(Price.ofUnitWithProration(unitWithProration))
 
             /** Alias for calling [price] with `Price.ofGroupedAllocation(groupedAllocation)`. */
-            fun price(groupedAllocation: Price.GroupedAllocationPrice) =
+            fun price(groupedAllocation: Price.GroupedAllocation) =
                 price(Price.ofGroupedAllocation(groupedAllocation))
 
             /**
              * Alias for calling [price] with
              * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
              */
-            fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimumPrice) =
+            fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimum) =
                 price(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
 
             /**
              * Alias for calling [price] with
              * `Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)`.
              */
-            fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimumPrice) =
+            fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimum) =
                 price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
             /**
              * Alias for calling [price] with
              * `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
              */
-            fun price(matrixWithDisplayName: Price.MatrixWithDisplayNamePrice) =
+            fun price(matrixWithDisplayName: Price.MatrixWithDisplayName) =
                 price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
 
             /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
-            fun price(bulkWithProration: Price.BulkWithProrationPrice) =
+            fun price(bulkWithProration: Price.BulkWithProration) =
                 price(Price.ofBulkWithProration(bulkWithProration))
 
             /**
              * Alias for calling [price] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
              */
-            fun price(groupedTieredPackage: Price.GroupedTieredPackagePrice) =
+            fun price(groupedTieredPackage: Price.GroupedTieredPackage) =
                 price(Price.ofGroupedTieredPackage(groupedTieredPackage))
 
             /**
              * Alias for calling [price] with
              * `Price.ofMaxGroupTieredPackage(maxGroupTieredPackage)`.
              */
-            fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) =
+            fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackage) =
                 price(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
             /**
              * Alias for calling [price] with
              * `Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)`.
              */
-            fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricingPrice) =
+            fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricing) =
                 price(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
 
             /**
              * Alias for calling [price] with
              * `Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)`.
              */
-            fun price(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice) =
+            fun price(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricing) =
                 price(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
 
             /**
              * Alias for calling [price] with
              * `Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk)`.
              */
-            fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulkPrice) =
+            fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
                 price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
             /** Either the fixed fee quantity or the usage during the service period. */
@@ -7179,16 +7170,14 @@ private constructor(
             }
 
             /** Alias for calling [addSubLineItem] with `SubLineItem.ofMatrix(matrix)`. */
-            fun addSubLineItem(matrix: SubLineItem.MatrixSubLineItem) =
+            fun addSubLineItem(matrix: SubLineItem.Matrix) =
                 addSubLineItem(SubLineItem.ofMatrix(matrix))
 
             /** Alias for calling [addSubLineItem] with `SubLineItem.ofTier(tier)`. */
-            fun addSubLineItem(tier: SubLineItem.TierSubLineItem) =
-                addSubLineItem(SubLineItem.ofTier(tier))
+            fun addSubLineItem(tier: SubLineItem.Tier) = addSubLineItem(SubLineItem.ofTier(tier))
 
-            /** Alias for calling [addSubLineItem] with `SubLineItem.ofOther(other)`. */
-            fun addSubLineItem(other: SubLineItem.OtherSubLineItem) =
-                addSubLineItem(SubLineItem.ofOther(other))
+            /** Alias for calling [addSubLineItem] with `SubLineItem.ofNull(null_)`. */
+            fun addSubLineItem(null_: SubLineItem.Null) = addSubLineItem(SubLineItem.ofNull(null_))
 
             /** The line amount before before any adjustments. */
             fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
@@ -7412,62 +7401,55 @@ private constructor(
         @JsonSerialize(using = Adjustment.Serializer::class)
         class Adjustment
         private constructor(
-            private val monetaryUsageDiscount: MonetaryUsageDiscountAdjustment? = null,
-            private val monetaryAmountDiscount: MonetaryAmountDiscountAdjustment? = null,
-            private val monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment? = null,
-            private val monetaryMinimum: MonetaryMinimumAdjustment? = null,
-            private val monetaryMaximum: MonetaryMaximumAdjustment? = null,
+            private val usageDiscount: UsageDiscount? = null,
+            private val amountDiscount: AmountDiscount? = null,
+            private val percentageDiscount: PercentageDiscount? = null,
+            private val minimum: Minimum? = null,
+            private val maximum: Maximum? = null,
             private val _json: JsonValue? = null,
         ) {
 
-            fun monetaryUsageDiscount(): MonetaryUsageDiscountAdjustment? = monetaryUsageDiscount
+            fun usageDiscount(): UsageDiscount? = usageDiscount
 
-            fun monetaryAmountDiscount(): MonetaryAmountDiscountAdjustment? = monetaryAmountDiscount
+            fun amountDiscount(): AmountDiscount? = amountDiscount
 
-            fun monetaryPercentageDiscount(): MonetaryPercentageDiscountAdjustment? =
-                monetaryPercentageDiscount
+            fun percentageDiscount(): PercentageDiscount? = percentageDiscount
 
-            fun monetaryMinimum(): MonetaryMinimumAdjustment? = monetaryMinimum
+            fun minimum(): Minimum? = minimum
 
-            fun monetaryMaximum(): MonetaryMaximumAdjustment? = monetaryMaximum
+            fun maximum(): Maximum? = maximum
 
-            fun isMonetaryUsageDiscount(): Boolean = monetaryUsageDiscount != null
+            fun isUsageDiscount(): Boolean = usageDiscount != null
 
-            fun isMonetaryAmountDiscount(): Boolean = monetaryAmountDiscount != null
+            fun isAmountDiscount(): Boolean = amountDiscount != null
 
-            fun isMonetaryPercentageDiscount(): Boolean = monetaryPercentageDiscount != null
+            fun isPercentageDiscount(): Boolean = percentageDiscount != null
 
-            fun isMonetaryMinimum(): Boolean = monetaryMinimum != null
+            fun isMinimum(): Boolean = minimum != null
 
-            fun isMonetaryMaximum(): Boolean = monetaryMaximum != null
+            fun isMaximum(): Boolean = maximum != null
 
-            fun asMonetaryUsageDiscount(): MonetaryUsageDiscountAdjustment =
-                monetaryUsageDiscount.getOrThrow("monetaryUsageDiscount")
+            fun asUsageDiscount(): UsageDiscount = usageDiscount.getOrThrow("usageDiscount")
 
-            fun asMonetaryAmountDiscount(): MonetaryAmountDiscountAdjustment =
-                monetaryAmountDiscount.getOrThrow("monetaryAmountDiscount")
+            fun asAmountDiscount(): AmountDiscount = amountDiscount.getOrThrow("amountDiscount")
 
-            fun asMonetaryPercentageDiscount(): MonetaryPercentageDiscountAdjustment =
-                monetaryPercentageDiscount.getOrThrow("monetaryPercentageDiscount")
+            fun asPercentageDiscount(): PercentageDiscount =
+                percentageDiscount.getOrThrow("percentageDiscount")
 
-            fun asMonetaryMinimum(): MonetaryMinimumAdjustment =
-                monetaryMinimum.getOrThrow("monetaryMinimum")
+            fun asMinimum(): Minimum = minimum.getOrThrow("minimum")
 
-            fun asMonetaryMaximum(): MonetaryMaximumAdjustment =
-                monetaryMaximum.getOrThrow("monetaryMaximum")
+            fun asMaximum(): Maximum = maximum.getOrThrow("maximum")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T =
                 when {
-                    monetaryUsageDiscount != null ->
-                        visitor.visitMonetaryUsageDiscount(monetaryUsageDiscount)
-                    monetaryAmountDiscount != null ->
-                        visitor.visitMonetaryAmountDiscount(monetaryAmountDiscount)
-                    monetaryPercentageDiscount != null ->
-                        visitor.visitMonetaryPercentageDiscount(monetaryPercentageDiscount)
-                    monetaryMinimum != null -> visitor.visitMonetaryMinimum(monetaryMinimum)
-                    monetaryMaximum != null -> visitor.visitMonetaryMaximum(monetaryMaximum)
+                    usageDiscount != null -> visitor.visitUsageDiscount(usageDiscount)
+                    amountDiscount != null -> visitor.visitAmountDiscount(amountDiscount)
+                    percentageDiscount != null ->
+                        visitor.visitPercentageDiscount(percentageDiscount)
+                    minimum != null -> visitor.visitMinimum(minimum)
+                    maximum != null -> visitor.visitMaximum(maximum)
                     else -> visitor.unknown(_json)
                 }
 
@@ -7480,34 +7462,26 @@ private constructor(
 
                 accept(
                     object : Visitor<Unit> {
-                        override fun visitMonetaryUsageDiscount(
-                            monetaryUsageDiscount: MonetaryUsageDiscountAdjustment
-                        ) {
-                            monetaryUsageDiscount.validate()
+                        override fun visitUsageDiscount(usageDiscount: UsageDiscount) {
+                            usageDiscount.validate()
                         }
 
-                        override fun visitMonetaryAmountDiscount(
-                            monetaryAmountDiscount: MonetaryAmountDiscountAdjustment
-                        ) {
-                            monetaryAmountDiscount.validate()
+                        override fun visitAmountDiscount(amountDiscount: AmountDiscount) {
+                            amountDiscount.validate()
                         }
 
-                        override fun visitMonetaryPercentageDiscount(
-                            monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment
+                        override fun visitPercentageDiscount(
+                            percentageDiscount: PercentageDiscount
                         ) {
-                            monetaryPercentageDiscount.validate()
+                            percentageDiscount.validate()
                         }
 
-                        override fun visitMonetaryMinimum(
-                            monetaryMinimum: MonetaryMinimumAdjustment
-                        ) {
-                            monetaryMinimum.validate()
+                        override fun visitMinimum(minimum: Minimum) {
+                            minimum.validate()
                         }
 
-                        override fun visitMonetaryMaximum(
-                            monetaryMaximum: MonetaryMaximumAdjustment
-                        ) {
-                            monetaryMaximum.validate()
+                        override fun visitMaximum(maximum: Maximum) {
+                            maximum.validate()
                         }
                     }
                 )
@@ -7531,25 +7505,19 @@ private constructor(
             internal fun validity(): Int =
                 accept(
                     object : Visitor<Int> {
-                        override fun visitMonetaryUsageDiscount(
-                            monetaryUsageDiscount: MonetaryUsageDiscountAdjustment
-                        ) = monetaryUsageDiscount.validity()
+                        override fun visitUsageDiscount(usageDiscount: UsageDiscount) =
+                            usageDiscount.validity()
 
-                        override fun visitMonetaryAmountDiscount(
-                            monetaryAmountDiscount: MonetaryAmountDiscountAdjustment
-                        ) = monetaryAmountDiscount.validity()
+                        override fun visitAmountDiscount(amountDiscount: AmountDiscount) =
+                            amountDiscount.validity()
 
-                        override fun visitMonetaryPercentageDiscount(
-                            monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment
-                        ) = monetaryPercentageDiscount.validity()
+                        override fun visitPercentageDiscount(
+                            percentageDiscount: PercentageDiscount
+                        ) = percentageDiscount.validity()
 
-                        override fun visitMonetaryMinimum(
-                            monetaryMinimum: MonetaryMinimumAdjustment
-                        ) = monetaryMinimum.validity()
+                        override fun visitMinimum(minimum: Minimum) = minimum.validity()
 
-                        override fun visitMonetaryMaximum(
-                            monetaryMaximum: MonetaryMaximumAdjustment
-                        ) = monetaryMaximum.validity()
+                        override fun visitMaximum(maximum: Maximum) = maximum.validity()
 
                         override fun unknown(json: JsonValue?) = 0
                     }
@@ -7560,44 +7528,37 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Adjustment && monetaryUsageDiscount == other.monetaryUsageDiscount && monetaryAmountDiscount == other.monetaryAmountDiscount && monetaryPercentageDiscount == other.monetaryPercentageDiscount && monetaryMinimum == other.monetaryMinimum && monetaryMaximum == other.monetaryMaximum /* spotless:on */
+                return /* spotless:off */ other is Adjustment && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount && percentageDiscount == other.percentageDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(monetaryUsageDiscount, monetaryAmountDiscount, monetaryPercentageDiscount, monetaryMinimum, monetaryMaximum) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum) /* spotless:on */
 
             override fun toString(): String =
                 when {
-                    monetaryUsageDiscount != null ->
-                        "Adjustment{monetaryUsageDiscount=$monetaryUsageDiscount}"
-                    monetaryAmountDiscount != null ->
-                        "Adjustment{monetaryAmountDiscount=$monetaryAmountDiscount}"
-                    monetaryPercentageDiscount != null ->
-                        "Adjustment{monetaryPercentageDiscount=$monetaryPercentageDiscount}"
-                    monetaryMinimum != null -> "Adjustment{monetaryMinimum=$monetaryMinimum}"
-                    monetaryMaximum != null -> "Adjustment{monetaryMaximum=$monetaryMaximum}"
+                    usageDiscount != null -> "Adjustment{usageDiscount=$usageDiscount}"
+                    amountDiscount != null -> "Adjustment{amountDiscount=$amountDiscount}"
+                    percentageDiscount != null ->
+                        "Adjustment{percentageDiscount=$percentageDiscount}"
+                    minimum != null -> "Adjustment{minimum=$minimum}"
+                    maximum != null -> "Adjustment{maximum=$maximum}"
                     _json != null -> "Adjustment{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Adjustment")
                 }
 
             companion object {
 
-                fun ofMonetaryUsageDiscount(
-                    monetaryUsageDiscount: MonetaryUsageDiscountAdjustment
-                ) = Adjustment(monetaryUsageDiscount = monetaryUsageDiscount)
+                fun ofUsageDiscount(usageDiscount: UsageDiscount) =
+                    Adjustment(usageDiscount = usageDiscount)
 
-                fun ofMonetaryAmountDiscount(
-                    monetaryAmountDiscount: MonetaryAmountDiscountAdjustment
-                ) = Adjustment(monetaryAmountDiscount = monetaryAmountDiscount)
+                fun ofAmountDiscount(amountDiscount: AmountDiscount) =
+                    Adjustment(amountDiscount = amountDiscount)
 
-                fun ofMonetaryPercentageDiscount(
-                    monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment
-                ) = Adjustment(monetaryPercentageDiscount = monetaryPercentageDiscount)
+                fun ofPercentageDiscount(percentageDiscount: PercentageDiscount) =
+                    Adjustment(percentageDiscount = percentageDiscount)
 
-                fun ofMonetaryMinimum(monetaryMinimum: MonetaryMinimumAdjustment) =
-                    Adjustment(monetaryMinimum = monetaryMinimum)
+                fun ofMinimum(minimum: Minimum) = Adjustment(minimum = minimum)
 
-                fun ofMonetaryMaximum(monetaryMaximum: MonetaryMaximumAdjustment) =
-                    Adjustment(monetaryMaximum = monetaryMaximum)
+                fun ofMaximum(maximum: Maximum) = Adjustment(maximum = maximum)
             }
 
             /**
@@ -7606,21 +7567,15 @@ private constructor(
              */
             interface Visitor<out T> {
 
-                fun visitMonetaryUsageDiscount(
-                    monetaryUsageDiscount: MonetaryUsageDiscountAdjustment
-                ): T
+                fun visitUsageDiscount(usageDiscount: UsageDiscount): T
 
-                fun visitMonetaryAmountDiscount(
-                    monetaryAmountDiscount: MonetaryAmountDiscountAdjustment
-                ): T
+                fun visitAmountDiscount(amountDiscount: AmountDiscount): T
 
-                fun visitMonetaryPercentageDiscount(
-                    monetaryPercentageDiscount: MonetaryPercentageDiscountAdjustment
-                ): T
+                fun visitPercentageDiscount(percentageDiscount: PercentageDiscount): T
 
-                fun visitMonetaryMinimum(monetaryMinimum: MonetaryMinimumAdjustment): T
+                fun visitMinimum(minimum: Minimum): T
 
-                fun visitMonetaryMaximum(monetaryMaximum: MonetaryMaximumAdjustment): T
+                fun visitMaximum(maximum: Maximum): T
 
                 /**
                  * Maps an unknown variant of [Adjustment] to a value of type [T].
@@ -7645,38 +7600,29 @@ private constructor(
 
                     when (adjustmentType) {
                         "usage_discount" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<MonetaryUsageDiscountAdjustment>(),
-                                )
-                                ?.let { Adjustment(monetaryUsageDiscount = it, _json = json) }
-                                ?: Adjustment(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<UsageDiscount>())?.let {
+                                Adjustment(usageDiscount = it, _json = json)
+                            } ?: Adjustment(_json = json)
                         }
                         "amount_discount" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<MonetaryAmountDiscountAdjustment>(),
-                                )
-                                ?.let { Adjustment(monetaryAmountDiscount = it, _json = json) }
-                                ?: Adjustment(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<AmountDiscount>())?.let {
+                                Adjustment(amountDiscount = it, _json = json)
+                            } ?: Adjustment(_json = json)
                         }
                         "percentage_discount" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<MonetaryPercentageDiscountAdjustment>(),
-                                )
-                                ?.let { Adjustment(monetaryPercentageDiscount = it, _json = json) }
-                                ?: Adjustment(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<PercentageDiscount>())?.let {
+                                Adjustment(percentageDiscount = it, _json = json)
+                            } ?: Adjustment(_json = json)
                         }
                         "minimum" -> {
-                            return tryDeserialize(node, jacksonTypeRef<MonetaryMinimumAdjustment>())
-                                ?.let { Adjustment(monetaryMinimum = it, _json = json) }
-                                ?: Adjustment(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Minimum>())?.let {
+                                Adjustment(minimum = it, _json = json)
+                            } ?: Adjustment(_json = json)
                         }
                         "maximum" -> {
-                            return tryDeserialize(node, jacksonTypeRef<MonetaryMaximumAdjustment>())
-                                ?.let { Adjustment(monetaryMaximum = it, _json = json) }
-                                ?: Adjustment(_json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Maximum>())?.let {
+                                Adjustment(maximum = it, _json = json)
+                            } ?: Adjustment(_json = json)
                         }
                     }
 
@@ -7692,23 +7638,19 @@ private constructor(
                     provider: SerializerProvider,
                 ) {
                     when {
-                        value.monetaryUsageDiscount != null ->
-                            generator.writeObject(value.monetaryUsageDiscount)
-                        value.monetaryAmountDiscount != null ->
-                            generator.writeObject(value.monetaryAmountDiscount)
-                        value.monetaryPercentageDiscount != null ->
-                            generator.writeObject(value.monetaryPercentageDiscount)
-                        value.monetaryMinimum != null ->
-                            generator.writeObject(value.monetaryMinimum)
-                        value.monetaryMaximum != null ->
-                            generator.writeObject(value.monetaryMaximum)
+                        value.usageDiscount != null -> generator.writeObject(value.usageDiscount)
+                        value.amountDiscount != null -> generator.writeObject(value.amountDiscount)
+                        value.percentageDiscount != null ->
+                            generator.writeObject(value.percentageDiscount)
+                        value.minimum != null -> generator.writeObject(value.minimum)
+                        value.maximum != null -> generator.writeObject(value.maximum)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid Adjustment")
                     }
                 }
             }
 
-            class MonetaryUsageDiscountAdjustment
+            class UsageDiscount
             private constructor(
                 private val id: JsonField<String>,
                 private val adjustmentType: JsonValue,
@@ -7887,8 +7829,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [MonetaryUsageDiscountAdjustment].
+                     * Returns a mutable builder for constructing an instance of [UsageDiscount].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -7903,7 +7844,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [MonetaryUsageDiscountAdjustment]. */
+                /** A builder for [UsageDiscount]. */
                 class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
@@ -7915,21 +7856,16 @@ private constructor(
                     private var usageDiscount: JsonField<Double>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        monetaryUsageDiscountAdjustment: MonetaryUsageDiscountAdjustment
-                    ) = apply {
-                        id = monetaryUsageDiscountAdjustment.id
-                        adjustmentType = monetaryUsageDiscountAdjustment.adjustmentType
-                        amount = monetaryUsageDiscountAdjustment.amount
+                    internal fun from(usageDiscount: UsageDiscount) = apply {
+                        id = usageDiscount.id
+                        adjustmentType = usageDiscount.adjustmentType
+                        amount = usageDiscount.amount
                         appliesToPriceIds =
-                            monetaryUsageDiscountAdjustment.appliesToPriceIds.map {
-                                it.toMutableList()
-                            }
-                        isInvoiceLevel = monetaryUsageDiscountAdjustment.isInvoiceLevel
-                        reason = monetaryUsageDiscountAdjustment.reason
-                        usageDiscount = monetaryUsageDiscountAdjustment.usageDiscount
-                        additionalProperties =
-                            monetaryUsageDiscountAdjustment.additionalProperties.toMutableMap()
+                            usageDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        isInvoiceLevel = usageDiscount.isInvoiceLevel
+                        reason = usageDiscount.reason
+                        this.usageDiscount = usageDiscount.usageDiscount
+                        additionalProperties = usageDiscount.additionalProperties.toMutableMap()
                     }
 
                     fun id(id: String) = id(JsonField.of(id))
@@ -8069,7 +8005,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [MonetaryUsageDiscountAdjustment].
+                     * Returns an immutable instance of [UsageDiscount].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -8085,8 +8021,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): MonetaryUsageDiscountAdjustment =
-                        MonetaryUsageDiscountAdjustment(
+                    fun build(): UsageDiscount =
+                        UsageDiscount(
                             checkRequired("id", id),
                             adjustmentType,
                             checkRequired("amount", amount),
@@ -8102,7 +8038,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): MonetaryUsageDiscountAdjustment = apply {
+                fun validate(): UsageDiscount = apply {
                     if (validated) {
                         return@apply
                     }
@@ -8153,7 +8089,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is MonetaryUsageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is UsageDiscount && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -8163,10 +8099,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "MonetaryUsageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
+                    "UsageDiscount{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
             }
 
-            class MonetaryAmountDiscountAdjustment
+            class AmountDiscount
             private constructor(
                 private val id: JsonField<String>,
                 private val adjustmentType: JsonValue,
@@ -8345,8 +8281,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [MonetaryAmountDiscountAdjustment].
+                     * Returns a mutable builder for constructing an instance of [AmountDiscount].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -8361,7 +8296,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [MonetaryAmountDiscountAdjustment]. */
+                /** A builder for [AmountDiscount]. */
                 class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
@@ -8373,21 +8308,16 @@ private constructor(
                     private var reason: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        monetaryAmountDiscountAdjustment: MonetaryAmountDiscountAdjustment
-                    ) = apply {
-                        id = monetaryAmountDiscountAdjustment.id
-                        adjustmentType = monetaryAmountDiscountAdjustment.adjustmentType
-                        amount = monetaryAmountDiscountAdjustment.amount
-                        amountDiscount = monetaryAmountDiscountAdjustment.amountDiscount
+                    internal fun from(amountDiscount: AmountDiscount) = apply {
+                        id = amountDiscount.id
+                        adjustmentType = amountDiscount.adjustmentType
+                        amount = amountDiscount.amount
+                        this.amountDiscount = amountDiscount.amountDiscount
                         appliesToPriceIds =
-                            monetaryAmountDiscountAdjustment.appliesToPriceIds.map {
-                                it.toMutableList()
-                            }
-                        isInvoiceLevel = monetaryAmountDiscountAdjustment.isInvoiceLevel
-                        reason = monetaryAmountDiscountAdjustment.reason
-                        additionalProperties =
-                            monetaryAmountDiscountAdjustment.additionalProperties.toMutableMap()
+                            amountDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        isInvoiceLevel = amountDiscount.isInvoiceLevel
+                        reason = amountDiscount.reason
+                        additionalProperties = amountDiscount.additionalProperties.toMutableMap()
                     }
 
                     fun id(id: String) = id(JsonField.of(id))
@@ -8527,7 +8457,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [MonetaryAmountDiscountAdjustment].
+                     * Returns an immutable instance of [AmountDiscount].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -8543,8 +8473,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): MonetaryAmountDiscountAdjustment =
-                        MonetaryAmountDiscountAdjustment(
+                    fun build(): AmountDiscount =
+                        AmountDiscount(
                             checkRequired("id", id),
                             adjustmentType,
                             checkRequired("amount", amount),
@@ -8560,7 +8490,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): MonetaryAmountDiscountAdjustment = apply {
+                fun validate(): AmountDiscount = apply {
                     if (validated) {
                         return@apply
                     }
@@ -8611,7 +8541,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is MonetaryAmountDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is AmountDiscount && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -8621,10 +8551,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "MonetaryAmountDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, reason=$reason, additionalProperties=$additionalProperties}"
+                    "AmountDiscount{id=$id, adjustmentType=$adjustmentType, amount=$amount, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
-            class MonetaryPercentageDiscountAdjustment
+            class PercentageDiscount
             private constructor(
                 private val id: JsonField<String>,
                 private val adjustmentType: JsonValue,
@@ -8805,7 +8735,7 @@ private constructor(
 
                     /**
                      * Returns a mutable builder for constructing an instance of
-                     * [MonetaryPercentageDiscountAdjustment].
+                     * [PercentageDiscount].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -8820,7 +8750,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [MonetaryPercentageDiscountAdjustment]. */
+                /** A builder for [PercentageDiscount]. */
                 class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
@@ -8832,21 +8762,17 @@ private constructor(
                     private var reason: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(
-                        monetaryPercentageDiscountAdjustment: MonetaryPercentageDiscountAdjustment
-                    ) = apply {
-                        id = monetaryPercentageDiscountAdjustment.id
-                        adjustmentType = monetaryPercentageDiscountAdjustment.adjustmentType
-                        amount = monetaryPercentageDiscountAdjustment.amount
+                    internal fun from(percentageDiscount: PercentageDiscount) = apply {
+                        id = percentageDiscount.id
+                        adjustmentType = percentageDiscount.adjustmentType
+                        amount = percentageDiscount.amount
                         appliesToPriceIds =
-                            monetaryPercentageDiscountAdjustment.appliesToPriceIds.map {
-                                it.toMutableList()
-                            }
-                        isInvoiceLevel = monetaryPercentageDiscountAdjustment.isInvoiceLevel
-                        percentageDiscount = monetaryPercentageDiscountAdjustment.percentageDiscount
-                        reason = monetaryPercentageDiscountAdjustment.reason
+                            percentageDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        isInvoiceLevel = percentageDiscount.isInvoiceLevel
+                        this.percentageDiscount = percentageDiscount.percentageDiscount
+                        reason = percentageDiscount.reason
                         additionalProperties =
-                            monetaryPercentageDiscountAdjustment.additionalProperties.toMutableMap()
+                            percentageDiscount.additionalProperties.toMutableMap()
                     }
 
                     fun id(id: String) = id(JsonField.of(id))
@@ -8986,7 +8912,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [MonetaryPercentageDiscountAdjustment].
+                     * Returns an immutable instance of [PercentageDiscount].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -9002,8 +8928,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): MonetaryPercentageDiscountAdjustment =
-                        MonetaryPercentageDiscountAdjustment(
+                    fun build(): PercentageDiscount =
+                        PercentageDiscount(
                             checkRequired("id", id),
                             adjustmentType,
                             checkRequired("amount", amount),
@@ -9019,7 +8945,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): MonetaryPercentageDiscountAdjustment = apply {
+                fun validate(): PercentageDiscount = apply {
                     if (validated) {
                         return@apply
                     }
@@ -9070,7 +8996,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is MonetaryPercentageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && percentageDiscount == other.percentageDiscount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is PercentageDiscount && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && percentageDiscount == other.percentageDiscount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -9080,10 +9006,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "MonetaryPercentageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, reason=$reason, additionalProperties=$additionalProperties}"
+                    "PercentageDiscount{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
-            class MonetaryMinimumAdjustment
+            class Minimum
             private constructor(
                 private val id: JsonField<String>,
                 private val adjustmentType: JsonValue,
@@ -9284,8 +9210,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [MonetaryMinimumAdjustment].
+                     * Returns a mutable builder for constructing an instance of [Minimum].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -9301,7 +9226,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [MonetaryMinimumAdjustment]. */
+                /** A builder for [Minimum]. */
                 class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
@@ -9314,22 +9239,17 @@ private constructor(
                     private var reason: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(monetaryMinimumAdjustment: MonetaryMinimumAdjustment) =
-                        apply {
-                            id = monetaryMinimumAdjustment.id
-                            adjustmentType = monetaryMinimumAdjustment.adjustmentType
-                            amount = monetaryMinimumAdjustment.amount
-                            appliesToPriceIds =
-                                monetaryMinimumAdjustment.appliesToPriceIds.map {
-                                    it.toMutableList()
-                                }
-                            isInvoiceLevel = monetaryMinimumAdjustment.isInvoiceLevel
-                            itemId = monetaryMinimumAdjustment.itemId
-                            minimumAmount = monetaryMinimumAdjustment.minimumAmount
-                            reason = monetaryMinimumAdjustment.reason
-                            additionalProperties =
-                                monetaryMinimumAdjustment.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(minimum: Minimum) = apply {
+                        id = minimum.id
+                        adjustmentType = minimum.adjustmentType
+                        amount = minimum.amount
+                        appliesToPriceIds = minimum.appliesToPriceIds.map { it.toMutableList() }
+                        isInvoiceLevel = minimum.isInvoiceLevel
+                        itemId = minimum.itemId
+                        minimumAmount = minimum.minimumAmount
+                        reason = minimum.reason
+                        additionalProperties = minimum.additionalProperties.toMutableMap()
+                    }
 
                     fun id(id: String) = id(JsonField.of(id))
 
@@ -9480,7 +9400,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [MonetaryMinimumAdjustment].
+                     * Returns an immutable instance of [Minimum].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -9497,8 +9417,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): MonetaryMinimumAdjustment =
-                        MonetaryMinimumAdjustment(
+                    fun build(): Minimum =
+                        Minimum(
                             checkRequired("id", id),
                             adjustmentType,
                             checkRequired("amount", amount),
@@ -9515,7 +9435,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): MonetaryMinimumAdjustment = apply {
+                fun validate(): Minimum = apply {
                     if (validated) {
                         return@apply
                     }
@@ -9566,7 +9486,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is MonetaryMinimumAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Minimum && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -9576,10 +9496,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "MonetaryMinimumAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, reason=$reason, additionalProperties=$additionalProperties}"
+                    "Minimum{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
-            class MonetaryMaximumAdjustment
+            class Maximum
             private constructor(
                 private val id: JsonField<String>,
                 private val adjustmentType: JsonValue,
@@ -9758,8 +9678,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [MonetaryMaximumAdjustment].
+                     * Returns a mutable builder for constructing an instance of [Maximum].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -9774,7 +9693,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [MonetaryMaximumAdjustment]. */
+                /** A builder for [Maximum]. */
                 class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
@@ -9786,21 +9705,16 @@ private constructor(
                     private var reason: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(monetaryMaximumAdjustment: MonetaryMaximumAdjustment) =
-                        apply {
-                            id = monetaryMaximumAdjustment.id
-                            adjustmentType = monetaryMaximumAdjustment.adjustmentType
-                            amount = monetaryMaximumAdjustment.amount
-                            appliesToPriceIds =
-                                monetaryMaximumAdjustment.appliesToPriceIds.map {
-                                    it.toMutableList()
-                                }
-                            isInvoiceLevel = monetaryMaximumAdjustment.isInvoiceLevel
-                            maximumAmount = monetaryMaximumAdjustment.maximumAmount
-                            reason = monetaryMaximumAdjustment.reason
-                            additionalProperties =
-                                monetaryMaximumAdjustment.additionalProperties.toMutableMap()
-                        }
+                    internal fun from(maximum: Maximum) = apply {
+                        id = maximum.id
+                        adjustmentType = maximum.adjustmentType
+                        amount = maximum.amount
+                        appliesToPriceIds = maximum.appliesToPriceIds.map { it.toMutableList() }
+                        isInvoiceLevel = maximum.isInvoiceLevel
+                        maximumAmount = maximum.maximumAmount
+                        reason = maximum.reason
+                        additionalProperties = maximum.additionalProperties.toMutableMap()
+                    }
 
                     fun id(id: String) = id(JsonField.of(id))
 
@@ -9939,7 +9853,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [MonetaryMaximumAdjustment].
+                     * Returns an immutable instance of [Maximum].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -9955,8 +9869,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): MonetaryMaximumAdjustment =
-                        MonetaryMaximumAdjustment(
+                    fun build(): Maximum =
+                        Maximum(
                             checkRequired("id", id),
                             adjustmentType,
                             checkRequired("amount", amount),
@@ -9972,7 +9886,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): MonetaryMaximumAdjustment = apply {
+                fun validate(): Maximum = apply {
                     if (validated) {
                         return@apply
                     }
@@ -10021,7 +9935,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is MonetaryMaximumAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && maximumAmount == other.maximumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Maximum && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && maximumAmount == other.maximumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -10031,7 +9945,7 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "MonetaryMaximumAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, maximumAmount=$maximumAmount, reason=$reason, additionalProperties=$additionalProperties}"
+                    "Maximum{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, maximumAmount=$maximumAmount, reason=$reason, additionalProperties=$additionalProperties}"
             }
         }
 
@@ -10511,29 +10425,29 @@ private constructor(
         @JsonSerialize(using = SubLineItem.Serializer::class)
         class SubLineItem
         private constructor(
-            private val matrix: MatrixSubLineItem? = null,
-            private val tier: TierSubLineItem? = null,
-            private val other: OtherSubLineItem? = null,
+            private val matrix: Matrix? = null,
+            private val tier: Tier? = null,
+            private val null_: Null? = null,
             private val _json: JsonValue? = null,
         ) {
 
-            fun matrix(): MatrixSubLineItem? = matrix
+            fun matrix(): Matrix? = matrix
 
-            fun tier(): TierSubLineItem? = tier
+            fun tier(): Tier? = tier
 
-            fun other(): OtherSubLineItem? = other
+            fun null_(): Null? = null_
 
             fun isMatrix(): Boolean = matrix != null
 
             fun isTier(): Boolean = tier != null
 
-            fun isOther(): Boolean = other != null
+            fun isNull(): Boolean = null_ != null
 
-            fun asMatrix(): MatrixSubLineItem = matrix.getOrThrow("matrix")
+            fun asMatrix(): Matrix = matrix.getOrThrow("matrix")
 
-            fun asTier(): TierSubLineItem = tier.getOrThrow("tier")
+            fun asTier(): Tier = tier.getOrThrow("tier")
 
-            fun asOther(): OtherSubLineItem = other.getOrThrow("other")
+            fun asNull(): Null = null_.getOrThrow("null_")
 
             fun _json(): JsonValue? = _json
 
@@ -10541,7 +10455,7 @@ private constructor(
                 when {
                     matrix != null -> visitor.visitMatrix(matrix)
                     tier != null -> visitor.visitTier(tier)
-                    other != null -> visitor.visitOther(other)
+                    null_ != null -> visitor.visitNull(null_)
                     else -> visitor.unknown(_json)
                 }
 
@@ -10554,16 +10468,16 @@ private constructor(
 
                 accept(
                     object : Visitor<Unit> {
-                        override fun visitMatrix(matrix: MatrixSubLineItem) {
+                        override fun visitMatrix(matrix: Matrix) {
                             matrix.validate()
                         }
 
-                        override fun visitTier(tier: TierSubLineItem) {
+                        override fun visitTier(tier: Tier) {
                             tier.validate()
                         }
 
-                        override fun visitOther(other: OtherSubLineItem) {
-                            other.validate()
+                        override fun visitNull(null_: Null) {
+                            null_.validate()
                         }
                     }
                 )
@@ -10587,11 +10501,11 @@ private constructor(
             internal fun validity(): Int =
                 accept(
                     object : Visitor<Int> {
-                        override fun visitMatrix(matrix: MatrixSubLineItem) = matrix.validity()
+                        override fun visitMatrix(matrix: Matrix) = matrix.validity()
 
-                        override fun visitTier(tier: TierSubLineItem) = tier.validity()
+                        override fun visitTier(tier: Tier) = tier.validity()
 
-                        override fun visitOther(other: OtherSubLineItem) = other.validity()
+                        override fun visitNull(null_: Null) = null_.validity()
 
                         override fun unknown(json: JsonValue?) = 0
                     }
@@ -10602,27 +10516,27 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is SubLineItem && matrix == other.matrix && tier == other.tier && this.other == other.other /* spotless:on */
+                return /* spotless:off */ other is SubLineItem && matrix == other.matrix && tier == other.tier && null_ == other.null_ /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(matrix, tier, other) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(matrix, tier, null_) /* spotless:on */
 
             override fun toString(): String =
                 when {
                     matrix != null -> "SubLineItem{matrix=$matrix}"
                     tier != null -> "SubLineItem{tier=$tier}"
-                    other != null -> "SubLineItem{other=$other}"
+                    null_ != null -> "SubLineItem{null_=$null_}"
                     _json != null -> "SubLineItem{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid SubLineItem")
                 }
 
             companion object {
 
-                fun ofMatrix(matrix: MatrixSubLineItem) = SubLineItem(matrix = matrix)
+                fun ofMatrix(matrix: Matrix) = SubLineItem(matrix = matrix)
 
-                fun ofTier(tier: TierSubLineItem) = SubLineItem(tier = tier)
+                fun ofTier(tier: Tier) = SubLineItem(tier = tier)
 
-                fun ofOther(other: OtherSubLineItem) = SubLineItem(other = other)
+                fun ofNull(null_: Null) = SubLineItem(null_ = null_)
             }
 
             /**
@@ -10631,11 +10545,11 @@ private constructor(
              */
             interface Visitor<out T> {
 
-                fun visitMatrix(matrix: MatrixSubLineItem): T
+                fun visitMatrix(matrix: Matrix): T
 
-                fun visitTier(tier: TierSubLineItem): T
+                fun visitTier(tier: Tier): T
 
-                fun visitOther(other: OtherSubLineItem): T
+                fun visitNull(null_: Null): T
 
                 /**
                  * Maps an unknown variant of [SubLineItem] to a value of type [T].
@@ -10660,18 +10574,18 @@ private constructor(
 
                     when (type) {
                         "matrix" -> {
-                            return tryDeserialize(node, jacksonTypeRef<MatrixSubLineItem>())?.let {
+                            return tryDeserialize(node, jacksonTypeRef<Matrix>())?.let {
                                 SubLineItem(matrix = it, _json = json)
                             } ?: SubLineItem(_json = json)
                         }
                         "tier" -> {
-                            return tryDeserialize(node, jacksonTypeRef<TierSubLineItem>())?.let {
+                            return tryDeserialize(node, jacksonTypeRef<Tier>())?.let {
                                 SubLineItem(tier = it, _json = json)
                             } ?: SubLineItem(_json = json)
                         }
                         "'null'" -> {
-                            return tryDeserialize(node, jacksonTypeRef<OtherSubLineItem>())?.let {
-                                SubLineItem(other = it, _json = json)
+                            return tryDeserialize(node, jacksonTypeRef<Null>())?.let {
+                                SubLineItem(null_ = it, _json = json)
                             } ?: SubLineItem(_json = json)
                         }
                     }
@@ -10690,14 +10604,14 @@ private constructor(
                     when {
                         value.matrix != null -> generator.writeObject(value.matrix)
                         value.tier != null -> generator.writeObject(value.tier)
-                        value.other != null -> generator.writeObject(value.other)
+                        value.null_ != null -> generator.writeObject(value.null_)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid SubLineItem")
                     }
                 }
             }
 
-            class MatrixSubLineItem
+            class Matrix
             private constructor(
                 private val amount: JsonField<String>,
                 private val grouping: JsonField<Grouping>,
@@ -10836,8 +10750,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of
-                     * [MatrixSubLineItem].
+                     * Returns a mutable builder for constructing an instance of [Matrix].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -10851,7 +10764,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [MatrixSubLineItem]. */
+                /** A builder for [Matrix]. */
                 class Builder internal constructor() {
 
                     private var amount: JsonField<String>? = null
@@ -10862,14 +10775,14 @@ private constructor(
                     private var type: JsonValue = JsonValue.from("matrix")
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(matrixSubLineItem: MatrixSubLineItem) = apply {
-                        amount = matrixSubLineItem.amount
-                        grouping = matrixSubLineItem.grouping
-                        matrixConfig = matrixSubLineItem.matrixConfig
-                        name = matrixSubLineItem.name
-                        quantity = matrixSubLineItem.quantity
-                        type = matrixSubLineItem.type
-                        additionalProperties = matrixSubLineItem.additionalProperties.toMutableMap()
+                    internal fun from(matrix: Matrix) = apply {
+                        amount = matrix.amount
+                        grouping = matrix.grouping
+                        matrixConfig = matrix.matrixConfig
+                        name = matrix.name
+                        quantity = matrix.quantity
+                        type = matrix.type
+                        additionalProperties = matrix.additionalProperties.toMutableMap()
                     }
 
                     /** The total amount for this sub line item. */
@@ -10968,7 +10881,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [MatrixSubLineItem].
+                     * Returns an immutable instance of [Matrix].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -10983,8 +10896,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): MatrixSubLineItem =
-                        MatrixSubLineItem(
+                    fun build(): Matrix =
+                        Matrix(
                             checkRequired("amount", amount),
                             checkRequired("grouping", grouping),
                             checkRequired("matrixConfig", matrixConfig),
@@ -10997,7 +10910,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): MatrixSubLineItem = apply {
+                fun validate(): Matrix = apply {
                     if (validated) {
                         return@apply
                     }
@@ -11433,7 +11346,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is MatrixSubLineItem && amount == other.amount && grouping == other.grouping && matrixConfig == other.matrixConfig && name == other.name && quantity == other.quantity && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Matrix && amount == other.amount && grouping == other.grouping && matrixConfig == other.matrixConfig && name == other.name && quantity == other.quantity && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -11443,10 +11356,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "MatrixSubLineItem{amount=$amount, grouping=$grouping, matrixConfig=$matrixConfig, name=$name, quantity=$quantity, type=$type, additionalProperties=$additionalProperties}"
+                    "Matrix{amount=$amount, grouping=$grouping, matrixConfig=$matrixConfig, name=$name, quantity=$quantity, type=$type, additionalProperties=$additionalProperties}"
             }
 
-            class TierSubLineItem
+            class Tier
             private constructor(
                 private val amount: JsonField<String>,
                 private val grouping: JsonField<Grouping>,
@@ -11585,7 +11498,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of [TierSubLineItem].
+                     * Returns a mutable builder for constructing an instance of [Tier].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -11599,7 +11512,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [TierSubLineItem]. */
+                /** A builder for [Tier]. */
                 class Builder internal constructor() {
 
                     private var amount: JsonField<String>? = null
@@ -11610,14 +11523,14 @@ private constructor(
                     private var type: JsonValue = JsonValue.from("tier")
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(tierSubLineItem: TierSubLineItem) = apply {
-                        amount = tierSubLineItem.amount
-                        grouping = tierSubLineItem.grouping
-                        name = tierSubLineItem.name
-                        quantity = tierSubLineItem.quantity
-                        tierConfig = tierSubLineItem.tierConfig
-                        type = tierSubLineItem.type
-                        additionalProperties = tierSubLineItem.additionalProperties.toMutableMap()
+                    internal fun from(tier: Tier) = apply {
+                        amount = tier.amount
+                        grouping = tier.grouping
+                        name = tier.name
+                        quantity = tier.quantity
+                        tierConfig = tier.tierConfig
+                        type = tier.type
+                        additionalProperties = tier.additionalProperties.toMutableMap()
                     }
 
                     /** The total amount for this sub line item. */
@@ -11715,7 +11628,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [TierSubLineItem].
+                     * Returns an immutable instance of [Tier].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -11730,8 +11643,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): TierSubLineItem =
-                        TierSubLineItem(
+                    fun build(): Tier =
+                        Tier(
                             checkRequired("amount", amount),
                             checkRequired("grouping", grouping),
                             checkRequired("name", name),
@@ -11744,7 +11657,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): TierSubLineItem = apply {
+                fun validate(): Tier = apply {
                     if (validated) {
                         return@apply
                     }
@@ -12246,7 +12159,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is TierSubLineItem && amount == other.amount && grouping == other.grouping && name == other.name && quantity == other.quantity && tierConfig == other.tierConfig && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Tier && amount == other.amount && grouping == other.grouping && name == other.name && quantity == other.quantity && tierConfig == other.tierConfig && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -12256,10 +12169,10 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "TierSubLineItem{amount=$amount, grouping=$grouping, name=$name, quantity=$quantity, tierConfig=$tierConfig, type=$type, additionalProperties=$additionalProperties}"
+                    "Tier{amount=$amount, grouping=$grouping, name=$name, quantity=$quantity, tierConfig=$tierConfig, type=$type, additionalProperties=$additionalProperties}"
             }
 
-            class OtherSubLineItem
+            class Null
             private constructor(
                 private val amount: JsonField<String>,
                 private val grouping: JsonField<Grouping>,
@@ -12377,7 +12290,7 @@ private constructor(
                 companion object {
 
                     /**
-                     * Returns a mutable builder for constructing an instance of [OtherSubLineItem].
+                     * Returns a mutable builder for constructing an instance of [Null].
                      *
                      * The following fields are required:
                      * ```kotlin
@@ -12390,7 +12303,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [OtherSubLineItem]. */
+                /** A builder for [Null]. */
                 class Builder internal constructor() {
 
                     private var amount: JsonField<String>? = null
@@ -12400,13 +12313,13 @@ private constructor(
                     private var type: JsonValue = JsonValue.from("'null'")
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(otherSubLineItem: OtherSubLineItem) = apply {
-                        amount = otherSubLineItem.amount
-                        grouping = otherSubLineItem.grouping
-                        name = otherSubLineItem.name
-                        quantity = otherSubLineItem.quantity
-                        type = otherSubLineItem.type
-                        additionalProperties = otherSubLineItem.additionalProperties.toMutableMap()
+                    internal fun from(null_: Null) = apply {
+                        amount = null_.amount
+                        grouping = null_.grouping
+                        name = null_.name
+                        quantity = null_.quantity
+                        type = null_.type
+                        additionalProperties = null_.additionalProperties.toMutableMap()
                     }
 
                     /** The total amount for this sub line item. */
@@ -12491,7 +12404,7 @@ private constructor(
                     }
 
                     /**
-                     * Returns an immutable instance of [OtherSubLineItem].
+                     * Returns an immutable instance of [Null].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
                      *
@@ -12505,8 +12418,8 @@ private constructor(
                      *
                      * @throws IllegalStateException if any required field is unset.
                      */
-                    fun build(): OtherSubLineItem =
-                        OtherSubLineItem(
+                    fun build(): Null =
+                        Null(
                             checkRequired("amount", amount),
                             checkRequired("grouping", grouping),
                             checkRequired("name", name),
@@ -12518,7 +12431,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): OtherSubLineItem = apply {
+                fun validate(): Null = apply {
                     if (validated) {
                         return@apply
                     }
@@ -12763,7 +12676,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is OtherSubLineItem && amount == other.amount && grouping == other.grouping && name == other.name && quantity == other.quantity && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Null && amount == other.amount && grouping == other.grouping && name == other.name && quantity == other.quantity && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -12773,7 +12686,7 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "OtherSubLineItem{amount=$amount, grouping=$grouping, name=$name, quantity=$quantity, type=$type, additionalProperties=$additionalProperties}"
+                    "Null{amount=$amount, grouping=$grouping, name=$name, quantity=$quantity, type=$type, additionalProperties=$additionalProperties}"
             }
         }
 

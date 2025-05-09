@@ -193,94 +193,41 @@ private constructor(
 
         fun body(body: Body) = apply { this.body = body }
 
-        /**
-         * Alias for calling [body] with
-         * `Body.ofAddIncrementCreditLedgerEntryRequestParams(addIncrementCreditLedgerEntryRequestParams)`.
-         */
-        fun body(
-            addIncrementCreditLedgerEntryRequestParams:
-                Body.AddIncrementCreditLedgerEntryRequestParams
-        ) =
-            body(
-                Body.ofAddIncrementCreditLedgerEntryRequestParams(
-                    addIncrementCreditLedgerEntryRequestParams
-                )
-            )
+        /** Alias for calling [body] with `Body.ofIncrement(increment)`. */
+        fun body(increment: Body.Increment) = body(Body.ofIncrement(increment))
 
         /**
          * Alias for calling [body] with the following:
          * ```kotlin
-         * Body.AddIncrementCreditLedgerEntryRequestParams.builder()
+         * Body.Increment.builder()
          *     .amount(amount)
          *     .build()
          * ```
          */
-        fun addIncrementCreditLedgerEntryRequestParamsBody(amount: Double) =
-            body(Body.AddIncrementCreditLedgerEntryRequestParams.builder().amount(amount).build())
+        fun incrementBody(amount: Double) = body(Body.Increment.builder().amount(amount).build())
 
-        /**
-         * Alias for calling [body] with
-         * `Body.ofAddDecrementCreditLedgerEntryRequestParams(addDecrementCreditLedgerEntryRequestParams)`.
-         */
-        fun body(
-            addDecrementCreditLedgerEntryRequestParams:
-                Body.AddDecrementCreditLedgerEntryRequestParams
-        ) =
-            body(
-                Body.ofAddDecrementCreditLedgerEntryRequestParams(
-                    addDecrementCreditLedgerEntryRequestParams
-                )
-            )
+        /** Alias for calling [body] with `Body.ofDecrement(decrement)`. */
+        fun body(decrement: Body.Decrement) = body(Body.ofDecrement(decrement))
 
         /**
          * Alias for calling [body] with the following:
          * ```kotlin
-         * Body.AddDecrementCreditLedgerEntryRequestParams.builder()
+         * Body.Decrement.builder()
          *     .amount(amount)
          *     .build()
          * ```
          */
-        fun addDecrementCreditLedgerEntryRequestParamsBody(amount: Double) =
-            body(Body.AddDecrementCreditLedgerEntryRequestParams.builder().amount(amount).build())
+        fun decrementBody(amount: Double) = body(Body.Decrement.builder().amount(amount).build())
 
-        /**
-         * Alias for calling [body] with
-         * `Body.ofAddExpirationChangeCreditLedgerEntryRequestParams(addExpirationChangeCreditLedgerEntryRequestParams)`.
-         */
-        fun body(
-            addExpirationChangeCreditLedgerEntryRequestParams:
-                Body.AddExpirationChangeCreditLedgerEntryRequestParams
-        ) =
-            body(
-                Body.ofAddExpirationChangeCreditLedgerEntryRequestParams(
-                    addExpirationChangeCreditLedgerEntryRequestParams
-                )
-            )
+        /** Alias for calling [body] with `Body.ofExpirationChange(expirationChange)`. */
+        fun body(expirationChange: Body.ExpirationChange) =
+            body(Body.ofExpirationChange(expirationChange))
 
-        /**
-         * Alias for calling [body] with
-         * `Body.ofAddVoidCreditLedgerEntryRequestParams(addVoidCreditLedgerEntryRequestParams)`.
-         */
-        fun body(
-            addVoidCreditLedgerEntryRequestParams: Body.AddVoidCreditLedgerEntryRequestParams
-        ) =
-            body(
-                Body.ofAddVoidCreditLedgerEntryRequestParams(addVoidCreditLedgerEntryRequestParams)
-            )
+        /** Alias for calling [body] with `Body.ofVoid(void)`. */
+        fun body(void: Body.Void) = body(Body.ofVoid(void))
 
-        /**
-         * Alias for calling [body] with
-         * `Body.ofAddAmendmentCreditLedgerEntryRequestParams(addAmendmentCreditLedgerEntryRequestParams)`.
-         */
-        fun body(
-            addAmendmentCreditLedgerEntryRequestParams:
-                Body.AddAmendmentCreditLedgerEntryRequestParams
-        ) =
-            body(
-                Body.ofAddAmendmentCreditLedgerEntryRequestParams(
-                    addAmendmentCreditLedgerEntryRequestParams
-                )
-            )
+        /** Alias for calling [body] with `Body.ofAmendment(amendment)`. */
+        fun body(amendment: Body.Amendment) = body(Body.ofAmendment(amendment))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -417,107 +364,53 @@ private constructor(
     @JsonSerialize(using = Body.Serializer::class)
     class Body
     private constructor(
-        private val addIncrementCreditLedgerEntryRequestParams:
-            AddIncrementCreditLedgerEntryRequestParams? =
-            null,
-        private val addDecrementCreditLedgerEntryRequestParams:
-            AddDecrementCreditLedgerEntryRequestParams? =
-            null,
-        private val addExpirationChangeCreditLedgerEntryRequestParams:
-            AddExpirationChangeCreditLedgerEntryRequestParams? =
-            null,
-        private val addVoidCreditLedgerEntryRequestParams: AddVoidCreditLedgerEntryRequestParams? =
-            null,
-        private val addAmendmentCreditLedgerEntryRequestParams:
-            AddAmendmentCreditLedgerEntryRequestParams? =
-            null,
+        private val increment: Increment? = null,
+        private val decrement: Decrement? = null,
+        private val expirationChange: ExpirationChange? = null,
+        private val void: Void? = null,
+        private val amendment: Amendment? = null,
         private val _json: JsonValue? = null,
     ) {
 
-        fun addIncrementCreditLedgerEntryRequestParams():
-            AddIncrementCreditLedgerEntryRequestParams? = addIncrementCreditLedgerEntryRequestParams
+        fun increment(): Increment? = increment
 
-        fun addDecrementCreditLedgerEntryRequestParams():
-            AddDecrementCreditLedgerEntryRequestParams? = addDecrementCreditLedgerEntryRequestParams
+        fun decrement(): Decrement? = decrement
 
-        fun addExpirationChangeCreditLedgerEntryRequestParams():
-            AddExpirationChangeCreditLedgerEntryRequestParams? =
-            addExpirationChangeCreditLedgerEntryRequestParams
+        fun expirationChange(): ExpirationChange? = expirationChange
 
-        fun addVoidCreditLedgerEntryRequestParams(): AddVoidCreditLedgerEntryRequestParams? =
-            addVoidCreditLedgerEntryRequestParams
+        fun void(): Void? = void
 
-        fun addAmendmentCreditLedgerEntryRequestParams():
-            AddAmendmentCreditLedgerEntryRequestParams? = addAmendmentCreditLedgerEntryRequestParams
+        fun amendment(): Amendment? = amendment
 
-        fun isAddIncrementCreditLedgerEntryRequestParams(): Boolean =
-            addIncrementCreditLedgerEntryRequestParams != null
+        fun isIncrement(): Boolean = increment != null
 
-        fun isAddDecrementCreditLedgerEntryRequestParams(): Boolean =
-            addDecrementCreditLedgerEntryRequestParams != null
+        fun isDecrement(): Boolean = decrement != null
 
-        fun isAddExpirationChangeCreditLedgerEntryRequestParams(): Boolean =
-            addExpirationChangeCreditLedgerEntryRequestParams != null
+        fun isExpirationChange(): Boolean = expirationChange != null
 
-        fun isAddVoidCreditLedgerEntryRequestParams(): Boolean =
-            addVoidCreditLedgerEntryRequestParams != null
+        fun isVoid(): Boolean = void != null
 
-        fun isAddAmendmentCreditLedgerEntryRequestParams(): Boolean =
-            addAmendmentCreditLedgerEntryRequestParams != null
+        fun isAmendment(): Boolean = amendment != null
 
-        fun asAddIncrementCreditLedgerEntryRequestParams():
-            AddIncrementCreditLedgerEntryRequestParams =
-            addIncrementCreditLedgerEntryRequestParams.getOrThrow(
-                "addIncrementCreditLedgerEntryRequestParams"
-            )
+        fun asIncrement(): Increment = increment.getOrThrow("increment")
 
-        fun asAddDecrementCreditLedgerEntryRequestParams():
-            AddDecrementCreditLedgerEntryRequestParams =
-            addDecrementCreditLedgerEntryRequestParams.getOrThrow(
-                "addDecrementCreditLedgerEntryRequestParams"
-            )
+        fun asDecrement(): Decrement = decrement.getOrThrow("decrement")
 
-        fun asAddExpirationChangeCreditLedgerEntryRequestParams():
-            AddExpirationChangeCreditLedgerEntryRequestParams =
-            addExpirationChangeCreditLedgerEntryRequestParams.getOrThrow(
-                "addExpirationChangeCreditLedgerEntryRequestParams"
-            )
+        fun asExpirationChange(): ExpirationChange = expirationChange.getOrThrow("expirationChange")
 
-        fun asAddVoidCreditLedgerEntryRequestParams(): AddVoidCreditLedgerEntryRequestParams =
-            addVoidCreditLedgerEntryRequestParams.getOrThrow(
-                "addVoidCreditLedgerEntryRequestParams"
-            )
+        fun asVoid(): Void = void.getOrThrow("void")
 
-        fun asAddAmendmentCreditLedgerEntryRequestParams():
-            AddAmendmentCreditLedgerEntryRequestParams =
-            addAmendmentCreditLedgerEntryRequestParams.getOrThrow(
-                "addAmendmentCreditLedgerEntryRequestParams"
-            )
+        fun asAmendment(): Amendment = amendment.getOrThrow("amendment")
 
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T =
             when {
-                addIncrementCreditLedgerEntryRequestParams != null ->
-                    visitor.visitAddIncrementCreditLedgerEntryRequestParams(
-                        addIncrementCreditLedgerEntryRequestParams
-                    )
-                addDecrementCreditLedgerEntryRequestParams != null ->
-                    visitor.visitAddDecrementCreditLedgerEntryRequestParams(
-                        addDecrementCreditLedgerEntryRequestParams
-                    )
-                addExpirationChangeCreditLedgerEntryRequestParams != null ->
-                    visitor.visitAddExpirationChangeCreditLedgerEntryRequestParams(
-                        addExpirationChangeCreditLedgerEntryRequestParams
-                    )
-                addVoidCreditLedgerEntryRequestParams != null ->
-                    visitor.visitAddVoidCreditLedgerEntryRequestParams(
-                        addVoidCreditLedgerEntryRequestParams
-                    )
-                addAmendmentCreditLedgerEntryRequestParams != null ->
-                    visitor.visitAddAmendmentCreditLedgerEntryRequestParams(
-                        addAmendmentCreditLedgerEntryRequestParams
-                    )
+                increment != null -> visitor.visitIncrement(increment)
+                decrement != null -> visitor.visitDecrement(decrement)
+                expirationChange != null -> visitor.visitExpirationChange(expirationChange)
+                void != null -> visitor.visitVoid(void)
+                amendment != null -> visitor.visitAmendment(amendment)
                 else -> visitor.unknown(_json)
             }
 
@@ -530,38 +423,24 @@ private constructor(
 
             accept(
                 object : Visitor<Unit> {
-                    override fun visitAddIncrementCreditLedgerEntryRequestParams(
-                        addIncrementCreditLedgerEntryRequestParams:
-                            AddIncrementCreditLedgerEntryRequestParams
-                    ) {
-                        addIncrementCreditLedgerEntryRequestParams.validate()
+                    override fun visitIncrement(increment: Increment) {
+                        increment.validate()
                     }
 
-                    override fun visitAddDecrementCreditLedgerEntryRequestParams(
-                        addDecrementCreditLedgerEntryRequestParams:
-                            AddDecrementCreditLedgerEntryRequestParams
-                    ) {
-                        addDecrementCreditLedgerEntryRequestParams.validate()
+                    override fun visitDecrement(decrement: Decrement) {
+                        decrement.validate()
                     }
 
-                    override fun visitAddExpirationChangeCreditLedgerEntryRequestParams(
-                        addExpirationChangeCreditLedgerEntryRequestParams:
-                            AddExpirationChangeCreditLedgerEntryRequestParams
-                    ) {
-                        addExpirationChangeCreditLedgerEntryRequestParams.validate()
+                    override fun visitExpirationChange(expirationChange: ExpirationChange) {
+                        expirationChange.validate()
                     }
 
-                    override fun visitAddVoidCreditLedgerEntryRequestParams(
-                        addVoidCreditLedgerEntryRequestParams: AddVoidCreditLedgerEntryRequestParams
-                    ) {
-                        addVoidCreditLedgerEntryRequestParams.validate()
+                    override fun visitVoid(void: Void) {
+                        void.validate()
                     }
 
-                    override fun visitAddAmendmentCreditLedgerEntryRequestParams(
-                        addAmendmentCreditLedgerEntryRequestParams:
-                            AddAmendmentCreditLedgerEntryRequestParams
-                    ) {
-                        addAmendmentCreditLedgerEntryRequestParams.validate()
+                    override fun visitAmendment(amendment: Amendment) {
+                        amendment.validate()
                     }
                 }
             )
@@ -585,29 +464,16 @@ private constructor(
         internal fun validity(): Int =
             accept(
                 object : Visitor<Int> {
-                    override fun visitAddIncrementCreditLedgerEntryRequestParams(
-                        addIncrementCreditLedgerEntryRequestParams:
-                            AddIncrementCreditLedgerEntryRequestParams
-                    ) = addIncrementCreditLedgerEntryRequestParams.validity()
+                    override fun visitIncrement(increment: Increment) = increment.validity()
 
-                    override fun visitAddDecrementCreditLedgerEntryRequestParams(
-                        addDecrementCreditLedgerEntryRequestParams:
-                            AddDecrementCreditLedgerEntryRequestParams
-                    ) = addDecrementCreditLedgerEntryRequestParams.validity()
+                    override fun visitDecrement(decrement: Decrement) = decrement.validity()
 
-                    override fun visitAddExpirationChangeCreditLedgerEntryRequestParams(
-                        addExpirationChangeCreditLedgerEntryRequestParams:
-                            AddExpirationChangeCreditLedgerEntryRequestParams
-                    ) = addExpirationChangeCreditLedgerEntryRequestParams.validity()
+                    override fun visitExpirationChange(expirationChange: ExpirationChange) =
+                        expirationChange.validity()
 
-                    override fun visitAddVoidCreditLedgerEntryRequestParams(
-                        addVoidCreditLedgerEntryRequestParams: AddVoidCreditLedgerEntryRequestParams
-                    ) = addVoidCreditLedgerEntryRequestParams.validity()
+                    override fun visitVoid(void: Void) = void.validity()
 
-                    override fun visitAddAmendmentCreditLedgerEntryRequestParams(
-                        addAmendmentCreditLedgerEntryRequestParams:
-                            AddAmendmentCreditLedgerEntryRequestParams
-                    ) = addAmendmentCreditLedgerEntryRequestParams.validity()
+                    override fun visitAmendment(amendment: Amendment) = amendment.validity()
 
                     override fun unknown(json: JsonValue?) = 0
                 }
@@ -618,96 +484,48 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && addIncrementCreditLedgerEntryRequestParams == other.addIncrementCreditLedgerEntryRequestParams && addDecrementCreditLedgerEntryRequestParams == other.addDecrementCreditLedgerEntryRequestParams && addExpirationChangeCreditLedgerEntryRequestParams == other.addExpirationChangeCreditLedgerEntryRequestParams && addVoidCreditLedgerEntryRequestParams == other.addVoidCreditLedgerEntryRequestParams && addAmendmentCreditLedgerEntryRequestParams == other.addAmendmentCreditLedgerEntryRequestParams /* spotless:on */
+            return /* spotless:off */ other is Body && increment == other.increment && decrement == other.decrement && expirationChange == other.expirationChange && void == other.void && amendment == other.amendment /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(increment, decrement, expirationChange, void, amendment) /* spotless:on */
 
         override fun toString(): String =
             when {
-                addIncrementCreditLedgerEntryRequestParams != null ->
-                    "Body{addIncrementCreditLedgerEntryRequestParams=$addIncrementCreditLedgerEntryRequestParams}"
-                addDecrementCreditLedgerEntryRequestParams != null ->
-                    "Body{addDecrementCreditLedgerEntryRequestParams=$addDecrementCreditLedgerEntryRequestParams}"
-                addExpirationChangeCreditLedgerEntryRequestParams != null ->
-                    "Body{addExpirationChangeCreditLedgerEntryRequestParams=$addExpirationChangeCreditLedgerEntryRequestParams}"
-                addVoidCreditLedgerEntryRequestParams != null ->
-                    "Body{addVoidCreditLedgerEntryRequestParams=$addVoidCreditLedgerEntryRequestParams}"
-                addAmendmentCreditLedgerEntryRequestParams != null ->
-                    "Body{addAmendmentCreditLedgerEntryRequestParams=$addAmendmentCreditLedgerEntryRequestParams}"
+                increment != null -> "Body{increment=$increment}"
+                decrement != null -> "Body{decrement=$decrement}"
+                expirationChange != null -> "Body{expirationChange=$expirationChange}"
+                void != null -> "Body{void=$void}"
+                amendment != null -> "Body{amendment=$amendment}"
                 _json != null -> "Body{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Body")
             }
 
         companion object {
 
-            fun ofAddIncrementCreditLedgerEntryRequestParams(
-                addIncrementCreditLedgerEntryRequestParams:
-                    AddIncrementCreditLedgerEntryRequestParams
-            ) =
-                Body(
-                    addIncrementCreditLedgerEntryRequestParams =
-                        addIncrementCreditLedgerEntryRequestParams
-                )
+            fun ofIncrement(increment: Increment) = Body(increment = increment)
 
-            fun ofAddDecrementCreditLedgerEntryRequestParams(
-                addDecrementCreditLedgerEntryRequestParams:
-                    AddDecrementCreditLedgerEntryRequestParams
-            ) =
-                Body(
-                    addDecrementCreditLedgerEntryRequestParams =
-                        addDecrementCreditLedgerEntryRequestParams
-                )
+            fun ofDecrement(decrement: Decrement) = Body(decrement = decrement)
 
-            fun ofAddExpirationChangeCreditLedgerEntryRequestParams(
-                addExpirationChangeCreditLedgerEntryRequestParams:
-                    AddExpirationChangeCreditLedgerEntryRequestParams
-            ) =
-                Body(
-                    addExpirationChangeCreditLedgerEntryRequestParams =
-                        addExpirationChangeCreditLedgerEntryRequestParams
-                )
+            fun ofExpirationChange(expirationChange: ExpirationChange) =
+                Body(expirationChange = expirationChange)
 
-            fun ofAddVoidCreditLedgerEntryRequestParams(
-                addVoidCreditLedgerEntryRequestParams: AddVoidCreditLedgerEntryRequestParams
-            ) = Body(addVoidCreditLedgerEntryRequestParams = addVoidCreditLedgerEntryRequestParams)
+            fun ofVoid(void: Void) = Body(void = void)
 
-            fun ofAddAmendmentCreditLedgerEntryRequestParams(
-                addAmendmentCreditLedgerEntryRequestParams:
-                    AddAmendmentCreditLedgerEntryRequestParams
-            ) =
-                Body(
-                    addAmendmentCreditLedgerEntryRequestParams =
-                        addAmendmentCreditLedgerEntryRequestParams
-                )
+            fun ofAmendment(amendment: Amendment) = Body(amendment = amendment)
         }
 
         /** An interface that defines how to map each variant of [Body] to a value of type [T]. */
         interface Visitor<out T> {
 
-            fun visitAddIncrementCreditLedgerEntryRequestParams(
-                addIncrementCreditLedgerEntryRequestParams:
-                    AddIncrementCreditLedgerEntryRequestParams
-            ): T
+            fun visitIncrement(increment: Increment): T
 
-            fun visitAddDecrementCreditLedgerEntryRequestParams(
-                addDecrementCreditLedgerEntryRequestParams:
-                    AddDecrementCreditLedgerEntryRequestParams
-            ): T
+            fun visitDecrement(decrement: Decrement): T
 
-            fun visitAddExpirationChangeCreditLedgerEntryRequestParams(
-                addExpirationChangeCreditLedgerEntryRequestParams:
-                    AddExpirationChangeCreditLedgerEntryRequestParams
-            ): T
+            fun visitExpirationChange(expirationChange: ExpirationChange): T
 
-            fun visitAddVoidCreditLedgerEntryRequestParams(
-                addVoidCreditLedgerEntryRequestParams: AddVoidCreditLedgerEntryRequestParams
-            ): T
+            fun visitVoid(void: Void): T
 
-            fun visitAddAmendmentCreditLedgerEntryRequestParams(
-                addAmendmentCreditLedgerEntryRequestParams:
-                    AddAmendmentCreditLedgerEntryRequestParams
-            ): T
+            fun visitAmendment(amendment: Amendment): T
 
             /**
              * Maps an unknown variant of [Body] to a value of type [T].
@@ -731,51 +549,29 @@ private constructor(
 
                 when (entryType) {
                     "increment" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<AddIncrementCreditLedgerEntryRequestParams>(),
-                            )
-                            ?.let {
-                                Body(addIncrementCreditLedgerEntryRequestParams = it, _json = json)
-                            } ?: Body(_json = json)
+                        return tryDeserialize(node, jacksonTypeRef<Increment>())?.let {
+                            Body(increment = it, _json = json)
+                        } ?: Body(_json = json)
                     }
                     "decrement" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<AddDecrementCreditLedgerEntryRequestParams>(),
-                            )
-                            ?.let {
-                                Body(addDecrementCreditLedgerEntryRequestParams = it, _json = json)
-                            } ?: Body(_json = json)
+                        return tryDeserialize(node, jacksonTypeRef<Decrement>())?.let {
+                            Body(decrement = it, _json = json)
+                        } ?: Body(_json = json)
                     }
                     "expiration_change" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<AddExpirationChangeCreditLedgerEntryRequestParams>(),
-                            )
-                            ?.let {
-                                Body(
-                                    addExpirationChangeCreditLedgerEntryRequestParams = it,
-                                    _json = json,
-                                )
-                            } ?: Body(_json = json)
+                        return tryDeserialize(node, jacksonTypeRef<ExpirationChange>())?.let {
+                            Body(expirationChange = it, _json = json)
+                        } ?: Body(_json = json)
                     }
                     "void" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<AddVoidCreditLedgerEntryRequestParams>(),
-                            )
-                            ?.let { Body(addVoidCreditLedgerEntryRequestParams = it, _json = json) }
-                            ?: Body(_json = json)
+                        return tryDeserialize(node, jacksonTypeRef<Void>())?.let {
+                            Body(void = it, _json = json)
+                        } ?: Body(_json = json)
                     }
                     "amendment" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<AddAmendmentCreditLedgerEntryRequestParams>(),
-                            )
-                            ?.let {
-                                Body(addAmendmentCreditLedgerEntryRequestParams = it, _json = json)
-                            } ?: Body(_json = json)
+                        return tryDeserialize(node, jacksonTypeRef<Amendment>())?.let {
+                            Body(amendment = it, _json = json)
+                        } ?: Body(_json = json)
                     }
                 }
 
@@ -791,25 +587,18 @@ private constructor(
                 provider: SerializerProvider,
             ) {
                 when {
-                    value.addIncrementCreditLedgerEntryRequestParams != null ->
-                        generator.writeObject(value.addIncrementCreditLedgerEntryRequestParams)
-                    value.addDecrementCreditLedgerEntryRequestParams != null ->
-                        generator.writeObject(value.addDecrementCreditLedgerEntryRequestParams)
-                    value.addExpirationChangeCreditLedgerEntryRequestParams != null ->
-                        generator.writeObject(
-                            value.addExpirationChangeCreditLedgerEntryRequestParams
-                        )
-                    value.addVoidCreditLedgerEntryRequestParams != null ->
-                        generator.writeObject(value.addVoidCreditLedgerEntryRequestParams)
-                    value.addAmendmentCreditLedgerEntryRequestParams != null ->
-                        generator.writeObject(value.addAmendmentCreditLedgerEntryRequestParams)
+                    value.increment != null -> generator.writeObject(value.increment)
+                    value.decrement != null -> generator.writeObject(value.decrement)
+                    value.expirationChange != null -> generator.writeObject(value.expirationChange)
+                    value.void != null -> generator.writeObject(value.void)
+                    value.amendment != null -> generator.writeObject(value.amendment)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Body")
                 }
             }
         }
 
-        class AddIncrementCreditLedgerEntryRequestParams
+        class Increment
         private constructor(
             private val amount: JsonField<Double>,
             private val entryType: JsonValue,
@@ -1040,8 +829,7 @@ private constructor(
             companion object {
 
                 /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [AddIncrementCreditLedgerEntryRequestParams].
+                 * Returns a mutable builder for constructing an instance of [Increment].
                  *
                  * The following fields are required:
                  * ```kotlin
@@ -1051,7 +839,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            /** A builder for [AddIncrementCreditLedgerEntryRequestParams]. */
+            /** A builder for [Increment]. */
             class Builder internal constructor() {
 
                 private var amount: JsonField<Double>? = null
@@ -1065,22 +853,17 @@ private constructor(
                 private var perUnitCostBasis: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(
-                    addIncrementCreditLedgerEntryRequestParams:
-                        AddIncrementCreditLedgerEntryRequestParams
-                ) = apply {
-                    amount = addIncrementCreditLedgerEntryRequestParams.amount
-                    entryType = addIncrementCreditLedgerEntryRequestParams.entryType
-                    currency = addIncrementCreditLedgerEntryRequestParams.currency
-                    description = addIncrementCreditLedgerEntryRequestParams.description
-                    effectiveDate = addIncrementCreditLedgerEntryRequestParams.effectiveDate
-                    expiryDate = addIncrementCreditLedgerEntryRequestParams.expiryDate
-                    invoiceSettings = addIncrementCreditLedgerEntryRequestParams.invoiceSettings
-                    metadata = addIncrementCreditLedgerEntryRequestParams.metadata
-                    perUnitCostBasis = addIncrementCreditLedgerEntryRequestParams.perUnitCostBasis
-                    additionalProperties =
-                        addIncrementCreditLedgerEntryRequestParams.additionalProperties
-                            .toMutableMap()
+                internal fun from(increment: Increment) = apply {
+                    amount = increment.amount
+                    entryType = increment.entryType
+                    currency = increment.currency
+                    description = increment.description
+                    effectiveDate = increment.effectiveDate
+                    expiryDate = increment.expiryDate
+                    invoiceSettings = increment.invoiceSettings
+                    metadata = increment.metadata
+                    perUnitCostBasis = increment.perUnitCostBasis
+                    additionalProperties = increment.additionalProperties.toMutableMap()
                 }
 
                 /**
@@ -1255,7 +1038,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [AddIncrementCreditLedgerEntryRequestParams].
+                 * Returns an immutable instance of [Increment].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -1266,8 +1049,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): AddIncrementCreditLedgerEntryRequestParams =
-                    AddIncrementCreditLedgerEntryRequestParams(
+                fun build(): Increment =
+                    Increment(
                         checkRequired("amount", amount),
                         entryType,
                         currency,
@@ -1283,7 +1066,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): AddIncrementCreditLedgerEntryRequestParams = apply {
+            fun validate(): Increment = apply {
                 if (validated) {
                     return@apply
                 }
@@ -1755,7 +1538,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AddIncrementCreditLedgerEntryRequestParams && amount == other.amount && entryType == other.entryType && currency == other.currency && description == other.description && effectiveDate == other.effectiveDate && expiryDate == other.expiryDate && invoiceSettings == other.invoiceSettings && metadata == other.metadata && perUnitCostBasis == other.perUnitCostBasis && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Increment && amount == other.amount && entryType == other.entryType && currency == other.currency && description == other.description && effectiveDate == other.effectiveDate && expiryDate == other.expiryDate && invoiceSettings == other.invoiceSettings && metadata == other.metadata && perUnitCostBasis == other.perUnitCostBasis && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -1765,10 +1548,10 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AddIncrementCreditLedgerEntryRequestParams{amount=$amount, entryType=$entryType, currency=$currency, description=$description, effectiveDate=$effectiveDate, expiryDate=$expiryDate, invoiceSettings=$invoiceSettings, metadata=$metadata, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
+                "Increment{amount=$amount, entryType=$entryType, currency=$currency, description=$description, effectiveDate=$effectiveDate, expiryDate=$expiryDate, invoiceSettings=$invoiceSettings, metadata=$metadata, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
         }
 
-        class AddDecrementCreditLedgerEntryRequestParams
+        class Decrement
         private constructor(
             private val amount: JsonField<Double>,
             private val entryType: JsonValue,
@@ -1895,8 +1678,7 @@ private constructor(
             companion object {
 
                 /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [AddDecrementCreditLedgerEntryRequestParams].
+                 * Returns a mutable builder for constructing an instance of [Decrement].
                  *
                  * The following fields are required:
                  * ```kotlin
@@ -1906,7 +1688,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            /** A builder for [AddDecrementCreditLedgerEntryRequestParams]. */
+            /** A builder for [Decrement]. */
             class Builder internal constructor() {
 
                 private var amount: JsonField<Double>? = null
@@ -1916,18 +1698,13 @@ private constructor(
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(
-                    addDecrementCreditLedgerEntryRequestParams:
-                        AddDecrementCreditLedgerEntryRequestParams
-                ) = apply {
-                    amount = addDecrementCreditLedgerEntryRequestParams.amount
-                    entryType = addDecrementCreditLedgerEntryRequestParams.entryType
-                    currency = addDecrementCreditLedgerEntryRequestParams.currency
-                    description = addDecrementCreditLedgerEntryRequestParams.description
-                    metadata = addDecrementCreditLedgerEntryRequestParams.metadata
-                    additionalProperties =
-                        addDecrementCreditLedgerEntryRequestParams.additionalProperties
-                            .toMutableMap()
+                internal fun from(decrement: Decrement) = apply {
+                    amount = decrement.amount
+                    entryType = decrement.entryType
+                    currency = decrement.currency
+                    description = decrement.description
+                    metadata = decrement.metadata
+                    additionalProperties = decrement.additionalProperties.toMutableMap()
                 }
 
                 /**
@@ -2032,7 +1809,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [AddDecrementCreditLedgerEntryRequestParams].
+                 * Returns an immutable instance of [Decrement].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -2043,8 +1820,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): AddDecrementCreditLedgerEntryRequestParams =
-                    AddDecrementCreditLedgerEntryRequestParams(
+                fun build(): Decrement =
+                    Decrement(
                         checkRequired("amount", amount),
                         entryType,
                         currency,
@@ -2056,7 +1833,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): AddDecrementCreditLedgerEntryRequestParams = apply {
+            fun validate(): Decrement = apply {
                 if (validated) {
                     return@apply
                 }
@@ -2208,7 +1985,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AddDecrementCreditLedgerEntryRequestParams && amount == other.amount && entryType == other.entryType && currency == other.currency && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Decrement && amount == other.amount && entryType == other.entryType && currency == other.currency && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -2218,10 +1995,10 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AddDecrementCreditLedgerEntryRequestParams{amount=$amount, entryType=$entryType, currency=$currency, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "Decrement{amount=$amount, entryType=$entryType, currency=$currency, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
-        class AddExpirationChangeCreditLedgerEntryRequestParams
+        class ExpirationChange
         private constructor(
             private val entryType: JsonValue,
             private val expiryDate: JsonField<OffsetDateTime>,
@@ -2423,8 +2200,7 @@ private constructor(
             companion object {
 
                 /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [AddExpirationChangeCreditLedgerEntryRequestParams].
+                 * Returns a mutable builder for constructing an instance of [ExpirationChange].
                  *
                  * The following fields are required:
                  * ```kotlin
@@ -2435,7 +2211,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            /** A builder for [AddExpirationChangeCreditLedgerEntryRequestParams]. */
+            /** A builder for [ExpirationChange]. */
             class Builder internal constructor() {
 
                 private var entryType: JsonValue = JsonValue.from("expiration_change")
@@ -2448,22 +2224,16 @@ private constructor(
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(
-                    addExpirationChangeCreditLedgerEntryRequestParams:
-                        AddExpirationChangeCreditLedgerEntryRequestParams
-                ) = apply {
-                    entryType = addExpirationChangeCreditLedgerEntryRequestParams.entryType
-                    expiryDate = addExpirationChangeCreditLedgerEntryRequestParams.expiryDate
-                    targetExpiryDate =
-                        addExpirationChangeCreditLedgerEntryRequestParams.targetExpiryDate
-                    amount = addExpirationChangeCreditLedgerEntryRequestParams.amount
-                    blockId = addExpirationChangeCreditLedgerEntryRequestParams.blockId
-                    currency = addExpirationChangeCreditLedgerEntryRequestParams.currency
-                    description = addExpirationChangeCreditLedgerEntryRequestParams.description
-                    metadata = addExpirationChangeCreditLedgerEntryRequestParams.metadata
-                    additionalProperties =
-                        addExpirationChangeCreditLedgerEntryRequestParams.additionalProperties
-                            .toMutableMap()
+                internal fun from(expirationChange: ExpirationChange) = apply {
+                    entryType = expirationChange.entryType
+                    expiryDate = expirationChange.expiryDate
+                    targetExpiryDate = expirationChange.targetExpiryDate
+                    amount = expirationChange.amount
+                    blockId = expirationChange.blockId
+                    currency = expirationChange.currency
+                    description = expirationChange.description
+                    metadata = expirationChange.metadata
+                    additionalProperties = expirationChange.additionalProperties.toMutableMap()
                 }
 
                 /**
@@ -2626,8 +2396,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of
-                 * [AddExpirationChangeCreditLedgerEntryRequestParams].
+                 * Returns an immutable instance of [ExpirationChange].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -2639,8 +2408,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): AddExpirationChangeCreditLedgerEntryRequestParams =
-                    AddExpirationChangeCreditLedgerEntryRequestParams(
+                fun build(): ExpirationChange =
+                    ExpirationChange(
                         entryType,
                         checkRequired("expiryDate", expiryDate),
                         checkRequired("targetExpiryDate", targetExpiryDate),
@@ -2655,7 +2424,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): AddExpirationChangeCreditLedgerEntryRequestParams = apply {
+            fun validate(): ExpirationChange = apply {
                 if (validated) {
                     return@apply
                 }
@@ -2813,7 +2582,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AddExpirationChangeCreditLedgerEntryRequestParams && entryType == other.entryType && expiryDate == other.expiryDate && targetExpiryDate == other.targetExpiryDate && amount == other.amount && blockId == other.blockId && currency == other.currency && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is ExpirationChange && entryType == other.entryType && expiryDate == other.expiryDate && targetExpiryDate == other.targetExpiryDate && amount == other.amount && blockId == other.blockId && currency == other.currency && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -2823,10 +2592,10 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AddExpirationChangeCreditLedgerEntryRequestParams{entryType=$entryType, expiryDate=$expiryDate, targetExpiryDate=$targetExpiryDate, amount=$amount, blockId=$blockId, currency=$currency, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "ExpirationChange{entryType=$entryType, expiryDate=$expiryDate, targetExpiryDate=$targetExpiryDate, amount=$amount, blockId=$blockId, currency=$currency, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
-        class AddVoidCreditLedgerEntryRequestParams
+        class Void
         private constructor(
             private val amount: JsonField<Double>,
             private val blockId: JsonField<String>,
@@ -3004,8 +2773,7 @@ private constructor(
             companion object {
 
                 /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [AddVoidCreditLedgerEntryRequestParams].
+                 * Returns a mutable builder for constructing an instance of [Void].
                  *
                  * The following fields are required:
                  * ```kotlin
@@ -3016,7 +2784,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            /** A builder for [AddVoidCreditLedgerEntryRequestParams]. */
+            /** A builder for [Void]. */
             class Builder internal constructor() {
 
                 private var amount: JsonField<Double>? = null
@@ -3028,18 +2796,15 @@ private constructor(
                 private var voidReason: JsonField<VoidReason> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(
-                    addVoidCreditLedgerEntryRequestParams: AddVoidCreditLedgerEntryRequestParams
-                ) = apply {
-                    amount = addVoidCreditLedgerEntryRequestParams.amount
-                    blockId = addVoidCreditLedgerEntryRequestParams.blockId
-                    entryType = addVoidCreditLedgerEntryRequestParams.entryType
-                    currency = addVoidCreditLedgerEntryRequestParams.currency
-                    description = addVoidCreditLedgerEntryRequestParams.description
-                    metadata = addVoidCreditLedgerEntryRequestParams.metadata
-                    voidReason = addVoidCreditLedgerEntryRequestParams.voidReason
-                    additionalProperties =
-                        addVoidCreditLedgerEntryRequestParams.additionalProperties.toMutableMap()
+                internal fun from(void: Void) = apply {
+                    amount = void.amount
+                    blockId = void.blockId
+                    entryType = void.entryType
+                    currency = void.currency
+                    description = void.description
+                    metadata = void.metadata
+                    voidReason = void.voidReason
+                    additionalProperties = void.additionalProperties.toMutableMap()
                 }
 
                 /**
@@ -3171,7 +2936,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [AddVoidCreditLedgerEntryRequestParams].
+                 * Returns an immutable instance of [Void].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -3183,8 +2948,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): AddVoidCreditLedgerEntryRequestParams =
-                    AddVoidCreditLedgerEntryRequestParams(
+                fun build(): Void =
+                    Void(
                         checkRequired("amount", amount),
                         checkRequired("blockId", blockId),
                         entryType,
@@ -3198,7 +2963,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): AddVoidCreditLedgerEntryRequestParams = apply {
+            fun validate(): Void = apply {
                 if (validated) {
                     return@apply
                 }
@@ -3479,7 +3244,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AddVoidCreditLedgerEntryRequestParams && amount == other.amount && blockId == other.blockId && entryType == other.entryType && currency == other.currency && description == other.description && metadata == other.metadata && voidReason == other.voidReason && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Void && amount == other.amount && blockId == other.blockId && entryType == other.entryType && currency == other.currency && description == other.description && metadata == other.metadata && voidReason == other.voidReason && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -3489,10 +3254,10 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AddVoidCreditLedgerEntryRequestParams{amount=$amount, blockId=$blockId, entryType=$entryType, currency=$currency, description=$description, metadata=$metadata, voidReason=$voidReason, additionalProperties=$additionalProperties}"
+                "Void{amount=$amount, blockId=$blockId, entryType=$entryType, currency=$currency, description=$description, metadata=$metadata, voidReason=$voidReason, additionalProperties=$additionalProperties}"
         }
 
-        class AddAmendmentCreditLedgerEntryRequestParams
+        class Amendment
         private constructor(
             private val amount: JsonField<Double>,
             private val blockId: JsonField<String>,
@@ -3639,8 +3404,7 @@ private constructor(
             companion object {
 
                 /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [AddAmendmentCreditLedgerEntryRequestParams].
+                 * Returns a mutable builder for constructing an instance of [Amendment].
                  *
                  * The following fields are required:
                  * ```kotlin
@@ -3651,7 +3415,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            /** A builder for [AddAmendmentCreditLedgerEntryRequestParams]. */
+            /** A builder for [Amendment]. */
             class Builder internal constructor() {
 
                 private var amount: JsonField<Double>? = null
@@ -3662,19 +3426,14 @@ private constructor(
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(
-                    addAmendmentCreditLedgerEntryRequestParams:
-                        AddAmendmentCreditLedgerEntryRequestParams
-                ) = apply {
-                    amount = addAmendmentCreditLedgerEntryRequestParams.amount
-                    blockId = addAmendmentCreditLedgerEntryRequestParams.blockId
-                    entryType = addAmendmentCreditLedgerEntryRequestParams.entryType
-                    currency = addAmendmentCreditLedgerEntryRequestParams.currency
-                    description = addAmendmentCreditLedgerEntryRequestParams.description
-                    metadata = addAmendmentCreditLedgerEntryRequestParams.metadata
-                    additionalProperties =
-                        addAmendmentCreditLedgerEntryRequestParams.additionalProperties
-                            .toMutableMap()
+                internal fun from(amendment: Amendment) = apply {
+                    amount = amendment.amount
+                    blockId = amendment.blockId
+                    entryType = amendment.entryType
+                    currency = amendment.currency
+                    description = amendment.description
+                    metadata = amendment.metadata
+                    additionalProperties = amendment.additionalProperties.toMutableMap()
                 }
 
                 /**
@@ -3791,7 +3550,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [AddAmendmentCreditLedgerEntryRequestParams].
+                 * Returns an immutable instance of [Amendment].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -3803,8 +3562,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): AddAmendmentCreditLedgerEntryRequestParams =
-                    AddAmendmentCreditLedgerEntryRequestParams(
+                fun build(): Amendment =
+                    Amendment(
                         checkRequired("amount", amount),
                         checkRequired("blockId", blockId),
                         entryType,
@@ -3817,7 +3576,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): AddAmendmentCreditLedgerEntryRequestParams = apply {
+            fun validate(): Amendment = apply {
                 if (validated) {
                     return@apply
                 }
@@ -3971,7 +3730,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AddAmendmentCreditLedgerEntryRequestParams && amount == other.amount && blockId == other.blockId && entryType == other.entryType && currency == other.currency && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Amendment && amount == other.amount && blockId == other.blockId && entryType == other.entryType && currency == other.currency && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -3981,7 +3740,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AddAmendmentCreditLedgerEntryRequestParams{amount=$amount, blockId=$blockId, entryType=$entryType, currency=$currency, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "Amendment{amount=$amount, blockId=$blockId, entryType=$entryType, currency=$currency, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
     }
 
