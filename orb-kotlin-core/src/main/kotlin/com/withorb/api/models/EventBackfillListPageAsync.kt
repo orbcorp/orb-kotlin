@@ -2,11 +2,11 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.AutoPagerAsync
+import com.withorb.api.core.PageAsync
 import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.events.BackfillServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [BackfillServiceAsync.list] */
 class EventBackfillListPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: BackfillServiceAsync,
     private val params: EventBackfillListParams,
     private val response: EventBackfillListPageResponse,
-) {
+) : PageAsync<EventBackfillListResponse> {
 
     /**
      * Delegates to [EventBackfillListPageResponse], but gracefully handles missing data.
@@ -32,29 +32,22 @@ private constructor(
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
 
-    fun hasNextPage(): Boolean =
-        data().isNotEmpty() &&
+    override fun items(): List<EventBackfillListResponse> = data()
+
+    override fun hasNextPage(): Boolean =
+        items().isNotEmpty() &&
             paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") } != null
 
-    fun getNextPageParams(): EventBackfillListParams? {
-        if (!hasNextPage()) {
-            return null
-        }
-
-        return params
-            .toBuilder()
-            .apply {
-                paginationMetadata()
-                    ?.let { it._nextCursor().getNullable("next_cursor") }
-                    ?.let { cursor(it) }
-            }
-            .build()
+    fun nextPageParams(): EventBackfillListParams {
+        val nextCursor =
+            paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") }
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().cursor(nextCursor).build()
     }
 
-    suspend fun getNextPage(): EventBackfillListPageAsync? =
-        getNextPageParams()?.let { service.list(it) }
+    override suspend fun nextPage(): EventBackfillListPageAsync = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<EventBackfillListResponse> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): EventBackfillListParams = params
@@ -120,22 +113,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: EventBackfillListPageAsync) :
-        Flow<EventBackfillListResponse> {
-
-        override suspend fun collect(collector: FlowCollector<EventBackfillListResponse>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

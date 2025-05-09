@@ -2,11 +2,11 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.AutoPagerAsync
+import com.withorb.api.core.PageAsync
 import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.CouponServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [CouponServiceAsync.list] */
 class CouponListPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: CouponServiceAsync,
     private val params: CouponListParams,
     private val response: CouponListPageResponse,
-) {
+) : PageAsync<Coupon> {
 
     /**
      * Delegates to [CouponListPageResponse], but gracefully handles missing data.
@@ -31,28 +31,22 @@ private constructor(
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
 
-    fun hasNextPage(): Boolean =
-        data().isNotEmpty() &&
+    override fun items(): List<Coupon> = data()
+
+    override fun hasNextPage(): Boolean =
+        items().isNotEmpty() &&
             paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") } != null
 
-    fun getNextPageParams(): CouponListParams? {
-        if (!hasNextPage()) {
-            return null
-        }
-
-        return params
-            .toBuilder()
-            .apply {
-                paginationMetadata()
-                    ?.let { it._nextCursor().getNullable("next_cursor") }
-                    ?.let { cursor(it) }
-            }
-            .build()
+    fun nextPageParams(): CouponListParams {
+        val nextCursor =
+            paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") }
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().cursor(nextCursor).build()
     }
 
-    suspend fun getNextPage(): CouponListPageAsync? = getNextPageParams()?.let { service.list(it) }
+    override suspend fun nextPage(): CouponListPageAsync = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<Coupon> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): CouponListParams = params
@@ -118,21 +112,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: CouponListPageAsync) : Flow<Coupon> {
-
-        override suspend fun collect(collector: FlowCollector<Coupon>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

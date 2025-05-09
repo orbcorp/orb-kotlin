@@ -2,6 +2,8 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.AutoPager
+import com.withorb.api.core.Page
 import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.customers.CreditService
 import java.util.Objects
@@ -12,7 +14,7 @@ private constructor(
     private val service: CreditService,
     private val params: CustomerCreditListByExternalIdParams,
     private val response: CustomerCreditListByExternalIdPageResponse,
-) {
+) : Page<CustomerCreditListByExternalIdResponse> {
 
     /**
      * Delegates to [CustomerCreditListByExternalIdPageResponse], but gracefully handles missing
@@ -32,29 +34,23 @@ private constructor(
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
 
-    fun hasNextPage(): Boolean =
-        data().isNotEmpty() &&
+    override fun items(): List<CustomerCreditListByExternalIdResponse> = data()
+
+    override fun hasNextPage(): Boolean =
+        items().isNotEmpty() &&
             paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") } != null
 
-    fun getNextPageParams(): CustomerCreditListByExternalIdParams? {
-        if (!hasNextPage()) {
-            return null
-        }
-
-        return params
-            .toBuilder()
-            .apply {
-                paginationMetadata()
-                    ?.let { it._nextCursor().getNullable("next_cursor") }
-                    ?.let { cursor(it) }
-            }
-            .build()
+    fun nextPageParams(): CustomerCreditListByExternalIdParams {
+        val nextCursor =
+            paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") }
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().cursor(nextCursor).build()
     }
 
-    fun getNextPage(): CustomerCreditListByExternalIdPage? =
-        getNextPageParams()?.let { service.listByExternalId(it) }
+    override fun nextPage(): CustomerCreditListByExternalIdPage =
+        service.listByExternalId(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<CustomerCreditListByExternalIdResponse> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): CustomerCreditListByExternalIdParams = params
@@ -124,22 +120,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: CustomerCreditListByExternalIdPage) :
-        Sequence<CustomerCreditListByExternalIdResponse> {
-
-        override fun iterator(): Iterator<CustomerCreditListByExternalIdResponse> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

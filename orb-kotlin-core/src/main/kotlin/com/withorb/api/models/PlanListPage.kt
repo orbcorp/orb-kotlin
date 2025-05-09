@@ -2,6 +2,8 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.AutoPager
+import com.withorb.api.core.Page
 import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.PlanService
 import java.util.Objects
@@ -12,7 +14,7 @@ private constructor(
     private val service: PlanService,
     private val params: PlanListParams,
     private val response: PlanListPageResponse,
-) {
+) : Page<Plan> {
 
     /**
      * Delegates to [PlanListPageResponse], but gracefully handles missing data.
@@ -29,28 +31,22 @@ private constructor(
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
 
-    fun hasNextPage(): Boolean =
-        data().isNotEmpty() &&
+    override fun items(): List<Plan> = data()
+
+    override fun hasNextPage(): Boolean =
+        items().isNotEmpty() &&
             paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") } != null
 
-    fun getNextPageParams(): PlanListParams? {
-        if (!hasNextPage()) {
-            return null
-        }
-
-        return params
-            .toBuilder()
-            .apply {
-                paginationMetadata()
-                    ?.let { it._nextCursor().getNullable("next_cursor") }
-                    ?.let { cursor(it) }
-            }
-            .build()
+    fun nextPageParams(): PlanListParams {
+        val nextCursor =
+            paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") }
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().cursor(nextCursor).build()
     }
 
-    fun getNextPage(): PlanListPage? = getNextPageParams()?.let { service.list(it) }
+    override fun nextPage(): PlanListPage = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<Plan> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): PlanListParams = params
@@ -116,21 +112,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: PlanListPage) : Sequence<Plan> {
-
-        override fun iterator(): Iterator<Plan> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

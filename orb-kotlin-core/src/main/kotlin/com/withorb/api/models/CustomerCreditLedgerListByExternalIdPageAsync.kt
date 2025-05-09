@@ -2,11 +2,11 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.AutoPagerAsync
+import com.withorb.api.core.PageAsync
 import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.customers.credits.LedgerServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [LedgerServiceAsync.listByExternalId] */
 class CustomerCreditLedgerListByExternalIdPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: LedgerServiceAsync,
     private val params: CustomerCreditLedgerListByExternalIdParams,
     private val response: CustomerCreditLedgerListByExternalIdPageResponse,
-) {
+) : PageAsync<CustomerCreditLedgerListByExternalIdResponse> {
 
     /**
      * Delegates to [CustomerCreditLedgerListByExternalIdPageResponse], but gracefully handles
@@ -34,29 +34,24 @@ private constructor(
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
 
-    fun hasNextPage(): Boolean =
-        data().isNotEmpty() &&
+    override fun items(): List<CustomerCreditLedgerListByExternalIdResponse> = data()
+
+    override fun hasNextPage(): Boolean =
+        items().isNotEmpty() &&
             paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") } != null
 
-    fun getNextPageParams(): CustomerCreditLedgerListByExternalIdParams? {
-        if (!hasNextPage()) {
-            return null
-        }
-
-        return params
-            .toBuilder()
-            .apply {
-                paginationMetadata()
-                    ?.let { it._nextCursor().getNullable("next_cursor") }
-                    ?.let { cursor(it) }
-            }
-            .build()
+    fun nextPageParams(): CustomerCreditLedgerListByExternalIdParams {
+        val nextCursor =
+            paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") }
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().cursor(nextCursor).build()
     }
 
-    suspend fun getNextPage(): CustomerCreditLedgerListByExternalIdPageAsync? =
-        getNextPageParams()?.let { service.listByExternalId(it) }
+    override suspend fun nextPage(): CustomerCreditLedgerListByExternalIdPageAsync =
+        service.listByExternalId(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<CustomerCreditLedgerListByExternalIdResponse> =
+        AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): CustomerCreditLedgerListByExternalIdParams = params
@@ -130,24 +125,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: CustomerCreditLedgerListByExternalIdPageAsync) :
-        Flow<CustomerCreditLedgerListByExternalIdResponse> {
-
-        override suspend fun collect(
-            collector: FlowCollector<CustomerCreditLedgerListByExternalIdResponse>
-        ) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
