@@ -28,24 +28,22 @@ internal class PlanServiceAsyncTest {
                     .currency("currency")
                     .name("name")
                     .addPrice(
-                        PlanCreateParams.Price.NewPlanUnitPrice.builder()
-                            .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
+                        PlanCreateParams.Price.Unit.builder()
+                            .cadence(PlanCreateParams.Price.Unit.Cadence.ANNUAL)
                             .itemId("item_id")
                             .name("Annual fee")
                             .unitConfig(
-                                PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
+                                PlanCreateParams.Price.Unit.UnitConfig.builder()
                                     .unitAmount("unit_amount")
                                     .build()
                             )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration
-                                    .builder()
+                                PlanCreateParams.Price.Unit.BillingCycleConfiguration.builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        PlanCreateParams.Price.NewPlanUnitPrice
-                                            .BillingCycleConfiguration
+                                        PlanCreateParams.Price.Unit.BillingCycleConfiguration
                                             .DurationUnit
                                             .DAY
                                     )
@@ -57,19 +55,17 @@ internal class PlanServiceAsyncTest {
                             .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
-                                PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
-                                    .builder()
+                                PlanCreateParams.Price.Unit.InvoicingCycleConfiguration.builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        PlanCreateParams.Price.NewPlanUnitPrice
-                                            .InvoicingCycleConfiguration
+                                        PlanCreateParams.Price.Unit.InvoicingCycleConfiguration
                                             .DurationUnit
                                             .DAY
                                     )
                                     .build()
                             )
                             .metadata(
-                                PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
+                                PlanCreateParams.Price.Unit.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )

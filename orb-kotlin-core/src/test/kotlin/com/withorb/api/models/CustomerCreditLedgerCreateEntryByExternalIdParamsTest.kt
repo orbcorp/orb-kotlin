@@ -14,17 +14,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
         CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
             .externalCustomerId("external_customer_id")
             .body(
-                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                    .AddIncrementCreditLedgerEntryRequestParams
-                    .builder()
+                CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment.builder()
                     .amount(0.0)
                     .currency("currency")
                     .description("description")
                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .invoiceSettings(
-                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                            .AddIncrementCreditLedgerEntryRequestParams
+                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
                             .InvoiceSettings
                             .builder()
                             .autoCollection(true)
@@ -34,9 +31,7 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
                             .build()
                     )
                     .metadata(
-                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                            .AddIncrementCreditLedgerEntryRequestParams
-                            .Metadata
+                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment.Metadata
                             .builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
@@ -52,7 +47,7 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
         val params =
             CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
-                .addIncrementCreditLedgerEntryRequestParamsBody(0.0)
+                .incrementBody(0.0)
                 .build()
 
         assertThat(params._pathParam(0)).isEqualTo("external_customer_id")
@@ -66,17 +61,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
             CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
                 .body(
-                    CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                        .AddIncrementCreditLedgerEntryRequestParams
-                        .builder()
+                    CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment.builder()
                         .amount(0.0)
                         .currency("currency")
                         .description("description")
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .invoiceSettings(
-                            CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                                .AddIncrementCreditLedgerEntryRequestParams
+                            CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
                                 .InvoiceSettings
                                 .builder()
                                 .autoCollection(true)
@@ -86,8 +78,7 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
                                 .build()
                         )
                         .metadata(
-                            CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                                .AddIncrementCreditLedgerEntryRequestParams
+                            CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
                                 .Metadata
                                 .builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -102,38 +93,33 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
 
         assertThat(body)
             .isEqualTo(
-                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                    .ofAddIncrementCreditLedgerEntryRequestParams(
-                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                            .AddIncrementCreditLedgerEntryRequestParams
-                            .builder()
-                            .amount(0.0)
-                            .currency("currency")
-                            .description("description")
-                            .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .invoiceSettings(
-                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                                    .AddIncrementCreditLedgerEntryRequestParams
-                                    .InvoiceSettings
-                                    .builder()
-                                    .autoCollection(true)
-                                    .netTerms(0L)
-                                    .memo("memo")
-                                    .requireSuccessfulPayment(true)
-                                    .build()
-                            )
-                            .metadata(
-                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                                    .AddIncrementCreditLedgerEntryRequestParams
-                                    .Metadata
-                                    .builder()
-                                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                                    .build()
-                            )
-                            .perUnitCostBasis("per_unit_cost_basis")
-                            .build()
-                    )
+                CustomerCreditLedgerCreateEntryByExternalIdParams.Body.ofIncrement(
+                    CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment.builder()
+                        .amount(0.0)
+                        .currency("currency")
+                        .description("description")
+                        .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .invoiceSettings(
+                            CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
+                                .InvoiceSettings
+                                .builder()
+                                .autoCollection(true)
+                                .netTerms(0L)
+                                .memo("memo")
+                                .requireSuccessfulPayment(true)
+                                .build()
+                        )
+                        .metadata(
+                            CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
+                                .Metadata
+                                .builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
+                        .perUnitCostBasis("per_unit_cost_basis")
+                        .build()
+                )
             )
     }
 
@@ -142,21 +128,18 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
         val params =
             CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
-                .addIncrementCreditLedgerEntryRequestParamsBody(0.0)
+                .incrementBody(0.0)
                 .build()
 
         val body = params._body()
 
         assertThat(body)
             .isEqualTo(
-                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                    .ofAddIncrementCreditLedgerEntryRequestParams(
-                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                            .AddIncrementCreditLedgerEntryRequestParams
-                            .builder()
-                            .amount(0.0)
-                            .build()
-                    )
+                CustomerCreditLedgerCreateEntryByExternalIdParams.Body.ofIncrement(
+                    CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment.builder()
+                        .amount(0.0)
+                        .build()
+                )
             )
     }
 }

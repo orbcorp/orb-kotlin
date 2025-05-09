@@ -29,7 +29,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                 .adjustment(
                                     SubscriptionChangeApplyResponse.Subscription.AdjustmentInterval
                                         .Adjustment
-                                        .PlanPhaseUsageDiscountAdjustment
+                                        .UsageDiscount
                                         .builder()
                                         .id("id")
                                         .addAppliesToPriceId("string")
@@ -151,8 +151,7 @@ internal class SubscriptionChangeApplyResponseTest {
                         )
                         .defaultInvoiceMemo("default_invoice_memo")
                         .addDiscountInterval(
-                            SubscriptionChangeApplyResponse.Subscription.DiscountInterval
-                                .AmountDiscountInterval
+                            SubscriptionChangeApplyResponse.Subscription.DiscountInterval.Amount
                                 .builder()
                                 .amountDiscount("amount_discount")
                                 .addAppliesToPriceId("string")
@@ -206,7 +205,7 @@ internal class SubscriptionChangeApplyResponseTest {
                             Plan.builder()
                                 .id("id")
                                 .addAdjustment(
-                                    Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
+                                    Plan.Adjustment.UsageDiscount.builder()
                                         .id("id")
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
@@ -295,28 +294,26 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .build()
                                 )
                                 .addPrice(
-                                    Price.UnitPrice.builder()
+                                    Price.Unit.builder()
                                         .id("id")
                                         .billableMetric(
-                                            Price.UnitPrice.BillableMetric.builder()
-                                                .id("id")
-                                                .build()
+                                            Price.Unit.BillableMetric.builder().id("id").build()
                                         )
                                         .billingCycleConfiguration(
-                                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                                            Price.Unit.BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.BillingCycleConfiguration
+                                                    Price.Unit.BillingCycleConfiguration
                                                         .DurationUnit
                                                         .DAY
                                                 )
                                                 .build()
                                         )
-                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                        .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
-                                            Price.UnitPrice.CreditAllocation.builder()
+                                            Price.Unit.CreditAllocation.builder()
                                                 .allowsRollover(true)
                                                 .currency("currency")
                                                 .build()
@@ -336,30 +333,27 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                            Price.Unit.InvoicingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
+                                                    Price.Unit.InvoicingCycleConfiguration
                                                         .DurationUnit
                                                         .DAY
                                                 )
                                                 .build()
                                         )
                                         .item(
-                                            Price.UnitPrice.Item.builder()
-                                                .id("id")
-                                                .name("name")
-                                                .build()
+                                            Price.Unit.Item.builder().id("id").name("name").build()
                                         )
                                         .maximum(
-                                            Price.UnitPrice.Maximum.builder()
+                                            Price.Unit.Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
                                         .metadata(
-                                            Price.UnitPrice.Metadata.builder()
+                                            Price.Unit.Metadata.builder()
                                                 .putAdditionalProperty(
                                                     "foo",
                                                     JsonValue.from("string"),
@@ -367,7 +361,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Price.UnitPrice.Minimum.builder()
+                                            Price.Unit.Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .minimumAmount("minimum_amount")
                                                 .build()
@@ -375,14 +369,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .minimumAmount("minimum_amount")
                                         .name("name")
                                         .planPhaseOrder(0L)
-                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .unitConfig(
-                                            Price.UnitPrice.UnitConfig.builder()
+                                            Price.Unit.UnitConfig.builder()
                                                 .unitAmount("unit_amount")
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
-                                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                            Price.Unit.DimensionalPriceConfiguration.builder()
                                                 .addDimensionValue("string")
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
@@ -432,28 +426,26 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .build()
                                 )
                                 .price(
-                                    Price.UnitPrice.builder()
+                                    Price.Unit.builder()
                                         .id("id")
                                         .billableMetric(
-                                            Price.UnitPrice.BillableMetric.builder()
-                                                .id("id")
-                                                .build()
+                                            Price.Unit.BillableMetric.builder().id("id").build()
                                         )
                                         .billingCycleConfiguration(
-                                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                                            Price.Unit.BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.BillingCycleConfiguration
+                                                    Price.Unit.BillingCycleConfiguration
                                                         .DurationUnit
                                                         .DAY
                                                 )
                                                 .build()
                                         )
-                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                        .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
-                                            Price.UnitPrice.CreditAllocation.builder()
+                                            Price.Unit.CreditAllocation.builder()
                                                 .allowsRollover(true)
                                                 .currency("currency")
                                                 .build()
@@ -473,30 +465,27 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                            Price.Unit.InvoicingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
+                                                    Price.Unit.InvoicingCycleConfiguration
                                                         .DurationUnit
                                                         .DAY
                                                 )
                                                 .build()
                                         )
                                         .item(
-                                            Price.UnitPrice.Item.builder()
-                                                .id("id")
-                                                .name("name")
-                                                .build()
+                                            Price.Unit.Item.builder().id("id").name("name").build()
                                         )
                                         .maximum(
-                                            Price.UnitPrice.Maximum.builder()
+                                            Price.Unit.Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
                                         .metadata(
-                                            Price.UnitPrice.Metadata.builder()
+                                            Price.Unit.Metadata.builder()
                                                 .putAdditionalProperty(
                                                     "foo",
                                                     JsonValue.from("string"),
@@ -504,7 +493,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Price.UnitPrice.Minimum.builder()
+                                            Price.Unit.Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .minimumAmount("minimum_amount")
                                                 .build()
@@ -512,14 +501,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .minimumAmount("minimum_amount")
                                         .name("name")
                                         .planPhaseOrder(0L)
-                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .unitConfig(
-                                            Price.UnitPrice.UnitConfig.builder()
+                                            Price.Unit.UnitConfig.builder()
                                                 .unitAmount("unit_amount")
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
-                                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                            Price.Unit.DimensionalPriceConfiguration.builder()
                                                 .addDimensionValue("string")
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
@@ -763,8 +752,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .id("id")
                                                 .adjustedSubtotal("5.00")
                                                 .addAdjustment(
-                                                    Invoice.LineItem.Adjustment
-                                                        .MonetaryUsageDiscountAdjustment
+                                                    Invoice.LineItem.Adjustment.UsageDiscount
                                                         .builder()
                                                         .id("id")
                                                         .amount("amount")
@@ -812,27 +800,26 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .name("Fixed Fee")
                                                 .partiallyInvoicedAmount("4.00")
                                                 .price(
-                                                    Price.UnitPrice.builder()
+                                                    Price.Unit.builder()
                                                         .id("id")
                                                         .billableMetric(
-                                                            Price.UnitPrice.BillableMetric.builder()
+                                                            Price.Unit.BillableMetric.builder()
                                                                 .id("id")
                                                                 .build()
                                                         )
                                                         .billingCycleConfiguration(
-                                                            Price.UnitPrice
-                                                                .BillingCycleConfiguration
+                                                            Price.Unit.BillingCycleConfiguration
                                                                 .builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.UnitPrice
+                                                                    Price.Unit
                                                                         .BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
                                                                 .build()
                                                         )
-                                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                                        .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .conversionRate(0.0)
                                                         .createdAt(
                                                             OffsetDateTime.parse(
@@ -840,8 +827,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                             )
                                                         )
                                                         .creditAllocation(
-                                                            Price.UnitPrice.CreditAllocation
-                                                                .builder()
+                                                            Price.Unit.CreditAllocation.builder()
                                                                 .allowsRollover(true)
                                                                 .currency("currency")
                                                                 .build()
@@ -866,12 +852,11 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .externalPriceId("external_price_id")
                                                         .fixedPriceQuantity(0.0)
                                                         .invoicingCycleConfiguration(
-                                                            Price.UnitPrice
-                                                                .InvoicingCycleConfiguration
+                                                            Price.Unit.InvoicingCycleConfiguration
                                                                 .builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.UnitPrice
+                                                                    Price.Unit
                                                                         .InvoicingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
@@ -879,20 +864,20 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .item(
-                                                            Price.UnitPrice.Item.builder()
+                                                            Price.Unit.Item.builder()
                                                                 .id("id")
                                                                 .name("name")
                                                                 .build()
                                                         )
                                                         .maximum(
-                                                            Price.UnitPrice.Maximum.builder()
+                                                            Price.Unit.Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .maximumAmount("maximum_amount")
                                                                 .build()
                                                         )
                                                         .maximumAmount("maximum_amount")
                                                         .metadata(
-                                                            Price.UnitPrice.Metadata.builder()
+                                                            Price.Unit.Metadata.builder()
                                                                 .putAdditionalProperty(
                                                                     "foo",
                                                                     JsonValue.from("string"),
@@ -900,7 +885,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .minimum(
-                                                            Price.UnitPrice.Minimum.builder()
+                                                            Price.Unit.Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .minimumAmount("minimum_amount")
                                                                 .build()
@@ -908,17 +893,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .minimumAmount("minimum_amount")
                                                         .name("name")
                                                         .planPhaseOrder(0L)
-                                                        .priceType(
-                                                            Price.UnitPrice.PriceType.USAGE_PRICE
-                                                        )
+                                                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                         .unitConfig(
-                                                            Price.UnitPrice.UnitConfig.builder()
+                                                            Price.Unit.UnitConfig.builder()
                                                                 .unitAmount("unit_amount")
                                                                 .build()
                                                         )
                                                         .dimensionalPriceConfiguration(
-                                                            Price.UnitPrice
-                                                                .DimensionalPriceConfiguration
+                                                            Price.Unit.DimensionalPriceConfiguration
                                                                 .builder()
                                                                 .addDimensionValue("string")
                                                                 .dimensionalPriceGroupId(
@@ -935,12 +917,10 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     )
                                                 )
                                                 .addSubLineItem(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .builder()
+                                                    Invoice.LineItem.SubLineItem.Matrix.builder()
                                                         .amount("9.00")
                                                         .grouping(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
+                                                            Invoice.LineItem.SubLineItem.Matrix
                                                                 .Grouping
                                                                 .builder()
                                                                 .key("region")
@@ -948,8 +928,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .matrixConfig(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
+                                                            Invoice.LineItem.SubLineItem.Matrix
                                                                 .MatrixConfig
                                                                 .builder()
                                                                 .addDimensionValue("string")
@@ -1257,8 +1236,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .id("id")
                                                 .adjustedSubtotal("5.00")
                                                 .addAdjustment(
-                                                    Invoice.LineItem.Adjustment
-                                                        .MonetaryUsageDiscountAdjustment
+                                                    Invoice.LineItem.Adjustment.UsageDiscount
                                                         .builder()
                                                         .id("id")
                                                         .amount("amount")
@@ -1306,27 +1284,26 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .name("Fixed Fee")
                                                 .partiallyInvoicedAmount("4.00")
                                                 .price(
-                                                    Price.UnitPrice.builder()
+                                                    Price.Unit.builder()
                                                         .id("id")
                                                         .billableMetric(
-                                                            Price.UnitPrice.BillableMetric.builder()
+                                                            Price.Unit.BillableMetric.builder()
                                                                 .id("id")
                                                                 .build()
                                                         )
                                                         .billingCycleConfiguration(
-                                                            Price.UnitPrice
-                                                                .BillingCycleConfiguration
+                                                            Price.Unit.BillingCycleConfiguration
                                                                 .builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.UnitPrice
+                                                                    Price.Unit
                                                                         .BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
                                                                 .build()
                                                         )
-                                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                                        .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .conversionRate(0.0)
                                                         .createdAt(
                                                             OffsetDateTime.parse(
@@ -1334,8 +1311,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                             )
                                                         )
                                                         .creditAllocation(
-                                                            Price.UnitPrice.CreditAllocation
-                                                                .builder()
+                                                            Price.Unit.CreditAllocation.builder()
                                                                 .allowsRollover(true)
                                                                 .currency("currency")
                                                                 .build()
@@ -1360,12 +1336,11 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .externalPriceId("external_price_id")
                                                         .fixedPriceQuantity(0.0)
                                                         .invoicingCycleConfiguration(
-                                                            Price.UnitPrice
-                                                                .InvoicingCycleConfiguration
+                                                            Price.Unit.InvoicingCycleConfiguration
                                                                 .builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.UnitPrice
+                                                                    Price.Unit
                                                                         .InvoicingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
@@ -1373,20 +1348,20 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .item(
-                                                            Price.UnitPrice.Item.builder()
+                                                            Price.Unit.Item.builder()
                                                                 .id("id")
                                                                 .name("name")
                                                                 .build()
                                                         )
                                                         .maximum(
-                                                            Price.UnitPrice.Maximum.builder()
+                                                            Price.Unit.Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .maximumAmount("maximum_amount")
                                                                 .build()
                                                         )
                                                         .maximumAmount("maximum_amount")
                                                         .metadata(
-                                                            Price.UnitPrice.Metadata.builder()
+                                                            Price.Unit.Metadata.builder()
                                                                 .putAdditionalProperty(
                                                                     "foo",
                                                                     JsonValue.from("string"),
@@ -1394,7 +1369,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .minimum(
-                                                            Price.UnitPrice.Minimum.builder()
+                                                            Price.Unit.Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .minimumAmount("minimum_amount")
                                                                 .build()
@@ -1402,17 +1377,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .minimumAmount("minimum_amount")
                                                         .name("name")
                                                         .planPhaseOrder(0L)
-                                                        .priceType(
-                                                            Price.UnitPrice.PriceType.USAGE_PRICE
-                                                        )
+                                                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                         .unitConfig(
-                                                            Price.UnitPrice.UnitConfig.builder()
+                                                            Price.Unit.UnitConfig.builder()
                                                                 .unitAmount("unit_amount")
                                                                 .build()
                                                         )
                                                         .dimensionalPriceConfiguration(
-                                                            Price.UnitPrice
-                                                                .DimensionalPriceConfiguration
+                                                            Price.Unit.DimensionalPriceConfiguration
                                                                 .builder()
                                                                 .addDimensionValue("string")
                                                                 .dimensionalPriceGroupId(
@@ -1429,12 +1401,10 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     )
                                                 )
                                                 .addSubLineItem(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .builder()
+                                                    Invoice.LineItem.SubLineItem.Matrix.builder()
                                                         .amount("9.00")
                                                         .grouping(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
+                                                            Invoice.LineItem.SubLineItem.Matrix
                                                                 .Grouping
                                                                 .builder()
                                                                 .key("region")
@@ -1442,8 +1412,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .matrixConfig(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
+                                                            Invoice.LineItem.SubLineItem.Matrix
                                                                 .MatrixConfig
                                                                 .builder()
                                                                 .addDimensionValue("string")
@@ -1560,7 +1529,7 @@ internal class SubscriptionChangeApplyResponseTest {
                             .adjustment(
                                 SubscriptionChangeApplyResponse.Subscription.AdjustmentInterval
                                     .Adjustment
-                                    .PlanPhaseUsageDiscountAdjustment
+                                    .UsageDiscount
                                     .builder()
                                     .id("id")
                                     .addAppliesToPriceId("string")
@@ -1677,8 +1646,7 @@ internal class SubscriptionChangeApplyResponseTest {
                     )
                     .defaultInvoiceMemo("default_invoice_memo")
                     .addDiscountInterval(
-                        SubscriptionChangeApplyResponse.Subscription.DiscountInterval
-                            .AmountDiscountInterval
+                        SubscriptionChangeApplyResponse.Subscription.DiscountInterval.Amount
                             .builder()
                             .amountDiscount("amount_discount")
                             .addAppliesToPriceId("string")
@@ -1732,7 +1700,7 @@ internal class SubscriptionChangeApplyResponseTest {
                         Plan.builder()
                             .id("id")
                             .addAdjustment(
-                                Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
+                                Plan.Adjustment.UsageDiscount.builder()
                                     .id("id")
                                     .addAppliesToPriceId("string")
                                     .isInvoiceLevel(true)
@@ -1821,26 +1789,25 @@ internal class SubscriptionChangeApplyResponseTest {
                                     .build()
                             )
                             .addPrice(
-                                Price.UnitPrice.builder()
+                                Price.Unit.builder()
                                     .id("id")
                                     .billableMetric(
-                                        Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                        Price.Unit.BillableMetric.builder().id("id").build()
                                     )
                                     .billingCycleConfiguration(
-                                        Price.UnitPrice.BillingCycleConfiguration.builder()
+                                        Price.Unit.BillingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.UnitPrice.BillingCycleConfiguration
-                                                    .DurationUnit
+                                                Price.Unit.BillingCycleConfiguration.DurationUnit
                                                     .DAY
                                             )
                                             .build()
                                     )
-                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                    .cadence(Price.Unit.Cadence.ONE_TIME)
                                     .conversionRate(0.0)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditAllocation(
-                                        Price.UnitPrice.CreditAllocation.builder()
+                                        Price.Unit.CreditAllocation.builder()
                                             .allowsRollover(true)
                                             .currency("currency")
                                             .build()
@@ -1860,32 +1827,29 @@ internal class SubscriptionChangeApplyResponseTest {
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(0.0)
                                     .invoicingCycleConfiguration(
-                                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                        Price.Unit.InvoicingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.UnitPrice.InvoicingCycleConfiguration
-                                                    .DurationUnit
+                                                Price.Unit.InvoicingCycleConfiguration.DurationUnit
                                                     .DAY
                                             )
                                             .build()
                                     )
-                                    .item(
-                                        Price.UnitPrice.Item.builder().id("id").name("name").build()
-                                    )
+                                    .item(Price.Unit.Item.builder().id("id").name("name").build())
                                     .maximum(
-                                        Price.UnitPrice.Maximum.builder()
+                                        Price.Unit.Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
                                     .maximumAmount("maximum_amount")
                                     .metadata(
-                                        Price.UnitPrice.Metadata.builder()
+                                        Price.Unit.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
                                             .build()
                                     )
                                     .minimum(
-                                        Price.UnitPrice.Minimum.builder()
+                                        Price.Unit.Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .minimumAmount("minimum_amount")
                                             .build()
@@ -1893,14 +1857,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                     .minimumAmount("minimum_amount")
                                     .name("name")
                                     .planPhaseOrder(0L)
-                                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                    .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                     .unitConfig(
-                                        Price.UnitPrice.UnitConfig.builder()
+                                        Price.Unit.UnitConfig.builder()
                                             .unitAmount("unit_amount")
                                             .build()
                                     )
                                     .dimensionalPriceConfiguration(
-                                        Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                        Price.Unit.DimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
                                             .build()
@@ -1946,26 +1910,25 @@ internal class SubscriptionChangeApplyResponseTest {
                                     .build()
                             )
                             .price(
-                                Price.UnitPrice.builder()
+                                Price.Unit.builder()
                                     .id("id")
                                     .billableMetric(
-                                        Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                        Price.Unit.BillableMetric.builder().id("id").build()
                                     )
                                     .billingCycleConfiguration(
-                                        Price.UnitPrice.BillingCycleConfiguration.builder()
+                                        Price.Unit.BillingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.UnitPrice.BillingCycleConfiguration
-                                                    .DurationUnit
+                                                Price.Unit.BillingCycleConfiguration.DurationUnit
                                                     .DAY
                                             )
                                             .build()
                                     )
-                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                    .cadence(Price.Unit.Cadence.ONE_TIME)
                                     .conversionRate(0.0)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditAllocation(
-                                        Price.UnitPrice.CreditAllocation.builder()
+                                        Price.Unit.CreditAllocation.builder()
                                             .allowsRollover(true)
                                             .currency("currency")
                                             .build()
@@ -1985,32 +1948,29 @@ internal class SubscriptionChangeApplyResponseTest {
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(0.0)
                                     .invoicingCycleConfiguration(
-                                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                        Price.Unit.InvoicingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.UnitPrice.InvoicingCycleConfiguration
-                                                    .DurationUnit
+                                                Price.Unit.InvoicingCycleConfiguration.DurationUnit
                                                     .DAY
                                             )
                                             .build()
                                     )
-                                    .item(
-                                        Price.UnitPrice.Item.builder().id("id").name("name").build()
-                                    )
+                                    .item(Price.Unit.Item.builder().id("id").name("name").build())
                                     .maximum(
-                                        Price.UnitPrice.Maximum.builder()
+                                        Price.Unit.Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
                                     .maximumAmount("maximum_amount")
                                     .metadata(
-                                        Price.UnitPrice.Metadata.builder()
+                                        Price.Unit.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
                                             .build()
                                     )
                                     .minimum(
-                                        Price.UnitPrice.Minimum.builder()
+                                        Price.Unit.Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .minimumAmount("minimum_amount")
                                             .build()
@@ -2018,14 +1978,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                     .minimumAmount("minimum_amount")
                                     .name("name")
                                     .planPhaseOrder(0L)
-                                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                    .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                     .unitConfig(
-                                        Price.UnitPrice.UnitConfig.builder()
+                                        Price.Unit.UnitConfig.builder()
                                             .unitAmount("unit_amount")
                                             .build()
                                     )
                                     .dimensionalPriceConfiguration(
-                                        Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                        Price.Unit.DimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
                                             .build()
@@ -2252,9 +2212,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                             .id("id")
                                             .adjustedSubtotal("5.00")
                                             .addAdjustment(
-                                                Invoice.LineItem.Adjustment
-                                                    .MonetaryUsageDiscountAdjustment
-                                                    .builder()
+                                                Invoice.LineItem.Adjustment.UsageDiscount.builder()
                                                     .id("id")
                                                     .amount("amount")
                                                     .addAppliesToPriceId("string")
@@ -2298,26 +2256,25 @@ internal class SubscriptionChangeApplyResponseTest {
                                             .name("Fixed Fee")
                                             .partiallyInvoicedAmount("4.00")
                                             .price(
-                                                Price.UnitPrice.builder()
+                                                Price.Unit.builder()
                                                     .id("id")
                                                     .billableMetric(
-                                                        Price.UnitPrice.BillableMetric.builder()
+                                                        Price.Unit.BillableMetric.builder()
                                                             .id("id")
                                                             .build()
                                                     )
                                                     .billingCycleConfiguration(
-                                                        Price.UnitPrice.BillingCycleConfiguration
+                                                        Price.Unit.BillingCycleConfiguration
                                                             .builder()
                                                             .duration(0L)
                                                             .durationUnit(
-                                                                Price.UnitPrice
-                                                                    .BillingCycleConfiguration
+                                                                Price.Unit.BillingCycleConfiguration
                                                                     .DurationUnit
                                                                     .DAY
                                                             )
                                                             .build()
                                                     )
-                                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                                    .cadence(Price.Unit.Cadence.ONE_TIME)
                                                     .conversionRate(0.0)
                                                     .createdAt(
                                                         OffsetDateTime.parse(
@@ -2325,7 +2282,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         )
                                                     )
                                                     .creditAllocation(
-                                                        Price.UnitPrice.CreditAllocation.builder()
+                                                        Price.Unit.CreditAllocation.builder()
                                                             .allowsRollover(true)
                                                             .currency("currency")
                                                             .build()
@@ -2346,11 +2303,11 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     .externalPriceId("external_price_id")
                                                     .fixedPriceQuantity(0.0)
                                                     .invoicingCycleConfiguration(
-                                                        Price.UnitPrice.InvoicingCycleConfiguration
+                                                        Price.Unit.InvoicingCycleConfiguration
                                                             .builder()
                                                             .duration(0L)
                                                             .durationUnit(
-                                                                Price.UnitPrice
+                                                                Price.Unit
                                                                     .InvoicingCycleConfiguration
                                                                     .DurationUnit
                                                                     .DAY
@@ -2358,20 +2315,20 @@ internal class SubscriptionChangeApplyResponseTest {
                                                             .build()
                                                     )
                                                     .item(
-                                                        Price.UnitPrice.Item.builder()
+                                                        Price.Unit.Item.builder()
                                                             .id("id")
                                                             .name("name")
                                                             .build()
                                                     )
                                                     .maximum(
-                                                        Price.UnitPrice.Maximum.builder()
+                                                        Price.Unit.Maximum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .maximumAmount("maximum_amount")
                                                             .build()
                                                     )
                                                     .maximumAmount("maximum_amount")
                                                     .metadata(
-                                                        Price.UnitPrice.Metadata.builder()
+                                                        Price.Unit.Metadata.builder()
                                                             .putAdditionalProperty(
                                                                 "foo",
                                                                 JsonValue.from("string"),
@@ -2379,7 +2336,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                             .build()
                                                     )
                                                     .minimum(
-                                                        Price.UnitPrice.Minimum.builder()
+                                                        Price.Unit.Minimum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .minimumAmount("minimum_amount")
                                                             .build()
@@ -2387,17 +2344,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     .minimumAmount("minimum_amount")
                                                     .name("name")
                                                     .planPhaseOrder(0L)
-                                                    .priceType(
-                                                        Price.UnitPrice.PriceType.USAGE_PRICE
-                                                    )
+                                                    .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                     .unitConfig(
-                                                        Price.UnitPrice.UnitConfig.builder()
+                                                        Price.Unit.UnitConfig.builder()
                                                             .unitAmount("unit_amount")
                                                             .build()
                                                     )
                                                     .dimensionalPriceConfiguration(
-                                                        Price.UnitPrice
-                                                            .DimensionalPriceConfiguration
+                                                        Price.Unit.DimensionalPriceConfiguration
                                                             .builder()
                                                             .addDimensionValue("string")
                                                             .dimensionalPriceGroupId(
@@ -2412,21 +2366,17 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 OffsetDateTime.parse("2022-02-01T08:00:00+00:00")
                                             )
                                             .addSubLineItem(
-                                                Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                    .builder()
+                                                Invoice.LineItem.SubLineItem.Matrix.builder()
                                                     .amount("9.00")
                                                     .grouping(
-                                                        Invoice.LineItem.SubLineItem
-                                                            .MatrixSubLineItem
-                                                            .Grouping
+                                                        Invoice.LineItem.SubLineItem.Matrix.Grouping
                                                             .builder()
                                                             .key("region")
                                                             .value("west")
                                                             .build()
                                                     )
                                                     .matrixConfig(
-                                                        Invoice.LineItem.SubLineItem
-                                                            .MatrixSubLineItem
+                                                        Invoice.LineItem.SubLineItem.Matrix
                                                             .MatrixConfig
                                                             .builder()
                                                             .addDimensionValue("string")
@@ -2714,9 +2664,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                             .id("id")
                                             .adjustedSubtotal("5.00")
                                             .addAdjustment(
-                                                Invoice.LineItem.Adjustment
-                                                    .MonetaryUsageDiscountAdjustment
-                                                    .builder()
+                                                Invoice.LineItem.Adjustment.UsageDiscount.builder()
                                                     .id("id")
                                                     .amount("amount")
                                                     .addAppliesToPriceId("string")
@@ -2760,26 +2708,25 @@ internal class SubscriptionChangeApplyResponseTest {
                                             .name("Fixed Fee")
                                             .partiallyInvoicedAmount("4.00")
                                             .price(
-                                                Price.UnitPrice.builder()
+                                                Price.Unit.builder()
                                                     .id("id")
                                                     .billableMetric(
-                                                        Price.UnitPrice.BillableMetric.builder()
+                                                        Price.Unit.BillableMetric.builder()
                                                             .id("id")
                                                             .build()
                                                     )
                                                     .billingCycleConfiguration(
-                                                        Price.UnitPrice.BillingCycleConfiguration
+                                                        Price.Unit.BillingCycleConfiguration
                                                             .builder()
                                                             .duration(0L)
                                                             .durationUnit(
-                                                                Price.UnitPrice
-                                                                    .BillingCycleConfiguration
+                                                                Price.Unit.BillingCycleConfiguration
                                                                     .DurationUnit
                                                                     .DAY
                                                             )
                                                             .build()
                                                     )
-                                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                                    .cadence(Price.Unit.Cadence.ONE_TIME)
                                                     .conversionRate(0.0)
                                                     .createdAt(
                                                         OffsetDateTime.parse(
@@ -2787,7 +2734,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         )
                                                     )
                                                     .creditAllocation(
-                                                        Price.UnitPrice.CreditAllocation.builder()
+                                                        Price.Unit.CreditAllocation.builder()
                                                             .allowsRollover(true)
                                                             .currency("currency")
                                                             .build()
@@ -2808,11 +2755,11 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     .externalPriceId("external_price_id")
                                                     .fixedPriceQuantity(0.0)
                                                     .invoicingCycleConfiguration(
-                                                        Price.UnitPrice.InvoicingCycleConfiguration
+                                                        Price.Unit.InvoicingCycleConfiguration
                                                             .builder()
                                                             .duration(0L)
                                                             .durationUnit(
-                                                                Price.UnitPrice
+                                                                Price.Unit
                                                                     .InvoicingCycleConfiguration
                                                                     .DurationUnit
                                                                     .DAY
@@ -2820,20 +2767,20 @@ internal class SubscriptionChangeApplyResponseTest {
                                                             .build()
                                                     )
                                                     .item(
-                                                        Price.UnitPrice.Item.builder()
+                                                        Price.Unit.Item.builder()
                                                             .id("id")
                                                             .name("name")
                                                             .build()
                                                     )
                                                     .maximum(
-                                                        Price.UnitPrice.Maximum.builder()
+                                                        Price.Unit.Maximum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .maximumAmount("maximum_amount")
                                                             .build()
                                                     )
                                                     .maximumAmount("maximum_amount")
                                                     .metadata(
-                                                        Price.UnitPrice.Metadata.builder()
+                                                        Price.Unit.Metadata.builder()
                                                             .putAdditionalProperty(
                                                                 "foo",
                                                                 JsonValue.from("string"),
@@ -2841,7 +2788,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                             .build()
                                                     )
                                                     .minimum(
-                                                        Price.UnitPrice.Minimum.builder()
+                                                        Price.Unit.Minimum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .minimumAmount("minimum_amount")
                                                             .build()
@@ -2849,17 +2796,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     .minimumAmount("minimum_amount")
                                                     .name("name")
                                                     .planPhaseOrder(0L)
-                                                    .priceType(
-                                                        Price.UnitPrice.PriceType.USAGE_PRICE
-                                                    )
+                                                    .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                     .unitConfig(
-                                                        Price.UnitPrice.UnitConfig.builder()
+                                                        Price.Unit.UnitConfig.builder()
                                                             .unitAmount("unit_amount")
                                                             .build()
                                                     )
                                                     .dimensionalPriceConfiguration(
-                                                        Price.UnitPrice
-                                                            .DimensionalPriceConfiguration
+                                                        Price.Unit.DimensionalPriceConfiguration
                                                             .builder()
                                                             .addDimensionValue("string")
                                                             .dimensionalPriceGroupId(
@@ -2874,21 +2818,17 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 OffsetDateTime.parse("2022-02-01T08:00:00+00:00")
                                             )
                                             .addSubLineItem(
-                                                Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                    .builder()
+                                                Invoice.LineItem.SubLineItem.Matrix.builder()
                                                     .amount("9.00")
                                                     .grouping(
-                                                        Invoice.LineItem.SubLineItem
-                                                            .MatrixSubLineItem
-                                                            .Grouping
+                                                        Invoice.LineItem.SubLineItem.Matrix.Grouping
                                                             .builder()
                                                             .key("region")
                                                             .value("west")
                                                             .build()
                                                     )
                                                     .matrixConfig(
-                                                        Invoice.LineItem.SubLineItem
-                                                            .MatrixSubLineItem
+                                                        Invoice.LineItem.SubLineItem.Matrix
                                                             .MatrixConfig
                                                             .builder()
                                                             .addDimensionValue("string")
@@ -3005,7 +2945,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                 .adjustment(
                                     SubscriptionChangeApplyResponse.Subscription.AdjustmentInterval
                                         .Adjustment
-                                        .PlanPhaseUsageDiscountAdjustment
+                                        .UsageDiscount
                                         .builder()
                                         .id("id")
                                         .addAppliesToPriceId("string")
@@ -3127,8 +3067,7 @@ internal class SubscriptionChangeApplyResponseTest {
                         )
                         .defaultInvoiceMemo("default_invoice_memo")
                         .addDiscountInterval(
-                            SubscriptionChangeApplyResponse.Subscription.DiscountInterval
-                                .AmountDiscountInterval
+                            SubscriptionChangeApplyResponse.Subscription.DiscountInterval.Amount
                                 .builder()
                                 .amountDiscount("amount_discount")
                                 .addAppliesToPriceId("string")
@@ -3182,7 +3121,7 @@ internal class SubscriptionChangeApplyResponseTest {
                             Plan.builder()
                                 .id("id")
                                 .addAdjustment(
-                                    Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
+                                    Plan.Adjustment.UsageDiscount.builder()
                                         .id("id")
                                         .addAppliesToPriceId("string")
                                         .isInvoiceLevel(true)
@@ -3271,28 +3210,26 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .build()
                                 )
                                 .addPrice(
-                                    Price.UnitPrice.builder()
+                                    Price.Unit.builder()
                                         .id("id")
                                         .billableMetric(
-                                            Price.UnitPrice.BillableMetric.builder()
-                                                .id("id")
-                                                .build()
+                                            Price.Unit.BillableMetric.builder().id("id").build()
                                         )
                                         .billingCycleConfiguration(
-                                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                                            Price.Unit.BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.BillingCycleConfiguration
+                                                    Price.Unit.BillingCycleConfiguration
                                                         .DurationUnit
                                                         .DAY
                                                 )
                                                 .build()
                                         )
-                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                        .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
-                                            Price.UnitPrice.CreditAllocation.builder()
+                                            Price.Unit.CreditAllocation.builder()
                                                 .allowsRollover(true)
                                                 .currency("currency")
                                                 .build()
@@ -3312,30 +3249,27 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                            Price.Unit.InvoicingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
+                                                    Price.Unit.InvoicingCycleConfiguration
                                                         .DurationUnit
                                                         .DAY
                                                 )
                                                 .build()
                                         )
                                         .item(
-                                            Price.UnitPrice.Item.builder()
-                                                .id("id")
-                                                .name("name")
-                                                .build()
+                                            Price.Unit.Item.builder().id("id").name("name").build()
                                         )
                                         .maximum(
-                                            Price.UnitPrice.Maximum.builder()
+                                            Price.Unit.Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
                                         .metadata(
-                                            Price.UnitPrice.Metadata.builder()
+                                            Price.Unit.Metadata.builder()
                                                 .putAdditionalProperty(
                                                     "foo",
                                                     JsonValue.from("string"),
@@ -3343,7 +3277,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Price.UnitPrice.Minimum.builder()
+                                            Price.Unit.Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .minimumAmount("minimum_amount")
                                                 .build()
@@ -3351,14 +3285,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .minimumAmount("minimum_amount")
                                         .name("name")
                                         .planPhaseOrder(0L)
-                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .unitConfig(
-                                            Price.UnitPrice.UnitConfig.builder()
+                                            Price.Unit.UnitConfig.builder()
                                                 .unitAmount("unit_amount")
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
-                                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                            Price.Unit.DimensionalPriceConfiguration.builder()
                                                 .addDimensionValue("string")
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
@@ -3408,28 +3342,26 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .build()
                                 )
                                 .price(
-                                    Price.UnitPrice.builder()
+                                    Price.Unit.builder()
                                         .id("id")
                                         .billableMetric(
-                                            Price.UnitPrice.BillableMetric.builder()
-                                                .id("id")
-                                                .build()
+                                            Price.Unit.BillableMetric.builder().id("id").build()
                                         )
                                         .billingCycleConfiguration(
-                                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                                            Price.Unit.BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.BillingCycleConfiguration
+                                                    Price.Unit.BillingCycleConfiguration
                                                         .DurationUnit
                                                         .DAY
                                                 )
                                                 .build()
                                         )
-                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                        .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
-                                            Price.UnitPrice.CreditAllocation.builder()
+                                            Price.Unit.CreditAllocation.builder()
                                                 .allowsRollover(true)
                                                 .currency("currency")
                                                 .build()
@@ -3449,30 +3381,27 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                            Price.Unit.InvoicingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
+                                                    Price.Unit.InvoicingCycleConfiguration
                                                         .DurationUnit
                                                         .DAY
                                                 )
                                                 .build()
                                         )
                                         .item(
-                                            Price.UnitPrice.Item.builder()
-                                                .id("id")
-                                                .name("name")
-                                                .build()
+                                            Price.Unit.Item.builder().id("id").name("name").build()
                                         )
                                         .maximum(
-                                            Price.UnitPrice.Maximum.builder()
+                                            Price.Unit.Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
                                         .metadata(
-                                            Price.UnitPrice.Metadata.builder()
+                                            Price.Unit.Metadata.builder()
                                                 .putAdditionalProperty(
                                                     "foo",
                                                     JsonValue.from("string"),
@@ -3480,7 +3409,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Price.UnitPrice.Minimum.builder()
+                                            Price.Unit.Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .minimumAmount("minimum_amount")
                                                 .build()
@@ -3488,14 +3417,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .minimumAmount("minimum_amount")
                                         .name("name")
                                         .planPhaseOrder(0L)
-                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .unitConfig(
-                                            Price.UnitPrice.UnitConfig.builder()
+                                            Price.Unit.UnitConfig.builder()
                                                 .unitAmount("unit_amount")
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
-                                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                            Price.Unit.DimensionalPriceConfiguration.builder()
                                                 .addDimensionValue("string")
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
@@ -3739,8 +3668,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .id("id")
                                                 .adjustedSubtotal("5.00")
                                                 .addAdjustment(
-                                                    Invoice.LineItem.Adjustment
-                                                        .MonetaryUsageDiscountAdjustment
+                                                    Invoice.LineItem.Adjustment.UsageDiscount
                                                         .builder()
                                                         .id("id")
                                                         .amount("amount")
@@ -3788,27 +3716,26 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .name("Fixed Fee")
                                                 .partiallyInvoicedAmount("4.00")
                                                 .price(
-                                                    Price.UnitPrice.builder()
+                                                    Price.Unit.builder()
                                                         .id("id")
                                                         .billableMetric(
-                                                            Price.UnitPrice.BillableMetric.builder()
+                                                            Price.Unit.BillableMetric.builder()
                                                                 .id("id")
                                                                 .build()
                                                         )
                                                         .billingCycleConfiguration(
-                                                            Price.UnitPrice
-                                                                .BillingCycleConfiguration
+                                                            Price.Unit.BillingCycleConfiguration
                                                                 .builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.UnitPrice
+                                                                    Price.Unit
                                                                         .BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
                                                                 .build()
                                                         )
-                                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                                        .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .conversionRate(0.0)
                                                         .createdAt(
                                                             OffsetDateTime.parse(
@@ -3816,8 +3743,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                             )
                                                         )
                                                         .creditAllocation(
-                                                            Price.UnitPrice.CreditAllocation
-                                                                .builder()
+                                                            Price.Unit.CreditAllocation.builder()
                                                                 .allowsRollover(true)
                                                                 .currency("currency")
                                                                 .build()
@@ -3842,12 +3768,11 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .externalPriceId("external_price_id")
                                                         .fixedPriceQuantity(0.0)
                                                         .invoicingCycleConfiguration(
-                                                            Price.UnitPrice
-                                                                .InvoicingCycleConfiguration
+                                                            Price.Unit.InvoicingCycleConfiguration
                                                                 .builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.UnitPrice
+                                                                    Price.Unit
                                                                         .InvoicingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
@@ -3855,20 +3780,20 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .item(
-                                                            Price.UnitPrice.Item.builder()
+                                                            Price.Unit.Item.builder()
                                                                 .id("id")
                                                                 .name("name")
                                                                 .build()
                                                         )
                                                         .maximum(
-                                                            Price.UnitPrice.Maximum.builder()
+                                                            Price.Unit.Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .maximumAmount("maximum_amount")
                                                                 .build()
                                                         )
                                                         .maximumAmount("maximum_amount")
                                                         .metadata(
-                                                            Price.UnitPrice.Metadata.builder()
+                                                            Price.Unit.Metadata.builder()
                                                                 .putAdditionalProperty(
                                                                     "foo",
                                                                     JsonValue.from("string"),
@@ -3876,7 +3801,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .minimum(
-                                                            Price.UnitPrice.Minimum.builder()
+                                                            Price.Unit.Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .minimumAmount("minimum_amount")
                                                                 .build()
@@ -3884,17 +3809,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .minimumAmount("minimum_amount")
                                                         .name("name")
                                                         .planPhaseOrder(0L)
-                                                        .priceType(
-                                                            Price.UnitPrice.PriceType.USAGE_PRICE
-                                                        )
+                                                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                         .unitConfig(
-                                                            Price.UnitPrice.UnitConfig.builder()
+                                                            Price.Unit.UnitConfig.builder()
                                                                 .unitAmount("unit_amount")
                                                                 .build()
                                                         )
                                                         .dimensionalPriceConfiguration(
-                                                            Price.UnitPrice
-                                                                .DimensionalPriceConfiguration
+                                                            Price.Unit.DimensionalPriceConfiguration
                                                                 .builder()
                                                                 .addDimensionValue("string")
                                                                 .dimensionalPriceGroupId(
@@ -3911,12 +3833,10 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     )
                                                 )
                                                 .addSubLineItem(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .builder()
+                                                    Invoice.LineItem.SubLineItem.Matrix.builder()
                                                         .amount("9.00")
                                                         .grouping(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
+                                                            Invoice.LineItem.SubLineItem.Matrix
                                                                 .Grouping
                                                                 .builder()
                                                                 .key("region")
@@ -3924,8 +3844,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .matrixConfig(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
+                                                            Invoice.LineItem.SubLineItem.Matrix
                                                                 .MatrixConfig
                                                                 .builder()
                                                                 .addDimensionValue("string")
@@ -4233,8 +4152,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .id("id")
                                                 .adjustedSubtotal("5.00")
                                                 .addAdjustment(
-                                                    Invoice.LineItem.Adjustment
-                                                        .MonetaryUsageDiscountAdjustment
+                                                    Invoice.LineItem.Adjustment.UsageDiscount
                                                         .builder()
                                                         .id("id")
                                                         .amount("amount")
@@ -4282,27 +4200,26 @@ internal class SubscriptionChangeApplyResponseTest {
                                                 .name("Fixed Fee")
                                                 .partiallyInvoicedAmount("4.00")
                                                 .price(
-                                                    Price.UnitPrice.builder()
+                                                    Price.Unit.builder()
                                                         .id("id")
                                                         .billableMetric(
-                                                            Price.UnitPrice.BillableMetric.builder()
+                                                            Price.Unit.BillableMetric.builder()
                                                                 .id("id")
                                                                 .build()
                                                         )
                                                         .billingCycleConfiguration(
-                                                            Price.UnitPrice
-                                                                .BillingCycleConfiguration
+                                                            Price.Unit.BillingCycleConfiguration
                                                                 .builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.UnitPrice
+                                                                    Price.Unit
                                                                         .BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
                                                                 .build()
                                                         )
-                                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                                        .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .conversionRate(0.0)
                                                         .createdAt(
                                                             OffsetDateTime.parse(
@@ -4310,8 +4227,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                             )
                                                         )
                                                         .creditAllocation(
-                                                            Price.UnitPrice.CreditAllocation
-                                                                .builder()
+                                                            Price.Unit.CreditAllocation.builder()
                                                                 .allowsRollover(true)
                                                                 .currency("currency")
                                                                 .build()
@@ -4336,12 +4252,11 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .externalPriceId("external_price_id")
                                                         .fixedPriceQuantity(0.0)
                                                         .invoicingCycleConfiguration(
-                                                            Price.UnitPrice
-                                                                .InvoicingCycleConfiguration
+                                                            Price.Unit.InvoicingCycleConfiguration
                                                                 .builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.UnitPrice
+                                                                    Price.Unit
                                                                         .InvoicingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
@@ -4349,20 +4264,20 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .item(
-                                                            Price.UnitPrice.Item.builder()
+                                                            Price.Unit.Item.builder()
                                                                 .id("id")
                                                                 .name("name")
                                                                 .build()
                                                         )
                                                         .maximum(
-                                                            Price.UnitPrice.Maximum.builder()
+                                                            Price.Unit.Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .maximumAmount("maximum_amount")
                                                                 .build()
                                                         )
                                                         .maximumAmount("maximum_amount")
                                                         .metadata(
-                                                            Price.UnitPrice.Metadata.builder()
+                                                            Price.Unit.Metadata.builder()
                                                                 .putAdditionalProperty(
                                                                     "foo",
                                                                     JsonValue.from("string"),
@@ -4370,7 +4285,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .minimum(
-                                                            Price.UnitPrice.Minimum.builder()
+                                                            Price.Unit.Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .minimumAmount("minimum_amount")
                                                                 .build()
@@ -4378,17 +4293,14 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         .minimumAmount("minimum_amount")
                                                         .name("name")
                                                         .planPhaseOrder(0L)
-                                                        .priceType(
-                                                            Price.UnitPrice.PriceType.USAGE_PRICE
-                                                        )
+                                                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                         .unitConfig(
-                                                            Price.UnitPrice.UnitConfig.builder()
+                                                            Price.Unit.UnitConfig.builder()
                                                                 .unitAmount("unit_amount")
                                                                 .build()
                                                         )
                                                         .dimensionalPriceConfiguration(
-                                                            Price.UnitPrice
-                                                                .DimensionalPriceConfiguration
+                                                            Price.Unit.DimensionalPriceConfiguration
                                                                 .builder()
                                                                 .addDimensionValue("string")
                                                                 .dimensionalPriceGroupId(
@@ -4405,12 +4317,10 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     )
                                                 )
                                                 .addSubLineItem(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .builder()
+                                                    Invoice.LineItem.SubLineItem.Matrix.builder()
                                                         .amount("9.00")
                                                         .grouping(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
+                                                            Invoice.LineItem.SubLineItem.Matrix
                                                                 .Grouping
                                                                 .builder()
                                                                 .key("region")
@@ -4418,8 +4328,7 @@ internal class SubscriptionChangeApplyResponseTest {
                                                                 .build()
                                                         )
                                                         .matrixConfig(
-                                                            Invoice.LineItem.SubLineItem
-                                                                .MatrixSubLineItem
+                                                            Invoice.LineItem.SubLineItem.Matrix
                                                                 .MatrixConfig
                                                                 .builder()
                                                                 .addDimensionValue("string")

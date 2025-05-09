@@ -18,8 +18,7 @@ internal class InvoiceLineItemCreateResponseTest {
                 .id("id")
                 .adjustedSubtotal("5.00")
                 .addAdjustment(
-                    InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
-                        .builder()
+                    InvoiceLineItemCreateResponse.Adjustment.UsageDiscount.builder()
                         .id("id")
                         .amount("amount")
                         .addAppliesToPriceId("string")
@@ -59,22 +58,20 @@ internal class InvoiceLineItemCreateResponseTest {
                 .name("Fixed Fee")
                 .partiallyInvoicedAmount("4.00")
                 .price(
-                    Price.UnitPrice.builder()
+                    Price.Unit.builder()
                         .id("id")
-                        .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())
+                        .billableMetric(Price.Unit.BillableMetric.builder().id("id").build())
                         .billingCycleConfiguration(
-                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                            Price.Unit.BillingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(
-                                    Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
-                                )
+                                .durationUnit(Price.Unit.BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
-                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                        .cadence(Price.Unit.Cadence.ONE_TIME)
                         .conversionRate(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditAllocation(
-                            Price.UnitPrice.CreditAllocation.builder()
+                            Price.Unit.CreditAllocation.builder()
                                 .allowsRollover(true)
                                 .currency("currency")
                                 .build()
@@ -92,28 +89,28 @@ internal class InvoiceLineItemCreateResponseTest {
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
                         .invoicingCycleConfiguration(
-                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                            Price.Unit.InvoicingCycleConfiguration.builder()
                                 .duration(0L)
                                 .durationUnit(
-                                    Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                                    Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
                                 )
                                 .build()
                         )
-                        .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                        .item(Price.Unit.Item.builder().id("id").name("name").build())
                         .maximum(
-                            Price.UnitPrice.Maximum.builder()
+                            Price.Unit.Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
                         .maximumAmount("maximum_amount")
                         .metadata(
-                            Price.UnitPrice.Metadata.builder()
+                            Price.Unit.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
                         .minimum(
-                            Price.UnitPrice.Minimum.builder()
+                            Price.Unit.Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .minimumAmount("minimum_amount")
                                 .build()
@@ -121,12 +118,12 @@ internal class InvoiceLineItemCreateResponseTest {
                         .minimumAmount("minimum_amount")
                         .name("name")
                         .planPhaseOrder(0L)
-                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
                         .unitConfig(
-                            Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
+                            Price.Unit.UnitConfig.builder().unitAmount("unit_amount").build()
                         )
                         .dimensionalPriceConfiguration(
-                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                            Price.Unit.DimensionalPriceConfiguration.builder()
                                 .addDimensionValue("string")
                                 .dimensionalPriceGroupId("dimensional_price_group_id")
                                 .build()
@@ -136,18 +133,16 @@ internal class InvoiceLineItemCreateResponseTest {
                 .quantity(1.0)
                 .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                 .addSubLineItem(
-                    InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.builder()
+                    InvoiceLineItemCreateResponse.SubLineItem.Matrix.builder()
                         .amount("9.00")
                         .grouping(
-                            InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.Grouping
-                                .builder()
+                            InvoiceLineItemCreateResponse.SubLineItem.Matrix.Grouping.builder()
                                 .key("region")
                                 .value("west")
                                 .build()
                         )
                         .matrixConfig(
-                            InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.MatrixConfig
-                                .builder()
+                            InvoiceLineItemCreateResponse.SubLineItem.Matrix.MatrixConfig.builder()
                                 .addDimensionValue("string")
                                 .build()
                         )
@@ -170,9 +165,8 @@ internal class InvoiceLineItemCreateResponseTest {
         assertThat(invoiceLineItemCreateResponse.adjustedSubtotal()).isEqualTo("5.00")
         assertThat(invoiceLineItemCreateResponse.adjustments())
             .containsExactly(
-                InvoiceLineItemCreateResponse.Adjustment.ofMonetaryUsageDiscount(
-                    InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
-                        .builder()
+                InvoiceLineItemCreateResponse.Adjustment.ofUsageDiscount(
+                    InvoiceLineItemCreateResponse.Adjustment.UsageDiscount.builder()
                         .id("id")
                         .amount("amount")
                         .addAppliesToPriceId("string")
@@ -221,22 +215,20 @@ internal class InvoiceLineItemCreateResponseTest {
         assertThat(invoiceLineItemCreateResponse.price())
             .isEqualTo(
                 Price.ofUnit(
-                    Price.UnitPrice.builder()
+                    Price.Unit.builder()
                         .id("id")
-                        .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())
+                        .billableMetric(Price.Unit.BillableMetric.builder().id("id").build())
                         .billingCycleConfiguration(
-                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                            Price.Unit.BillingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(
-                                    Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
-                                )
+                                .durationUnit(Price.Unit.BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
-                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                        .cadence(Price.Unit.Cadence.ONE_TIME)
                         .conversionRate(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditAllocation(
-                            Price.UnitPrice.CreditAllocation.builder()
+                            Price.Unit.CreditAllocation.builder()
                                 .allowsRollover(true)
                                 .currency("currency")
                                 .build()
@@ -254,28 +246,28 @@ internal class InvoiceLineItemCreateResponseTest {
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
                         .invoicingCycleConfiguration(
-                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                            Price.Unit.InvoicingCycleConfiguration.builder()
                                 .duration(0L)
                                 .durationUnit(
-                                    Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                                    Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
                                 )
                                 .build()
                         )
-                        .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                        .item(Price.Unit.Item.builder().id("id").name("name").build())
                         .maximum(
-                            Price.UnitPrice.Maximum.builder()
+                            Price.Unit.Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
                         .maximumAmount("maximum_amount")
                         .metadata(
-                            Price.UnitPrice.Metadata.builder()
+                            Price.Unit.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
                         .minimum(
-                            Price.UnitPrice.Minimum.builder()
+                            Price.Unit.Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .minimumAmount("minimum_amount")
                                 .build()
@@ -283,12 +275,12 @@ internal class InvoiceLineItemCreateResponseTest {
                         .minimumAmount("minimum_amount")
                         .name("name")
                         .planPhaseOrder(0L)
-                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
                         .unitConfig(
-                            Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
+                            Price.Unit.UnitConfig.builder().unitAmount("unit_amount").build()
                         )
                         .dimensionalPriceConfiguration(
-                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                            Price.Unit.DimensionalPriceConfiguration.builder()
                                 .addDimensionValue("string")
                                 .dimensionalPriceGroupId("dimensional_price_group_id")
                                 .build()
@@ -302,18 +294,16 @@ internal class InvoiceLineItemCreateResponseTest {
         assertThat(invoiceLineItemCreateResponse.subLineItems())
             .containsExactly(
                 InvoiceLineItemCreateResponse.SubLineItem.ofMatrix(
-                    InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.builder()
+                    InvoiceLineItemCreateResponse.SubLineItem.Matrix.builder()
                         .amount("9.00")
                         .grouping(
-                            InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.Grouping
-                                .builder()
+                            InvoiceLineItemCreateResponse.SubLineItem.Matrix.Grouping.builder()
                                 .key("region")
                                 .value("west")
                                 .build()
                         )
                         .matrixConfig(
-                            InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.MatrixConfig
-                                .builder()
+                            InvoiceLineItemCreateResponse.SubLineItem.Matrix.MatrixConfig.builder()
                                 .addDimensionValue("string")
                                 .build()
                         )
@@ -342,8 +332,7 @@ internal class InvoiceLineItemCreateResponseTest {
                 .id("id")
                 .adjustedSubtotal("5.00")
                 .addAdjustment(
-                    InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
-                        .builder()
+                    InvoiceLineItemCreateResponse.Adjustment.UsageDiscount.builder()
                         .id("id")
                         .amount("amount")
                         .addAppliesToPriceId("string")
@@ -383,22 +372,20 @@ internal class InvoiceLineItemCreateResponseTest {
                 .name("Fixed Fee")
                 .partiallyInvoicedAmount("4.00")
                 .price(
-                    Price.UnitPrice.builder()
+                    Price.Unit.builder()
                         .id("id")
-                        .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())
+                        .billableMetric(Price.Unit.BillableMetric.builder().id("id").build())
                         .billingCycleConfiguration(
-                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                            Price.Unit.BillingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(
-                                    Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
-                                )
+                                .durationUnit(Price.Unit.BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
-                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                        .cadence(Price.Unit.Cadence.ONE_TIME)
                         .conversionRate(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditAllocation(
-                            Price.UnitPrice.CreditAllocation.builder()
+                            Price.Unit.CreditAllocation.builder()
                                 .allowsRollover(true)
                                 .currency("currency")
                                 .build()
@@ -416,28 +403,28 @@ internal class InvoiceLineItemCreateResponseTest {
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
                         .invoicingCycleConfiguration(
-                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                            Price.Unit.InvoicingCycleConfiguration.builder()
                                 .duration(0L)
                                 .durationUnit(
-                                    Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                                    Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
                                 )
                                 .build()
                         )
-                        .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                        .item(Price.Unit.Item.builder().id("id").name("name").build())
                         .maximum(
-                            Price.UnitPrice.Maximum.builder()
+                            Price.Unit.Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
                         .maximumAmount("maximum_amount")
                         .metadata(
-                            Price.UnitPrice.Metadata.builder()
+                            Price.Unit.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
                         .minimum(
-                            Price.UnitPrice.Minimum.builder()
+                            Price.Unit.Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .minimumAmount("minimum_amount")
                                 .build()
@@ -445,12 +432,12 @@ internal class InvoiceLineItemCreateResponseTest {
                         .minimumAmount("minimum_amount")
                         .name("name")
                         .planPhaseOrder(0L)
-                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
                         .unitConfig(
-                            Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
+                            Price.Unit.UnitConfig.builder().unitAmount("unit_amount").build()
                         )
                         .dimensionalPriceConfiguration(
-                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                            Price.Unit.DimensionalPriceConfiguration.builder()
                                 .addDimensionValue("string")
                                 .dimensionalPriceGroupId("dimensional_price_group_id")
                                 .build()
@@ -460,18 +447,16 @@ internal class InvoiceLineItemCreateResponseTest {
                 .quantity(1.0)
                 .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                 .addSubLineItem(
-                    InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.builder()
+                    InvoiceLineItemCreateResponse.SubLineItem.Matrix.builder()
                         .amount("9.00")
                         .grouping(
-                            InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.Grouping
-                                .builder()
+                            InvoiceLineItemCreateResponse.SubLineItem.Matrix.Grouping.builder()
                                 .key("region")
                                 .value("west")
                                 .build()
                         )
                         .matrixConfig(
-                            InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.MatrixConfig
-                                .builder()
+                            InvoiceLineItemCreateResponse.SubLineItem.Matrix.MatrixConfig.builder()
                                 .addDimensionValue("string")
                                 .build()
                         )

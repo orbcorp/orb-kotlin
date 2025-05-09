@@ -16,15 +16,14 @@ import org.junit.jupiter.params.provider.EnumSource
 internal class CustomerCreditLedgerListByExternalIdResponseTest {
 
     @Test
-    fun ofIncrementLedgerEntry() {
-        val incrementLedgerEntry =
-            CustomerCreditLedgerListByExternalIdResponse.IncrementLedgerEntry.builder()
+    fun ofIncrement() {
+        val increment =
+            CustomerCreditLedgerListByExternalIdResponse.Increment.builder()
                 .id("id")
                 .amount(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditBlock(
-                    CustomerCreditLedgerListByExternalIdResponse.IncrementLedgerEntry.CreditBlock
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Increment.CreditBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
@@ -32,8 +31,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 )
                 .currency("currency")
                 .customer(
-                    CustomerCreditLedgerListByExternalIdResponse.IncrementLedgerEntry.Customer
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Increment.Customer.builder()
                         .id("id")
                         .externalCustomerId("external_customer_id")
                         .build()
@@ -41,13 +39,11 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .description("description")
                 .endingBalance(0.0)
                 .entryStatus(
-                    CustomerCreditLedgerListByExternalIdResponse.IncrementLedgerEntry.EntryStatus
-                        .COMMITTED
+                    CustomerCreditLedgerListByExternalIdResponse.Increment.EntryStatus.COMMITTED
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
-                    CustomerCreditLedgerListByExternalIdResponse.IncrementLedgerEntry.Metadata
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Increment.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
@@ -55,35 +51,28 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .build()
 
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofIncrementLedgerEntry(
-                incrementLedgerEntry
-            )
+            CustomerCreditLedgerListByExternalIdResponse.ofIncrement(increment)
 
-        assertThat(customerCreditLedgerListByExternalIdResponse.incrementLedgerEntry())
-            .isEqualTo(incrementLedgerEntry)
-        assertThat(customerCreditLedgerListByExternalIdResponse.decrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChangeLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiryLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiatedLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.amendmentLedgerEntry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.increment()).isEqualTo(increment)
+        assertThat(customerCreditLedgerListByExternalIdResponse.decrement()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChange()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.void()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiated()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.amendment()).isNull()
     }
 
     @Test
-    fun ofIncrementLedgerEntryRoundtrip() {
+    fun ofIncrementRoundtrip() {
         val jsonMapper = jsonMapper()
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofIncrementLedgerEntry(
-                CustomerCreditLedgerListByExternalIdResponse.IncrementLedgerEntry.builder()
+            CustomerCreditLedgerListByExternalIdResponse.ofIncrement(
+                CustomerCreditLedgerListByExternalIdResponse.Increment.builder()
                     .id("id")
                     .amount(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditBlock(
-                        CustomerCreditLedgerListByExternalIdResponse.IncrementLedgerEntry
-                            .CreditBlock
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Increment.CreditBlock.builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .perUnitCostBasis("per_unit_cost_basis")
@@ -91,8 +80,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     )
                     .currency("currency")
                     .customer(
-                        CustomerCreditLedgerListByExternalIdResponse.IncrementLedgerEntry.Customer
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Increment.Customer.builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
                             .build()
@@ -100,14 +88,11 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     .description("description")
                     .endingBalance(0.0)
                     .entryStatus(
-                        CustomerCreditLedgerListByExternalIdResponse.IncrementLedgerEntry
-                            .EntryStatus
-                            .COMMITTED
+                        CustomerCreditLedgerListByExternalIdResponse.Increment.EntryStatus.COMMITTED
                     )
                     .ledgerSequenceNumber(0L)
                     .metadata(
-                        CustomerCreditLedgerListByExternalIdResponse.IncrementLedgerEntry.Metadata
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Increment.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
@@ -126,15 +111,14 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
     }
 
     @Test
-    fun ofDecrementLedgerEntry() {
-        val decrementLedgerEntry =
-            CustomerCreditLedgerListByExternalIdResponse.DecrementLedgerEntry.builder()
+    fun ofDecrement() {
+        val decrement =
+            CustomerCreditLedgerListByExternalIdResponse.Decrement.builder()
                 .id("id")
                 .amount(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditBlock(
-                    CustomerCreditLedgerListByExternalIdResponse.DecrementLedgerEntry.CreditBlock
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Decrement.CreditBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
@@ -142,8 +126,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 )
                 .currency("currency")
                 .customer(
-                    CustomerCreditLedgerListByExternalIdResponse.DecrementLedgerEntry.Customer
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Decrement.Customer.builder()
                         .id("id")
                         .externalCustomerId("external_customer_id")
                         .build()
@@ -151,13 +134,11 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .description("description")
                 .endingBalance(0.0)
                 .entryStatus(
-                    CustomerCreditLedgerListByExternalIdResponse.DecrementLedgerEntry.EntryStatus
-                        .COMMITTED
+                    CustomerCreditLedgerListByExternalIdResponse.Decrement.EntryStatus.COMMITTED
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
-                    CustomerCreditLedgerListByExternalIdResponse.DecrementLedgerEntry.Metadata
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Decrement.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
@@ -168,35 +149,28 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .build()
 
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofDecrementLedgerEntry(
-                decrementLedgerEntry
-            )
+            CustomerCreditLedgerListByExternalIdResponse.ofDecrement(decrement)
 
-        assertThat(customerCreditLedgerListByExternalIdResponse.incrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.decrementLedgerEntry())
-            .isEqualTo(decrementLedgerEntry)
-        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChangeLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiryLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiatedLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.amendmentLedgerEntry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.increment()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.decrement()).isEqualTo(decrement)
+        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChange()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.void()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiated()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.amendment()).isNull()
     }
 
     @Test
-    fun ofDecrementLedgerEntryRoundtrip() {
+    fun ofDecrementRoundtrip() {
         val jsonMapper = jsonMapper()
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofDecrementLedgerEntry(
-                CustomerCreditLedgerListByExternalIdResponse.DecrementLedgerEntry.builder()
+            CustomerCreditLedgerListByExternalIdResponse.ofDecrement(
+                CustomerCreditLedgerListByExternalIdResponse.Decrement.builder()
                     .id("id")
                     .amount(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditBlock(
-                        CustomerCreditLedgerListByExternalIdResponse.DecrementLedgerEntry
-                            .CreditBlock
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Decrement.CreditBlock.builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .perUnitCostBasis("per_unit_cost_basis")
@@ -204,8 +178,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     )
                     .currency("currency")
                     .customer(
-                        CustomerCreditLedgerListByExternalIdResponse.DecrementLedgerEntry.Customer
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Decrement.Customer.builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
                             .build()
@@ -213,14 +186,11 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     .description("description")
                     .endingBalance(0.0)
                     .entryStatus(
-                        CustomerCreditLedgerListByExternalIdResponse.DecrementLedgerEntry
-                            .EntryStatus
-                            .COMMITTED
+                        CustomerCreditLedgerListByExternalIdResponse.Decrement.EntryStatus.COMMITTED
                     )
                     .ledgerSequenceNumber(0L)
                     .metadata(
-                        CustomerCreditLedgerListByExternalIdResponse.DecrementLedgerEntry.Metadata
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Decrement.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
@@ -242,15 +212,14 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
     }
 
     @Test
-    fun ofExpirationChangeLedgerEntry() {
-        val expirationChangeLedgerEntry =
-            CustomerCreditLedgerListByExternalIdResponse.ExpirationChangeLedgerEntry.builder()
+    fun ofExpirationChange() {
+        val expirationChange =
+            CustomerCreditLedgerListByExternalIdResponse.ExpirationChange.builder()
                 .id("id")
                 .amount(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditBlock(
-                    CustomerCreditLedgerListByExternalIdResponse.ExpirationChangeLedgerEntry
-                        .CreditBlock
+                    CustomerCreditLedgerListByExternalIdResponse.ExpirationChange.CreditBlock
                         .builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -259,9 +228,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 )
                 .currency("currency")
                 .customer(
-                    CustomerCreditLedgerListByExternalIdResponse.ExpirationChangeLedgerEntry
-                        .Customer
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.ExpirationChange.Customer.builder()
                         .id("id")
                         .externalCustomerId("external_customer_id")
                         .build()
@@ -269,15 +236,12 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .description("description")
                 .endingBalance(0.0)
                 .entryStatus(
-                    CustomerCreditLedgerListByExternalIdResponse.ExpirationChangeLedgerEntry
-                        .EntryStatus
+                    CustomerCreditLedgerListByExternalIdResponse.ExpirationChange.EntryStatus
                         .COMMITTED
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
-                    CustomerCreditLedgerListByExternalIdResponse.ExpirationChangeLedgerEntry
-                        .Metadata
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.ExpirationChange.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
@@ -286,33 +250,29 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .build()
 
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofExpirationChangeLedgerEntry(
-                expirationChangeLedgerEntry
-            )
+            CustomerCreditLedgerListByExternalIdResponse.ofExpirationChange(expirationChange)
 
-        assertThat(customerCreditLedgerListByExternalIdResponse.incrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.decrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChangeLedgerEntry())
-            .isEqualTo(expirationChangeLedgerEntry)
-        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiryLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiatedLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.amendmentLedgerEntry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.increment()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.decrement()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChange())
+            .isEqualTo(expirationChange)
+        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.void()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiated()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.amendment()).isNull()
     }
 
     @Test
-    fun ofExpirationChangeLedgerEntryRoundtrip() {
+    fun ofExpirationChangeRoundtrip() {
         val jsonMapper = jsonMapper()
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofExpirationChangeLedgerEntry(
-                CustomerCreditLedgerListByExternalIdResponse.ExpirationChangeLedgerEntry.builder()
+            CustomerCreditLedgerListByExternalIdResponse.ofExpirationChange(
+                CustomerCreditLedgerListByExternalIdResponse.ExpirationChange.builder()
                     .id("id")
                     .amount(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditBlock(
-                        CustomerCreditLedgerListByExternalIdResponse.ExpirationChangeLedgerEntry
-                            .CreditBlock
+                        CustomerCreditLedgerListByExternalIdResponse.ExpirationChange.CreditBlock
                             .builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -321,8 +281,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     )
                     .currency("currency")
                     .customer(
-                        CustomerCreditLedgerListByExternalIdResponse.ExpirationChangeLedgerEntry
-                            .Customer
+                        CustomerCreditLedgerListByExternalIdResponse.ExpirationChange.Customer
                             .builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
@@ -331,14 +290,12 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     .description("description")
                     .endingBalance(0.0)
                     .entryStatus(
-                        CustomerCreditLedgerListByExternalIdResponse.ExpirationChangeLedgerEntry
-                            .EntryStatus
+                        CustomerCreditLedgerListByExternalIdResponse.ExpirationChange.EntryStatus
                             .COMMITTED
                     )
                     .ledgerSequenceNumber(0L)
                     .metadata(
-                        CustomerCreditLedgerListByExternalIdResponse.ExpirationChangeLedgerEntry
-                            .Metadata
+                        CustomerCreditLedgerListByExternalIdResponse.ExpirationChange.Metadata
                             .builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
@@ -359,15 +316,14 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
     }
 
     @Test
-    fun ofCreditBlockExpiryLedgerEntry() {
-        val creditBlockExpiryLedgerEntry =
-            CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiryLedgerEntry.builder()
+    fun ofCreditBlockExpiry() {
+        val creditBlockExpiry =
+            CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiry.builder()
                 .id("id")
                 .amount(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditBlock(
-                    CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiryLedgerEntry
-                        .CreditBlock
+                    CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiry.CreditBlock
                         .builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -376,8 +332,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 )
                 .currency("currency")
                 .customer(
-                    CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiryLedgerEntry
-                        .Customer
+                    CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiry.Customer
                         .builder()
                         .id("id")
                         .externalCustomerId("external_customer_id")
@@ -386,14 +341,12 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .description("description")
                 .endingBalance(0.0)
                 .entryStatus(
-                    CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiryLedgerEntry
-                        .EntryStatus
+                    CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiry.EntryStatus
                         .COMMITTED
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
-                    CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiryLedgerEntry
-                        .Metadata
+                    CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiry.Metadata
                         .builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
@@ -402,33 +355,29 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .build()
 
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofCreditBlockExpiryLedgerEntry(
-                creditBlockExpiryLedgerEntry
-            )
+            CustomerCreditLedgerListByExternalIdResponse.ofCreditBlockExpiry(creditBlockExpiry)
 
-        assertThat(customerCreditLedgerListByExternalIdResponse.incrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.decrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChangeLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiryLedgerEntry())
-            .isEqualTo(creditBlockExpiryLedgerEntry)
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiatedLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.amendmentLedgerEntry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.increment()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.decrement()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChange()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiry())
+            .isEqualTo(creditBlockExpiry)
+        assertThat(customerCreditLedgerListByExternalIdResponse.void()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiated()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.amendment()).isNull()
     }
 
     @Test
-    fun ofCreditBlockExpiryLedgerEntryRoundtrip() {
+    fun ofCreditBlockExpiryRoundtrip() {
         val jsonMapper = jsonMapper()
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofCreditBlockExpiryLedgerEntry(
-                CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiryLedgerEntry.builder()
+            CustomerCreditLedgerListByExternalIdResponse.ofCreditBlockExpiry(
+                CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiry.builder()
                     .id("id")
                     .amount(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditBlock(
-                        CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiryLedgerEntry
-                            .CreditBlock
+                        CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiry.CreditBlock
                             .builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -437,8 +386,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     )
                     .currency("currency")
                     .customer(
-                        CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiryLedgerEntry
-                            .Customer
+                        CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiry.Customer
                             .builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
@@ -447,14 +395,12 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     .description("description")
                     .endingBalance(0.0)
                     .entryStatus(
-                        CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiryLedgerEntry
-                            .EntryStatus
+                        CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiry.EntryStatus
                             .COMMITTED
                     )
                     .ledgerSequenceNumber(0L)
                     .metadata(
-                        CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiryLedgerEntry
-                            .Metadata
+                        CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiry.Metadata
                             .builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
@@ -474,15 +420,14 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
     }
 
     @Test
-    fun ofVoidLedgerEntry() {
-        val voidLedgerEntry =
-            CustomerCreditLedgerListByExternalIdResponse.VoidLedgerEntry.builder()
+    fun ofVoid() {
+        val void =
+            CustomerCreditLedgerListByExternalIdResponse.Void.builder()
                 .id("id")
                 .amount(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditBlock(
-                    CustomerCreditLedgerListByExternalIdResponse.VoidLedgerEntry.CreditBlock
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Void.CreditBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
@@ -490,7 +435,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 )
                 .currency("currency")
                 .customer(
-                    CustomerCreditLedgerListByExternalIdResponse.VoidLedgerEntry.Customer.builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Void.Customer.builder()
                         .id("id")
                         .externalCustomerId("external_customer_id")
                         .build()
@@ -498,12 +443,11 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .description("description")
                 .endingBalance(0.0)
                 .entryStatus(
-                    CustomerCreditLedgerListByExternalIdResponse.VoidLedgerEntry.EntryStatus
-                        .COMMITTED
+                    CustomerCreditLedgerListByExternalIdResponse.Void.EntryStatus.COMMITTED
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
-                    CustomerCreditLedgerListByExternalIdResponse.VoidLedgerEntry.Metadata.builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Void.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
@@ -513,32 +457,28 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .build()
 
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofVoidLedgerEntry(voidLedgerEntry)
+            CustomerCreditLedgerListByExternalIdResponse.ofVoid(void)
 
-        assertThat(customerCreditLedgerListByExternalIdResponse.incrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.decrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChangeLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiryLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidLedgerEntry())
-            .isEqualTo(voidLedgerEntry)
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiatedLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.amendmentLedgerEntry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.increment()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.decrement()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChange()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.void()).isEqualTo(void)
+        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiated()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.amendment()).isNull()
     }
 
     @Test
-    fun ofVoidLedgerEntryRoundtrip() {
+    fun ofVoidRoundtrip() {
         val jsonMapper = jsonMapper()
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofVoidLedgerEntry(
-                CustomerCreditLedgerListByExternalIdResponse.VoidLedgerEntry.builder()
+            CustomerCreditLedgerListByExternalIdResponse.ofVoid(
+                CustomerCreditLedgerListByExternalIdResponse.Void.builder()
                     .id("id")
                     .amount(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditBlock(
-                        CustomerCreditLedgerListByExternalIdResponse.VoidLedgerEntry.CreditBlock
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Void.CreditBlock.builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .perUnitCostBasis("per_unit_cost_basis")
@@ -546,8 +486,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     )
                     .currency("currency")
                     .customer(
-                        CustomerCreditLedgerListByExternalIdResponse.VoidLedgerEntry.Customer
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Void.Customer.builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
                             .build()
@@ -555,13 +494,11 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     .description("description")
                     .endingBalance(0.0)
                     .entryStatus(
-                        CustomerCreditLedgerListByExternalIdResponse.VoidLedgerEntry.EntryStatus
-                            .COMMITTED
+                        CustomerCreditLedgerListByExternalIdResponse.Void.EntryStatus.COMMITTED
                     )
                     .ledgerSequenceNumber(0L)
                     .metadata(
-                        CustomerCreditLedgerListByExternalIdResponse.VoidLedgerEntry.Metadata
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Void.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
@@ -582,16 +519,14 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
     }
 
     @Test
-    fun ofVoidInitiatedLedgerEntry() {
-        val voidInitiatedLedgerEntry =
-            CustomerCreditLedgerListByExternalIdResponse.VoidInitiatedLedgerEntry.builder()
+    fun ofVoidInitiated() {
+        val voidInitiated =
+            CustomerCreditLedgerListByExternalIdResponse.VoidInitiated.builder()
                 .id("id")
                 .amount(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditBlock(
-                    CustomerCreditLedgerListByExternalIdResponse.VoidInitiatedLedgerEntry
-                        .CreditBlock
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.VoidInitiated.CreditBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
@@ -599,8 +534,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 )
                 .currency("currency")
                 .customer(
-                    CustomerCreditLedgerListByExternalIdResponse.VoidInitiatedLedgerEntry.Customer
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.VoidInitiated.Customer.builder()
                         .id("id")
                         .externalCustomerId("external_customer_id")
                         .build()
@@ -608,14 +542,11 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .description("description")
                 .endingBalance(0.0)
                 .entryStatus(
-                    CustomerCreditLedgerListByExternalIdResponse.VoidInitiatedLedgerEntry
-                        .EntryStatus
-                        .COMMITTED
+                    CustomerCreditLedgerListByExternalIdResponse.VoidInitiated.EntryStatus.COMMITTED
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
-                    CustomerCreditLedgerListByExternalIdResponse.VoidInitiatedLedgerEntry.Metadata
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.VoidInitiated.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
@@ -626,34 +557,29 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .build()
 
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofVoidInitiatedLedgerEntry(
-                voidInitiatedLedgerEntry
-            )
+            CustomerCreditLedgerListByExternalIdResponse.ofVoidInitiated(voidInitiated)
 
-        assertThat(customerCreditLedgerListByExternalIdResponse.incrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.decrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChangeLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiryLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiatedLedgerEntry())
-            .isEqualTo(voidInitiatedLedgerEntry)
-        assertThat(customerCreditLedgerListByExternalIdResponse.amendmentLedgerEntry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.increment()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.decrement()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChange()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.void()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiated())
+            .isEqualTo(voidInitiated)
+        assertThat(customerCreditLedgerListByExternalIdResponse.amendment()).isNull()
     }
 
     @Test
-    fun ofVoidInitiatedLedgerEntryRoundtrip() {
+    fun ofVoidInitiatedRoundtrip() {
         val jsonMapper = jsonMapper()
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofVoidInitiatedLedgerEntry(
-                CustomerCreditLedgerListByExternalIdResponse.VoidInitiatedLedgerEntry.builder()
+            CustomerCreditLedgerListByExternalIdResponse.ofVoidInitiated(
+                CustomerCreditLedgerListByExternalIdResponse.VoidInitiated.builder()
                     .id("id")
                     .amount(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditBlock(
-                        CustomerCreditLedgerListByExternalIdResponse.VoidInitiatedLedgerEntry
-                            .CreditBlock
+                        CustomerCreditLedgerListByExternalIdResponse.VoidInitiated.CreditBlock
                             .builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -662,8 +588,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     )
                     .currency("currency")
                     .customer(
-                        CustomerCreditLedgerListByExternalIdResponse.VoidInitiatedLedgerEntry
-                            .Customer
+                        CustomerCreditLedgerListByExternalIdResponse.VoidInitiated.Customer
                             .builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
@@ -672,14 +597,12 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     .description("description")
                     .endingBalance(0.0)
                     .entryStatus(
-                        CustomerCreditLedgerListByExternalIdResponse.VoidInitiatedLedgerEntry
-                            .EntryStatus
+                        CustomerCreditLedgerListByExternalIdResponse.VoidInitiated.EntryStatus
                             .COMMITTED
                     )
                     .ledgerSequenceNumber(0L)
                     .metadata(
-                        CustomerCreditLedgerListByExternalIdResponse.VoidInitiatedLedgerEntry
-                            .Metadata
+                        CustomerCreditLedgerListByExternalIdResponse.VoidInitiated.Metadata
                             .builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
@@ -702,15 +625,14 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
     }
 
     @Test
-    fun ofAmendmentLedgerEntry() {
-        val amendmentLedgerEntry =
-            CustomerCreditLedgerListByExternalIdResponse.AmendmentLedgerEntry.builder()
+    fun ofAmendment() {
+        val amendment =
+            CustomerCreditLedgerListByExternalIdResponse.Amendment.builder()
                 .id("id")
                 .amount(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditBlock(
-                    CustomerCreditLedgerListByExternalIdResponse.AmendmentLedgerEntry.CreditBlock
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Amendment.CreditBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
@@ -718,8 +640,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 )
                 .currency("currency")
                 .customer(
-                    CustomerCreditLedgerListByExternalIdResponse.AmendmentLedgerEntry.Customer
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Amendment.Customer.builder()
                         .id("id")
                         .externalCustomerId("external_customer_id")
                         .build()
@@ -727,13 +648,11 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .description("description")
                 .endingBalance(0.0)
                 .entryStatus(
-                    CustomerCreditLedgerListByExternalIdResponse.AmendmentLedgerEntry.EntryStatus
-                        .COMMITTED
+                    CustomerCreditLedgerListByExternalIdResponse.Amendment.EntryStatus.COMMITTED
                 )
                 .ledgerSequenceNumber(0L)
                 .metadata(
-                    CustomerCreditLedgerListByExternalIdResponse.AmendmentLedgerEntry.Metadata
-                        .builder()
+                    CustomerCreditLedgerListByExternalIdResponse.Amendment.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
@@ -741,35 +660,28 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                 .build()
 
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofAmendmentLedgerEntry(
-                amendmentLedgerEntry
-            )
+            CustomerCreditLedgerListByExternalIdResponse.ofAmendment(amendment)
 
-        assertThat(customerCreditLedgerListByExternalIdResponse.incrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.decrementLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChangeLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiryLedgerEntry())
-            .isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiatedLedgerEntry()).isNull()
-        assertThat(customerCreditLedgerListByExternalIdResponse.amendmentLedgerEntry())
-            .isEqualTo(amendmentLedgerEntry)
+        assertThat(customerCreditLedgerListByExternalIdResponse.increment()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.decrement()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.expirationChange()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.creditBlockExpiry()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.void()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.voidInitiated()).isNull()
+        assertThat(customerCreditLedgerListByExternalIdResponse.amendment()).isEqualTo(amendment)
     }
 
     @Test
-    fun ofAmendmentLedgerEntryRoundtrip() {
+    fun ofAmendmentRoundtrip() {
         val jsonMapper = jsonMapper()
         val customerCreditLedgerListByExternalIdResponse =
-            CustomerCreditLedgerListByExternalIdResponse.ofAmendmentLedgerEntry(
-                CustomerCreditLedgerListByExternalIdResponse.AmendmentLedgerEntry.builder()
+            CustomerCreditLedgerListByExternalIdResponse.ofAmendment(
+                CustomerCreditLedgerListByExternalIdResponse.Amendment.builder()
                     .id("id")
                     .amount(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditBlock(
-                        CustomerCreditLedgerListByExternalIdResponse.AmendmentLedgerEntry
-                            .CreditBlock
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Amendment.CreditBlock.builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .perUnitCostBasis("per_unit_cost_basis")
@@ -777,8 +689,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     )
                     .currency("currency")
                     .customer(
-                        CustomerCreditLedgerListByExternalIdResponse.AmendmentLedgerEntry.Customer
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Amendment.Customer.builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
                             .build()
@@ -786,14 +697,11 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     .description("description")
                     .endingBalance(0.0)
                     .entryStatus(
-                        CustomerCreditLedgerListByExternalIdResponse.AmendmentLedgerEntry
-                            .EntryStatus
-                            .COMMITTED
+                        CustomerCreditLedgerListByExternalIdResponse.Amendment.EntryStatus.COMMITTED
                     )
                     .ledgerSequenceNumber(0L)
                     .metadata(
-                        CustomerCreditLedgerListByExternalIdResponse.AmendmentLedgerEntry.Metadata
-                            .builder()
+                        CustomerCreditLedgerListByExternalIdResponse.Amendment.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )

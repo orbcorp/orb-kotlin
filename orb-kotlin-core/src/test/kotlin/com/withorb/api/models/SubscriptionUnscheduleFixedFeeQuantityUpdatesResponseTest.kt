@@ -24,7 +24,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                         .adjustment(
                             SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.AdjustmentInterval
                                 .Adjustment
-                                .PlanPhaseUsageDiscountAdjustment
+                                .UsageDiscount
                                 .builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
@@ -141,8 +141,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                 )
                 .defaultInvoiceMemo("default_invoice_memo")
                 .addDiscountInterval(
-                    SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval
-                        .AmountDiscountInterval
+                    SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval.Amount
                         .builder()
                         .amountDiscount("amount_discount")
                         .addAppliesToPriceId("string")
@@ -196,7 +195,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                     Plan.builder()
                         .id("id")
                         .addAdjustment(
-                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
+                            Plan.Adjustment.UsageDiscount.builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
                                 .isInvoiceLevel(true)
@@ -283,25 +282,24 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .build()
                         )
                         .addPrice(
-                            Price.UnitPrice.builder()
+                            Price.Unit.builder()
                                 .id("id")
                                 .billableMetric(
-                                    Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                    Price.Unit.BillableMetric.builder().id("id").build()
                                 )
                                 .billingCycleConfiguration(
-                                    Price.UnitPrice.BillingCycleConfiguration.builder()
+                                    Price.Unit.BillingCycleConfiguration.builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            Price.UnitPrice.BillingCycleConfiguration.DurationUnit
-                                                .DAY
+                                            Price.Unit.BillingCycleConfiguration.DurationUnit.DAY
                                         )
                                         .build()
                                 )
-                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                .cadence(Price.Unit.Cadence.ONE_TIME)
                                 .conversionRate(0.0)
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditAllocation(
-                                    Price.UnitPrice.CreditAllocation.builder()
+                                    Price.Unit.CreditAllocation.builder()
                                         .allowsRollover(true)
                                         .currency("currency")
                                         .build()
@@ -319,29 +317,28 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(0.0)
                                 .invoicingCycleConfiguration(
-                                    Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                    Price.Unit.InvoicingCycleConfiguration.builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
-                                                .DAY
+                                            Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
                                         )
                                         .build()
                                 )
-                                .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                                .item(Price.Unit.Item.builder().id("id").name("name").build())
                                 .maximum(
-                                    Price.UnitPrice.Maximum.builder()
+                                    Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
                                 .maximumAmount("maximum_amount")
                                 .metadata(
-                                    Price.UnitPrice.Metadata.builder()
+                                    Price.Unit.Metadata.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
                                 .minimum(
-                                    Price.UnitPrice.Minimum.builder()
+                                    Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .minimumAmount("minimum_amount")
                                         .build()
@@ -349,14 +346,14 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .minimumAmount("minimum_amount")
                                 .name("name")
                                 .planPhaseOrder(0L)
-                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                 .unitConfig(
-                                    Price.UnitPrice.UnitConfig.builder()
+                                    Price.Unit.UnitConfig.builder()
                                         .unitAmount("unit_amount")
                                         .build()
                                 )
                                 .dimensionalPriceConfiguration(
-                                    Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                    Price.Unit.DimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
                                         .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .build()
@@ -402,25 +399,24 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .build()
                         )
                         .price(
-                            Price.UnitPrice.builder()
+                            Price.Unit.builder()
                                 .id("id")
                                 .billableMetric(
-                                    Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                    Price.Unit.BillableMetric.builder().id("id").build()
                                 )
                                 .billingCycleConfiguration(
-                                    Price.UnitPrice.BillingCycleConfiguration.builder()
+                                    Price.Unit.BillingCycleConfiguration.builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            Price.UnitPrice.BillingCycleConfiguration.DurationUnit
-                                                .DAY
+                                            Price.Unit.BillingCycleConfiguration.DurationUnit.DAY
                                         )
                                         .build()
                                 )
-                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                .cadence(Price.Unit.Cadence.ONE_TIME)
                                 .conversionRate(0.0)
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditAllocation(
-                                    Price.UnitPrice.CreditAllocation.builder()
+                                    Price.Unit.CreditAllocation.builder()
                                         .allowsRollover(true)
                                         .currency("currency")
                                         .build()
@@ -438,29 +434,28 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(0.0)
                                 .invoicingCycleConfiguration(
-                                    Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                    Price.Unit.InvoicingCycleConfiguration.builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
-                                                .DAY
+                                            Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
                                         )
                                         .build()
                                 )
-                                .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                                .item(Price.Unit.Item.builder().id("id").name("name").build())
                                 .maximum(
-                                    Price.UnitPrice.Maximum.builder()
+                                    Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
                                 .maximumAmount("maximum_amount")
                                 .metadata(
-                                    Price.UnitPrice.Metadata.builder()
+                                    Price.Unit.Metadata.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
                                 .minimum(
-                                    Price.UnitPrice.Minimum.builder()
+                                    Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .minimumAmount("minimum_amount")
                                         .build()
@@ -468,14 +463,14 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .minimumAmount("minimum_amount")
                                 .name("name")
                                 .planPhaseOrder(0L)
-                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                 .unitConfig(
-                                    Price.UnitPrice.UnitConfig.builder()
+                                    Price.Unit.UnitConfig.builder()
                                         .unitAmount("unit_amount")
                                         .build()
                                 )
                                 .dimensionalPriceConfiguration(
-                                    Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                    Price.Unit.DimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
                                         .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .build()
@@ -693,9 +688,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                         .id("id")
                                         .adjustedSubtotal("5.00")
                                         .addAdjustment(
-                                            Invoice.LineItem.Adjustment
-                                                .MonetaryUsageDiscountAdjustment
-                                                .builder()
+                                            Invoice.LineItem.Adjustment.UsageDiscount.builder()
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
@@ -737,32 +730,30 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                         .name("Fixed Fee")
                                         .partiallyInvoicedAmount("4.00")
                                         .price(
-                                            Price.UnitPrice.builder()
+                                            Price.Unit.builder()
                                                 .id("id")
                                                 .billableMetric(
-                                                    Price.UnitPrice.BillableMetric.builder()
+                                                    Price.Unit.BillableMetric.builder()
                                                         .id("id")
                                                         .build()
                                                 )
                                                 .billingCycleConfiguration(
-                                                    Price.UnitPrice.BillingCycleConfiguration
-                                                        .builder()
+                                                    Price.Unit.BillingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.UnitPrice
-                                                                .BillingCycleConfiguration
+                                                            Price.Unit.BillingCycleConfiguration
                                                                 .DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
                                                 )
-                                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                                .cadence(Price.Unit.Cadence.ONE_TIME)
                                                 .conversionRate(0.0)
                                                 .createdAt(
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                                 )
                                                 .creditAllocation(
-                                                    Price.UnitPrice.CreditAllocation.builder()
+                                                    Price.Unit.CreditAllocation.builder()
                                                         .allowsRollover(true)
                                                         .currency("currency")
                                                         .build()
@@ -783,32 +774,30 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(0.0)
                                                 .invoicingCycleConfiguration(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
-                                                        .builder()
+                                                    Price.Unit.InvoicingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.UnitPrice
-                                                                .InvoicingCycleConfiguration
+                                                            Price.Unit.InvoicingCycleConfiguration
                                                                 .DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
                                                 )
                                                 .item(
-                                                    Price.UnitPrice.Item.builder()
+                                                    Price.Unit.Item.builder()
                                                         .id("id")
                                                         .name("name")
                                                         .build()
                                                 )
                                                 .maximum(
-                                                    Price.UnitPrice.Maximum.builder()
+                                                    Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
                                                 .maximumAmount("maximum_amount")
                                                 .metadata(
-                                                    Price.UnitPrice.Metadata.builder()
+                                                    Price.Unit.Metadata.builder()
                                                         .putAdditionalProperty(
                                                             "foo",
                                                             JsonValue.from("string"),
@@ -816,7 +805,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                         .build()
                                                 )
                                                 .minimum(
-                                                    Price.UnitPrice.Minimum.builder()
+                                                    Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .minimumAmount("minimum_amount")
                                                         .build()
@@ -824,14 +813,14 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                 .minimumAmount("minimum_amount")
                                                 .name("name")
                                                 .planPhaseOrder(0L)
-                                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                                .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                 .unitConfig(
-                                                    Price.UnitPrice.UnitConfig.builder()
+                                                    Price.Unit.UnitConfig.builder()
                                                         .unitAmount("unit_amount")
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
-                                                    Price.UnitPrice.DimensionalPriceConfiguration
+                                                    Price.Unit.DimensionalPriceConfiguration
                                                         .builder()
                                                         .addDimensionValue("string")
                                                         .dimensionalPriceGroupId(
@@ -846,19 +835,17 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                             OffsetDateTime.parse("2022-02-01T08:00:00+00:00")
                                         )
                                         .addSubLineItem(
-                                            Invoice.LineItem.SubLineItem.MatrixSubLineItem.builder()
+                                            Invoice.LineItem.SubLineItem.Matrix.builder()
                                                 .amount("9.00")
                                                 .grouping(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .Grouping
+                                                    Invoice.LineItem.SubLineItem.Matrix.Grouping
                                                         .builder()
                                                         .key("region")
                                                         .value("west")
                                                         .build()
                                                 )
                                                 .matrixConfig(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .MatrixConfig
+                                                    Invoice.LineItem.SubLineItem.Matrix.MatrixConfig
                                                         .builder()
                                                         .addDimensionValue("string")
                                                         .build()
@@ -1126,9 +1113,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                         .id("id")
                                         .adjustedSubtotal("5.00")
                                         .addAdjustment(
-                                            Invoice.LineItem.Adjustment
-                                                .MonetaryUsageDiscountAdjustment
-                                                .builder()
+                                            Invoice.LineItem.Adjustment.UsageDiscount.builder()
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
@@ -1170,32 +1155,30 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                         .name("Fixed Fee")
                                         .partiallyInvoicedAmount("4.00")
                                         .price(
-                                            Price.UnitPrice.builder()
+                                            Price.Unit.builder()
                                                 .id("id")
                                                 .billableMetric(
-                                                    Price.UnitPrice.BillableMetric.builder()
+                                                    Price.Unit.BillableMetric.builder()
                                                         .id("id")
                                                         .build()
                                                 )
                                                 .billingCycleConfiguration(
-                                                    Price.UnitPrice.BillingCycleConfiguration
-                                                        .builder()
+                                                    Price.Unit.BillingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.UnitPrice
-                                                                .BillingCycleConfiguration
+                                                            Price.Unit.BillingCycleConfiguration
                                                                 .DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
                                                 )
-                                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                                .cadence(Price.Unit.Cadence.ONE_TIME)
                                                 .conversionRate(0.0)
                                                 .createdAt(
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                                 )
                                                 .creditAllocation(
-                                                    Price.UnitPrice.CreditAllocation.builder()
+                                                    Price.Unit.CreditAllocation.builder()
                                                         .allowsRollover(true)
                                                         .currency("currency")
                                                         .build()
@@ -1216,32 +1199,30 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(0.0)
                                                 .invoicingCycleConfiguration(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
-                                                        .builder()
+                                                    Price.Unit.InvoicingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.UnitPrice
-                                                                .InvoicingCycleConfiguration
+                                                            Price.Unit.InvoicingCycleConfiguration
                                                                 .DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
                                                 )
                                                 .item(
-                                                    Price.UnitPrice.Item.builder()
+                                                    Price.Unit.Item.builder()
                                                         .id("id")
                                                         .name("name")
                                                         .build()
                                                 )
                                                 .maximum(
-                                                    Price.UnitPrice.Maximum.builder()
+                                                    Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
                                                 .maximumAmount("maximum_amount")
                                                 .metadata(
-                                                    Price.UnitPrice.Metadata.builder()
+                                                    Price.Unit.Metadata.builder()
                                                         .putAdditionalProperty(
                                                             "foo",
                                                             JsonValue.from("string"),
@@ -1249,7 +1230,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                         .build()
                                                 )
                                                 .minimum(
-                                                    Price.UnitPrice.Minimum.builder()
+                                                    Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .minimumAmount("minimum_amount")
                                                         .build()
@@ -1257,14 +1238,14 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                 .minimumAmount("minimum_amount")
                                                 .name("name")
                                                 .planPhaseOrder(0L)
-                                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                                .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                 .unitConfig(
-                                                    Price.UnitPrice.UnitConfig.builder()
+                                                    Price.Unit.UnitConfig.builder()
                                                         .unitAmount("unit_amount")
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
-                                                    Price.UnitPrice.DimensionalPriceConfiguration
+                                                    Price.Unit.DimensionalPriceConfiguration
                                                         .builder()
                                                         .addDimensionValue("string")
                                                         .dimensionalPriceGroupId(
@@ -1279,19 +1260,17 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                             OffsetDateTime.parse("2022-02-01T08:00:00+00:00")
                                         )
                                         .addSubLineItem(
-                                            Invoice.LineItem.SubLineItem.MatrixSubLineItem.builder()
+                                            Invoice.LineItem.SubLineItem.Matrix.builder()
                                                 .amount("9.00")
                                                 .grouping(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .Grouping
+                                                    Invoice.LineItem.SubLineItem.Matrix.Grouping
                                                         .builder()
                                                         .key("region")
                                                         .value("west")
                                                         .build()
                                                 )
                                                 .matrixConfig(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .MatrixConfig
+                                                    Invoice.LineItem.SubLineItem.Matrix.MatrixConfig
                                                         .builder()
                                                         .addDimensionValue("string")
                                                         .build()
@@ -1382,7 +1361,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                     .adjustment(
                         SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.AdjustmentInterval
                             .Adjustment
-                            .PlanPhaseUsageDiscountAdjustment
+                            .UsageDiscount
                             .builder()
                             .id("id")
                             .addAppliesToPriceId("string")
@@ -1516,8 +1495,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
         assertThat(subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.discountIntervals())
             .containsExactly(
                 SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval.ofAmount(
-                    SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval
-                        .AmountDiscountInterval
+                    SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval.Amount
                         .builder()
                         .amountDiscount("amount_discount")
                         .addAppliesToPriceId("string")
@@ -1582,7 +1560,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                 Plan.builder()
                     .id("id")
                     .addAdjustment(
-                        Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
+                        Plan.Adjustment.UsageDiscount.builder()
                             .id("id")
                             .addAppliesToPriceId("string")
                             .isInvoiceLevel(true)
@@ -1669,24 +1647,22 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                             .build()
                     )
                     .addPrice(
-                        Price.UnitPrice.builder()
+                        Price.Unit.builder()
                             .id("id")
-                            .billableMetric(
-                                Price.UnitPrice.BillableMetric.builder().id("id").build()
-                            )
+                            .billableMetric(Price.Unit.BillableMetric.builder().id("id").build())
                             .billingCycleConfiguration(
-                                Price.UnitPrice.BillingCycleConfiguration.builder()
+                                Price.Unit.BillingCycleConfiguration.builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
+                                        Price.Unit.BillingCycleConfiguration.DurationUnit.DAY
                                     )
                                     .build()
                             )
-                            .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                            .cadence(Price.Unit.Cadence.ONE_TIME)
                             .conversionRate(0.0)
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .creditAllocation(
-                                Price.UnitPrice.CreditAllocation.builder()
+                                Price.Unit.CreditAllocation.builder()
                                     .allowsRollover(true)
                                     .currency("currency")
                                     .build()
@@ -1704,28 +1680,28 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(0.0)
                             .invoicingCycleConfiguration(
-                                Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                Price.Unit.InvoicingCycleConfiguration.builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                                        Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
                                     )
                                     .build()
                             )
-                            .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                            .item(Price.Unit.Item.builder().id("id").name("name").build())
                             .maximum(
-                                Price.UnitPrice.Maximum.builder()
+                                Price.Unit.Maximum.builder()
                                     .addAppliesToPriceId("string")
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
                             .maximumAmount("maximum_amount")
                             .metadata(
-                                Price.UnitPrice.Metadata.builder()
+                                Price.Unit.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
                             .minimum(
-                                Price.UnitPrice.Minimum.builder()
+                                Price.Unit.Minimum.builder()
                                     .addAppliesToPriceId("string")
                                     .minimumAmount("minimum_amount")
                                     .build()
@@ -1733,14 +1709,12 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                             .minimumAmount("minimum_amount")
                             .name("name")
                             .planPhaseOrder(0L)
-                            .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                            .priceType(Price.Unit.PriceType.USAGE_PRICE)
                             .unitConfig(
-                                Price.UnitPrice.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
+                                Price.Unit.UnitConfig.builder().unitAmount("unit_amount").build()
                             )
                             .dimensionalPriceConfiguration(
-                                Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                Price.Unit.DimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")
                                     .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .build()
@@ -1783,24 +1757,22 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                             .build()
                     )
                     .price(
-                        Price.UnitPrice.builder()
+                        Price.Unit.builder()
                             .id("id")
-                            .billableMetric(
-                                Price.UnitPrice.BillableMetric.builder().id("id").build()
-                            )
+                            .billableMetric(Price.Unit.BillableMetric.builder().id("id").build())
                             .billingCycleConfiguration(
-                                Price.UnitPrice.BillingCycleConfiguration.builder()
+                                Price.Unit.BillingCycleConfiguration.builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
+                                        Price.Unit.BillingCycleConfiguration.DurationUnit.DAY
                                     )
                                     .build()
                             )
-                            .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                            .cadence(Price.Unit.Cadence.ONE_TIME)
                             .conversionRate(0.0)
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .creditAllocation(
-                                Price.UnitPrice.CreditAllocation.builder()
+                                Price.Unit.CreditAllocation.builder()
                                     .allowsRollover(true)
                                     .currency("currency")
                                     .build()
@@ -1818,28 +1790,28 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(0.0)
                             .invoicingCycleConfiguration(
-                                Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                Price.Unit.InvoicingCycleConfiguration.builder()
                                     .duration(0L)
                                     .durationUnit(
-                                        Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                                        Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
                                     )
                                     .build()
                             )
-                            .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                            .item(Price.Unit.Item.builder().id("id").name("name").build())
                             .maximum(
-                                Price.UnitPrice.Maximum.builder()
+                                Price.Unit.Maximum.builder()
                                     .addAppliesToPriceId("string")
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
                             .maximumAmount("maximum_amount")
                             .metadata(
-                                Price.UnitPrice.Metadata.builder()
+                                Price.Unit.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
                             .minimum(
-                                Price.UnitPrice.Minimum.builder()
+                                Price.Unit.Minimum.builder()
                                     .addAppliesToPriceId("string")
                                     .minimumAmount("minimum_amount")
                                     .build()
@@ -1847,14 +1819,12 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                             .minimumAmount("minimum_amount")
                             .name("name")
                             .planPhaseOrder(0L)
-                            .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                            .priceType(Price.Unit.PriceType.USAGE_PRICE)
                             .unitConfig(
-                                Price.UnitPrice.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
+                                Price.Unit.UnitConfig.builder().unitAmount("unit_amount").build()
                             )
                             .dimensionalPriceConfiguration(
-                                Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                Price.Unit.DimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")
                                     .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .build()
@@ -2068,8 +2038,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                     .id("id")
                                     .adjustedSubtotal("5.00")
                                     .addAdjustment(
-                                        Invoice.LineItem.Adjustment.MonetaryUsageDiscountAdjustment
-                                            .builder()
+                                        Invoice.LineItem.Adjustment.UsageDiscount.builder()
                                             .id("id")
                                             .amount("amount")
                                             .addAppliesToPriceId("string")
@@ -2111,30 +2080,28 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                     .name("Fixed Fee")
                                     .partiallyInvoicedAmount("4.00")
                                     .price(
-                                        Price.UnitPrice.builder()
+                                        Price.Unit.builder()
                                             .id("id")
                                             .billableMetric(
-                                                Price.UnitPrice.BillableMetric.builder()
-                                                    .id("id")
-                                                    .build()
+                                                Price.Unit.BillableMetric.builder().id("id").build()
                                             )
                                             .billingCycleConfiguration(
-                                                Price.UnitPrice.BillingCycleConfiguration.builder()
+                                                Price.Unit.BillingCycleConfiguration.builder()
                                                     .duration(0L)
                                                     .durationUnit(
-                                                        Price.UnitPrice.BillingCycleConfiguration
+                                                        Price.Unit.BillingCycleConfiguration
                                                             .DurationUnit
                                                             .DAY
                                                     )
                                                     .build()
                                             )
-                                            .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                            .cadence(Price.Unit.Cadence.ONE_TIME)
                                             .conversionRate(0.0)
                                             .createdAt(
                                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                             )
                                             .creditAllocation(
-                                                Price.UnitPrice.CreditAllocation.builder()
+                                                Price.Unit.CreditAllocation.builder()
                                                     .allowsRollover(true)
                                                     .currency("currency")
                                                     .build()
@@ -2154,31 +2121,30 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                             .externalPriceId("external_price_id")
                                             .fixedPriceQuantity(0.0)
                                             .invoicingCycleConfiguration(
-                                                Price.UnitPrice.InvoicingCycleConfiguration
-                                                    .builder()
+                                                Price.Unit.InvoicingCycleConfiguration.builder()
                                                     .duration(0L)
                                                     .durationUnit(
-                                                        Price.UnitPrice.InvoicingCycleConfiguration
+                                                        Price.Unit.InvoicingCycleConfiguration
                                                             .DurationUnit
                                                             .DAY
                                                     )
                                                     .build()
                                             )
                                             .item(
-                                                Price.UnitPrice.Item.builder()
+                                                Price.Unit.Item.builder()
                                                     .id("id")
                                                     .name("name")
                                                     .build()
                                             )
                                             .maximum(
-                                                Price.UnitPrice.Maximum.builder()
+                                                Price.Unit.Maximum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .maximumAmount("maximum_amount")
                                                     .build()
                                             )
                                             .maximumAmount("maximum_amount")
                                             .metadata(
-                                                Price.UnitPrice.Metadata.builder()
+                                                Price.Unit.Metadata.builder()
                                                     .putAdditionalProperty(
                                                         "foo",
                                                         JsonValue.from("string"),
@@ -2186,7 +2152,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                     .build()
                                             )
                                             .minimum(
-                                                Price.UnitPrice.Minimum.builder()
+                                                Price.Unit.Minimum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .minimumAmount("minimum_amount")
                                                     .build()
@@ -2194,15 +2160,14 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                             .minimumAmount("minimum_amount")
                                             .name("name")
                                             .planPhaseOrder(0L)
-                                            .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                            .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                             .unitConfig(
-                                                Price.UnitPrice.UnitConfig.builder()
+                                                Price.Unit.UnitConfig.builder()
                                                     .unitAmount("unit_amount")
                                                     .build()
                                             )
                                             .dimensionalPriceConfiguration(
-                                                Price.UnitPrice.DimensionalPriceConfiguration
-                                                    .builder()
+                                                Price.Unit.DimensionalPriceConfiguration.builder()
                                                     .addDimensionValue("string")
                                                     .dimensionalPriceGroupId(
                                                         "dimensional_price_group_id"
@@ -2214,19 +2179,17 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                     .quantity(1.0)
                                     .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                                     .addSubLineItem(
-                                        Invoice.LineItem.SubLineItem.MatrixSubLineItem.builder()
+                                        Invoice.LineItem.SubLineItem.Matrix.builder()
                                             .amount("9.00")
                                             .grouping(
-                                                Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                    .Grouping
+                                                Invoice.LineItem.SubLineItem.Matrix.Grouping
                                                     .builder()
                                                     .key("region")
                                                     .value("west")
                                                     .build()
                                             )
                                             .matrixConfig(
-                                                Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                    .MatrixConfig
+                                                Invoice.LineItem.SubLineItem.Matrix.MatrixConfig
                                                     .builder()
                                                     .addDimensionValue("string")
                                                     .build()
@@ -2483,8 +2446,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                     .id("id")
                                     .adjustedSubtotal("5.00")
                                     .addAdjustment(
-                                        Invoice.LineItem.Adjustment.MonetaryUsageDiscountAdjustment
-                                            .builder()
+                                        Invoice.LineItem.Adjustment.UsageDiscount.builder()
                                             .id("id")
                                             .amount("amount")
                                             .addAppliesToPriceId("string")
@@ -2526,30 +2488,28 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                     .name("Fixed Fee")
                                     .partiallyInvoicedAmount("4.00")
                                     .price(
-                                        Price.UnitPrice.builder()
+                                        Price.Unit.builder()
                                             .id("id")
                                             .billableMetric(
-                                                Price.UnitPrice.BillableMetric.builder()
-                                                    .id("id")
-                                                    .build()
+                                                Price.Unit.BillableMetric.builder().id("id").build()
                                             )
                                             .billingCycleConfiguration(
-                                                Price.UnitPrice.BillingCycleConfiguration.builder()
+                                                Price.Unit.BillingCycleConfiguration.builder()
                                                     .duration(0L)
                                                     .durationUnit(
-                                                        Price.UnitPrice.BillingCycleConfiguration
+                                                        Price.Unit.BillingCycleConfiguration
                                                             .DurationUnit
                                                             .DAY
                                                     )
                                                     .build()
                                             )
-                                            .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                            .cadence(Price.Unit.Cadence.ONE_TIME)
                                             .conversionRate(0.0)
                                             .createdAt(
                                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                             )
                                             .creditAllocation(
-                                                Price.UnitPrice.CreditAllocation.builder()
+                                                Price.Unit.CreditAllocation.builder()
                                                     .allowsRollover(true)
                                                     .currency("currency")
                                                     .build()
@@ -2569,31 +2529,30 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                             .externalPriceId("external_price_id")
                                             .fixedPriceQuantity(0.0)
                                             .invoicingCycleConfiguration(
-                                                Price.UnitPrice.InvoicingCycleConfiguration
-                                                    .builder()
+                                                Price.Unit.InvoicingCycleConfiguration.builder()
                                                     .duration(0L)
                                                     .durationUnit(
-                                                        Price.UnitPrice.InvoicingCycleConfiguration
+                                                        Price.Unit.InvoicingCycleConfiguration
                                                             .DurationUnit
                                                             .DAY
                                                     )
                                                     .build()
                                             )
                                             .item(
-                                                Price.UnitPrice.Item.builder()
+                                                Price.Unit.Item.builder()
                                                     .id("id")
                                                     .name("name")
                                                     .build()
                                             )
                                             .maximum(
-                                                Price.UnitPrice.Maximum.builder()
+                                                Price.Unit.Maximum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .maximumAmount("maximum_amount")
                                                     .build()
                                             )
                                             .maximumAmount("maximum_amount")
                                             .metadata(
-                                                Price.UnitPrice.Metadata.builder()
+                                                Price.Unit.Metadata.builder()
                                                     .putAdditionalProperty(
                                                         "foo",
                                                         JsonValue.from("string"),
@@ -2601,7 +2560,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                     .build()
                                             )
                                             .minimum(
-                                                Price.UnitPrice.Minimum.builder()
+                                                Price.Unit.Minimum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .minimumAmount("minimum_amount")
                                                     .build()
@@ -2609,15 +2568,14 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                             .minimumAmount("minimum_amount")
                                             .name("name")
                                             .planPhaseOrder(0L)
-                                            .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                            .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                             .unitConfig(
-                                                Price.UnitPrice.UnitConfig.builder()
+                                                Price.Unit.UnitConfig.builder()
                                                     .unitAmount("unit_amount")
                                                     .build()
                                             )
                                             .dimensionalPriceConfiguration(
-                                                Price.UnitPrice.DimensionalPriceConfiguration
-                                                    .builder()
+                                                Price.Unit.DimensionalPriceConfiguration.builder()
                                                     .addDimensionValue("string")
                                                     .dimensionalPriceGroupId(
                                                         "dimensional_price_group_id"
@@ -2629,19 +2587,17 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                     .quantity(1.0)
                                     .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                                     .addSubLineItem(
-                                        Invoice.LineItem.SubLineItem.MatrixSubLineItem.builder()
+                                        Invoice.LineItem.SubLineItem.Matrix.builder()
                                             .amount("9.00")
                                             .grouping(
-                                                Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                    .Grouping
+                                                Invoice.LineItem.SubLineItem.Matrix.Grouping
                                                     .builder()
                                                     .key("region")
                                                     .value("west")
                                                     .build()
                                             )
                                             .matrixConfig(
-                                                Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                    .MatrixConfig
+                                                Invoice.LineItem.SubLineItem.Matrix.MatrixConfig
                                                     .builder()
                                                     .addDimensionValue("string")
                                                     .build()
@@ -2734,7 +2690,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                         .adjustment(
                             SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.AdjustmentInterval
                                 .Adjustment
-                                .PlanPhaseUsageDiscountAdjustment
+                                .UsageDiscount
                                 .builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
@@ -2851,8 +2807,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                 )
                 .defaultInvoiceMemo("default_invoice_memo")
                 .addDiscountInterval(
-                    SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval
-                        .AmountDiscountInterval
+                    SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval.Amount
                         .builder()
                         .amountDiscount("amount_discount")
                         .addAppliesToPriceId("string")
@@ -2906,7 +2861,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                     Plan.builder()
                         .id("id")
                         .addAdjustment(
-                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
+                            Plan.Adjustment.UsageDiscount.builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
                                 .isInvoiceLevel(true)
@@ -2993,25 +2948,24 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .build()
                         )
                         .addPrice(
-                            Price.UnitPrice.builder()
+                            Price.Unit.builder()
                                 .id("id")
                                 .billableMetric(
-                                    Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                    Price.Unit.BillableMetric.builder().id("id").build()
                                 )
                                 .billingCycleConfiguration(
-                                    Price.UnitPrice.BillingCycleConfiguration.builder()
+                                    Price.Unit.BillingCycleConfiguration.builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            Price.UnitPrice.BillingCycleConfiguration.DurationUnit
-                                                .DAY
+                                            Price.Unit.BillingCycleConfiguration.DurationUnit.DAY
                                         )
                                         .build()
                                 )
-                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                .cadence(Price.Unit.Cadence.ONE_TIME)
                                 .conversionRate(0.0)
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditAllocation(
-                                    Price.UnitPrice.CreditAllocation.builder()
+                                    Price.Unit.CreditAllocation.builder()
                                         .allowsRollover(true)
                                         .currency("currency")
                                         .build()
@@ -3029,29 +2983,28 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(0.0)
                                 .invoicingCycleConfiguration(
-                                    Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                    Price.Unit.InvoicingCycleConfiguration.builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
-                                                .DAY
+                                            Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
                                         )
                                         .build()
                                 )
-                                .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                                .item(Price.Unit.Item.builder().id("id").name("name").build())
                                 .maximum(
-                                    Price.UnitPrice.Maximum.builder()
+                                    Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
                                 .maximumAmount("maximum_amount")
                                 .metadata(
-                                    Price.UnitPrice.Metadata.builder()
+                                    Price.Unit.Metadata.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
                                 .minimum(
-                                    Price.UnitPrice.Minimum.builder()
+                                    Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .minimumAmount("minimum_amount")
                                         .build()
@@ -3059,14 +3012,14 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .minimumAmount("minimum_amount")
                                 .name("name")
                                 .planPhaseOrder(0L)
-                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                 .unitConfig(
-                                    Price.UnitPrice.UnitConfig.builder()
+                                    Price.Unit.UnitConfig.builder()
                                         .unitAmount("unit_amount")
                                         .build()
                                 )
                                 .dimensionalPriceConfiguration(
-                                    Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                    Price.Unit.DimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
                                         .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .build()
@@ -3112,25 +3065,24 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .build()
                         )
                         .price(
-                            Price.UnitPrice.builder()
+                            Price.Unit.builder()
                                 .id("id")
                                 .billableMetric(
-                                    Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                    Price.Unit.BillableMetric.builder().id("id").build()
                                 )
                                 .billingCycleConfiguration(
-                                    Price.UnitPrice.BillingCycleConfiguration.builder()
+                                    Price.Unit.BillingCycleConfiguration.builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            Price.UnitPrice.BillingCycleConfiguration.DurationUnit
-                                                .DAY
+                                            Price.Unit.BillingCycleConfiguration.DurationUnit.DAY
                                         )
                                         .build()
                                 )
-                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                .cadence(Price.Unit.Cadence.ONE_TIME)
                                 .conversionRate(0.0)
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditAllocation(
-                                    Price.UnitPrice.CreditAllocation.builder()
+                                    Price.Unit.CreditAllocation.builder()
                                         .allowsRollover(true)
                                         .currency("currency")
                                         .build()
@@ -3148,29 +3100,28 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(0.0)
                                 .invoicingCycleConfiguration(
-                                    Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                    Price.Unit.InvoicingCycleConfiguration.builder()
                                         .duration(0L)
                                         .durationUnit(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
-                                                .DAY
+                                            Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
                                         )
                                         .build()
                                 )
-                                .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                                .item(Price.Unit.Item.builder().id("id").name("name").build())
                                 .maximum(
-                                    Price.UnitPrice.Maximum.builder()
+                                    Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
                                 .maximumAmount("maximum_amount")
                                 .metadata(
-                                    Price.UnitPrice.Metadata.builder()
+                                    Price.Unit.Metadata.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
                                 .minimum(
-                                    Price.UnitPrice.Minimum.builder()
+                                    Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .minimumAmount("minimum_amount")
                                         .build()
@@ -3178,14 +3129,14 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .minimumAmount("minimum_amount")
                                 .name("name")
                                 .planPhaseOrder(0L)
-                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                 .unitConfig(
-                                    Price.UnitPrice.UnitConfig.builder()
+                                    Price.Unit.UnitConfig.builder()
                                         .unitAmount("unit_amount")
                                         .build()
                                 )
                                 .dimensionalPriceConfiguration(
-                                    Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                    Price.Unit.DimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
                                         .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .build()
@@ -3403,9 +3354,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                         .id("id")
                                         .adjustedSubtotal("5.00")
                                         .addAdjustment(
-                                            Invoice.LineItem.Adjustment
-                                                .MonetaryUsageDiscountAdjustment
-                                                .builder()
+                                            Invoice.LineItem.Adjustment.UsageDiscount.builder()
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
@@ -3447,32 +3396,30 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                         .name("Fixed Fee")
                                         .partiallyInvoicedAmount("4.00")
                                         .price(
-                                            Price.UnitPrice.builder()
+                                            Price.Unit.builder()
                                                 .id("id")
                                                 .billableMetric(
-                                                    Price.UnitPrice.BillableMetric.builder()
+                                                    Price.Unit.BillableMetric.builder()
                                                         .id("id")
                                                         .build()
                                                 )
                                                 .billingCycleConfiguration(
-                                                    Price.UnitPrice.BillingCycleConfiguration
-                                                        .builder()
+                                                    Price.Unit.BillingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.UnitPrice
-                                                                .BillingCycleConfiguration
+                                                            Price.Unit.BillingCycleConfiguration
                                                                 .DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
                                                 )
-                                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                                .cadence(Price.Unit.Cadence.ONE_TIME)
                                                 .conversionRate(0.0)
                                                 .createdAt(
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                                 )
                                                 .creditAllocation(
-                                                    Price.UnitPrice.CreditAllocation.builder()
+                                                    Price.Unit.CreditAllocation.builder()
                                                         .allowsRollover(true)
                                                         .currency("currency")
                                                         .build()
@@ -3493,32 +3440,30 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(0.0)
                                                 .invoicingCycleConfiguration(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
-                                                        .builder()
+                                                    Price.Unit.InvoicingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.UnitPrice
-                                                                .InvoicingCycleConfiguration
+                                                            Price.Unit.InvoicingCycleConfiguration
                                                                 .DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
                                                 )
                                                 .item(
-                                                    Price.UnitPrice.Item.builder()
+                                                    Price.Unit.Item.builder()
                                                         .id("id")
                                                         .name("name")
                                                         .build()
                                                 )
                                                 .maximum(
-                                                    Price.UnitPrice.Maximum.builder()
+                                                    Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
                                                 .maximumAmount("maximum_amount")
                                                 .metadata(
-                                                    Price.UnitPrice.Metadata.builder()
+                                                    Price.Unit.Metadata.builder()
                                                         .putAdditionalProperty(
                                                             "foo",
                                                             JsonValue.from("string"),
@@ -3526,7 +3471,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                         .build()
                                                 )
                                                 .minimum(
-                                                    Price.UnitPrice.Minimum.builder()
+                                                    Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .minimumAmount("minimum_amount")
                                                         .build()
@@ -3534,14 +3479,14 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                 .minimumAmount("minimum_amount")
                                                 .name("name")
                                                 .planPhaseOrder(0L)
-                                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                                .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                 .unitConfig(
-                                                    Price.UnitPrice.UnitConfig.builder()
+                                                    Price.Unit.UnitConfig.builder()
                                                         .unitAmount("unit_amount")
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
-                                                    Price.UnitPrice.DimensionalPriceConfiguration
+                                                    Price.Unit.DimensionalPriceConfiguration
                                                         .builder()
                                                         .addDimensionValue("string")
                                                         .dimensionalPriceGroupId(
@@ -3556,19 +3501,17 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                             OffsetDateTime.parse("2022-02-01T08:00:00+00:00")
                                         )
                                         .addSubLineItem(
-                                            Invoice.LineItem.SubLineItem.MatrixSubLineItem.builder()
+                                            Invoice.LineItem.SubLineItem.Matrix.builder()
                                                 .amount("9.00")
                                                 .grouping(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .Grouping
+                                                    Invoice.LineItem.SubLineItem.Matrix.Grouping
                                                         .builder()
                                                         .key("region")
                                                         .value("west")
                                                         .build()
                                                 )
                                                 .matrixConfig(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .MatrixConfig
+                                                    Invoice.LineItem.SubLineItem.Matrix.MatrixConfig
                                                         .builder()
                                                         .addDimensionValue("string")
                                                         .build()
@@ -3836,9 +3779,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                         .id("id")
                                         .adjustedSubtotal("5.00")
                                         .addAdjustment(
-                                            Invoice.LineItem.Adjustment
-                                                .MonetaryUsageDiscountAdjustment
-                                                .builder()
+                                            Invoice.LineItem.Adjustment.UsageDiscount.builder()
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
@@ -3880,32 +3821,30 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                         .name("Fixed Fee")
                                         .partiallyInvoicedAmount("4.00")
                                         .price(
-                                            Price.UnitPrice.builder()
+                                            Price.Unit.builder()
                                                 .id("id")
                                                 .billableMetric(
-                                                    Price.UnitPrice.BillableMetric.builder()
+                                                    Price.Unit.BillableMetric.builder()
                                                         .id("id")
                                                         .build()
                                                 )
                                                 .billingCycleConfiguration(
-                                                    Price.UnitPrice.BillingCycleConfiguration
-                                                        .builder()
+                                                    Price.Unit.BillingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.UnitPrice
-                                                                .BillingCycleConfiguration
+                                                            Price.Unit.BillingCycleConfiguration
                                                                 .DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
                                                 )
-                                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                                .cadence(Price.Unit.Cadence.ONE_TIME)
                                                 .conversionRate(0.0)
                                                 .createdAt(
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                                 )
                                                 .creditAllocation(
-                                                    Price.UnitPrice.CreditAllocation.builder()
+                                                    Price.Unit.CreditAllocation.builder()
                                                         .allowsRollover(true)
                                                         .currency("currency")
                                                         .build()
@@ -3926,32 +3865,30 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(0.0)
                                                 .invoicingCycleConfiguration(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
-                                                        .builder()
+                                                    Price.Unit.InvoicingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.UnitPrice
-                                                                .InvoicingCycleConfiguration
+                                                            Price.Unit.InvoicingCycleConfiguration
                                                                 .DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
                                                 )
                                                 .item(
-                                                    Price.UnitPrice.Item.builder()
+                                                    Price.Unit.Item.builder()
                                                         .id("id")
                                                         .name("name")
                                                         .build()
                                                 )
                                                 .maximum(
-                                                    Price.UnitPrice.Maximum.builder()
+                                                    Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
                                                 .maximumAmount("maximum_amount")
                                                 .metadata(
-                                                    Price.UnitPrice.Metadata.builder()
+                                                    Price.Unit.Metadata.builder()
                                                         .putAdditionalProperty(
                                                             "foo",
                                                             JsonValue.from("string"),
@@ -3959,7 +3896,7 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                         .build()
                                                 )
                                                 .minimum(
-                                                    Price.UnitPrice.Minimum.builder()
+                                                    Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .minimumAmount("minimum_amount")
                                                         .build()
@@ -3967,14 +3904,14 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                 .minimumAmount("minimum_amount")
                                                 .name("name")
                                                 .planPhaseOrder(0L)
-                                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                                .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                 .unitConfig(
-                                                    Price.UnitPrice.UnitConfig.builder()
+                                                    Price.Unit.UnitConfig.builder()
                                                         .unitAmount("unit_amount")
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
-                                                    Price.UnitPrice.DimensionalPriceConfiguration
+                                                    Price.Unit.DimensionalPriceConfiguration
                                                         .builder()
                                                         .addDimensionValue("string")
                                                         .dimensionalPriceGroupId(
@@ -3989,19 +3926,17 @@ internal class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                             OffsetDateTime.parse("2022-02-01T08:00:00+00:00")
                                         )
                                         .addSubLineItem(
-                                            Invoice.LineItem.SubLineItem.MatrixSubLineItem.builder()
+                                            Invoice.LineItem.SubLineItem.Matrix.builder()
                                                 .amount("9.00")
                                                 .grouping(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .Grouping
+                                                    Invoice.LineItem.SubLineItem.Matrix.Grouping
                                                         .builder()
                                                         .key("region")
                                                         .value("west")
                                                         .build()
                                                 )
                                                 .matrixConfig(
-                                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem
-                                                        .MatrixConfig
+                                                    Invoice.LineItem.SubLineItem.Matrix.MatrixConfig
                                                         .builder()
                                                         .addDimensionValue("string")
                                                         .build()

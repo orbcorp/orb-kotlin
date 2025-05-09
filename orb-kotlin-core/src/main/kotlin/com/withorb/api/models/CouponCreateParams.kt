@@ -158,41 +158,33 @@ private constructor(
          */
         fun discount(discount: JsonField<Discount>) = apply { body.discount(discount) }
 
-        /**
-         * Alias for calling [discount] with `Discount.ofNewCouponPercentage(newCouponPercentage)`.
-         */
-        fun discount(newCouponPercentage: Discount.NewCouponPercentageDiscount) = apply {
-            body.discount(newCouponPercentage)
-        }
+        /** Alias for calling [discount] with `Discount.ofPercentage(percentage)`. */
+        fun discount(percentage: Discount.Percentage) = apply { body.discount(percentage) }
 
         /**
          * Alias for calling [discount] with the following:
          * ```kotlin
-         * Discount.NewCouponPercentageDiscount.builder()
+         * Discount.Percentage.builder()
          *     .percentageDiscount(percentageDiscount)
          *     .build()
          * ```
          */
-        fun newCouponPercentageDiscount(percentageDiscount: Double) = apply {
-            body.newCouponPercentageDiscount(percentageDiscount)
+        fun percentageDiscount(percentageDiscount: Double) = apply {
+            body.percentageDiscount(percentageDiscount)
         }
 
-        /** Alias for calling [discount] with `Discount.ofNewCouponAmount(newCouponAmount)`. */
-        fun discount(newCouponAmount: Discount.NewCouponAmountDiscount) = apply {
-            body.discount(newCouponAmount)
-        }
+        /** Alias for calling [discount] with `Discount.ofAmount(amount)`. */
+        fun discount(amount: Discount.Amount) = apply { body.discount(amount) }
 
         /**
          * Alias for calling [discount] with the following:
          * ```kotlin
-         * Discount.NewCouponAmountDiscount.builder()
+         * Discount.Amount.builder()
          *     .amountDiscount(amountDiscount)
          *     .build()
          * ```
          */
-        fun newCouponAmountDiscount(amountDiscount: String) = apply {
-            body.newCouponAmountDiscount(amountDiscount)
-        }
+        fun amountDiscount(amountDiscount: String) = apply { body.amountDiscount(amountDiscount) }
 
         /** This string can be used to redeem this coupon for a given subscription. */
         fun redemptionCode(redemptionCode: String) = apply { body.redemptionCode(redemptionCode) }
@@ -550,46 +542,36 @@ private constructor(
              */
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
-            /**
-             * Alias for calling [discount] with
-             * `Discount.ofNewCouponPercentage(newCouponPercentage)`.
-             */
-            fun discount(newCouponPercentage: Discount.NewCouponPercentageDiscount) =
-                discount(Discount.ofNewCouponPercentage(newCouponPercentage))
+            /** Alias for calling [discount] with `Discount.ofPercentage(percentage)`. */
+            fun discount(percentage: Discount.Percentage) =
+                discount(Discount.ofPercentage(percentage))
 
             /**
              * Alias for calling [discount] with the following:
              * ```kotlin
-             * Discount.NewCouponPercentageDiscount.builder()
+             * Discount.Percentage.builder()
              *     .percentageDiscount(percentageDiscount)
              *     .build()
              * ```
              */
-            fun newCouponPercentageDiscount(percentageDiscount: Double) =
+            fun percentageDiscount(percentageDiscount: Double) =
                 discount(
-                    Discount.NewCouponPercentageDiscount.builder()
-                        .percentageDiscount(percentageDiscount)
-                        .build()
+                    Discount.Percentage.builder().percentageDiscount(percentageDiscount).build()
                 )
 
-            /** Alias for calling [discount] with `Discount.ofNewCouponAmount(newCouponAmount)`. */
-            fun discount(newCouponAmount: Discount.NewCouponAmountDiscount) =
-                discount(Discount.ofNewCouponAmount(newCouponAmount))
+            /** Alias for calling [discount] with `Discount.ofAmount(amount)`. */
+            fun discount(amount: Discount.Amount) = discount(Discount.ofAmount(amount))
 
             /**
              * Alias for calling [discount] with the following:
              * ```kotlin
-             * Discount.NewCouponAmountDiscount.builder()
+             * Discount.Amount.builder()
              *     .amountDiscount(amountDiscount)
              *     .build()
              * ```
              */
-            fun newCouponAmountDiscount(amountDiscount: String) =
-                discount(
-                    Discount.NewCouponAmountDiscount.builder()
-                        .amountDiscount(amountDiscount)
-                        .build()
-                )
+            fun amountDiscount(amountDiscount: String) =
+                discount(Discount.Amount.builder().amountDiscount(amountDiscount).build())
 
             /** This string can be used to redeem this coupon for a given subscription. */
             fun redemptionCode(redemptionCode: String) =
@@ -755,31 +737,29 @@ private constructor(
     @JsonSerialize(using = Discount.Serializer::class)
     class Discount
     private constructor(
-        private val newCouponPercentage: NewCouponPercentageDiscount? = null,
-        private val newCouponAmount: NewCouponAmountDiscount? = null,
+        private val percentage: Percentage? = null,
+        private val amount: Amount? = null,
         private val _json: JsonValue? = null,
     ) {
 
-        fun newCouponPercentage(): NewCouponPercentageDiscount? = newCouponPercentage
+        fun percentage(): Percentage? = percentage
 
-        fun newCouponAmount(): NewCouponAmountDiscount? = newCouponAmount
+        fun amount(): Amount? = amount
 
-        fun isNewCouponPercentage(): Boolean = newCouponPercentage != null
+        fun isPercentage(): Boolean = percentage != null
 
-        fun isNewCouponAmount(): Boolean = newCouponAmount != null
+        fun isAmount(): Boolean = amount != null
 
-        fun asNewCouponPercentage(): NewCouponPercentageDiscount =
-            newCouponPercentage.getOrThrow("newCouponPercentage")
+        fun asPercentage(): Percentage = percentage.getOrThrow("percentage")
 
-        fun asNewCouponAmount(): NewCouponAmountDiscount =
-            newCouponAmount.getOrThrow("newCouponAmount")
+        fun asAmount(): Amount = amount.getOrThrow("amount")
 
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T =
             when {
-                newCouponPercentage != null -> visitor.visitNewCouponPercentage(newCouponPercentage)
-                newCouponAmount != null -> visitor.visitNewCouponAmount(newCouponAmount)
+                percentage != null -> visitor.visitPercentage(percentage)
+                amount != null -> visitor.visitAmount(amount)
                 else -> visitor.unknown(_json)
             }
 
@@ -792,14 +772,12 @@ private constructor(
 
             accept(
                 object : Visitor<Unit> {
-                    override fun visitNewCouponPercentage(
-                        newCouponPercentage: NewCouponPercentageDiscount
-                    ) {
-                        newCouponPercentage.validate()
+                    override fun visitPercentage(percentage: Percentage) {
+                        percentage.validate()
                     }
 
-                    override fun visitNewCouponAmount(newCouponAmount: NewCouponAmountDiscount) {
-                        newCouponAmount.validate()
+                    override fun visitAmount(amount: Amount) {
+                        amount.validate()
                     }
                 }
             )
@@ -823,12 +801,9 @@ private constructor(
         internal fun validity(): Int =
             accept(
                 object : Visitor<Int> {
-                    override fun visitNewCouponPercentage(
-                        newCouponPercentage: NewCouponPercentageDiscount
-                    ) = newCouponPercentage.validity()
+                    override fun visitPercentage(percentage: Percentage) = percentage.validity()
 
-                    override fun visitNewCouponAmount(newCouponAmount: NewCouponAmountDiscount) =
-                        newCouponAmount.validity()
+                    override fun visitAmount(amount: Amount) = amount.validity()
 
                     override fun unknown(json: JsonValue?) = 0
                 }
@@ -839,26 +814,24 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Discount && newCouponPercentage == other.newCouponPercentage && newCouponAmount == other.newCouponAmount /* spotless:on */
+            return /* spotless:off */ other is Discount && percentage == other.percentage && amount == other.amount /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(newCouponPercentage, newCouponAmount) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentage, amount) /* spotless:on */
 
         override fun toString(): String =
             when {
-                newCouponPercentage != null -> "Discount{newCouponPercentage=$newCouponPercentage}"
-                newCouponAmount != null -> "Discount{newCouponAmount=$newCouponAmount}"
+                percentage != null -> "Discount{percentage=$percentage}"
+                amount != null -> "Discount{amount=$amount}"
                 _json != null -> "Discount{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Discount")
             }
 
         companion object {
 
-            fun ofNewCouponPercentage(newCouponPercentage: NewCouponPercentageDiscount) =
-                Discount(newCouponPercentage = newCouponPercentage)
+            fun ofPercentage(percentage: Percentage) = Discount(percentage = percentage)
 
-            fun ofNewCouponAmount(newCouponAmount: NewCouponAmountDiscount) =
-                Discount(newCouponAmount = newCouponAmount)
+            fun ofAmount(amount: Amount) = Discount(amount = amount)
         }
 
         /**
@@ -866,9 +839,9 @@ private constructor(
          */
         interface Visitor<out T> {
 
-            fun visitNewCouponPercentage(newCouponPercentage: NewCouponPercentageDiscount): T
+            fun visitPercentage(percentage: Percentage): T
 
-            fun visitNewCouponAmount(newCouponAmount: NewCouponAmountDiscount): T
+            fun visitAmount(amount: Amount): T
 
             /**
              * Maps an unknown variant of [Discount] to a value of type [T].
@@ -893,14 +866,14 @@ private constructor(
 
                 when (discountType) {
                     "percentage" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewCouponPercentageDiscount>())
-                            ?.let { Discount(newCouponPercentage = it, _json = json) }
-                            ?: Discount(_json = json)
+                        return tryDeserialize(node, jacksonTypeRef<Percentage>())?.let {
+                            Discount(percentage = it, _json = json)
+                        } ?: Discount(_json = json)
                     }
                     "amount" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewCouponAmountDiscount>())
-                            ?.let { Discount(newCouponAmount = it, _json = json) }
-                            ?: Discount(_json = json)
+                        return tryDeserialize(node, jacksonTypeRef<Amount>())?.let {
+                            Discount(amount = it, _json = json)
+                        } ?: Discount(_json = json)
                     }
                 }
 
@@ -916,16 +889,15 @@ private constructor(
                 provider: SerializerProvider,
             ) {
                 when {
-                    value.newCouponPercentage != null ->
-                        generator.writeObject(value.newCouponPercentage)
-                    value.newCouponAmount != null -> generator.writeObject(value.newCouponAmount)
+                    value.percentage != null -> generator.writeObject(value.percentage)
+                    value.amount != null -> generator.writeObject(value.amount)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Discount")
                 }
             }
         }
 
-        class NewCouponPercentageDiscount
+        class Percentage
         private constructor(
             private val discountType: JsonValue,
             private val percentageDiscount: JsonField<Double>,
@@ -987,8 +959,7 @@ private constructor(
             companion object {
 
                 /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [NewCouponPercentageDiscount].
+                 * Returns a mutable builder for constructing an instance of [Percentage].
                  *
                  * The following fields are required:
                  * ```kotlin
@@ -998,20 +969,18 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            /** A builder for [NewCouponPercentageDiscount]. */
+            /** A builder for [Percentage]. */
             class Builder internal constructor() {
 
                 private var discountType: JsonValue = JsonValue.from("percentage")
                 private var percentageDiscount: JsonField<Double>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(newCouponPercentageDiscount: NewCouponPercentageDiscount) =
-                    apply {
-                        discountType = newCouponPercentageDiscount.discountType
-                        percentageDiscount = newCouponPercentageDiscount.percentageDiscount
-                        additionalProperties =
-                            newCouponPercentageDiscount.additionalProperties.toMutableMap()
-                    }
+                internal fun from(percentage: Percentage) = apply {
+                    discountType = percentage.discountType
+                    percentageDiscount = percentage.percentageDiscount
+                    additionalProperties = percentage.additionalProperties.toMutableMap()
+                }
 
                 /**
                  * Sets the field to an arbitrary JSON value.
@@ -1066,7 +1035,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [NewCouponPercentageDiscount].
+                 * Returns an immutable instance of [Percentage].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -1077,8 +1046,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): NewCouponPercentageDiscount =
-                    NewCouponPercentageDiscount(
+                fun build(): Percentage =
+                    Percentage(
                         discountType,
                         checkRequired("percentageDiscount", percentageDiscount),
                         additionalProperties.toMutableMap(),
@@ -1087,7 +1056,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): NewCouponPercentageDiscount = apply {
+            fun validate(): Percentage = apply {
                 if (validated) {
                     return@apply
                 }
@@ -1124,7 +1093,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is NewCouponPercentageDiscount && discountType == other.discountType && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Percentage && discountType == other.discountType && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -1134,10 +1103,10 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "NewCouponPercentageDiscount{discountType=$discountType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
+                "Percentage{discountType=$discountType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
         }
 
-        class NewCouponAmountDiscount
+        class Amount
         private constructor(
             private val amountDiscount: JsonField<String>,
             private val discountType: JsonValue,
@@ -1199,8 +1168,7 @@ private constructor(
             companion object {
 
                 /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [NewCouponAmountDiscount].
+                 * Returns a mutable builder for constructing an instance of [Amount].
                  *
                  * The following fields are required:
                  * ```kotlin
@@ -1210,18 +1178,17 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            /** A builder for [NewCouponAmountDiscount]. */
+            /** A builder for [Amount]. */
             class Builder internal constructor() {
 
                 private var amountDiscount: JsonField<String>? = null
                 private var discountType: JsonValue = JsonValue.from("amount")
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(newCouponAmountDiscount: NewCouponAmountDiscount) = apply {
-                    amountDiscount = newCouponAmountDiscount.amountDiscount
-                    discountType = newCouponAmountDiscount.discountType
-                    additionalProperties =
-                        newCouponAmountDiscount.additionalProperties.toMutableMap()
+                internal fun from(amount: Amount) = apply {
+                    amountDiscount = amount.amountDiscount
+                    discountType = amount.discountType
+                    additionalProperties = amount.additionalProperties.toMutableMap()
                 }
 
                 fun amountDiscount(amountDiscount: String) =
@@ -1277,7 +1244,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [NewCouponAmountDiscount].
+                 * Returns an immutable instance of [Amount].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -1288,8 +1255,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): NewCouponAmountDiscount =
-                    NewCouponAmountDiscount(
+                fun build(): Amount =
+                    Amount(
                         checkRequired("amountDiscount", amountDiscount),
                         discountType,
                         additionalProperties.toMutableMap(),
@@ -1298,7 +1265,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): NewCouponAmountDiscount = apply {
+            fun validate(): Amount = apply {
                 if (validated) {
                     return@apply
                 }
@@ -1335,7 +1302,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is NewCouponAmountDiscount && amountDiscount == other.amountDiscount && discountType == other.discountType && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Amount && amountDiscount == other.amountDiscount && discountType == other.discountType && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -1345,7 +1312,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "NewCouponAmountDiscount{amountDiscount=$amountDiscount, discountType=$discountType, additionalProperties=$additionalProperties}"
+                "Amount{amountDiscount=$amountDiscount, discountType=$discountType, additionalProperties=$additionalProperties}"
         }
     }
 

@@ -18,20 +18,20 @@ internal class PriceTest {
     @Test
     fun ofUnit() {
         val unit =
-            Price.UnitPrice.builder()
+            Price.Unit.builder()
                 .id("id")
-                .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())
+                .billableMetric(Price.Unit.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.UnitPrice.BillingCycleConfiguration.builder()
+                    Price.Unit.BillingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY)
+                        .durationUnit(Price.Unit.BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                .cadence(Price.Unit.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.UnitPrice.CreditAllocation.builder()
+                    Price.Unit.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -49,26 +49,26 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                    Price.Unit.InvoicingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY)
+                        .durationUnit(Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                .item(Price.Unit.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.UnitPrice.Maximum.builder()
+                    Price.Unit.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.UnitPrice.Metadata.builder()
+                    Price.Unit.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.UnitPrice.Minimum.builder()
+                    Price.Unit.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -76,10 +76,10 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
-                .unitConfig(Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build())
+                .priceType(Price.Unit.PriceType.USAGE_PRICE)
+                .unitConfig(Price.Unit.UnitConfig.builder().unitAmount("unit_amount").build())
                 .dimensionalPriceConfiguration(
-                    Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                    Price.Unit.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -89,7 +89,7 @@ internal class PriceTest {
         val price = Price.ofUnit(unit)
 
         assertThat(price.unit()).isEqualTo(unit)
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -123,22 +123,20 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofUnit(
-                Price.UnitPrice.builder()
+                Price.Unit.builder()
                     .id("id")
-                    .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())
+                    .billableMetric(Price.Unit.BillableMetric.builder().id("id").build())
                     .billingCycleConfiguration(
-                        Price.UnitPrice.BillingCycleConfiguration.builder()
+                        Price.Unit.BillingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(
-                                Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
-                            )
+                            .durationUnit(Price.Unit.BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
-                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                    .cadence(Price.Unit.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.UnitPrice.CreditAllocation.builder()
+                        Price.Unit.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -156,28 +154,26 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                        Price.Unit.InvoicingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(
-                                Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
-                            )
+                            .durationUnit(Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
-                    .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.Unit.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.UnitPrice.Maximum.builder()
+                        Price.Unit.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.UnitPrice.Metadata.builder()
+                        Price.Unit.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.UnitPrice.Minimum.builder()
+                        Price.Unit.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -185,12 +181,10 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
-                    .unitConfig(
-                        Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
-                    )
+                    .priceType(Price.Unit.PriceType.USAGE_PRICE)
+                    .unitConfig(Price.Unit.UnitConfig.builder().unitAmount("unit_amount").build())
                     .dimensionalPriceConfiguration(
-                        Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                        Price.Unit.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -205,22 +199,22 @@ internal class PriceTest {
     }
 
     @Test
-    fun ofPackagePrice() {
-        val packagePrice =
-            Price.PackagePrice.builder()
+    fun ofPackage() {
+        val package_ =
+            Price.Package.builder()
                 .id("id")
-                .billableMetric(Price.PackagePrice.BillableMetric.builder().id("id").build())
+                .billableMetric(Price.Package.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.PackagePrice.BillingCycleConfiguration.builder()
+                    Price.Package.BillingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(Price.PackagePrice.BillingCycleConfiguration.DurationUnit.DAY)
+                        .durationUnit(Price.Package.BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .cadence(Price.PackagePrice.Cadence.ONE_TIME)
+                .cadence(Price.Package.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.PackagePrice.CreditAllocation.builder()
+                    Price.Package.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -238,28 +232,26 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.PackagePrice.InvoicingCycleConfiguration.builder()
+                    Price.Package.InvoicingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(
-                            Price.PackagePrice.InvoicingCycleConfiguration.DurationUnit.DAY
-                        )
+                        .durationUnit(Price.Package.InvoicingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .item(Price.PackagePrice.Item.builder().id("id").name("name").build())
+                .item(Price.Package.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.PackagePrice.Maximum.builder()
+                    Price.Package.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.PackagePrice.Metadata.builder()
+                    Price.Package.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.PackagePrice.Minimum.builder()
+                    Price.Package.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -267,25 +259,25 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .packageConfig(
-                    Price.PackagePrice.PackageConfig.builder()
+                    Price.Package.PackageConfig.builder()
                         .packageAmount("package_amount")
                         .packageSize(0L)
                         .build()
                 )
                 .planPhaseOrder(0L)
-                .priceType(Price.PackagePrice.PriceType.USAGE_PRICE)
+                .priceType(Price.Package.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.PackagePrice.DimensionalPriceConfiguration.builder()
+                    Price.Package.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
                 )
                 .build()
 
-        val price = Price.ofPackagePrice(packagePrice)
+        val price = Price.ofPackage(package_)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isEqualTo(packagePrice)
+        assertThat(price.package_()).isEqualTo(package_)
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -315,26 +307,24 @@ internal class PriceTest {
     }
 
     @Test
-    fun ofPackagePriceRoundtrip() {
+    fun ofPackageRoundtrip() {
         val jsonMapper = jsonMapper()
         val price =
-            Price.ofPackagePrice(
-                Price.PackagePrice.builder()
+            Price.ofPackage(
+                Price.Package.builder()
                     .id("id")
-                    .billableMetric(Price.PackagePrice.BillableMetric.builder().id("id").build())
+                    .billableMetric(Price.Package.BillableMetric.builder().id("id").build())
                     .billingCycleConfiguration(
-                        Price.PackagePrice.BillingCycleConfiguration.builder()
+                        Price.Package.BillingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(
-                                Price.PackagePrice.BillingCycleConfiguration.DurationUnit.DAY
-                            )
+                            .durationUnit(Price.Package.BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
-                    .cadence(Price.PackagePrice.Cadence.ONE_TIME)
+                    .cadence(Price.Package.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.PackagePrice.CreditAllocation.builder()
+                        Price.Package.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -352,28 +342,28 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.PackagePrice.InvoicingCycleConfiguration.builder()
+                        Price.Package.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.PackagePrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                                Price.Package.InvoicingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .item(Price.PackagePrice.Item.builder().id("id").name("name").build())
+                    .item(Price.Package.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.PackagePrice.Maximum.builder()
+                        Price.Package.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.PackagePrice.Metadata.builder()
+                        Price.Package.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.PackagePrice.Minimum.builder()
+                        Price.Package.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -381,15 +371,15 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .packageConfig(
-                        Price.PackagePrice.PackageConfig.builder()
+                        Price.Package.PackageConfig.builder()
                             .packageAmount("package_amount")
                             .packageSize(0L)
                             .build()
                     )
                     .planPhaseOrder(0L)
-                    .priceType(Price.PackagePrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.Package.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.PackagePrice.DimensionalPriceConfiguration.builder()
+                        Price.Package.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -406,20 +396,20 @@ internal class PriceTest {
     @Test
     fun ofMatrix() {
         val matrix =
-            Price.MatrixPrice.builder()
+            Price.Matrix.builder()
                 .id("id")
-                .billableMetric(Price.MatrixPrice.BillableMetric.builder().id("id").build())
+                .billableMetric(Price.Matrix.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.MatrixPrice.BillingCycleConfiguration.builder()
+                    Price.Matrix.BillingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(Price.MatrixPrice.BillingCycleConfiguration.DurationUnit.DAY)
+                        .durationUnit(Price.Matrix.BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .cadence(Price.MatrixPrice.Cadence.ONE_TIME)
+                .cadence(Price.Matrix.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.MatrixPrice.CreditAllocation.builder()
+                    Price.Matrix.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -437,20 +427,18 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.MatrixPrice.InvoicingCycleConfiguration.builder()
+                    Price.Matrix.InvoicingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(
-                            Price.MatrixPrice.InvoicingCycleConfiguration.DurationUnit.DAY
-                        )
+                        .durationUnit(Price.Matrix.InvoicingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .item(Price.MatrixPrice.Item.builder().id("id").name("name").build())
+                .item(Price.Matrix.Item.builder().id("id").name("name").build())
                 .matrixConfig(
-                    Price.MatrixPrice.MatrixConfig.builder()
+                    Price.Matrix.MatrixConfig.builder()
                         .defaultUnitAmount("default_unit_amount")
                         .addDimension("string")
                         .addMatrixValue(
-                            Price.MatrixPrice.MatrixConfig.MatrixValue.builder()
+                            Price.Matrix.MatrixConfig.MatrixValue.builder()
                                 .addDimensionValue("string")
                                 .unitAmount("unit_amount")
                                 .build()
@@ -458,19 +446,19 @@ internal class PriceTest {
                         .build()
                 )
                 .maximum(
-                    Price.MatrixPrice.Maximum.builder()
+                    Price.Matrix.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.MatrixPrice.Metadata.builder()
+                    Price.Matrix.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.MatrixPrice.Minimum.builder()
+                    Price.Matrix.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -478,9 +466,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.MatrixPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.Matrix.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.MatrixPrice.DimensionalPriceConfiguration.builder()
+                    Price.Matrix.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -490,7 +478,7 @@ internal class PriceTest {
         val price = Price.ofMatrix(matrix)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isEqualTo(matrix)
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -524,22 +512,20 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofMatrix(
-                Price.MatrixPrice.builder()
+                Price.Matrix.builder()
                     .id("id")
-                    .billableMetric(Price.MatrixPrice.BillableMetric.builder().id("id").build())
+                    .billableMetric(Price.Matrix.BillableMetric.builder().id("id").build())
                     .billingCycleConfiguration(
-                        Price.MatrixPrice.BillingCycleConfiguration.builder()
+                        Price.Matrix.BillingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(
-                                Price.MatrixPrice.BillingCycleConfiguration.DurationUnit.DAY
-                            )
+                            .durationUnit(Price.Matrix.BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
-                    .cadence(Price.MatrixPrice.Cadence.ONE_TIME)
+                    .cadence(Price.Matrix.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.MatrixPrice.CreditAllocation.builder()
+                        Price.Matrix.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -557,20 +543,18 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.MatrixPrice.InvoicingCycleConfiguration.builder()
+                        Price.Matrix.InvoicingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(
-                                Price.MatrixPrice.InvoicingCycleConfiguration.DurationUnit.DAY
-                            )
+                            .durationUnit(Price.Matrix.InvoicingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
-                    .item(Price.MatrixPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.Matrix.Item.builder().id("id").name("name").build())
                     .matrixConfig(
-                        Price.MatrixPrice.MatrixConfig.builder()
+                        Price.Matrix.MatrixConfig.builder()
                             .defaultUnitAmount("default_unit_amount")
                             .addDimension("string")
                             .addMatrixValue(
-                                Price.MatrixPrice.MatrixConfig.MatrixValue.builder()
+                                Price.Matrix.MatrixConfig.MatrixValue.builder()
                                     .addDimensionValue("string")
                                     .unitAmount("unit_amount")
                                     .build()
@@ -578,19 +562,19 @@ internal class PriceTest {
                             .build()
                     )
                     .maximum(
-                        Price.MatrixPrice.Maximum.builder()
+                        Price.Matrix.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.MatrixPrice.Metadata.builder()
+                        Price.Matrix.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.MatrixPrice.Minimum.builder()
+                        Price.Matrix.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -598,9 +582,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.MatrixPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.Matrix.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.MatrixPrice.DimensionalPriceConfiguration.builder()
+                        Price.Matrix.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -617,20 +601,20 @@ internal class PriceTest {
     @Test
     fun ofTiered() {
         val tiered =
-            Price.TieredPrice.builder()
+            Price.Tiered.builder()
                 .id("id")
-                .billableMetric(Price.TieredPrice.BillableMetric.builder().id("id").build())
+                .billableMetric(Price.Tiered.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.TieredPrice.BillingCycleConfiguration.builder()
+                    Price.Tiered.BillingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(Price.TieredPrice.BillingCycleConfiguration.DurationUnit.DAY)
+                        .durationUnit(Price.Tiered.BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .cadence(Price.TieredPrice.Cadence.ONE_TIME)
+                .cadence(Price.Tiered.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.TieredPrice.CreditAllocation.builder()
+                    Price.Tiered.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -648,28 +632,26 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.TieredPrice.InvoicingCycleConfiguration.builder()
+                    Price.Tiered.InvoicingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(
-                            Price.TieredPrice.InvoicingCycleConfiguration.DurationUnit.DAY
-                        )
+                        .durationUnit(Price.Tiered.InvoicingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .item(Price.TieredPrice.Item.builder().id("id").name("name").build())
+                .item(Price.Tiered.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.TieredPrice.Maximum.builder()
+                    Price.Tiered.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.TieredPrice.Metadata.builder()
+                    Price.Tiered.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.TieredPrice.Minimum.builder()
+                    Price.Tiered.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -677,11 +659,11 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.TieredPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.Tiered.PriceType.USAGE_PRICE)
                 .tieredConfig(
-                    Price.TieredPrice.TieredConfig.builder()
+                    Price.Tiered.TieredConfig.builder()
                         .addTier(
-                            Price.TieredPrice.TieredConfig.Tier.builder()
+                            Price.Tiered.TieredConfig.Tier.builder()
                                 .firstUnit(0.0)
                                 .unitAmount("unit_amount")
                                 .lastUnit(0.0)
@@ -690,7 +672,7 @@ internal class PriceTest {
                         .build()
                 )
                 .dimensionalPriceConfiguration(
-                    Price.TieredPrice.DimensionalPriceConfiguration.builder()
+                    Price.Tiered.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -700,7 +682,7 @@ internal class PriceTest {
         val price = Price.ofTiered(tiered)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isEqualTo(tiered)
         assertThat(price.tieredBps()).isNull()
@@ -734,22 +716,20 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofTiered(
-                Price.TieredPrice.builder()
+                Price.Tiered.builder()
                     .id("id")
-                    .billableMetric(Price.TieredPrice.BillableMetric.builder().id("id").build())
+                    .billableMetric(Price.Tiered.BillableMetric.builder().id("id").build())
                     .billingCycleConfiguration(
-                        Price.TieredPrice.BillingCycleConfiguration.builder()
+                        Price.Tiered.BillingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(
-                                Price.TieredPrice.BillingCycleConfiguration.DurationUnit.DAY
-                            )
+                            .durationUnit(Price.Tiered.BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
-                    .cadence(Price.TieredPrice.Cadence.ONE_TIME)
+                    .cadence(Price.Tiered.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.TieredPrice.CreditAllocation.builder()
+                        Price.Tiered.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -767,28 +747,26 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.TieredPrice.InvoicingCycleConfiguration.builder()
+                        Price.Tiered.InvoicingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(
-                                Price.TieredPrice.InvoicingCycleConfiguration.DurationUnit.DAY
-                            )
+                            .durationUnit(Price.Tiered.InvoicingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
-                    .item(Price.TieredPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.Tiered.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.TieredPrice.Maximum.builder()
+                        Price.Tiered.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.TieredPrice.Metadata.builder()
+                        Price.Tiered.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.TieredPrice.Minimum.builder()
+                        Price.Tiered.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -796,11 +774,11 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.TieredPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.Tiered.PriceType.USAGE_PRICE)
                     .tieredConfig(
-                        Price.TieredPrice.TieredConfig.builder()
+                        Price.Tiered.TieredConfig.builder()
                             .addTier(
-                                Price.TieredPrice.TieredConfig.Tier.builder()
+                                Price.Tiered.TieredConfig.Tier.builder()
                                     .firstUnit(0.0)
                                     .unitAmount("unit_amount")
                                     .lastUnit(0.0)
@@ -809,7 +787,7 @@ internal class PriceTest {
                             .build()
                     )
                     .dimensionalPriceConfiguration(
-                        Price.TieredPrice.DimensionalPriceConfiguration.builder()
+                        Price.Tiered.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -826,22 +804,20 @@ internal class PriceTest {
     @Test
     fun ofTieredBps() {
         val tieredBps =
-            Price.TieredBpsPrice.builder()
+            Price.TieredBps.builder()
                 .id("id")
-                .billableMetric(Price.TieredBpsPrice.BillableMetric.builder().id("id").build())
+                .billableMetric(Price.TieredBps.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.TieredBpsPrice.BillingCycleConfiguration.builder()
+                    Price.TieredBps.BillingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(
-                            Price.TieredBpsPrice.BillingCycleConfiguration.DurationUnit.DAY
-                        )
+                        .durationUnit(Price.TieredBps.BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .cadence(Price.TieredBpsPrice.Cadence.ONE_TIME)
+                .cadence(Price.TieredBps.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.TieredBpsPrice.CreditAllocation.builder()
+                    Price.TieredBps.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -859,28 +835,26 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.TieredBpsPrice.InvoicingCycleConfiguration.builder()
+                    Price.TieredBps.InvoicingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(
-                            Price.TieredBpsPrice.InvoicingCycleConfiguration.DurationUnit.DAY
-                        )
+                        .durationUnit(Price.TieredBps.InvoicingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .item(Price.TieredBpsPrice.Item.builder().id("id").name("name").build())
+                .item(Price.TieredBps.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.TieredBpsPrice.Maximum.builder()
+                    Price.TieredBps.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.TieredBpsPrice.Metadata.builder()
+                    Price.TieredBps.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.TieredBpsPrice.Minimum.builder()
+                    Price.TieredBps.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -888,11 +862,11 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.TieredBpsPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.TieredBps.PriceType.USAGE_PRICE)
                 .tieredBpsConfig(
-                    Price.TieredBpsPrice.TieredBpsConfig.builder()
+                    Price.TieredBps.TieredBpsConfig.builder()
                         .addTier(
-                            Price.TieredBpsPrice.TieredBpsConfig.Tier.builder()
+                            Price.TieredBps.TieredBpsConfig.Tier.builder()
                                 .bps(0.0)
                                 .minimumAmount("minimum_amount")
                                 .maximumAmount("maximum_amount")
@@ -902,7 +876,7 @@ internal class PriceTest {
                         .build()
                 )
                 .dimensionalPriceConfiguration(
-                    Price.TieredBpsPrice.DimensionalPriceConfiguration.builder()
+                    Price.TieredBps.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -912,7 +886,7 @@ internal class PriceTest {
         val price = Price.ofTieredBps(tieredBps)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isEqualTo(tieredBps)
@@ -946,22 +920,22 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofTieredBps(
-                Price.TieredBpsPrice.builder()
+                Price.TieredBps.builder()
                     .id("id")
-                    .billableMetric(Price.TieredBpsPrice.BillableMetric.builder().id("id").build())
+                    .billableMetric(Price.TieredBps.BillableMetric.builder().id("id").build())
                     .billingCycleConfiguration(
-                        Price.TieredBpsPrice.BillingCycleConfiguration.builder()
+                        Price.TieredBps.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.TieredBpsPrice.BillingCycleConfiguration.DurationUnit.DAY
+                                Price.TieredBps.BillingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .cadence(Price.TieredBpsPrice.Cadence.ONE_TIME)
+                    .cadence(Price.TieredBps.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.TieredBpsPrice.CreditAllocation.builder()
+                        Price.TieredBps.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -979,28 +953,28 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.TieredBpsPrice.InvoicingCycleConfiguration.builder()
+                        Price.TieredBps.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.TieredBpsPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                                Price.TieredBps.InvoicingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .item(Price.TieredBpsPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.TieredBps.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.TieredBpsPrice.Maximum.builder()
+                        Price.TieredBps.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.TieredBpsPrice.Metadata.builder()
+                        Price.TieredBps.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.TieredBpsPrice.Minimum.builder()
+                        Price.TieredBps.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -1008,11 +982,11 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.TieredBpsPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.TieredBps.PriceType.USAGE_PRICE)
                     .tieredBpsConfig(
-                        Price.TieredBpsPrice.TieredBpsConfig.builder()
+                        Price.TieredBps.TieredBpsConfig.builder()
                             .addTier(
-                                Price.TieredBpsPrice.TieredBpsConfig.Tier.builder()
+                                Price.TieredBps.TieredBpsConfig.Tier.builder()
                                     .bps(0.0)
                                     .minimumAmount("minimum_amount")
                                     .maximumAmount("maximum_amount")
@@ -1022,7 +996,7 @@ internal class PriceTest {
                             .build()
                     )
                     .dimensionalPriceConfiguration(
-                        Price.TieredBpsPrice.DimensionalPriceConfiguration.builder()
+                        Price.TieredBps.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -1039,26 +1013,26 @@ internal class PriceTest {
     @Test
     fun ofBps() {
         val bps =
-            Price.BpsPrice.builder()
+            Price.Bps.builder()
                 .id("id")
-                .billableMetric(Price.BpsPrice.BillableMetric.builder().id("id").build())
+                .billableMetric(Price.Bps.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.BpsPrice.BillingCycleConfiguration.builder()
+                    Price.Bps.BillingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(Price.BpsPrice.BillingCycleConfiguration.DurationUnit.DAY)
+                        .durationUnit(Price.Bps.BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
                 .bpsConfig(
-                    Price.BpsPrice.BpsConfig.builder()
+                    Price.Bps.BpsConfig.builder()
                         .bps(0.0)
                         .perUnitMaximum("per_unit_maximum")
                         .build()
                 )
-                .cadence(Price.BpsPrice.Cadence.ONE_TIME)
+                .cadence(Price.Bps.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.BpsPrice.CreditAllocation.builder()
+                    Price.Bps.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -1076,26 +1050,26 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.BpsPrice.InvoicingCycleConfiguration.builder()
+                    Price.Bps.InvoicingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(Price.BpsPrice.InvoicingCycleConfiguration.DurationUnit.DAY)
+                        .durationUnit(Price.Bps.InvoicingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .item(Price.BpsPrice.Item.builder().id("id").name("name").build())
+                .item(Price.Bps.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.BpsPrice.Maximum.builder()
+                    Price.Bps.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.BpsPrice.Metadata.builder()
+                    Price.Bps.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.BpsPrice.Minimum.builder()
+                    Price.Bps.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -1103,9 +1077,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.BpsPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.Bps.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.BpsPrice.DimensionalPriceConfiguration.builder()
+                    Price.Bps.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -1115,7 +1089,7 @@ internal class PriceTest {
         val price = Price.ofBps(bps)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -1149,26 +1123,26 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofBps(
-                Price.BpsPrice.builder()
+                Price.Bps.builder()
                     .id("id")
-                    .billableMetric(Price.BpsPrice.BillableMetric.builder().id("id").build())
+                    .billableMetric(Price.Bps.BillableMetric.builder().id("id").build())
                     .billingCycleConfiguration(
-                        Price.BpsPrice.BillingCycleConfiguration.builder()
+                        Price.Bps.BillingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(Price.BpsPrice.BillingCycleConfiguration.DurationUnit.DAY)
+                            .durationUnit(Price.Bps.BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
                     .bpsConfig(
-                        Price.BpsPrice.BpsConfig.builder()
+                        Price.Bps.BpsConfig.builder()
                             .bps(0.0)
                             .perUnitMaximum("per_unit_maximum")
                             .build()
                     )
-                    .cadence(Price.BpsPrice.Cadence.ONE_TIME)
+                    .cadence(Price.Bps.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.BpsPrice.CreditAllocation.builder()
+                        Price.Bps.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -1186,28 +1160,26 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.BpsPrice.InvoicingCycleConfiguration.builder()
+                        Price.Bps.InvoicingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(
-                                Price.BpsPrice.InvoicingCycleConfiguration.DurationUnit.DAY
-                            )
+                            .durationUnit(Price.Bps.InvoicingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
-                    .item(Price.BpsPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.Bps.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.BpsPrice.Maximum.builder()
+                        Price.Bps.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.BpsPrice.Metadata.builder()
+                        Price.Bps.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.BpsPrice.Minimum.builder()
+                        Price.Bps.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -1215,9 +1187,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.BpsPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.Bps.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.BpsPrice.DimensionalPriceConfiguration.builder()
+                        Price.Bps.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -1234,19 +1206,19 @@ internal class PriceTest {
     @Test
     fun ofBulkBps() {
         val bulkBps =
-            Price.BulkBpsPrice.builder()
+            Price.BulkBps.builder()
                 .id("id")
-                .billableMetric(Price.BulkBpsPrice.BillableMetric.builder().id("id").build())
+                .billableMetric(Price.BulkBps.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.BulkBpsPrice.BillingCycleConfiguration.builder()
+                    Price.BulkBps.BillingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(Price.BulkBpsPrice.BillingCycleConfiguration.DurationUnit.DAY)
+                        .durationUnit(Price.BulkBps.BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
                 .bulkBpsConfig(
-                    Price.BulkBpsPrice.BulkBpsConfig.builder()
+                    Price.BulkBps.BulkBpsConfig.builder()
                         .addTier(
-                            Price.BulkBpsPrice.BulkBpsConfig.Tier.builder()
+                            Price.BulkBps.BulkBpsConfig.Tier.builder()
                                 .bps(0.0)
                                 .maximumAmount("maximum_amount")
                                 .perUnitMaximum("per_unit_maximum")
@@ -1254,11 +1226,11 @@ internal class PriceTest {
                         )
                         .build()
                 )
-                .cadence(Price.BulkBpsPrice.Cadence.ONE_TIME)
+                .cadence(Price.BulkBps.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.BulkBpsPrice.CreditAllocation.builder()
+                    Price.BulkBps.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -1276,28 +1248,26 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.BulkBpsPrice.InvoicingCycleConfiguration.builder()
+                    Price.BulkBps.InvoicingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(
-                            Price.BulkBpsPrice.InvoicingCycleConfiguration.DurationUnit.DAY
-                        )
+                        .durationUnit(Price.BulkBps.InvoicingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .item(Price.BulkBpsPrice.Item.builder().id("id").name("name").build())
+                .item(Price.BulkBps.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.BulkBpsPrice.Maximum.builder()
+                    Price.BulkBps.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.BulkBpsPrice.Metadata.builder()
+                    Price.BulkBps.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.BulkBpsPrice.Minimum.builder()
+                    Price.BulkBps.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -1305,9 +1275,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.BulkBpsPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.BulkBps.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.BulkBpsPrice.DimensionalPriceConfiguration.builder()
+                    Price.BulkBps.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -1317,7 +1287,7 @@ internal class PriceTest {
         val price = Price.ofBulkBps(bulkBps)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -1351,21 +1321,19 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofBulkBps(
-                Price.BulkBpsPrice.builder()
+                Price.BulkBps.builder()
                     .id("id")
-                    .billableMetric(Price.BulkBpsPrice.BillableMetric.builder().id("id").build())
+                    .billableMetric(Price.BulkBps.BillableMetric.builder().id("id").build())
                     .billingCycleConfiguration(
-                        Price.BulkBpsPrice.BillingCycleConfiguration.builder()
+                        Price.BulkBps.BillingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(
-                                Price.BulkBpsPrice.BillingCycleConfiguration.DurationUnit.DAY
-                            )
+                            .durationUnit(Price.BulkBps.BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
                     .bulkBpsConfig(
-                        Price.BulkBpsPrice.BulkBpsConfig.builder()
+                        Price.BulkBps.BulkBpsConfig.builder()
                             .addTier(
-                                Price.BulkBpsPrice.BulkBpsConfig.Tier.builder()
+                                Price.BulkBps.BulkBpsConfig.Tier.builder()
                                     .bps(0.0)
                                     .maximumAmount("maximum_amount")
                                     .perUnitMaximum("per_unit_maximum")
@@ -1373,11 +1341,11 @@ internal class PriceTest {
                             )
                             .build()
                     )
-                    .cadence(Price.BulkBpsPrice.Cadence.ONE_TIME)
+                    .cadence(Price.BulkBps.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.BulkBpsPrice.CreditAllocation.builder()
+                        Price.BulkBps.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -1395,28 +1363,28 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.BulkBpsPrice.InvoicingCycleConfiguration.builder()
+                        Price.BulkBps.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.BulkBpsPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                                Price.BulkBps.InvoicingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .item(Price.BulkBpsPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.BulkBps.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.BulkBpsPrice.Maximum.builder()
+                        Price.BulkBps.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.BulkBpsPrice.Metadata.builder()
+                        Price.BulkBps.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.BulkBpsPrice.Minimum.builder()
+                        Price.BulkBps.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -1424,9 +1392,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.BulkBpsPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.BulkBps.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.BulkBpsPrice.DimensionalPriceConfiguration.builder()
+                        Price.BulkBps.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -1443,30 +1411,30 @@ internal class PriceTest {
     @Test
     fun ofBulk() {
         val bulk =
-            Price.BulkPrice.builder()
+            Price.Bulk.builder()
                 .id("id")
-                .billableMetric(Price.BulkPrice.BillableMetric.builder().id("id").build())
+                .billableMetric(Price.Bulk.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.BulkPrice.BillingCycleConfiguration.builder()
+                    Price.Bulk.BillingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(Price.BulkPrice.BillingCycleConfiguration.DurationUnit.DAY)
+                        .durationUnit(Price.Bulk.BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
                 .bulkConfig(
-                    Price.BulkPrice.BulkConfig.builder()
+                    Price.Bulk.BulkConfig.builder()
                         .addTier(
-                            Price.BulkPrice.BulkConfig.Tier.builder()
+                            Price.Bulk.BulkConfig.Tier.builder()
                                 .unitAmount("unit_amount")
                                 .maximumUnits(0.0)
                                 .build()
                         )
                         .build()
                 )
-                .cadence(Price.BulkPrice.Cadence.ONE_TIME)
+                .cadence(Price.Bulk.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.BulkPrice.CreditAllocation.builder()
+                    Price.Bulk.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -1484,26 +1452,26 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.BulkPrice.InvoicingCycleConfiguration.builder()
+                    Price.Bulk.InvoicingCycleConfiguration.builder()
                         .duration(0L)
-                        .durationUnit(Price.BulkPrice.InvoicingCycleConfiguration.DurationUnit.DAY)
+                        .durationUnit(Price.Bulk.InvoicingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
-                .item(Price.BulkPrice.Item.builder().id("id").name("name").build())
+                .item(Price.Bulk.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.BulkPrice.Maximum.builder()
+                    Price.Bulk.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.BulkPrice.Metadata.builder()
+                    Price.Bulk.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.BulkPrice.Minimum.builder()
+                    Price.Bulk.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -1511,9 +1479,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.BulkPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.Bulk.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.BulkPrice.DimensionalPriceConfiguration.builder()
+                    Price.Bulk.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -1523,7 +1491,7 @@ internal class PriceTest {
         val price = Price.ofBulk(bulk)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -1557,32 +1525,30 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofBulk(
-                Price.BulkPrice.builder()
+                Price.Bulk.builder()
                     .id("id")
-                    .billableMetric(Price.BulkPrice.BillableMetric.builder().id("id").build())
+                    .billableMetric(Price.Bulk.BillableMetric.builder().id("id").build())
                     .billingCycleConfiguration(
-                        Price.BulkPrice.BillingCycleConfiguration.builder()
+                        Price.Bulk.BillingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(
-                                Price.BulkPrice.BillingCycleConfiguration.DurationUnit.DAY
-                            )
+                            .durationUnit(Price.Bulk.BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
                     .bulkConfig(
-                        Price.BulkPrice.BulkConfig.builder()
+                        Price.Bulk.BulkConfig.builder()
                             .addTier(
-                                Price.BulkPrice.BulkConfig.Tier.builder()
+                                Price.Bulk.BulkConfig.Tier.builder()
                                     .unitAmount("unit_amount")
                                     .maximumUnits(0.0)
                                     .build()
                             )
                             .build()
                     )
-                    .cadence(Price.BulkPrice.Cadence.ONE_TIME)
+                    .cadence(Price.Bulk.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.BulkPrice.CreditAllocation.builder()
+                        Price.Bulk.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -1600,28 +1566,26 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.BulkPrice.InvoicingCycleConfiguration.builder()
+                        Price.Bulk.InvoicingCycleConfiguration.builder()
                             .duration(0L)
-                            .durationUnit(
-                                Price.BulkPrice.InvoicingCycleConfiguration.DurationUnit.DAY
-                            )
+                            .durationUnit(Price.Bulk.InvoicingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
-                    .item(Price.BulkPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.Bulk.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.BulkPrice.Maximum.builder()
+                        Price.Bulk.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.BulkPrice.Metadata.builder()
+                        Price.Bulk.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.BulkPrice.Minimum.builder()
+                        Price.Bulk.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -1629,9 +1593,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.BulkPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.Bulk.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.BulkPrice.DimensionalPriceConfiguration.builder()
+                        Price.Bulk.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -1648,25 +1612,24 @@ internal class PriceTest {
     @Test
     fun ofThresholdTotalAmount() {
         val thresholdTotalAmount =
-            Price.ThresholdTotalAmountPrice.builder()
+            Price.ThresholdTotalAmount.builder()
                 .id("id")
                 .billableMetric(
-                    Price.ThresholdTotalAmountPrice.BillableMetric.builder().id("id").build()
+                    Price.ThresholdTotalAmount.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.ThresholdTotalAmountPrice.BillingCycleConfiguration.builder()
+                    Price.ThresholdTotalAmount.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.ThresholdTotalAmountPrice.BillingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.ThresholdTotalAmount.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.ThresholdTotalAmountPrice.Cadence.ONE_TIME)
+                .cadence(Price.ThresholdTotalAmount.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.ThresholdTotalAmountPrice.CreditAllocation.builder()
+                    Price.ThresholdTotalAmount.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -1684,29 +1647,28 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.ThresholdTotalAmountPrice.InvoicingCycleConfiguration.builder()
+                    Price.ThresholdTotalAmount.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.ThresholdTotalAmountPrice.InvoicingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.ThresholdTotalAmount.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.ThresholdTotalAmountPrice.Item.builder().id("id").name("name").build())
+                .item(Price.ThresholdTotalAmount.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.ThresholdTotalAmountPrice.Maximum.builder()
+                    Price.ThresholdTotalAmount.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.ThresholdTotalAmountPrice.Metadata.builder()
+                    Price.ThresholdTotalAmount.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.ThresholdTotalAmountPrice.Minimum.builder()
+                    Price.ThresholdTotalAmount.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -1714,14 +1676,14 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.ThresholdTotalAmountPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.ThresholdTotalAmount.PriceType.USAGE_PRICE)
                 .thresholdTotalAmountConfig(
-                    Price.ThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
+                    Price.ThresholdTotalAmount.ThresholdTotalAmountConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .dimensionalPriceConfiguration(
-                    Price.ThresholdTotalAmountPrice.DimensionalPriceConfiguration.builder()
+                    Price.ThresholdTotalAmount.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -1731,7 +1693,7 @@ internal class PriceTest {
         val price = Price.ofThresholdTotalAmount(thresholdTotalAmount)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -1765,26 +1727,25 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofThresholdTotalAmount(
-                Price.ThresholdTotalAmountPrice.builder()
+                Price.ThresholdTotalAmount.builder()
                     .id("id")
                     .billableMetric(
-                        Price.ThresholdTotalAmountPrice.BillableMetric.builder().id("id").build()
+                        Price.ThresholdTotalAmount.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.ThresholdTotalAmountPrice.BillingCycleConfiguration.builder()
+                        Price.ThresholdTotalAmount.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.ThresholdTotalAmountPrice.BillingCycleConfiguration
-                                    .DurationUnit
+                                Price.ThresholdTotalAmount.BillingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.ThresholdTotalAmountPrice.Cadence.ONE_TIME)
+                    .cadence(Price.ThresholdTotalAmount.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.ThresholdTotalAmountPrice.CreditAllocation.builder()
+                        Price.ThresholdTotalAmount.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -1802,32 +1763,29 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.ThresholdTotalAmountPrice.InvoicingCycleConfiguration.builder()
+                        Price.ThresholdTotalAmount.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.ThresholdTotalAmountPrice.InvoicingCycleConfiguration
-                                    .DurationUnit
+                                Price.ThresholdTotalAmount.InvoicingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .item(
-                        Price.ThresholdTotalAmountPrice.Item.builder().id("id").name("name").build()
-                    )
+                    .item(Price.ThresholdTotalAmount.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.ThresholdTotalAmountPrice.Maximum.builder()
+                        Price.ThresholdTotalAmount.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.ThresholdTotalAmountPrice.Metadata.builder()
+                        Price.ThresholdTotalAmount.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.ThresholdTotalAmountPrice.Minimum.builder()
+                        Price.ThresholdTotalAmount.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -1835,14 +1793,14 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.ThresholdTotalAmountPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.ThresholdTotalAmount.PriceType.USAGE_PRICE)
                     .thresholdTotalAmountConfig(
-                        Price.ThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
+                        Price.ThresholdTotalAmount.ThresholdTotalAmountConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .dimensionalPriceConfiguration(
-                        Price.ThresholdTotalAmountPrice.DimensionalPriceConfiguration.builder()
+                        Price.ThresholdTotalAmount.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -1859,22 +1817,22 @@ internal class PriceTest {
     @Test
     fun ofTieredPackage() {
         val tieredPackage =
-            Price.TieredPackagePrice.builder()
+            Price.TieredPackage.builder()
                 .id("id")
-                .billableMetric(Price.TieredPackagePrice.BillableMetric.builder().id("id").build())
+                .billableMetric(Price.TieredPackage.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.TieredPackagePrice.BillingCycleConfiguration.builder()
+                    Price.TieredPackage.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.TieredPackagePrice.BillingCycleConfiguration.DurationUnit.DAY
+                            Price.TieredPackage.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.TieredPackagePrice.Cadence.ONE_TIME)
+                .cadence(Price.TieredPackage.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.TieredPackagePrice.CreditAllocation.builder()
+                    Price.TieredPackage.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -1892,28 +1850,28 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.TieredPackagePrice.InvoicingCycleConfiguration.builder()
+                    Price.TieredPackage.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.TieredPackagePrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                            Price.TieredPackage.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.TieredPackagePrice.Item.builder().id("id").name("name").build())
+                .item(Price.TieredPackage.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.TieredPackagePrice.Maximum.builder()
+                    Price.TieredPackage.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.TieredPackagePrice.Metadata.builder()
+                    Price.TieredPackage.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.TieredPackagePrice.Minimum.builder()
+                    Price.TieredPackage.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -1921,14 +1879,14 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.TieredPackagePrice.PriceType.USAGE_PRICE)
+                .priceType(Price.TieredPackage.PriceType.USAGE_PRICE)
                 .tieredPackageConfig(
-                    Price.TieredPackagePrice.TieredPackageConfig.builder()
+                    Price.TieredPackage.TieredPackageConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .dimensionalPriceConfiguration(
-                    Price.TieredPackagePrice.DimensionalPriceConfiguration.builder()
+                    Price.TieredPackage.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -1938,7 +1896,7 @@ internal class PriceTest {
         val price = Price.ofTieredPackage(tieredPackage)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -1972,24 +1930,22 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofTieredPackage(
-                Price.TieredPackagePrice.builder()
+                Price.TieredPackage.builder()
                     .id("id")
-                    .billableMetric(
-                        Price.TieredPackagePrice.BillableMetric.builder().id("id").build()
-                    )
+                    .billableMetric(Price.TieredPackage.BillableMetric.builder().id("id").build())
                     .billingCycleConfiguration(
-                        Price.TieredPackagePrice.BillingCycleConfiguration.builder()
+                        Price.TieredPackage.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.TieredPackagePrice.BillingCycleConfiguration.DurationUnit.DAY
+                                Price.TieredPackage.BillingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .cadence(Price.TieredPackagePrice.Cadence.ONE_TIME)
+                    .cadence(Price.TieredPackage.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.TieredPackagePrice.CreditAllocation.builder()
+                        Price.TieredPackage.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -2007,29 +1963,28 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.TieredPackagePrice.InvoicingCycleConfiguration.builder()
+                        Price.TieredPackage.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.TieredPackagePrice.InvoicingCycleConfiguration.DurationUnit
-                                    .DAY
+                                Price.TieredPackage.InvoicingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .item(Price.TieredPackagePrice.Item.builder().id("id").name("name").build())
+                    .item(Price.TieredPackage.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.TieredPackagePrice.Maximum.builder()
+                        Price.TieredPackage.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.TieredPackagePrice.Metadata.builder()
+                        Price.TieredPackage.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.TieredPackagePrice.Minimum.builder()
+                        Price.TieredPackage.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -2037,14 +1992,14 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.TieredPackagePrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.TieredPackage.PriceType.USAGE_PRICE)
                     .tieredPackageConfig(
-                        Price.TieredPackagePrice.TieredPackageConfig.builder()
+                        Price.TieredPackage.TieredPackageConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .dimensionalPriceConfiguration(
-                        Price.TieredPackagePrice.DimensionalPriceConfiguration.builder()
+                        Price.TieredPackage.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -2061,22 +2016,22 @@ internal class PriceTest {
     @Test
     fun ofGroupedTiered() {
         val groupedTiered =
-            Price.GroupedTieredPrice.builder()
+            Price.GroupedTiered.builder()
                 .id("id")
-                .billableMetric(Price.GroupedTieredPrice.BillableMetric.builder().id("id").build())
+                .billableMetric(Price.GroupedTiered.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.GroupedTieredPrice.BillingCycleConfiguration.builder()
+                    Price.GroupedTiered.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.GroupedTieredPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            Price.GroupedTiered.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.GroupedTieredPrice.Cadence.ONE_TIME)
+                .cadence(Price.GroupedTiered.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.GroupedTieredPrice.CreditAllocation.builder()
+                    Price.GroupedTiered.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -2094,33 +2049,33 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .groupedTieredConfig(
-                    Price.GroupedTieredPrice.GroupedTieredConfig.builder()
+                    Price.GroupedTiered.GroupedTieredConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .invoicingCycleConfiguration(
-                    Price.GroupedTieredPrice.InvoicingCycleConfiguration.builder()
+                    Price.GroupedTiered.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.GroupedTieredPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                            Price.GroupedTiered.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.GroupedTieredPrice.Item.builder().id("id").name("name").build())
+                .item(Price.GroupedTiered.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.GroupedTieredPrice.Maximum.builder()
+                    Price.GroupedTiered.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.GroupedTieredPrice.Metadata.builder()
+                    Price.GroupedTiered.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.GroupedTieredPrice.Minimum.builder()
+                    Price.GroupedTiered.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -2128,9 +2083,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.GroupedTieredPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.GroupedTiered.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.GroupedTieredPrice.DimensionalPriceConfiguration.builder()
+                    Price.GroupedTiered.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -2140,7 +2095,7 @@ internal class PriceTest {
         val price = Price.ofGroupedTiered(groupedTiered)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -2174,24 +2129,22 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofGroupedTiered(
-                Price.GroupedTieredPrice.builder()
+                Price.GroupedTiered.builder()
                     .id("id")
-                    .billableMetric(
-                        Price.GroupedTieredPrice.BillableMetric.builder().id("id").build()
-                    )
+                    .billableMetric(Price.GroupedTiered.BillableMetric.builder().id("id").build())
                     .billingCycleConfiguration(
-                        Price.GroupedTieredPrice.BillingCycleConfiguration.builder()
+                        Price.GroupedTiered.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.GroupedTieredPrice.BillingCycleConfiguration.DurationUnit.DAY
+                                Price.GroupedTiered.BillingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .cadence(Price.GroupedTieredPrice.Cadence.ONE_TIME)
+                    .cadence(Price.GroupedTiered.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.GroupedTieredPrice.CreditAllocation.builder()
+                        Price.GroupedTiered.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -2209,34 +2162,33 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .groupedTieredConfig(
-                        Price.GroupedTieredPrice.GroupedTieredConfig.builder()
+                        Price.GroupedTiered.GroupedTieredConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .invoicingCycleConfiguration(
-                        Price.GroupedTieredPrice.InvoicingCycleConfiguration.builder()
+                        Price.GroupedTiered.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.GroupedTieredPrice.InvoicingCycleConfiguration.DurationUnit
-                                    .DAY
+                                Price.GroupedTiered.InvoicingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .item(Price.GroupedTieredPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.GroupedTiered.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.GroupedTieredPrice.Maximum.builder()
+                        Price.GroupedTiered.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.GroupedTieredPrice.Metadata.builder()
+                        Price.GroupedTiered.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.GroupedTieredPrice.Minimum.builder()
+                        Price.GroupedTiered.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -2244,9 +2196,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.GroupedTieredPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.GroupedTiered.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.GroupedTieredPrice.DimensionalPriceConfiguration.builder()
+                        Price.GroupedTiered.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -2263,24 +2215,22 @@ internal class PriceTest {
     @Test
     fun ofTieredWithMinimum() {
         val tieredWithMinimum =
-            Price.TieredWithMinimumPrice.builder()
+            Price.TieredWithMinimum.builder()
                 .id("id")
-                .billableMetric(
-                    Price.TieredWithMinimumPrice.BillableMetric.builder().id("id").build()
-                )
+                .billableMetric(Price.TieredWithMinimum.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.TieredWithMinimumPrice.BillingCycleConfiguration.builder()
+                    Price.TieredWithMinimum.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.TieredWithMinimumPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            Price.TieredWithMinimum.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.TieredWithMinimumPrice.Cadence.ONE_TIME)
+                .cadence(Price.TieredWithMinimum.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.TieredWithMinimumPrice.CreditAllocation.builder()
+                    Price.TieredWithMinimum.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -2298,29 +2248,28 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.TieredWithMinimumPrice.InvoicingCycleConfiguration.builder()
+                    Price.TieredWithMinimum.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.TieredWithMinimumPrice.InvoicingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.TieredWithMinimum.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.TieredWithMinimumPrice.Item.builder().id("id").name("name").build())
+                .item(Price.TieredWithMinimum.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.TieredWithMinimumPrice.Maximum.builder()
+                    Price.TieredWithMinimum.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.TieredWithMinimumPrice.Metadata.builder()
+                    Price.TieredWithMinimum.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.TieredWithMinimumPrice.Minimum.builder()
+                    Price.TieredWithMinimum.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -2328,14 +2277,14 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.TieredWithMinimumPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.TieredWithMinimum.PriceType.USAGE_PRICE)
                 .tieredWithMinimumConfig(
-                    Price.TieredWithMinimumPrice.TieredWithMinimumConfig.builder()
+                    Price.TieredWithMinimum.TieredWithMinimumConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .dimensionalPriceConfiguration(
-                    Price.TieredWithMinimumPrice.DimensionalPriceConfiguration.builder()
+                    Price.TieredWithMinimum.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -2345,7 +2294,7 @@ internal class PriceTest {
         val price = Price.ofTieredWithMinimum(tieredWithMinimum)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -2379,25 +2328,24 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofTieredWithMinimum(
-                Price.TieredWithMinimumPrice.builder()
+                Price.TieredWithMinimum.builder()
                     .id("id")
                     .billableMetric(
-                        Price.TieredWithMinimumPrice.BillableMetric.builder().id("id").build()
+                        Price.TieredWithMinimum.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.TieredWithMinimumPrice.BillingCycleConfiguration.builder()
+                        Price.TieredWithMinimum.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.TieredWithMinimumPrice.BillingCycleConfiguration.DurationUnit
-                                    .DAY
+                                Price.TieredWithMinimum.BillingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .cadence(Price.TieredWithMinimumPrice.Cadence.ONE_TIME)
+                    .cadence(Price.TieredWithMinimum.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.TieredWithMinimumPrice.CreditAllocation.builder()
+                        Price.TieredWithMinimum.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -2415,30 +2363,28 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.TieredWithMinimumPrice.InvoicingCycleConfiguration.builder()
+                        Price.TieredWithMinimum.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.TieredWithMinimumPrice.InvoicingCycleConfiguration
-                                    .DurationUnit
-                                    .DAY
+                                Price.TieredWithMinimum.InvoicingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .item(Price.TieredWithMinimumPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.TieredWithMinimum.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.TieredWithMinimumPrice.Maximum.builder()
+                        Price.TieredWithMinimum.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.TieredWithMinimumPrice.Metadata.builder()
+                        Price.TieredWithMinimum.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.TieredWithMinimumPrice.Minimum.builder()
+                        Price.TieredWithMinimum.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -2446,14 +2392,14 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.TieredWithMinimumPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.TieredWithMinimum.PriceType.USAGE_PRICE)
                     .tieredWithMinimumConfig(
-                        Price.TieredWithMinimumPrice.TieredWithMinimumConfig.builder()
+                        Price.TieredWithMinimum.TieredWithMinimumConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .dimensionalPriceConfiguration(
-                        Price.TieredWithMinimumPrice.DimensionalPriceConfiguration.builder()
+                        Price.TieredWithMinimum.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -2470,26 +2416,25 @@ internal class PriceTest {
     @Test
     fun ofTieredPackageWithMinimum() {
         val tieredPackageWithMinimum =
-            Price.TieredPackageWithMinimumPrice.builder()
+            Price.TieredPackageWithMinimum.builder()
                 .id("id")
                 .billableMetric(
-                    Price.TieredPackageWithMinimumPrice.BillableMetric.builder().id("id").build()
+                    Price.TieredPackageWithMinimum.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.TieredPackageWithMinimumPrice.BillingCycleConfiguration.builder()
+                    Price.TieredPackageWithMinimum.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.TieredPackageWithMinimumPrice.BillingCycleConfiguration
-                                .DurationUnit
+                            Price.TieredPackageWithMinimum.BillingCycleConfiguration.DurationUnit
                                 .DAY
                         )
                         .build()
                 )
-                .cadence(Price.TieredPackageWithMinimumPrice.Cadence.ONE_TIME)
+                .cadence(Price.TieredPackageWithMinimum.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.TieredPackageWithMinimumPrice.CreditAllocation.builder()
+                    Price.TieredPackageWithMinimum.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -2507,32 +2452,29 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.TieredPackageWithMinimumPrice.InvoicingCycleConfiguration.builder()
+                    Price.TieredPackageWithMinimum.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.TieredPackageWithMinimumPrice.InvoicingCycleConfiguration
-                                .DurationUnit
+                            Price.TieredPackageWithMinimum.InvoicingCycleConfiguration.DurationUnit
                                 .DAY
                         )
                         .build()
                 )
-                .item(
-                    Price.TieredPackageWithMinimumPrice.Item.builder().id("id").name("name").build()
-                )
+                .item(Price.TieredPackageWithMinimum.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.TieredPackageWithMinimumPrice.Maximum.builder()
+                    Price.TieredPackageWithMinimum.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.TieredPackageWithMinimumPrice.Metadata.builder()
+                    Price.TieredPackageWithMinimum.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.TieredPackageWithMinimumPrice.Minimum.builder()
+                    Price.TieredPackageWithMinimum.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -2540,14 +2482,14 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.TieredPackageWithMinimumPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.TieredPackageWithMinimum.PriceType.USAGE_PRICE)
                 .tieredPackageWithMinimumConfig(
-                    Price.TieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.builder()
+                    Price.TieredPackageWithMinimum.TieredPackageWithMinimumConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .dimensionalPriceConfiguration(
-                    Price.TieredPackageWithMinimumPrice.DimensionalPriceConfiguration.builder()
+                    Price.TieredPackageWithMinimum.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -2557,7 +2499,7 @@ internal class PriceTest {
         val price = Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -2591,28 +2533,26 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofTieredPackageWithMinimum(
-                Price.TieredPackageWithMinimumPrice.builder()
+                Price.TieredPackageWithMinimum.builder()
                     .id("id")
                     .billableMetric(
-                        Price.TieredPackageWithMinimumPrice.BillableMetric.builder()
-                            .id("id")
-                            .build()
+                        Price.TieredPackageWithMinimum.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.TieredPackageWithMinimumPrice.BillingCycleConfiguration.builder()
+                        Price.TieredPackageWithMinimum.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.TieredPackageWithMinimumPrice.BillingCycleConfiguration
+                                Price.TieredPackageWithMinimum.BillingCycleConfiguration
                                     .DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.TieredPackageWithMinimumPrice.Cadence.ONE_TIME)
+                    .cadence(Price.TieredPackageWithMinimum.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.TieredPackageWithMinimumPrice.CreditAllocation.builder()
+                        Price.TieredPackageWithMinimum.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -2630,35 +2570,32 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.TieredPackageWithMinimumPrice.InvoicingCycleConfiguration.builder()
+                        Price.TieredPackageWithMinimum.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.TieredPackageWithMinimumPrice.InvoicingCycleConfiguration
+                                Price.TieredPackageWithMinimum.InvoicingCycleConfiguration
                                     .DurationUnit
                                     .DAY
                             )
                             .build()
                     )
                     .item(
-                        Price.TieredPackageWithMinimumPrice.Item.builder()
-                            .id("id")
-                            .name("name")
-                            .build()
+                        Price.TieredPackageWithMinimum.Item.builder().id("id").name("name").build()
                     )
                     .maximum(
-                        Price.TieredPackageWithMinimumPrice.Maximum.builder()
+                        Price.TieredPackageWithMinimum.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.TieredPackageWithMinimumPrice.Metadata.builder()
+                        Price.TieredPackageWithMinimum.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.TieredPackageWithMinimumPrice.Minimum.builder()
+                        Price.TieredPackageWithMinimum.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -2666,14 +2603,14 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.TieredPackageWithMinimumPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.TieredPackageWithMinimum.PriceType.USAGE_PRICE)
                     .tieredPackageWithMinimumConfig(
-                        Price.TieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.builder()
+                        Price.TieredPackageWithMinimum.TieredPackageWithMinimumConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .dimensionalPriceConfiguration(
-                        Price.TieredPackageWithMinimumPrice.DimensionalPriceConfiguration.builder()
+                        Price.TieredPackageWithMinimum.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -2690,25 +2627,24 @@ internal class PriceTest {
     @Test
     fun ofPackageWithAllocation() {
         val packageWithAllocation =
-            Price.PackageWithAllocationPrice.builder()
+            Price.PackageWithAllocation.builder()
                 .id("id")
                 .billableMetric(
-                    Price.PackageWithAllocationPrice.BillableMetric.builder().id("id").build()
+                    Price.PackageWithAllocation.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.PackageWithAllocationPrice.BillingCycleConfiguration.builder()
+                    Price.PackageWithAllocation.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.PackageWithAllocationPrice.BillingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.PackageWithAllocation.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.PackageWithAllocationPrice.Cadence.ONE_TIME)
+                .cadence(Price.PackageWithAllocation.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.PackageWithAllocationPrice.CreditAllocation.builder()
+                    Price.PackageWithAllocation.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -2726,30 +2662,28 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.PackageWithAllocationPrice.InvoicingCycleConfiguration.builder()
+                    Price.PackageWithAllocation.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.PackageWithAllocationPrice.InvoicingCycleConfiguration
-                                .DurationUnit
-                                .DAY
+                            Price.PackageWithAllocation.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.PackageWithAllocationPrice.Item.builder().id("id").name("name").build())
+                .item(Price.PackageWithAllocation.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.PackageWithAllocationPrice.Maximum.builder()
+                    Price.PackageWithAllocation.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.PackageWithAllocationPrice.Metadata.builder()
+                    Price.PackageWithAllocation.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.PackageWithAllocationPrice.Minimum.builder()
+                    Price.PackageWithAllocation.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -2757,14 +2691,14 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .packageWithAllocationConfig(
-                    Price.PackageWithAllocationPrice.PackageWithAllocationConfig.builder()
+                    Price.PackageWithAllocation.PackageWithAllocationConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .planPhaseOrder(0L)
-                .priceType(Price.PackageWithAllocationPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.PackageWithAllocation.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.PackageWithAllocationPrice.DimensionalPriceConfiguration.builder()
+                    Price.PackageWithAllocation.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -2774,7 +2708,7 @@ internal class PriceTest {
         val price = Price.ofPackageWithAllocation(packageWithAllocation)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -2808,26 +2742,25 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofPackageWithAllocation(
-                Price.PackageWithAllocationPrice.builder()
+                Price.PackageWithAllocation.builder()
                     .id("id")
                     .billableMetric(
-                        Price.PackageWithAllocationPrice.BillableMetric.builder().id("id").build()
+                        Price.PackageWithAllocation.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.PackageWithAllocationPrice.BillingCycleConfiguration.builder()
+                        Price.PackageWithAllocation.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.PackageWithAllocationPrice.BillingCycleConfiguration
-                                    .DurationUnit
+                                Price.PackageWithAllocation.BillingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.PackageWithAllocationPrice.Cadence.ONE_TIME)
+                    .cadence(Price.PackageWithAllocation.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.PackageWithAllocationPrice.CreditAllocation.builder()
+                        Price.PackageWithAllocation.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -2845,35 +2778,29 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.PackageWithAllocationPrice.InvoicingCycleConfiguration.builder()
+                        Price.PackageWithAllocation.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.PackageWithAllocationPrice.InvoicingCycleConfiguration
-                                    .DurationUnit
+                                Price.PackageWithAllocation.InvoicingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .item(
-                        Price.PackageWithAllocationPrice.Item.builder()
-                            .id("id")
-                            .name("name")
-                            .build()
-                    )
+                    .item(Price.PackageWithAllocation.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.PackageWithAllocationPrice.Maximum.builder()
+                        Price.PackageWithAllocation.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.PackageWithAllocationPrice.Metadata.builder()
+                        Price.PackageWithAllocation.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.PackageWithAllocationPrice.Minimum.builder()
+                        Price.PackageWithAllocation.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -2881,14 +2808,14 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .packageWithAllocationConfig(
-                        Price.PackageWithAllocationPrice.PackageWithAllocationConfig.builder()
+                        Price.PackageWithAllocation.PackageWithAllocationConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .planPhaseOrder(0L)
-                    .priceType(Price.PackageWithAllocationPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.PackageWithAllocation.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.PackageWithAllocationPrice.DimensionalPriceConfiguration.builder()
+                        Price.PackageWithAllocation.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -2905,24 +2832,22 @@ internal class PriceTest {
     @Test
     fun ofUnitWithPercent() {
         val unitWithPercent =
-            Price.UnitWithPercentPrice.builder()
+            Price.UnitWithPercent.builder()
                 .id("id")
-                .billableMetric(
-                    Price.UnitWithPercentPrice.BillableMetric.builder().id("id").build()
-                )
+                .billableMetric(Price.UnitWithPercent.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.UnitWithPercentPrice.BillingCycleConfiguration.builder()
+                    Price.UnitWithPercent.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.UnitWithPercentPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            Price.UnitWithPercent.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.UnitWithPercentPrice.Cadence.ONE_TIME)
+                .cadence(Price.UnitWithPercent.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.UnitWithPercentPrice.CreditAllocation.builder()
+                    Price.UnitWithPercent.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -2940,28 +2865,28 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.UnitWithPercentPrice.InvoicingCycleConfiguration.builder()
+                    Price.UnitWithPercent.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.UnitWithPercentPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                            Price.UnitWithPercent.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.UnitWithPercentPrice.Item.builder().id("id").name("name").build())
+                .item(Price.UnitWithPercent.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.UnitWithPercentPrice.Maximum.builder()
+                    Price.UnitWithPercent.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.UnitWithPercentPrice.Metadata.builder()
+                    Price.UnitWithPercent.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.UnitWithPercentPrice.Minimum.builder()
+                    Price.UnitWithPercent.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -2969,14 +2894,14 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.UnitWithPercentPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.UnitWithPercent.PriceType.USAGE_PRICE)
                 .unitWithPercentConfig(
-                    Price.UnitWithPercentPrice.UnitWithPercentConfig.builder()
+                    Price.UnitWithPercent.UnitWithPercentConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .dimensionalPriceConfiguration(
-                    Price.UnitWithPercentPrice.DimensionalPriceConfiguration.builder()
+                    Price.UnitWithPercent.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -2986,7 +2911,7 @@ internal class PriceTest {
         val price = Price.ofUnitWithPercent(unitWithPercent)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -3020,25 +2945,22 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofUnitWithPercent(
-                Price.UnitWithPercentPrice.builder()
+                Price.UnitWithPercent.builder()
                     .id("id")
-                    .billableMetric(
-                        Price.UnitWithPercentPrice.BillableMetric.builder().id("id").build()
-                    )
+                    .billableMetric(Price.UnitWithPercent.BillableMetric.builder().id("id").build())
                     .billingCycleConfiguration(
-                        Price.UnitWithPercentPrice.BillingCycleConfiguration.builder()
+                        Price.UnitWithPercent.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.UnitWithPercentPrice.BillingCycleConfiguration.DurationUnit
-                                    .DAY
+                                Price.UnitWithPercent.BillingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .cadence(Price.UnitWithPercentPrice.Cadence.ONE_TIME)
+                    .cadence(Price.UnitWithPercent.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.UnitWithPercentPrice.CreditAllocation.builder()
+                        Price.UnitWithPercent.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -3056,29 +2978,28 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.UnitWithPercentPrice.InvoicingCycleConfiguration.builder()
+                        Price.UnitWithPercent.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.UnitWithPercentPrice.InvoicingCycleConfiguration.DurationUnit
-                                    .DAY
+                                Price.UnitWithPercent.InvoicingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .item(Price.UnitWithPercentPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.UnitWithPercent.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.UnitWithPercentPrice.Maximum.builder()
+                        Price.UnitWithPercent.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.UnitWithPercentPrice.Metadata.builder()
+                        Price.UnitWithPercent.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.UnitWithPercentPrice.Minimum.builder()
+                        Price.UnitWithPercent.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -3086,14 +3007,14 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.UnitWithPercentPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.UnitWithPercent.PriceType.USAGE_PRICE)
                     .unitWithPercentConfig(
-                        Price.UnitWithPercentPrice.UnitWithPercentConfig.builder()
+                        Price.UnitWithPercent.UnitWithPercentConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .dimensionalPriceConfiguration(
-                        Price.UnitWithPercentPrice.DimensionalPriceConfiguration.builder()
+                        Price.UnitWithPercent.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -3110,25 +3031,24 @@ internal class PriceTest {
     @Test
     fun ofMatrixWithAllocation() {
         val matrixWithAllocation =
-            Price.MatrixWithAllocationPrice.builder()
+            Price.MatrixWithAllocation.builder()
                 .id("id")
                 .billableMetric(
-                    Price.MatrixWithAllocationPrice.BillableMetric.builder().id("id").build()
+                    Price.MatrixWithAllocation.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.MatrixWithAllocationPrice.BillingCycleConfiguration.builder()
+                    Price.MatrixWithAllocation.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.MatrixWithAllocationPrice.BillingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.MatrixWithAllocation.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.MatrixWithAllocationPrice.Cadence.ONE_TIME)
+                .cadence(Price.MatrixWithAllocation.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.MatrixWithAllocationPrice.CreditAllocation.builder()
+                    Price.MatrixWithAllocation.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -3146,22 +3066,21 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.MatrixWithAllocationPrice.InvoicingCycleConfiguration.builder()
+                    Price.MatrixWithAllocation.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.MatrixWithAllocationPrice.InvoicingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.MatrixWithAllocation.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.MatrixWithAllocationPrice.Item.builder().id("id").name("name").build())
+                .item(Price.MatrixWithAllocation.Item.builder().id("id").name("name").build())
                 .matrixWithAllocationConfig(
-                    Price.MatrixWithAllocationPrice.MatrixWithAllocationConfig.builder()
+                    Price.MatrixWithAllocation.MatrixWithAllocationConfig.builder()
                         .allocation(0.0)
                         .defaultUnitAmount("default_unit_amount")
                         .addDimension("string")
                         .addMatrixValue(
-                            Price.MatrixWithAllocationPrice.MatrixWithAllocationConfig.MatrixValue
+                            Price.MatrixWithAllocation.MatrixWithAllocationConfig.MatrixValue
                                 .builder()
                                 .addDimensionValue("string")
                                 .unitAmount("unit_amount")
@@ -3170,19 +3089,19 @@ internal class PriceTest {
                         .build()
                 )
                 .maximum(
-                    Price.MatrixWithAllocationPrice.Maximum.builder()
+                    Price.MatrixWithAllocation.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.MatrixWithAllocationPrice.Metadata.builder()
+                    Price.MatrixWithAllocation.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.MatrixWithAllocationPrice.Minimum.builder()
+                    Price.MatrixWithAllocation.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -3190,9 +3109,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.MatrixWithAllocationPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.MatrixWithAllocation.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.MatrixWithAllocationPrice.DimensionalPriceConfiguration.builder()
+                    Price.MatrixWithAllocation.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -3202,7 +3121,7 @@ internal class PriceTest {
         val price = Price.ofMatrixWithAllocation(matrixWithAllocation)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -3236,26 +3155,25 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofMatrixWithAllocation(
-                Price.MatrixWithAllocationPrice.builder()
+                Price.MatrixWithAllocation.builder()
                     .id("id")
                     .billableMetric(
-                        Price.MatrixWithAllocationPrice.BillableMetric.builder().id("id").build()
+                        Price.MatrixWithAllocation.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.MatrixWithAllocationPrice.BillingCycleConfiguration.builder()
+                        Price.MatrixWithAllocation.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.MatrixWithAllocationPrice.BillingCycleConfiguration
-                                    .DurationUnit
+                                Price.MatrixWithAllocation.BillingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.MatrixWithAllocationPrice.Cadence.ONE_TIME)
+                    .cadence(Price.MatrixWithAllocation.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.MatrixWithAllocationPrice.CreditAllocation.builder()
+                        Price.MatrixWithAllocation.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -3273,26 +3191,22 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.MatrixWithAllocationPrice.InvoicingCycleConfiguration.builder()
+                        Price.MatrixWithAllocation.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.MatrixWithAllocationPrice.InvoicingCycleConfiguration
-                                    .DurationUnit
+                                Price.MatrixWithAllocation.InvoicingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .item(
-                        Price.MatrixWithAllocationPrice.Item.builder().id("id").name("name").build()
-                    )
+                    .item(Price.MatrixWithAllocation.Item.builder().id("id").name("name").build())
                     .matrixWithAllocationConfig(
-                        Price.MatrixWithAllocationPrice.MatrixWithAllocationConfig.builder()
+                        Price.MatrixWithAllocation.MatrixWithAllocationConfig.builder()
                             .allocation(0.0)
                             .defaultUnitAmount("default_unit_amount")
                             .addDimension("string")
                             .addMatrixValue(
-                                Price.MatrixWithAllocationPrice.MatrixWithAllocationConfig
-                                    .MatrixValue
+                                Price.MatrixWithAllocation.MatrixWithAllocationConfig.MatrixValue
                                     .builder()
                                     .addDimensionValue("string")
                                     .unitAmount("unit_amount")
@@ -3301,19 +3215,19 @@ internal class PriceTest {
                             .build()
                     )
                     .maximum(
-                        Price.MatrixWithAllocationPrice.Maximum.builder()
+                        Price.MatrixWithAllocation.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.MatrixWithAllocationPrice.Metadata.builder()
+                        Price.MatrixWithAllocation.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.MatrixWithAllocationPrice.Minimum.builder()
+                        Price.MatrixWithAllocation.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -3321,9 +3235,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.MatrixWithAllocationPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.MatrixWithAllocation.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.MatrixWithAllocationPrice.DimensionalPriceConfiguration.builder()
+                        Price.MatrixWithAllocation.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -3340,25 +3254,22 @@ internal class PriceTest {
     @Test
     fun ofTieredWithProration() {
         val tieredWithProration =
-            Price.TieredWithProrationPrice.builder()
+            Price.TieredWithProration.builder()
                 .id("id")
-                .billableMetric(
-                    Price.TieredWithProrationPrice.BillableMetric.builder().id("id").build()
-                )
+                .billableMetric(Price.TieredWithProration.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.TieredWithProrationPrice.BillingCycleConfiguration.builder()
+                    Price.TieredWithProration.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.TieredWithProrationPrice.BillingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.TieredWithProration.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.TieredWithProrationPrice.Cadence.ONE_TIME)
+                .cadence(Price.TieredWithProration.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.TieredWithProrationPrice.CreditAllocation.builder()
+                    Price.TieredWithProration.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -3376,29 +3287,28 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.TieredWithProrationPrice.InvoicingCycleConfiguration.builder()
+                    Price.TieredWithProration.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.TieredWithProrationPrice.InvoicingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.TieredWithProration.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.TieredWithProrationPrice.Item.builder().id("id").name("name").build())
+                .item(Price.TieredWithProration.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.TieredWithProrationPrice.Maximum.builder()
+                    Price.TieredWithProration.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.TieredWithProrationPrice.Metadata.builder()
+                    Price.TieredWithProration.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.TieredWithProrationPrice.Minimum.builder()
+                    Price.TieredWithProration.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -3406,14 +3316,14 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.TieredWithProrationPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.TieredWithProration.PriceType.USAGE_PRICE)
                 .tieredWithProrationConfig(
-                    Price.TieredWithProrationPrice.TieredWithProrationConfig.builder()
+                    Price.TieredWithProration.TieredWithProrationConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .dimensionalPriceConfiguration(
-                    Price.TieredWithProrationPrice.DimensionalPriceConfiguration.builder()
+                    Price.TieredWithProration.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -3423,7 +3333,7 @@ internal class PriceTest {
         val price = Price.ofTieredWithProration(tieredWithProration)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -3457,26 +3367,24 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofTieredWithProration(
-                Price.TieredWithProrationPrice.builder()
+                Price.TieredWithProration.builder()
                     .id("id")
                     .billableMetric(
-                        Price.TieredWithProrationPrice.BillableMetric.builder().id("id").build()
+                        Price.TieredWithProration.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.TieredWithProrationPrice.BillingCycleConfiguration.builder()
+                        Price.TieredWithProration.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.TieredWithProrationPrice.BillingCycleConfiguration
-                                    .DurationUnit
-                                    .DAY
+                                Price.TieredWithProration.BillingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .cadence(Price.TieredWithProrationPrice.Cadence.ONE_TIME)
+                    .cadence(Price.TieredWithProration.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.TieredWithProrationPrice.CreditAllocation.builder()
+                        Price.TieredWithProration.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -3494,32 +3402,29 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.TieredWithProrationPrice.InvoicingCycleConfiguration.builder()
+                        Price.TieredWithProration.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.TieredWithProrationPrice.InvoicingCycleConfiguration
-                                    .DurationUnit
+                                Price.TieredWithProration.InvoicingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .item(
-                        Price.TieredWithProrationPrice.Item.builder().id("id").name("name").build()
-                    )
+                    .item(Price.TieredWithProration.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.TieredWithProrationPrice.Maximum.builder()
+                        Price.TieredWithProration.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.TieredWithProrationPrice.Metadata.builder()
+                        Price.TieredWithProration.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.TieredWithProrationPrice.Minimum.builder()
+                        Price.TieredWithProration.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -3527,14 +3432,14 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.TieredWithProrationPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.TieredWithProration.PriceType.USAGE_PRICE)
                     .tieredWithProrationConfig(
-                        Price.TieredWithProrationPrice.TieredWithProrationConfig.builder()
+                        Price.TieredWithProration.TieredWithProrationConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .dimensionalPriceConfiguration(
-                        Price.TieredWithProrationPrice.DimensionalPriceConfiguration.builder()
+                        Price.TieredWithProration.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -3551,24 +3456,22 @@ internal class PriceTest {
     @Test
     fun ofUnitWithProration() {
         val unitWithProration =
-            Price.UnitWithProrationPrice.builder()
+            Price.UnitWithProration.builder()
                 .id("id")
-                .billableMetric(
-                    Price.UnitWithProrationPrice.BillableMetric.builder().id("id").build()
-                )
+                .billableMetric(Price.UnitWithProration.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.UnitWithProrationPrice.BillingCycleConfiguration.builder()
+                    Price.UnitWithProration.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.UnitWithProrationPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            Price.UnitWithProration.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.UnitWithProrationPrice.Cadence.ONE_TIME)
+                .cadence(Price.UnitWithProration.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.UnitWithProrationPrice.CreditAllocation.builder()
+                    Price.UnitWithProration.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -3586,29 +3489,28 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.UnitWithProrationPrice.InvoicingCycleConfiguration.builder()
+                    Price.UnitWithProration.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.UnitWithProrationPrice.InvoicingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.UnitWithProration.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.UnitWithProrationPrice.Item.builder().id("id").name("name").build())
+                .item(Price.UnitWithProration.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.UnitWithProrationPrice.Maximum.builder()
+                    Price.UnitWithProration.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.UnitWithProrationPrice.Metadata.builder()
+                    Price.UnitWithProration.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.UnitWithProrationPrice.Minimum.builder()
+                    Price.UnitWithProration.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -3616,14 +3518,14 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.UnitWithProrationPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.UnitWithProration.PriceType.USAGE_PRICE)
                 .unitWithProrationConfig(
-                    Price.UnitWithProrationPrice.UnitWithProrationConfig.builder()
+                    Price.UnitWithProration.UnitWithProrationConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .dimensionalPriceConfiguration(
-                    Price.UnitWithProrationPrice.DimensionalPriceConfiguration.builder()
+                    Price.UnitWithProration.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -3633,7 +3535,7 @@ internal class PriceTest {
         val price = Price.ofUnitWithProration(unitWithProration)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -3667,25 +3569,24 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofUnitWithProration(
-                Price.UnitWithProrationPrice.builder()
+                Price.UnitWithProration.builder()
                     .id("id")
                     .billableMetric(
-                        Price.UnitWithProrationPrice.BillableMetric.builder().id("id").build()
+                        Price.UnitWithProration.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.UnitWithProrationPrice.BillingCycleConfiguration.builder()
+                        Price.UnitWithProration.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.UnitWithProrationPrice.BillingCycleConfiguration.DurationUnit
-                                    .DAY
+                                Price.UnitWithProration.BillingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .cadence(Price.UnitWithProrationPrice.Cadence.ONE_TIME)
+                    .cadence(Price.UnitWithProration.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.UnitWithProrationPrice.CreditAllocation.builder()
+                        Price.UnitWithProration.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -3703,30 +3604,28 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.UnitWithProrationPrice.InvoicingCycleConfiguration.builder()
+                        Price.UnitWithProration.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.UnitWithProrationPrice.InvoicingCycleConfiguration
-                                    .DurationUnit
-                                    .DAY
+                                Price.UnitWithProration.InvoicingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .item(Price.UnitWithProrationPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.UnitWithProration.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.UnitWithProrationPrice.Maximum.builder()
+                        Price.UnitWithProration.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.UnitWithProrationPrice.Metadata.builder()
+                        Price.UnitWithProration.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.UnitWithProrationPrice.Minimum.builder()
+                        Price.UnitWithProration.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -3734,14 +3633,14 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.UnitWithProrationPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.UnitWithProration.PriceType.USAGE_PRICE)
                     .unitWithProrationConfig(
-                        Price.UnitWithProrationPrice.UnitWithProrationConfig.builder()
+                        Price.UnitWithProration.UnitWithProrationConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .dimensionalPriceConfiguration(
-                        Price.UnitWithProrationPrice.DimensionalPriceConfiguration.builder()
+                        Price.UnitWithProration.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -3758,24 +3657,22 @@ internal class PriceTest {
     @Test
     fun ofGroupedAllocation() {
         val groupedAllocation =
-            Price.GroupedAllocationPrice.builder()
+            Price.GroupedAllocation.builder()
                 .id("id")
-                .billableMetric(
-                    Price.GroupedAllocationPrice.BillableMetric.builder().id("id").build()
-                )
+                .billableMetric(Price.GroupedAllocation.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.GroupedAllocationPrice.BillingCycleConfiguration.builder()
+                    Price.GroupedAllocation.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.GroupedAllocationPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            Price.GroupedAllocation.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.GroupedAllocationPrice.Cadence.ONE_TIME)
+                .cadence(Price.GroupedAllocation.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.GroupedAllocationPrice.CreditAllocation.builder()
+                    Price.GroupedAllocation.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -3793,34 +3690,33 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .groupedAllocationConfig(
-                    Price.GroupedAllocationPrice.GroupedAllocationConfig.builder()
+                    Price.GroupedAllocation.GroupedAllocationConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .invoicingCycleConfiguration(
-                    Price.GroupedAllocationPrice.InvoicingCycleConfiguration.builder()
+                    Price.GroupedAllocation.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.GroupedAllocationPrice.InvoicingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.GroupedAllocation.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.GroupedAllocationPrice.Item.builder().id("id").name("name").build())
+                .item(Price.GroupedAllocation.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.GroupedAllocationPrice.Maximum.builder()
+                    Price.GroupedAllocation.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.GroupedAllocationPrice.Metadata.builder()
+                    Price.GroupedAllocation.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.GroupedAllocationPrice.Minimum.builder()
+                    Price.GroupedAllocation.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -3828,9 +3724,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.GroupedAllocationPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.GroupedAllocation.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.GroupedAllocationPrice.DimensionalPriceConfiguration.builder()
+                    Price.GroupedAllocation.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -3840,7 +3736,7 @@ internal class PriceTest {
         val price = Price.ofGroupedAllocation(groupedAllocation)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -3874,25 +3770,24 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofGroupedAllocation(
-                Price.GroupedAllocationPrice.builder()
+                Price.GroupedAllocation.builder()
                     .id("id")
                     .billableMetric(
-                        Price.GroupedAllocationPrice.BillableMetric.builder().id("id").build()
+                        Price.GroupedAllocation.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.GroupedAllocationPrice.BillingCycleConfiguration.builder()
+                        Price.GroupedAllocation.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.GroupedAllocationPrice.BillingCycleConfiguration.DurationUnit
-                                    .DAY
+                                Price.GroupedAllocation.BillingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .cadence(Price.GroupedAllocationPrice.Cadence.ONE_TIME)
+                    .cadence(Price.GroupedAllocation.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.GroupedAllocationPrice.CreditAllocation.builder()
+                        Price.GroupedAllocation.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -3910,35 +3805,33 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .groupedAllocationConfig(
-                        Price.GroupedAllocationPrice.GroupedAllocationConfig.builder()
+                        Price.GroupedAllocation.GroupedAllocationConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .invoicingCycleConfiguration(
-                        Price.GroupedAllocationPrice.InvoicingCycleConfiguration.builder()
+                        Price.GroupedAllocation.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.GroupedAllocationPrice.InvoicingCycleConfiguration
-                                    .DurationUnit
-                                    .DAY
+                                Price.GroupedAllocation.InvoicingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .item(Price.GroupedAllocationPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.GroupedAllocation.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.GroupedAllocationPrice.Maximum.builder()
+                        Price.GroupedAllocation.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.GroupedAllocationPrice.Metadata.builder()
+                        Price.GroupedAllocation.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.GroupedAllocationPrice.Minimum.builder()
+                        Price.GroupedAllocation.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -3946,9 +3839,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.GroupedAllocationPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.GroupedAllocation.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.GroupedAllocationPrice.DimensionalPriceConfiguration.builder()
+                        Price.GroupedAllocation.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -3965,26 +3858,25 @@ internal class PriceTest {
     @Test
     fun ofGroupedWithProratedMinimum() {
         val groupedWithProratedMinimum =
-            Price.GroupedWithProratedMinimumPrice.builder()
+            Price.GroupedWithProratedMinimum.builder()
                 .id("id")
                 .billableMetric(
-                    Price.GroupedWithProratedMinimumPrice.BillableMetric.builder().id("id").build()
+                    Price.GroupedWithProratedMinimum.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.GroupedWithProratedMinimumPrice.BillingCycleConfiguration.builder()
+                    Price.GroupedWithProratedMinimum.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.GroupedWithProratedMinimumPrice.BillingCycleConfiguration
-                                .DurationUnit
+                            Price.GroupedWithProratedMinimum.BillingCycleConfiguration.DurationUnit
                                 .DAY
                         )
                         .build()
                 )
-                .cadence(Price.GroupedWithProratedMinimumPrice.Cadence.ONE_TIME)
+                .cadence(Price.GroupedWithProratedMinimum.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.GroupedWithProratedMinimumPrice.CreditAllocation.builder()
+                    Price.GroupedWithProratedMinimum.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -4002,40 +3894,35 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .groupedWithProratedMinimumConfig(
-                    Price.GroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig.builder()
+                    Price.GroupedWithProratedMinimum.GroupedWithProratedMinimumConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .invoicingCycleConfiguration(
-                    Price.GroupedWithProratedMinimumPrice.InvoicingCycleConfiguration.builder()
+                    Price.GroupedWithProratedMinimum.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.GroupedWithProratedMinimumPrice.InvoicingCycleConfiguration
+                            Price.GroupedWithProratedMinimum.InvoicingCycleConfiguration
                                 .DurationUnit
                                 .DAY
                         )
                         .build()
                 )
-                .item(
-                    Price.GroupedWithProratedMinimumPrice.Item.builder()
-                        .id("id")
-                        .name("name")
-                        .build()
-                )
+                .item(Price.GroupedWithProratedMinimum.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.GroupedWithProratedMinimumPrice.Maximum.builder()
+                    Price.GroupedWithProratedMinimum.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.GroupedWithProratedMinimumPrice.Metadata.builder()
+                    Price.GroupedWithProratedMinimum.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.GroupedWithProratedMinimumPrice.Minimum.builder()
+                    Price.GroupedWithProratedMinimum.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -4043,9 +3930,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.GroupedWithProratedMinimumPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.GroupedWithProratedMinimum.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.GroupedWithProratedMinimumPrice.DimensionalPriceConfiguration.builder()
+                    Price.GroupedWithProratedMinimum.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -4055,7 +3942,7 @@ internal class PriceTest {
         val price = Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -4089,28 +3976,26 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofGroupedWithProratedMinimum(
-                Price.GroupedWithProratedMinimumPrice.builder()
+                Price.GroupedWithProratedMinimum.builder()
                     .id("id")
                     .billableMetric(
-                        Price.GroupedWithProratedMinimumPrice.BillableMetric.builder()
-                            .id("id")
-                            .build()
+                        Price.GroupedWithProratedMinimum.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.GroupedWithProratedMinimumPrice.BillingCycleConfiguration.builder()
+                        Price.GroupedWithProratedMinimum.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.GroupedWithProratedMinimumPrice.BillingCycleConfiguration
+                                Price.GroupedWithProratedMinimum.BillingCycleConfiguration
                                     .DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.GroupedWithProratedMinimumPrice.Cadence.ONE_TIME)
+                    .cadence(Price.GroupedWithProratedMinimum.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.GroupedWithProratedMinimumPrice.CreditAllocation.builder()
+                        Price.GroupedWithProratedMinimum.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -4128,41 +4013,40 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .groupedWithProratedMinimumConfig(
-                        Price.GroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig
-                            .builder()
+                        Price.GroupedWithProratedMinimum.GroupedWithProratedMinimumConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .invoicingCycleConfiguration(
-                        Price.GroupedWithProratedMinimumPrice.InvoicingCycleConfiguration.builder()
+                        Price.GroupedWithProratedMinimum.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.GroupedWithProratedMinimumPrice.InvoicingCycleConfiguration
+                                Price.GroupedWithProratedMinimum.InvoicingCycleConfiguration
                                     .DurationUnit
                                     .DAY
                             )
                             .build()
                     )
                     .item(
-                        Price.GroupedWithProratedMinimumPrice.Item.builder()
+                        Price.GroupedWithProratedMinimum.Item.builder()
                             .id("id")
                             .name("name")
                             .build()
                     )
                     .maximum(
-                        Price.GroupedWithProratedMinimumPrice.Maximum.builder()
+                        Price.GroupedWithProratedMinimum.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.GroupedWithProratedMinimumPrice.Metadata.builder()
+                        Price.GroupedWithProratedMinimum.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.GroupedWithProratedMinimumPrice.Minimum.builder()
+                        Price.GroupedWithProratedMinimum.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -4170,10 +4054,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.GroupedWithProratedMinimumPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.GroupedWithProratedMinimum.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.GroupedWithProratedMinimumPrice.DimensionalPriceConfiguration
-                            .builder()
+                        Price.GroupedWithProratedMinimum.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -4190,26 +4073,25 @@ internal class PriceTest {
     @Test
     fun ofGroupedWithMeteredMinimum() {
         val groupedWithMeteredMinimum =
-            Price.GroupedWithMeteredMinimumPrice.builder()
+            Price.GroupedWithMeteredMinimum.builder()
                 .id("id")
                 .billableMetric(
-                    Price.GroupedWithMeteredMinimumPrice.BillableMetric.builder().id("id").build()
+                    Price.GroupedWithMeteredMinimum.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.GroupedWithMeteredMinimumPrice.BillingCycleConfiguration.builder()
+                    Price.GroupedWithMeteredMinimum.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.GroupedWithMeteredMinimumPrice.BillingCycleConfiguration
-                                .DurationUnit
+                            Price.GroupedWithMeteredMinimum.BillingCycleConfiguration.DurationUnit
                                 .DAY
                         )
                         .build()
                 )
-                .cadence(Price.GroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
+                .cadence(Price.GroupedWithMeteredMinimum.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.GroupedWithMeteredMinimumPrice.CreditAllocation.builder()
+                    Price.GroupedWithMeteredMinimum.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -4227,40 +4109,34 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .groupedWithMeteredMinimumConfig(
-                    Price.GroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig.builder()
+                    Price.GroupedWithMeteredMinimum.GroupedWithMeteredMinimumConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .invoicingCycleConfiguration(
-                    Price.GroupedWithMeteredMinimumPrice.InvoicingCycleConfiguration.builder()
+                    Price.GroupedWithMeteredMinimum.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.GroupedWithMeteredMinimumPrice.InvoicingCycleConfiguration
-                                .DurationUnit
+                            Price.GroupedWithMeteredMinimum.InvoicingCycleConfiguration.DurationUnit
                                 .DAY
                         )
                         .build()
                 )
-                .item(
-                    Price.GroupedWithMeteredMinimumPrice.Item.builder()
-                        .id("id")
-                        .name("name")
-                        .build()
-                )
+                .item(Price.GroupedWithMeteredMinimum.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.GroupedWithMeteredMinimumPrice.Maximum.builder()
+                    Price.GroupedWithMeteredMinimum.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.GroupedWithMeteredMinimumPrice.Metadata.builder()
+                    Price.GroupedWithMeteredMinimum.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.GroupedWithMeteredMinimumPrice.Minimum.builder()
+                    Price.GroupedWithMeteredMinimum.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -4268,9 +4144,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.GroupedWithMeteredMinimumPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.GroupedWithMeteredMinimum.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.GroupedWithMeteredMinimumPrice.DimensionalPriceConfiguration.builder()
+                    Price.GroupedWithMeteredMinimum.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -4280,7 +4156,7 @@ internal class PriceTest {
         val price = Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -4314,28 +4190,26 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofGroupedWithMeteredMinimum(
-                Price.GroupedWithMeteredMinimumPrice.builder()
+                Price.GroupedWithMeteredMinimum.builder()
                     .id("id")
                     .billableMetric(
-                        Price.GroupedWithMeteredMinimumPrice.BillableMetric.builder()
-                            .id("id")
-                            .build()
+                        Price.GroupedWithMeteredMinimum.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.GroupedWithMeteredMinimumPrice.BillingCycleConfiguration.builder()
+                        Price.GroupedWithMeteredMinimum.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.GroupedWithMeteredMinimumPrice.BillingCycleConfiguration
+                                Price.GroupedWithMeteredMinimum.BillingCycleConfiguration
                                     .DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.GroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
+                    .cadence(Price.GroupedWithMeteredMinimum.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.GroupedWithMeteredMinimumPrice.CreditAllocation.builder()
+                        Price.GroupedWithMeteredMinimum.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -4353,41 +4227,37 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .groupedWithMeteredMinimumConfig(
-                        Price.GroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
-                            .builder()
+                        Price.GroupedWithMeteredMinimum.GroupedWithMeteredMinimumConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .invoicingCycleConfiguration(
-                        Price.GroupedWithMeteredMinimumPrice.InvoicingCycleConfiguration.builder()
+                        Price.GroupedWithMeteredMinimum.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.GroupedWithMeteredMinimumPrice.InvoicingCycleConfiguration
+                                Price.GroupedWithMeteredMinimum.InvoicingCycleConfiguration
                                     .DurationUnit
                                     .DAY
                             )
                             .build()
                     )
                     .item(
-                        Price.GroupedWithMeteredMinimumPrice.Item.builder()
-                            .id("id")
-                            .name("name")
-                            .build()
+                        Price.GroupedWithMeteredMinimum.Item.builder().id("id").name("name").build()
                     )
                     .maximum(
-                        Price.GroupedWithMeteredMinimumPrice.Maximum.builder()
+                        Price.GroupedWithMeteredMinimum.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.GroupedWithMeteredMinimumPrice.Metadata.builder()
+                        Price.GroupedWithMeteredMinimum.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.GroupedWithMeteredMinimumPrice.Minimum.builder()
+                        Price.GroupedWithMeteredMinimum.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -4395,9 +4265,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.GroupedWithMeteredMinimumPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.GroupedWithMeteredMinimum.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.GroupedWithMeteredMinimumPrice.DimensionalPriceConfiguration.builder()
+                        Price.GroupedWithMeteredMinimum.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -4414,25 +4284,24 @@ internal class PriceTest {
     @Test
     fun ofMatrixWithDisplayName() {
         val matrixWithDisplayName =
-            Price.MatrixWithDisplayNamePrice.builder()
+            Price.MatrixWithDisplayName.builder()
                 .id("id")
                 .billableMetric(
-                    Price.MatrixWithDisplayNamePrice.BillableMetric.builder().id("id").build()
+                    Price.MatrixWithDisplayName.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.MatrixWithDisplayNamePrice.BillingCycleConfiguration.builder()
+                    Price.MatrixWithDisplayName.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.MatrixWithDisplayNamePrice.BillingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.MatrixWithDisplayName.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.MatrixWithDisplayNamePrice.Cadence.ONE_TIME)
+                .cadence(Price.MatrixWithDisplayName.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.MatrixWithDisplayNamePrice.CreditAllocation.builder()
+                    Price.MatrixWithDisplayName.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -4450,35 +4319,33 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.MatrixWithDisplayNamePrice.InvoicingCycleConfiguration.builder()
+                    Price.MatrixWithDisplayName.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.MatrixWithDisplayNamePrice.InvoicingCycleConfiguration
-                                .DurationUnit
-                                .DAY
+                            Price.MatrixWithDisplayName.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.MatrixWithDisplayNamePrice.Item.builder().id("id").name("name").build())
+                .item(Price.MatrixWithDisplayName.Item.builder().id("id").name("name").build())
                 .matrixWithDisplayNameConfig(
-                    Price.MatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
+                    Price.MatrixWithDisplayName.MatrixWithDisplayNameConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .maximum(
-                    Price.MatrixWithDisplayNamePrice.Maximum.builder()
+                    Price.MatrixWithDisplayName.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.MatrixWithDisplayNamePrice.Metadata.builder()
+                    Price.MatrixWithDisplayName.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.MatrixWithDisplayNamePrice.Minimum.builder()
+                    Price.MatrixWithDisplayName.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -4486,9 +4353,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.MatrixWithDisplayNamePrice.PriceType.USAGE_PRICE)
+                .priceType(Price.MatrixWithDisplayName.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.MatrixWithDisplayNamePrice.DimensionalPriceConfiguration.builder()
+                    Price.MatrixWithDisplayName.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -4498,7 +4365,7 @@ internal class PriceTest {
         val price = Price.ofMatrixWithDisplayName(matrixWithDisplayName)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -4532,26 +4399,25 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofMatrixWithDisplayName(
-                Price.MatrixWithDisplayNamePrice.builder()
+                Price.MatrixWithDisplayName.builder()
                     .id("id")
                     .billableMetric(
-                        Price.MatrixWithDisplayNamePrice.BillableMetric.builder().id("id").build()
+                        Price.MatrixWithDisplayName.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.MatrixWithDisplayNamePrice.BillingCycleConfiguration.builder()
+                        Price.MatrixWithDisplayName.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.MatrixWithDisplayNamePrice.BillingCycleConfiguration
-                                    .DurationUnit
+                                Price.MatrixWithDisplayName.BillingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.MatrixWithDisplayNamePrice.Cadence.ONE_TIME)
+                    .cadence(Price.MatrixWithDisplayName.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.MatrixWithDisplayNamePrice.CreditAllocation.builder()
+                        Price.MatrixWithDisplayName.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -4569,40 +4435,34 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.MatrixWithDisplayNamePrice.InvoicingCycleConfiguration.builder()
+                        Price.MatrixWithDisplayName.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.MatrixWithDisplayNamePrice.InvoicingCycleConfiguration
-                                    .DurationUnit
+                                Price.MatrixWithDisplayName.InvoicingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .item(
-                        Price.MatrixWithDisplayNamePrice.Item.builder()
-                            .id("id")
-                            .name("name")
-                            .build()
-                    )
+                    .item(Price.MatrixWithDisplayName.Item.builder().id("id").name("name").build())
                     .matrixWithDisplayNameConfig(
-                        Price.MatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
+                        Price.MatrixWithDisplayName.MatrixWithDisplayNameConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .maximum(
-                        Price.MatrixWithDisplayNamePrice.Maximum.builder()
+                        Price.MatrixWithDisplayName.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.MatrixWithDisplayNamePrice.Metadata.builder()
+                        Price.MatrixWithDisplayName.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.MatrixWithDisplayNamePrice.Minimum.builder()
+                        Price.MatrixWithDisplayName.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -4610,9 +4470,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.MatrixWithDisplayNamePrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.MatrixWithDisplayName.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.MatrixWithDisplayNamePrice.DimensionalPriceConfiguration.builder()
+                        Price.MatrixWithDisplayName.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -4629,29 +4489,27 @@ internal class PriceTest {
     @Test
     fun ofBulkWithProration() {
         val bulkWithProration =
-            Price.BulkWithProrationPrice.builder()
+            Price.BulkWithProration.builder()
                 .id("id")
-                .billableMetric(
-                    Price.BulkWithProrationPrice.BillableMetric.builder().id("id").build()
-                )
+                .billableMetric(Price.BulkWithProration.BillableMetric.builder().id("id").build())
                 .billingCycleConfiguration(
-                    Price.BulkWithProrationPrice.BillingCycleConfiguration.builder()
+                    Price.BulkWithProration.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.BulkWithProrationPrice.BillingCycleConfiguration.DurationUnit.DAY
+                            Price.BulkWithProration.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
                 .bulkWithProrationConfig(
-                    Price.BulkWithProrationPrice.BulkWithProrationConfig.builder()
+                    Price.BulkWithProration.BulkWithProrationConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
-                .cadence(Price.BulkWithProrationPrice.Cadence.ONE_TIME)
+                .cadence(Price.BulkWithProration.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.BulkWithProrationPrice.CreditAllocation.builder()
+                    Price.BulkWithProration.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -4669,29 +4527,28 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.BulkWithProrationPrice.InvoicingCycleConfiguration.builder()
+                    Price.BulkWithProration.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.BulkWithProrationPrice.InvoicingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.BulkWithProration.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.BulkWithProrationPrice.Item.builder().id("id").name("name").build())
+                .item(Price.BulkWithProration.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.BulkWithProrationPrice.Maximum.builder()
+                    Price.BulkWithProration.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.BulkWithProrationPrice.Metadata.builder()
+                    Price.BulkWithProration.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.BulkWithProrationPrice.Minimum.builder()
+                    Price.BulkWithProration.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -4699,9 +4556,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.BulkWithProrationPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.BulkWithProration.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.BulkWithProrationPrice.DimensionalPriceConfiguration.builder()
+                    Price.BulkWithProration.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -4711,7 +4568,7 @@ internal class PriceTest {
         val price = Price.ofBulkWithProration(bulkWithProration)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -4745,30 +4602,29 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofBulkWithProration(
-                Price.BulkWithProrationPrice.builder()
+                Price.BulkWithProration.builder()
                     .id("id")
                     .billableMetric(
-                        Price.BulkWithProrationPrice.BillableMetric.builder().id("id").build()
+                        Price.BulkWithProration.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.BulkWithProrationPrice.BillingCycleConfiguration.builder()
+                        Price.BulkWithProration.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.BulkWithProrationPrice.BillingCycleConfiguration.DurationUnit
-                                    .DAY
+                                Price.BulkWithProration.BillingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
                     .bulkWithProrationConfig(
-                        Price.BulkWithProrationPrice.BulkWithProrationConfig.builder()
+                        Price.BulkWithProration.BulkWithProrationConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
-                    .cadence(Price.BulkWithProrationPrice.Cadence.ONE_TIME)
+                    .cadence(Price.BulkWithProration.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.BulkWithProrationPrice.CreditAllocation.builder()
+                        Price.BulkWithProration.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -4786,30 +4642,28 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.BulkWithProrationPrice.InvoicingCycleConfiguration.builder()
+                        Price.BulkWithProration.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.BulkWithProrationPrice.InvoicingCycleConfiguration
-                                    .DurationUnit
-                                    .DAY
+                                Price.BulkWithProration.InvoicingCycleConfiguration.DurationUnit.DAY
                             )
                             .build()
                     )
-                    .item(Price.BulkWithProrationPrice.Item.builder().id("id").name("name").build())
+                    .item(Price.BulkWithProration.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.BulkWithProrationPrice.Maximum.builder()
+                        Price.BulkWithProration.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.BulkWithProrationPrice.Metadata.builder()
+                        Price.BulkWithProration.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.BulkWithProrationPrice.Minimum.builder()
+                        Price.BulkWithProration.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -4817,9 +4671,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.BulkWithProrationPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.BulkWithProration.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.BulkWithProrationPrice.DimensionalPriceConfiguration.builder()
+                        Price.BulkWithProration.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -4836,25 +4690,24 @@ internal class PriceTest {
     @Test
     fun ofGroupedTieredPackage() {
         val groupedTieredPackage =
-            Price.GroupedTieredPackagePrice.builder()
+            Price.GroupedTieredPackage.builder()
                 .id("id")
                 .billableMetric(
-                    Price.GroupedTieredPackagePrice.BillableMetric.builder().id("id").build()
+                    Price.GroupedTieredPackage.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.GroupedTieredPackagePrice.BillingCycleConfiguration.builder()
+                    Price.GroupedTieredPackage.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.GroupedTieredPackagePrice.BillingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.GroupedTieredPackage.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.GroupedTieredPackagePrice.Cadence.ONE_TIME)
+                .cadence(Price.GroupedTieredPackage.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.GroupedTieredPackagePrice.CreditAllocation.builder()
+                    Price.GroupedTieredPackage.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -4872,34 +4725,33 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .groupedTieredPackageConfig(
-                    Price.GroupedTieredPackagePrice.GroupedTieredPackageConfig.builder()
+                    Price.GroupedTieredPackage.GroupedTieredPackageConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .invoicingCycleConfiguration(
-                    Price.GroupedTieredPackagePrice.InvoicingCycleConfiguration.builder()
+                    Price.GroupedTieredPackage.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.GroupedTieredPackagePrice.InvoicingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.GroupedTieredPackage.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.GroupedTieredPackagePrice.Item.builder().id("id").name("name").build())
+                .item(Price.GroupedTieredPackage.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.GroupedTieredPackagePrice.Maximum.builder()
+                    Price.GroupedTieredPackage.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.GroupedTieredPackagePrice.Metadata.builder()
+                    Price.GroupedTieredPackage.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.GroupedTieredPackagePrice.Minimum.builder()
+                    Price.GroupedTieredPackage.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -4907,9 +4759,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.GroupedTieredPackagePrice.PriceType.USAGE_PRICE)
+                .priceType(Price.GroupedTieredPackage.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.GroupedTieredPackagePrice.DimensionalPriceConfiguration.builder()
+                    Price.GroupedTieredPackage.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -4919,7 +4771,7 @@ internal class PriceTest {
         val price = Price.ofGroupedTieredPackage(groupedTieredPackage)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -4953,26 +4805,25 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofGroupedTieredPackage(
-                Price.GroupedTieredPackagePrice.builder()
+                Price.GroupedTieredPackage.builder()
                     .id("id")
                     .billableMetric(
-                        Price.GroupedTieredPackagePrice.BillableMetric.builder().id("id").build()
+                        Price.GroupedTieredPackage.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.GroupedTieredPackagePrice.BillingCycleConfiguration.builder()
+                        Price.GroupedTieredPackage.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.GroupedTieredPackagePrice.BillingCycleConfiguration
-                                    .DurationUnit
+                                Price.GroupedTieredPackage.BillingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.GroupedTieredPackagePrice.Cadence.ONE_TIME)
+                    .cadence(Price.GroupedTieredPackage.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.GroupedTieredPackagePrice.CreditAllocation.builder()
+                        Price.GroupedTieredPackage.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -4990,37 +4841,34 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .groupedTieredPackageConfig(
-                        Price.GroupedTieredPackagePrice.GroupedTieredPackageConfig.builder()
+                        Price.GroupedTieredPackage.GroupedTieredPackageConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .invoicingCycleConfiguration(
-                        Price.GroupedTieredPackagePrice.InvoicingCycleConfiguration.builder()
+                        Price.GroupedTieredPackage.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.GroupedTieredPackagePrice.InvoicingCycleConfiguration
-                                    .DurationUnit
+                                Price.GroupedTieredPackage.InvoicingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .item(
-                        Price.GroupedTieredPackagePrice.Item.builder().id("id").name("name").build()
-                    )
+                    .item(Price.GroupedTieredPackage.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.GroupedTieredPackagePrice.Maximum.builder()
+                        Price.GroupedTieredPackage.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.GroupedTieredPackagePrice.Metadata.builder()
+                        Price.GroupedTieredPackage.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.GroupedTieredPackagePrice.Minimum.builder()
+                        Price.GroupedTieredPackage.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -5028,9 +4876,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.GroupedTieredPackagePrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.GroupedTieredPackage.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.GroupedTieredPackagePrice.DimensionalPriceConfiguration.builder()
+                        Price.GroupedTieredPackage.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -5047,25 +4895,24 @@ internal class PriceTest {
     @Test
     fun ofMaxGroupTieredPackage() {
         val maxGroupTieredPackage =
-            Price.MaxGroupTieredPackagePrice.builder()
+            Price.MaxGroupTieredPackage.builder()
                 .id("id")
                 .billableMetric(
-                    Price.MaxGroupTieredPackagePrice.BillableMetric.builder().id("id").build()
+                    Price.MaxGroupTieredPackage.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.MaxGroupTieredPackagePrice.BillingCycleConfiguration.builder()
+                    Price.MaxGroupTieredPackage.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.MaxGroupTieredPackagePrice.BillingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.MaxGroupTieredPackage.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.MaxGroupTieredPackagePrice.Cadence.ONE_TIME)
+                .cadence(Price.MaxGroupTieredPackage.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.MaxGroupTieredPackagePrice.CreditAllocation.builder()
+                    Price.MaxGroupTieredPackage.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -5083,35 +4930,33 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.MaxGroupTieredPackagePrice.InvoicingCycleConfiguration.builder()
+                    Price.MaxGroupTieredPackage.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.MaxGroupTieredPackagePrice.InvoicingCycleConfiguration
-                                .DurationUnit
-                                .DAY
+                            Price.MaxGroupTieredPackage.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.MaxGroupTieredPackagePrice.Item.builder().id("id").name("name").build())
+                .item(Price.MaxGroupTieredPackage.Item.builder().id("id").name("name").build())
                 .maxGroupTieredPackageConfig(
-                    Price.MaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.builder()
+                    Price.MaxGroupTieredPackage.MaxGroupTieredPackageConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .maximum(
-                    Price.MaxGroupTieredPackagePrice.Maximum.builder()
+                    Price.MaxGroupTieredPackage.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.MaxGroupTieredPackagePrice.Metadata.builder()
+                    Price.MaxGroupTieredPackage.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.MaxGroupTieredPackagePrice.Minimum.builder()
+                    Price.MaxGroupTieredPackage.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -5119,9 +4964,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.MaxGroupTieredPackagePrice.PriceType.USAGE_PRICE)
+                .priceType(Price.MaxGroupTieredPackage.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.MaxGroupTieredPackagePrice.DimensionalPriceConfiguration.builder()
+                    Price.MaxGroupTieredPackage.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -5131,7 +4976,7 @@ internal class PriceTest {
         val price = Price.ofMaxGroupTieredPackage(maxGroupTieredPackage)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -5165,26 +5010,25 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofMaxGroupTieredPackage(
-                Price.MaxGroupTieredPackagePrice.builder()
+                Price.MaxGroupTieredPackage.builder()
                     .id("id")
                     .billableMetric(
-                        Price.MaxGroupTieredPackagePrice.BillableMetric.builder().id("id").build()
+                        Price.MaxGroupTieredPackage.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.MaxGroupTieredPackagePrice.BillingCycleConfiguration.builder()
+                        Price.MaxGroupTieredPackage.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.MaxGroupTieredPackagePrice.BillingCycleConfiguration
-                                    .DurationUnit
+                                Price.MaxGroupTieredPackage.BillingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.MaxGroupTieredPackagePrice.Cadence.ONE_TIME)
+                    .cadence(Price.MaxGroupTieredPackage.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.MaxGroupTieredPackagePrice.CreditAllocation.builder()
+                        Price.MaxGroupTieredPackage.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -5202,40 +5046,34 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.MaxGroupTieredPackagePrice.InvoicingCycleConfiguration.builder()
+                        Price.MaxGroupTieredPackage.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.MaxGroupTieredPackagePrice.InvoicingCycleConfiguration
-                                    .DurationUnit
+                                Price.MaxGroupTieredPackage.InvoicingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .item(
-                        Price.MaxGroupTieredPackagePrice.Item.builder()
-                            .id("id")
-                            .name("name")
-                            .build()
-                    )
+                    .item(Price.MaxGroupTieredPackage.Item.builder().id("id").name("name").build())
                     .maxGroupTieredPackageConfig(
-                        Price.MaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.builder()
+                        Price.MaxGroupTieredPackage.MaxGroupTieredPackageConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .maximum(
-                        Price.MaxGroupTieredPackagePrice.Maximum.builder()
+                        Price.MaxGroupTieredPackage.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.MaxGroupTieredPackagePrice.Metadata.builder()
+                        Price.MaxGroupTieredPackage.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.MaxGroupTieredPackagePrice.Minimum.builder()
+                        Price.MaxGroupTieredPackage.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -5243,9 +5081,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.MaxGroupTieredPackagePrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.MaxGroupTieredPackage.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.MaxGroupTieredPackagePrice.DimensionalPriceConfiguration.builder()
+                        Price.MaxGroupTieredPackage.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -5262,28 +5100,26 @@ internal class PriceTest {
     @Test
     fun ofScalableMatrixWithUnitPricing() {
         val scalableMatrixWithUnitPricing =
-            Price.ScalableMatrixWithUnitPricingPrice.builder()
+            Price.ScalableMatrixWithUnitPricing.builder()
                 .id("id")
                 .billableMetric(
-                    Price.ScalableMatrixWithUnitPricingPrice.BillableMetric.builder()
-                        .id("id")
-                        .build()
+                    Price.ScalableMatrixWithUnitPricing.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.ScalableMatrixWithUnitPricingPrice.BillingCycleConfiguration.builder()
+                    Price.ScalableMatrixWithUnitPricing.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.ScalableMatrixWithUnitPricingPrice.BillingCycleConfiguration
+                            Price.ScalableMatrixWithUnitPricing.BillingCycleConfiguration
                                 .DurationUnit
                                 .DAY
                         )
                         .build()
                 )
-                .cadence(Price.ScalableMatrixWithUnitPricingPrice.Cadence.ONE_TIME)
+                .cadence(Price.ScalableMatrixWithUnitPricing.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.ScalableMatrixWithUnitPricingPrice.CreditAllocation.builder()
+                    Price.ScalableMatrixWithUnitPricing.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -5301,35 +5137,32 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.ScalableMatrixWithUnitPricingPrice.InvoicingCycleConfiguration.builder()
+                    Price.ScalableMatrixWithUnitPricing.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.ScalableMatrixWithUnitPricingPrice.InvoicingCycleConfiguration
+                            Price.ScalableMatrixWithUnitPricing.InvoicingCycleConfiguration
                                 .DurationUnit
                                 .DAY
                         )
                         .build()
                 )
                 .item(
-                    Price.ScalableMatrixWithUnitPricingPrice.Item.builder()
-                        .id("id")
-                        .name("name")
-                        .build()
+                    Price.ScalableMatrixWithUnitPricing.Item.builder().id("id").name("name").build()
                 )
                 .maximum(
-                    Price.ScalableMatrixWithUnitPricingPrice.Maximum.builder()
+                    Price.ScalableMatrixWithUnitPricing.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.ScalableMatrixWithUnitPricingPrice.Metadata.builder()
+                    Price.ScalableMatrixWithUnitPricing.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.ScalableMatrixWithUnitPricingPrice.Minimum.builder()
+                    Price.ScalableMatrixWithUnitPricing.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -5337,15 +5170,15 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.ScalableMatrixWithUnitPricingPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.ScalableMatrixWithUnitPricing.PriceType.USAGE_PRICE)
                 .scalableMatrixWithUnitPricingConfig(
-                    Price.ScalableMatrixWithUnitPricingPrice.ScalableMatrixWithUnitPricingConfig
+                    Price.ScalableMatrixWithUnitPricing.ScalableMatrixWithUnitPricingConfig
                         .builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .dimensionalPriceConfiguration(
-                    Price.ScalableMatrixWithUnitPricingPrice.DimensionalPriceConfiguration.builder()
+                    Price.ScalableMatrixWithUnitPricing.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -5355,7 +5188,7 @@ internal class PriceTest {
         val price = Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -5389,28 +5222,28 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofScalableMatrixWithUnitPricing(
-                Price.ScalableMatrixWithUnitPricingPrice.builder()
+                Price.ScalableMatrixWithUnitPricing.builder()
                     .id("id")
                     .billableMetric(
-                        Price.ScalableMatrixWithUnitPricingPrice.BillableMetric.builder()
+                        Price.ScalableMatrixWithUnitPricing.BillableMetric.builder()
                             .id("id")
                             .build()
                     )
                     .billingCycleConfiguration(
-                        Price.ScalableMatrixWithUnitPricingPrice.BillingCycleConfiguration.builder()
+                        Price.ScalableMatrixWithUnitPricing.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.ScalableMatrixWithUnitPricingPrice.BillingCycleConfiguration
+                                Price.ScalableMatrixWithUnitPricing.BillingCycleConfiguration
                                     .DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.ScalableMatrixWithUnitPricingPrice.Cadence.ONE_TIME)
+                    .cadence(Price.ScalableMatrixWithUnitPricing.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.ScalableMatrixWithUnitPricingPrice.CreditAllocation.builder()
+                        Price.ScalableMatrixWithUnitPricing.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -5428,36 +5261,35 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.ScalableMatrixWithUnitPricingPrice.InvoicingCycleConfiguration
-                            .builder()
+                        Price.ScalableMatrixWithUnitPricing.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.ScalableMatrixWithUnitPricingPrice.InvoicingCycleConfiguration
+                                Price.ScalableMatrixWithUnitPricing.InvoicingCycleConfiguration
                                     .DurationUnit
                                     .DAY
                             )
                             .build()
                     )
                     .item(
-                        Price.ScalableMatrixWithUnitPricingPrice.Item.builder()
+                        Price.ScalableMatrixWithUnitPricing.Item.builder()
                             .id("id")
                             .name("name")
                             .build()
                     )
                     .maximum(
-                        Price.ScalableMatrixWithUnitPricingPrice.Maximum.builder()
+                        Price.ScalableMatrixWithUnitPricing.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.ScalableMatrixWithUnitPricingPrice.Metadata.builder()
+                        Price.ScalableMatrixWithUnitPricing.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.ScalableMatrixWithUnitPricingPrice.Minimum.builder()
+                        Price.ScalableMatrixWithUnitPricing.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -5465,16 +5297,15 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.ScalableMatrixWithUnitPricingPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.ScalableMatrixWithUnitPricing.PriceType.USAGE_PRICE)
                     .scalableMatrixWithUnitPricingConfig(
-                        Price.ScalableMatrixWithUnitPricingPrice.ScalableMatrixWithUnitPricingConfig
+                        Price.ScalableMatrixWithUnitPricing.ScalableMatrixWithUnitPricingConfig
                             .builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .dimensionalPriceConfiguration(
-                        Price.ScalableMatrixWithUnitPricingPrice.DimensionalPriceConfiguration
-                            .builder()
+                        Price.ScalableMatrixWithUnitPricing.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()
@@ -5491,28 +5322,26 @@ internal class PriceTest {
     @Test
     fun ofScalableMatrixWithTieredPricing() {
         val scalableMatrixWithTieredPricing =
-            Price.ScalableMatrixWithTieredPricingPrice.builder()
+            Price.ScalableMatrixWithTieredPricing.builder()
                 .id("id")
                 .billableMetric(
-                    Price.ScalableMatrixWithTieredPricingPrice.BillableMetric.builder()
-                        .id("id")
-                        .build()
+                    Price.ScalableMatrixWithTieredPricing.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.ScalableMatrixWithTieredPricingPrice.BillingCycleConfiguration.builder()
+                    Price.ScalableMatrixWithTieredPricing.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.ScalableMatrixWithTieredPricingPrice.BillingCycleConfiguration
+                            Price.ScalableMatrixWithTieredPricing.BillingCycleConfiguration
                                 .DurationUnit
                                 .DAY
                         )
                         .build()
                 )
-                .cadence(Price.ScalableMatrixWithTieredPricingPrice.Cadence.ONE_TIME)
+                .cadence(Price.ScalableMatrixWithTieredPricing.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.ScalableMatrixWithTieredPricingPrice.CreditAllocation.builder()
+                    Price.ScalableMatrixWithTieredPricing.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
@@ -5530,35 +5359,35 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.ScalableMatrixWithTieredPricingPrice.InvoicingCycleConfiguration.builder()
+                    Price.ScalableMatrixWithTieredPricing.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.ScalableMatrixWithTieredPricingPrice.InvoicingCycleConfiguration
+                            Price.ScalableMatrixWithTieredPricing.InvoicingCycleConfiguration
                                 .DurationUnit
                                 .DAY
                         )
                         .build()
                 )
                 .item(
-                    Price.ScalableMatrixWithTieredPricingPrice.Item.builder()
+                    Price.ScalableMatrixWithTieredPricing.Item.builder()
                         .id("id")
                         .name("name")
                         .build()
                 )
                 .maximum(
-                    Price.ScalableMatrixWithTieredPricingPrice.Maximum.builder()
+                    Price.ScalableMatrixWithTieredPricing.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.ScalableMatrixWithTieredPricingPrice.Metadata.builder()
+                    Price.ScalableMatrixWithTieredPricing.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.ScalableMatrixWithTieredPricingPrice.Minimum.builder()
+                    Price.ScalableMatrixWithTieredPricing.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -5566,16 +5395,15 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.ScalableMatrixWithTieredPricingPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.ScalableMatrixWithTieredPricing.PriceType.USAGE_PRICE)
                 .scalableMatrixWithTieredPricingConfig(
-                    Price.ScalableMatrixWithTieredPricingPrice.ScalableMatrixWithTieredPricingConfig
+                    Price.ScalableMatrixWithTieredPricing.ScalableMatrixWithTieredPricingConfig
                         .builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .dimensionalPriceConfiguration(
-                    Price.ScalableMatrixWithTieredPricingPrice.DimensionalPriceConfiguration
-                        .builder()
+                    Price.ScalableMatrixWithTieredPricing.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -5585,7 +5413,7 @@ internal class PriceTest {
         val price = Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -5620,29 +5448,28 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofScalableMatrixWithTieredPricing(
-                Price.ScalableMatrixWithTieredPricingPrice.builder()
+                Price.ScalableMatrixWithTieredPricing.builder()
                     .id("id")
                     .billableMetric(
-                        Price.ScalableMatrixWithTieredPricingPrice.BillableMetric.builder()
+                        Price.ScalableMatrixWithTieredPricing.BillableMetric.builder()
                             .id("id")
                             .build()
                     )
                     .billingCycleConfiguration(
-                        Price.ScalableMatrixWithTieredPricingPrice.BillingCycleConfiguration
-                            .builder()
+                        Price.ScalableMatrixWithTieredPricing.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.ScalableMatrixWithTieredPricingPrice.BillingCycleConfiguration
+                                Price.ScalableMatrixWithTieredPricing.BillingCycleConfiguration
                                     .DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.ScalableMatrixWithTieredPricingPrice.Cadence.ONE_TIME)
+                    .cadence(Price.ScalableMatrixWithTieredPricing.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.ScalableMatrixWithTieredPricingPrice.CreditAllocation.builder()
+                        Price.ScalableMatrixWithTieredPricing.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
@@ -5660,37 +5487,35 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.ScalableMatrixWithTieredPricingPrice.InvoicingCycleConfiguration
-                            .builder()
+                        Price.ScalableMatrixWithTieredPricing.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.ScalableMatrixWithTieredPricingPrice
-                                    .InvoicingCycleConfiguration
+                                Price.ScalableMatrixWithTieredPricing.InvoicingCycleConfiguration
                                     .DurationUnit
                                     .DAY
                             )
                             .build()
                     )
                     .item(
-                        Price.ScalableMatrixWithTieredPricingPrice.Item.builder()
+                        Price.ScalableMatrixWithTieredPricing.Item.builder()
                             .id("id")
                             .name("name")
                             .build()
                     )
                     .maximum(
-                        Price.ScalableMatrixWithTieredPricingPrice.Maximum.builder()
+                        Price.ScalableMatrixWithTieredPricing.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.ScalableMatrixWithTieredPricingPrice.Metadata.builder()
+                        Price.ScalableMatrixWithTieredPricing.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.ScalableMatrixWithTieredPricingPrice.Minimum.builder()
+                        Price.ScalableMatrixWithTieredPricing.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -5698,16 +5523,15 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.ScalableMatrixWithTieredPricingPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.ScalableMatrixWithTieredPricing.PriceType.USAGE_PRICE)
                     .scalableMatrixWithTieredPricingConfig(
-                        Price.ScalableMatrixWithTieredPricingPrice
-                            .ScalableMatrixWithTieredPricingConfig
+                        Price.ScalableMatrixWithTieredPricing.ScalableMatrixWithTieredPricingConfig
                             .builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .dimensionalPriceConfiguration(
-                        Price.ScalableMatrixWithTieredPricingPrice.DimensionalPriceConfiguration
+                        Price.ScalableMatrixWithTieredPricing.DimensionalPriceConfiguration
                             .builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
@@ -5725,31 +5549,30 @@ internal class PriceTest {
     @Test
     fun ofCumulativeGroupedBulk() {
         val cumulativeGroupedBulk =
-            Price.CumulativeGroupedBulkPrice.builder()
+            Price.CumulativeGroupedBulk.builder()
                 .id("id")
                 .billableMetric(
-                    Price.CumulativeGroupedBulkPrice.BillableMetric.builder().id("id").build()
+                    Price.CumulativeGroupedBulk.BillableMetric.builder().id("id").build()
                 )
                 .billingCycleConfiguration(
-                    Price.CumulativeGroupedBulkPrice.BillingCycleConfiguration.builder()
+                    Price.CumulativeGroupedBulk.BillingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.CumulativeGroupedBulkPrice.BillingCycleConfiguration.DurationUnit
-                                .DAY
+                            Price.CumulativeGroupedBulk.BillingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .cadence(Price.CumulativeGroupedBulkPrice.Cadence.ONE_TIME)
+                .cadence(Price.CumulativeGroupedBulk.Cadence.ONE_TIME)
                 .conversionRate(0.0)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
-                    Price.CumulativeGroupedBulkPrice.CreditAllocation.builder()
+                    Price.CumulativeGroupedBulk.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
                         .build()
                 )
                 .cumulativeGroupedBulkConfig(
-                    Price.CumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
+                    Price.CumulativeGroupedBulk.CumulativeGroupedBulkConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
@@ -5766,30 +5589,28 @@ internal class PriceTest {
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
                 .invoicingCycleConfiguration(
-                    Price.CumulativeGroupedBulkPrice.InvoicingCycleConfiguration.builder()
+                    Price.CumulativeGroupedBulk.InvoicingCycleConfiguration.builder()
                         .duration(0L)
                         .durationUnit(
-                            Price.CumulativeGroupedBulkPrice.InvoicingCycleConfiguration
-                                .DurationUnit
-                                .DAY
+                            Price.CumulativeGroupedBulk.InvoicingCycleConfiguration.DurationUnit.DAY
                         )
                         .build()
                 )
-                .item(Price.CumulativeGroupedBulkPrice.Item.builder().id("id").name("name").build())
+                .item(Price.CumulativeGroupedBulk.Item.builder().id("id").name("name").build())
                 .maximum(
-                    Price.CumulativeGroupedBulkPrice.Maximum.builder()
+                    Price.CumulativeGroupedBulk.Maximum.builder()
                         .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .metadata(
-                    Price.CumulativeGroupedBulkPrice.Metadata.builder()
+                    Price.CumulativeGroupedBulk.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .minimum(
-                    Price.CumulativeGroupedBulkPrice.Minimum.builder()
+                    Price.CumulativeGroupedBulk.Minimum.builder()
                         .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
@@ -5797,9 +5618,9 @@ internal class PriceTest {
                 .minimumAmount("minimum_amount")
                 .name("name")
                 .planPhaseOrder(0L)
-                .priceType(Price.CumulativeGroupedBulkPrice.PriceType.USAGE_PRICE)
+                .priceType(Price.CumulativeGroupedBulk.PriceType.USAGE_PRICE)
                 .dimensionalPriceConfiguration(
-                    Price.CumulativeGroupedBulkPrice.DimensionalPriceConfiguration.builder()
+                    Price.CumulativeGroupedBulk.DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .build()
@@ -5809,7 +5630,7 @@ internal class PriceTest {
         val price = Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk)
 
         assertThat(price.unit()).isNull()
-        assertThat(price.packagePrice()).isNull()
+        assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
         assertThat(price.tieredBps()).isNull()
@@ -5843,32 +5664,31 @@ internal class PriceTest {
         val jsonMapper = jsonMapper()
         val price =
             Price.ofCumulativeGroupedBulk(
-                Price.CumulativeGroupedBulkPrice.builder()
+                Price.CumulativeGroupedBulk.builder()
                     .id("id")
                     .billableMetric(
-                        Price.CumulativeGroupedBulkPrice.BillableMetric.builder().id("id").build()
+                        Price.CumulativeGroupedBulk.BillableMetric.builder().id("id").build()
                     )
                     .billingCycleConfiguration(
-                        Price.CumulativeGroupedBulkPrice.BillingCycleConfiguration.builder()
+                        Price.CumulativeGroupedBulk.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.CumulativeGroupedBulkPrice.BillingCycleConfiguration
-                                    .DurationUnit
+                                Price.CumulativeGroupedBulk.BillingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .cadence(Price.CumulativeGroupedBulkPrice.Cadence.ONE_TIME)
+                    .cadence(Price.CumulativeGroupedBulk.Cadence.ONE_TIME)
                     .conversionRate(0.0)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
-                        Price.CumulativeGroupedBulkPrice.CreditAllocation.builder()
+                        Price.CumulativeGroupedBulk.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
                             .build()
                     )
                     .cumulativeGroupedBulkConfig(
-                        Price.CumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
+                        Price.CumulativeGroupedBulk.CumulativeGroupedBulkConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
@@ -5885,35 +5705,29 @@ internal class PriceTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
                     .invoicingCycleConfiguration(
-                        Price.CumulativeGroupedBulkPrice.InvoicingCycleConfiguration.builder()
+                        Price.CumulativeGroupedBulk.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                Price.CumulativeGroupedBulkPrice.InvoicingCycleConfiguration
-                                    .DurationUnit
+                                Price.CumulativeGroupedBulk.InvoicingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
-                    .item(
-                        Price.CumulativeGroupedBulkPrice.Item.builder()
-                            .id("id")
-                            .name("name")
-                            .build()
-                    )
+                    .item(Price.CumulativeGroupedBulk.Item.builder().id("id").name("name").build())
                     .maximum(
-                        Price.CumulativeGroupedBulkPrice.Maximum.builder()
+                        Price.CumulativeGroupedBulk.Maximum.builder()
                             .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .metadata(
-                        Price.CumulativeGroupedBulkPrice.Metadata.builder()
+                        Price.CumulativeGroupedBulk.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .minimum(
-                        Price.CumulativeGroupedBulkPrice.Minimum.builder()
+                        Price.CumulativeGroupedBulk.Minimum.builder()
                             .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
@@ -5921,9 +5735,9 @@ internal class PriceTest {
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .planPhaseOrder(0L)
-                    .priceType(Price.CumulativeGroupedBulkPrice.PriceType.USAGE_PRICE)
+                    .priceType(Price.CumulativeGroupedBulk.PriceType.USAGE_PRICE)
                     .dimensionalPriceConfiguration(
-                        Price.CumulativeGroupedBulkPrice.DimensionalPriceConfiguration.builder()
+                        Price.CumulativeGroupedBulk.DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
                             .dimensionalPriceGroupId("dimensional_price_group_id")
                             .build()

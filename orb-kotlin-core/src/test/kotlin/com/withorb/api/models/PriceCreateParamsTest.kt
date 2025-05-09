@@ -12,26 +12,23 @@ internal class PriceCreateParamsTest {
     fun create() {
         PriceCreateParams.builder()
             .body(
-                PriceCreateParams.Body.NewFloatingUnitPrice.builder()
-                    .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
+                PriceCreateParams.Body.Unit.builder()
+                    .cadence(PriceCreateParams.Body.Unit.Cadence.ANNUAL)
                     .currency("currency")
                     .itemId("item_id")
                     .name("Annual fee")
                     .unitConfig(
-                        PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
+                        PriceCreateParams.Body.Unit.UnitConfig.builder()
                             .unitAmount("unit_amount")
                             .build()
                     )
                     .billableMetricId("billable_metric_id")
                     .billedInAdvance(true)
                     .billingCycleConfiguration(
-                        PriceCreateParams.Body.NewFloatingUnitPrice.BillingCycleConfiguration
-                            .builder()
+                        PriceCreateParams.Body.Unit.BillingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                PriceCreateParams.Body.NewFloatingUnitPrice
-                                    .BillingCycleConfiguration
-                                    .DurationUnit
+                                PriceCreateParams.Body.Unit.BillingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
@@ -41,19 +38,16 @@ internal class PriceCreateParamsTest {
                     .fixedPriceQuantity(0.0)
                     .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
-                        PriceCreateParams.Body.NewFloatingUnitPrice.InvoicingCycleConfiguration
-                            .builder()
+                        PriceCreateParams.Body.Unit.InvoicingCycleConfiguration.builder()
                             .duration(0L)
                             .durationUnit(
-                                PriceCreateParams.Body.NewFloatingUnitPrice
-                                    .InvoicingCycleConfiguration
-                                    .DurationUnit
+                                PriceCreateParams.Body.Unit.InvoicingCycleConfiguration.DurationUnit
                                     .DAY
                             )
                             .build()
                     )
                     .metadata(
-                        PriceCreateParams.Body.NewFloatingUnitPrice.Metadata.builder()
+                        PriceCreateParams.Body.Unit.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
@@ -67,25 +61,23 @@ internal class PriceCreateParamsTest {
         val params =
             PriceCreateParams.builder()
                 .body(
-                    PriceCreateParams.Body.NewFloatingUnitPrice.builder()
-                        .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
+                    PriceCreateParams.Body.Unit.builder()
+                        .cadence(PriceCreateParams.Body.Unit.Cadence.ANNUAL)
                         .currency("currency")
                         .itemId("item_id")
                         .name("Annual fee")
                         .unitConfig(
-                            PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
+                            PriceCreateParams.Body.Unit.UnitConfig.builder()
                                 .unitAmount("unit_amount")
                                 .build()
                         )
                         .billableMetricId("billable_metric_id")
                         .billedInAdvance(true)
                         .billingCycleConfiguration(
-                            PriceCreateParams.Body.NewFloatingUnitPrice.BillingCycleConfiguration
-                                .builder()
+                            PriceCreateParams.Body.Unit.BillingCycleConfiguration.builder()
                                 .duration(0L)
                                 .durationUnit(
-                                    PriceCreateParams.Body.NewFloatingUnitPrice
-                                        .BillingCycleConfiguration
+                                    PriceCreateParams.Body.Unit.BillingCycleConfiguration
                                         .DurationUnit
                                         .DAY
                                 )
@@ -96,19 +88,17 @@ internal class PriceCreateParamsTest {
                         .fixedPriceQuantity(0.0)
                         .invoiceGroupingKey("invoice_grouping_key")
                         .invoicingCycleConfiguration(
-                            PriceCreateParams.Body.NewFloatingUnitPrice.InvoicingCycleConfiguration
-                                .builder()
+                            PriceCreateParams.Body.Unit.InvoicingCycleConfiguration.builder()
                                 .duration(0L)
                                 .durationUnit(
-                                    PriceCreateParams.Body.NewFloatingUnitPrice
-                                        .InvoicingCycleConfiguration
+                                    PriceCreateParams.Body.Unit.InvoicingCycleConfiguration
                                         .DurationUnit
                                         .DAY
                                 )
                                 .build()
                         )
                         .metadata(
-                            PriceCreateParams.Body.NewFloatingUnitPrice.Metadata.builder()
+                            PriceCreateParams.Body.Unit.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
@@ -120,26 +110,24 @@ internal class PriceCreateParamsTest {
 
         assertThat(body)
             .isEqualTo(
-                PriceCreateParams.Body.ofNewFloatingUnitPrice(
-                    PriceCreateParams.Body.NewFloatingUnitPrice.builder()
-                        .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
+                PriceCreateParams.Body.ofUnit(
+                    PriceCreateParams.Body.Unit.builder()
+                        .cadence(PriceCreateParams.Body.Unit.Cadence.ANNUAL)
                         .currency("currency")
                         .itemId("item_id")
                         .name("Annual fee")
                         .unitConfig(
-                            PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
+                            PriceCreateParams.Body.Unit.UnitConfig.builder()
                                 .unitAmount("unit_amount")
                                 .build()
                         )
                         .billableMetricId("billable_metric_id")
                         .billedInAdvance(true)
                         .billingCycleConfiguration(
-                            PriceCreateParams.Body.NewFloatingUnitPrice.BillingCycleConfiguration
-                                .builder()
+                            PriceCreateParams.Body.Unit.BillingCycleConfiguration.builder()
                                 .duration(0L)
                                 .durationUnit(
-                                    PriceCreateParams.Body.NewFloatingUnitPrice
-                                        .BillingCycleConfiguration
+                                    PriceCreateParams.Body.Unit.BillingCycleConfiguration
                                         .DurationUnit
                                         .DAY
                                 )
@@ -150,19 +138,17 @@ internal class PriceCreateParamsTest {
                         .fixedPriceQuantity(0.0)
                         .invoiceGroupingKey("invoice_grouping_key")
                         .invoicingCycleConfiguration(
-                            PriceCreateParams.Body.NewFloatingUnitPrice.InvoicingCycleConfiguration
-                                .builder()
+                            PriceCreateParams.Body.Unit.InvoicingCycleConfiguration.builder()
                                 .duration(0L)
                                 .durationUnit(
-                                    PriceCreateParams.Body.NewFloatingUnitPrice
-                                        .InvoicingCycleConfiguration
+                                    PriceCreateParams.Body.Unit.InvoicingCycleConfiguration
                                         .DurationUnit
                                         .DAY
                                 )
                                 .build()
                         )
                         .metadata(
-                            PriceCreateParams.Body.NewFloatingUnitPrice.Metadata.builder()
+                            PriceCreateParams.Body.Unit.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
@@ -176,13 +162,13 @@ internal class PriceCreateParamsTest {
         val params =
             PriceCreateParams.builder()
                 .body(
-                    PriceCreateParams.Body.NewFloatingUnitPrice.builder()
-                        .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
+                    PriceCreateParams.Body.Unit.builder()
+                        .cadence(PriceCreateParams.Body.Unit.Cadence.ANNUAL)
                         .currency("currency")
                         .itemId("item_id")
                         .name("Annual fee")
                         .unitConfig(
-                            PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
+                            PriceCreateParams.Body.Unit.UnitConfig.builder()
                                 .unitAmount("unit_amount")
                                 .build()
                         )
@@ -194,14 +180,14 @@ internal class PriceCreateParamsTest {
 
         assertThat(body)
             .isEqualTo(
-                PriceCreateParams.Body.ofNewFloatingUnitPrice(
-                    PriceCreateParams.Body.NewFloatingUnitPrice.builder()
-                        .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
+                PriceCreateParams.Body.ofUnit(
+                    PriceCreateParams.Body.Unit.builder()
+                        .cadence(PriceCreateParams.Body.Unit.Cadence.ANNUAL)
                         .currency("currency")
                         .itemId("item_id")
                         .name("Annual fee")
                         .unitConfig(
-                            PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
+                            PriceCreateParams.Body.Unit.UnitConfig.builder()
                                 .unitAmount("unit_amount")
                                 .build()
                         )
