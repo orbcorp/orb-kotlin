@@ -773,6 +773,23 @@ private constructor(
             body.taxjarTaxConfiguration(taxExempt)
         }
 
+        /** Alias for calling [taxConfiguration] with `TaxConfiguration.ofSphere(sphere)`. */
+        fun taxConfiguration(sphere: TaxConfiguration.Sphere) = apply {
+            body.taxConfiguration(sphere)
+        }
+
+        /**
+         * Alias for calling [taxConfiguration] with the following:
+         * ```kotlin
+         * TaxConfiguration.Sphere.builder()
+         *     .taxExempt(taxExempt)
+         *     .build()
+         * ```
+         */
+        fun sphereTaxConfiguration(taxExempt: Boolean) = apply {
+            body.sphereTaxConfiguration(taxExempt)
+        }
+
         /**
          * Tax IDs are commonly required to be displayed on customer invoices, which are added to
          * the headers of invoices.
@@ -1884,6 +1901,21 @@ private constructor(
              */
             fun taxjarTaxConfiguration(taxExempt: Boolean) =
                 taxConfiguration(TaxConfiguration.Taxjar.builder().taxExempt(taxExempt).build())
+
+            /** Alias for calling [taxConfiguration] with `TaxConfiguration.ofSphere(sphere)`. */
+            fun taxConfiguration(sphere: TaxConfiguration.Sphere) =
+                taxConfiguration(TaxConfiguration.ofSphere(sphere))
+
+            /**
+             * Alias for calling [taxConfiguration] with the following:
+             * ```kotlin
+             * TaxConfiguration.Sphere.builder()
+             *     .taxExempt(taxExempt)
+             *     .build()
+             * ```
+             */
+            fun sphereTaxConfiguration(taxExempt: Boolean) =
+                taxConfiguration(TaxConfiguration.Sphere.builder().taxExempt(taxExempt).build())
 
             /**
              * Tax IDs are commonly required to be displayed on customer invoices, which are added
@@ -3776,6 +3808,7 @@ private constructor(
     private constructor(
         private val avalara: Avalara? = null,
         private val taxjar: Taxjar? = null,
+        private val sphere: Sphere? = null,
         private val _json: JsonValue? = null,
     ) {
 
@@ -3783,13 +3816,19 @@ private constructor(
 
         fun taxjar(): Taxjar? = taxjar
 
+        fun sphere(): Sphere? = sphere
+
         fun isAvalara(): Boolean = avalara != null
 
         fun isTaxjar(): Boolean = taxjar != null
 
+        fun isSphere(): Boolean = sphere != null
+
         fun asAvalara(): Avalara = avalara.getOrThrow("avalara")
 
         fun asTaxjar(): Taxjar = taxjar.getOrThrow("taxjar")
+
+        fun asSphere(): Sphere = sphere.getOrThrow("sphere")
 
         fun _json(): JsonValue? = _json
 
@@ -3797,6 +3836,7 @@ private constructor(
             when {
                 avalara != null -> visitor.visitAvalara(avalara)
                 taxjar != null -> visitor.visitTaxjar(taxjar)
+                sphere != null -> visitor.visitSphere(sphere)
                 else -> visitor.unknown(_json)
             }
 
@@ -3815,6 +3855,10 @@ private constructor(
 
                     override fun visitTaxjar(taxjar: Taxjar) {
                         taxjar.validate()
+                    }
+
+                    override fun visitSphere(sphere: Sphere) {
+                        sphere.validate()
                     }
                 }
             )
@@ -3842,6 +3886,8 @@ private constructor(
 
                     override fun visitTaxjar(taxjar: Taxjar) = taxjar.validity()
 
+                    override fun visitSphere(sphere: Sphere) = sphere.validity()
+
                     override fun unknown(json: JsonValue?) = 0
                 }
             )
@@ -3851,15 +3897,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TaxConfiguration && avalara == other.avalara && taxjar == other.taxjar /* spotless:on */
+            return /* spotless:off */ other is TaxConfiguration && avalara == other.avalara && taxjar == other.taxjar && sphere == other.sphere /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(avalara, taxjar) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(avalara, taxjar, sphere) /* spotless:on */
 
         override fun toString(): String =
             when {
                 avalara != null -> "TaxConfiguration{avalara=$avalara}"
                 taxjar != null -> "TaxConfiguration{taxjar=$taxjar}"
+                sphere != null -> "TaxConfiguration{sphere=$sphere}"
                 _json != null -> "TaxConfiguration{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid TaxConfiguration")
             }
@@ -3869,6 +3916,8 @@ private constructor(
             fun ofAvalara(avalara: Avalara) = TaxConfiguration(avalara = avalara)
 
             fun ofTaxjar(taxjar: Taxjar) = TaxConfiguration(taxjar = taxjar)
+
+            fun ofSphere(sphere: Sphere) = TaxConfiguration(sphere = sphere)
         }
 
         /**
@@ -3880,6 +3929,8 @@ private constructor(
             fun visitAvalara(avalara: Avalara): T
 
             fun visitTaxjar(taxjar: Taxjar): T
+
+            fun visitSphere(sphere: Sphere): T
 
             /**
              * Maps an unknown variant of [TaxConfiguration] to a value of type [T].
@@ -3913,6 +3964,11 @@ private constructor(
                             TaxConfiguration(taxjar = it, _json = json)
                         } ?: TaxConfiguration(_json = json)
                     }
+                    "sphere" -> {
+                        return tryDeserialize(node, jacksonTypeRef<Sphere>())?.let {
+                            TaxConfiguration(sphere = it, _json = json)
+                        } ?: TaxConfiguration(_json = json)
+                    }
                 }
 
                 return TaxConfiguration(_json = json)
@@ -3929,6 +3985,7 @@ private constructor(
                 when {
                     value.avalara != null -> generator.writeObject(value.avalara)
                     value.taxjar != null -> generator.writeObject(value.taxjar)
+                    value.sphere != null -> generator.writeObject(value.sphere)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid TaxConfiguration")
                 }
@@ -4380,6 +4437,210 @@ private constructor(
 
             override fun toString() =
                 "Taxjar{taxExempt=$taxExempt, taxProvider=$taxProvider, additionalProperties=$additionalProperties}"
+        }
+
+        class Sphere
+        private constructor(
+            private val taxExempt: JsonField<Boolean>,
+            private val taxProvider: JsonValue,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("tax_exempt")
+                @ExcludeMissing
+                taxExempt: JsonField<Boolean> = JsonMissing.of(),
+                @JsonProperty("tax_provider")
+                @ExcludeMissing
+                taxProvider: JsonValue = JsonMissing.of(),
+            ) : this(taxExempt, taxProvider, mutableMapOf())
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun taxExempt(): Boolean = taxExempt.getRequired("tax_exempt")
+
+            /**
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("sphere")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("tax_provider")
+            @ExcludeMissing
+            fun _taxProvider(): JsonValue = taxProvider
+
+            /**
+             * Returns the raw JSON value of [taxExempt].
+             *
+             * Unlike [taxExempt], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("tax_exempt")
+            @ExcludeMissing
+            fun _taxExempt(): JsonField<Boolean> = taxExempt
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [Sphere].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .taxExempt()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Sphere]. */
+            class Builder internal constructor() {
+
+                private var taxExempt: JsonField<Boolean>? = null
+                private var taxProvider: JsonValue = JsonValue.from("sphere")
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(sphere: Sphere) = apply {
+                    taxExempt = sphere.taxExempt
+                    taxProvider = sphere.taxProvider
+                    additionalProperties = sphere.additionalProperties.toMutableMap()
+                }
+
+                fun taxExempt(taxExempt: Boolean) = taxExempt(JsonField.of(taxExempt))
+
+                /**
+                 * Sets [Builder.taxExempt] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.taxExempt] with a well-typed [Boolean] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun taxExempt(taxExempt: JsonField<Boolean>) = apply { this.taxExempt = taxExempt }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("sphere")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun taxProvider(taxProvider: JsonValue) = apply { this.taxProvider = taxProvider }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [Sphere].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .taxExempt()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): Sphere =
+                    Sphere(
+                        checkRequired("taxExempt", taxExempt),
+                        taxProvider,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Sphere = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                taxExempt()
+                _taxProvider().let {
+                    if (it != JsonValue.from("sphere")) {
+                        throw OrbInvalidDataException("'taxProvider' is invalid, received $it")
+                    }
+                }
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (taxExempt.asKnown() == null) 0 else 1) +
+                    taxProvider.let { if (it == JsonValue.from("sphere")) 1 else 0 }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Sphere && taxExempt == other.taxExempt && taxProvider == other.taxProvider && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(taxExempt, taxProvider, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Sphere{taxExempt=$taxExempt, taxProvider=$taxProvider, additionalProperties=$additionalProperties}"
         }
     }
 

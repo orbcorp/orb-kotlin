@@ -36,6 +36,9 @@ internal class AlertTest {
                 .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
                 .addThreshold(Alert.Threshold.builder().value(0.0).build())
                 .type(Alert.Type.CREDIT_BALANCE_DEPLETED)
+                .addBalanceAlertStatus(
+                    Alert.BalanceAlertStatus.builder().inAlert(true).thresholdValue(0.0).build()
+                )
                 .build()
 
         assertThat(alert.id()).isEqualTo("XuxCbt7x9L82yyeF")
@@ -60,6 +63,10 @@ internal class AlertTest {
             .isEqualTo(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
         assertThat(alert.thresholds()).containsExactly(Alert.Threshold.builder().value(0.0).build())
         assertThat(alert.type()).isEqualTo(Alert.Type.CREDIT_BALANCE_DEPLETED)
+        assertThat(alert.balanceAlertStatus())
+            .containsExactly(
+                Alert.BalanceAlertStatus.builder().inAlert(true).thresholdValue(0.0).build()
+            )
     }
 
     @Test
@@ -89,6 +96,9 @@ internal class AlertTest {
                 .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
                 .addThreshold(Alert.Threshold.builder().value(0.0).build())
                 .type(Alert.Type.CREDIT_BALANCE_DEPLETED)
+                .addBalanceAlertStatus(
+                    Alert.BalanceAlertStatus.builder().inAlert(true).thresholdValue(0.0).build()
+                )
                 .build()
 
         val roundtrippedAlert =

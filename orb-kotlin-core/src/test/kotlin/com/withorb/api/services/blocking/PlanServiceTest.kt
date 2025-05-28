@@ -51,9 +51,18 @@ internal class PlanServiceTest {
                             )
                             .conversionRate(0.0)
                             .currency("currency")
+                            .dimensionalPriceConfiguration(
+                                PlanCreateParams.Price.Unit.DimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .externalDimensionalPriceGroupId(
+                                        "external_dimensional_price_group_id"
+                                    )
+                                    .build()
+                            )
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(0.0)
-                            .invoiceGroupingKey("invoice_grouping_key")
+                            .invoiceGroupingKey("x")
                             .invoicingCycleConfiguration(
                                 PlanCreateParams.Price.Unit.InvoicingCycleConfiguration.builder()
                                     .duration(0L)

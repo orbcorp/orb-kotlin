@@ -22,6 +22,9 @@ import java.util.Collections
 import java.util.Objects
 
 /**
+ * [NOTE] It is recommended to use the `/v1/prices/evaluate` which offers further functionality,
+ * such as multiple prices, inline price definitions, and querying over preview events.
+ *
  * This endpoint is used to evaluate the output of a price for a given customer and time range. It
  * enables filtering and grouping the output using
  * [computed properties](/extensibility/advanced-metrics#computed-properties), supporting the

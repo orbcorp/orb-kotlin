@@ -37,10 +37,10 @@ internal class PriceListPageResponseTest {
                         .currency("currency")
                         .discount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -58,6 +58,13 @@ internal class PriceListPageResponseTest {
                         .maximum(
                             Price.Unit.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Price.Unit.Maximum.Filter.builder()
+                                        .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -70,6 +77,13 @@ internal class PriceListPageResponseTest {
                         .minimum(
                             Price.Unit.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Price.Unit.Minimum.Filter.builder()
+                                        .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -117,10 +131,10 @@ internal class PriceListPageResponseTest {
                         .currency("currency")
                         .discount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -138,6 +152,13 @@ internal class PriceListPageResponseTest {
                         .maximum(
                             Price.Unit.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Price.Unit.Maximum.Filter.builder()
+                                        .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -150,6 +171,13 @@ internal class PriceListPageResponseTest {
                         .minimum(
                             Price.Unit.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Price.Unit.Minimum.Filter.builder()
+                                        .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -200,10 +228,10 @@ internal class PriceListPageResponseTest {
                         .currency("currency")
                         .discount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -221,6 +249,13 @@ internal class PriceListPageResponseTest {
                         .maximum(
                             Price.Unit.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Price.Unit.Maximum.Filter.builder()
+                                        .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -233,6 +268,13 @@ internal class PriceListPageResponseTest {
                         .minimum(
                             Price.Unit.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Price.Unit.Minimum.Filter.builder()
+                                        .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )

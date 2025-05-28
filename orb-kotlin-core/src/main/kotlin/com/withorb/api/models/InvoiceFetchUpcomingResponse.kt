@@ -1436,28 +1436,45 @@ private constructor(
         fun addDiscount(percentage: PercentageDiscount) =
             addDiscount(InvoiceLevelDiscount.ofPercentage(percentage))
 
+        /**
+         * Alias for calling [addDiscount] with the following:
+         * ```kotlin
+         * PercentageDiscount.builder()
+         *     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+         *     .percentageDiscount(percentageDiscount)
+         *     .build()
+         * ```
+         */
+        fun addPercentageDiscount(percentageDiscount: Double) =
+            addDiscount(
+                PercentageDiscount.builder()
+                    .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                    .percentageDiscount(percentageDiscount)
+                    .build()
+            )
+
         /** Alias for calling [addDiscount] with `InvoiceLevelDiscount.ofAmount(amount)`. */
         fun addDiscount(amount: AmountDiscount) = addDiscount(InvoiceLevelDiscount.ofAmount(amount))
-
-        /** Alias for calling [addDiscount] with `InvoiceLevelDiscount.ofTrial(trial)`. */
-        fun addDiscount(trial: TrialDiscount) = addDiscount(InvoiceLevelDiscount.ofTrial(trial))
 
         /**
          * Alias for calling [addDiscount] with the following:
          * ```kotlin
-         * TrialDiscount.builder()
-         *     .discountType(TrialDiscount.DiscountType.TRIAL)
-         *     .appliesToPriceIds(appliesToPriceIds)
+         * AmountDiscount.builder()
+         *     .discountType(AmountDiscount.DiscountType.AMOUNT)
+         *     .amountDiscount(amountDiscount)
          *     .build()
          * ```
          */
-        fun addTrialDiscount(appliesToPriceIds: List<String>) =
+        fun addAmountDiscount(amountDiscount: String) =
             addDiscount(
-                TrialDiscount.builder()
-                    .discountType(TrialDiscount.DiscountType.TRIAL)
-                    .appliesToPriceIds(appliesToPriceIds)
+                AmountDiscount.builder()
+                    .discountType(AmountDiscount.DiscountType.AMOUNT)
+                    .amountDiscount(amountDiscount)
                     .build()
             )
+
+        /** Alias for calling [addDiscount] with `InvoiceLevelDiscount.ofTrial(trial)`. */
+        fun addDiscount(trial: TrialDiscount) = addDiscount(InvoiceLevelDiscount.ofTrial(trial))
 
         /**
          * When the invoice payment is due. The due date is null if the invoice is not yet
@@ -6787,31 +6804,65 @@ private constructor(
             fun discount(percentage: PercentageDiscount) =
                 discount(Discount.ofPercentage(percentage))
 
-            /** Alias for calling [discount] with `Discount.ofTrial(trial)`. */
-            fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
-
             /**
              * Alias for calling [discount] with the following:
              * ```kotlin
-             * TrialDiscount.builder()
-             *     .discountType(TrialDiscount.DiscountType.TRIAL)
-             *     .appliesToPriceIds(appliesToPriceIds)
+             * PercentageDiscount.builder()
+             *     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+             *     .percentageDiscount(percentageDiscount)
              *     .build()
              * ```
              */
-            fun trialDiscount(appliesToPriceIds: List<String>) =
+            fun percentageDiscount(percentageDiscount: Double) =
                 discount(
-                    TrialDiscount.builder()
-                        .discountType(TrialDiscount.DiscountType.TRIAL)
-                        .appliesToPriceIds(appliesToPriceIds)
+                    PercentageDiscount.builder()
+                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                        .percentageDiscount(percentageDiscount)
                         .build()
                 )
+
+            /** Alias for calling [discount] with `Discount.ofTrial(trial)`. */
+            fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
             /** Alias for calling [discount] with `Discount.ofUsage(usage)`. */
             fun discount(usage: UsageDiscount) = discount(Discount.ofUsage(usage))
 
+            /**
+             * Alias for calling [discount] with the following:
+             * ```kotlin
+             * UsageDiscount.builder()
+             *     .discountType(UsageDiscount.DiscountType.USAGE)
+             *     .usageDiscount(usageDiscount)
+             *     .build()
+             * ```
+             */
+            fun usageDiscount(usageDiscount: Double) =
+                discount(
+                    UsageDiscount.builder()
+                        .discountType(UsageDiscount.DiscountType.USAGE)
+                        .usageDiscount(usageDiscount)
+                        .build()
+                )
+
             /** Alias for calling [discount] with `Discount.ofAmount(amount)`. */
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
+
+            /**
+             * Alias for calling [discount] with the following:
+             * ```kotlin
+             * AmountDiscount.builder()
+             *     .discountType(AmountDiscount.DiscountType.AMOUNT)
+             *     .amountDiscount(amountDiscount)
+             *     .build()
+             * ```
+             */
+            fun amountDiscount(amountDiscount: String) =
+                discount(
+                    AmountDiscount.builder()
+                        .discountType(AmountDiscount.DiscountType.AMOUNT)
+                        .amountDiscount(amountDiscount)
+                        .build()
+                )
 
             /** The end date of the range of time applied for this line item's price. */
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
@@ -7647,6 +7698,7 @@ private constructor(
                 private val adjustmentType: JsonValue,
                 private val amount: JsonField<String>,
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val filters: JsonField<List<Filter>>,
                 private val isInvoiceLevel: JsonField<Boolean>,
                 private val reason: JsonField<String>,
                 private val usageDiscount: JsonField<Double>,
@@ -7665,6 +7717,9 @@ private constructor(
                     @JsonProperty("applies_to_price_ids")
                     @ExcludeMissing
                     appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("filters")
+                    @ExcludeMissing
+                    filters: JsonField<List<Filter>> = JsonMissing.of(),
                     @JsonProperty("is_invoice_level")
                     @ExcludeMissing
                     isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
@@ -7679,6 +7734,7 @@ private constructor(
                     adjustmentType,
                     amount,
                     appliesToPriceIds,
+                    filters,
                     isInvoiceLevel,
                     reason,
                     usageDiscount,
@@ -7721,8 +7777,18 @@ private constructor(
                  *   unexpectedly missing or null (e.g. if the server responded with an unexpected
                  *   value).
                  */
+                @Deprecated("deprecated")
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
+
+                /**
+                 * The filters that determine which prices to apply this adjustment to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun filters(): List<Filter> = filters.getRequired("filters")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -7773,9 +7839,20 @@ private constructor(
                  * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
                  * unexpected type.
                  */
+                @Deprecated("deprecated")
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
+
+                /**
+                 * Returns the raw JSON value of [filters].
+                 *
+                 * Unlike [filters], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("filters")
+                @ExcludeMissing
+                fun _filters(): JsonField<List<Filter>> = filters
 
                 /**
                  * Returns the raw JSON value of [isInvoiceLevel].
@@ -7827,6 +7904,7 @@ private constructor(
                      * .id()
                      * .amount()
                      * .appliesToPriceIds()
+                     * .filters()
                      * .isInvoiceLevel()
                      * .reason()
                      * .usageDiscount()
@@ -7842,6 +7920,7 @@ private constructor(
                     private var adjustmentType: JsonValue = JsonValue.from("usage_discount")
                     private var amount: JsonField<String>? = null
                     private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+                    private var filters: JsonField<MutableList<Filter>>? = null
                     private var isInvoiceLevel: JsonField<Boolean>? = null
                     private var reason: JsonField<String>? = null
                     private var usageDiscount: JsonField<Double>? = null
@@ -7853,6 +7932,7 @@ private constructor(
                         amount = usageDiscount.amount
                         appliesToPriceIds =
                             usageDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        filters = usageDiscount.filters.map { it.toMutableList() }
                         isInvoiceLevel = usageDiscount.isInvoiceLevel
                         reason = usageDiscount.reason
                         this.usageDiscount = usageDiscount.usageDiscount
@@ -7899,6 +7979,7 @@ private constructor(
                     fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                     /** The price IDs that this adjustment applies to. */
+                    @Deprecated("deprecated")
                     fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                         appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
@@ -7909,6 +7990,7 @@ private constructor(
                      * `List<String>` value instead. This method is primarily for setting the field
                      * to an undocumented or not yet supported value.
                      */
+                    @Deprecated("deprecated")
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                     }
@@ -7918,10 +8000,37 @@ private constructor(
                      *
                      * @throws IllegalStateException if the field was previously set to a non-list.
                      */
+                    @Deprecated("deprecated")
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
                             (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                                 checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
+                            }
+                    }
+
+                    /** The filters that determine which prices to apply this adjustment to. */
+                    fun filters(filters: List<Filter>) = filters(JsonField.of(filters))
+
+                    /**
+                     * Sets [Builder.filters] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.filters] with a well-typed `List<Filter>`
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun filters(filters: JsonField<List<Filter>>) = apply {
+                        this.filters = filters.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [Filter] to [filters].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addFilter(filter: Filter) = apply {
+                        filters =
+                            (filters ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("filters", it).add(filter)
                             }
                     }
 
@@ -8005,6 +8114,7 @@ private constructor(
                      * .id()
                      * .amount()
                      * .appliesToPriceIds()
+                     * .filters()
                      * .isInvoiceLevel()
                      * .reason()
                      * .usageDiscount()
@@ -8020,6 +8130,7 @@ private constructor(
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                                 it.toImmutable()
                             },
+                            checkRequired("filters", filters).map { it.toImmutable() },
                             checkRequired("isInvoiceLevel", isInvoiceLevel),
                             checkRequired("reason", reason),
                             checkRequired("usageDiscount", usageDiscount),
@@ -8044,6 +8155,7 @@ private constructor(
                     }
                     amount()
                     appliesToPriceIds()
+                    filters().forEach { it.validate() }
                     isInvoiceLevel()
                     reason()
                     usageDiscount()
@@ -8071,26 +8183,581 @@ private constructor(
                         } +
                         (if (amount.asKnown() == null) 0 else 1) +
                         (appliesToPriceIds.asKnown()?.size ?: 0) +
+                        (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                         (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
                         (if (reason.asKnown() == null) 0 else 1) +
                         (if (usageDiscount.asKnown() == null) 0 else 1)
+
+                class Filter
+                private constructor(
+                    private val field: JsonField<Field>,
+                    private val operator: JsonField<Operator>,
+                    private val values: JsonField<List<String>>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
+                ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("field")
+                        @ExcludeMissing
+                        field: JsonField<Field> = JsonMissing.of(),
+                        @JsonProperty("operator")
+                        @ExcludeMissing
+                        operator: JsonField<Operator> = JsonMissing.of(),
+                        @JsonProperty("values")
+                        @ExcludeMissing
+                        values: JsonField<List<String>> = JsonMissing.of(),
+                    ) : this(field, operator, values, mutableMapOf())
+
+                    /**
+                     * The property of the price to filter on.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun field(): Field = field.getRequired("field")
+
+                    /**
+                     * Should prices that match the filter be included or excluded.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun operator(): Operator = operator.getRequired("operator")
+
+                    /**
+                     * The IDs or values that match this filter.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun values(): List<String> = values.getRequired("values")
+
+                    /**
+                     * Returns the raw JSON value of [field].
+                     *
+                     * Unlike [field], this method doesn't throw if the JSON field has an unexpected
+                     * type.
+                     */
+                    @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<Field> = field
+
+                    /**
+                     * Returns the raw JSON value of [operator].
+                     *
+                     * Unlike [operator], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("operator")
+                    @ExcludeMissing
+                    fun _operator(): JsonField<Operator> = operator
+
+                    /**
+                     * Returns the raw JSON value of [values].
+                     *
+                     * Unlike [values], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("values")
+                    @ExcludeMissing
+                    fun _values(): JsonField<List<String>> = values
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /**
+                         * Returns a mutable builder for constructing an instance of [Filter].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .field()
+                         * .operator()
+                         * .values()
+                         * ```
+                         */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [Filter]. */
+                    class Builder internal constructor() {
+
+                        private var field: JsonField<Field>? = null
+                        private var operator: JsonField<Operator>? = null
+                        private var values: JsonField<MutableList<String>>? = null
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(filter: Filter) = apply {
+                            field = filter.field
+                            operator = filter.operator
+                            values = filter.values.map { it.toMutableList() }
+                            additionalProperties = filter.additionalProperties.toMutableMap()
+                        }
+
+                        /** The property of the price to filter on. */
+                        fun field(field: Field) = field(JsonField.of(field))
+
+                        /**
+                         * Sets [Builder.field] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.field] with a well-typed [Field] value
+                         * instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun field(field: JsonField<Field>) = apply { this.field = field }
+
+                        /** Should prices that match the filter be included or excluded. */
+                        fun operator(operator: Operator) = operator(JsonField.of(operator))
+
+                        /**
+                         * Sets [Builder.operator] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.operator] with a well-typed [Operator]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun operator(operator: JsonField<Operator>) = apply {
+                            this.operator = operator
+                        }
+
+                        /** The IDs or values that match this filter. */
+                        fun values(values: List<String>) = values(JsonField.of(values))
+
+                        /**
+                         * Sets [Builder.values] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.values] with a well-typed `List<String>`
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun values(values: JsonField<List<String>>) = apply {
+                            this.values = values.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [String] to [values].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addValue(value: String) = apply {
+                            values =
+                                (values ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("values", it).add(value)
+                                }
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [Filter].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .field()
+                         * .operator()
+                         * .values()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
+                        fun build(): Filter =
+                            Filter(
+                                checkRequired("field", field),
+                                checkRequired("operator", operator),
+                                checkRequired("values", values).map { it.toImmutable() },
+                                additionalProperties.toMutableMap(),
+                            )
+                    }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Filter = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        field().validate()
+                        operator().validate()
+                        values()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (field.asKnown()?.validity() ?: 0) +
+                            (operator.asKnown()?.validity() ?: 0) +
+                            (values.asKnown()?.size ?: 0)
+
+                    /** The property of the price to filter on. */
+                    class Field
+                    @JsonCreator
+                    private constructor(private val value: JsonField<String>) : Enum {
+
+                        /**
+                         * Returns this class instance's raw value.
+                         *
+                         * This is usually only useful if this instance was deserialized from data
+                         * that doesn't match any known member, and you want to know that value. For
+                         * example, if the SDK is on an older version than the API, then the API may
+                         * respond with new members that the SDK is unaware of.
+                         */
+                        @com.fasterxml.jackson.annotation.JsonValue
+                        fun _value(): JsonField<String> = value
+
+                        companion object {
+
+                            val PRICE_ID = of("price_id")
+
+                            val ITEM_ID = of("item_id")
+
+                            val PRICE_TYPE = of("price_type")
+
+                            val CURRENCY = of("currency")
+
+                            val PRICING_UNIT_ID = of("pricing_unit_id")
+
+                            fun of(value: String) = Field(JsonField.of(value))
+                        }
+
+                        /** An enum containing [Field]'s known values. */
+                        enum class Known {
+                            PRICE_ID,
+                            ITEM_ID,
+                            PRICE_TYPE,
+                            CURRENCY,
+                            PRICING_UNIT_ID,
+                        }
+
+                        /**
+                         * An enum containing [Field]'s known values, as well as an [_UNKNOWN]
+                         * member.
+                         *
+                         * An instance of [Field] can contain an unknown value in a couple of cases:
+                         * - It was deserialized from data that doesn't match any known member. For
+                         *   example, if the SDK is on an older version than the API, then the API
+                         *   may respond with new members that the SDK is unaware of.
+                         * - It was constructed with an arbitrary value using the [of] method.
+                         */
+                        enum class Value {
+                            PRICE_ID,
+                            ITEM_ID,
+                            PRICE_TYPE,
+                            CURRENCY,
+                            PRICING_UNIT_ID,
+                            /**
+                             * An enum member indicating that [Field] was instantiated with an
+                             * unknown value.
+                             */
+                            _UNKNOWN,
+                        }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value, or
+                         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                         *
+                         * Use the [known] method instead if you're certain the value is always
+                         * known or if you want to throw for the unknown case.
+                         */
+                        fun value(): Value =
+                            when (this) {
+                                PRICE_ID -> Value.PRICE_ID
+                                ITEM_ID -> Value.ITEM_ID
+                                PRICE_TYPE -> Value.PRICE_TYPE
+                                CURRENCY -> Value.CURRENCY
+                                PRICING_UNIT_ID -> Value.PRICING_UNIT_ID
+                                else -> Value._UNKNOWN
+                            }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value.
+                         *
+                         * Use the [value] method instead if you're uncertain the value is always
+                         * known and don't want to throw for the unknown case.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value is a not a
+                         *   known member.
+                         */
+                        fun known(): Known =
+                            when (this) {
+                                PRICE_ID -> Known.PRICE_ID
+                                ITEM_ID -> Known.ITEM_ID
+                                PRICE_TYPE -> Known.PRICE_TYPE
+                                CURRENCY -> Known.CURRENCY
+                                PRICING_UNIT_ID -> Known.PRICING_UNIT_ID
+                                else -> throw OrbInvalidDataException("Unknown Field: $value")
+                            }
+
+                        /**
+                         * Returns this class instance's primitive wire representation.
+                         *
+                         * This differs from the [toString] method because that method is primarily
+                         * for debugging and generally doesn't throw.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value does not
+                         *   have the expected primitive type.
+                         */
+                        fun asString(): String =
+                            _value().asString()
+                                ?: throw OrbInvalidDataException("Value is not a String")
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Field = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            known()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Field && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
+                    }
+
+                    /** Should prices that match the filter be included or excluded. */
+                    class Operator
+                    @JsonCreator
+                    private constructor(private val value: JsonField<String>) : Enum {
+
+                        /**
+                         * Returns this class instance's raw value.
+                         *
+                         * This is usually only useful if this instance was deserialized from data
+                         * that doesn't match any known member, and you want to know that value. For
+                         * example, if the SDK is on an older version than the API, then the API may
+                         * respond with new members that the SDK is unaware of.
+                         */
+                        @com.fasterxml.jackson.annotation.JsonValue
+                        fun _value(): JsonField<String> = value
+
+                        companion object {
+
+                            val INCLUDES = of("includes")
+
+                            val EXCLUDES = of("excludes")
+
+                            fun of(value: String) = Operator(JsonField.of(value))
+                        }
+
+                        /** An enum containing [Operator]'s known values. */
+                        enum class Known {
+                            INCLUDES,
+                            EXCLUDES,
+                        }
+
+                        /**
+                         * An enum containing [Operator]'s known values, as well as an [_UNKNOWN]
+                         * member.
+                         *
+                         * An instance of [Operator] can contain an unknown value in a couple of
+                         * cases:
+                         * - It was deserialized from data that doesn't match any known member. For
+                         *   example, if the SDK is on an older version than the API, then the API
+                         *   may respond with new members that the SDK is unaware of.
+                         * - It was constructed with an arbitrary value using the [of] method.
+                         */
+                        enum class Value {
+                            INCLUDES,
+                            EXCLUDES,
+                            /**
+                             * An enum member indicating that [Operator] was instantiated with an
+                             * unknown value.
+                             */
+                            _UNKNOWN,
+                        }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value, or
+                         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                         *
+                         * Use the [known] method instead if you're certain the value is always
+                         * known or if you want to throw for the unknown case.
+                         */
+                        fun value(): Value =
+                            when (this) {
+                                INCLUDES -> Value.INCLUDES
+                                EXCLUDES -> Value.EXCLUDES
+                                else -> Value._UNKNOWN
+                            }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value.
+                         *
+                         * Use the [value] method instead if you're uncertain the value is always
+                         * known and don't want to throw for the unknown case.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value is a not a
+                         *   known member.
+                         */
+                        fun known(): Known =
+                            when (this) {
+                                INCLUDES -> Known.INCLUDES
+                                EXCLUDES -> Known.EXCLUDES
+                                else -> throw OrbInvalidDataException("Unknown Operator: $value")
+                            }
+
+                        /**
+                         * Returns this class instance's primitive wire representation.
+                         *
+                         * This differs from the [toString] method because that method is primarily
+                         * for debugging and generally doesn't throw.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value does not
+                         *   have the expected primitive type.
+                         */
+                        fun asString(): String =
+                            _value().asString()
+                                ?: throw OrbInvalidDataException("Value is not a String")
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Operator = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            known()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
+                    }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is Filter && field == other.field && operator == other.operator && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+                    }
+
+                    /* spotless:off */
+                    private val hashCode: Int by lazy { Objects.hash(field, operator, values, additionalProperties) }
+                    /* spotless:on */
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() =
+                        "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
+                }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
                     }
 
-                    return /* spotless:off */ other is UsageDiscount && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is UsageDiscount && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, isInvoiceLevel, reason, usageDiscount, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, filters, isInvoiceLevel, reason, usageDiscount, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "UsageDiscount{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
+                    "UsageDiscount{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, filters=$filters, isInvoiceLevel=$isInvoiceLevel, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
             }
 
             class AmountDiscount
@@ -8100,6 +8767,7 @@ private constructor(
                 private val amount: JsonField<String>,
                 private val amountDiscount: JsonField<String>,
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val filters: JsonField<List<Filter>>,
                 private val isInvoiceLevel: JsonField<Boolean>,
                 private val reason: JsonField<String>,
                 private val additionalProperties: MutableMap<String, JsonValue>,
@@ -8120,6 +8788,9 @@ private constructor(
                     @JsonProperty("applies_to_price_ids")
                     @ExcludeMissing
                     appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("filters")
+                    @ExcludeMissing
+                    filters: JsonField<List<Filter>> = JsonMissing.of(),
                     @JsonProperty("is_invoice_level")
                     @ExcludeMissing
                     isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
@@ -8132,6 +8803,7 @@ private constructor(
                     amount,
                     amountDiscount,
                     appliesToPriceIds,
+                    filters,
                     isInvoiceLevel,
                     reason,
                     mutableMapOf(),
@@ -8183,8 +8855,18 @@ private constructor(
                  *   unexpectedly missing or null (e.g. if the server responded with an unexpected
                  *   value).
                  */
+                @Deprecated("deprecated")
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
+
+                /**
+                 * The filters that determine which prices to apply this adjustment to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun filters(): List<Filter> = filters.getRequired("filters")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -8235,9 +8917,20 @@ private constructor(
                  * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
                  * unexpected type.
                  */
+                @Deprecated("deprecated")
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
+
+                /**
+                 * Returns the raw JSON value of [filters].
+                 *
+                 * Unlike [filters], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("filters")
+                @ExcludeMissing
+                fun _filters(): JsonField<List<Filter>> = filters
 
                 /**
                  * Returns the raw JSON value of [isInvoiceLevel].
@@ -8280,6 +8973,7 @@ private constructor(
                      * .amount()
                      * .amountDiscount()
                      * .appliesToPriceIds()
+                     * .filters()
                      * .isInvoiceLevel()
                      * .reason()
                      * ```
@@ -8295,6 +8989,7 @@ private constructor(
                     private var amount: JsonField<String>? = null
                     private var amountDiscount: JsonField<String>? = null
                     private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+                    private var filters: JsonField<MutableList<Filter>>? = null
                     private var isInvoiceLevel: JsonField<Boolean>? = null
                     private var reason: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -8306,6 +9001,7 @@ private constructor(
                         this.amountDiscount = amountDiscount.amountDiscount
                         appliesToPriceIds =
                             amountDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        filters = amountDiscount.filters.map { it.toMutableList() }
                         isInvoiceLevel = amountDiscount.isInvoiceLevel
                         reason = amountDiscount.reason
                         additionalProperties = amountDiscount.additionalProperties.toMutableMap()
@@ -8369,6 +9065,7 @@ private constructor(
                     }
 
                     /** The price IDs that this adjustment applies to. */
+                    @Deprecated("deprecated")
                     fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                         appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
@@ -8379,6 +9076,7 @@ private constructor(
                      * `List<String>` value instead. This method is primarily for setting the field
                      * to an undocumented or not yet supported value.
                      */
+                    @Deprecated("deprecated")
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                     }
@@ -8388,10 +9086,37 @@ private constructor(
                      *
                      * @throws IllegalStateException if the field was previously set to a non-list.
                      */
+                    @Deprecated("deprecated")
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
                             (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                                 checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
+                            }
+                    }
+
+                    /** The filters that determine which prices to apply this adjustment to. */
+                    fun filters(filters: List<Filter>) = filters(JsonField.of(filters))
+
+                    /**
+                     * Sets [Builder.filters] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.filters] with a well-typed `List<Filter>`
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun filters(filters: JsonField<List<Filter>>) = apply {
+                        this.filters = filters.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [Filter] to [filters].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addFilter(filter: Filter) = apply {
+                        filters =
+                            (filters ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("filters", it).add(filter)
                             }
                     }
 
@@ -8458,6 +9183,7 @@ private constructor(
                      * .amount()
                      * .amountDiscount()
                      * .appliesToPriceIds()
+                     * .filters()
                      * .isInvoiceLevel()
                      * .reason()
                      * ```
@@ -8473,6 +9199,7 @@ private constructor(
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                                 it.toImmutable()
                             },
+                            checkRequired("filters", filters).map { it.toImmutable() },
                             checkRequired("isInvoiceLevel", isInvoiceLevel),
                             checkRequired("reason", reason),
                             additionalProperties.toMutableMap(),
@@ -8497,6 +9224,7 @@ private constructor(
                     amount()
                     amountDiscount()
                     appliesToPriceIds()
+                    filters().forEach { it.validate() }
                     isInvoiceLevel()
                     reason()
                     validated = true
@@ -8524,25 +9252,580 @@ private constructor(
                         (if (amount.asKnown() == null) 0 else 1) +
                         (if (amountDiscount.asKnown() == null) 0 else 1) +
                         (appliesToPriceIds.asKnown()?.size ?: 0) +
+                        (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                         (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
                         (if (reason.asKnown() == null) 0 else 1)
+
+                class Filter
+                private constructor(
+                    private val field: JsonField<Field>,
+                    private val operator: JsonField<Operator>,
+                    private val values: JsonField<List<String>>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
+                ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("field")
+                        @ExcludeMissing
+                        field: JsonField<Field> = JsonMissing.of(),
+                        @JsonProperty("operator")
+                        @ExcludeMissing
+                        operator: JsonField<Operator> = JsonMissing.of(),
+                        @JsonProperty("values")
+                        @ExcludeMissing
+                        values: JsonField<List<String>> = JsonMissing.of(),
+                    ) : this(field, operator, values, mutableMapOf())
+
+                    /**
+                     * The property of the price to filter on.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun field(): Field = field.getRequired("field")
+
+                    /**
+                     * Should prices that match the filter be included or excluded.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun operator(): Operator = operator.getRequired("operator")
+
+                    /**
+                     * The IDs or values that match this filter.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun values(): List<String> = values.getRequired("values")
+
+                    /**
+                     * Returns the raw JSON value of [field].
+                     *
+                     * Unlike [field], this method doesn't throw if the JSON field has an unexpected
+                     * type.
+                     */
+                    @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<Field> = field
+
+                    /**
+                     * Returns the raw JSON value of [operator].
+                     *
+                     * Unlike [operator], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("operator")
+                    @ExcludeMissing
+                    fun _operator(): JsonField<Operator> = operator
+
+                    /**
+                     * Returns the raw JSON value of [values].
+                     *
+                     * Unlike [values], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("values")
+                    @ExcludeMissing
+                    fun _values(): JsonField<List<String>> = values
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /**
+                         * Returns a mutable builder for constructing an instance of [Filter].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .field()
+                         * .operator()
+                         * .values()
+                         * ```
+                         */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [Filter]. */
+                    class Builder internal constructor() {
+
+                        private var field: JsonField<Field>? = null
+                        private var operator: JsonField<Operator>? = null
+                        private var values: JsonField<MutableList<String>>? = null
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(filter: Filter) = apply {
+                            field = filter.field
+                            operator = filter.operator
+                            values = filter.values.map { it.toMutableList() }
+                            additionalProperties = filter.additionalProperties.toMutableMap()
+                        }
+
+                        /** The property of the price to filter on. */
+                        fun field(field: Field) = field(JsonField.of(field))
+
+                        /**
+                         * Sets [Builder.field] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.field] with a well-typed [Field] value
+                         * instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun field(field: JsonField<Field>) = apply { this.field = field }
+
+                        /** Should prices that match the filter be included or excluded. */
+                        fun operator(operator: Operator) = operator(JsonField.of(operator))
+
+                        /**
+                         * Sets [Builder.operator] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.operator] with a well-typed [Operator]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun operator(operator: JsonField<Operator>) = apply {
+                            this.operator = operator
+                        }
+
+                        /** The IDs or values that match this filter. */
+                        fun values(values: List<String>) = values(JsonField.of(values))
+
+                        /**
+                         * Sets [Builder.values] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.values] with a well-typed `List<String>`
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun values(values: JsonField<List<String>>) = apply {
+                            this.values = values.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [String] to [values].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addValue(value: String) = apply {
+                            values =
+                                (values ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("values", it).add(value)
+                                }
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [Filter].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .field()
+                         * .operator()
+                         * .values()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
+                        fun build(): Filter =
+                            Filter(
+                                checkRequired("field", field),
+                                checkRequired("operator", operator),
+                                checkRequired("values", values).map { it.toImmutable() },
+                                additionalProperties.toMutableMap(),
+                            )
+                    }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Filter = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        field().validate()
+                        operator().validate()
+                        values()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (field.asKnown()?.validity() ?: 0) +
+                            (operator.asKnown()?.validity() ?: 0) +
+                            (values.asKnown()?.size ?: 0)
+
+                    /** The property of the price to filter on. */
+                    class Field
+                    @JsonCreator
+                    private constructor(private val value: JsonField<String>) : Enum {
+
+                        /**
+                         * Returns this class instance's raw value.
+                         *
+                         * This is usually only useful if this instance was deserialized from data
+                         * that doesn't match any known member, and you want to know that value. For
+                         * example, if the SDK is on an older version than the API, then the API may
+                         * respond with new members that the SDK is unaware of.
+                         */
+                        @com.fasterxml.jackson.annotation.JsonValue
+                        fun _value(): JsonField<String> = value
+
+                        companion object {
+
+                            val PRICE_ID = of("price_id")
+
+                            val ITEM_ID = of("item_id")
+
+                            val PRICE_TYPE = of("price_type")
+
+                            val CURRENCY = of("currency")
+
+                            val PRICING_UNIT_ID = of("pricing_unit_id")
+
+                            fun of(value: String) = Field(JsonField.of(value))
+                        }
+
+                        /** An enum containing [Field]'s known values. */
+                        enum class Known {
+                            PRICE_ID,
+                            ITEM_ID,
+                            PRICE_TYPE,
+                            CURRENCY,
+                            PRICING_UNIT_ID,
+                        }
+
+                        /**
+                         * An enum containing [Field]'s known values, as well as an [_UNKNOWN]
+                         * member.
+                         *
+                         * An instance of [Field] can contain an unknown value in a couple of cases:
+                         * - It was deserialized from data that doesn't match any known member. For
+                         *   example, if the SDK is on an older version than the API, then the API
+                         *   may respond with new members that the SDK is unaware of.
+                         * - It was constructed with an arbitrary value using the [of] method.
+                         */
+                        enum class Value {
+                            PRICE_ID,
+                            ITEM_ID,
+                            PRICE_TYPE,
+                            CURRENCY,
+                            PRICING_UNIT_ID,
+                            /**
+                             * An enum member indicating that [Field] was instantiated with an
+                             * unknown value.
+                             */
+                            _UNKNOWN,
+                        }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value, or
+                         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                         *
+                         * Use the [known] method instead if you're certain the value is always
+                         * known or if you want to throw for the unknown case.
+                         */
+                        fun value(): Value =
+                            when (this) {
+                                PRICE_ID -> Value.PRICE_ID
+                                ITEM_ID -> Value.ITEM_ID
+                                PRICE_TYPE -> Value.PRICE_TYPE
+                                CURRENCY -> Value.CURRENCY
+                                PRICING_UNIT_ID -> Value.PRICING_UNIT_ID
+                                else -> Value._UNKNOWN
+                            }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value.
+                         *
+                         * Use the [value] method instead if you're uncertain the value is always
+                         * known and don't want to throw for the unknown case.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value is a not a
+                         *   known member.
+                         */
+                        fun known(): Known =
+                            when (this) {
+                                PRICE_ID -> Known.PRICE_ID
+                                ITEM_ID -> Known.ITEM_ID
+                                PRICE_TYPE -> Known.PRICE_TYPE
+                                CURRENCY -> Known.CURRENCY
+                                PRICING_UNIT_ID -> Known.PRICING_UNIT_ID
+                                else -> throw OrbInvalidDataException("Unknown Field: $value")
+                            }
+
+                        /**
+                         * Returns this class instance's primitive wire representation.
+                         *
+                         * This differs from the [toString] method because that method is primarily
+                         * for debugging and generally doesn't throw.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value does not
+                         *   have the expected primitive type.
+                         */
+                        fun asString(): String =
+                            _value().asString()
+                                ?: throw OrbInvalidDataException("Value is not a String")
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Field = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            known()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Field && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
+                    }
+
+                    /** Should prices that match the filter be included or excluded. */
+                    class Operator
+                    @JsonCreator
+                    private constructor(private val value: JsonField<String>) : Enum {
+
+                        /**
+                         * Returns this class instance's raw value.
+                         *
+                         * This is usually only useful if this instance was deserialized from data
+                         * that doesn't match any known member, and you want to know that value. For
+                         * example, if the SDK is on an older version than the API, then the API may
+                         * respond with new members that the SDK is unaware of.
+                         */
+                        @com.fasterxml.jackson.annotation.JsonValue
+                        fun _value(): JsonField<String> = value
+
+                        companion object {
+
+                            val INCLUDES = of("includes")
+
+                            val EXCLUDES = of("excludes")
+
+                            fun of(value: String) = Operator(JsonField.of(value))
+                        }
+
+                        /** An enum containing [Operator]'s known values. */
+                        enum class Known {
+                            INCLUDES,
+                            EXCLUDES,
+                        }
+
+                        /**
+                         * An enum containing [Operator]'s known values, as well as an [_UNKNOWN]
+                         * member.
+                         *
+                         * An instance of [Operator] can contain an unknown value in a couple of
+                         * cases:
+                         * - It was deserialized from data that doesn't match any known member. For
+                         *   example, if the SDK is on an older version than the API, then the API
+                         *   may respond with new members that the SDK is unaware of.
+                         * - It was constructed with an arbitrary value using the [of] method.
+                         */
+                        enum class Value {
+                            INCLUDES,
+                            EXCLUDES,
+                            /**
+                             * An enum member indicating that [Operator] was instantiated with an
+                             * unknown value.
+                             */
+                            _UNKNOWN,
+                        }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value, or
+                         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                         *
+                         * Use the [known] method instead if you're certain the value is always
+                         * known or if you want to throw for the unknown case.
+                         */
+                        fun value(): Value =
+                            when (this) {
+                                INCLUDES -> Value.INCLUDES
+                                EXCLUDES -> Value.EXCLUDES
+                                else -> Value._UNKNOWN
+                            }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value.
+                         *
+                         * Use the [value] method instead if you're uncertain the value is always
+                         * known and don't want to throw for the unknown case.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value is a not a
+                         *   known member.
+                         */
+                        fun known(): Known =
+                            when (this) {
+                                INCLUDES -> Known.INCLUDES
+                                EXCLUDES -> Known.EXCLUDES
+                                else -> throw OrbInvalidDataException("Unknown Operator: $value")
+                            }
+
+                        /**
+                         * Returns this class instance's primitive wire representation.
+                         *
+                         * This differs from the [toString] method because that method is primarily
+                         * for debugging and generally doesn't throw.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value does not
+                         *   have the expected primitive type.
+                         */
+                        fun asString(): String =
+                            _value().asString()
+                                ?: throw OrbInvalidDataException("Value is not a String")
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Operator = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            known()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
+                    }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is Filter && field == other.field && operator == other.operator && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+                    }
+
+                    /* spotless:off */
+                    private val hashCode: Int by lazy { Objects.hash(field, operator, values, additionalProperties) }
+                    /* spotless:on */
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() =
+                        "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
+                }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
                     }
 
-                    return /* spotless:off */ other is AmountDiscount && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is AmountDiscount && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, amountDiscount, appliesToPriceIds, isInvoiceLevel, reason, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, amountDiscount, appliesToPriceIds, filters, isInvoiceLevel, reason, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "AmountDiscount{id=$id, adjustmentType=$adjustmentType, amount=$amount, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, reason=$reason, additionalProperties=$additionalProperties}"
+                    "AmountDiscount{id=$id, adjustmentType=$adjustmentType, amount=$amount, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, filters=$filters, isInvoiceLevel=$isInvoiceLevel, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
             class PercentageDiscount
@@ -8551,6 +9834,7 @@ private constructor(
                 private val adjustmentType: JsonValue,
                 private val amount: JsonField<String>,
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val filters: JsonField<List<Filter>>,
                 private val isInvoiceLevel: JsonField<Boolean>,
                 private val percentageDiscount: JsonField<Double>,
                 private val reason: JsonField<String>,
@@ -8569,6 +9853,9 @@ private constructor(
                     @JsonProperty("applies_to_price_ids")
                     @ExcludeMissing
                     appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("filters")
+                    @ExcludeMissing
+                    filters: JsonField<List<Filter>> = JsonMissing.of(),
                     @JsonProperty("is_invoice_level")
                     @ExcludeMissing
                     isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
@@ -8583,6 +9870,7 @@ private constructor(
                     adjustmentType,
                     amount,
                     appliesToPriceIds,
+                    filters,
                     isInvoiceLevel,
                     percentageDiscount,
                     reason,
@@ -8625,8 +9913,18 @@ private constructor(
                  *   unexpectedly missing or null (e.g. if the server responded with an unexpected
                  *   value).
                  */
+                @Deprecated("deprecated")
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
+
+                /**
+                 * The filters that determine which prices to apply this adjustment to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun filters(): List<Filter> = filters.getRequired("filters")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -8678,9 +9976,20 @@ private constructor(
                  * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
                  * unexpected type.
                  */
+                @Deprecated("deprecated")
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
+
+                /**
+                 * Returns the raw JSON value of [filters].
+                 *
+                 * Unlike [filters], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("filters")
+                @ExcludeMissing
+                fun _filters(): JsonField<List<Filter>> = filters
 
                 /**
                  * Returns the raw JSON value of [isInvoiceLevel].
@@ -8733,6 +10042,7 @@ private constructor(
                      * .id()
                      * .amount()
                      * .appliesToPriceIds()
+                     * .filters()
                      * .isInvoiceLevel()
                      * .percentageDiscount()
                      * .reason()
@@ -8748,6 +10058,7 @@ private constructor(
                     private var adjustmentType: JsonValue = JsonValue.from("percentage_discount")
                     private var amount: JsonField<String>? = null
                     private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+                    private var filters: JsonField<MutableList<Filter>>? = null
                     private var isInvoiceLevel: JsonField<Boolean>? = null
                     private var percentageDiscount: JsonField<Double>? = null
                     private var reason: JsonField<String>? = null
@@ -8759,6 +10070,7 @@ private constructor(
                         amount = percentageDiscount.amount
                         appliesToPriceIds =
                             percentageDiscount.appliesToPriceIds.map { it.toMutableList() }
+                        filters = percentageDiscount.filters.map { it.toMutableList() }
                         isInvoiceLevel = percentageDiscount.isInvoiceLevel
                         this.percentageDiscount = percentageDiscount.percentageDiscount
                         reason = percentageDiscount.reason
@@ -8806,6 +10118,7 @@ private constructor(
                     fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                     /** The price IDs that this adjustment applies to. */
+                    @Deprecated("deprecated")
                     fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                         appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
@@ -8816,6 +10129,7 @@ private constructor(
                      * `List<String>` value instead. This method is primarily for setting the field
                      * to an undocumented or not yet supported value.
                      */
+                    @Deprecated("deprecated")
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                     }
@@ -8825,10 +10139,37 @@ private constructor(
                      *
                      * @throws IllegalStateException if the field was previously set to a non-list.
                      */
+                    @Deprecated("deprecated")
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
                             (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                                 checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
+                            }
+                    }
+
+                    /** The filters that determine which prices to apply this adjustment to. */
+                    fun filters(filters: List<Filter>) = filters(JsonField.of(filters))
+
+                    /**
+                     * Sets [Builder.filters] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.filters] with a well-typed `List<Filter>`
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun filters(filters: JsonField<List<Filter>>) = apply {
+                        this.filters = filters.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [Filter] to [filters].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addFilter(filter: Filter) = apply {
+                        filters =
+                            (filters ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("filters", it).add(filter)
                             }
                     }
 
@@ -8912,6 +10253,7 @@ private constructor(
                      * .id()
                      * .amount()
                      * .appliesToPriceIds()
+                     * .filters()
                      * .isInvoiceLevel()
                      * .percentageDiscount()
                      * .reason()
@@ -8927,6 +10269,7 @@ private constructor(
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                                 it.toImmutable()
                             },
+                            checkRequired("filters", filters).map { it.toImmutable() },
                             checkRequired("isInvoiceLevel", isInvoiceLevel),
                             checkRequired("percentageDiscount", percentageDiscount),
                             checkRequired("reason", reason),
@@ -8951,6 +10294,7 @@ private constructor(
                     }
                     amount()
                     appliesToPriceIds()
+                    filters().forEach { it.validate() }
                     isInvoiceLevel()
                     percentageDiscount()
                     reason()
@@ -8978,26 +10322,581 @@ private constructor(
                         } +
                         (if (amount.asKnown() == null) 0 else 1) +
                         (appliesToPriceIds.asKnown()?.size ?: 0) +
+                        (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                         (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
                         (if (percentageDiscount.asKnown() == null) 0 else 1) +
                         (if (reason.asKnown() == null) 0 else 1)
+
+                class Filter
+                private constructor(
+                    private val field: JsonField<Field>,
+                    private val operator: JsonField<Operator>,
+                    private val values: JsonField<List<String>>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
+                ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("field")
+                        @ExcludeMissing
+                        field: JsonField<Field> = JsonMissing.of(),
+                        @JsonProperty("operator")
+                        @ExcludeMissing
+                        operator: JsonField<Operator> = JsonMissing.of(),
+                        @JsonProperty("values")
+                        @ExcludeMissing
+                        values: JsonField<List<String>> = JsonMissing.of(),
+                    ) : this(field, operator, values, mutableMapOf())
+
+                    /**
+                     * The property of the price to filter on.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun field(): Field = field.getRequired("field")
+
+                    /**
+                     * Should prices that match the filter be included or excluded.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun operator(): Operator = operator.getRequired("operator")
+
+                    /**
+                     * The IDs or values that match this filter.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun values(): List<String> = values.getRequired("values")
+
+                    /**
+                     * Returns the raw JSON value of [field].
+                     *
+                     * Unlike [field], this method doesn't throw if the JSON field has an unexpected
+                     * type.
+                     */
+                    @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<Field> = field
+
+                    /**
+                     * Returns the raw JSON value of [operator].
+                     *
+                     * Unlike [operator], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("operator")
+                    @ExcludeMissing
+                    fun _operator(): JsonField<Operator> = operator
+
+                    /**
+                     * Returns the raw JSON value of [values].
+                     *
+                     * Unlike [values], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("values")
+                    @ExcludeMissing
+                    fun _values(): JsonField<List<String>> = values
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /**
+                         * Returns a mutable builder for constructing an instance of [Filter].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .field()
+                         * .operator()
+                         * .values()
+                         * ```
+                         */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [Filter]. */
+                    class Builder internal constructor() {
+
+                        private var field: JsonField<Field>? = null
+                        private var operator: JsonField<Operator>? = null
+                        private var values: JsonField<MutableList<String>>? = null
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(filter: Filter) = apply {
+                            field = filter.field
+                            operator = filter.operator
+                            values = filter.values.map { it.toMutableList() }
+                            additionalProperties = filter.additionalProperties.toMutableMap()
+                        }
+
+                        /** The property of the price to filter on. */
+                        fun field(field: Field) = field(JsonField.of(field))
+
+                        /**
+                         * Sets [Builder.field] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.field] with a well-typed [Field] value
+                         * instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun field(field: JsonField<Field>) = apply { this.field = field }
+
+                        /** Should prices that match the filter be included or excluded. */
+                        fun operator(operator: Operator) = operator(JsonField.of(operator))
+
+                        /**
+                         * Sets [Builder.operator] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.operator] with a well-typed [Operator]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun operator(operator: JsonField<Operator>) = apply {
+                            this.operator = operator
+                        }
+
+                        /** The IDs or values that match this filter. */
+                        fun values(values: List<String>) = values(JsonField.of(values))
+
+                        /**
+                         * Sets [Builder.values] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.values] with a well-typed `List<String>`
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun values(values: JsonField<List<String>>) = apply {
+                            this.values = values.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [String] to [values].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addValue(value: String) = apply {
+                            values =
+                                (values ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("values", it).add(value)
+                                }
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [Filter].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .field()
+                         * .operator()
+                         * .values()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
+                        fun build(): Filter =
+                            Filter(
+                                checkRequired("field", field),
+                                checkRequired("operator", operator),
+                                checkRequired("values", values).map { it.toImmutable() },
+                                additionalProperties.toMutableMap(),
+                            )
+                    }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Filter = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        field().validate()
+                        operator().validate()
+                        values()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (field.asKnown()?.validity() ?: 0) +
+                            (operator.asKnown()?.validity() ?: 0) +
+                            (values.asKnown()?.size ?: 0)
+
+                    /** The property of the price to filter on. */
+                    class Field
+                    @JsonCreator
+                    private constructor(private val value: JsonField<String>) : Enum {
+
+                        /**
+                         * Returns this class instance's raw value.
+                         *
+                         * This is usually only useful if this instance was deserialized from data
+                         * that doesn't match any known member, and you want to know that value. For
+                         * example, if the SDK is on an older version than the API, then the API may
+                         * respond with new members that the SDK is unaware of.
+                         */
+                        @com.fasterxml.jackson.annotation.JsonValue
+                        fun _value(): JsonField<String> = value
+
+                        companion object {
+
+                            val PRICE_ID = of("price_id")
+
+                            val ITEM_ID = of("item_id")
+
+                            val PRICE_TYPE = of("price_type")
+
+                            val CURRENCY = of("currency")
+
+                            val PRICING_UNIT_ID = of("pricing_unit_id")
+
+                            fun of(value: String) = Field(JsonField.of(value))
+                        }
+
+                        /** An enum containing [Field]'s known values. */
+                        enum class Known {
+                            PRICE_ID,
+                            ITEM_ID,
+                            PRICE_TYPE,
+                            CURRENCY,
+                            PRICING_UNIT_ID,
+                        }
+
+                        /**
+                         * An enum containing [Field]'s known values, as well as an [_UNKNOWN]
+                         * member.
+                         *
+                         * An instance of [Field] can contain an unknown value in a couple of cases:
+                         * - It was deserialized from data that doesn't match any known member. For
+                         *   example, if the SDK is on an older version than the API, then the API
+                         *   may respond with new members that the SDK is unaware of.
+                         * - It was constructed with an arbitrary value using the [of] method.
+                         */
+                        enum class Value {
+                            PRICE_ID,
+                            ITEM_ID,
+                            PRICE_TYPE,
+                            CURRENCY,
+                            PRICING_UNIT_ID,
+                            /**
+                             * An enum member indicating that [Field] was instantiated with an
+                             * unknown value.
+                             */
+                            _UNKNOWN,
+                        }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value, or
+                         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                         *
+                         * Use the [known] method instead if you're certain the value is always
+                         * known or if you want to throw for the unknown case.
+                         */
+                        fun value(): Value =
+                            when (this) {
+                                PRICE_ID -> Value.PRICE_ID
+                                ITEM_ID -> Value.ITEM_ID
+                                PRICE_TYPE -> Value.PRICE_TYPE
+                                CURRENCY -> Value.CURRENCY
+                                PRICING_UNIT_ID -> Value.PRICING_UNIT_ID
+                                else -> Value._UNKNOWN
+                            }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value.
+                         *
+                         * Use the [value] method instead if you're uncertain the value is always
+                         * known and don't want to throw for the unknown case.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value is a not a
+                         *   known member.
+                         */
+                        fun known(): Known =
+                            when (this) {
+                                PRICE_ID -> Known.PRICE_ID
+                                ITEM_ID -> Known.ITEM_ID
+                                PRICE_TYPE -> Known.PRICE_TYPE
+                                CURRENCY -> Known.CURRENCY
+                                PRICING_UNIT_ID -> Known.PRICING_UNIT_ID
+                                else -> throw OrbInvalidDataException("Unknown Field: $value")
+                            }
+
+                        /**
+                         * Returns this class instance's primitive wire representation.
+                         *
+                         * This differs from the [toString] method because that method is primarily
+                         * for debugging and generally doesn't throw.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value does not
+                         *   have the expected primitive type.
+                         */
+                        fun asString(): String =
+                            _value().asString()
+                                ?: throw OrbInvalidDataException("Value is not a String")
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Field = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            known()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Field && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
+                    }
+
+                    /** Should prices that match the filter be included or excluded. */
+                    class Operator
+                    @JsonCreator
+                    private constructor(private val value: JsonField<String>) : Enum {
+
+                        /**
+                         * Returns this class instance's raw value.
+                         *
+                         * This is usually only useful if this instance was deserialized from data
+                         * that doesn't match any known member, and you want to know that value. For
+                         * example, if the SDK is on an older version than the API, then the API may
+                         * respond with new members that the SDK is unaware of.
+                         */
+                        @com.fasterxml.jackson.annotation.JsonValue
+                        fun _value(): JsonField<String> = value
+
+                        companion object {
+
+                            val INCLUDES = of("includes")
+
+                            val EXCLUDES = of("excludes")
+
+                            fun of(value: String) = Operator(JsonField.of(value))
+                        }
+
+                        /** An enum containing [Operator]'s known values. */
+                        enum class Known {
+                            INCLUDES,
+                            EXCLUDES,
+                        }
+
+                        /**
+                         * An enum containing [Operator]'s known values, as well as an [_UNKNOWN]
+                         * member.
+                         *
+                         * An instance of [Operator] can contain an unknown value in a couple of
+                         * cases:
+                         * - It was deserialized from data that doesn't match any known member. For
+                         *   example, if the SDK is on an older version than the API, then the API
+                         *   may respond with new members that the SDK is unaware of.
+                         * - It was constructed with an arbitrary value using the [of] method.
+                         */
+                        enum class Value {
+                            INCLUDES,
+                            EXCLUDES,
+                            /**
+                             * An enum member indicating that [Operator] was instantiated with an
+                             * unknown value.
+                             */
+                            _UNKNOWN,
+                        }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value, or
+                         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                         *
+                         * Use the [known] method instead if you're certain the value is always
+                         * known or if you want to throw for the unknown case.
+                         */
+                        fun value(): Value =
+                            when (this) {
+                                INCLUDES -> Value.INCLUDES
+                                EXCLUDES -> Value.EXCLUDES
+                                else -> Value._UNKNOWN
+                            }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value.
+                         *
+                         * Use the [value] method instead if you're uncertain the value is always
+                         * known and don't want to throw for the unknown case.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value is a not a
+                         *   known member.
+                         */
+                        fun known(): Known =
+                            when (this) {
+                                INCLUDES -> Known.INCLUDES
+                                EXCLUDES -> Known.EXCLUDES
+                                else -> throw OrbInvalidDataException("Unknown Operator: $value")
+                            }
+
+                        /**
+                         * Returns this class instance's primitive wire representation.
+                         *
+                         * This differs from the [toString] method because that method is primarily
+                         * for debugging and generally doesn't throw.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value does not
+                         *   have the expected primitive type.
+                         */
+                        fun asString(): String =
+                            _value().asString()
+                                ?: throw OrbInvalidDataException("Value is not a String")
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Operator = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            known()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
+                    }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is Filter && field == other.field && operator == other.operator && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+                    }
+
+                    /* spotless:off */
+                    private val hashCode: Int by lazy { Objects.hash(field, operator, values, additionalProperties) }
+                    /* spotless:on */
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() =
+                        "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
+                }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
                     }
 
-                    return /* spotless:off */ other is PercentageDiscount && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && percentageDiscount == other.percentageDiscount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is PercentageDiscount && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && percentageDiscount == other.percentageDiscount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, isInvoiceLevel, percentageDiscount, reason, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, filters, isInvoiceLevel, percentageDiscount, reason, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "PercentageDiscount{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, reason=$reason, additionalProperties=$additionalProperties}"
+                    "PercentageDiscount{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, filters=$filters, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
             class Minimum
@@ -9006,6 +10905,7 @@ private constructor(
                 private val adjustmentType: JsonValue,
                 private val amount: JsonField<String>,
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val filters: JsonField<List<Filter>>,
                 private val isInvoiceLevel: JsonField<Boolean>,
                 private val itemId: JsonField<String>,
                 private val minimumAmount: JsonField<String>,
@@ -9025,6 +10925,9 @@ private constructor(
                     @JsonProperty("applies_to_price_ids")
                     @ExcludeMissing
                     appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("filters")
+                    @ExcludeMissing
+                    filters: JsonField<List<Filter>> = JsonMissing.of(),
                     @JsonProperty("is_invoice_level")
                     @ExcludeMissing
                     isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
@@ -9042,6 +10945,7 @@ private constructor(
                     adjustmentType,
                     amount,
                     appliesToPriceIds,
+                    filters,
                     isInvoiceLevel,
                     itemId,
                     minimumAmount,
@@ -9085,8 +10989,18 @@ private constructor(
                  *   unexpectedly missing or null (e.g. if the server responded with an unexpected
                  *   value).
                  */
+                @Deprecated("deprecated")
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
+
+                /**
+                 * The filters that determine which prices to apply this adjustment to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun filters(): List<Filter> = filters.getRequired("filters")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -9146,9 +11060,20 @@ private constructor(
                  * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
                  * unexpected type.
                  */
+                @Deprecated("deprecated")
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
+
+                /**
+                 * Returns the raw JSON value of [filters].
+                 *
+                 * Unlike [filters], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("filters")
+                @ExcludeMissing
+                fun _filters(): JsonField<List<Filter>> = filters
 
                 /**
                  * Returns the raw JSON value of [isInvoiceLevel].
@@ -9208,6 +11133,7 @@ private constructor(
                      * .id()
                      * .amount()
                      * .appliesToPriceIds()
+                     * .filters()
                      * .isInvoiceLevel()
                      * .itemId()
                      * .minimumAmount()
@@ -9224,6 +11150,7 @@ private constructor(
                     private var adjustmentType: JsonValue = JsonValue.from("minimum")
                     private var amount: JsonField<String>? = null
                     private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+                    private var filters: JsonField<MutableList<Filter>>? = null
                     private var isInvoiceLevel: JsonField<Boolean>? = null
                     private var itemId: JsonField<String>? = null
                     private var minimumAmount: JsonField<String>? = null
@@ -9235,6 +11162,7 @@ private constructor(
                         adjustmentType = minimum.adjustmentType
                         amount = minimum.amount
                         appliesToPriceIds = minimum.appliesToPriceIds.map { it.toMutableList() }
+                        filters = minimum.filters.map { it.toMutableList() }
                         isInvoiceLevel = minimum.isInvoiceLevel
                         itemId = minimum.itemId
                         minimumAmount = minimum.minimumAmount
@@ -9282,6 +11210,7 @@ private constructor(
                     fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                     /** The price IDs that this adjustment applies to. */
+                    @Deprecated("deprecated")
                     fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                         appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
@@ -9292,6 +11221,7 @@ private constructor(
                      * `List<String>` value instead. This method is primarily for setting the field
                      * to an undocumented or not yet supported value.
                      */
+                    @Deprecated("deprecated")
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                     }
@@ -9301,10 +11231,37 @@ private constructor(
                      *
                      * @throws IllegalStateException if the field was previously set to a non-list.
                      */
+                    @Deprecated("deprecated")
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
                             (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                                 checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
+                            }
+                    }
+
+                    /** The filters that determine which prices to apply this adjustment to. */
+                    fun filters(filters: List<Filter>) = filters(JsonField.of(filters))
+
+                    /**
+                     * Sets [Builder.filters] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.filters] with a well-typed `List<Filter>`
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun filters(filters: JsonField<List<Filter>>) = apply {
+                        this.filters = filters.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [Filter] to [filters].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addFilter(filter: Filter) = apply {
+                        filters =
+                            (filters ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("filters", it).add(filter)
                             }
                     }
 
@@ -9400,6 +11357,7 @@ private constructor(
                      * .id()
                      * .amount()
                      * .appliesToPriceIds()
+                     * .filters()
                      * .isInvoiceLevel()
                      * .itemId()
                      * .minimumAmount()
@@ -9416,6 +11374,7 @@ private constructor(
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                                 it.toImmutable()
                             },
+                            checkRequired("filters", filters).map { it.toImmutable() },
                             checkRequired("isInvoiceLevel", isInvoiceLevel),
                             checkRequired("itemId", itemId),
                             checkRequired("minimumAmount", minimumAmount),
@@ -9441,6 +11400,7 @@ private constructor(
                     }
                     amount()
                     appliesToPriceIds()
+                    filters().forEach { it.validate() }
                     isInvoiceLevel()
                     itemId()
                     minimumAmount()
@@ -9467,27 +11427,582 @@ private constructor(
                         adjustmentType.let { if (it == JsonValue.from("minimum")) 1 else 0 } +
                         (if (amount.asKnown() == null) 0 else 1) +
                         (appliesToPriceIds.asKnown()?.size ?: 0) +
+                        (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                         (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
                         (if (itemId.asKnown() == null) 0 else 1) +
                         (if (minimumAmount.asKnown() == null) 0 else 1) +
                         (if (reason.asKnown() == null) 0 else 1)
+
+                class Filter
+                private constructor(
+                    private val field: JsonField<Field>,
+                    private val operator: JsonField<Operator>,
+                    private val values: JsonField<List<String>>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
+                ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("field")
+                        @ExcludeMissing
+                        field: JsonField<Field> = JsonMissing.of(),
+                        @JsonProperty("operator")
+                        @ExcludeMissing
+                        operator: JsonField<Operator> = JsonMissing.of(),
+                        @JsonProperty("values")
+                        @ExcludeMissing
+                        values: JsonField<List<String>> = JsonMissing.of(),
+                    ) : this(field, operator, values, mutableMapOf())
+
+                    /**
+                     * The property of the price to filter on.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun field(): Field = field.getRequired("field")
+
+                    /**
+                     * Should prices that match the filter be included or excluded.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun operator(): Operator = operator.getRequired("operator")
+
+                    /**
+                     * The IDs or values that match this filter.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun values(): List<String> = values.getRequired("values")
+
+                    /**
+                     * Returns the raw JSON value of [field].
+                     *
+                     * Unlike [field], this method doesn't throw if the JSON field has an unexpected
+                     * type.
+                     */
+                    @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<Field> = field
+
+                    /**
+                     * Returns the raw JSON value of [operator].
+                     *
+                     * Unlike [operator], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("operator")
+                    @ExcludeMissing
+                    fun _operator(): JsonField<Operator> = operator
+
+                    /**
+                     * Returns the raw JSON value of [values].
+                     *
+                     * Unlike [values], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("values")
+                    @ExcludeMissing
+                    fun _values(): JsonField<List<String>> = values
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /**
+                         * Returns a mutable builder for constructing an instance of [Filter].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .field()
+                         * .operator()
+                         * .values()
+                         * ```
+                         */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [Filter]. */
+                    class Builder internal constructor() {
+
+                        private var field: JsonField<Field>? = null
+                        private var operator: JsonField<Operator>? = null
+                        private var values: JsonField<MutableList<String>>? = null
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(filter: Filter) = apply {
+                            field = filter.field
+                            operator = filter.operator
+                            values = filter.values.map { it.toMutableList() }
+                            additionalProperties = filter.additionalProperties.toMutableMap()
+                        }
+
+                        /** The property of the price to filter on. */
+                        fun field(field: Field) = field(JsonField.of(field))
+
+                        /**
+                         * Sets [Builder.field] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.field] with a well-typed [Field] value
+                         * instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun field(field: JsonField<Field>) = apply { this.field = field }
+
+                        /** Should prices that match the filter be included or excluded. */
+                        fun operator(operator: Operator) = operator(JsonField.of(operator))
+
+                        /**
+                         * Sets [Builder.operator] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.operator] with a well-typed [Operator]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun operator(operator: JsonField<Operator>) = apply {
+                            this.operator = operator
+                        }
+
+                        /** The IDs or values that match this filter. */
+                        fun values(values: List<String>) = values(JsonField.of(values))
+
+                        /**
+                         * Sets [Builder.values] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.values] with a well-typed `List<String>`
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun values(values: JsonField<List<String>>) = apply {
+                            this.values = values.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [String] to [values].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addValue(value: String) = apply {
+                            values =
+                                (values ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("values", it).add(value)
+                                }
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [Filter].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .field()
+                         * .operator()
+                         * .values()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
+                        fun build(): Filter =
+                            Filter(
+                                checkRequired("field", field),
+                                checkRequired("operator", operator),
+                                checkRequired("values", values).map { it.toImmutable() },
+                                additionalProperties.toMutableMap(),
+                            )
+                    }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Filter = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        field().validate()
+                        operator().validate()
+                        values()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (field.asKnown()?.validity() ?: 0) +
+                            (operator.asKnown()?.validity() ?: 0) +
+                            (values.asKnown()?.size ?: 0)
+
+                    /** The property of the price to filter on. */
+                    class Field
+                    @JsonCreator
+                    private constructor(private val value: JsonField<String>) : Enum {
+
+                        /**
+                         * Returns this class instance's raw value.
+                         *
+                         * This is usually only useful if this instance was deserialized from data
+                         * that doesn't match any known member, and you want to know that value. For
+                         * example, if the SDK is on an older version than the API, then the API may
+                         * respond with new members that the SDK is unaware of.
+                         */
+                        @com.fasterxml.jackson.annotation.JsonValue
+                        fun _value(): JsonField<String> = value
+
+                        companion object {
+
+                            val PRICE_ID = of("price_id")
+
+                            val ITEM_ID = of("item_id")
+
+                            val PRICE_TYPE = of("price_type")
+
+                            val CURRENCY = of("currency")
+
+                            val PRICING_UNIT_ID = of("pricing_unit_id")
+
+                            fun of(value: String) = Field(JsonField.of(value))
+                        }
+
+                        /** An enum containing [Field]'s known values. */
+                        enum class Known {
+                            PRICE_ID,
+                            ITEM_ID,
+                            PRICE_TYPE,
+                            CURRENCY,
+                            PRICING_UNIT_ID,
+                        }
+
+                        /**
+                         * An enum containing [Field]'s known values, as well as an [_UNKNOWN]
+                         * member.
+                         *
+                         * An instance of [Field] can contain an unknown value in a couple of cases:
+                         * - It was deserialized from data that doesn't match any known member. For
+                         *   example, if the SDK is on an older version than the API, then the API
+                         *   may respond with new members that the SDK is unaware of.
+                         * - It was constructed with an arbitrary value using the [of] method.
+                         */
+                        enum class Value {
+                            PRICE_ID,
+                            ITEM_ID,
+                            PRICE_TYPE,
+                            CURRENCY,
+                            PRICING_UNIT_ID,
+                            /**
+                             * An enum member indicating that [Field] was instantiated with an
+                             * unknown value.
+                             */
+                            _UNKNOWN,
+                        }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value, or
+                         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                         *
+                         * Use the [known] method instead if you're certain the value is always
+                         * known or if you want to throw for the unknown case.
+                         */
+                        fun value(): Value =
+                            when (this) {
+                                PRICE_ID -> Value.PRICE_ID
+                                ITEM_ID -> Value.ITEM_ID
+                                PRICE_TYPE -> Value.PRICE_TYPE
+                                CURRENCY -> Value.CURRENCY
+                                PRICING_UNIT_ID -> Value.PRICING_UNIT_ID
+                                else -> Value._UNKNOWN
+                            }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value.
+                         *
+                         * Use the [value] method instead if you're uncertain the value is always
+                         * known and don't want to throw for the unknown case.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value is a not a
+                         *   known member.
+                         */
+                        fun known(): Known =
+                            when (this) {
+                                PRICE_ID -> Known.PRICE_ID
+                                ITEM_ID -> Known.ITEM_ID
+                                PRICE_TYPE -> Known.PRICE_TYPE
+                                CURRENCY -> Known.CURRENCY
+                                PRICING_UNIT_ID -> Known.PRICING_UNIT_ID
+                                else -> throw OrbInvalidDataException("Unknown Field: $value")
+                            }
+
+                        /**
+                         * Returns this class instance's primitive wire representation.
+                         *
+                         * This differs from the [toString] method because that method is primarily
+                         * for debugging and generally doesn't throw.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value does not
+                         *   have the expected primitive type.
+                         */
+                        fun asString(): String =
+                            _value().asString()
+                                ?: throw OrbInvalidDataException("Value is not a String")
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Field = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            known()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Field && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
+                    }
+
+                    /** Should prices that match the filter be included or excluded. */
+                    class Operator
+                    @JsonCreator
+                    private constructor(private val value: JsonField<String>) : Enum {
+
+                        /**
+                         * Returns this class instance's raw value.
+                         *
+                         * This is usually only useful if this instance was deserialized from data
+                         * that doesn't match any known member, and you want to know that value. For
+                         * example, if the SDK is on an older version than the API, then the API may
+                         * respond with new members that the SDK is unaware of.
+                         */
+                        @com.fasterxml.jackson.annotation.JsonValue
+                        fun _value(): JsonField<String> = value
+
+                        companion object {
+
+                            val INCLUDES = of("includes")
+
+                            val EXCLUDES = of("excludes")
+
+                            fun of(value: String) = Operator(JsonField.of(value))
+                        }
+
+                        /** An enum containing [Operator]'s known values. */
+                        enum class Known {
+                            INCLUDES,
+                            EXCLUDES,
+                        }
+
+                        /**
+                         * An enum containing [Operator]'s known values, as well as an [_UNKNOWN]
+                         * member.
+                         *
+                         * An instance of [Operator] can contain an unknown value in a couple of
+                         * cases:
+                         * - It was deserialized from data that doesn't match any known member. For
+                         *   example, if the SDK is on an older version than the API, then the API
+                         *   may respond with new members that the SDK is unaware of.
+                         * - It was constructed with an arbitrary value using the [of] method.
+                         */
+                        enum class Value {
+                            INCLUDES,
+                            EXCLUDES,
+                            /**
+                             * An enum member indicating that [Operator] was instantiated with an
+                             * unknown value.
+                             */
+                            _UNKNOWN,
+                        }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value, or
+                         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                         *
+                         * Use the [known] method instead if you're certain the value is always
+                         * known or if you want to throw for the unknown case.
+                         */
+                        fun value(): Value =
+                            when (this) {
+                                INCLUDES -> Value.INCLUDES
+                                EXCLUDES -> Value.EXCLUDES
+                                else -> Value._UNKNOWN
+                            }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value.
+                         *
+                         * Use the [value] method instead if you're uncertain the value is always
+                         * known and don't want to throw for the unknown case.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value is a not a
+                         *   known member.
+                         */
+                        fun known(): Known =
+                            when (this) {
+                                INCLUDES -> Known.INCLUDES
+                                EXCLUDES -> Known.EXCLUDES
+                                else -> throw OrbInvalidDataException("Unknown Operator: $value")
+                            }
+
+                        /**
+                         * Returns this class instance's primitive wire representation.
+                         *
+                         * This differs from the [toString] method because that method is primarily
+                         * for debugging and generally doesn't throw.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value does not
+                         *   have the expected primitive type.
+                         */
+                        fun asString(): String =
+                            _value().asString()
+                                ?: throw OrbInvalidDataException("Value is not a String")
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Operator = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            known()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
+                    }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is Filter && field == other.field && operator == other.operator && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+                    }
+
+                    /* spotless:off */
+                    private val hashCode: Int by lazy { Objects.hash(field, operator, values, additionalProperties) }
+                    /* spotless:on */
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() =
+                        "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
+                }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
                     }
 
-                    return /* spotless:off */ other is Minimum && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Minimum && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, isInvoiceLevel, itemId, minimumAmount, reason, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, filters, isInvoiceLevel, itemId, minimumAmount, reason, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "Minimum{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, reason=$reason, additionalProperties=$additionalProperties}"
+                    "Minimum{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, filters=$filters, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
             class Maximum
@@ -9496,6 +12011,7 @@ private constructor(
                 private val adjustmentType: JsonValue,
                 private val amount: JsonField<String>,
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val filters: JsonField<List<Filter>>,
                 private val isInvoiceLevel: JsonField<Boolean>,
                 private val maximumAmount: JsonField<String>,
                 private val reason: JsonField<String>,
@@ -9514,6 +12030,9 @@ private constructor(
                     @JsonProperty("applies_to_price_ids")
                     @ExcludeMissing
                     appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("filters")
+                    @ExcludeMissing
+                    filters: JsonField<List<Filter>> = JsonMissing.of(),
                     @JsonProperty("is_invoice_level")
                     @ExcludeMissing
                     isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
@@ -9528,6 +12047,7 @@ private constructor(
                     adjustmentType,
                     amount,
                     appliesToPriceIds,
+                    filters,
                     isInvoiceLevel,
                     maximumAmount,
                     reason,
@@ -9570,8 +12090,18 @@ private constructor(
                  *   unexpectedly missing or null (e.g. if the server responded with an unexpected
                  *   value).
                  */
+                @Deprecated("deprecated")
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
+
+                /**
+                 * The filters that determine which prices to apply this adjustment to.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun filters(): List<Filter> = filters.getRequired("filters")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -9622,9 +12152,20 @@ private constructor(
                  * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
                  * unexpected type.
                  */
+                @Deprecated("deprecated")
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
+
+                /**
+                 * Returns the raw JSON value of [filters].
+                 *
+                 * Unlike [filters], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("filters")
+                @ExcludeMissing
+                fun _filters(): JsonField<List<Filter>> = filters
 
                 /**
                  * Returns the raw JSON value of [isInvoiceLevel].
@@ -9676,6 +12217,7 @@ private constructor(
                      * .id()
                      * .amount()
                      * .appliesToPriceIds()
+                     * .filters()
                      * .isInvoiceLevel()
                      * .maximumAmount()
                      * .reason()
@@ -9691,6 +12233,7 @@ private constructor(
                     private var adjustmentType: JsonValue = JsonValue.from("maximum")
                     private var amount: JsonField<String>? = null
                     private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+                    private var filters: JsonField<MutableList<Filter>>? = null
                     private var isInvoiceLevel: JsonField<Boolean>? = null
                     private var maximumAmount: JsonField<String>? = null
                     private var reason: JsonField<String>? = null
@@ -9701,6 +12244,7 @@ private constructor(
                         adjustmentType = maximum.adjustmentType
                         amount = maximum.amount
                         appliesToPriceIds = maximum.appliesToPriceIds.map { it.toMutableList() }
+                        filters = maximum.filters.map { it.toMutableList() }
                         isInvoiceLevel = maximum.isInvoiceLevel
                         maximumAmount = maximum.maximumAmount
                         reason = maximum.reason
@@ -9747,6 +12291,7 @@ private constructor(
                     fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                     /** The price IDs that this adjustment applies to. */
+                    @Deprecated("deprecated")
                     fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                         appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
@@ -9757,6 +12302,7 @@ private constructor(
                      * `List<String>` value instead. This method is primarily for setting the field
                      * to an undocumented or not yet supported value.
                      */
+                    @Deprecated("deprecated")
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                     }
@@ -9766,10 +12312,37 @@ private constructor(
                      *
                      * @throws IllegalStateException if the field was previously set to a non-list.
                      */
+                    @Deprecated("deprecated")
                     fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                         appliesToPriceIds =
                             (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                                 checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
+                            }
+                    }
+
+                    /** The filters that determine which prices to apply this adjustment to. */
+                    fun filters(filters: List<Filter>) = filters(JsonField.of(filters))
+
+                    /**
+                     * Sets [Builder.filters] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.filters] with a well-typed `List<Filter>`
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun filters(filters: JsonField<List<Filter>>) = apply {
+                        this.filters = filters.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [Filter] to [filters].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addFilter(filter: Filter) = apply {
+                        filters =
+                            (filters ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("filters", it).add(filter)
                             }
                     }
 
@@ -9853,6 +12426,7 @@ private constructor(
                      * .id()
                      * .amount()
                      * .appliesToPriceIds()
+                     * .filters()
                      * .isInvoiceLevel()
                      * .maximumAmount()
                      * .reason()
@@ -9868,6 +12442,7 @@ private constructor(
                             checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                                 it.toImmutable()
                             },
+                            checkRequired("filters", filters).map { it.toImmutable() },
                             checkRequired("isInvoiceLevel", isInvoiceLevel),
                             checkRequired("maximumAmount", maximumAmount),
                             checkRequired("reason", reason),
@@ -9892,6 +12467,7 @@ private constructor(
                     }
                     amount()
                     appliesToPriceIds()
+                    filters().forEach { it.validate() }
                     isInvoiceLevel()
                     maximumAmount()
                     reason()
@@ -9917,26 +12493,581 @@ private constructor(
                         adjustmentType.let { if (it == JsonValue.from("maximum")) 1 else 0 } +
                         (if (amount.asKnown() == null) 0 else 1) +
                         (appliesToPriceIds.asKnown()?.size ?: 0) +
+                        (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                         (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
                         (if (maximumAmount.asKnown() == null) 0 else 1) +
                         (if (reason.asKnown() == null) 0 else 1)
+
+                class Filter
+                private constructor(
+                    private val field: JsonField<Field>,
+                    private val operator: JsonField<Operator>,
+                    private val values: JsonField<List<String>>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
+                ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("field")
+                        @ExcludeMissing
+                        field: JsonField<Field> = JsonMissing.of(),
+                        @JsonProperty("operator")
+                        @ExcludeMissing
+                        operator: JsonField<Operator> = JsonMissing.of(),
+                        @JsonProperty("values")
+                        @ExcludeMissing
+                        values: JsonField<List<String>> = JsonMissing.of(),
+                    ) : this(field, operator, values, mutableMapOf())
+
+                    /**
+                     * The property of the price to filter on.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun field(): Field = field.getRequired("field")
+
+                    /**
+                     * Should prices that match the filter be included or excluded.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun operator(): Operator = operator.getRequired("operator")
+
+                    /**
+                     * The IDs or values that match this filter.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun values(): List<String> = values.getRequired("values")
+
+                    /**
+                     * Returns the raw JSON value of [field].
+                     *
+                     * Unlike [field], this method doesn't throw if the JSON field has an unexpected
+                     * type.
+                     */
+                    @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<Field> = field
+
+                    /**
+                     * Returns the raw JSON value of [operator].
+                     *
+                     * Unlike [operator], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("operator")
+                    @ExcludeMissing
+                    fun _operator(): JsonField<Operator> = operator
+
+                    /**
+                     * Returns the raw JSON value of [values].
+                     *
+                     * Unlike [values], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("values")
+                    @ExcludeMissing
+                    fun _values(): JsonField<List<String>> = values
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /**
+                         * Returns a mutable builder for constructing an instance of [Filter].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .field()
+                         * .operator()
+                         * .values()
+                         * ```
+                         */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [Filter]. */
+                    class Builder internal constructor() {
+
+                        private var field: JsonField<Field>? = null
+                        private var operator: JsonField<Operator>? = null
+                        private var values: JsonField<MutableList<String>>? = null
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(filter: Filter) = apply {
+                            field = filter.field
+                            operator = filter.operator
+                            values = filter.values.map { it.toMutableList() }
+                            additionalProperties = filter.additionalProperties.toMutableMap()
+                        }
+
+                        /** The property of the price to filter on. */
+                        fun field(field: Field) = field(JsonField.of(field))
+
+                        /**
+                         * Sets [Builder.field] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.field] with a well-typed [Field] value
+                         * instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun field(field: JsonField<Field>) = apply { this.field = field }
+
+                        /** Should prices that match the filter be included or excluded. */
+                        fun operator(operator: Operator) = operator(JsonField.of(operator))
+
+                        /**
+                         * Sets [Builder.operator] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.operator] with a well-typed [Operator]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun operator(operator: JsonField<Operator>) = apply {
+                            this.operator = operator
+                        }
+
+                        /** The IDs or values that match this filter. */
+                        fun values(values: List<String>) = values(JsonField.of(values))
+
+                        /**
+                         * Sets [Builder.values] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.values] with a well-typed `List<String>`
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun values(values: JsonField<List<String>>) = apply {
+                            this.values = values.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [String] to [values].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addValue(value: String) = apply {
+                            values =
+                                (values ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("values", it).add(value)
+                                }
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [Filter].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .field()
+                         * .operator()
+                         * .values()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
+                        fun build(): Filter =
+                            Filter(
+                                checkRequired("field", field),
+                                checkRequired("operator", operator),
+                                checkRequired("values", values).map { it.toImmutable() },
+                                additionalProperties.toMutableMap(),
+                            )
+                    }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Filter = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        field().validate()
+                        operator().validate()
+                        values()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (field.asKnown()?.validity() ?: 0) +
+                            (operator.asKnown()?.validity() ?: 0) +
+                            (values.asKnown()?.size ?: 0)
+
+                    /** The property of the price to filter on. */
+                    class Field
+                    @JsonCreator
+                    private constructor(private val value: JsonField<String>) : Enum {
+
+                        /**
+                         * Returns this class instance's raw value.
+                         *
+                         * This is usually only useful if this instance was deserialized from data
+                         * that doesn't match any known member, and you want to know that value. For
+                         * example, if the SDK is on an older version than the API, then the API may
+                         * respond with new members that the SDK is unaware of.
+                         */
+                        @com.fasterxml.jackson.annotation.JsonValue
+                        fun _value(): JsonField<String> = value
+
+                        companion object {
+
+                            val PRICE_ID = of("price_id")
+
+                            val ITEM_ID = of("item_id")
+
+                            val PRICE_TYPE = of("price_type")
+
+                            val CURRENCY = of("currency")
+
+                            val PRICING_UNIT_ID = of("pricing_unit_id")
+
+                            fun of(value: String) = Field(JsonField.of(value))
+                        }
+
+                        /** An enum containing [Field]'s known values. */
+                        enum class Known {
+                            PRICE_ID,
+                            ITEM_ID,
+                            PRICE_TYPE,
+                            CURRENCY,
+                            PRICING_UNIT_ID,
+                        }
+
+                        /**
+                         * An enum containing [Field]'s known values, as well as an [_UNKNOWN]
+                         * member.
+                         *
+                         * An instance of [Field] can contain an unknown value in a couple of cases:
+                         * - It was deserialized from data that doesn't match any known member. For
+                         *   example, if the SDK is on an older version than the API, then the API
+                         *   may respond with new members that the SDK is unaware of.
+                         * - It was constructed with an arbitrary value using the [of] method.
+                         */
+                        enum class Value {
+                            PRICE_ID,
+                            ITEM_ID,
+                            PRICE_TYPE,
+                            CURRENCY,
+                            PRICING_UNIT_ID,
+                            /**
+                             * An enum member indicating that [Field] was instantiated with an
+                             * unknown value.
+                             */
+                            _UNKNOWN,
+                        }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value, or
+                         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                         *
+                         * Use the [known] method instead if you're certain the value is always
+                         * known or if you want to throw for the unknown case.
+                         */
+                        fun value(): Value =
+                            when (this) {
+                                PRICE_ID -> Value.PRICE_ID
+                                ITEM_ID -> Value.ITEM_ID
+                                PRICE_TYPE -> Value.PRICE_TYPE
+                                CURRENCY -> Value.CURRENCY
+                                PRICING_UNIT_ID -> Value.PRICING_UNIT_ID
+                                else -> Value._UNKNOWN
+                            }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value.
+                         *
+                         * Use the [value] method instead if you're uncertain the value is always
+                         * known and don't want to throw for the unknown case.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value is a not a
+                         *   known member.
+                         */
+                        fun known(): Known =
+                            when (this) {
+                                PRICE_ID -> Known.PRICE_ID
+                                ITEM_ID -> Known.ITEM_ID
+                                PRICE_TYPE -> Known.PRICE_TYPE
+                                CURRENCY -> Known.CURRENCY
+                                PRICING_UNIT_ID -> Known.PRICING_UNIT_ID
+                                else -> throw OrbInvalidDataException("Unknown Field: $value")
+                            }
+
+                        /**
+                         * Returns this class instance's primitive wire representation.
+                         *
+                         * This differs from the [toString] method because that method is primarily
+                         * for debugging and generally doesn't throw.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value does not
+                         *   have the expected primitive type.
+                         */
+                        fun asString(): String =
+                            _value().asString()
+                                ?: throw OrbInvalidDataException("Value is not a String")
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Field = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            known()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Field && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
+                    }
+
+                    /** Should prices that match the filter be included or excluded. */
+                    class Operator
+                    @JsonCreator
+                    private constructor(private val value: JsonField<String>) : Enum {
+
+                        /**
+                         * Returns this class instance's raw value.
+                         *
+                         * This is usually only useful if this instance was deserialized from data
+                         * that doesn't match any known member, and you want to know that value. For
+                         * example, if the SDK is on an older version than the API, then the API may
+                         * respond with new members that the SDK is unaware of.
+                         */
+                        @com.fasterxml.jackson.annotation.JsonValue
+                        fun _value(): JsonField<String> = value
+
+                        companion object {
+
+                            val INCLUDES = of("includes")
+
+                            val EXCLUDES = of("excludes")
+
+                            fun of(value: String) = Operator(JsonField.of(value))
+                        }
+
+                        /** An enum containing [Operator]'s known values. */
+                        enum class Known {
+                            INCLUDES,
+                            EXCLUDES,
+                        }
+
+                        /**
+                         * An enum containing [Operator]'s known values, as well as an [_UNKNOWN]
+                         * member.
+                         *
+                         * An instance of [Operator] can contain an unknown value in a couple of
+                         * cases:
+                         * - It was deserialized from data that doesn't match any known member. For
+                         *   example, if the SDK is on an older version than the API, then the API
+                         *   may respond with new members that the SDK is unaware of.
+                         * - It was constructed with an arbitrary value using the [of] method.
+                         */
+                        enum class Value {
+                            INCLUDES,
+                            EXCLUDES,
+                            /**
+                             * An enum member indicating that [Operator] was instantiated with an
+                             * unknown value.
+                             */
+                            _UNKNOWN,
+                        }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value, or
+                         * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                         *
+                         * Use the [known] method instead if you're certain the value is always
+                         * known or if you want to throw for the unknown case.
+                         */
+                        fun value(): Value =
+                            when (this) {
+                                INCLUDES -> Value.INCLUDES
+                                EXCLUDES -> Value.EXCLUDES
+                                else -> Value._UNKNOWN
+                            }
+
+                        /**
+                         * Returns an enum member corresponding to this class instance's value.
+                         *
+                         * Use the [value] method instead if you're uncertain the value is always
+                         * known and don't want to throw for the unknown case.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value is a not a
+                         *   known member.
+                         */
+                        fun known(): Known =
+                            when (this) {
+                                INCLUDES -> Known.INCLUDES
+                                EXCLUDES -> Known.EXCLUDES
+                                else -> throw OrbInvalidDataException("Unknown Operator: $value")
+                            }
+
+                        /**
+                         * Returns this class instance's primitive wire representation.
+                         *
+                         * This differs from the [toString] method because that method is primarily
+                         * for debugging and generally doesn't throw.
+                         *
+                         * @throws OrbInvalidDataException if this class instance's value does not
+                         *   have the expected primitive type.
+                         */
+                        fun asString(): String =
+                            _value().asString()
+                                ?: throw OrbInvalidDataException("Value is not a String")
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Operator = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            known()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
+                    }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is Filter && field == other.field && operator == other.operator && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+                    }
+
+                    /* spotless:off */
+                    private val hashCode: Int by lazy { Objects.hash(field, operator, values, additionalProperties) }
+                    /* spotless:on */
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() =
+                        "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
+                }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
                     }
 
-                    return /* spotless:off */ other is Maximum && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && maximumAmount == other.maximumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Maximum && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && maximumAmount == other.maximumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, isInvoiceLevel, maximumAmount, reason, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, filters, isInvoiceLevel, maximumAmount, reason, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "Maximum{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, maximumAmount=$maximumAmount, reason=$reason, additionalProperties=$additionalProperties}"
+                    "Maximum{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, filters=$filters, isInvoiceLevel=$isInvoiceLevel, maximumAmount=$maximumAmount, reason=$reason, additionalProperties=$additionalProperties}"
             }
         }
 
@@ -9945,6 +13076,7 @@ private constructor(
         class Maximum
         private constructor(
             private val appliesToPriceIds: JsonField<List<String>>,
+            private val filters: JsonField<List<Filter>>,
             private val maximumAmount: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
@@ -9954,10 +13086,13 @@ private constructor(
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("filters")
+                @ExcludeMissing
+                filters: JsonField<List<Filter>> = JsonMissing.of(),
                 @JsonProperty("maximum_amount")
                 @ExcludeMissing
                 maximumAmount: JsonField<String> = JsonMissing.of(),
-            ) : this(appliesToPriceIds, maximumAmount, mutableMapOf())
+            ) : this(appliesToPriceIds, filters, maximumAmount, mutableMapOf())
 
             /**
              * List of price_ids that this maximum amount applies to. For plan/plan phase maximums,
@@ -9967,8 +13102,18 @@ private constructor(
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
              */
+            @Deprecated("deprecated")
             fun appliesToPriceIds(): List<String> =
                 appliesToPriceIds.getRequired("applies_to_price_ids")
+
+            /**
+             * The filters that determine which prices to apply this maximum to.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun filters(): List<Filter> = filters.getRequired("filters")
 
             /**
              * Maximum amount applied
@@ -9985,9 +13130,19 @@ private constructor(
              * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
              * unexpected type.
              */
+            @Deprecated("deprecated")
             @JsonProperty("applies_to_price_ids")
             @ExcludeMissing
             fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
+
+            /**
+             * Returns the raw JSON value of [filters].
+             *
+             * Unlike [filters], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("filters")
+            @ExcludeMissing
+            fun _filters(): JsonField<List<Filter>> = filters
 
             /**
              * Returns the raw JSON value of [maximumAmount].
@@ -10019,6 +13174,7 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .appliesToPriceIds()
+                 * .filters()
                  * .maximumAmount()
                  * ```
                  */
@@ -10029,11 +13185,13 @@ private constructor(
             class Builder internal constructor() {
 
                 private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+                private var filters: JsonField<MutableList<Filter>>? = null
                 private var maximumAmount: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(maximum: Maximum) = apply {
                     appliesToPriceIds = maximum.appliesToPriceIds.map { it.toMutableList() }
+                    filters = maximum.filters.map { it.toMutableList() }
                     maximumAmount = maximum.maximumAmount
                     additionalProperties = maximum.additionalProperties.toMutableMap()
                 }
@@ -10042,6 +13200,7 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
+                @Deprecated("deprecated")
                 fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                     appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
@@ -10052,6 +13211,7 @@ private constructor(
                  * `List<String>` value instead. This method is primarily for setting the field to
                  * an undocumented or not yet supported value.
                  */
+                @Deprecated("deprecated")
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                 }
@@ -10061,10 +13221,37 @@ private constructor(
                  *
                  * @throws IllegalStateException if the field was previously set to a non-list.
                  */
+                @Deprecated("deprecated")
                 fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                     appliesToPriceIds =
                         (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                             checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
+                        }
+                }
+
+                /** The filters that determine which prices to apply this maximum to. */
+                fun filters(filters: List<Filter>) = filters(JsonField.of(filters))
+
+                /**
+                 * Sets [Builder.filters] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.filters] with a well-typed `List<Filter>` value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun filters(filters: JsonField<List<Filter>>) = apply {
+                    this.filters = filters.map { it.toMutableList() }
+                }
+
+                /**
+                 * Adds a single [Filter] to [filters].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
+                fun addFilter(filter: Filter) = apply {
+                    filters =
+                        (filters ?: JsonField.of(mutableListOf())).also {
+                            checkKnown("filters", it).add(filter)
                         }
                 }
 
@@ -10113,6 +13300,7 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .appliesToPriceIds()
+                 * .filters()
                  * .maximumAmount()
                  * ```
                  *
@@ -10123,6 +13311,7 @@ private constructor(
                         checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                             it.toImmutable()
                         },
+                        checkRequired("filters", filters).map { it.toImmutable() },
                         checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toMutableMap(),
                     )
@@ -10136,6 +13325,7 @@ private constructor(
                 }
 
                 appliesToPriceIds()
+                filters().forEach { it.validate() }
                 maximumAmount()
                 validated = true
             }
@@ -10156,24 +13346,572 @@ private constructor(
              */
             internal fun validity(): Int =
                 (appliesToPriceIds.asKnown()?.size ?: 0) +
+                    (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                     (if (maximumAmount.asKnown() == null) 0 else 1)
+
+            class Filter
+            private constructor(
+                private val field: JsonField<Field>,
+                private val operator: JsonField<Operator>,
+                private val values: JsonField<List<String>>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("field")
+                    @ExcludeMissing
+                    field: JsonField<Field> = JsonMissing.of(),
+                    @JsonProperty("operator")
+                    @ExcludeMissing
+                    operator: JsonField<Operator> = JsonMissing.of(),
+                    @JsonProperty("values")
+                    @ExcludeMissing
+                    values: JsonField<List<String>> = JsonMissing.of(),
+                ) : this(field, operator, values, mutableMapOf())
+
+                /**
+                 * The property of the price to filter on.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun field(): Field = field.getRequired("field")
+
+                /**
+                 * Should prices that match the filter be included or excluded.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun operator(): Operator = operator.getRequired("operator")
+
+                /**
+                 * The IDs or values that match this filter.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun values(): List<String> = values.getRequired("values")
+
+                /**
+                 * Returns the raw JSON value of [field].
+                 *
+                 * Unlike [field], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<Field> = field
+
+                /**
+                 * Returns the raw JSON value of [operator].
+                 *
+                 * Unlike [operator], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("operator")
+                @ExcludeMissing
+                fun _operator(): JsonField<Operator> = operator
+
+                /**
+                 * Returns the raw JSON value of [values].
+                 *
+                 * Unlike [values], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("values")
+                @ExcludeMissing
+                fun _values(): JsonField<List<String>> = values
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of [Filter].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .field()
+                     * .operator()
+                     * .values()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [Filter]. */
+                class Builder internal constructor() {
+
+                    private var field: JsonField<Field>? = null
+                    private var operator: JsonField<Operator>? = null
+                    private var values: JsonField<MutableList<String>>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(filter: Filter) = apply {
+                        field = filter.field
+                        operator = filter.operator
+                        values = filter.values.map { it.toMutableList() }
+                        additionalProperties = filter.additionalProperties.toMutableMap()
+                    }
+
+                    /** The property of the price to filter on. */
+                    fun field(field: Field) = field(JsonField.of(field))
+
+                    /**
+                     * Sets [Builder.field] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.field] with a well-typed [Field] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun field(field: JsonField<Field>) = apply { this.field = field }
+
+                    /** Should prices that match the filter be included or excluded. */
+                    fun operator(operator: Operator) = operator(JsonField.of(operator))
+
+                    /**
+                     * Sets [Builder.operator] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.operator] with a well-typed [Operator] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun operator(operator: JsonField<Operator>) = apply { this.operator = operator }
+
+                    /** The IDs or values that match this filter. */
+                    fun values(values: List<String>) = values(JsonField.of(values))
+
+                    /**
+                     * Sets [Builder.values] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.values] with a well-typed `List<String>`
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun values(values: JsonField<List<String>>) = apply {
+                        this.values = values.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [values].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addValue(value: String) = apply {
+                        values =
+                            (values ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("values", it).add(value)
+                            }
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [Filter].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .field()
+                     * .operator()
+                     * .values()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): Filter =
+                        Filter(
+                            checkRequired("field", field),
+                            checkRequired("operator", operator),
+                            checkRequired("values", values).map { it.toImmutable() },
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Filter = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    field().validate()
+                    operator().validate()
+                    values()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (field.asKnown()?.validity() ?: 0) +
+                        (operator.asKnown()?.validity() ?: 0) +
+                        (values.asKnown()?.size ?: 0)
+
+                /** The property of the price to filter on. */
+                class Field @JsonCreator private constructor(private val value: JsonField<String>) :
+                    Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val PRICE_ID = of("price_id")
+
+                        val ITEM_ID = of("item_id")
+
+                        val PRICE_TYPE = of("price_type")
+
+                        val CURRENCY = of("currency")
+
+                        val PRICING_UNIT_ID = of("pricing_unit_id")
+
+                        fun of(value: String) = Field(JsonField.of(value))
+                    }
+
+                    /** An enum containing [Field]'s known values. */
+                    enum class Known {
+                        PRICE_ID,
+                        ITEM_ID,
+                        PRICE_TYPE,
+                        CURRENCY,
+                        PRICING_UNIT_ID,
+                    }
+
+                    /**
+                     * An enum containing [Field]'s known values, as well as an [_UNKNOWN] member.
+                     *
+                     * An instance of [Field] can contain an unknown value in a couple of cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        PRICE_ID,
+                        ITEM_ID,
+                        PRICE_TYPE,
+                        CURRENCY,
+                        PRICING_UNIT_ID,
+                        /**
+                         * An enum member indicating that [Field] was instantiated with an unknown
+                         * value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            PRICE_ID -> Value.PRICE_ID
+                            ITEM_ID -> Value.ITEM_ID
+                            PRICE_TYPE -> Value.PRICE_TYPE
+                            CURRENCY -> Value.CURRENCY
+                            PRICING_UNIT_ID -> Value.PRICING_UNIT_ID
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            PRICE_ID -> Known.PRICE_ID
+                            ITEM_ID -> Known.ITEM_ID
+                            PRICE_TYPE -> Known.PRICE_TYPE
+                            CURRENCY -> Known.CURRENCY
+                            PRICING_UNIT_ID -> Known.PRICING_UNIT_ID
+                            else -> throw OrbInvalidDataException("Unknown Field: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Field = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is Field && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                /** Should prices that match the filter be included or excluded. */
+                class Operator
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val INCLUDES = of("includes")
+
+                        val EXCLUDES = of("excludes")
+
+                        fun of(value: String) = Operator(JsonField.of(value))
+                    }
+
+                    /** An enum containing [Operator]'s known values. */
+                    enum class Known {
+                        INCLUDES,
+                        EXCLUDES,
+                    }
+
+                    /**
+                     * An enum containing [Operator]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [Operator] can contain an unknown value in a couple of cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        INCLUDES,
+                        EXCLUDES,
+                        /**
+                         * An enum member indicating that [Operator] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            INCLUDES -> Value.INCLUDES
+                            EXCLUDES -> Value.EXCLUDES
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            INCLUDES -> Known.INCLUDES
+                            EXCLUDES -> Known.EXCLUDES
+                            else -> throw OrbInvalidDataException("Unknown Operator: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Operator = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Filter && field == other.field && operator == other.operator && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(field, operator, values, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
+            }
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
                     return true
                 }
 
-                return /* spotless:off */ other is Maximum && appliesToPriceIds == other.appliesToPriceIds && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Maximum && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, maximumAmount, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, filters, maximumAmount, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "Maximum{appliesToPriceIds=$appliesToPriceIds, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
+                "Maximum{appliesToPriceIds=$appliesToPriceIds, filters=$filters, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
         }
 
         /** This field is deprecated in favor of `adjustments`. */
@@ -10181,6 +13919,7 @@ private constructor(
         class Minimum
         private constructor(
             private val appliesToPriceIds: JsonField<List<String>>,
+            private val filters: JsonField<List<Filter>>,
             private val minimumAmount: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
@@ -10190,10 +13929,13 @@ private constructor(
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("filters")
+                @ExcludeMissing
+                filters: JsonField<List<Filter>> = JsonMissing.of(),
                 @JsonProperty("minimum_amount")
                 @ExcludeMissing
                 minimumAmount: JsonField<String> = JsonMissing.of(),
-            ) : this(appliesToPriceIds, minimumAmount, mutableMapOf())
+            ) : this(appliesToPriceIds, filters, minimumAmount, mutableMapOf())
 
             /**
              * List of price_ids that this minimum amount applies to. For plan/plan phase minimums,
@@ -10203,8 +13945,18 @@ private constructor(
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
              */
+            @Deprecated("deprecated")
             fun appliesToPriceIds(): List<String> =
                 appliesToPriceIds.getRequired("applies_to_price_ids")
+
+            /**
+             * The filters that determine which prices to apply this minimum to.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun filters(): List<Filter> = filters.getRequired("filters")
 
             /**
              * Minimum amount applied
@@ -10221,9 +13973,19 @@ private constructor(
              * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an
              * unexpected type.
              */
+            @Deprecated("deprecated")
             @JsonProperty("applies_to_price_ids")
             @ExcludeMissing
             fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
+
+            /**
+             * Returns the raw JSON value of [filters].
+             *
+             * Unlike [filters], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("filters")
+            @ExcludeMissing
+            fun _filters(): JsonField<List<Filter>> = filters
 
             /**
              * Returns the raw JSON value of [minimumAmount].
@@ -10255,6 +14017,7 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .appliesToPriceIds()
+                 * .filters()
                  * .minimumAmount()
                  * ```
                  */
@@ -10265,11 +14028,13 @@ private constructor(
             class Builder internal constructor() {
 
                 private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+                private var filters: JsonField<MutableList<Filter>>? = null
                 private var minimumAmount: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(minimum: Minimum) = apply {
                     appliesToPriceIds = minimum.appliesToPriceIds.map { it.toMutableList() }
+                    filters = minimum.filters.map { it.toMutableList() }
                     minimumAmount = minimum.minimumAmount
                     additionalProperties = minimum.additionalProperties.toMutableMap()
                 }
@@ -10278,6 +14043,7 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
+                @Deprecated("deprecated")
                 fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                     appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
@@ -10288,6 +14054,7 @@ private constructor(
                  * `List<String>` value instead. This method is primarily for setting the field to
                  * an undocumented or not yet supported value.
                  */
+                @Deprecated("deprecated")
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
                 }
@@ -10297,10 +14064,37 @@ private constructor(
                  *
                  * @throws IllegalStateException if the field was previously set to a non-list.
                  */
+                @Deprecated("deprecated")
                 fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                     appliesToPriceIds =
                         (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                             checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
+                        }
+                }
+
+                /** The filters that determine which prices to apply this minimum to. */
+                fun filters(filters: List<Filter>) = filters(JsonField.of(filters))
+
+                /**
+                 * Sets [Builder.filters] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.filters] with a well-typed `List<Filter>` value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun filters(filters: JsonField<List<Filter>>) = apply {
+                    this.filters = filters.map { it.toMutableList() }
+                }
+
+                /**
+                 * Adds a single [Filter] to [filters].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
+                fun addFilter(filter: Filter) = apply {
+                    filters =
+                        (filters ?: JsonField.of(mutableListOf())).also {
+                            checkKnown("filters", it).add(filter)
                         }
                 }
 
@@ -10349,6 +14143,7 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .appliesToPriceIds()
+                 * .filters()
                  * .minimumAmount()
                  * ```
                  *
@@ -10359,6 +14154,7 @@ private constructor(
                         checkRequired("appliesToPriceIds", appliesToPriceIds).map {
                             it.toImmutable()
                         },
+                        checkRequired("filters", filters).map { it.toImmutable() },
                         checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toMutableMap(),
                     )
@@ -10372,6 +14168,7 @@ private constructor(
                 }
 
                 appliesToPriceIds()
+                filters().forEach { it.validate() }
                 minimumAmount()
                 validated = true
             }
@@ -10392,24 +14189,572 @@ private constructor(
              */
             internal fun validity(): Int =
                 (appliesToPriceIds.asKnown()?.size ?: 0) +
+                    (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                     (if (minimumAmount.asKnown() == null) 0 else 1)
+
+            class Filter
+            private constructor(
+                private val field: JsonField<Field>,
+                private val operator: JsonField<Operator>,
+                private val values: JsonField<List<String>>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("field")
+                    @ExcludeMissing
+                    field: JsonField<Field> = JsonMissing.of(),
+                    @JsonProperty("operator")
+                    @ExcludeMissing
+                    operator: JsonField<Operator> = JsonMissing.of(),
+                    @JsonProperty("values")
+                    @ExcludeMissing
+                    values: JsonField<List<String>> = JsonMissing.of(),
+                ) : this(field, operator, values, mutableMapOf())
+
+                /**
+                 * The property of the price to filter on.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun field(): Field = field.getRequired("field")
+
+                /**
+                 * Should prices that match the filter be included or excluded.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun operator(): Operator = operator.getRequired("operator")
+
+                /**
+                 * The IDs or values that match this filter.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun values(): List<String> = values.getRequired("values")
+
+                /**
+                 * Returns the raw JSON value of [field].
+                 *
+                 * Unlike [field], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<Field> = field
+
+                /**
+                 * Returns the raw JSON value of [operator].
+                 *
+                 * Unlike [operator], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("operator")
+                @ExcludeMissing
+                fun _operator(): JsonField<Operator> = operator
+
+                /**
+                 * Returns the raw JSON value of [values].
+                 *
+                 * Unlike [values], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("values")
+                @ExcludeMissing
+                fun _values(): JsonField<List<String>> = values
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of [Filter].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .field()
+                     * .operator()
+                     * .values()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [Filter]. */
+                class Builder internal constructor() {
+
+                    private var field: JsonField<Field>? = null
+                    private var operator: JsonField<Operator>? = null
+                    private var values: JsonField<MutableList<String>>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(filter: Filter) = apply {
+                        field = filter.field
+                        operator = filter.operator
+                        values = filter.values.map { it.toMutableList() }
+                        additionalProperties = filter.additionalProperties.toMutableMap()
+                    }
+
+                    /** The property of the price to filter on. */
+                    fun field(field: Field) = field(JsonField.of(field))
+
+                    /**
+                     * Sets [Builder.field] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.field] with a well-typed [Field] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun field(field: JsonField<Field>) = apply { this.field = field }
+
+                    /** Should prices that match the filter be included or excluded. */
+                    fun operator(operator: Operator) = operator(JsonField.of(operator))
+
+                    /**
+                     * Sets [Builder.operator] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.operator] with a well-typed [Operator] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun operator(operator: JsonField<Operator>) = apply { this.operator = operator }
+
+                    /** The IDs or values that match this filter. */
+                    fun values(values: List<String>) = values(JsonField.of(values))
+
+                    /**
+                     * Sets [Builder.values] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.values] with a well-typed `List<String>`
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun values(values: JsonField<List<String>>) = apply {
+                        this.values = values.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [values].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addValue(value: String) = apply {
+                        values =
+                            (values ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("values", it).add(value)
+                            }
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [Filter].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .field()
+                     * .operator()
+                     * .values()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): Filter =
+                        Filter(
+                            checkRequired("field", field),
+                            checkRequired("operator", operator),
+                            checkRequired("values", values).map { it.toImmutable() },
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Filter = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    field().validate()
+                    operator().validate()
+                    values()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (field.asKnown()?.validity() ?: 0) +
+                        (operator.asKnown()?.validity() ?: 0) +
+                        (values.asKnown()?.size ?: 0)
+
+                /** The property of the price to filter on. */
+                class Field @JsonCreator private constructor(private val value: JsonField<String>) :
+                    Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val PRICE_ID = of("price_id")
+
+                        val ITEM_ID = of("item_id")
+
+                        val PRICE_TYPE = of("price_type")
+
+                        val CURRENCY = of("currency")
+
+                        val PRICING_UNIT_ID = of("pricing_unit_id")
+
+                        fun of(value: String) = Field(JsonField.of(value))
+                    }
+
+                    /** An enum containing [Field]'s known values. */
+                    enum class Known {
+                        PRICE_ID,
+                        ITEM_ID,
+                        PRICE_TYPE,
+                        CURRENCY,
+                        PRICING_UNIT_ID,
+                    }
+
+                    /**
+                     * An enum containing [Field]'s known values, as well as an [_UNKNOWN] member.
+                     *
+                     * An instance of [Field] can contain an unknown value in a couple of cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        PRICE_ID,
+                        ITEM_ID,
+                        PRICE_TYPE,
+                        CURRENCY,
+                        PRICING_UNIT_ID,
+                        /**
+                         * An enum member indicating that [Field] was instantiated with an unknown
+                         * value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            PRICE_ID -> Value.PRICE_ID
+                            ITEM_ID -> Value.ITEM_ID
+                            PRICE_TYPE -> Value.PRICE_TYPE
+                            CURRENCY -> Value.CURRENCY
+                            PRICING_UNIT_ID -> Value.PRICING_UNIT_ID
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            PRICE_ID -> Known.PRICE_ID
+                            ITEM_ID -> Known.ITEM_ID
+                            PRICE_TYPE -> Known.PRICE_TYPE
+                            CURRENCY -> Known.CURRENCY
+                            PRICING_UNIT_ID -> Known.PRICING_UNIT_ID
+                            else -> throw OrbInvalidDataException("Unknown Field: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Field = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is Field && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                /** Should prices that match the filter be included or excluded. */
+                class Operator
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val INCLUDES = of("includes")
+
+                        val EXCLUDES = of("excludes")
+
+                        fun of(value: String) = Operator(JsonField.of(value))
+                    }
+
+                    /** An enum containing [Operator]'s known values. */
+                    enum class Known {
+                        INCLUDES,
+                        EXCLUDES,
+                    }
+
+                    /**
+                     * An enum containing [Operator]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [Operator] can contain an unknown value in a couple of cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        INCLUDES,
+                        EXCLUDES,
+                        /**
+                         * An enum member indicating that [Operator] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            INCLUDES -> Value.INCLUDES
+                            EXCLUDES -> Value.EXCLUDES
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            INCLUDES -> Known.INCLUDES
+                            EXCLUDES -> Known.EXCLUDES
+                            else -> throw OrbInvalidDataException("Unknown Operator: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Operator = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Filter && field == other.field && operator == other.operator && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(field, operator, values, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
+            }
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
                     return true
                 }
 
-                return /* spotless:off */ other is Minimum && appliesToPriceIds == other.appliesToPriceIds && minimumAmount == other.minimumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Minimum && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && minimumAmount == other.minimumAmount && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, minimumAmount, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, filters, minimumAmount, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "Minimum{appliesToPriceIds=$appliesToPriceIds, minimumAmount=$minimumAmount, additionalProperties=$additionalProperties}"
+                "Minimum{appliesToPriceIds=$appliesToPriceIds, filters=$filters, minimumAmount=$minimumAmount, additionalProperties=$additionalProperties}"
         }
 
         @JsonDeserialize(using = SubLineItem.Deserializer::class)
@@ -12956,6 +17301,7 @@ private constructor(
     class Maximum
     private constructor(
         private val appliesToPriceIds: JsonField<List<String>>,
+        private val filters: JsonField<List<Filter>>,
         private val maximumAmount: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -12965,10 +17311,13 @@ private constructor(
             @JsonProperty("applies_to_price_ids")
             @ExcludeMissing
             appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("filters")
+            @ExcludeMissing
+            filters: JsonField<List<Filter>> = JsonMissing.of(),
             @JsonProperty("maximum_amount")
             @ExcludeMissing
             maximumAmount: JsonField<String> = JsonMissing.of(),
-        ) : this(appliesToPriceIds, maximumAmount, mutableMapOf())
+        ) : this(appliesToPriceIds, filters, maximumAmount, mutableMapOf())
 
         /**
          * List of price_ids that this maximum amount applies to. For plan/plan phase maximums, this
@@ -12977,8 +17326,17 @@ private constructor(
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
+        @Deprecated("deprecated")
         fun appliesToPriceIds(): List<String> =
             appliesToPriceIds.getRequired("applies_to_price_ids")
+
+        /**
+         * The filters that determine which prices to apply this maximum to.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun filters(): List<Filter> = filters.getRequired("filters")
 
         /**
          * Maximum amount applied
@@ -12994,9 +17352,17 @@ private constructor(
          * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an unexpected
          * type.
          */
+        @Deprecated("deprecated")
         @JsonProperty("applies_to_price_ids")
         @ExcludeMissing
         fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
+
+        /**
+         * Returns the raw JSON value of [filters].
+         *
+         * Unlike [filters], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("filters") @ExcludeMissing fun _filters(): JsonField<List<Filter>> = filters
 
         /**
          * Returns the raw JSON value of [maximumAmount].
@@ -13028,6 +17394,7 @@ private constructor(
              * The following fields are required:
              * ```kotlin
              * .appliesToPriceIds()
+             * .filters()
              * .maximumAmount()
              * ```
              */
@@ -13038,11 +17405,13 @@ private constructor(
         class Builder internal constructor() {
 
             private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+            private var filters: JsonField<MutableList<Filter>>? = null
             private var maximumAmount: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(maximum: Maximum) = apply {
                 appliesToPriceIds = maximum.appliesToPriceIds.map { it.toMutableList() }
+                filters = maximum.filters.map { it.toMutableList() }
                 maximumAmount = maximum.maximumAmount
                 additionalProperties = maximum.additionalProperties.toMutableMap()
             }
@@ -13051,6 +17420,7 @@ private constructor(
              * List of price_ids that this maximum amount applies to. For plan/plan phase maximums,
              * this can be a subset of prices.
              */
+            @Deprecated("deprecated")
             fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                 appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
@@ -13061,6 +17431,7 @@ private constructor(
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
+            @Deprecated("deprecated")
             fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                 this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
             }
@@ -13070,10 +17441,37 @@ private constructor(
              *
              * @throws IllegalStateException if the field was previously set to a non-list.
              */
+            @Deprecated("deprecated")
             fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                 appliesToPriceIds =
                     (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                         checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
+                    }
+            }
+
+            /** The filters that determine which prices to apply this maximum to. */
+            fun filters(filters: List<Filter>) = filters(JsonField.of(filters))
+
+            /**
+             * Sets [Builder.filters] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.filters] with a well-typed `List<Filter>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun filters(filters: JsonField<List<Filter>>) = apply {
+                this.filters = filters.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Filter] to [filters].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addFilter(filter: Filter) = apply {
+                filters =
+                    (filters ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("filters", it).add(filter)
                     }
             }
 
@@ -13118,6 +17516,7 @@ private constructor(
              * The following fields are required:
              * ```kotlin
              * .appliesToPriceIds()
+             * .filters()
              * .maximumAmount()
              * ```
              *
@@ -13126,6 +17525,7 @@ private constructor(
             fun build(): Maximum =
                 Maximum(
                     checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
+                    checkRequired("filters", filters).map { it.toImmutable() },
                     checkRequired("maximumAmount", maximumAmount),
                     additionalProperties.toMutableMap(),
                 )
@@ -13139,6 +17539,7 @@ private constructor(
             }
 
             appliesToPriceIds()
+            filters().forEach { it.validate() }
             maximumAmount()
             validated = true
         }
@@ -13159,24 +17560,560 @@ private constructor(
          */
         internal fun validity(): Int =
             (appliesToPriceIds.asKnown()?.size ?: 0) +
+                (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (maximumAmount.asKnown() == null) 0 else 1)
+
+        class Filter
+        private constructor(
+            private val field: JsonField<Field>,
+            private val operator: JsonField<Operator>,
+            private val values: JsonField<List<String>>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("field") @ExcludeMissing field: JsonField<Field> = JsonMissing.of(),
+                @JsonProperty("operator")
+                @ExcludeMissing
+                operator: JsonField<Operator> = JsonMissing.of(),
+                @JsonProperty("values")
+                @ExcludeMissing
+                values: JsonField<List<String>> = JsonMissing.of(),
+            ) : this(field, operator, values, mutableMapOf())
+
+            /**
+             * The property of the price to filter on.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun field(): Field = field.getRequired("field")
+
+            /**
+             * Should prices that match the filter be included or excluded.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun operator(): Operator = operator.getRequired("operator")
+
+            /**
+             * The IDs or values that match this filter.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun values(): List<String> = values.getRequired("values")
+
+            /**
+             * Returns the raw JSON value of [field].
+             *
+             * Unlike [field], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<Field> = field
+
+            /**
+             * Returns the raw JSON value of [operator].
+             *
+             * Unlike [operator], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("operator")
+            @ExcludeMissing
+            fun _operator(): JsonField<Operator> = operator
+
+            /**
+             * Returns the raw JSON value of [values].
+             *
+             * Unlike [values], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("values") @ExcludeMissing fun _values(): JsonField<List<String>> = values
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [Filter].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .field()
+                 * .operator()
+                 * .values()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Filter]. */
+            class Builder internal constructor() {
+
+                private var field: JsonField<Field>? = null
+                private var operator: JsonField<Operator>? = null
+                private var values: JsonField<MutableList<String>>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(filter: Filter) = apply {
+                    field = filter.field
+                    operator = filter.operator
+                    values = filter.values.map { it.toMutableList() }
+                    additionalProperties = filter.additionalProperties.toMutableMap()
+                }
+
+                /** The property of the price to filter on. */
+                fun field(field: Field) = field(JsonField.of(field))
+
+                /**
+                 * Sets [Builder.field] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.field] with a well-typed [Field] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun field(field: JsonField<Field>) = apply { this.field = field }
+
+                /** Should prices that match the filter be included or excluded. */
+                fun operator(operator: Operator) = operator(JsonField.of(operator))
+
+                /**
+                 * Sets [Builder.operator] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.operator] with a well-typed [Operator] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun operator(operator: JsonField<Operator>) = apply { this.operator = operator }
+
+                /** The IDs or values that match this filter. */
+                fun values(values: List<String>) = values(JsonField.of(values))
+
+                /**
+                 * Sets [Builder.values] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.values] with a well-typed `List<String>` value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun values(values: JsonField<List<String>>) = apply {
+                    this.values = values.map { it.toMutableList() }
+                }
+
+                /**
+                 * Adds a single [String] to [values].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
+                fun addValue(value: String) = apply {
+                    values =
+                        (values ?: JsonField.of(mutableListOf())).also {
+                            checkKnown("values", it).add(value)
+                        }
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [Filter].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .field()
+                 * .operator()
+                 * .values()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): Filter =
+                    Filter(
+                        checkRequired("field", field),
+                        checkRequired("operator", operator),
+                        checkRequired("values", values).map { it.toImmutable() },
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Filter = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                field().validate()
+                operator().validate()
+                values()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (field.asKnown()?.validity() ?: 0) +
+                    (operator.asKnown()?.validity() ?: 0) +
+                    (values.asKnown()?.size ?: 0)
+
+            /** The property of the price to filter on. */
+            class Field @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val PRICE_ID = of("price_id")
+
+                    val ITEM_ID = of("item_id")
+
+                    val PRICE_TYPE = of("price_type")
+
+                    val CURRENCY = of("currency")
+
+                    val PRICING_UNIT_ID = of("pricing_unit_id")
+
+                    fun of(value: String) = Field(JsonField.of(value))
+                }
+
+                /** An enum containing [Field]'s known values. */
+                enum class Known {
+                    PRICE_ID,
+                    ITEM_ID,
+                    PRICE_TYPE,
+                    CURRENCY,
+                    PRICING_UNIT_ID,
+                }
+
+                /**
+                 * An enum containing [Field]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Field] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    PRICE_ID,
+                    ITEM_ID,
+                    PRICE_TYPE,
+                    CURRENCY,
+                    PRICING_UNIT_ID,
+                    /**
+                     * An enum member indicating that [Field] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        PRICE_ID -> Value.PRICE_ID
+                        ITEM_ID -> Value.ITEM_ID
+                        PRICE_TYPE -> Value.PRICE_TYPE
+                        CURRENCY -> Value.CURRENCY
+                        PRICING_UNIT_ID -> Value.PRICING_UNIT_ID
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        PRICE_ID -> Known.PRICE_ID
+                        ITEM_ID -> Known.ITEM_ID
+                        PRICE_TYPE -> Known.PRICE_TYPE
+                        CURRENCY -> Known.CURRENCY
+                        PRICING_UNIT_ID -> Known.PRICING_UNIT_ID
+                        else -> throw OrbInvalidDataException("Unknown Field: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value does not have the
+                 *   expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): Field = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Field && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            /** Should prices that match the filter be included or excluded. */
+            class Operator @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val INCLUDES = of("includes")
+
+                    val EXCLUDES = of("excludes")
+
+                    fun of(value: String) = Operator(JsonField.of(value))
+                }
+
+                /** An enum containing [Operator]'s known values. */
+                enum class Known {
+                    INCLUDES,
+                    EXCLUDES,
+                }
+
+                /**
+                 * An enum containing [Operator]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Operator] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    INCLUDES,
+                    EXCLUDES,
+                    /**
+                     * An enum member indicating that [Operator] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        INCLUDES -> Value.INCLUDES
+                        EXCLUDES -> Value.EXCLUDES
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        INCLUDES -> Known.INCLUDES
+                        EXCLUDES -> Known.EXCLUDES
+                        else -> throw OrbInvalidDataException("Unknown Operator: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value does not have the
+                 *   expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): Operator = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Filter && field == other.field && operator == other.operator && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(field, operator, values, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is Maximum && appliesToPriceIds == other.appliesToPriceIds && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Maximum && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, maximumAmount, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, filters, maximumAmount, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Maximum{appliesToPriceIds=$appliesToPriceIds, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
+            "Maximum{appliesToPriceIds=$appliesToPriceIds, filters=$filters, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -13286,6 +18223,7 @@ private constructor(
     class Minimum
     private constructor(
         private val appliesToPriceIds: JsonField<List<String>>,
+        private val filters: JsonField<List<Filter>>,
         private val minimumAmount: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -13295,10 +18233,13 @@ private constructor(
             @JsonProperty("applies_to_price_ids")
             @ExcludeMissing
             appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("filters")
+            @ExcludeMissing
+            filters: JsonField<List<Filter>> = JsonMissing.of(),
             @JsonProperty("minimum_amount")
             @ExcludeMissing
             minimumAmount: JsonField<String> = JsonMissing.of(),
-        ) : this(appliesToPriceIds, minimumAmount, mutableMapOf())
+        ) : this(appliesToPriceIds, filters, minimumAmount, mutableMapOf())
 
         /**
          * List of price_ids that this minimum amount applies to. For plan/plan phase minimums, this
@@ -13307,8 +18248,17 @@ private constructor(
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
+        @Deprecated("deprecated")
         fun appliesToPriceIds(): List<String> =
             appliesToPriceIds.getRequired("applies_to_price_ids")
+
+        /**
+         * The filters that determine which prices to apply this minimum to.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun filters(): List<Filter> = filters.getRequired("filters")
 
         /**
          * Minimum amount applied
@@ -13324,9 +18274,17 @@ private constructor(
          * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an unexpected
          * type.
          */
+        @Deprecated("deprecated")
         @JsonProperty("applies_to_price_ids")
         @ExcludeMissing
         fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
+
+        /**
+         * Returns the raw JSON value of [filters].
+         *
+         * Unlike [filters], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("filters") @ExcludeMissing fun _filters(): JsonField<List<Filter>> = filters
 
         /**
          * Returns the raw JSON value of [minimumAmount].
@@ -13358,6 +18316,7 @@ private constructor(
              * The following fields are required:
              * ```kotlin
              * .appliesToPriceIds()
+             * .filters()
              * .minimumAmount()
              * ```
              */
@@ -13368,11 +18327,13 @@ private constructor(
         class Builder internal constructor() {
 
             private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+            private var filters: JsonField<MutableList<Filter>>? = null
             private var minimumAmount: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(minimum: Minimum) = apply {
                 appliesToPriceIds = minimum.appliesToPriceIds.map { it.toMutableList() }
+                filters = minimum.filters.map { it.toMutableList() }
                 minimumAmount = minimum.minimumAmount
                 additionalProperties = minimum.additionalProperties.toMutableMap()
             }
@@ -13381,6 +18342,7 @@ private constructor(
              * List of price_ids that this minimum amount applies to. For plan/plan phase minimums,
              * this can be a subset of prices.
              */
+            @Deprecated("deprecated")
             fun appliesToPriceIds(appliesToPriceIds: List<String>) =
                 appliesToPriceIds(JsonField.of(appliesToPriceIds))
 
@@ -13391,6 +18353,7 @@ private constructor(
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
+            @Deprecated("deprecated")
             fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                 this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
             }
@@ -13400,10 +18363,37 @@ private constructor(
              *
              * @throws IllegalStateException if the field was previously set to a non-list.
              */
+            @Deprecated("deprecated")
             fun addAppliesToPriceId(appliesToPriceId: String) = apply {
                 appliesToPriceIds =
                     (appliesToPriceIds ?: JsonField.of(mutableListOf())).also {
                         checkKnown("appliesToPriceIds", it).add(appliesToPriceId)
+                    }
+            }
+
+            /** The filters that determine which prices to apply this minimum to. */
+            fun filters(filters: List<Filter>) = filters(JsonField.of(filters))
+
+            /**
+             * Sets [Builder.filters] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.filters] with a well-typed `List<Filter>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun filters(filters: JsonField<List<Filter>>) = apply {
+                this.filters = filters.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Filter] to [filters].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addFilter(filter: Filter) = apply {
+                filters =
+                    (filters ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("filters", it).add(filter)
                     }
             }
 
@@ -13448,6 +18438,7 @@ private constructor(
              * The following fields are required:
              * ```kotlin
              * .appliesToPriceIds()
+             * .filters()
              * .minimumAmount()
              * ```
              *
@@ -13456,6 +18447,7 @@ private constructor(
             fun build(): Minimum =
                 Minimum(
                     checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
+                    checkRequired("filters", filters).map { it.toImmutable() },
                     checkRequired("minimumAmount", minimumAmount),
                     additionalProperties.toMutableMap(),
                 )
@@ -13469,6 +18461,7 @@ private constructor(
             }
 
             appliesToPriceIds()
+            filters().forEach { it.validate() }
             minimumAmount()
             validated = true
         }
@@ -13489,24 +18482,560 @@ private constructor(
          */
         internal fun validity(): Int =
             (appliesToPriceIds.asKnown()?.size ?: 0) +
+                (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (minimumAmount.asKnown() == null) 0 else 1)
+
+        class Filter
+        private constructor(
+            private val field: JsonField<Field>,
+            private val operator: JsonField<Operator>,
+            private val values: JsonField<List<String>>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("field") @ExcludeMissing field: JsonField<Field> = JsonMissing.of(),
+                @JsonProperty("operator")
+                @ExcludeMissing
+                operator: JsonField<Operator> = JsonMissing.of(),
+                @JsonProperty("values")
+                @ExcludeMissing
+                values: JsonField<List<String>> = JsonMissing.of(),
+            ) : this(field, operator, values, mutableMapOf())
+
+            /**
+             * The property of the price to filter on.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun field(): Field = field.getRequired("field")
+
+            /**
+             * Should prices that match the filter be included or excluded.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun operator(): Operator = operator.getRequired("operator")
+
+            /**
+             * The IDs or values that match this filter.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun values(): List<String> = values.getRequired("values")
+
+            /**
+             * Returns the raw JSON value of [field].
+             *
+             * Unlike [field], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<Field> = field
+
+            /**
+             * Returns the raw JSON value of [operator].
+             *
+             * Unlike [operator], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("operator")
+            @ExcludeMissing
+            fun _operator(): JsonField<Operator> = operator
+
+            /**
+             * Returns the raw JSON value of [values].
+             *
+             * Unlike [values], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("values") @ExcludeMissing fun _values(): JsonField<List<String>> = values
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [Filter].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .field()
+                 * .operator()
+                 * .values()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Filter]. */
+            class Builder internal constructor() {
+
+                private var field: JsonField<Field>? = null
+                private var operator: JsonField<Operator>? = null
+                private var values: JsonField<MutableList<String>>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(filter: Filter) = apply {
+                    field = filter.field
+                    operator = filter.operator
+                    values = filter.values.map { it.toMutableList() }
+                    additionalProperties = filter.additionalProperties.toMutableMap()
+                }
+
+                /** The property of the price to filter on. */
+                fun field(field: Field) = field(JsonField.of(field))
+
+                /**
+                 * Sets [Builder.field] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.field] with a well-typed [Field] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun field(field: JsonField<Field>) = apply { this.field = field }
+
+                /** Should prices that match the filter be included or excluded. */
+                fun operator(operator: Operator) = operator(JsonField.of(operator))
+
+                /**
+                 * Sets [Builder.operator] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.operator] with a well-typed [Operator] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun operator(operator: JsonField<Operator>) = apply { this.operator = operator }
+
+                /** The IDs or values that match this filter. */
+                fun values(values: List<String>) = values(JsonField.of(values))
+
+                /**
+                 * Sets [Builder.values] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.values] with a well-typed `List<String>` value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun values(values: JsonField<List<String>>) = apply {
+                    this.values = values.map { it.toMutableList() }
+                }
+
+                /**
+                 * Adds a single [String] to [values].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
+                fun addValue(value: String) = apply {
+                    values =
+                        (values ?: JsonField.of(mutableListOf())).also {
+                            checkKnown("values", it).add(value)
+                        }
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [Filter].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .field()
+                 * .operator()
+                 * .values()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): Filter =
+                    Filter(
+                        checkRequired("field", field),
+                        checkRequired("operator", operator),
+                        checkRequired("values", values).map { it.toImmutable() },
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Filter = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                field().validate()
+                operator().validate()
+                values()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (field.asKnown()?.validity() ?: 0) +
+                    (operator.asKnown()?.validity() ?: 0) +
+                    (values.asKnown()?.size ?: 0)
+
+            /** The property of the price to filter on. */
+            class Field @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val PRICE_ID = of("price_id")
+
+                    val ITEM_ID = of("item_id")
+
+                    val PRICE_TYPE = of("price_type")
+
+                    val CURRENCY = of("currency")
+
+                    val PRICING_UNIT_ID = of("pricing_unit_id")
+
+                    fun of(value: String) = Field(JsonField.of(value))
+                }
+
+                /** An enum containing [Field]'s known values. */
+                enum class Known {
+                    PRICE_ID,
+                    ITEM_ID,
+                    PRICE_TYPE,
+                    CURRENCY,
+                    PRICING_UNIT_ID,
+                }
+
+                /**
+                 * An enum containing [Field]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Field] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    PRICE_ID,
+                    ITEM_ID,
+                    PRICE_TYPE,
+                    CURRENCY,
+                    PRICING_UNIT_ID,
+                    /**
+                     * An enum member indicating that [Field] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        PRICE_ID -> Value.PRICE_ID
+                        ITEM_ID -> Value.ITEM_ID
+                        PRICE_TYPE -> Value.PRICE_TYPE
+                        CURRENCY -> Value.CURRENCY
+                        PRICING_UNIT_ID -> Value.PRICING_UNIT_ID
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        PRICE_ID -> Known.PRICE_ID
+                        ITEM_ID -> Known.ITEM_ID
+                        PRICE_TYPE -> Known.PRICE_TYPE
+                        CURRENCY -> Known.CURRENCY
+                        PRICING_UNIT_ID -> Known.PRICING_UNIT_ID
+                        else -> throw OrbInvalidDataException("Unknown Field: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value does not have the
+                 *   expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): Field = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Field && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            /** Should prices that match the filter be included or excluded. */
+            class Operator @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val INCLUDES = of("includes")
+
+                    val EXCLUDES = of("excludes")
+
+                    fun of(value: String) = Operator(JsonField.of(value))
+                }
+
+                /** An enum containing [Operator]'s known values. */
+                enum class Known {
+                    INCLUDES,
+                    EXCLUDES,
+                }
+
+                /**
+                 * An enum containing [Operator]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Operator] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    INCLUDES,
+                    EXCLUDES,
+                    /**
+                     * An enum member indicating that [Operator] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        INCLUDES -> Value.INCLUDES
+                        EXCLUDES -> Value.EXCLUDES
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        INCLUDES -> Known.INCLUDES
+                        EXCLUDES -> Known.EXCLUDES
+                        else -> throw OrbInvalidDataException("Unknown Operator: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value does not have the
+                 *   expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): Operator = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Filter && field == other.field && operator == other.operator && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(field, operator, values, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is Minimum && appliesToPriceIds == other.appliesToPriceIds && minimumAmount == other.minimumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Minimum && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && minimumAmount == other.minimumAmount && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, minimumAmount, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, filters, minimumAmount, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Minimum{appliesToPriceIds=$appliesToPriceIds, minimumAmount=$minimumAmount, additionalProperties=$additionalProperties}"
+            "Minimum{appliesToPriceIds=$appliesToPriceIds, filters=$filters, minimumAmount=$minimumAmount, additionalProperties=$additionalProperties}"
     }
 
     class PaymentAttempt

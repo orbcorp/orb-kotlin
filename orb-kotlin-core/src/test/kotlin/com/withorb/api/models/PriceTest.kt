@@ -39,10 +39,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -58,6 +58,13 @@ internal class PriceTest {
                 .maximum(
                     Price.Unit.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Unit.Maximum.Filter.builder()
+                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -70,6 +77,13 @@ internal class PriceTest {
                 .minimum(
                     Price.Unit.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Unit.Minimum.Filter.builder()
+                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -144,10 +158,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -163,6 +177,13 @@ internal class PriceTest {
                     .maximum(
                         Price.Unit.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Unit.Maximum.Filter.builder()
+                                    .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -175,6 +196,13 @@ internal class PriceTest {
                     .minimum(
                         Price.Unit.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Unit.Minimum.Filter.builder()
+                                    .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -222,10 +250,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -241,6 +269,13 @@ internal class PriceTest {
                 .maximum(
                     Price.Package.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Package.Maximum.Filter.builder()
+                                .field(Price.Package.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.Package.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -253,6 +288,13 @@ internal class PriceTest {
                 .minimum(
                     Price.Package.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Package.Minimum.Filter.builder()
+                                .field(Price.Package.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.Package.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -332,10 +374,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -353,6 +395,13 @@ internal class PriceTest {
                     .maximum(
                         Price.Package.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Package.Maximum.Filter.builder()
+                                    .field(Price.Package.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Package.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -365,6 +414,13 @@ internal class PriceTest {
                     .minimum(
                         Price.Package.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Package.Minimum.Filter.builder()
+                                    .field(Price.Package.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Package.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -417,10 +473,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -448,6 +504,13 @@ internal class PriceTest {
                 .maximum(
                     Price.Matrix.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Matrix.Maximum.Filter.builder()
+                                .field(Price.Matrix.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.Matrix.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -460,6 +523,13 @@ internal class PriceTest {
                 .minimum(
                     Price.Matrix.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Matrix.Minimum.Filter.builder()
+                                .field(Price.Matrix.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.Matrix.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -533,10 +603,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -564,6 +634,13 @@ internal class PriceTest {
                     .maximum(
                         Price.Matrix.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Matrix.Maximum.Filter.builder()
+                                    .field(Price.Matrix.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Matrix.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -576,6 +653,13 @@ internal class PriceTest {
                     .minimum(
                         Price.Matrix.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Matrix.Minimum.Filter.builder()
+                                    .field(Price.Matrix.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Matrix.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -622,10 +706,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -641,6 +725,13 @@ internal class PriceTest {
                 .maximum(
                     Price.Tiered.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Tiered.Maximum.Filter.builder()
+                                .field(Price.Tiered.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.Tiered.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -653,6 +744,13 @@ internal class PriceTest {
                 .minimum(
                     Price.Tiered.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Tiered.Minimum.Filter.builder()
+                                .field(Price.Tiered.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.Tiered.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -737,10 +835,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -756,6 +854,13 @@ internal class PriceTest {
                     .maximum(
                         Price.Tiered.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Tiered.Maximum.Filter.builder()
+                                    .field(Price.Tiered.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Tiered.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -768,6 +873,13 @@ internal class PriceTest {
                     .minimum(
                         Price.Tiered.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Tiered.Minimum.Filter.builder()
+                                    .field(Price.Tiered.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Tiered.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -825,10 +937,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -844,6 +956,13 @@ internal class PriceTest {
                 .maximum(
                     Price.TieredBps.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.TieredBps.Maximum.Filter.builder()
+                                .field(Price.TieredBps.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.TieredBps.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -856,6 +975,13 @@ internal class PriceTest {
                 .minimum(
                     Price.TieredBps.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.TieredBps.Minimum.Filter.builder()
+                                .field(Price.TieredBps.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.TieredBps.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -943,10 +1069,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -964,6 +1090,13 @@ internal class PriceTest {
                     .maximum(
                         Price.TieredBps.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.TieredBps.Maximum.Filter.builder()
+                                    .field(Price.TieredBps.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Price.TieredBps.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -976,6 +1109,13 @@ internal class PriceTest {
                     .minimum(
                         Price.TieredBps.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.TieredBps.Minimum.Filter.builder()
+                                    .field(Price.TieredBps.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Price.TieredBps.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -1040,10 +1180,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -1059,6 +1199,13 @@ internal class PriceTest {
                 .maximum(
                     Price.Bps.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Bps.Maximum.Filter.builder()
+                                .field(Price.Bps.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.Bps.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -1071,6 +1218,13 @@ internal class PriceTest {
                 .minimum(
                     Price.Bps.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Bps.Minimum.Filter.builder()
+                                .field(Price.Bps.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.Bps.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -1150,10 +1304,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -1169,6 +1323,13 @@ internal class PriceTest {
                     .maximum(
                         Price.Bps.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Bps.Maximum.Filter.builder()
+                                    .field(Price.Bps.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Bps.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -1181,6 +1342,13 @@ internal class PriceTest {
                     .minimum(
                         Price.Bps.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Bps.Minimum.Filter.builder()
+                                    .field(Price.Bps.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Bps.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -1238,10 +1406,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -1257,6 +1425,13 @@ internal class PriceTest {
                 .maximum(
                     Price.BulkBps.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.BulkBps.Maximum.Filter.builder()
+                                .field(Price.BulkBps.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.BulkBps.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -1269,6 +1444,13 @@ internal class PriceTest {
                 .minimum(
                     Price.BulkBps.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.BulkBps.Minimum.Filter.builder()
+                                .field(Price.BulkBps.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.BulkBps.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -1353,10 +1535,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -1374,6 +1556,13 @@ internal class PriceTest {
                     .maximum(
                         Price.BulkBps.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.BulkBps.Maximum.Filter.builder()
+                                    .field(Price.BulkBps.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Price.BulkBps.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -1386,6 +1575,13 @@ internal class PriceTest {
                     .minimum(
                         Price.BulkBps.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.BulkBps.Minimum.Filter.builder()
+                                    .field(Price.BulkBps.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Price.BulkBps.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -1442,10 +1638,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -1461,6 +1657,13 @@ internal class PriceTest {
                 .maximum(
                     Price.Bulk.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Bulk.Maximum.Filter.builder()
+                                .field(Price.Bulk.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.Bulk.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -1473,6 +1676,13 @@ internal class PriceTest {
                 .minimum(
                     Price.Bulk.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.Bulk.Minimum.Filter.builder()
+                                .field(Price.Bulk.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.Bulk.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -1556,10 +1766,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -1575,6 +1785,13 @@ internal class PriceTest {
                     .maximum(
                         Price.Bulk.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Bulk.Maximum.Filter.builder()
+                                    .field(Price.Bulk.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Bulk.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -1587,6 +1804,13 @@ internal class PriceTest {
                     .minimum(
                         Price.Bulk.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.Bulk.Minimum.Filter.builder()
+                                    .field(Price.Bulk.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Price.Bulk.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -1637,10 +1861,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -1658,6 +1882,15 @@ internal class PriceTest {
                 .maximum(
                     Price.ThresholdTotalAmount.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.ThresholdTotalAmount.Maximum.Filter.builder()
+                                .field(Price.ThresholdTotalAmount.Maximum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.ThresholdTotalAmount.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -1670,6 +1903,15 @@ internal class PriceTest {
                 .minimum(
                     Price.ThresholdTotalAmount.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.ThresholdTotalAmount.Minimum.Filter.builder()
+                                .field(Price.ThresholdTotalAmount.Minimum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.ThresholdTotalAmount.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -1753,10 +1995,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -1775,6 +2017,15 @@ internal class PriceTest {
                     .maximum(
                         Price.ThresholdTotalAmount.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.ThresholdTotalAmount.Maximum.Filter.builder()
+                                    .field(Price.ThresholdTotalAmount.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.ThresholdTotalAmount.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -1787,6 +2038,15 @@ internal class PriceTest {
                     .minimum(
                         Price.ThresholdTotalAmount.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.ThresholdTotalAmount.Minimum.Filter.builder()
+                                    .field(Price.ThresholdTotalAmount.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.ThresholdTotalAmount.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -1840,10 +2100,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -1861,6 +2121,13 @@ internal class PriceTest {
                 .maximum(
                     Price.TieredPackage.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.TieredPackage.Maximum.Filter.builder()
+                                .field(Price.TieredPackage.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.TieredPackage.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -1873,6 +2140,13 @@ internal class PriceTest {
                 .minimum(
                     Price.TieredPackage.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.TieredPackage.Minimum.Filter.builder()
+                                .field(Price.TieredPackage.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.TieredPackage.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -1953,10 +2227,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -1974,6 +2248,13 @@ internal class PriceTest {
                     .maximum(
                         Price.TieredPackage.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.TieredPackage.Maximum.Filter.builder()
+                                    .field(Price.TieredPackage.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Price.TieredPackage.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -1986,6 +2267,13 @@ internal class PriceTest {
                     .minimum(
                         Price.TieredPackage.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.TieredPackage.Minimum.Filter.builder()
+                                    .field(Price.TieredPackage.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Price.TieredPackage.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -2039,10 +2327,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -2065,6 +2353,13 @@ internal class PriceTest {
                 .maximum(
                     Price.GroupedTiered.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.GroupedTiered.Maximum.Filter.builder()
+                                .field(Price.GroupedTiered.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.GroupedTiered.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -2077,6 +2372,13 @@ internal class PriceTest {
                 .minimum(
                     Price.GroupedTiered.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.GroupedTiered.Minimum.Filter.builder()
+                                .field(Price.GroupedTiered.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.GroupedTiered.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -2152,10 +2454,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -2178,6 +2480,13 @@ internal class PriceTest {
                     .maximum(
                         Price.GroupedTiered.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.GroupedTiered.Maximum.Filter.builder()
+                                    .field(Price.GroupedTiered.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Price.GroupedTiered.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -2190,6 +2499,13 @@ internal class PriceTest {
                     .minimum(
                         Price.GroupedTiered.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.GroupedTiered.Minimum.Filter.builder()
+                                    .field(Price.GroupedTiered.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Price.GroupedTiered.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -2238,10 +2554,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -2259,6 +2575,13 @@ internal class PriceTest {
                 .maximum(
                     Price.TieredWithMinimum.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.TieredWithMinimum.Maximum.Filter.builder()
+                                .field(Price.TieredWithMinimum.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.TieredWithMinimum.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -2271,6 +2594,13 @@ internal class PriceTest {
                 .minimum(
                     Price.TieredWithMinimum.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.TieredWithMinimum.Minimum.Filter.builder()
+                                .field(Price.TieredWithMinimum.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.TieredWithMinimum.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -2353,10 +2683,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -2374,6 +2704,15 @@ internal class PriceTest {
                     .maximum(
                         Price.TieredWithMinimum.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.TieredWithMinimum.Maximum.Filter.builder()
+                                    .field(Price.TieredWithMinimum.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.TieredWithMinimum.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -2386,6 +2725,15 @@ internal class PriceTest {
                     .minimum(
                         Price.TieredWithMinimum.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.TieredWithMinimum.Minimum.Filter.builder()
+                                    .field(Price.TieredWithMinimum.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.TieredWithMinimum.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -2442,10 +2790,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -2464,6 +2812,15 @@ internal class PriceTest {
                 .maximum(
                     Price.TieredPackageWithMinimum.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.TieredPackageWithMinimum.Maximum.Filter.builder()
+                                .field(Price.TieredPackageWithMinimum.Maximum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.TieredPackageWithMinimum.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -2476,6 +2833,15 @@ internal class PriceTest {
                 .minimum(
                     Price.TieredPackageWithMinimum.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.TieredPackageWithMinimum.Minimum.Filter.builder()
+                                .field(Price.TieredPackageWithMinimum.Minimum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.TieredPackageWithMinimum.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -2560,10 +2926,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -2585,6 +2951,18 @@ internal class PriceTest {
                     .maximum(
                         Price.TieredPackageWithMinimum.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.TieredPackageWithMinimum.Maximum.Filter.builder()
+                                    .field(
+                                        Price.TieredPackageWithMinimum.Maximum.Filter.Field.PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.TieredPackageWithMinimum.Maximum.Filter.Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -2597,6 +2975,18 @@ internal class PriceTest {
                     .minimum(
                         Price.TieredPackageWithMinimum.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.TieredPackageWithMinimum.Minimum.Filter.builder()
+                                    .field(
+                                        Price.TieredPackageWithMinimum.Minimum.Filter.Field.PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.TieredPackageWithMinimum.Minimum.Filter.Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -2652,10 +3042,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -2673,6 +3063,15 @@ internal class PriceTest {
                 .maximum(
                     Price.PackageWithAllocation.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.PackageWithAllocation.Maximum.Filter.builder()
+                                .field(Price.PackageWithAllocation.Maximum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.PackageWithAllocation.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -2685,6 +3084,15 @@ internal class PriceTest {
                 .minimum(
                     Price.PackageWithAllocation.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.PackageWithAllocation.Minimum.Filter.builder()
+                                .field(Price.PackageWithAllocation.Minimum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.PackageWithAllocation.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -2768,10 +3176,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -2790,6 +3198,17 @@ internal class PriceTest {
                     .maximum(
                         Price.PackageWithAllocation.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.PackageWithAllocation.Maximum.Filter.builder()
+                                    .field(
+                                        Price.PackageWithAllocation.Maximum.Filter.Field.PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.PackageWithAllocation.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -2802,6 +3221,17 @@ internal class PriceTest {
                     .minimum(
                         Price.PackageWithAllocation.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.PackageWithAllocation.Minimum.Filter.builder()
+                                    .field(
+                                        Price.PackageWithAllocation.Minimum.Filter.Field.PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.PackageWithAllocation.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -2855,10 +3285,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -2876,6 +3306,13 @@ internal class PriceTest {
                 .maximum(
                     Price.UnitWithPercent.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.UnitWithPercent.Maximum.Filter.builder()
+                                .field(Price.UnitWithPercent.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.UnitWithPercent.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -2888,6 +3325,13 @@ internal class PriceTest {
                 .minimum(
                     Price.UnitWithPercent.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.UnitWithPercent.Minimum.Filter.builder()
+                                .field(Price.UnitWithPercent.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.UnitWithPercent.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -2968,10 +3412,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -2989,6 +3433,15 @@ internal class PriceTest {
                     .maximum(
                         Price.UnitWithPercent.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.UnitWithPercent.Maximum.Filter.builder()
+                                    .field(Price.UnitWithPercent.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.UnitWithPercent.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -3001,6 +3454,15 @@ internal class PriceTest {
                     .minimum(
                         Price.UnitWithPercent.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.UnitWithPercent.Minimum.Filter.builder()
+                                    .field(Price.UnitWithPercent.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.UnitWithPercent.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -3056,10 +3518,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -3091,6 +3553,15 @@ internal class PriceTest {
                 .maximum(
                     Price.MatrixWithAllocation.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.MatrixWithAllocation.Maximum.Filter.builder()
+                                .field(Price.MatrixWithAllocation.Maximum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.MatrixWithAllocation.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -3103,6 +3574,15 @@ internal class PriceTest {
                 .minimum(
                     Price.MatrixWithAllocation.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.MatrixWithAllocation.Minimum.Filter.builder()
+                                .field(Price.MatrixWithAllocation.Minimum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.MatrixWithAllocation.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -3181,10 +3661,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -3217,6 +3697,15 @@ internal class PriceTest {
                     .maximum(
                         Price.MatrixWithAllocation.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.MatrixWithAllocation.Maximum.Filter.builder()
+                                    .field(Price.MatrixWithAllocation.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.MatrixWithAllocation.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -3229,6 +3718,15 @@ internal class PriceTest {
                     .minimum(
                         Price.MatrixWithAllocation.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.MatrixWithAllocation.Minimum.Filter.builder()
+                                    .field(Price.MatrixWithAllocation.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.MatrixWithAllocation.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -3277,10 +3775,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -3298,6 +3796,15 @@ internal class PriceTest {
                 .maximum(
                     Price.TieredWithProration.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.TieredWithProration.Maximum.Filter.builder()
+                                .field(Price.TieredWithProration.Maximum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.TieredWithProration.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -3310,6 +3817,15 @@ internal class PriceTest {
                 .minimum(
                     Price.TieredWithProration.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.TieredWithProration.Minimum.Filter.builder()
+                                .field(Price.TieredWithProration.Minimum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.TieredWithProration.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -3392,10 +3908,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -3414,6 +3930,15 @@ internal class PriceTest {
                     .maximum(
                         Price.TieredWithProration.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.TieredWithProration.Maximum.Filter.builder()
+                                    .field(Price.TieredWithProration.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.TieredWithProration.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -3426,6 +3951,15 @@ internal class PriceTest {
                     .minimum(
                         Price.TieredWithProration.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.TieredWithProration.Minimum.Filter.builder()
+                                    .field(Price.TieredWithProration.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.TieredWithProration.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -3479,10 +4013,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -3500,6 +4034,13 @@ internal class PriceTest {
                 .maximum(
                     Price.UnitWithProration.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.UnitWithProration.Maximum.Filter.builder()
+                                .field(Price.UnitWithProration.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.UnitWithProration.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -3512,6 +4053,13 @@ internal class PriceTest {
                 .minimum(
                     Price.UnitWithProration.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.UnitWithProration.Minimum.Filter.builder()
+                                .field(Price.UnitWithProration.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.UnitWithProration.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -3594,10 +4142,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -3615,6 +4163,15 @@ internal class PriceTest {
                     .maximum(
                         Price.UnitWithProration.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.UnitWithProration.Maximum.Filter.builder()
+                                    .field(Price.UnitWithProration.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.UnitWithProration.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -3627,6 +4184,15 @@ internal class PriceTest {
                     .minimum(
                         Price.UnitWithProration.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.UnitWithProration.Minimum.Filter.builder()
+                                    .field(Price.UnitWithProration.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.UnitWithProration.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -3680,10 +4246,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -3706,6 +4272,13 @@ internal class PriceTest {
                 .maximum(
                     Price.GroupedAllocation.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.GroupedAllocation.Maximum.Filter.builder()
+                                .field(Price.GroupedAllocation.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.GroupedAllocation.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -3718,6 +4291,13 @@ internal class PriceTest {
                 .minimum(
                     Price.GroupedAllocation.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.GroupedAllocation.Minimum.Filter.builder()
+                                .field(Price.GroupedAllocation.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.GroupedAllocation.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -3795,10 +4375,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -3821,6 +4401,15 @@ internal class PriceTest {
                     .maximum(
                         Price.GroupedAllocation.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.GroupedAllocation.Maximum.Filter.builder()
+                                    .field(Price.GroupedAllocation.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.GroupedAllocation.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -3833,6 +4422,15 @@ internal class PriceTest {
                     .minimum(
                         Price.GroupedAllocation.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.GroupedAllocation.Minimum.Filter.builder()
+                                    .field(Price.GroupedAllocation.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.GroupedAllocation.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -3884,10 +4482,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -3912,6 +4510,18 @@ internal class PriceTest {
                 .maximum(
                     Price.GroupedWithProratedMinimum.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.GroupedWithProratedMinimum.Maximum.Filter.builder()
+                                .field(
+                                    Price.GroupedWithProratedMinimum.Maximum.Filter.Field.PRICE_ID
+                                )
+                                .operator(
+                                    Price.GroupedWithProratedMinimum.Maximum.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -3924,6 +4534,18 @@ internal class PriceTest {
                 .minimum(
                     Price.GroupedWithProratedMinimum.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.GroupedWithProratedMinimum.Minimum.Filter.builder()
+                                .field(
+                                    Price.GroupedWithProratedMinimum.Minimum.Filter.Field.PRICE_ID
+                                )
+                                .operator(
+                                    Price.GroupedWithProratedMinimum.Minimum.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -4003,10 +4625,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -4036,6 +4658,19 @@ internal class PriceTest {
                     .maximum(
                         Price.GroupedWithProratedMinimum.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.GroupedWithProratedMinimum.Maximum.Filter.builder()
+                                    .field(
+                                        Price.GroupedWithProratedMinimum.Maximum.Filter.Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.GroupedWithProratedMinimum.Maximum.Filter.Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -4048,6 +4683,19 @@ internal class PriceTest {
                     .minimum(
                         Price.GroupedWithProratedMinimum.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.GroupedWithProratedMinimum.Minimum.Filter.builder()
+                                    .field(
+                                        Price.GroupedWithProratedMinimum.Minimum.Filter.Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.GroupedWithProratedMinimum.Minimum.Filter.Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -4099,10 +4747,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -4126,6 +4774,17 @@ internal class PriceTest {
                 .maximum(
                     Price.GroupedWithMeteredMinimum.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.GroupedWithMeteredMinimum.Maximum.Filter.builder()
+                                .field(
+                                    Price.GroupedWithMeteredMinimum.Maximum.Filter.Field.PRICE_ID
+                                )
+                                .operator(
+                                    Price.GroupedWithMeteredMinimum.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -4138,6 +4797,17 @@ internal class PriceTest {
                 .minimum(
                     Price.GroupedWithMeteredMinimum.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.GroupedWithMeteredMinimum.Minimum.Filter.builder()
+                                .field(
+                                    Price.GroupedWithMeteredMinimum.Minimum.Filter.Field.PRICE_ID
+                                )
+                                .operator(
+                                    Price.GroupedWithMeteredMinimum.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -4217,10 +4887,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -4247,6 +4917,19 @@ internal class PriceTest {
                     .maximum(
                         Price.GroupedWithMeteredMinimum.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.GroupedWithMeteredMinimum.Maximum.Filter.builder()
+                                    .field(
+                                        Price.GroupedWithMeteredMinimum.Maximum.Filter.Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.GroupedWithMeteredMinimum.Maximum.Filter.Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -4259,6 +4942,19 @@ internal class PriceTest {
                     .minimum(
                         Price.GroupedWithMeteredMinimum.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.GroupedWithMeteredMinimum.Minimum.Filter.builder()
+                                    .field(
+                                        Price.GroupedWithMeteredMinimum.Minimum.Filter.Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.GroupedWithMeteredMinimum.Minimum.Filter.Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -4309,10 +5005,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -4335,6 +5031,15 @@ internal class PriceTest {
                 .maximum(
                     Price.MatrixWithDisplayName.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.MatrixWithDisplayName.Maximum.Filter.builder()
+                                .field(Price.MatrixWithDisplayName.Maximum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.MatrixWithDisplayName.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -4347,6 +5052,15 @@ internal class PriceTest {
                 .minimum(
                     Price.MatrixWithDisplayName.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.MatrixWithDisplayName.Minimum.Filter.builder()
+                                .field(Price.MatrixWithDisplayName.Minimum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.MatrixWithDisplayName.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -4425,10 +5139,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -4452,6 +5166,17 @@ internal class PriceTest {
                     .maximum(
                         Price.MatrixWithDisplayName.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.MatrixWithDisplayName.Maximum.Filter.builder()
+                                    .field(
+                                        Price.MatrixWithDisplayName.Maximum.Filter.Field.PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.MatrixWithDisplayName.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -4464,6 +5189,17 @@ internal class PriceTest {
                     .minimum(
                         Price.MatrixWithDisplayName.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.MatrixWithDisplayName.Minimum.Filter.builder()
+                                    .field(
+                                        Price.MatrixWithDisplayName.Minimum.Filter.Field.PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.MatrixWithDisplayName.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -4517,10 +5253,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -4538,6 +5274,13 @@ internal class PriceTest {
                 .maximum(
                     Price.BulkWithProration.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.BulkWithProration.Maximum.Filter.builder()
+                                .field(Price.BulkWithProration.Maximum.Filter.Field.PRICE_ID)
+                                .operator(Price.BulkWithProration.Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -4550,6 +5293,13 @@ internal class PriceTest {
                 .minimum(
                     Price.BulkWithProration.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.BulkWithProration.Minimum.Filter.builder()
+                                .field(Price.BulkWithProration.Minimum.Filter.Field.PRICE_ID)
+                                .operator(Price.BulkWithProration.Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -4632,10 +5382,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -4653,6 +5403,15 @@ internal class PriceTest {
                     .maximum(
                         Price.BulkWithProration.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.BulkWithProration.Maximum.Filter.builder()
+                                    .field(Price.BulkWithProration.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.BulkWithProration.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -4665,6 +5424,15 @@ internal class PriceTest {
                     .minimum(
                         Price.BulkWithProration.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.BulkWithProration.Minimum.Filter.builder()
+                                    .field(Price.BulkWithProration.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.BulkWithProration.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -4715,10 +5483,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -4741,6 +5509,15 @@ internal class PriceTest {
                 .maximum(
                     Price.GroupedTieredPackage.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.GroupedTieredPackage.Maximum.Filter.builder()
+                                .field(Price.GroupedTieredPackage.Maximum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.GroupedTieredPackage.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -4753,6 +5530,15 @@ internal class PriceTest {
                 .minimum(
                     Price.GroupedTieredPackage.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.GroupedTieredPackage.Minimum.Filter.builder()
+                                .field(Price.GroupedTieredPackage.Minimum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.GroupedTieredPackage.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -4831,10 +5617,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -4858,6 +5644,15 @@ internal class PriceTest {
                     .maximum(
                         Price.GroupedTieredPackage.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.GroupedTieredPackage.Maximum.Filter.builder()
+                                    .field(Price.GroupedTieredPackage.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.GroupedTieredPackage.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -4870,6 +5665,15 @@ internal class PriceTest {
                     .minimum(
                         Price.GroupedTieredPackage.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.GroupedTieredPackage.Minimum.Filter.builder()
+                                    .field(Price.GroupedTieredPackage.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.GroupedTieredPackage.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -4920,10 +5724,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -4946,6 +5750,15 @@ internal class PriceTest {
                 .maximum(
                     Price.MaxGroupTieredPackage.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.MaxGroupTieredPackage.Maximum.Filter.builder()
+                                .field(Price.MaxGroupTieredPackage.Maximum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.MaxGroupTieredPackage.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -4958,6 +5771,15 @@ internal class PriceTest {
                 .minimum(
                     Price.MaxGroupTieredPackage.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.MaxGroupTieredPackage.Minimum.Filter.builder()
+                                .field(Price.MaxGroupTieredPackage.Minimum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.MaxGroupTieredPackage.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -5036,10 +5858,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -5063,6 +5885,17 @@ internal class PriceTest {
                     .maximum(
                         Price.MaxGroupTieredPackage.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.MaxGroupTieredPackage.Maximum.Filter.builder()
+                                    .field(
+                                        Price.MaxGroupTieredPackage.Maximum.Filter.Field.PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.MaxGroupTieredPackage.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -5075,6 +5908,17 @@ internal class PriceTest {
                     .minimum(
                         Price.MaxGroupTieredPackage.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.MaxGroupTieredPackage.Minimum.Filter.builder()
+                                    .field(
+                                        Price.MaxGroupTieredPackage.Minimum.Filter.Field.PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.MaxGroupTieredPackage.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -5127,10 +5971,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -5152,6 +5996,19 @@ internal class PriceTest {
                 .maximum(
                     Price.ScalableMatrixWithUnitPricing.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.ScalableMatrixWithUnitPricing.Maximum.Filter.builder()
+                                .field(
+                                    Price.ScalableMatrixWithUnitPricing.Maximum.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    Price.ScalableMatrixWithUnitPricing.Maximum.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -5164,6 +6021,19 @@ internal class PriceTest {
                 .minimum(
                     Price.ScalableMatrixWithUnitPricing.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.ScalableMatrixWithUnitPricing.Minimum.Filter.builder()
+                                .field(
+                                    Price.ScalableMatrixWithUnitPricing.Minimum.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    Price.ScalableMatrixWithUnitPricing.Minimum.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -5251,10 +6121,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -5279,6 +6149,19 @@ internal class PriceTest {
                     .maximum(
                         Price.ScalableMatrixWithUnitPricing.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.ScalableMatrixWithUnitPricing.Maximum.Filter.builder()
+                                    .field(
+                                        Price.ScalableMatrixWithUnitPricing.Maximum.Filter.Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.ScalableMatrixWithUnitPricing.Maximum.Filter.Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -5291,6 +6174,19 @@ internal class PriceTest {
                     .minimum(
                         Price.ScalableMatrixWithUnitPricing.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.ScalableMatrixWithUnitPricing.Minimum.Filter.builder()
+                                    .field(
+                                        Price.ScalableMatrixWithUnitPricing.Minimum.Filter.Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.ScalableMatrixWithUnitPricing.Minimum.Filter.Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -5349,10 +6245,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -5377,6 +6273,19 @@ internal class PriceTest {
                 .maximum(
                     Price.ScalableMatrixWithTieredPricing.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.ScalableMatrixWithTieredPricing.Maximum.Filter.builder()
+                                .field(
+                                    Price.ScalableMatrixWithTieredPricing.Maximum.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    Price.ScalableMatrixWithTieredPricing.Maximum.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -5389,6 +6298,19 @@ internal class PriceTest {
                 .minimum(
                     Price.ScalableMatrixWithTieredPricing.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.ScalableMatrixWithTieredPricing.Minimum.Filter.builder()
+                                .field(
+                                    Price.ScalableMatrixWithTieredPricing.Minimum.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    Price.ScalableMatrixWithTieredPricing.Minimum.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -5477,10 +6399,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -5505,6 +6427,20 @@ internal class PriceTest {
                     .maximum(
                         Price.ScalableMatrixWithTieredPricing.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.ScalableMatrixWithTieredPricing.Maximum.Filter.builder()
+                                    .field(
+                                        Price.ScalableMatrixWithTieredPricing.Maximum.Filter.Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.ScalableMatrixWithTieredPricing.Maximum.Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -5517,6 +6453,20 @@ internal class PriceTest {
                     .minimum(
                         Price.ScalableMatrixWithTieredPricing.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.ScalableMatrixWithTieredPricing.Minimum.Filter.builder()
+                                    .field(
+                                        Price.ScalableMatrixWithTieredPricing.Minimum.Filter.Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.ScalableMatrixWithTieredPricing.Minimum.Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -5579,10 +6529,10 @@ internal class PriceTest {
                 .currency("currency")
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -5600,6 +6550,15 @@ internal class PriceTest {
                 .maximum(
                     Price.CumulativeGroupedBulk.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.CumulativeGroupedBulk.Maximum.Filter.builder()
+                                .field(Price.CumulativeGroupedBulk.Maximum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.CumulativeGroupedBulk.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -5612,6 +6571,15 @@ internal class PriceTest {
                 .minimum(
                     Price.CumulativeGroupedBulk.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            Price.CumulativeGroupedBulk.Minimum.Filter.builder()
+                                .field(Price.CumulativeGroupedBulk.Minimum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    Price.CumulativeGroupedBulk.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -5695,10 +6663,10 @@ internal class PriceTest {
                     .currency("currency")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -5717,6 +6685,17 @@ internal class PriceTest {
                     .maximum(
                         Price.CumulativeGroupedBulk.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.CumulativeGroupedBulk.Maximum.Filter.builder()
+                                    .field(
+                                        Price.CumulativeGroupedBulk.Maximum.Filter.Field.PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.CumulativeGroupedBulk.Maximum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -5729,6 +6708,17 @@ internal class PriceTest {
                     .minimum(
                         Price.CumulativeGroupedBulk.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Price.CumulativeGroupedBulk.Minimum.Filter.builder()
+                                    .field(
+                                        Price.CumulativeGroupedBulk.Minimum.Filter.Field.PRICE_ID
+                                    )
+                                    .operator(
+                                        Price.CumulativeGroupedBulk.Minimum.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )

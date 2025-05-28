@@ -29,8 +29,8 @@ internal class CreditNoteServiceTest {
                             .invoiceLineItemId("4khy3nwzktxv7")
                             .build()
                     )
-                    .memo("An optional memo for my credit note.")
                     .reason(CreditNoteCreateParams.Reason.DUPLICATE)
+                    .memo("An optional memo for my credit note.")
                     .build()
             )
 

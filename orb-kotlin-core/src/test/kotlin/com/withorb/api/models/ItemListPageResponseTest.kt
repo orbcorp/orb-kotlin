@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.withorb.api.core.JsonValue
 import com.withorb.api.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
@@ -26,6 +27,11 @@ internal class ItemListPageResponseTest {
                                 .externalEntityId("external_entity_id")
                                 .build()
                         )
+                        .metadata(
+                            Item.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .name("name")
                         .build()
                 )
@@ -45,6 +51,11 @@ internal class ItemListPageResponseTest {
                                 Item.ExternalConnection.ExternalConnectionName.STRIPE
                             )
                             .externalEntityId("external_entity_id")
+                            .build()
+                    )
+                    .metadata(
+                        Item.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .name("name")
@@ -69,6 +80,11 @@ internal class ItemListPageResponseTest {
                                     Item.ExternalConnection.ExternalConnectionName.STRIPE
                                 )
                                 .externalEntityId("external_entity_id")
+                                .build()
+                        )
+                        .metadata(
+                            Item.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
                         .name("name")

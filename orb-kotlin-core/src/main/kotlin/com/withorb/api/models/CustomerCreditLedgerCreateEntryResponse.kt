@@ -20,6 +20,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.toImmutable
@@ -361,6 +362,7 @@ private constructor(
         private val ledgerSequenceNumber: JsonField<Long>,
         private val metadata: JsonField<Metadata>,
         private val startingBalance: JsonField<Double>,
+        private val createdInvoices: JsonField<List<Invoice>>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -399,6 +401,9 @@ private constructor(
             @JsonProperty("starting_balance")
             @ExcludeMissing
             startingBalance: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("created_invoices")
+            @ExcludeMissing
+            createdInvoices: JsonField<List<Invoice>> = JsonMissing.of(),
         ) : this(
             id,
             amount,
@@ -413,6 +418,7 @@ private constructor(
             ledgerSequenceNumber,
             metadata,
             startingBalance,
+            createdInvoices,
             mutableMapOf(),
         )
 
@@ -503,6 +509,14 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
+
+        /**
+         * If the increment resulted in invoice creation, the list of created invoices
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun createdInvoices(): List<Invoice>? = createdInvoices.getNullable("created_invoices")
 
         /**
          * Returns the raw JSON value of [id].
@@ -605,6 +619,16 @@ private constructor(
         @ExcludeMissing
         fun _startingBalance(): JsonField<Double> = startingBalance
 
+        /**
+         * Returns the raw JSON value of [createdInvoices].
+         *
+         * Unlike [createdInvoices], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("created_invoices")
+        @ExcludeMissing
+        fun _createdInvoices(): JsonField<List<Invoice>> = createdInvoices
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -657,6 +681,7 @@ private constructor(
             private var ledgerSequenceNumber: JsonField<Long>? = null
             private var metadata: JsonField<Metadata>? = null
             private var startingBalance: JsonField<Double>? = null
+            private var createdInvoices: JsonField<MutableList<Invoice>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(increment: Increment) = apply {
@@ -673,6 +698,7 @@ private constructor(
                 ledgerSequenceNumber = increment.ledgerSequenceNumber
                 metadata = increment.metadata
                 startingBalance = increment.startingBalance
+                createdInvoices = increment.createdInvoices.map { it.toMutableList() }
                 additionalProperties = increment.additionalProperties.toMutableMap()
             }
 
@@ -843,6 +869,33 @@ private constructor(
                 this.startingBalance = startingBalance
             }
 
+            /** If the increment resulted in invoice creation, the list of created invoices */
+            fun createdInvoices(createdInvoices: List<Invoice>?) =
+                createdInvoices(JsonField.ofNullable(createdInvoices))
+
+            /**
+             * Sets [Builder.createdInvoices] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.createdInvoices] with a well-typed `List<Invoice>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun createdInvoices(createdInvoices: JsonField<List<Invoice>>) = apply {
+                this.createdInvoices = createdInvoices.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Invoice] to [createdInvoices].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addCreatedInvoice(createdInvoice: Invoice) = apply {
+                createdInvoices =
+                    (createdInvoices ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("createdInvoices", it).add(createdInvoice)
+                    }
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -900,6 +953,7 @@ private constructor(
                     checkRequired("ledgerSequenceNumber", ledgerSequenceNumber),
                     checkRequired("metadata", metadata),
                     checkRequired("startingBalance", startingBalance),
+                    (createdInvoices ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -928,6 +982,7 @@ private constructor(
             ledgerSequenceNumber()
             metadata().validate()
             startingBalance()
+            createdInvoices()?.forEach { it.validate() }
             validated = true
         }
 
@@ -958,7 +1013,8 @@ private constructor(
                 entryType.let { if (it == JsonValue.from("increment")) 1 else 0 } +
                 (if (ledgerSequenceNumber.asKnown() == null) 0 else 1) +
                 (metadata.asKnown()?.validity() ?: 0) +
-                (if (startingBalance.asKnown() == null) 0 else 1)
+                (if (startingBalance.asKnown() == null) 0 else 1) +
+                (createdInvoices.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
         class CreditBlock
         private constructor(
@@ -1643,17 +1699,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Increment && id == other.id && amount == other.amount && createdAt == other.createdAt && creditBlock == other.creditBlock && currency == other.currency && customer == other.customer && description == other.description && endingBalance == other.endingBalance && entryStatus == other.entryStatus && entryType == other.entryType && ledgerSequenceNumber == other.ledgerSequenceNumber && metadata == other.metadata && startingBalance == other.startingBalance && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Increment && id == other.id && amount == other.amount && createdAt == other.createdAt && creditBlock == other.creditBlock && currency == other.currency && customer == other.customer && description == other.description && endingBalance == other.endingBalance && entryStatus == other.entryStatus && entryType == other.entryType && ledgerSequenceNumber == other.ledgerSequenceNumber && metadata == other.metadata && startingBalance == other.startingBalance && createdInvoices == other.createdInvoices && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, creditBlock, currency, customer, description, endingBalance, entryStatus, entryType, ledgerSequenceNumber, metadata, startingBalance, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, creditBlock, currency, customer, description, endingBalance, entryStatus, entryType, ledgerSequenceNumber, metadata, startingBalance, createdInvoices, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Increment{id=$id, amount=$amount, createdAt=$createdAt, creditBlock=$creditBlock, currency=$currency, customer=$customer, description=$description, endingBalance=$endingBalance, entryStatus=$entryStatus, entryType=$entryType, ledgerSequenceNumber=$ledgerSequenceNumber, metadata=$metadata, startingBalance=$startingBalance, additionalProperties=$additionalProperties}"
+            "Increment{id=$id, amount=$amount, createdAt=$createdAt, creditBlock=$creditBlock, currency=$currency, customer=$customer, description=$description, endingBalance=$endingBalance, entryStatus=$entryStatus, entryType=$entryType, ledgerSequenceNumber=$ledgerSequenceNumber, metadata=$metadata, startingBalance=$startingBalance, createdInvoices=$createdInvoices, additionalProperties=$additionalProperties}"
     }
 
     class Decrement

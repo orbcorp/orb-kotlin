@@ -26,6 +26,30 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    SubscriptionPriceIntervalsResponse.AdjustmentInterval.Adjustment
+                                        .UsageDiscount
+                                        .Filter
+                                        .builder()
+                                        .field(
+                                            SubscriptionPriceIntervalsResponse.AdjustmentInterval
+                                                .Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            SubscriptionPriceIntervalsResponse.AdjustmentInterval
+                                                .Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
@@ -139,9 +163,26 @@ internal class SubscriptionPriceIntervalsResponseTest {
                 .addDiscountInterval(
                     SubscriptionPriceIntervalsResponse.DiscountInterval.Amount.builder()
                         .amountDiscount("amount_discount")
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionPriceIntervalsResponse.DiscountInterval.Amount.Filter
+                                .builder()
+                                .field(
+                                    SubscriptionPriceIntervalsResponse.DiscountInterval.Amount
+                                        .Filter
+                                        .Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionPriceIntervalsResponse.DiscountInterval.Amount
+                                        .Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
@@ -157,9 +198,22 @@ internal class SubscriptionPriceIntervalsResponseTest {
                 .invoicingThreshold("invoicing_threshold")
                 .addMaximumInterval(
                     SubscriptionPriceIntervalsResponse.MaximumInterval.builder()
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionPriceIntervalsResponse.MaximumInterval.Filter.builder()
+                                .field(
+                                    SubscriptionPriceIntervalsResponse.MaximumInterval.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionPriceIntervalsResponse.MaximumInterval.Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
@@ -171,13 +225,27 @@ internal class SubscriptionPriceIntervalsResponseTest {
                 )
                 .addMinimumInterval(
                     SubscriptionPriceIntervalsResponse.MinimumInterval.builder()
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionPriceIntervalsResponse.MinimumInterval.Filter.builder()
+                                .field(
+                                    SubscriptionPriceIntervalsResponse.MinimumInterval.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionPriceIntervalsResponse.MinimumInterval.Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .name("name")
                 .netTerms(0L)
                 .pendingSubscriptionChange(
                     SubscriptionPriceIntervalsResponse.PendingSubscriptionChange.builder()
@@ -191,6 +259,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             Plan.Adjustment.UsageDiscount.builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Adjustment.UsageDiscount.Filter.builder()
+                                        .field(Plan.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
+                                        .operator(
+                                            Plan.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
@@ -211,10 +288,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                         .description("description")
                         .discount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -223,6 +300,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                         .maximum(
                             Plan.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Maximum.Filter.builder()
+                                        .field(Plan.Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -235,6 +319,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                         .minimum(
                             Plan.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Minimum.Filter.builder()
+                                        .field(Plan.Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -247,10 +338,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .description("description")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -259,6 +350,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .maximum(
                                     Plan.PlanPhase.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Maximum.Filter.builder()
+                                                .field(Plan.PlanPhase.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -266,6 +366,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .minimum(
                                     Plan.PlanPhase.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Minimum.Filter.builder()
+                                                .field(Plan.PlanPhase.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -300,10 +409,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -321,6 +430,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -333,6 +451,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -417,10 +544,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -438,6 +565,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -450,6 +586,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -658,10 +803,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .discount(JsonValue.from(mapOf<String, Any>()))
                                 .addDiscount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -685,6 +830,26 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .builder()
+                                                        .field(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .isInvoiceLevel(true)
                                                 .reason("reason")
                                                 .usageDiscount(0.0)
@@ -694,12 +859,12 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .creditsApplied("6.00")
                                         .discount(
                                             PercentageDiscount.builder()
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(0.15)
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -709,6 +874,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .maximum(
                                             Invoice.LineItem.Maximum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Maximum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Maximum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Maximum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
@@ -716,6 +894,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .minimum(
                                             Invoice.LineItem.Minimum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Minimum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Minimum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Minimum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
@@ -754,13 +945,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .currency("currency")
                                                 .discount(
                                                     PercentageDiscount.builder()
-                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .discountType(
                                                             PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
                                                         )
                                                         .percentageDiscount(0.15)
+                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .reason("reason")
                                                         .build()
                                                 )
@@ -785,6 +976,20 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .maximum(
                                                     Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Maximum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Maximum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Maximum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
@@ -800,6 +1005,20 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .minimum(
                                                     Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Minimum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Minimum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Minimum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .minimumAmount("minimum_amount")
                                                         .build()
                                                 )
@@ -861,6 +1080,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .maximum(
                                     Invoice.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Maximum.Filter.builder()
+                                                .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -874,6 +1100,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .minimum(
                                     Invoice.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Minimum.Filter.builder()
+                                                .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -1083,10 +1316,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .discount(JsonValue.from(mapOf<String, Any>()))
                                 .addDiscount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -1110,6 +1343,26 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .builder()
+                                                        .field(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .isInvoiceLevel(true)
                                                 .reason("reason")
                                                 .usageDiscount(0.0)
@@ -1119,12 +1372,12 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .creditsApplied("6.00")
                                         .discount(
                                             PercentageDiscount.builder()
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(0.15)
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -1134,6 +1387,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .maximum(
                                             Invoice.LineItem.Maximum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Maximum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Maximum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Maximum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
@@ -1141,6 +1407,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .minimum(
                                             Invoice.LineItem.Minimum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Minimum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Minimum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Minimum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
@@ -1179,13 +1458,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .currency("currency")
                                                 .discount(
                                                     PercentageDiscount.builder()
-                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .discountType(
                                                             PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
                                                         )
                                                         .percentageDiscount(0.15)
+                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .reason("reason")
                                                         .build()
                                                 )
@@ -1210,6 +1489,20 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .maximum(
                                                     Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Maximum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Maximum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Maximum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
@@ -1225,6 +1518,20 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .minimum(
                                                     Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Minimum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Minimum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Minimum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .minimumAmount("minimum_amount")
                                                         .build()
                                                 )
@@ -1286,6 +1593,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .maximum(
                                     Invoice.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Maximum.Filter.builder()
+                                                .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -1299,6 +1613,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .minimum(
                                     Invoice.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Minimum.Filter.builder()
+                                                .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -1356,6 +1677,30 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .builder()
                             .id("id")
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                SubscriptionPriceIntervalsResponse.AdjustmentInterval.Adjustment
+                                    .UsageDiscount
+                                    .Filter
+                                    .builder()
+                                    .field(
+                                        SubscriptionPriceIntervalsResponse.AdjustmentInterval
+                                            .Adjustment
+                                            .UsageDiscount
+                                            .Filter
+                                            .Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        SubscriptionPriceIntervalsResponse.AdjustmentInterval
+                                            .Adjustment
+                                            .UsageDiscount
+                                            .Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .isInvoiceLevel(true)
                             .planPhaseOrder(0L)
                             .reason("reason")
@@ -1476,9 +1821,26 @@ internal class SubscriptionPriceIntervalsResponseTest {
                 SubscriptionPriceIntervalsResponse.DiscountInterval.ofAmount(
                     SubscriptionPriceIntervalsResponse.DiscountInterval.Amount.builder()
                         .amountDiscount("amount_discount")
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionPriceIntervalsResponse.DiscountInterval.Amount.Filter
+                                .builder()
+                                .field(
+                                    SubscriptionPriceIntervalsResponse.DiscountInterval.Amount
+                                        .Filter
+                                        .Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionPriceIntervalsResponse.DiscountInterval.Amount
+                                        .Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
@@ -1499,9 +1861,21 @@ internal class SubscriptionPriceIntervalsResponseTest {
         assertThat(subscriptionPriceIntervalsResponse.maximumIntervals())
             .containsExactly(
                 SubscriptionPriceIntervalsResponse.MaximumInterval.builder()
-                    .addAppliesToPriceId("string")
                     .addAppliesToPriceIntervalId("string")
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .addFilter(
+                        SubscriptionPriceIntervalsResponse.MaximumInterval.Filter.builder()
+                            .field(
+                                SubscriptionPriceIntervalsResponse.MaximumInterval.Filter.Field
+                                    .PRICE_ID
+                            )
+                            .operator(
+                                SubscriptionPriceIntervalsResponse.MaximumInterval.Filter.Operator
+                                    .INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
                     .maximumAmount("maximum_amount")
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
@@ -1515,13 +1889,26 @@ internal class SubscriptionPriceIntervalsResponseTest {
         assertThat(subscriptionPriceIntervalsResponse.minimumIntervals())
             .containsExactly(
                 SubscriptionPriceIntervalsResponse.MinimumInterval.builder()
-                    .addAppliesToPriceId("string")
                     .addAppliesToPriceIntervalId("string")
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .addFilter(
+                        SubscriptionPriceIntervalsResponse.MinimumInterval.Filter.builder()
+                            .field(
+                                SubscriptionPriceIntervalsResponse.MinimumInterval.Filter.Field
+                                    .PRICE_ID
+                            )
+                            .operator(
+                                SubscriptionPriceIntervalsResponse.MinimumInterval.Filter.Operator
+                                    .INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
                     .minimumAmount("minimum_amount")
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+        assertThat(subscriptionPriceIntervalsResponse.name()).isEqualTo("name")
         assertThat(subscriptionPriceIntervalsResponse.netTerms()).isEqualTo(0L)
         assertThat(subscriptionPriceIntervalsResponse.pendingSubscriptionChange())
             .isEqualTo(
@@ -1537,6 +1924,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                         Plan.Adjustment.UsageDiscount.builder()
                             .id("id")
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Plan.Adjustment.UsageDiscount.Filter.builder()
+                                    .field(Plan.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Plan.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .isInvoiceLevel(true)
                             .planPhaseOrder(0L)
                             .reason("reason")
@@ -1557,10 +1953,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                     .description("description")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -1569,6 +1965,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                     .maximum(
                         Plan.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Plan.Maximum.Filter.builder()
+                                    .field(Plan.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -1581,6 +1984,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                     .minimum(
                         Plan.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Plan.Minimum.Filter.builder()
+                                    .field(Plan.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -1593,10 +2003,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .description("description")
                             .discount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -1605,6 +2015,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .maximum(
                                 Plan.PlanPhase.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Plan.PlanPhase.Maximum.Filter.builder()
+                                            .field(Plan.PlanPhase.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                Plan.PlanPhase.Maximum.Filter.Operator.INCLUDES
+                                            )
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -1612,6 +2031,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .minimum(
                                 Plan.PlanPhase.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Plan.PlanPhase.Minimum.Filter.builder()
+                                            .field(Plan.PlanPhase.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                Plan.PlanPhase.Minimum.Filter.Operator.INCLUDES
+                                            )
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -1644,10 +2072,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .currency("currency")
                             .discount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -1665,6 +2093,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .maximum(
                                 Price.Unit.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Maximum.Filter.builder()
+                                            .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -1677,6 +2112,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .minimum(
                                 Price.Unit.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Minimum.Filter.builder()
+                                            .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -1753,10 +2195,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .currency("currency")
                             .discount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -1774,6 +2216,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .maximum(
                                 Price.Unit.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Maximum.Filter.builder()
+                                            .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -1786,6 +2235,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .minimum(
                                 Price.Unit.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Minimum.Filter.builder()
+                                            .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -1988,10 +2444,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .discount(JsonValue.from(mapOf<String, Any>()))
                             .addDiscount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -2015,6 +2471,24 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                             .id("id")
                                             .amount("amount")
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                    .builder()
+                                                    .field(
+                                                        Invoice.LineItem.Adjustment.UsageDiscount
+                                                            .Filter
+                                                            .Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Adjustment.UsageDiscount
+                                                            .Filter
+                                                            .Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .isInvoiceLevel(true)
                                             .reason("reason")
                                             .usageDiscount(0.0)
@@ -2024,12 +2498,12 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                     .creditsApplied("6.00")
                                     .discount(
                                         PercentageDiscount.builder()
-                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
                                             .percentageDiscount(0.15)
+                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .reason("reason")
                                             .build()
                                     )
@@ -2039,6 +2513,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                     .maximum(
                                         Invoice.LineItem.Maximum.builder()
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Maximum.Filter.builder()
+                                                    .field(
+                                                        Invoice.LineItem.Maximum.Filter.Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Maximum.Filter.Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
@@ -2046,6 +2533,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                     .minimum(
                                         Invoice.LineItem.Minimum.builder()
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Minimum.Filter.builder()
+                                                    .field(
+                                                        Invoice.LineItem.Minimum.Filter.Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Minimum.Filter.Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .minimumAmount("minimum_amount")
                                             .build()
                                     )
@@ -2082,12 +2582,12 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                             .currency("currency")
                                             .discount(
                                                 PercentageDiscount.builder()
-                                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
                                                     .percentageDiscount(0.15)
+                                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .reason("reason")
                                                     .build()
                                             )
@@ -2112,6 +2612,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                             .maximum(
                                                 Price.Unit.Maximum.builder()
                                                     .addAppliesToPriceId("string")
+                                                    .addFilter(
+                                                        Price.Unit.Maximum.Filter.builder()
+                                                            .field(
+                                                                Price.Unit.Maximum.Filter.Field
+                                                                    .PRICE_ID
+                                                            )
+                                                            .operator(
+                                                                Price.Unit.Maximum.Filter.Operator
+                                                                    .INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .maximumAmount("maximum_amount")
                                                     .build()
                                             )
@@ -2127,6 +2640,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                             .minimum(
                                                 Price.Unit.Minimum.builder()
                                                     .addAppliesToPriceId("string")
+                                                    .addFilter(
+                                                        Price.Unit.Minimum.Filter.builder()
+                                                            .field(
+                                                                Price.Unit.Minimum.Filter.Field
+                                                                    .PRICE_ID
+                                                            )
+                                                            .operator(
+                                                                Price.Unit.Minimum.Filter.Operator
+                                                                    .INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .minimumAmount("minimum_amount")
                                                     .build()
                                             )
@@ -2185,6 +2711,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .maximum(
                                 Invoice.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Invoice.Maximum.Filter.builder()
+                                            .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -2198,6 +2731,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .minimum(
                                 Invoice.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Invoice.Minimum.Filter.builder()
+                                            .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -2396,10 +2936,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .discount(JsonValue.from(mapOf<String, Any>()))
                             .addDiscount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -2423,6 +2963,24 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                             .id("id")
                                             .amount("amount")
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                    .builder()
+                                                    .field(
+                                                        Invoice.LineItem.Adjustment.UsageDiscount
+                                                            .Filter
+                                                            .Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Adjustment.UsageDiscount
+                                                            .Filter
+                                                            .Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .isInvoiceLevel(true)
                                             .reason("reason")
                                             .usageDiscount(0.0)
@@ -2432,12 +2990,12 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                     .creditsApplied("6.00")
                                     .discount(
                                         PercentageDiscount.builder()
-                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
                                             .percentageDiscount(0.15)
+                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .reason("reason")
                                             .build()
                                     )
@@ -2447,6 +3005,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                     .maximum(
                                         Invoice.LineItem.Maximum.builder()
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Maximum.Filter.builder()
+                                                    .field(
+                                                        Invoice.LineItem.Maximum.Filter.Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Maximum.Filter.Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
@@ -2454,6 +3025,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                     .minimum(
                                         Invoice.LineItem.Minimum.builder()
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Minimum.Filter.builder()
+                                                    .field(
+                                                        Invoice.LineItem.Minimum.Filter.Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Minimum.Filter.Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .minimumAmount("minimum_amount")
                                             .build()
                                     )
@@ -2490,12 +3074,12 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                             .currency("currency")
                                             .discount(
                                                 PercentageDiscount.builder()
-                                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
                                                     .percentageDiscount(0.15)
+                                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .reason("reason")
                                                     .build()
                                             )
@@ -2520,6 +3104,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                             .maximum(
                                                 Price.Unit.Maximum.builder()
                                                     .addAppliesToPriceId("string")
+                                                    .addFilter(
+                                                        Price.Unit.Maximum.Filter.builder()
+                                                            .field(
+                                                                Price.Unit.Maximum.Filter.Field
+                                                                    .PRICE_ID
+                                                            )
+                                                            .operator(
+                                                                Price.Unit.Maximum.Filter.Operator
+                                                                    .INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .maximumAmount("maximum_amount")
                                                     .build()
                                             )
@@ -2535,6 +3132,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                             .minimum(
                                                 Price.Unit.Minimum.builder()
                                                     .addAppliesToPriceId("string")
+                                                    .addFilter(
+                                                        Price.Unit.Minimum.Filter.builder()
+                                                            .field(
+                                                                Price.Unit.Minimum.Filter.Field
+                                                                    .PRICE_ID
+                                                            )
+                                                            .operator(
+                                                                Price.Unit.Minimum.Filter.Operator
+                                                                    .INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .minimumAmount("minimum_amount")
                                                     .build()
                                             )
@@ -2593,6 +3203,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .maximum(
                                 Invoice.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Invoice.Maximum.Filter.builder()
+                                            .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -2606,6 +3223,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             .minimum(
                                 Invoice.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Invoice.Minimum.Filter.builder()
+                                            .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -2665,6 +3289,30 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    SubscriptionPriceIntervalsResponse.AdjustmentInterval.Adjustment
+                                        .UsageDiscount
+                                        .Filter
+                                        .builder()
+                                        .field(
+                                            SubscriptionPriceIntervalsResponse.AdjustmentInterval
+                                                .Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            SubscriptionPriceIntervalsResponse.AdjustmentInterval
+                                                .Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
@@ -2778,9 +3426,26 @@ internal class SubscriptionPriceIntervalsResponseTest {
                 .addDiscountInterval(
                     SubscriptionPriceIntervalsResponse.DiscountInterval.Amount.builder()
                         .amountDiscount("amount_discount")
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionPriceIntervalsResponse.DiscountInterval.Amount.Filter
+                                .builder()
+                                .field(
+                                    SubscriptionPriceIntervalsResponse.DiscountInterval.Amount
+                                        .Filter
+                                        .Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionPriceIntervalsResponse.DiscountInterval.Amount
+                                        .Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
@@ -2796,9 +3461,22 @@ internal class SubscriptionPriceIntervalsResponseTest {
                 .invoicingThreshold("invoicing_threshold")
                 .addMaximumInterval(
                     SubscriptionPriceIntervalsResponse.MaximumInterval.builder()
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionPriceIntervalsResponse.MaximumInterval.Filter.builder()
+                                .field(
+                                    SubscriptionPriceIntervalsResponse.MaximumInterval.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionPriceIntervalsResponse.MaximumInterval.Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
@@ -2810,13 +3488,27 @@ internal class SubscriptionPriceIntervalsResponseTest {
                 )
                 .addMinimumInterval(
                     SubscriptionPriceIntervalsResponse.MinimumInterval.builder()
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionPriceIntervalsResponse.MinimumInterval.Filter.builder()
+                                .field(
+                                    SubscriptionPriceIntervalsResponse.MinimumInterval.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionPriceIntervalsResponse.MinimumInterval.Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .name("name")
                 .netTerms(0L)
                 .pendingSubscriptionChange(
                     SubscriptionPriceIntervalsResponse.PendingSubscriptionChange.builder()
@@ -2830,6 +3522,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                             Plan.Adjustment.UsageDiscount.builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Adjustment.UsageDiscount.Filter.builder()
+                                        .field(Plan.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
+                                        .operator(
+                                            Plan.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
@@ -2850,10 +3551,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                         .description("description")
                         .discount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -2862,6 +3563,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                         .maximum(
                             Plan.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Maximum.Filter.builder()
+                                        .field(Plan.Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -2874,6 +3582,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                         .minimum(
                             Plan.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Minimum.Filter.builder()
+                                        .field(Plan.Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -2886,10 +3601,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .description("description")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -2898,6 +3613,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .maximum(
                                     Plan.PlanPhase.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Maximum.Filter.builder()
+                                                .field(Plan.PlanPhase.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -2905,6 +3629,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .minimum(
                                     Plan.PlanPhase.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Minimum.Filter.builder()
+                                                .field(Plan.PlanPhase.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -2939,10 +3672,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -2960,6 +3693,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -2972,6 +3714,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -3056,10 +3807,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -3077,6 +3828,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -3089,6 +3849,15 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -3297,10 +4066,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .discount(JsonValue.from(mapOf<String, Any>()))
                                 .addDiscount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -3324,6 +4093,26 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .builder()
+                                                        .field(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .isInvoiceLevel(true)
                                                 .reason("reason")
                                                 .usageDiscount(0.0)
@@ -3333,12 +4122,12 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .creditsApplied("6.00")
                                         .discount(
                                             PercentageDiscount.builder()
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(0.15)
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -3348,6 +4137,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .maximum(
                                             Invoice.LineItem.Maximum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Maximum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Maximum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Maximum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
@@ -3355,6 +4157,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .minimum(
                                             Invoice.LineItem.Minimum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Minimum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Minimum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Minimum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
@@ -3393,13 +4208,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .currency("currency")
                                                 .discount(
                                                     PercentageDiscount.builder()
-                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .discountType(
                                                             PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
                                                         )
                                                         .percentageDiscount(0.15)
+                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .reason("reason")
                                                         .build()
                                                 )
@@ -3424,6 +4239,20 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .maximum(
                                                     Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Maximum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Maximum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Maximum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
@@ -3439,6 +4268,20 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .minimum(
                                                     Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Minimum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Minimum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Minimum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .minimumAmount("minimum_amount")
                                                         .build()
                                                 )
@@ -3500,6 +4343,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .maximum(
                                     Invoice.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Maximum.Filter.builder()
+                                                .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -3513,6 +4363,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .minimum(
                                     Invoice.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Minimum.Filter.builder()
+                                                .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -3722,10 +4579,10 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .discount(JsonValue.from(mapOf<String, Any>()))
                                 .addDiscount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -3749,6 +4606,26 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .builder()
+                                                        .field(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .isInvoiceLevel(true)
                                                 .reason("reason")
                                                 .usageDiscount(0.0)
@@ -3758,12 +4635,12 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .creditsApplied("6.00")
                                         .discount(
                                             PercentageDiscount.builder()
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(0.15)
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -3773,6 +4650,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .maximum(
                                             Invoice.LineItem.Maximum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Maximum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Maximum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Maximum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
@@ -3780,6 +4670,19 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                         .minimum(
                                             Invoice.LineItem.Minimum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Minimum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Minimum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Minimum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
@@ -3818,13 +4721,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .currency("currency")
                                                 .discount(
                                                     PercentageDiscount.builder()
-                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .discountType(
                                                             PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
                                                         )
                                                         .percentageDiscount(0.15)
+                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .reason("reason")
                                                         .build()
                                                 )
@@ -3849,6 +4752,20 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .maximum(
                                                     Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Maximum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Maximum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Maximum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
@@ -3864,6 +4781,20 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                                 .minimum(
                                                     Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Minimum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Minimum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Minimum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .minimumAmount("minimum_amount")
                                                         .build()
                                                 )
@@ -3925,6 +4856,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .maximum(
                                     Invoice.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Maximum.Filter.builder()
+                                                .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -3938,6 +4876,13 @@ internal class SubscriptionPriceIntervalsResponseTest {
                                 .minimum(
                                     Invoice.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Minimum.Filter.builder()
+                                                .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )

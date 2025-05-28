@@ -6,6 +6,8 @@ import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.getPackageVersion
 import com.withorb.api.services.async.AlertServiceAsync
 import com.withorb.api.services.async.AlertServiceAsyncImpl
+import com.withorb.api.services.async.BetaServiceAsync
+import com.withorb.api.services.async.BetaServiceAsyncImpl
 import com.withorb.api.services.async.CouponServiceAsync
 import com.withorb.api.services.async.CouponServiceAsyncImpl
 import com.withorb.api.services.async.CreditNoteServiceAsync
@@ -55,6 +57,8 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
     private val topLevel: TopLevelServiceAsync by lazy {
         TopLevelServiceAsyncImpl(clientOptionsWithUserAgent)
     }
+
+    private val beta: BetaServiceAsync by lazy { BetaServiceAsyncImpl(clientOptionsWithUserAgent) }
 
     private val coupons: CouponServiceAsync by lazy {
         CouponServiceAsyncImpl(clientOptionsWithUserAgent)
@@ -114,6 +118,8 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
 
     override fun topLevel(): TopLevelServiceAsync = topLevel
 
+    override fun beta(): BetaServiceAsync = beta
+
     override fun coupons(): CouponServiceAsync = coupons
 
     override fun creditNotes(): CreditNoteServiceAsync = creditNotes
@@ -150,6 +156,10 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
 
         private val topLevel: TopLevelServiceAsync.WithRawResponse by lazy {
             TopLevelServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val beta: BetaServiceAsync.WithRawResponse by lazy {
+            BetaServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
         private val coupons: CouponServiceAsync.WithRawResponse by lazy {
@@ -210,6 +220,8 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
         }
 
         override fun topLevel(): TopLevelServiceAsync.WithRawResponse = topLevel
+
+        override fun beta(): BetaServiceAsync.WithRawResponse = beta
 
         override fun coupons(): CouponServiceAsync.WithRawResponse = coupons
 

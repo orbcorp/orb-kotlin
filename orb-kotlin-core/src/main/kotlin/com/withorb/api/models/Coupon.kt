@@ -287,8 +287,42 @@ private constructor(
         /** Alias for calling [discount] with `Discount.ofPercentage(percentage)`. */
         fun discount(percentage: PercentageDiscount) = discount(Discount.ofPercentage(percentage))
 
+        /**
+         * Alias for calling [discount] with the following:
+         * ```kotlin
+         * PercentageDiscount.builder()
+         *     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+         *     .percentageDiscount(percentageDiscount)
+         *     .build()
+         * ```
+         */
+        fun percentageDiscount(percentageDiscount: Double) =
+            discount(
+                PercentageDiscount.builder()
+                    .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                    .percentageDiscount(percentageDiscount)
+                    .build()
+            )
+
         /** Alias for calling [discount] with `Discount.ofAmount(amount)`. */
         fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
+
+        /**
+         * Alias for calling [discount] with the following:
+         * ```kotlin
+         * AmountDiscount.builder()
+         *     .discountType(AmountDiscount.DiscountType.AMOUNT)
+         *     .amountDiscount(amountDiscount)
+         *     .build()
+         * ```
+         */
+        fun amountDiscount(amountDiscount: String) =
+            discount(
+                AmountDiscount.builder()
+                    .discountType(AmountDiscount.DiscountType.AMOUNT)
+                    .amountDiscount(amountDiscount)
+                    .build()
+            )
 
         /**
          * This allows for a coupon's discount to apply for a limited time (determined in months); a
