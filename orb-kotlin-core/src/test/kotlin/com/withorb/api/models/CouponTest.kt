@@ -18,10 +18,10 @@ internal class CouponTest {
                 .archivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -37,10 +37,10 @@ internal class CouponTest {
             .isEqualTo(
                 Coupon.Discount.ofPercentage(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -60,10 +60,10 @@ internal class CouponTest {
                 .archivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .discount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )

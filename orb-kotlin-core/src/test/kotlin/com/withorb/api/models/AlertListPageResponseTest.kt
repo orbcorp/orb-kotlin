@@ -38,6 +38,12 @@ internal class AlertListPageResponseTest {
                         .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
                         .addThreshold(Alert.Threshold.builder().value(0.0).build())
                         .type(Alert.Type.CREDIT_BALANCE_DEPLETED)
+                        .addBalanceAlertStatus(
+                            Alert.BalanceAlertStatus.builder()
+                                .inAlert(true)
+                                .thresholdValue(0.0)
+                                .build()
+                        )
                         .build()
                 )
                 .paginationMetadata(
@@ -70,6 +76,9 @@ internal class AlertListPageResponseTest {
                     .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
                     .addThreshold(Alert.Threshold.builder().value(0.0).build())
                     .type(Alert.Type.CREDIT_BALANCE_DEPLETED)
+                    .addBalanceAlertStatus(
+                        Alert.BalanceAlertStatus.builder().inAlert(true).thresholdValue(0.0).build()
+                    )
                     .build()
             )
         assertThat(alertListPageResponse.paginationMetadata())
@@ -105,6 +114,12 @@ internal class AlertListPageResponseTest {
                         .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
                         .addThreshold(Alert.Threshold.builder().value(0.0).build())
                         .type(Alert.Type.CREDIT_BALANCE_DEPLETED)
+                        .addBalanceAlertStatus(
+                            Alert.BalanceAlertStatus.builder()
+                                .inAlert(true)
+                                .thresholdValue(0.0)
+                                .build()
+                        )
                         .build()
                 )
                 .paginationMetadata(

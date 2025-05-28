@@ -65,9 +65,20 @@ internal class SubscriptionPriceIntervalsParamsTest {
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .dimensionalPriceConfiguration(
+                                SubscriptionPriceIntervalsParams.Add.Price.Unit
+                                    .DimensionalPriceConfiguration
+                                    .builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .externalDimensionalPriceGroupId(
+                                        "external_dimensional_price_group_id"
+                                    )
+                                    .build()
+                            )
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(0.0)
-                            .invoiceGroupingKey("invoice_grouping_key")
+                            .invoiceGroupingKey("x")
                             .invoicingCycleConfiguration(
                                 SubscriptionPriceIntervalsParams.Add.Price.Unit
                                     .InvoicingCycleConfiguration
@@ -97,9 +108,9 @@ internal class SubscriptionPriceIntervalsParamsTest {
                     .adjustment(
                         SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment.PercentageDiscount
                             .builder()
+                            .percentageDiscount(0.0)
                             .addAppliesToPriceId("price_1")
                             .addAppliesToPriceId("price_2")
-                            .percentageDiscount(0.0)
                             .isInvoiceLevel(true)
                             .build()
                     )
@@ -206,9 +217,20 @@ internal class SubscriptionPriceIntervalsParamsTest {
                                         .build()
                                 )
                                 .conversionRate(0.0)
+                                .dimensionalPriceConfiguration(
+                                    SubscriptionPriceIntervalsParams.Add.Price.Unit
+                                        .DimensionalPriceConfiguration
+                                        .builder()
+                                        .addDimensionValue("string")
+                                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                                        .externalDimensionalPriceGroupId(
+                                            "external_dimensional_price_group_id"
+                                        )
+                                        .build()
+                                )
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(0.0)
-                                .invoiceGroupingKey("invoice_grouping_key")
+                                .invoiceGroupingKey("x")
                                 .invoicingCycleConfiguration(
                                     SubscriptionPriceIntervalsParams.Add.Price.Unit
                                         .InvoicingCycleConfiguration
@@ -240,9 +262,9 @@ internal class SubscriptionPriceIntervalsParamsTest {
                             SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
                                 .PercentageDiscount
                                 .builder()
+                                .percentageDiscount(0.0)
                                 .addAppliesToPriceId("price_1")
                                 .addAppliesToPriceId("price_2")
-                                .percentageDiscount(0.0)
                                 .isInvoiceLevel(true)
                                 .build()
                         )
@@ -332,9 +354,20 @@ internal class SubscriptionPriceIntervalsParamsTest {
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .dimensionalPriceConfiguration(
+                                SubscriptionPriceIntervalsParams.Add.Price.Unit
+                                    .DimensionalPriceConfiguration
+                                    .builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .externalDimensionalPriceGroupId(
+                                        "external_dimensional_price_group_id"
+                                    )
+                                    .build()
+                            )
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(0.0)
-                            .invoiceGroupingKey("invoice_grouping_key")
+                            .invoiceGroupingKey("x")
                             .invoicingCycleConfiguration(
                                 SubscriptionPriceIntervalsParams.Add.Price.Unit
                                     .InvoicingCycleConfiguration
@@ -365,9 +398,9 @@ internal class SubscriptionPriceIntervalsParamsTest {
                     .adjustment(
                         SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment.PercentageDiscount
                             .builder()
+                            .percentageDiscount(0.0)
                             .addAppliesToPriceId("price_1")
                             .addAppliesToPriceId("price_2")
-                            .percentageDiscount(0.0)
                             .isInvoiceLevel(true)
                             .build()
                     )

@@ -3,6 +3,7 @@
 package com.withorb.api.client
 
 import com.withorb.api.services.blocking.AlertService
+import com.withorb.api.services.blocking.BetaService
 import com.withorb.api.services.blocking.CouponService
 import com.withorb.api.services.blocking.CreditNoteService
 import com.withorb.api.services.blocking.CustomerService
@@ -49,6 +50,8 @@ interface OrbClient {
     fun withRawResponse(): WithRawResponse
 
     fun topLevel(): TopLevelService
+
+    fun beta(): BetaService
 
     fun coupons(): CouponService
 
@@ -97,6 +100,8 @@ interface OrbClient {
     interface WithRawResponse {
 
         fun topLevel(): TopLevelService.WithRawResponse
+
+        fun beta(): BetaService.WithRawResponse
 
         fun coupons(): CouponService.WithRawResponse
 

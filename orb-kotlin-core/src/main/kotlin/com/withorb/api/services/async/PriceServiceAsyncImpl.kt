@@ -18,6 +18,8 @@ import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.models.Price
 import com.withorb.api.models.PriceCreateParams
+import com.withorb.api.models.PriceEvaluateMultipleParams
+import com.withorb.api.models.PriceEvaluateMultipleResponse
 import com.withorb.api.models.PriceEvaluateParams
 import com.withorb.api.models.PriceEvaluateResponse
 import com.withorb.api.models.PriceFetchParams
@@ -64,6 +66,13 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
     ): PriceEvaluateResponse =
         // post /prices/{price_id}/evaluate
         withRawResponse().evaluate(params, requestOptions).parse()
+
+    override suspend fun evaluateMultiple(
+        params: PriceEvaluateMultipleParams,
+        requestOptions: RequestOptions,
+    ): PriceEvaluateMultipleResponse =
+        // post /prices/evaluate
+        withRawResponse().evaluateMultiple(params, requestOptions).parse()
 
     override suspend fun fetch(params: PriceFetchParams, requestOptions: RequestOptions): Price =
         // get /prices/{price_id}
@@ -195,6 +204,34 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return response.parseable {
                 response
                     .use { evaluateHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val evaluateMultipleHandler: Handler<PriceEvaluateMultipleResponse> =
+            jsonHandler<PriceEvaluateMultipleResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun evaluateMultiple(
+            params: PriceEvaluateMultipleParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PriceEvaluateMultipleResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("prices", "evaluate")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { evaluateMultipleHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

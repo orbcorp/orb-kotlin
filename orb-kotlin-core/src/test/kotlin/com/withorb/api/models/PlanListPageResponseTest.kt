@@ -22,6 +22,15 @@ internal class PlanListPageResponseTest {
                             Plan.Adjustment.UsageDiscount.builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Adjustment.UsageDiscount.Filter.builder()
+                                        .field(Plan.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
+                                        .operator(
+                                            Plan.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
@@ -42,10 +51,10 @@ internal class PlanListPageResponseTest {
                         .description("description")
                         .discount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -54,6 +63,13 @@ internal class PlanListPageResponseTest {
                         .maximum(
                             Plan.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Maximum.Filter.builder()
+                                        .field(Plan.Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -66,6 +82,13 @@ internal class PlanListPageResponseTest {
                         .minimum(
                             Plan.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Minimum.Filter.builder()
+                                        .field(Plan.Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -78,10 +101,10 @@ internal class PlanListPageResponseTest {
                                 .description("description")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -90,6 +113,15 @@ internal class PlanListPageResponseTest {
                                 .maximum(
                                     Plan.PlanPhase.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Maximum.Filter.builder()
+                                                .field(Plan.PlanPhase.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -97,6 +129,15 @@ internal class PlanListPageResponseTest {
                                 .minimum(
                                     Plan.PlanPhase.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Minimum.Filter.builder()
+                                                .field(Plan.PlanPhase.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -131,10 +172,10 @@ internal class PlanListPageResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -152,6 +193,15 @@ internal class PlanListPageResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -164,6 +214,15 @@ internal class PlanListPageResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -214,6 +273,15 @@ internal class PlanListPageResponseTest {
                         Plan.Adjustment.UsageDiscount.builder()
                             .id("id")
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Plan.Adjustment.UsageDiscount.Filter.builder()
+                                    .field(Plan.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Plan.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .isInvoiceLevel(true)
                             .planPhaseOrder(0L)
                             .reason("reason")
@@ -234,10 +302,10 @@ internal class PlanListPageResponseTest {
                     .description("description")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -246,6 +314,13 @@ internal class PlanListPageResponseTest {
                     .maximum(
                         Plan.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Plan.Maximum.Filter.builder()
+                                    .field(Plan.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -258,6 +333,13 @@ internal class PlanListPageResponseTest {
                     .minimum(
                         Plan.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Plan.Minimum.Filter.builder()
+                                    .field(Plan.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -270,10 +352,10 @@ internal class PlanListPageResponseTest {
                             .description("description")
                             .discount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -282,6 +364,15 @@ internal class PlanListPageResponseTest {
                             .maximum(
                                 Plan.PlanPhase.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Plan.PlanPhase.Maximum.Filter.builder()
+                                            .field(Plan.PlanPhase.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                Plan.PlanPhase.Maximum.Filter.Operator.INCLUDES
+                                            )
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -289,6 +380,15 @@ internal class PlanListPageResponseTest {
                             .minimum(
                                 Plan.PlanPhase.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Plan.PlanPhase.Minimum.Filter.builder()
+                                            .field(Plan.PlanPhase.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                Plan.PlanPhase.Minimum.Filter.Operator.INCLUDES
+                                            )
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -321,10 +421,10 @@ internal class PlanListPageResponseTest {
                             .currency("currency")
                             .discount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -342,6 +442,13 @@ internal class PlanListPageResponseTest {
                             .maximum(
                                 Price.Unit.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Maximum.Filter.builder()
+                                            .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -354,6 +461,13 @@ internal class PlanListPageResponseTest {
                             .minimum(
                                 Price.Unit.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Minimum.Filter.builder()
+                                            .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -405,6 +519,15 @@ internal class PlanListPageResponseTest {
                             Plan.Adjustment.UsageDiscount.builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Adjustment.UsageDiscount.Filter.builder()
+                                        .field(Plan.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
+                                        .operator(
+                                            Plan.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
@@ -425,10 +548,10 @@ internal class PlanListPageResponseTest {
                         .description("description")
                         .discount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -437,6 +560,13 @@ internal class PlanListPageResponseTest {
                         .maximum(
                             Plan.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Maximum.Filter.builder()
+                                        .field(Plan.Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -449,6 +579,13 @@ internal class PlanListPageResponseTest {
                         .minimum(
                             Plan.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Minimum.Filter.builder()
+                                        .field(Plan.Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -461,10 +598,10 @@ internal class PlanListPageResponseTest {
                                 .description("description")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -473,6 +610,15 @@ internal class PlanListPageResponseTest {
                                 .maximum(
                                     Plan.PlanPhase.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Maximum.Filter.builder()
+                                                .field(Plan.PlanPhase.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -480,6 +626,15 @@ internal class PlanListPageResponseTest {
                                 .minimum(
                                     Plan.PlanPhase.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Minimum.Filter.builder()
+                                                .field(Plan.PlanPhase.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -514,10 +669,10 @@ internal class PlanListPageResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -535,6 +690,15 @@ internal class PlanListPageResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -547,6 +711,15 @@ internal class PlanListPageResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )

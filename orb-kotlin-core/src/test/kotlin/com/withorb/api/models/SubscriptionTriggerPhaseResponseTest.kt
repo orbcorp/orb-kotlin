@@ -26,6 +26,30 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    SubscriptionTriggerPhaseResponse.AdjustmentInterval.Adjustment
+                                        .UsageDiscount
+                                        .Filter
+                                        .builder()
+                                        .field(
+                                            SubscriptionTriggerPhaseResponse.AdjustmentInterval
+                                                .Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            SubscriptionTriggerPhaseResponse.AdjustmentInterval
+                                                .Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
@@ -139,9 +163,24 @@ internal class SubscriptionTriggerPhaseResponseTest {
                 .addDiscountInterval(
                     SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.builder()
                         .amountDiscount("amount_discount")
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.Filter
+                                .builder()
+                                .field(
+                                    SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.Filter
+                                        .Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
@@ -157,9 +196,21 @@ internal class SubscriptionTriggerPhaseResponseTest {
                 .invoicingThreshold("invoicing_threshold")
                 .addMaximumInterval(
                     SubscriptionTriggerPhaseResponse.MaximumInterval.builder()
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionTriggerPhaseResponse.MaximumInterval.Filter.builder()
+                                .field(
+                                    SubscriptionTriggerPhaseResponse.MaximumInterval.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionTriggerPhaseResponse.MaximumInterval.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
@@ -171,13 +222,26 @@ internal class SubscriptionTriggerPhaseResponseTest {
                 )
                 .addMinimumInterval(
                     SubscriptionTriggerPhaseResponse.MinimumInterval.builder()
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionTriggerPhaseResponse.MinimumInterval.Filter.builder()
+                                .field(
+                                    SubscriptionTriggerPhaseResponse.MinimumInterval.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionTriggerPhaseResponse.MinimumInterval.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .name("name")
                 .netTerms(0L)
                 .pendingSubscriptionChange(
                     SubscriptionTriggerPhaseResponse.PendingSubscriptionChange.builder()
@@ -191,6 +255,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             Plan.Adjustment.UsageDiscount.builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Adjustment.UsageDiscount.Filter.builder()
+                                        .field(Plan.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
+                                        .operator(
+                                            Plan.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
@@ -211,10 +284,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                         .description("description")
                         .discount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -223,6 +296,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                         .maximum(
                             Plan.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Maximum.Filter.builder()
+                                        .field(Plan.Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -235,6 +315,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                         .minimum(
                             Plan.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Minimum.Filter.builder()
+                                        .field(Plan.Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -247,10 +334,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .description("description")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -259,6 +346,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .maximum(
                                     Plan.PlanPhase.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Maximum.Filter.builder()
+                                                .field(Plan.PlanPhase.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -266,6 +362,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .minimum(
                                     Plan.PlanPhase.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Minimum.Filter.builder()
+                                                .field(Plan.PlanPhase.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -300,10 +405,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -321,6 +426,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -333,6 +447,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -417,10 +540,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -438,6 +561,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -450,6 +582,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -658,10 +799,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .discount(JsonValue.from(mapOf<String, Any>()))
                                 .addDiscount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -685,6 +826,26 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .builder()
+                                                        .field(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .isInvoiceLevel(true)
                                                 .reason("reason")
                                                 .usageDiscount(0.0)
@@ -694,12 +855,12 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .creditsApplied("6.00")
                                         .discount(
                                             PercentageDiscount.builder()
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(0.15)
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -709,6 +870,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .maximum(
                                             Invoice.LineItem.Maximum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Maximum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Maximum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Maximum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
@@ -716,6 +890,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .minimum(
                                             Invoice.LineItem.Minimum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Minimum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Minimum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Minimum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
@@ -754,13 +941,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .currency("currency")
                                                 .discount(
                                                     PercentageDiscount.builder()
-                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .discountType(
                                                             PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
                                                         )
                                                         .percentageDiscount(0.15)
+                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .reason("reason")
                                                         .build()
                                                 )
@@ -785,6 +972,20 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .maximum(
                                                     Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Maximum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Maximum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Maximum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
@@ -800,6 +1001,20 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .minimum(
                                                     Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Minimum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Minimum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Minimum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .minimumAmount("minimum_amount")
                                                         .build()
                                                 )
@@ -861,6 +1076,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .maximum(
                                     Invoice.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Maximum.Filter.builder()
+                                                .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -874,6 +1096,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .minimum(
                                     Invoice.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Minimum.Filter.builder()
+                                                .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -1083,10 +1312,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .discount(JsonValue.from(mapOf<String, Any>()))
                                 .addDiscount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -1110,6 +1339,26 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .builder()
+                                                        .field(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .isInvoiceLevel(true)
                                                 .reason("reason")
                                                 .usageDiscount(0.0)
@@ -1119,12 +1368,12 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .creditsApplied("6.00")
                                         .discount(
                                             PercentageDiscount.builder()
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(0.15)
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -1134,6 +1383,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .maximum(
                                             Invoice.LineItem.Maximum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Maximum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Maximum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Maximum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
@@ -1141,6 +1403,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .minimum(
                                             Invoice.LineItem.Minimum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Minimum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Minimum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Minimum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
@@ -1179,13 +1454,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .currency("currency")
                                                 .discount(
                                                     PercentageDiscount.builder()
-                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .discountType(
                                                             PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
                                                         )
                                                         .percentageDiscount(0.15)
+                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .reason("reason")
                                                         .build()
                                                 )
@@ -1210,6 +1485,20 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .maximum(
                                                     Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Maximum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Maximum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Maximum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
@@ -1225,6 +1514,20 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .minimum(
                                                     Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Minimum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Minimum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Minimum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .minimumAmount("minimum_amount")
                                                         .build()
                                                 )
@@ -1286,6 +1589,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .maximum(
                                     Invoice.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Maximum.Filter.builder()
+                                                .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -1299,6 +1609,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .minimum(
                                     Invoice.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Minimum.Filter.builder()
+                                                .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -1355,6 +1672,30 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .builder()
                             .id("id")
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                SubscriptionTriggerPhaseResponse.AdjustmentInterval.Adjustment
+                                    .UsageDiscount
+                                    .Filter
+                                    .builder()
+                                    .field(
+                                        SubscriptionTriggerPhaseResponse.AdjustmentInterval
+                                            .Adjustment
+                                            .UsageDiscount
+                                            .Filter
+                                            .Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        SubscriptionTriggerPhaseResponse.AdjustmentInterval
+                                            .Adjustment
+                                            .UsageDiscount
+                                            .Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .isInvoiceLevel(true)
                             .planPhaseOrder(0L)
                             .reason("reason")
@@ -1475,9 +1816,24 @@ internal class SubscriptionTriggerPhaseResponseTest {
                 SubscriptionTriggerPhaseResponse.DiscountInterval.ofAmount(
                     SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.builder()
                         .amountDiscount("amount_discount")
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.Filter
+                                .builder()
+                                .field(
+                                    SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.Filter
+                                        .Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
@@ -1498,9 +1854,21 @@ internal class SubscriptionTriggerPhaseResponseTest {
         assertThat(subscriptionTriggerPhaseResponse.maximumIntervals())
             .containsExactly(
                 SubscriptionTriggerPhaseResponse.MaximumInterval.builder()
-                    .addAppliesToPriceId("string")
                     .addAppliesToPriceIntervalId("string")
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .addFilter(
+                        SubscriptionTriggerPhaseResponse.MaximumInterval.Filter.builder()
+                            .field(
+                                SubscriptionTriggerPhaseResponse.MaximumInterval.Filter.Field
+                                    .PRICE_ID
+                            )
+                            .operator(
+                                SubscriptionTriggerPhaseResponse.MaximumInterval.Filter.Operator
+                                    .INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
                     .maximumAmount("maximum_amount")
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
@@ -1514,13 +1882,26 @@ internal class SubscriptionTriggerPhaseResponseTest {
         assertThat(subscriptionTriggerPhaseResponse.minimumIntervals())
             .containsExactly(
                 SubscriptionTriggerPhaseResponse.MinimumInterval.builder()
-                    .addAppliesToPriceId("string")
                     .addAppliesToPriceIntervalId("string")
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .addFilter(
+                        SubscriptionTriggerPhaseResponse.MinimumInterval.Filter.builder()
+                            .field(
+                                SubscriptionTriggerPhaseResponse.MinimumInterval.Filter.Field
+                                    .PRICE_ID
+                            )
+                            .operator(
+                                SubscriptionTriggerPhaseResponse.MinimumInterval.Filter.Operator
+                                    .INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
                     .minimumAmount("minimum_amount")
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+        assertThat(subscriptionTriggerPhaseResponse.name()).isEqualTo("name")
         assertThat(subscriptionTriggerPhaseResponse.netTerms()).isEqualTo(0L)
         assertThat(subscriptionTriggerPhaseResponse.pendingSubscriptionChange())
             .isEqualTo(
@@ -1536,6 +1917,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                         Plan.Adjustment.UsageDiscount.builder()
                             .id("id")
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Plan.Adjustment.UsageDiscount.Filter.builder()
+                                    .field(Plan.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        Plan.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .isInvoiceLevel(true)
                             .planPhaseOrder(0L)
                             .reason("reason")
@@ -1556,10 +1946,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                     .description("description")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -1568,6 +1958,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                     .maximum(
                         Plan.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Plan.Maximum.Filter.builder()
+                                    .field(Plan.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -1580,6 +1977,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                     .minimum(
                         Plan.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Plan.Minimum.Filter.builder()
+                                    .field(Plan.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -1592,10 +1996,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .description("description")
                             .discount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -1604,6 +2008,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .maximum(
                                 Plan.PlanPhase.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Plan.PlanPhase.Maximum.Filter.builder()
+                                            .field(Plan.PlanPhase.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                Plan.PlanPhase.Maximum.Filter.Operator.INCLUDES
+                                            )
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -1611,6 +2024,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .minimum(
                                 Plan.PlanPhase.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Plan.PlanPhase.Minimum.Filter.builder()
+                                            .field(Plan.PlanPhase.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                Plan.PlanPhase.Minimum.Filter.Operator.INCLUDES
+                                            )
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -1643,10 +2065,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .currency("currency")
                             .discount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -1664,6 +2086,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .maximum(
                                 Price.Unit.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Maximum.Filter.builder()
+                                            .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -1676,6 +2105,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .minimum(
                                 Price.Unit.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Minimum.Filter.builder()
+                                            .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -1752,10 +2188,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .currency("currency")
                             .discount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -1773,6 +2209,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .maximum(
                                 Price.Unit.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Maximum.Filter.builder()
+                                            .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -1785,6 +2228,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .minimum(
                                 Price.Unit.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Minimum.Filter.builder()
+                                            .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -1987,10 +2437,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .discount(JsonValue.from(mapOf<String, Any>()))
                             .addDiscount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -2014,6 +2464,24 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                             .id("id")
                                             .amount("amount")
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                    .builder()
+                                                    .field(
+                                                        Invoice.LineItem.Adjustment.UsageDiscount
+                                                            .Filter
+                                                            .Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Adjustment.UsageDiscount
+                                                            .Filter
+                                                            .Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .isInvoiceLevel(true)
                                             .reason("reason")
                                             .usageDiscount(0.0)
@@ -2023,12 +2491,12 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                     .creditsApplied("6.00")
                                     .discount(
                                         PercentageDiscount.builder()
-                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
                                             .percentageDiscount(0.15)
+                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .reason("reason")
                                             .build()
                                     )
@@ -2038,6 +2506,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                     .maximum(
                                         Invoice.LineItem.Maximum.builder()
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Maximum.Filter.builder()
+                                                    .field(
+                                                        Invoice.LineItem.Maximum.Filter.Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Maximum.Filter.Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
@@ -2045,6 +2526,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                     .minimum(
                                         Invoice.LineItem.Minimum.builder()
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Minimum.Filter.builder()
+                                                    .field(
+                                                        Invoice.LineItem.Minimum.Filter.Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Minimum.Filter.Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .minimumAmount("minimum_amount")
                                             .build()
                                     )
@@ -2081,12 +2575,12 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                             .currency("currency")
                                             .discount(
                                                 PercentageDiscount.builder()
-                                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
                                                     .percentageDiscount(0.15)
+                                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .reason("reason")
                                                     .build()
                                             )
@@ -2111,6 +2605,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                             .maximum(
                                                 Price.Unit.Maximum.builder()
                                                     .addAppliesToPriceId("string")
+                                                    .addFilter(
+                                                        Price.Unit.Maximum.Filter.builder()
+                                                            .field(
+                                                                Price.Unit.Maximum.Filter.Field
+                                                                    .PRICE_ID
+                                                            )
+                                                            .operator(
+                                                                Price.Unit.Maximum.Filter.Operator
+                                                                    .INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .maximumAmount("maximum_amount")
                                                     .build()
                                             )
@@ -2126,6 +2633,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                             .minimum(
                                                 Price.Unit.Minimum.builder()
                                                     .addAppliesToPriceId("string")
+                                                    .addFilter(
+                                                        Price.Unit.Minimum.Filter.builder()
+                                                            .field(
+                                                                Price.Unit.Minimum.Filter.Field
+                                                                    .PRICE_ID
+                                                            )
+                                                            .operator(
+                                                                Price.Unit.Minimum.Filter.Operator
+                                                                    .INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .minimumAmount("minimum_amount")
                                                     .build()
                                             )
@@ -2184,6 +2704,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .maximum(
                                 Invoice.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Invoice.Maximum.Filter.builder()
+                                            .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -2197,6 +2724,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .minimum(
                                 Invoice.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Invoice.Minimum.Filter.builder()
+                                            .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -2395,10 +2929,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .discount(JsonValue.from(mapOf<String, Any>()))
                             .addDiscount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -2422,6 +2956,24 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                             .id("id")
                                             .amount("amount")
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                    .builder()
+                                                    .field(
+                                                        Invoice.LineItem.Adjustment.UsageDiscount
+                                                            .Filter
+                                                            .Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Adjustment.UsageDiscount
+                                                            .Filter
+                                                            .Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .isInvoiceLevel(true)
                                             .reason("reason")
                                             .usageDiscount(0.0)
@@ -2431,12 +2983,12 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                     .creditsApplied("6.00")
                                     .discount(
                                         PercentageDiscount.builder()
-                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
                                             .percentageDiscount(0.15)
+                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .reason("reason")
                                             .build()
                                     )
@@ -2446,6 +2998,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                     .maximum(
                                         Invoice.LineItem.Maximum.builder()
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Maximum.Filter.builder()
+                                                    .field(
+                                                        Invoice.LineItem.Maximum.Filter.Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Maximum.Filter.Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
@@ -2453,6 +3018,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                     .minimum(
                                         Invoice.LineItem.Minimum.builder()
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Invoice.LineItem.Minimum.Filter.builder()
+                                                    .field(
+                                                        Invoice.LineItem.Minimum.Filter.Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Invoice.LineItem.Minimum.Filter.Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .minimumAmount("minimum_amount")
                                             .build()
                                     )
@@ -2489,12 +3067,12 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                             .currency("currency")
                                             .discount(
                                                 PercentageDiscount.builder()
-                                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
                                                     .percentageDiscount(0.15)
+                                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .reason("reason")
                                                     .build()
                                             )
@@ -2519,6 +3097,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                             .maximum(
                                                 Price.Unit.Maximum.builder()
                                                     .addAppliesToPriceId("string")
+                                                    .addFilter(
+                                                        Price.Unit.Maximum.Filter.builder()
+                                                            .field(
+                                                                Price.Unit.Maximum.Filter.Field
+                                                                    .PRICE_ID
+                                                            )
+                                                            .operator(
+                                                                Price.Unit.Maximum.Filter.Operator
+                                                                    .INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .maximumAmount("maximum_amount")
                                                     .build()
                                             )
@@ -2534,6 +3125,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                             .minimum(
                                                 Price.Unit.Minimum.builder()
                                                     .addAppliesToPriceId("string")
+                                                    .addFilter(
+                                                        Price.Unit.Minimum.Filter.builder()
+                                                            .field(
+                                                                Price.Unit.Minimum.Filter.Field
+                                                                    .PRICE_ID
+                                                            )
+                                                            .operator(
+                                                                Price.Unit.Minimum.Filter.Operator
+                                                                    .INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .minimumAmount("minimum_amount")
                                                     .build()
                                             )
@@ -2592,6 +3196,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .maximum(
                                 Invoice.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Invoice.Maximum.Filter.builder()
+                                            .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -2605,6 +3216,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             .minimum(
                                 Invoice.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Invoice.Minimum.Filter.builder()
+                                            .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -2664,6 +3282,30 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    SubscriptionTriggerPhaseResponse.AdjustmentInterval.Adjustment
+                                        .UsageDiscount
+                                        .Filter
+                                        .builder()
+                                        .field(
+                                            SubscriptionTriggerPhaseResponse.AdjustmentInterval
+                                                .Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            SubscriptionTriggerPhaseResponse.AdjustmentInterval
+                                                .Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
@@ -2777,9 +3419,24 @@ internal class SubscriptionTriggerPhaseResponseTest {
                 .addDiscountInterval(
                     SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.builder()
                         .amountDiscount("amount_discount")
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.Filter
+                                .builder()
+                                .field(
+                                    SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.Filter
+                                        .Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionTriggerPhaseResponse.DiscountInterval.Amount.Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
@@ -2795,9 +3452,21 @@ internal class SubscriptionTriggerPhaseResponseTest {
                 .invoicingThreshold("invoicing_threshold")
                 .addMaximumInterval(
                     SubscriptionTriggerPhaseResponse.MaximumInterval.builder()
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionTriggerPhaseResponse.MaximumInterval.Filter.builder()
+                                .field(
+                                    SubscriptionTriggerPhaseResponse.MaximumInterval.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionTriggerPhaseResponse.MaximumInterval.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
@@ -2809,13 +3478,26 @@ internal class SubscriptionTriggerPhaseResponseTest {
                 )
                 .addMinimumInterval(
                     SubscriptionTriggerPhaseResponse.MinimumInterval.builder()
-                        .addAppliesToPriceId("string")
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            SubscriptionTriggerPhaseResponse.MinimumInterval.Filter.builder()
+                                .field(
+                                    SubscriptionTriggerPhaseResponse.MinimumInterval.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    SubscriptionTriggerPhaseResponse.MinimumInterval.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .name("name")
                 .netTerms(0L)
                 .pendingSubscriptionChange(
                     SubscriptionTriggerPhaseResponse.PendingSubscriptionChange.builder()
@@ -2829,6 +3511,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                             Plan.Adjustment.UsageDiscount.builder()
                                 .id("id")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Adjustment.UsageDiscount.Filter.builder()
+                                        .field(Plan.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
+                                        .operator(
+                                            Plan.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
@@ -2849,10 +3540,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                         .description("description")
                         .discount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -2861,6 +3552,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                         .maximum(
                             Plan.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Maximum.Filter.builder()
+                                        .field(Plan.Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -2873,6 +3571,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                         .minimum(
                             Plan.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Plan.Minimum.Filter.builder()
+                                        .field(Plan.Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -2885,10 +3590,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .description("description")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -2897,6 +3602,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .maximum(
                                     Plan.PlanPhase.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Maximum.Filter.builder()
+                                                .field(Plan.PlanPhase.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -2904,6 +3618,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .minimum(
                                     Plan.PlanPhase.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Plan.PlanPhase.Minimum.Filter.builder()
+                                                .field(Plan.PlanPhase.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Plan.PlanPhase.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -2938,10 +3661,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -2959,6 +3682,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -2971,6 +3703,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -3055,10 +3796,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -3076,6 +3817,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -3088,6 +3838,15 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -3296,10 +4055,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .discount(JsonValue.from(mapOf<String, Any>()))
                                 .addDiscount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -3323,6 +4082,26 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .builder()
+                                                        .field(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .isInvoiceLevel(true)
                                                 .reason("reason")
                                                 .usageDiscount(0.0)
@@ -3332,12 +4111,12 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .creditsApplied("6.00")
                                         .discount(
                                             PercentageDiscount.builder()
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(0.15)
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -3347,6 +4126,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .maximum(
                                             Invoice.LineItem.Maximum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Maximum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Maximum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Maximum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
@@ -3354,6 +4146,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .minimum(
                                             Invoice.LineItem.Minimum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Minimum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Minimum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Minimum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
@@ -3392,13 +4197,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .currency("currency")
                                                 .discount(
                                                     PercentageDiscount.builder()
-                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .discountType(
                                                             PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
                                                         )
                                                         .percentageDiscount(0.15)
+                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .reason("reason")
                                                         .build()
                                                 )
@@ -3423,6 +4228,20 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .maximum(
                                                     Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Maximum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Maximum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Maximum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
@@ -3438,6 +4257,20 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .minimum(
                                                     Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Minimum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Minimum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Minimum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .minimumAmount("minimum_amount")
                                                         .build()
                                                 )
@@ -3499,6 +4332,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .maximum(
                                     Invoice.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Maximum.Filter.builder()
+                                                .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -3512,6 +4352,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .minimum(
                                     Invoice.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Minimum.Filter.builder()
+                                                .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -3721,10 +4568,10 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .discount(JsonValue.from(mapOf<String, Any>()))
                                 .addDiscount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -3748,6 +4595,26 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .id("id")
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .builder()
+                                                        .field(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Adjustment
+                                                                .UsageDiscount
+                                                                .Filter
+                                                                .Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .isInvoiceLevel(true)
                                                 .reason("reason")
                                                 .usageDiscount(0.0)
@@ -3757,12 +4624,12 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .creditsApplied("6.00")
                                         .discount(
                                             PercentageDiscount.builder()
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(0.15)
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -3772,6 +4639,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .maximum(
                                             Invoice.LineItem.Maximum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Maximum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Maximum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Maximum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
@@ -3779,6 +4659,19 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                         .minimum(
                                             Invoice.LineItem.Minimum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Invoice.LineItem.Minimum.Filter.builder()
+                                                        .field(
+                                                            Invoice.LineItem.Minimum.Filter.Field
+                                                                .PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Invoice.LineItem.Minimum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
@@ -3817,13 +4710,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .currency("currency")
                                                 .discount(
                                                     PercentageDiscount.builder()
-                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .discountType(
                                                             PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
                                                         )
                                                         .percentageDiscount(0.15)
+                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .reason("reason")
                                                         .build()
                                                 )
@@ -3848,6 +4741,20 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .maximum(
                                                     Price.Unit.Maximum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Maximum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Maximum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Maximum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .maximumAmount("maximum_amount")
                                                         .build()
                                                 )
@@ -3863,6 +4770,20 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                                 .minimum(
                                                     Price.Unit.Minimum.builder()
                                                         .addAppliesToPriceId("string")
+                                                        .addFilter(
+                                                            Price.Unit.Minimum.Filter.builder()
+                                                                .field(
+                                                                    Price.Unit.Minimum.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Price.Unit.Minimum.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .minimumAmount("minimum_amount")
                                                         .build()
                                                 )
@@ -3924,6 +4845,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .maximum(
                                     Invoice.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Maximum.Filter.builder()
+                                                .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -3937,6 +4865,13 @@ internal class SubscriptionTriggerPhaseResponseTest {
                                 .minimum(
                                     Invoice.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.Minimum.Filter.builder()
+                                                .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )

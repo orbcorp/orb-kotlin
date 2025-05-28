@@ -93,10 +93,10 @@ internal class InvoiceFetchUpcomingResponseTest {
                 .discount(JsonValue.from(mapOf<String, Any>()))
                 .addDiscount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -117,6 +117,27 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 .id("id")
                                 .amount("amount")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    InvoiceFetchUpcomingResponse.LineItem.Adjustment.UsageDiscount
+                                        .Filter
+                                        .builder()
+                                        .field(
+                                            InvoiceFetchUpcomingResponse.LineItem.Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            InvoiceFetchUpcomingResponse.LineItem.Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .reason("reason")
                                 .usageDiscount(0.0)
@@ -126,10 +147,10 @@ internal class InvoiceFetchUpcomingResponseTest {
                         .creditsApplied("6.00")
                         .discount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -139,6 +160,21 @@ internal class InvoiceFetchUpcomingResponseTest {
                         .maximum(
                             InvoiceFetchUpcomingResponse.LineItem.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    InvoiceFetchUpcomingResponse.LineItem.Maximum.Filter.builder()
+                                        .field(
+                                            InvoiceFetchUpcomingResponse.LineItem.Maximum.Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            InvoiceFetchUpcomingResponse.LineItem.Maximum.Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -146,6 +182,21 @@ internal class InvoiceFetchUpcomingResponseTest {
                         .minimum(
                             InvoiceFetchUpcomingResponse.LineItem.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    InvoiceFetchUpcomingResponse.LineItem.Minimum.Filter.builder()
+                                        .field(
+                                            InvoiceFetchUpcomingResponse.LineItem.Minimum.Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            InvoiceFetchUpcomingResponse.LineItem.Minimum.Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -178,10 +229,10 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -199,6 +250,15 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -211,6 +271,15 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -269,6 +338,15 @@ internal class InvoiceFetchUpcomingResponseTest {
                 .maximum(
                     InvoiceFetchUpcomingResponse.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            InvoiceFetchUpcomingResponse.Maximum.Filter.builder()
+                                .field(InvoiceFetchUpcomingResponse.Maximum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    InvoiceFetchUpcomingResponse.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -282,6 +360,15 @@ internal class InvoiceFetchUpcomingResponseTest {
                 .minimum(
                     InvoiceFetchUpcomingResponse.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            InvoiceFetchUpcomingResponse.Minimum.Filter.builder()
+                                .field(InvoiceFetchUpcomingResponse.Minimum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    InvoiceFetchUpcomingResponse.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -410,10 +497,10 @@ internal class InvoiceFetchUpcomingResponseTest {
             .containsExactly(
                 InvoiceLevelDiscount.ofPercentage(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -442,6 +529,27 @@ internal class InvoiceFetchUpcomingResponseTest {
                             .id("id")
                             .amount("amount")
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                InvoiceFetchUpcomingResponse.LineItem.Adjustment.UsageDiscount
+                                    .Filter
+                                    .builder()
+                                    .field(
+                                        InvoiceFetchUpcomingResponse.LineItem.Adjustment
+                                            .UsageDiscount
+                                            .Filter
+                                            .Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        InvoiceFetchUpcomingResponse.LineItem.Adjustment
+                                            .UsageDiscount
+                                            .Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .isInvoiceLevel(true)
                             .reason("reason")
                             .usageDiscount(0.0)
@@ -451,10 +559,10 @@ internal class InvoiceFetchUpcomingResponseTest {
                     .creditsApplied("6.00")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -464,6 +572,20 @@ internal class InvoiceFetchUpcomingResponseTest {
                     .maximum(
                         InvoiceFetchUpcomingResponse.LineItem.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                InvoiceFetchUpcomingResponse.LineItem.Maximum.Filter.builder()
+                                    .field(
+                                        InvoiceFetchUpcomingResponse.LineItem.Maximum.Filter.Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        InvoiceFetchUpcomingResponse.LineItem.Maximum.Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -471,6 +593,20 @@ internal class InvoiceFetchUpcomingResponseTest {
                     .minimum(
                         InvoiceFetchUpcomingResponse.LineItem.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                InvoiceFetchUpcomingResponse.LineItem.Minimum.Filter.builder()
+                                    .field(
+                                        InvoiceFetchUpcomingResponse.LineItem.Minimum.Filter.Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        InvoiceFetchUpcomingResponse.LineItem.Minimum.Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -501,10 +637,10 @@ internal class InvoiceFetchUpcomingResponseTest {
                             .currency("currency")
                             .discount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -522,6 +658,13 @@ internal class InvoiceFetchUpcomingResponseTest {
                             .maximum(
                                 Price.Unit.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Maximum.Filter.builder()
+                                            .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -534,6 +677,13 @@ internal class InvoiceFetchUpcomingResponseTest {
                             .minimum(
                                 Price.Unit.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Price.Unit.Minimum.Filter.builder()
+                                            .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -590,6 +740,13 @@ internal class InvoiceFetchUpcomingResponseTest {
             .isEqualTo(
                 InvoiceFetchUpcomingResponse.Maximum.builder()
                     .addAppliesToPriceId("string")
+                    .addFilter(
+                        InvoiceFetchUpcomingResponse.Maximum.Filter.builder()
+                            .field(InvoiceFetchUpcomingResponse.Maximum.Filter.Field.PRICE_ID)
+                            .operator(InvoiceFetchUpcomingResponse.Maximum.Filter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .maximumAmount("maximum_amount")
                     .build()
             )
@@ -605,6 +762,13 @@ internal class InvoiceFetchUpcomingResponseTest {
             .isEqualTo(
                 InvoiceFetchUpcomingResponse.Minimum.builder()
                     .addAppliesToPriceId("string")
+                    .addFilter(
+                        InvoiceFetchUpcomingResponse.Minimum.Filter.builder()
+                            .field(InvoiceFetchUpcomingResponse.Minimum.Filter.Field.PRICE_ID)
+                            .operator(InvoiceFetchUpcomingResponse.Minimum.Filter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .minimumAmount("minimum_amount")
                     .build()
             )
@@ -741,10 +905,10 @@ internal class InvoiceFetchUpcomingResponseTest {
                 .discount(JsonValue.from(mapOf<String, Any>()))
                 .addDiscount(
                     PercentageDiscount.builder()
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .reason("reason")
                         .build()
                 )
@@ -765,6 +929,27 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 .id("id")
                                 .amount("amount")
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    InvoiceFetchUpcomingResponse.LineItem.Adjustment.UsageDiscount
+                                        .Filter
+                                        .builder()
+                                        .field(
+                                            InvoiceFetchUpcomingResponse.LineItem.Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            InvoiceFetchUpcomingResponse.LineItem.Adjustment
+                                                .UsageDiscount
+                                                .Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
                                 .reason("reason")
                                 .usageDiscount(0.0)
@@ -774,10 +959,10 @@ internal class InvoiceFetchUpcomingResponseTest {
                         .creditsApplied("6.00")
                         .discount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -787,6 +972,21 @@ internal class InvoiceFetchUpcomingResponseTest {
                         .maximum(
                             InvoiceFetchUpcomingResponse.LineItem.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    InvoiceFetchUpcomingResponse.LineItem.Maximum.Filter.builder()
+                                        .field(
+                                            InvoiceFetchUpcomingResponse.LineItem.Maximum.Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            InvoiceFetchUpcomingResponse.LineItem.Maximum.Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -794,6 +994,21 @@ internal class InvoiceFetchUpcomingResponseTest {
                         .minimum(
                             InvoiceFetchUpcomingResponse.LineItem.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    InvoiceFetchUpcomingResponse.LineItem.Minimum.Filter.builder()
+                                        .field(
+                                            InvoiceFetchUpcomingResponse.LineItem.Minimum.Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            InvoiceFetchUpcomingResponse.LineItem.Minimum.Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -826,10 +1041,10 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 .currency("currency")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -847,6 +1062,15 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 .maximum(
                                     Price.Unit.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Maximum.Filter.builder()
+                                                .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -859,6 +1083,15 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 .minimum(
                                     Price.Unit.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Price.Unit.Minimum.Filter.builder()
+                                                .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -917,6 +1150,15 @@ internal class InvoiceFetchUpcomingResponseTest {
                 .maximum(
                     InvoiceFetchUpcomingResponse.Maximum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            InvoiceFetchUpcomingResponse.Maximum.Filter.builder()
+                                .field(InvoiceFetchUpcomingResponse.Maximum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    InvoiceFetchUpcomingResponse.Maximum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -930,6 +1172,15 @@ internal class InvoiceFetchUpcomingResponseTest {
                 .minimum(
                     InvoiceFetchUpcomingResponse.Minimum.builder()
                         .addAppliesToPriceId("string")
+                        .addFilter(
+                            InvoiceFetchUpcomingResponse.Minimum.Filter.builder()
+                                .field(InvoiceFetchUpcomingResponse.Minimum.Filter.Field.PRICE_ID)
+                                .operator(
+                                    InvoiceFetchUpcomingResponse.Minimum.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .minimumAmount("minimum_amount")
                         .build()
                 )

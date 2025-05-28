@@ -82,6 +82,7 @@ private constructor(
 
     /**
      * The date from which the top-up is active. If unspecified, the top-up is active immediately.
+     * This should not be more than 10 days in the past.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -300,7 +301,7 @@ private constructor(
 
         /**
          * The date from which the top-up is active. If unspecified, the top-up is active
-         * immediately.
+         * immediately. This should not be more than 10 days in the past.
          */
         fun activeFrom(activeFrom: OffsetDateTime?) = apply { body.activeFrom(activeFrom) }
 
@@ -600,7 +601,7 @@ private constructor(
 
         /**
          * The date from which the top-up is active. If unspecified, the top-up is active
-         * immediately.
+         * immediately. This should not be more than 10 days in the past.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -823,7 +824,7 @@ private constructor(
 
             /**
              * The date from which the top-up is active. If unspecified, the top-up is active
-             * immediately.
+             * immediately. This should not be more than 10 days in the past.
              */
             fun activeFrom(activeFrom: OffsetDateTime?) =
                 activeFrom(JsonField.ofNullable(activeFrom))

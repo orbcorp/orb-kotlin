@@ -13,17 +13,17 @@ internal class UsageDiscountTest {
     fun create() {
         val usageDiscount =
             UsageDiscount.builder()
-                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                 .discountType(UsageDiscount.DiscountType.USAGE)
                 .usageDiscount(0.0)
+                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                 .reason("reason")
                 .build()
 
-        assertThat(usageDiscount.appliesToPriceIds())
-            .containsExactly("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
         assertThat(usageDiscount.discountType()).isEqualTo(UsageDiscount.DiscountType.USAGE)
         assertThat(usageDiscount.usageDiscount()).isEqualTo(0.0)
+        assertThat(usageDiscount.appliesToPriceIds())
+            .containsExactly("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
         assertThat(usageDiscount.reason()).isEqualTo("reason")
     }
 
@@ -32,10 +32,10 @@ internal class UsageDiscountTest {
         val jsonMapper = jsonMapper()
         val usageDiscount =
             UsageDiscount.builder()
-                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                 .discountType(UsageDiscount.DiscountType.USAGE)
                 .usageDiscount(0.0)
+                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                 .reason("reason")
                 .build()
 

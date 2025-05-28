@@ -386,6 +386,24 @@ private constructor(
             body.addPrice(cumulativeGroupedBulk)
         }
 
+        /**
+         * Alias for calling [addPrice] with
+         * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
+         */
+        fun addPrice(tieredPackageWithMinimum: Price.TieredPackageWithMinimum) = apply {
+            body.addPrice(tieredPackageWithMinimum)
+        }
+
+        /**
+         * Alias for calling [addPrice] with `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
+         */
+        fun addPrice(matrixWithAllocation: Price.MatrixWithAllocation) = apply {
+            body.addPrice(matrixWithAllocation)
+        }
+
+        /** Alias for calling [addPrice] with `Price.ofGroupedTiered(groupedTiered)`. */
+        fun addPrice(groupedTiered: Price.GroupedTiered) = apply { body.addPrice(groupedTiered) }
+
         /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
         fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = apply {
             body.defaultInvoiceMemo(defaultInvoiceMemo)
@@ -1007,6 +1025,24 @@ private constructor(
             fun addPrice(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
                 addPrice(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
+            /**
+             * Alias for calling [addPrice] with
+             * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
+             */
+            fun addPrice(tieredPackageWithMinimum: Price.TieredPackageWithMinimum) =
+                addPrice(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
+
+            /**
+             * Alias for calling [addPrice] with
+             * `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
+             */
+            fun addPrice(matrixWithAllocation: Price.MatrixWithAllocation) =
+                addPrice(Price.ofMatrixWithAllocation(matrixWithAllocation))
+
+            /** Alias for calling [addPrice] with `Price.ofGroupedTiered(groupedTiered)`. */
+            fun addPrice(groupedTiered: Price.GroupedTiered) =
+                addPrice(Price.ofGroupedTiered(groupedTiered))
+
             /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
             fun defaultInvoiceMemo(defaultInvoiceMemo: String?) =
                 defaultInvoiceMemo(JsonField.ofNullable(defaultInvoiceMemo))
@@ -1225,6 +1261,9 @@ private constructor(
         private val scalableMatrixWithUnitPricing: ScalableMatrixWithUnitPricing? = null,
         private val scalableMatrixWithTieredPricing: ScalableMatrixWithTieredPricing? = null,
         private val cumulativeGroupedBulk: CumulativeGroupedBulk? = null,
+        private val tieredPackageWithMinimum: TieredPackageWithMinimum? = null,
+        private val matrixWithAllocation: MatrixWithAllocation? = null,
+        private val groupedTiered: GroupedTiered? = null,
         private val _json: JsonValue? = null,
     ) {
 
@@ -1280,6 +1319,12 @@ private constructor(
 
         fun cumulativeGroupedBulk(): CumulativeGroupedBulk? = cumulativeGroupedBulk
 
+        fun tieredPackageWithMinimum(): TieredPackageWithMinimum? = tieredPackageWithMinimum
+
+        fun matrixWithAllocation(): MatrixWithAllocation? = matrixWithAllocation
+
+        fun groupedTiered(): GroupedTiered? = groupedTiered
+
         fun isUnit(): Boolean = unit != null
 
         fun isPackage(): Boolean = package_ != null
@@ -1329,6 +1374,12 @@ private constructor(
         fun isScalableMatrixWithTieredPricing(): Boolean = scalableMatrixWithTieredPricing != null
 
         fun isCumulativeGroupedBulk(): Boolean = cumulativeGroupedBulk != null
+
+        fun isTieredPackageWithMinimum(): Boolean = tieredPackageWithMinimum != null
+
+        fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
+
+        fun isGroupedTiered(): Boolean = groupedTiered != null
 
         fun asUnit(): Unit = unit.getOrThrow("unit")
 
@@ -1395,6 +1446,14 @@ private constructor(
         fun asCumulativeGroupedBulk(): CumulativeGroupedBulk =
             cumulativeGroupedBulk.getOrThrow("cumulativeGroupedBulk")
 
+        fun asTieredPackageWithMinimum(): TieredPackageWithMinimum =
+            tieredPackageWithMinimum.getOrThrow("tieredPackageWithMinimum")
+
+        fun asMatrixWithAllocation(): MatrixWithAllocation =
+            matrixWithAllocation.getOrThrow("matrixWithAllocation")
+
+        fun asGroupedTiered(): GroupedTiered = groupedTiered.getOrThrow("groupedTiered")
+
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T =
@@ -1434,6 +1493,11 @@ private constructor(
                     visitor.visitScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)
                 cumulativeGroupedBulk != null ->
                     visitor.visitCumulativeGroupedBulk(cumulativeGroupedBulk)
+                tieredPackageWithMinimum != null ->
+                    visitor.visitTieredPackageWithMinimum(tieredPackageWithMinimum)
+                matrixWithAllocation != null ->
+                    visitor.visitMatrixWithAllocation(matrixWithAllocation)
+                groupedTiered != null -> visitor.visitGroupedTiered(groupedTiered)
                 else -> visitor.unknown(_json)
             }
 
@@ -1567,6 +1631,22 @@ private constructor(
                     ) {
                         cumulativeGroupedBulk.validate()
                     }
+
+                    override fun visitTieredPackageWithMinimum(
+                        tieredPackageWithMinimum: TieredPackageWithMinimum
+                    ) {
+                        tieredPackageWithMinimum.validate()
+                    }
+
+                    override fun visitMatrixWithAllocation(
+                        matrixWithAllocation: MatrixWithAllocation
+                    ) {
+                        matrixWithAllocation.validate()
+                    }
+
+                    override fun visitGroupedTiered(groupedTiered: GroupedTiered) {
+                        groupedTiered.validate()
+                    }
                 }
             )
             validated = true
@@ -1667,6 +1747,17 @@ private constructor(
                         cumulativeGroupedBulk: CumulativeGroupedBulk
                     ) = cumulativeGroupedBulk.validity()
 
+                    override fun visitTieredPackageWithMinimum(
+                        tieredPackageWithMinimum: TieredPackageWithMinimum
+                    ) = tieredPackageWithMinimum.validity()
+
+                    override fun visitMatrixWithAllocation(
+                        matrixWithAllocation: MatrixWithAllocation
+                    ) = matrixWithAllocation.validity()
+
+                    override fun visitGroupedTiered(groupedTiered: GroupedTiered) =
+                        groupedTiered.validity()
+
                     override fun unknown(json: JsonValue?) = 0
                 }
             )
@@ -1676,10 +1767,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Price && unit == other.unit && package_ == other.package_ && matrix == other.matrix && tiered == other.tiered && tieredBps == other.tieredBps && bps == other.bps && bulkBps == other.bulkBps && bulk == other.bulk && thresholdTotalAmount == other.thresholdTotalAmount && tieredPackage == other.tieredPackage && tieredWithMinimum == other.tieredWithMinimum && unitWithPercent == other.unitWithPercent && packageWithAllocation == other.packageWithAllocation && tieredWithProration == other.tieredWithProration && unitWithProration == other.unitWithProration && groupedAllocation == other.groupedAllocation && groupedWithProratedMinimum == other.groupedWithProratedMinimum && groupedWithMeteredMinimum == other.groupedWithMeteredMinimum && matrixWithDisplayName == other.matrixWithDisplayName && bulkWithProration == other.bulkWithProration && groupedTieredPackage == other.groupedTieredPackage && maxGroupTieredPackage == other.maxGroupTieredPackage && scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing && scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing && cumulativeGroupedBulk == other.cumulativeGroupedBulk /* spotless:on */
+            return /* spotless:off */ other is Price && unit == other.unit && package_ == other.package_ && matrix == other.matrix && tiered == other.tiered && tieredBps == other.tieredBps && bps == other.bps && bulkBps == other.bulkBps && bulk == other.bulk && thresholdTotalAmount == other.thresholdTotalAmount && tieredPackage == other.tieredPackage && tieredWithMinimum == other.tieredWithMinimum && unitWithPercent == other.unitWithPercent && packageWithAllocation == other.packageWithAllocation && tieredWithProration == other.tieredWithProration && unitWithProration == other.unitWithProration && groupedAllocation == other.groupedAllocation && groupedWithProratedMinimum == other.groupedWithProratedMinimum && groupedWithMeteredMinimum == other.groupedWithMeteredMinimum && matrixWithDisplayName == other.matrixWithDisplayName && bulkWithProration == other.bulkWithProration && groupedTieredPackage == other.groupedTieredPackage && maxGroupTieredPackage == other.maxGroupTieredPackage && scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing && scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing && cumulativeGroupedBulk == other.cumulativeGroupedBulk && tieredPackageWithMinimum == other.tieredPackageWithMinimum && matrixWithAllocation == other.matrixWithAllocation && groupedTiered == other.groupedTiered /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, package_, matrix, tiered, tieredBps, bps, bulkBps, bulk, thresholdTotalAmount, tieredPackage, tieredWithMinimum, unitWithPercent, packageWithAllocation, tieredWithProration, unitWithProration, groupedAllocation, groupedWithProratedMinimum, groupedWithMeteredMinimum, matrixWithDisplayName, bulkWithProration, groupedTieredPackage, maxGroupTieredPackage, scalableMatrixWithUnitPricing, scalableMatrixWithTieredPricing, cumulativeGroupedBulk) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, package_, matrix, tiered, tieredBps, bps, bulkBps, bulk, thresholdTotalAmount, tieredPackage, tieredWithMinimum, unitWithPercent, packageWithAllocation, tieredWithProration, unitWithProration, groupedAllocation, groupedWithProratedMinimum, groupedWithMeteredMinimum, matrixWithDisplayName, bulkWithProration, groupedTieredPackage, maxGroupTieredPackage, scalableMatrixWithUnitPricing, scalableMatrixWithTieredPricing, cumulativeGroupedBulk, tieredPackageWithMinimum, matrixWithAllocation, groupedTiered) /* spotless:on */
 
         override fun toString(): String =
             when {
@@ -1716,6 +1807,10 @@ private constructor(
                     "Price{scalableMatrixWithTieredPricing=$scalableMatrixWithTieredPricing}"
                 cumulativeGroupedBulk != null ->
                     "Price{cumulativeGroupedBulk=$cumulativeGroupedBulk}"
+                tieredPackageWithMinimum != null ->
+                    "Price{tieredPackageWithMinimum=$tieredPackageWithMinimum}"
+                matrixWithAllocation != null -> "Price{matrixWithAllocation=$matrixWithAllocation}"
+                groupedTiered != null -> "Price{groupedTiered=$groupedTiered}"
                 _json != null -> "Price{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Price")
             }
@@ -1790,6 +1885,14 @@ private constructor(
 
             fun ofCumulativeGroupedBulk(cumulativeGroupedBulk: CumulativeGroupedBulk) =
                 Price(cumulativeGroupedBulk = cumulativeGroupedBulk)
+
+            fun ofTieredPackageWithMinimum(tieredPackageWithMinimum: TieredPackageWithMinimum) =
+                Price(tieredPackageWithMinimum = tieredPackageWithMinimum)
+
+            fun ofMatrixWithAllocation(matrixWithAllocation: MatrixWithAllocation) =
+                Price(matrixWithAllocation = matrixWithAllocation)
+
+            fun ofGroupedTiered(groupedTiered: GroupedTiered) = Price(groupedTiered = groupedTiered)
         }
 
         /** An interface that defines how to map each variant of [Price] to a value of type [T]. */
@@ -1852,6 +1955,12 @@ private constructor(
             ): T
 
             fun visitCumulativeGroupedBulk(cumulativeGroupedBulk: CumulativeGroupedBulk): T
+
+            fun visitTieredPackageWithMinimum(tieredPackageWithMinimum: TieredPackageWithMinimum): T
+
+            fun visitMatrixWithAllocation(matrixWithAllocation: MatrixWithAllocation): T
+
+            fun visitGroupedTiered(groupedTiered: GroupedTiered): T
 
             /**
              * Maps an unknown variant of [Price] to a value of type [T].
@@ -2003,6 +2112,21 @@ private constructor(
                             Price(cumulativeGroupedBulk = it, _json = json)
                         } ?: Price(_json = json)
                     }
+                    "tiered_package_with_minimum" -> {
+                        return tryDeserialize(node, jacksonTypeRef<TieredPackageWithMinimum>())
+                            ?.let { Price(tieredPackageWithMinimum = it, _json = json) }
+                            ?: Price(_json = json)
+                    }
+                    "matrix_with_allocation" -> {
+                        return tryDeserialize(node, jacksonTypeRef<MatrixWithAllocation>())?.let {
+                            Price(matrixWithAllocation = it, _json = json)
+                        } ?: Price(_json = json)
+                    }
+                    "grouped_tiered" -> {
+                        return tryDeserialize(node, jacksonTypeRef<GroupedTiered>())?.let {
+                            Price(groupedTiered = it, _json = json)
+                        } ?: Price(_json = json)
+                    }
                 }
 
                 return Price(_json = json)
@@ -2057,6 +2181,11 @@ private constructor(
                         generator.writeObject(value.scalableMatrixWithTieredPricing)
                     value.cumulativeGroupedBulk != null ->
                         generator.writeObject(value.cumulativeGroupedBulk)
+                    value.tieredPackageWithMinimum != null ->
+                        generator.writeObject(value.tieredPackageWithMinimum)
+                    value.matrixWithAllocation != null ->
+                        generator.writeObject(value.matrixWithAllocation)
+                    value.groupedTiered != null -> generator.writeObject(value.groupedTiered)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Price")
                 }
@@ -2075,6 +2204,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -2111,6 +2241,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -2138,6 +2272,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -2233,6 +2368,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -2361,6 +2505,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -2453,6 +2608,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -2472,6 +2630,7 @@ private constructor(
                     billingCycleConfiguration = unit.billingCycleConfiguration
                     conversionRate = unit.conversionRate
                     currency = unit.currency
+                    dimensionalPriceConfiguration = unit.dimensionalPriceConfiguration
                     externalPriceId = unit.externalPriceId
                     fixedPriceQuantity = unit.fixedPriceQuantity
                     invoiceGroupingKey = unit.invoiceGroupingKey
@@ -2644,6 +2803,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -2784,6 +2962,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -2814,6 +2993,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -2847,6 +3027,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -3528,6 +3709,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -3996,17 +4474,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Unit && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && unitConfig == other.unitConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Unit && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && unitConfig == other.unitConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, unitConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, unitConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "Unit{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, unitConfig=$unitConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "Unit{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, unitConfig=$unitConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class Package
@@ -4021,6 +4499,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -4057,6 +4536,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -4084,6 +4567,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -4179,6 +4663,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -4307,6 +4800,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -4399,6 +4903,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -4418,6 +4925,7 @@ private constructor(
                     billingCycleConfiguration = package_.billingCycleConfiguration
                     conversionRate = package_.conversionRate
                     currency = package_.currency
+                    dimensionalPriceConfiguration = package_.dimensionalPriceConfiguration
                     externalPriceId = package_.externalPriceId
                     fixedPriceQuantity = package_.fixedPriceQuantity
                     invoiceGroupingKey = package_.invoiceGroupingKey
@@ -4591,6 +5099,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -4731,6 +5258,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -4761,6 +5289,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -4794,6 +5323,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -5525,6 +6055,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -5993,17 +6820,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Package && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && packageConfig == other.packageConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Package && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && packageConfig == other.packageConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, packageConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, packageConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "Package{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, packageConfig=$packageConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "Package{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, packageConfig=$packageConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class Matrix
@@ -6018,6 +6845,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -6054,6 +6882,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -6081,6 +6913,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -6176,6 +7009,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -6304,6 +7146,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -6396,6 +7249,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -6415,6 +7271,7 @@ private constructor(
                     billingCycleConfiguration = matrix.billingCycleConfiguration
                     conversionRate = matrix.conversionRate
                     currency = matrix.currency
+                    dimensionalPriceConfiguration = matrix.dimensionalPriceConfiguration
                     externalPriceId = matrix.externalPriceId
                     fixedPriceQuantity = matrix.fixedPriceQuantity
                     invoiceGroupingKey = matrix.invoiceGroupingKey
@@ -6588,6 +7445,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -6728,6 +7604,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -6758,6 +7635,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -6791,6 +7669,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -7828,6 +8707,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -8296,17 +9472,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Matrix && cadence == other.cadence && itemId == other.itemId && matrixConfig == other.matrixConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Matrix && cadence == other.cadence && itemId == other.itemId && matrixConfig == other.matrixConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, matrixConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, matrixConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "Matrix{cadence=$cadence, itemId=$itemId, matrixConfig=$matrixConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "Matrix{cadence=$cadence, itemId=$itemId, matrixConfig=$matrixConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class Tiered
@@ -8321,6 +9497,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -8357,6 +9534,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -8384,6 +9565,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -8479,6 +9661,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -8607,6 +9798,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -8699,6 +9901,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -8718,6 +9923,7 @@ private constructor(
                     billingCycleConfiguration = tiered.billingCycleConfiguration
                     conversionRate = tiered.conversionRate
                     currency = tiered.currency
+                    dimensionalPriceConfiguration = tiered.dimensionalPriceConfiguration
                     externalPriceId = tiered.externalPriceId
                     fixedPriceQuantity = tiered.fixedPriceQuantity
                     invoiceGroupingKey = tiered.invoiceGroupingKey
@@ -8891,6 +10097,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -9031,6 +10256,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -9061,6 +10287,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -9094,6 +10321,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -10050,6 +11278,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -10518,17 +12043,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Tiered && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredConfig == other.tieredConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Tiered && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredConfig == other.tieredConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, tieredConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, tieredConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "Tiered{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredConfig=$tieredConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "Tiered{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredConfig=$tieredConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class TieredBps
@@ -10543,6 +12068,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -10579,6 +12105,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -10606,6 +12136,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -10702,6 +12233,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -10830,6 +12370,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -10922,6 +12473,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -10941,6 +12495,7 @@ private constructor(
                     billingCycleConfiguration = tieredBps.billingCycleConfiguration
                     conversionRate = tieredBps.conversionRate
                     currency = tieredBps.currency
+                    dimensionalPriceConfiguration = tieredBps.dimensionalPriceConfiguration
                     externalPriceId = tieredBps.externalPriceId
                     fixedPriceQuantity = tieredBps.fixedPriceQuantity
                     invoiceGroupingKey = tieredBps.invoiceGroupingKey
@@ -11114,6 +12669,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -11254,6 +12828,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -11284,6 +12859,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -11317,6 +12893,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -12308,6 +13885,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -12776,17 +14650,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is TieredBps && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredBpsConfig == other.tieredBpsConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is TieredBps && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredBpsConfig == other.tieredBpsConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, tieredBpsConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, tieredBpsConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "TieredBps{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredBpsConfig=$tieredBpsConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "TieredBps{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredBpsConfig=$tieredBpsConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class Bps
@@ -12801,6 +14675,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -12837,6 +14712,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -12864,6 +14743,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -12959,6 +14839,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -13087,6 +14976,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -13179,6 +15079,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -13198,6 +15101,7 @@ private constructor(
                     billingCycleConfiguration = bps.billingCycleConfiguration
                     conversionRate = bps.conversionRate
                     currency = bps.currency
+                    dimensionalPriceConfiguration = bps.dimensionalPriceConfiguration
                     externalPriceId = bps.externalPriceId
                     fixedPriceQuantity = bps.fixedPriceQuantity
                     invoiceGroupingKey = bps.invoiceGroupingKey
@@ -13370,6 +15274,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -13510,6 +15433,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -13540,6 +15464,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -13573,6 +15498,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -14290,6 +16216,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -14758,17 +16981,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Bps && bpsConfig == other.bpsConfig && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Bps && bpsConfig == other.bpsConfig && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(bpsConfig, cadence, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(bpsConfig, cadence, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "Bps{bpsConfig=$bpsConfig, cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "Bps{bpsConfig=$bpsConfig, cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class BulkBps
@@ -14783,6 +17006,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -14819,6 +17043,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -14846,6 +17074,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -14941,6 +17170,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -15069,6 +17307,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -15161,6 +17410,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -15180,6 +17432,7 @@ private constructor(
                     billingCycleConfiguration = bulkBps.billingCycleConfiguration
                     conversionRate = bulkBps.conversionRate
                     currency = bulkBps.currency
+                    dimensionalPriceConfiguration = bulkBps.dimensionalPriceConfiguration
                     externalPriceId = bulkBps.externalPriceId
                     fixedPriceQuantity = bulkBps.fixedPriceQuantity
                     invoiceGroupingKey = bulkBps.invoiceGroupingKey
@@ -15353,6 +17606,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -15493,6 +17765,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -15523,6 +17796,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -15556,6 +17830,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -16502,6 +18777,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -16970,17 +19542,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is BulkBps && bulkBpsConfig == other.bulkBpsConfig && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is BulkBps && bulkBpsConfig == other.bulkBpsConfig && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(bulkBpsConfig, cadence, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(bulkBpsConfig, cadence, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "BulkBps{bulkBpsConfig=$bulkBpsConfig, cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "BulkBps{bulkBpsConfig=$bulkBpsConfig, cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class Bulk
@@ -16995,6 +19567,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -17031,6 +19604,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -17058,6 +19635,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -17153,6 +19731,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -17281,6 +19868,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -17373,6 +19971,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -17392,6 +19993,7 @@ private constructor(
                     billingCycleConfiguration = bulk.billingCycleConfiguration
                     conversionRate = bulk.conversionRate
                     currency = bulk.currency
+                    dimensionalPriceConfiguration = bulk.dimensionalPriceConfiguration
                     externalPriceId = bulk.externalPriceId
                     fixedPriceQuantity = bulk.fixedPriceQuantity
                     invoiceGroupingKey = bulk.invoiceGroupingKey
@@ -17564,6 +20166,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -17704,6 +20325,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -17734,6 +20356,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -17767,6 +20390,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -18679,6 +21303,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -19147,17 +22068,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Bulk && bulkConfig == other.bulkConfig && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Bulk && bulkConfig == other.bulkConfig && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(bulkConfig, cadence, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(bulkConfig, cadence, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "Bulk{bulkConfig=$bulkConfig, cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "Bulk{bulkConfig=$bulkConfig, cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class ThresholdTotalAmount
@@ -19172,6 +22093,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -19209,6 +22131,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -19236,6 +22162,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -19332,6 +22259,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -19461,6 +22397,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -19554,6 +22501,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -19573,6 +22523,8 @@ private constructor(
                     billingCycleConfiguration = thresholdTotalAmount.billingCycleConfiguration
                     conversionRate = thresholdTotalAmount.conversionRate
                     currency = thresholdTotalAmount.currency
+                    dimensionalPriceConfiguration =
+                        thresholdTotalAmount.dimensionalPriceConfiguration
                     externalPriceId = thresholdTotalAmount.externalPriceId
                     fixedPriceQuantity = thresholdTotalAmount.fixedPriceQuantity
                     invoiceGroupingKey = thresholdTotalAmount.invoiceGroupingKey
@@ -19747,6 +22699,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -19887,6 +22858,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -19917,6 +22889,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -19950,6 +22923,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -20574,6 +23548,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -21042,17 +24313,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is ThresholdTotalAmount && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && thresholdTotalAmountConfig == other.thresholdTotalAmountConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is ThresholdTotalAmount && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && thresholdTotalAmountConfig == other.thresholdTotalAmountConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, thresholdTotalAmountConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, thresholdTotalAmountConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "ThresholdTotalAmount{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "ThresholdTotalAmount{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class TieredPackage
@@ -21067,6 +24338,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -21103,6 +24375,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -21130,6 +24406,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -21226,6 +24503,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -21354,6 +24640,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -21446,6 +24743,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -21465,6 +24765,7 @@ private constructor(
                     billingCycleConfiguration = tieredPackage.billingCycleConfiguration
                     conversionRate = tieredPackage.conversionRate
                     currency = tieredPackage.currency
+                    dimensionalPriceConfiguration = tieredPackage.dimensionalPriceConfiguration
                     externalPriceId = tieredPackage.externalPriceId
                     fixedPriceQuantity = tieredPackage.fixedPriceQuantity
                     invoiceGroupingKey = tieredPackage.invoiceGroupingKey
@@ -21639,6 +24940,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -21779,6 +25099,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -21809,6 +25130,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -21842,6 +25164,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -22465,6 +25788,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -22933,17 +26553,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is TieredPackage && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredPackageConfig == other.tieredPackageConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is TieredPackage && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredPackageConfig == other.tieredPackageConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, tieredPackageConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, tieredPackageConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "TieredPackage{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredPackageConfig=$tieredPackageConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "TieredPackage{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredPackageConfig=$tieredPackageConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class TieredWithMinimum
@@ -22958,6 +26578,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -22994,6 +26615,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -23021,6 +26646,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -23117,6 +26743,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -23246,6 +26881,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -23338,6 +26984,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -23357,6 +27006,7 @@ private constructor(
                     billingCycleConfiguration = tieredWithMinimum.billingCycleConfiguration
                     conversionRate = tieredWithMinimum.conversionRate
                     currency = tieredWithMinimum.currency
+                    dimensionalPriceConfiguration = tieredWithMinimum.dimensionalPriceConfiguration
                     externalPriceId = tieredWithMinimum.externalPriceId
                     fixedPriceQuantity = tieredWithMinimum.fixedPriceQuantity
                     invoiceGroupingKey = tieredWithMinimum.invoiceGroupingKey
@@ -23530,6 +27180,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -23670,6 +27339,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -23700,6 +27370,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -23733,6 +27404,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -24356,6 +28028,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -24824,17 +28793,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is TieredWithMinimum && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredWithMinimumConfig == other.tieredWithMinimumConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is TieredWithMinimum && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredWithMinimumConfig == other.tieredWithMinimumConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, tieredWithMinimumConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, tieredWithMinimumConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "TieredWithMinimum{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredWithMinimumConfig=$tieredWithMinimumConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "TieredWithMinimum{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredWithMinimumConfig=$tieredWithMinimumConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class UnitWithPercent
@@ -24849,6 +28818,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -24885,6 +28855,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -24912,6 +28886,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -25008,6 +28983,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -25136,6 +29120,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -25228,6 +29223,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -25247,6 +29245,7 @@ private constructor(
                     billingCycleConfiguration = unitWithPercent.billingCycleConfiguration
                     conversionRate = unitWithPercent.conversionRate
                     currency = unitWithPercent.currency
+                    dimensionalPriceConfiguration = unitWithPercent.dimensionalPriceConfiguration
                     externalPriceId = unitWithPercent.externalPriceId
                     fixedPriceQuantity = unitWithPercent.fixedPriceQuantity
                     invoiceGroupingKey = unitWithPercent.invoiceGroupingKey
@@ -25421,6 +29420,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -25561,6 +29579,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -25591,6 +29610,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -25624,6 +29644,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -26247,6 +30268,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -26715,17 +31033,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is UnitWithPercent && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && unitWithPercentConfig == other.unitWithPercentConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is UnitWithPercent && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && unitWithPercentConfig == other.unitWithPercentConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, unitWithPercentConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, unitWithPercentConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "UnitWithPercent{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, unitWithPercentConfig=$unitWithPercentConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "UnitWithPercent{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, unitWithPercentConfig=$unitWithPercentConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class PackageWithAllocation
@@ -26740,6 +31058,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -26777,6 +31096,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -26804,6 +31127,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -26900,6 +31224,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -27029,6 +31362,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -27123,6 +31467,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -27142,6 +31489,8 @@ private constructor(
                     billingCycleConfiguration = packageWithAllocation.billingCycleConfiguration
                     conversionRate = packageWithAllocation.conversionRate
                     currency = packageWithAllocation.currency
+                    dimensionalPriceConfiguration =
+                        packageWithAllocation.dimensionalPriceConfiguration
                     externalPriceId = packageWithAllocation.externalPriceId
                     fixedPriceQuantity = packageWithAllocation.fixedPriceQuantity
                     invoiceGroupingKey = packageWithAllocation.invoiceGroupingKey
@@ -27316,6 +31665,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -27456,6 +31824,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -27486,6 +31855,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -27521,6 +31891,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -28145,6 +32516,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -28613,17 +33281,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is PackageWithAllocation && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && packageWithAllocationConfig == other.packageWithAllocationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is PackageWithAllocation && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && packageWithAllocationConfig == other.packageWithAllocationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, packageWithAllocationConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, packageWithAllocationConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "PackageWithAllocation{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, packageWithAllocationConfig=$packageWithAllocationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "PackageWithAllocation{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, packageWithAllocationConfig=$packageWithAllocationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class TieredWithProration
@@ -28638,6 +33306,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -28674,6 +33343,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -28701,6 +33374,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -28797,6 +33471,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -28926,6 +33609,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -29018,6 +33712,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -29037,6 +33734,8 @@ private constructor(
                     billingCycleConfiguration = tieredWithProration.billingCycleConfiguration
                     conversionRate = tieredWithProration.conversionRate
                     currency = tieredWithProration.currency
+                    dimensionalPriceConfiguration =
+                        tieredWithProration.dimensionalPriceConfiguration
                     externalPriceId = tieredWithProration.externalPriceId
                     fixedPriceQuantity = tieredWithProration.fixedPriceQuantity
                     invoiceGroupingKey = tieredWithProration.invoiceGroupingKey
@@ -29211,6 +33910,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -29351,6 +34069,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -29381,6 +34100,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -29414,6 +34134,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -30038,6 +34759,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -30506,17 +35524,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is TieredWithProration && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredWithProrationConfig == other.tieredWithProrationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is TieredWithProration && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredWithProrationConfig == other.tieredWithProrationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, tieredWithProrationConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, tieredWithProrationConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "TieredWithProration{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredWithProrationConfig=$tieredWithProrationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "TieredWithProration{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredWithProrationConfig=$tieredWithProrationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class UnitWithProration
@@ -30531,6 +35549,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -30567,6 +35586,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -30594,6 +35617,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -30690,6 +35714,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -30819,6 +35852,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -30911,6 +35955,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -30930,6 +35977,7 @@ private constructor(
                     billingCycleConfiguration = unitWithProration.billingCycleConfiguration
                     conversionRate = unitWithProration.conversionRate
                     currency = unitWithProration.currency
+                    dimensionalPriceConfiguration = unitWithProration.dimensionalPriceConfiguration
                     externalPriceId = unitWithProration.externalPriceId
                     fixedPriceQuantity = unitWithProration.fixedPriceQuantity
                     invoiceGroupingKey = unitWithProration.invoiceGroupingKey
@@ -31103,6 +36151,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -31243,6 +36310,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -31273,6 +36341,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -31306,6 +36375,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -31929,6 +36999,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -32397,17 +37764,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is UnitWithProration && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && unitWithProrationConfig == other.unitWithProrationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is UnitWithProration && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && unitWithProrationConfig == other.unitWithProrationConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, unitWithProrationConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, unitWithProrationConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "UnitWithProration{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, unitWithProrationConfig=$unitWithProrationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "UnitWithProration{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, unitWithProrationConfig=$unitWithProrationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class GroupedAllocation
@@ -32422,6 +37789,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -32458,6 +37826,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -32485,6 +37857,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -32581,6 +37954,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -32710,6 +38092,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -32802,6 +38195,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -32821,6 +38217,7 @@ private constructor(
                     billingCycleConfiguration = groupedAllocation.billingCycleConfiguration
                     conversionRate = groupedAllocation.conversionRate
                     currency = groupedAllocation.currency
+                    dimensionalPriceConfiguration = groupedAllocation.dimensionalPriceConfiguration
                     externalPriceId = groupedAllocation.externalPriceId
                     fixedPriceQuantity = groupedAllocation.fixedPriceQuantity
                     invoiceGroupingKey = groupedAllocation.invoiceGroupingKey
@@ -32994,6 +38391,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -33134,6 +38550,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -33164,6 +38581,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -33197,6 +38615,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -33820,6 +39239,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -34288,17 +40004,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is GroupedAllocation && cadence == other.cadence && groupedAllocationConfig == other.groupedAllocationConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is GroupedAllocation && cadence == other.cadence && groupedAllocationConfig == other.groupedAllocationConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, groupedAllocationConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, groupedAllocationConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "GroupedAllocation{cadence=$cadence, groupedAllocationConfig=$groupedAllocationConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "GroupedAllocation{cadence=$cadence, groupedAllocationConfig=$groupedAllocationConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class GroupedWithProratedMinimum
@@ -34314,6 +40030,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -34351,6 +40068,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -34378,6 +40099,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -34474,6 +40196,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -34603,6 +40334,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -34698,6 +40440,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -34718,6 +40463,8 @@ private constructor(
                     billingCycleConfiguration = groupedWithProratedMinimum.billingCycleConfiguration
                     conversionRate = groupedWithProratedMinimum.conversionRate
                     currency = groupedWithProratedMinimum.currency
+                    dimensionalPriceConfiguration =
+                        groupedWithProratedMinimum.dimensionalPriceConfiguration
                     externalPriceId = groupedWithProratedMinimum.externalPriceId
                     fixedPriceQuantity = groupedWithProratedMinimum.fixedPriceQuantity
                     invoiceGroupingKey = groupedWithProratedMinimum.invoiceGroupingKey
@@ -34896,6 +40643,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -35039,6 +40805,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -35069,6 +40836,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -35104,6 +40872,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -35729,6 +41498,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -36197,17 +42263,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is GroupedWithProratedMinimum && cadence == other.cadence && groupedWithProratedMinimumConfig == other.groupedWithProratedMinimumConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is GroupedWithProratedMinimum && cadence == other.cadence && groupedWithProratedMinimumConfig == other.groupedWithProratedMinimumConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, groupedWithProratedMinimumConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, groupedWithProratedMinimumConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "GroupedWithProratedMinimum{cadence=$cadence, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "GroupedWithProratedMinimum{cadence=$cadence, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class GroupedWithMeteredMinimum
@@ -36222,6 +42288,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -36259,6 +42326,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -36286,6 +42357,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -36382,6 +42454,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -36511,6 +42592,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -36606,6 +42698,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -36626,6 +42721,8 @@ private constructor(
                     billingCycleConfiguration = groupedWithMeteredMinimum.billingCycleConfiguration
                     conversionRate = groupedWithMeteredMinimum.conversionRate
                     currency = groupedWithMeteredMinimum.currency
+                    dimensionalPriceConfiguration =
+                        groupedWithMeteredMinimum.dimensionalPriceConfiguration
                     externalPriceId = groupedWithMeteredMinimum.externalPriceId
                     fixedPriceQuantity = groupedWithMeteredMinimum.fixedPriceQuantity
                     invoiceGroupingKey = groupedWithMeteredMinimum.invoiceGroupingKey
@@ -36802,6 +42899,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -36945,6 +43061,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -36975,6 +43092,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -37010,6 +43128,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -37635,6 +43754,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -38103,17 +44519,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is GroupedWithMeteredMinimum && cadence == other.cadence && groupedWithMeteredMinimumConfig == other.groupedWithMeteredMinimumConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is GroupedWithMeteredMinimum && cadence == other.cadence && groupedWithMeteredMinimumConfig == other.groupedWithMeteredMinimumConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, groupedWithMeteredMinimumConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, groupedWithMeteredMinimumConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "GroupedWithMeteredMinimum{cadence=$cadence, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "GroupedWithMeteredMinimum{cadence=$cadence, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class MatrixWithDisplayName
@@ -38128,6 +44544,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -38165,6 +44582,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -38192,6 +44613,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -38288,6 +44710,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -38417,6 +44848,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -38511,6 +44953,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -38530,6 +44975,8 @@ private constructor(
                     billingCycleConfiguration = matrixWithDisplayName.billingCycleConfiguration
                     conversionRate = matrixWithDisplayName.conversionRate
                     currency = matrixWithDisplayName.currency
+                    dimensionalPriceConfiguration =
+                        matrixWithDisplayName.dimensionalPriceConfiguration
                     externalPriceId = matrixWithDisplayName.externalPriceId
                     fixedPriceQuantity = matrixWithDisplayName.fixedPriceQuantity
                     invoiceGroupingKey = matrixWithDisplayName.invoiceGroupingKey
@@ -38704,6 +45151,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -38844,6 +45310,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -38874,6 +45341,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -38909,6 +45377,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -39533,6 +46002,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -40001,17 +46767,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is MatrixWithDisplayName && cadence == other.cadence && itemId == other.itemId && matrixWithDisplayNameConfig == other.matrixWithDisplayNameConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is MatrixWithDisplayName && cadence == other.cadence && itemId == other.itemId && matrixWithDisplayNameConfig == other.matrixWithDisplayNameConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, matrixWithDisplayNameConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, matrixWithDisplayNameConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "MatrixWithDisplayName{cadence=$cadence, itemId=$itemId, matrixWithDisplayNameConfig=$matrixWithDisplayNameConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "MatrixWithDisplayName{cadence=$cadence, itemId=$itemId, matrixWithDisplayNameConfig=$matrixWithDisplayNameConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class BulkWithProration
@@ -40026,6 +46792,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -40062,6 +46829,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -40089,6 +46860,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -40185,6 +46957,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -40314,6 +47095,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -40406,6 +47198,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -40425,6 +47220,7 @@ private constructor(
                     billingCycleConfiguration = bulkWithProration.billingCycleConfiguration
                     conversionRate = bulkWithProration.conversionRate
                     currency = bulkWithProration.currency
+                    dimensionalPriceConfiguration = bulkWithProration.dimensionalPriceConfiguration
                     externalPriceId = bulkWithProration.externalPriceId
                     fixedPriceQuantity = bulkWithProration.fixedPriceQuantity
                     invoiceGroupingKey = bulkWithProration.invoiceGroupingKey
@@ -40598,6 +47394,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -40738,6 +47553,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -40768,6 +47584,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -40801,6 +47618,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -41424,6 +48242,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -41892,17 +49007,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is BulkWithProration && bulkWithProrationConfig == other.bulkWithProrationConfig && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is BulkWithProration && bulkWithProrationConfig == other.bulkWithProrationConfig && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(bulkWithProrationConfig, cadence, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(bulkWithProrationConfig, cadence, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "BulkWithProration{bulkWithProrationConfig=$bulkWithProrationConfig, cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "BulkWithProration{bulkWithProrationConfig=$bulkWithProrationConfig, cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class GroupedTieredPackage
@@ -41917,6 +49032,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -41954,6 +49070,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -41981,6 +49101,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -42077,6 +49198,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -42206,6 +49336,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -42299,6 +49440,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -42318,6 +49462,8 @@ private constructor(
                     billingCycleConfiguration = groupedTieredPackage.billingCycleConfiguration
                     conversionRate = groupedTieredPackage.conversionRate
                     currency = groupedTieredPackage.currency
+                    dimensionalPriceConfiguration =
+                        groupedTieredPackage.dimensionalPriceConfiguration
                     externalPriceId = groupedTieredPackage.externalPriceId
                     fixedPriceQuantity = groupedTieredPackage.fixedPriceQuantity
                     invoiceGroupingKey = groupedTieredPackage.invoiceGroupingKey
@@ -42492,6 +49638,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -42632,6 +49797,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -42662,6 +49828,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -42695,6 +49862,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -43319,6 +50487,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -43787,17 +51252,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is GroupedTieredPackage && cadence == other.cadence && groupedTieredPackageConfig == other.groupedTieredPackageConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is GroupedTieredPackage && cadence == other.cadence && groupedTieredPackageConfig == other.groupedTieredPackageConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, groupedTieredPackageConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, groupedTieredPackageConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "GroupedTieredPackage{cadence=$cadence, groupedTieredPackageConfig=$groupedTieredPackageConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "GroupedTieredPackage{cadence=$cadence, groupedTieredPackageConfig=$groupedTieredPackageConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class MaxGroupTieredPackage
@@ -43812,6 +51277,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -43849,6 +51315,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -43876,6 +51346,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -43972,6 +51443,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -44101,6 +51581,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -44195,6 +51686,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -44214,6 +51708,8 @@ private constructor(
                     billingCycleConfiguration = maxGroupTieredPackage.billingCycleConfiguration
                     conversionRate = maxGroupTieredPackage.conversionRate
                     currency = maxGroupTieredPackage.currency
+                    dimensionalPriceConfiguration =
+                        maxGroupTieredPackage.dimensionalPriceConfiguration
                     externalPriceId = maxGroupTieredPackage.externalPriceId
                     fixedPriceQuantity = maxGroupTieredPackage.fixedPriceQuantity
                     invoiceGroupingKey = maxGroupTieredPackage.invoiceGroupingKey
@@ -44388,6 +51884,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -44528,6 +52043,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -44558,6 +52074,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -44593,6 +52110,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -45217,6 +52735,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -45685,17 +53500,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is MaxGroupTieredPackage && cadence == other.cadence && itemId == other.itemId && maxGroupTieredPackageConfig == other.maxGroupTieredPackageConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is MaxGroupTieredPackage && cadence == other.cadence && itemId == other.itemId && maxGroupTieredPackageConfig == other.maxGroupTieredPackageConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, maxGroupTieredPackageConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, maxGroupTieredPackageConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "MaxGroupTieredPackage{cadence=$cadence, itemId=$itemId, maxGroupTieredPackageConfig=$maxGroupTieredPackageConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "MaxGroupTieredPackage{cadence=$cadence, itemId=$itemId, maxGroupTieredPackageConfig=$maxGroupTieredPackageConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class ScalableMatrixWithUnitPricing
@@ -45711,6 +53526,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -45749,6 +53565,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -45776,6 +53596,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -45874,6 +53695,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -46003,6 +53833,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -46099,6 +53940,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -46121,6 +53965,8 @@ private constructor(
                             scalableMatrixWithUnitPricing.billingCycleConfiguration
                         conversionRate = scalableMatrixWithUnitPricing.conversionRate
                         currency = scalableMatrixWithUnitPricing.currency
+                        dimensionalPriceConfiguration =
+                            scalableMatrixWithUnitPricing.dimensionalPriceConfiguration
                         externalPriceId = scalableMatrixWithUnitPricing.externalPriceId
                         fixedPriceQuantity = scalableMatrixWithUnitPricing.fixedPriceQuantity
                         invoiceGroupingKey = scalableMatrixWithUnitPricing.invoiceGroupingKey
@@ -46303,6 +54149,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -46446,6 +54311,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -46476,6 +54342,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -46511,6 +54378,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -47136,6 +55004,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -47604,17 +55769,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is ScalableMatrixWithUnitPricing && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && scalableMatrixWithUnitPricingConfig == other.scalableMatrixWithUnitPricingConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is ScalableMatrixWithUnitPricing && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && scalableMatrixWithUnitPricingConfig == other.scalableMatrixWithUnitPricingConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, scalableMatrixWithUnitPricingConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, scalableMatrixWithUnitPricingConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "ScalableMatrixWithUnitPricing{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithUnitPricingConfig=$scalableMatrixWithUnitPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "ScalableMatrixWithUnitPricing{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithUnitPricingConfig=$scalableMatrixWithUnitPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class ScalableMatrixWithTieredPricing
@@ -47630,6 +55795,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -47668,6 +55834,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -47695,6 +55865,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -47793,6 +55964,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -47923,6 +56103,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -48019,6 +56210,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -48042,6 +56236,8 @@ private constructor(
                         scalableMatrixWithTieredPricing.billingCycleConfiguration
                     conversionRate = scalableMatrixWithTieredPricing.conversionRate
                     currency = scalableMatrixWithTieredPricing.currency
+                    dimensionalPriceConfiguration =
+                        scalableMatrixWithTieredPricing.dimensionalPriceConfiguration
                     externalPriceId = scalableMatrixWithTieredPricing.externalPriceId
                     fixedPriceQuantity = scalableMatrixWithTieredPricing.fixedPriceQuantity
                     invoiceGroupingKey = scalableMatrixWithTieredPricing.invoiceGroupingKey
@@ -48225,6 +56421,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -48368,6 +56583,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -48398,6 +56614,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -48433,6 +56650,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -49059,6 +57277,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -49527,17 +58042,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is ScalableMatrixWithTieredPricing && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && scalableMatrixWithTieredPricingConfig == other.scalableMatrixWithTieredPricingConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is ScalableMatrixWithTieredPricing && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && scalableMatrixWithTieredPricingConfig == other.scalableMatrixWithTieredPricingConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, scalableMatrixWithTieredPricingConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, scalableMatrixWithTieredPricingConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "ScalableMatrixWithTieredPricing{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithTieredPricingConfig=$scalableMatrixWithTieredPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "ScalableMatrixWithTieredPricing{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithTieredPricingConfig=$scalableMatrixWithTieredPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class CumulativeGroupedBulk
@@ -49552,6 +58067,7 @@ private constructor(
             private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
             private val conversionRate: JsonField<Double>,
             private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
             private val externalPriceId: JsonField<String>,
             private val fixedPriceQuantity: JsonField<Double>,
             private val invoiceGroupingKey: JsonField<String>,
@@ -49589,6 +58105,10 @@ private constructor(
                 @JsonProperty("currency")
                 @ExcludeMissing
                 currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
                 @JsonProperty("external_price_id")
                 @ExcludeMissing
                 externalPriceId: JsonField<String> = JsonMissing.of(),
@@ -49616,6 +58136,7 @@ private constructor(
                 billingCycleConfiguration,
                 conversionRate,
                 currency,
+                dimensionalPriceConfiguration,
                 externalPriceId,
                 fixedPriceQuantity,
                 invoiceGroupingKey,
@@ -49712,6 +58233,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
 
             /**
              * An alias for the price.
@@ -49841,6 +58371,17 @@ private constructor(
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
              * Returns the raw JSON value of [externalPriceId].
              *
              * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
@@ -49935,6 +58476,9 @@ private constructor(
                     JsonMissing.of()
                 private var conversionRate: JsonField<Double> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
                 private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
@@ -49954,6 +58498,8 @@ private constructor(
                     billingCycleConfiguration = cumulativeGroupedBulk.billingCycleConfiguration
                     conversionRate = cumulativeGroupedBulk.conversionRate
                     currency = cumulativeGroupedBulk.currency
+                    dimensionalPriceConfiguration =
+                        cumulativeGroupedBulk.dimensionalPriceConfiguration
                     externalPriceId = cumulativeGroupedBulk.externalPriceId
                     fixedPriceQuantity = cumulativeGroupedBulk.fixedPriceQuantity
                     invoiceGroupingKey = cumulativeGroupedBulk.invoiceGroupingKey
@@ -50128,6 +58674,25 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String?) =
                     externalPriceId(JsonField.ofNullable(externalPriceId))
@@ -50268,6 +58833,7 @@ private constructor(
                         billingCycleConfiguration,
                         conversionRate,
                         currency,
+                        dimensionalPriceConfiguration,
                         externalPriceId,
                         fixedPriceQuantity,
                         invoiceGroupingKey,
@@ -50298,6 +58864,7 @@ private constructor(
                 billingCycleConfiguration()?.validate()
                 conversionRate()
                 currency()
+                dimensionalPriceConfiguration()?.validate()
                 externalPriceId()
                 fixedPriceQuantity()
                 invoiceGroupingKey()
@@ -50333,6 +58900,7 @@ private constructor(
                     (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                     (if (conversionRate.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
                     (if (externalPriceId.asKnown() == null) 0 else 1) +
                     (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
                     (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
@@ -50957,6 +59525,303 @@ private constructor(
                     "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
             }
 
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
             /**
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
@@ -51425,17 +60290,7220 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is CumulativeGroupedBulk && cadence == other.cadence && cumulativeGroupedBulkConfig == other.cumulativeGroupedBulkConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is CumulativeGroupedBulk && cadence == other.cadence && cumulativeGroupedBulkConfig == other.cumulativeGroupedBulkConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, cumulativeGroupedBulkConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, cumulativeGroupedBulkConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "CumulativeGroupedBulk{cadence=$cadence, cumulativeGroupedBulkConfig=$cumulativeGroupedBulkConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "CumulativeGroupedBulk{cadence=$cadence, cumulativeGroupedBulkConfig=$cumulativeGroupedBulkConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+        }
+
+        class TieredPackageWithMinimum
+        private constructor(
+            private val cadence: JsonField<Cadence>,
+            private val itemId: JsonField<String>,
+            private val modelType: JsonValue,
+            private val name: JsonField<String>,
+            private val tieredPackageWithMinimumConfig: JsonField<TieredPackageWithMinimumConfig>,
+            private val billableMetricId: JsonField<String>,
+            private val billedInAdvance: JsonField<Boolean>,
+            private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+            private val conversionRate: JsonField<Double>,
+            private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
+            private val externalPriceId: JsonField<String>,
+            private val fixedPriceQuantity: JsonField<Double>,
+            private val invoiceGroupingKey: JsonField<String>,
+            private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
+            private val metadata: JsonField<Metadata>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("cadence")
+                @ExcludeMissing
+                cadence: JsonField<Cadence> = JsonMissing.of(),
+                @JsonProperty("item_id")
+                @ExcludeMissing
+                itemId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("model_type") @ExcludeMissing modelType: JsonValue = JsonMissing.of(),
+                @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("tiered_package_with_minimum_config")
+                @ExcludeMissing
+                tieredPackageWithMinimumConfig: JsonField<TieredPackageWithMinimumConfig> =
+                    JsonMissing.of(),
+                @JsonProperty("billable_metric_id")
+                @ExcludeMissing
+                billableMetricId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("billed_in_advance")
+                @ExcludeMissing
+                billedInAdvance: JsonField<Boolean> = JsonMissing.of(),
+                @JsonProperty("billing_cycle_configuration")
+                @ExcludeMissing
+                billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+                @JsonProperty("conversion_rate")
+                @ExcludeMissing
+                conversionRate: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
+                @JsonProperty("external_price_id")
+                @ExcludeMissing
+                externalPriceId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("fixed_price_quantity")
+                @ExcludeMissing
+                fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("invoice_grouping_key")
+                @ExcludeMissing
+                invoiceGroupingKey: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("invoicing_cycle_configuration")
+                @ExcludeMissing
+                invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+                    JsonMissing.of(),
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                metadata: JsonField<Metadata> = JsonMissing.of(),
+            ) : this(
+                cadence,
+                itemId,
+                modelType,
+                name,
+                tieredPackageWithMinimumConfig,
+                billableMetricId,
+                billedInAdvance,
+                billingCycleConfiguration,
+                conversionRate,
+                currency,
+                dimensionalPriceConfiguration,
+                externalPriceId,
+                fixedPriceQuantity,
+                invoiceGroupingKey,
+                invoicingCycleConfiguration,
+                metadata,
+                mutableMapOf(),
+            )
+
+            /**
+             * The cadence to bill for this price on.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun cadence(): Cadence = cadence.getRequired("cadence")
+
+            /**
+             * The id of the item the price will be associated with.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun itemId(): String = itemId.getRequired("item_id")
+
+            /**
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("tiered_package_with_minimum")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("model_type") @ExcludeMissing fun _modelType(): JsonValue = modelType
+
+            /**
+             * The name of the price.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun name(): String = name.getRequired("name")
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun tieredPackageWithMinimumConfig(): TieredPackageWithMinimumConfig =
+                tieredPackageWithMinimumConfig.getRequired("tiered_package_with_minimum_config")
+
+            /**
+             * The id of the billable metric for the price. Only needed if the price is usage-based.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun billableMetricId(): String? = billableMetricId.getNullable("billable_metric_id")
+
+            /**
+             * If the Price represents a fixed cost, the price will be billed in-advance if this is
+             * true, and in-arrears if this is false.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun billedInAdvance(): Boolean? = billedInAdvance.getNullable("billed_in_advance")
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun billingCycleConfiguration(): BillingCycleConfiguration? =
+                billingCycleConfiguration.getNullable("billing_cycle_configuration")
+
+            /**
+             * The per unit conversion rate of the price currency to the invoicing currency.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+            /**
+             * An ISO 4217 currency string, or custom pricing unit identifier, in which this price
+             * is billed.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
+
+            /**
+             * An alias for the price.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
+
+            /**
+             * If the Price represents a fixed cost, this represents the quantity of units applied.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun fixedPriceQuantity(): Double? =
+                fixedPriceQuantity.getNullable("fixed_price_quantity")
+
+            /**
+             * The property used to group this price on an invoice
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun invoiceGroupingKey(): String? =
+                invoiceGroupingKey.getNullable("invoice_grouping_key")
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun invoicingCycleConfiguration(): InvoicingCycleConfiguration? =
+                invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+            /**
+             * Returns the raw JSON value of [cadence].
+             *
+             * Unlike [cadence], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("cadence") @ExcludeMissing fun _cadence(): JsonField<Cadence> = cadence
+
+            /**
+             * Returns the raw JSON value of [itemId].
+             *
+             * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+            /**
+             * Returns the raw JSON value of [name].
+             *
+             * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+            /**
+             * Returns the raw JSON value of [tieredPackageWithMinimumConfig].
+             *
+             * Unlike [tieredPackageWithMinimumConfig], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("tiered_package_with_minimum_config")
+            @ExcludeMissing
+            fun _tieredPackageWithMinimumConfig(): JsonField<TieredPackageWithMinimumConfig> =
+                tieredPackageWithMinimumConfig
+
+            /**
+             * Returns the raw JSON value of [billableMetricId].
+             *
+             * Unlike [billableMetricId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("billable_metric_id")
+            @ExcludeMissing
+            fun _billableMetricId(): JsonField<String> = billableMetricId
+
+            /**
+             * Returns the raw JSON value of [billedInAdvance].
+             *
+             * Unlike [billedInAdvance], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("billed_in_advance")
+            @ExcludeMissing
+            fun _billedInAdvance(): JsonField<Boolean> = billedInAdvance
+
+            /**
+             * Returns the raw JSON value of [billingCycleConfiguration].
+             *
+             * Unlike [billingCycleConfiguration], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
+            @JsonProperty("billing_cycle_configuration")
+            @ExcludeMissing
+            fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
+                billingCycleConfiguration
+
+            /**
+             * Returns the raw JSON value of [conversionRate].
+             *
+             * Unlike [conversionRate], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("conversion_rate")
+            @ExcludeMissing
+            fun _conversionRate(): JsonField<Double> = conversionRate
+
+            /**
+             * Returns the raw JSON value of [currency].
+             *
+             * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+            /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
+             * Returns the raw JSON value of [externalPriceId].
+             *
+             * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("external_price_id")
+            @ExcludeMissing
+            fun _externalPriceId(): JsonField<String> = externalPriceId
+
+            /**
+             * Returns the raw JSON value of [fixedPriceQuantity].
+             *
+             * Unlike [fixedPriceQuantity], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("fixed_price_quantity")
+            @ExcludeMissing
+            fun _fixedPriceQuantity(): JsonField<Double> = fixedPriceQuantity
+
+            /**
+             * Returns the raw JSON value of [invoiceGroupingKey].
+             *
+             * Unlike [invoiceGroupingKey], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("invoice_grouping_key")
+            @ExcludeMissing
+            fun _invoiceGroupingKey(): JsonField<String> = invoiceGroupingKey
+
+            /**
+             * Returns the raw JSON value of [invoicingCycleConfiguration].
+             *
+             * Unlike [invoicingCycleConfiguration], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
+            @JsonProperty("invoicing_cycle_configuration")
+            @ExcludeMissing
+            fun _invoicingCycleConfiguration(): JsonField<InvoicingCycleConfiguration> =
+                invoicingCycleConfiguration
+
+            /**
+             * Returns the raw JSON value of [metadata].
+             *
+             * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            fun _metadata(): JsonField<Metadata> = metadata
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [TieredPackageWithMinimum].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .name()
+                 * .tieredPackageWithMinimumConfig()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [TieredPackageWithMinimum]. */
+            class Builder internal constructor() {
+
+                private var cadence: JsonField<Cadence>? = null
+                private var itemId: JsonField<String>? = null
+                private var modelType: JsonValue = JsonValue.from("tiered_package_with_minimum")
+                private var name: JsonField<String>? = null
+                private var tieredPackageWithMinimumConfig:
+                    JsonField<TieredPackageWithMinimumConfig>? =
+                    null
+                private var billableMetricId: JsonField<String> = JsonMissing.of()
+                private var billedInAdvance: JsonField<Boolean> = JsonMissing.of()
+                private var billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+                    JsonMissing.of()
+                private var conversionRate: JsonField<Double> = JsonMissing.of()
+                private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
+                private var externalPriceId: JsonField<String> = JsonMissing.of()
+                private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
+                private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
+                private var invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+                    JsonMissing.of()
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(tieredPackageWithMinimum: TieredPackageWithMinimum) = apply {
+                    cadence = tieredPackageWithMinimum.cadence
+                    itemId = tieredPackageWithMinimum.itemId
+                    modelType = tieredPackageWithMinimum.modelType
+                    name = tieredPackageWithMinimum.name
+                    tieredPackageWithMinimumConfig =
+                        tieredPackageWithMinimum.tieredPackageWithMinimumConfig
+                    billableMetricId = tieredPackageWithMinimum.billableMetricId
+                    billedInAdvance = tieredPackageWithMinimum.billedInAdvance
+                    billingCycleConfiguration = tieredPackageWithMinimum.billingCycleConfiguration
+                    conversionRate = tieredPackageWithMinimum.conversionRate
+                    currency = tieredPackageWithMinimum.currency
+                    dimensionalPriceConfiguration =
+                        tieredPackageWithMinimum.dimensionalPriceConfiguration
+                    externalPriceId = tieredPackageWithMinimum.externalPriceId
+                    fixedPriceQuantity = tieredPackageWithMinimum.fixedPriceQuantity
+                    invoiceGroupingKey = tieredPackageWithMinimum.invoiceGroupingKey
+                    invoicingCycleConfiguration =
+                        tieredPackageWithMinimum.invoicingCycleConfiguration
+                    metadata = tieredPackageWithMinimum.metadata
+                    additionalProperties =
+                        tieredPackageWithMinimum.additionalProperties.toMutableMap()
+                }
+
+                /** The cadence to bill for this price on. */
+                fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
+
+                /**
+                 * Sets [Builder.cadence] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.cadence] with a well-typed [Cadence] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
+
+                /** The id of the item the price will be associated with. */
+                fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+                /**
+                 * Sets [Builder.itemId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.itemId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("tiered_package_with_minimum")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun modelType(modelType: JsonValue) = apply { this.modelType = modelType }
+
+                /** The name of the price. */
+                fun name(name: String) = name(JsonField.of(name))
+
+                /**
+                 * Sets [Builder.name] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.name] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun name(name: JsonField<String>) = apply { this.name = name }
+
+                fun tieredPackageWithMinimumConfig(
+                    tieredPackageWithMinimumConfig: TieredPackageWithMinimumConfig
+                ) = tieredPackageWithMinimumConfig(JsonField.of(tieredPackageWithMinimumConfig))
+
+                /**
+                 * Sets [Builder.tieredPackageWithMinimumConfig] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.tieredPackageWithMinimumConfig] with a
+                 * well-typed [TieredPackageWithMinimumConfig] value instead. This method is
+                 * primarily for setting the field to an undocumented or not yet supported value.
+                 */
+                fun tieredPackageWithMinimumConfig(
+                    tieredPackageWithMinimumConfig: JsonField<TieredPackageWithMinimumConfig>
+                ) = apply { this.tieredPackageWithMinimumConfig = tieredPackageWithMinimumConfig }
+
+                /**
+                 * The id of the billable metric for the price. Only needed if the price is
+                 * usage-based.
+                 */
+                fun billableMetricId(billableMetricId: String?) =
+                    billableMetricId(JsonField.ofNullable(billableMetricId))
+
+                /**
+                 * Sets [Builder.billableMetricId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.billableMetricId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun billableMetricId(billableMetricId: JsonField<String>) = apply {
+                    this.billableMetricId = billableMetricId
+                }
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 */
+                fun billedInAdvance(billedInAdvance: Boolean?) =
+                    billedInAdvance(JsonField.ofNullable(billedInAdvance))
+
+                /**
+                 * Alias for [Builder.billedInAdvance].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun billedInAdvance(billedInAdvance: Boolean) =
+                    billedInAdvance(billedInAdvance as Boolean?)
+
+                /**
+                 * Sets [Builder.billedInAdvance] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.billedInAdvance] with a well-typed [Boolean]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun billedInAdvance(billedInAdvance: JsonField<Boolean>) = apply {
+                    this.billedInAdvance = billedInAdvance
+                }
+
+                /**
+                 * For custom cadence: specifies the duration of the billing period in days or
+                 * months.
+                 */
+                fun billingCycleConfiguration(
+                    billingCycleConfiguration: BillingCycleConfiguration?
+                ) = billingCycleConfiguration(JsonField.ofNullable(billingCycleConfiguration))
+
+                /**
+                 * Sets [Builder.billingCycleConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.billingCycleConfiguration] with a well-typed
+                 * [BillingCycleConfiguration] value instead. This method is primarily for setting
+                 * the field to an undocumented or not yet supported value.
+                 */
+                fun billingCycleConfiguration(
+                    billingCycleConfiguration: JsonField<BillingCycleConfiguration>
+                ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+                /** The per unit conversion rate of the price currency to the invoicing currency. */
+                fun conversionRate(conversionRate: Double?) =
+                    conversionRate(JsonField.ofNullable(conversionRate))
+
+                /**
+                 * Alias for [Builder.conversionRate].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun conversionRate(conversionRate: Double) =
+                    conversionRate(conversionRate as Double?)
+
+                /**
+                 * Sets [Builder.conversionRate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.conversionRate] with a well-typed [Double] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun conversionRate(conversionRate: JsonField<Double>) = apply {
+                    this.conversionRate = conversionRate
+                }
+
+                /**
+                 * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                 * price is billed.
+                 */
+                fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
+
+                /**
+                 * Sets [Builder.currency] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.currency] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
+                /** An alias for the price. */
+                fun externalPriceId(externalPriceId: String?) =
+                    externalPriceId(JsonField.ofNullable(externalPriceId))
+
+                /**
+                 * Sets [Builder.externalPriceId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalPriceId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                    this.externalPriceId = externalPriceId
+                }
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: Double?) =
+                    fixedPriceQuantity(JsonField.ofNullable(fixedPriceQuantity))
+
+                /**
+                 * Alias for [Builder.fixedPriceQuantity].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                    fixedPriceQuantity(fixedPriceQuantity as Double?)
+
+                /**
+                 * Sets [Builder.fixedPriceQuantity] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.fixedPriceQuantity] with a well-typed [Double]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
+                    this.fixedPriceQuantity = fixedPriceQuantity
+                }
+
+                /** The property used to group this price on an invoice */
+                fun invoiceGroupingKey(invoiceGroupingKey: String?) =
+                    invoiceGroupingKey(JsonField.ofNullable(invoiceGroupingKey))
+
+                /**
+                 * Sets [Builder.invoiceGroupingKey] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.invoiceGroupingKey] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun invoiceGroupingKey(invoiceGroupingKey: JsonField<String>) = apply {
+                    this.invoiceGroupingKey = invoiceGroupingKey
+                }
+
+                /**
+                 * Within each billing cycle, specifies the cadence at which invoices are produced.
+                 * If unspecified, a single invoice is produced per billing cycle.
+                 */
+                fun invoicingCycleConfiguration(
+                    invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                ) = invoicingCycleConfiguration(JsonField.ofNullable(invoicingCycleConfiguration))
+
+                /**
+                 * Sets [Builder.invoicingCycleConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.invoicingCycleConfiguration] with a well-typed
+                 * [InvoicingCycleConfiguration] value instead. This method is primarily for setting
+                 * the field to an undocumented or not yet supported value.
+                 */
+                fun invoicingCycleConfiguration(
+                    invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
+                ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+                /**
+                 * Sets [Builder.metadata] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [TieredPackageWithMinimum].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .name()
+                 * .tieredPackageWithMinimumConfig()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): TieredPackageWithMinimum =
+                    TieredPackageWithMinimum(
+                        checkRequired("cadence", cadence),
+                        checkRequired("itemId", itemId),
+                        modelType,
+                        checkRequired("name", name),
+                        checkRequired(
+                            "tieredPackageWithMinimumConfig",
+                            tieredPackageWithMinimumConfig,
+                        ),
+                        billableMetricId,
+                        billedInAdvance,
+                        billingCycleConfiguration,
+                        conversionRate,
+                        currency,
+                        dimensionalPriceConfiguration,
+                        externalPriceId,
+                        fixedPriceQuantity,
+                        invoiceGroupingKey,
+                        invoicingCycleConfiguration,
+                        metadata,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): TieredPackageWithMinimum = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                cadence().validate()
+                itemId()
+                _modelType().let {
+                    if (it != JsonValue.from("tiered_package_with_minimum")) {
+                        throw OrbInvalidDataException("'modelType' is invalid, received $it")
+                    }
+                }
+                name()
+                tieredPackageWithMinimumConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                dimensionalPriceConfiguration()?.validate()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    modelType.let {
+                        if (it == JsonValue.from("tiered_package_with_minimum")) 1 else 0
+                    } +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (tieredPackageWithMinimumConfig.asKnown()?.validity() ?: 0) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
+
+            /** The cadence to bill for this price on. */
+            class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val ANNUAL = of("annual")
+
+                    val SEMI_ANNUAL = of("semi_annual")
+
+                    val MONTHLY = of("monthly")
+
+                    val QUARTERLY = of("quarterly")
+
+                    val ONE_TIME = of("one_time")
+
+                    val CUSTOM = of("custom")
+
+                    fun of(value: String) = Cadence(JsonField.of(value))
+                }
+
+                /** An enum containing [Cadence]'s known values. */
+                enum class Known {
+                    ANNUAL,
+                    SEMI_ANNUAL,
+                    MONTHLY,
+                    QUARTERLY,
+                    ONE_TIME,
+                    CUSTOM,
+                }
+
+                /**
+                 * An enum containing [Cadence]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Cadence] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    ANNUAL,
+                    SEMI_ANNUAL,
+                    MONTHLY,
+                    QUARTERLY,
+                    ONE_TIME,
+                    CUSTOM,
+                    /**
+                     * An enum member indicating that [Cadence] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        ANNUAL -> Value.ANNUAL
+                        SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                        MONTHLY -> Value.MONTHLY
+                        QUARTERLY -> Value.QUARTERLY
+                        ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        ANNUAL -> Known.ANNUAL
+                        SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                        MONTHLY -> Known.MONTHLY
+                        QUARTERLY -> Known.QUARTERLY
+                        ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
+                        else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value does not have the
+                 *   expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Cadence && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            class TieredPackageWithMinimumConfig
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [TieredPackageWithMinimumConfig].
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [TieredPackageWithMinimumConfig]. */
+                class Builder internal constructor() {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        tieredPackageWithMinimumConfig: TieredPackageWithMinimumConfig
+                    ) = apply {
+                        additionalProperties =
+                            tieredPackageWithMinimumConfig.additionalProperties.toMutableMap()
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [TieredPackageWithMinimumConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
+                    fun build(): TieredPackageWithMinimumConfig =
+                        TieredPackageWithMinimumConfig(additionalProperties.toImmutable())
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): TieredPackageWithMinimumConfig = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is TieredPackageWithMinimumConfig && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "TieredPackageWithMinimumConfig{additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             */
+            class BillingCycleConfiguration
+            private constructor(
+                private val duration: JsonField<Long>,
+                private val durationUnit: JsonField<DurationUnit>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("duration")
+                    @ExcludeMissing
+                    duration: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("duration_unit")
+                    @ExcludeMissing
+                    durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+                ) : this(duration, durationUnit, mutableMapOf())
+
+                /**
+                 * The duration of the billing period.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun duration(): Long = duration.getRequired("duration")
+
+                /**
+                 * The unit of billing period duration.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+                /**
+                 * Returns the raw JSON value of [duration].
+                 *
+                 * Unlike [duration], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("duration")
+                @ExcludeMissing
+                fun _duration(): JsonField<Long> = duration
+
+                /**
+                 * Returns the raw JSON value of [durationUnit].
+                 *
+                 * Unlike [durationUnit], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [BillingCycleConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [BillingCycleConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var duration: JsonField<Long>? = null
+                    private var durationUnit: JsonField<DurationUnit>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(billingCycleConfiguration: BillingCycleConfiguration) =
+                        apply {
+                            duration = billingCycleConfiguration.duration
+                            durationUnit = billingCycleConfiguration.durationUnit
+                            additionalProperties =
+                                billingCycleConfiguration.additionalProperties.toMutableMap()
+                        }
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                    /**
+                     * Sets [Builder.duration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.duration] with a well-typed [Long] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: DurationUnit) =
+                        durationUnit(JsonField.of(durationUnit))
+
+                    /**
+                     * Sets [Builder.durationUnit] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.durationUnit] with a well-typed
+                     * [DurationUnit] value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                        this.durationUnit = durationUnit
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): BillingCycleConfiguration =
+                        BillingCycleConfiguration(
+                            checkRequired("duration", duration),
+                            checkRequired("durationUnit", durationUnit),
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): BillingCycleConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    duration()
+                    durationUnit().validate()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
+
+                /** The unit of billing period duration. */
+                class DurationUnit
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val DAY = of("day")
+
+                        val MONTH = of("month")
+
+                        fun of(value: String) = DurationUnit(JsonField.of(value))
+                    }
+
+                    /** An enum containing [DurationUnit]'s known values. */
+                    enum class Known {
+                        DAY,
+                        MONTH,
+                    }
+
+                    /**
+                     * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [DurationUnit] can contain an unknown value in a couple of
+                     * cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        DAY,
+                        MONTH,
+                        /**
+                         * An enum member indicating that [DurationUnit] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            DAY -> Value.DAY
+                            MONTH -> Value.MONTH
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            DAY -> Known.DAY
+                            MONTH -> Known.MONTH
+                            else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is BillingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+            }
+
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             */
+            class InvoicingCycleConfiguration
+            private constructor(
+                private val duration: JsonField<Long>,
+                private val durationUnit: JsonField<DurationUnit>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("duration")
+                    @ExcludeMissing
+                    duration: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("duration_unit")
+                    @ExcludeMissing
+                    durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+                ) : this(duration, durationUnit, mutableMapOf())
+
+                /**
+                 * The duration of the billing period.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun duration(): Long = duration.getRequired("duration")
+
+                /**
+                 * The unit of billing period duration.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+                /**
+                 * Returns the raw JSON value of [duration].
+                 *
+                 * Unlike [duration], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("duration")
+                @ExcludeMissing
+                fun _duration(): JsonField<Long> = duration
+
+                /**
+                 * Returns the raw JSON value of [durationUnit].
+                 *
+                 * Unlike [durationUnit], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [InvoicingCycleConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [InvoicingCycleConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var duration: JsonField<Long>? = null
+                    private var durationUnit: JsonField<DurationUnit>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(invoicingCycleConfiguration: InvoicingCycleConfiguration) =
+                        apply {
+                            duration = invoicingCycleConfiguration.duration
+                            durationUnit = invoicingCycleConfiguration.durationUnit
+                            additionalProperties =
+                                invoicingCycleConfiguration.additionalProperties.toMutableMap()
+                        }
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                    /**
+                     * Sets [Builder.duration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.duration] with a well-typed [Long] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: DurationUnit) =
+                        durationUnit(JsonField.of(durationUnit))
+
+                    /**
+                     * Sets [Builder.durationUnit] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.durationUnit] with a well-typed
+                     * [DurationUnit] value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                        this.durationUnit = durationUnit
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): InvoicingCycleConfiguration =
+                        InvoicingCycleConfiguration(
+                            checkRequired("duration", duration),
+                            checkRequired("durationUnit", durationUnit),
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): InvoicingCycleConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    duration()
+                    durationUnit().validate()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
+
+                /** The unit of billing period duration. */
+                class DurationUnit
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val DAY = of("day")
+
+                        val MONTH = of("month")
+
+                        fun of(value: String) = DurationUnit(JsonField.of(value))
+                    }
+
+                    /** An enum containing [DurationUnit]'s known values. */
+                    enum class Known {
+                        DAY,
+                        MONTH,
+                    }
+
+                    /**
+                     * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [DurationUnit] can contain an unknown value in a couple of
+                     * cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        DAY,
+                        MONTH,
+                        /**
+                         * An enum member indicating that [DurationUnit] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            DAY -> Value.DAY
+                            MONTH -> Value.MONTH
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            DAY -> Known.DAY
+                            MONTH -> Known.MONTH
+                            else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is InvoicingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            class Metadata
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /** Returns a mutable builder for constructing an instance of [Metadata]. */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [Metadata]. */
+                class Builder internal constructor() {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties = metadata.additionalProperties.toMutableMap()
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Metadata = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is TieredPackageWithMinimum && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && tieredPackageWithMinimumConfig == other.tieredPackageWithMinimumConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, tieredPackageWithMinimumConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "TieredPackageWithMinimum{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredPackageWithMinimumConfig=$tieredPackageWithMinimumConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+        }
+
+        class MatrixWithAllocation
+        private constructor(
+            private val cadence: JsonField<Cadence>,
+            private val itemId: JsonField<String>,
+            private val matrixWithAllocationConfig: JsonField<MatrixWithAllocationConfig>,
+            private val modelType: JsonValue,
+            private val name: JsonField<String>,
+            private val billableMetricId: JsonField<String>,
+            private val billedInAdvance: JsonField<Boolean>,
+            private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+            private val conversionRate: JsonField<Double>,
+            private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
+            private val externalPriceId: JsonField<String>,
+            private val fixedPriceQuantity: JsonField<Double>,
+            private val invoiceGroupingKey: JsonField<String>,
+            private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
+            private val metadata: JsonField<Metadata>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("cadence")
+                @ExcludeMissing
+                cadence: JsonField<Cadence> = JsonMissing.of(),
+                @JsonProperty("item_id")
+                @ExcludeMissing
+                itemId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("matrix_with_allocation_config")
+                @ExcludeMissing
+                matrixWithAllocationConfig: JsonField<MatrixWithAllocationConfig> =
+                    JsonMissing.of(),
+                @JsonProperty("model_type") @ExcludeMissing modelType: JsonValue = JsonMissing.of(),
+                @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("billable_metric_id")
+                @ExcludeMissing
+                billableMetricId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("billed_in_advance")
+                @ExcludeMissing
+                billedInAdvance: JsonField<Boolean> = JsonMissing.of(),
+                @JsonProperty("billing_cycle_configuration")
+                @ExcludeMissing
+                billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+                @JsonProperty("conversion_rate")
+                @ExcludeMissing
+                conversionRate: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
+                @JsonProperty("external_price_id")
+                @ExcludeMissing
+                externalPriceId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("fixed_price_quantity")
+                @ExcludeMissing
+                fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("invoice_grouping_key")
+                @ExcludeMissing
+                invoiceGroupingKey: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("invoicing_cycle_configuration")
+                @ExcludeMissing
+                invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+                    JsonMissing.of(),
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                metadata: JsonField<Metadata> = JsonMissing.of(),
+            ) : this(
+                cadence,
+                itemId,
+                matrixWithAllocationConfig,
+                modelType,
+                name,
+                billableMetricId,
+                billedInAdvance,
+                billingCycleConfiguration,
+                conversionRate,
+                currency,
+                dimensionalPriceConfiguration,
+                externalPriceId,
+                fixedPriceQuantity,
+                invoiceGroupingKey,
+                invoicingCycleConfiguration,
+                metadata,
+                mutableMapOf(),
+            )
+
+            /**
+             * The cadence to bill for this price on.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun cadence(): Cadence = cadence.getRequired("cadence")
+
+            /**
+             * The id of the item the price will be associated with.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun itemId(): String = itemId.getRequired("item_id")
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun matrixWithAllocationConfig(): MatrixWithAllocationConfig =
+                matrixWithAllocationConfig.getRequired("matrix_with_allocation_config")
+
+            /**
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("matrix_with_allocation")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("model_type") @ExcludeMissing fun _modelType(): JsonValue = modelType
+
+            /**
+             * The name of the price.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun name(): String = name.getRequired("name")
+
+            /**
+             * The id of the billable metric for the price. Only needed if the price is usage-based.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun billableMetricId(): String? = billableMetricId.getNullable("billable_metric_id")
+
+            /**
+             * If the Price represents a fixed cost, the price will be billed in-advance if this is
+             * true, and in-arrears if this is false.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun billedInAdvance(): Boolean? = billedInAdvance.getNullable("billed_in_advance")
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun billingCycleConfiguration(): BillingCycleConfiguration? =
+                billingCycleConfiguration.getNullable("billing_cycle_configuration")
+
+            /**
+             * The per unit conversion rate of the price currency to the invoicing currency.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+            /**
+             * An ISO 4217 currency string, or custom pricing unit identifier, in which this price
+             * is billed.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
+
+            /**
+             * An alias for the price.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
+
+            /**
+             * If the Price represents a fixed cost, this represents the quantity of units applied.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun fixedPriceQuantity(): Double? =
+                fixedPriceQuantity.getNullable("fixed_price_quantity")
+
+            /**
+             * The property used to group this price on an invoice
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun invoiceGroupingKey(): String? =
+                invoiceGroupingKey.getNullable("invoice_grouping_key")
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun invoicingCycleConfiguration(): InvoicingCycleConfiguration? =
+                invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+            /**
+             * Returns the raw JSON value of [cadence].
+             *
+             * Unlike [cadence], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("cadence") @ExcludeMissing fun _cadence(): JsonField<Cadence> = cadence
+
+            /**
+             * Returns the raw JSON value of [itemId].
+             *
+             * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+            /**
+             * Returns the raw JSON value of [matrixWithAllocationConfig].
+             *
+             * Unlike [matrixWithAllocationConfig], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
+            @JsonProperty("matrix_with_allocation_config")
+            @ExcludeMissing
+            fun _matrixWithAllocationConfig(): JsonField<MatrixWithAllocationConfig> =
+                matrixWithAllocationConfig
+
+            /**
+             * Returns the raw JSON value of [name].
+             *
+             * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+            /**
+             * Returns the raw JSON value of [billableMetricId].
+             *
+             * Unlike [billableMetricId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("billable_metric_id")
+            @ExcludeMissing
+            fun _billableMetricId(): JsonField<String> = billableMetricId
+
+            /**
+             * Returns the raw JSON value of [billedInAdvance].
+             *
+             * Unlike [billedInAdvance], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("billed_in_advance")
+            @ExcludeMissing
+            fun _billedInAdvance(): JsonField<Boolean> = billedInAdvance
+
+            /**
+             * Returns the raw JSON value of [billingCycleConfiguration].
+             *
+             * Unlike [billingCycleConfiguration], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
+            @JsonProperty("billing_cycle_configuration")
+            @ExcludeMissing
+            fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
+                billingCycleConfiguration
+
+            /**
+             * Returns the raw JSON value of [conversionRate].
+             *
+             * Unlike [conversionRate], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("conversion_rate")
+            @ExcludeMissing
+            fun _conversionRate(): JsonField<Double> = conversionRate
+
+            /**
+             * Returns the raw JSON value of [currency].
+             *
+             * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+            /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
+             * Returns the raw JSON value of [externalPriceId].
+             *
+             * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("external_price_id")
+            @ExcludeMissing
+            fun _externalPriceId(): JsonField<String> = externalPriceId
+
+            /**
+             * Returns the raw JSON value of [fixedPriceQuantity].
+             *
+             * Unlike [fixedPriceQuantity], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("fixed_price_quantity")
+            @ExcludeMissing
+            fun _fixedPriceQuantity(): JsonField<Double> = fixedPriceQuantity
+
+            /**
+             * Returns the raw JSON value of [invoiceGroupingKey].
+             *
+             * Unlike [invoiceGroupingKey], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("invoice_grouping_key")
+            @ExcludeMissing
+            fun _invoiceGroupingKey(): JsonField<String> = invoiceGroupingKey
+
+            /**
+             * Returns the raw JSON value of [invoicingCycleConfiguration].
+             *
+             * Unlike [invoicingCycleConfiguration], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
+            @JsonProperty("invoicing_cycle_configuration")
+            @ExcludeMissing
+            fun _invoicingCycleConfiguration(): JsonField<InvoicingCycleConfiguration> =
+                invoicingCycleConfiguration
+
+            /**
+             * Returns the raw JSON value of [metadata].
+             *
+             * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            fun _metadata(): JsonField<Metadata> = metadata
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [MatrixWithAllocation].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .matrixWithAllocationConfig()
+                 * .name()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [MatrixWithAllocation]. */
+            class Builder internal constructor() {
+
+                private var cadence: JsonField<Cadence>? = null
+                private var itemId: JsonField<String>? = null
+                private var matrixWithAllocationConfig: JsonField<MatrixWithAllocationConfig>? =
+                    null
+                private var modelType: JsonValue = JsonValue.from("matrix_with_allocation")
+                private var name: JsonField<String>? = null
+                private var billableMetricId: JsonField<String> = JsonMissing.of()
+                private var billedInAdvance: JsonField<Boolean> = JsonMissing.of()
+                private var billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+                    JsonMissing.of()
+                private var conversionRate: JsonField<Double> = JsonMissing.of()
+                private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
+                private var externalPriceId: JsonField<String> = JsonMissing.of()
+                private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
+                private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
+                private var invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+                    JsonMissing.of()
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(matrixWithAllocation: MatrixWithAllocation) = apply {
+                    cadence = matrixWithAllocation.cadence
+                    itemId = matrixWithAllocation.itemId
+                    matrixWithAllocationConfig = matrixWithAllocation.matrixWithAllocationConfig
+                    modelType = matrixWithAllocation.modelType
+                    name = matrixWithAllocation.name
+                    billableMetricId = matrixWithAllocation.billableMetricId
+                    billedInAdvance = matrixWithAllocation.billedInAdvance
+                    billingCycleConfiguration = matrixWithAllocation.billingCycleConfiguration
+                    conversionRate = matrixWithAllocation.conversionRate
+                    currency = matrixWithAllocation.currency
+                    dimensionalPriceConfiguration =
+                        matrixWithAllocation.dimensionalPriceConfiguration
+                    externalPriceId = matrixWithAllocation.externalPriceId
+                    fixedPriceQuantity = matrixWithAllocation.fixedPriceQuantity
+                    invoiceGroupingKey = matrixWithAllocation.invoiceGroupingKey
+                    invoicingCycleConfiguration = matrixWithAllocation.invoicingCycleConfiguration
+                    metadata = matrixWithAllocation.metadata
+                    additionalProperties = matrixWithAllocation.additionalProperties.toMutableMap()
+                }
+
+                /** The cadence to bill for this price on. */
+                fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
+
+                /**
+                 * Sets [Builder.cadence] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.cadence] with a well-typed [Cadence] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
+
+                /** The id of the item the price will be associated with. */
+                fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+                /**
+                 * Sets [Builder.itemId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.itemId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+                fun matrixWithAllocationConfig(
+                    matrixWithAllocationConfig: MatrixWithAllocationConfig
+                ) = matrixWithAllocationConfig(JsonField.of(matrixWithAllocationConfig))
+
+                /**
+                 * Sets [Builder.matrixWithAllocationConfig] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.matrixWithAllocationConfig] with a well-typed
+                 * [MatrixWithAllocationConfig] value instead. This method is primarily for setting
+                 * the field to an undocumented or not yet supported value.
+                 */
+                fun matrixWithAllocationConfig(
+                    matrixWithAllocationConfig: JsonField<MatrixWithAllocationConfig>
+                ) = apply { this.matrixWithAllocationConfig = matrixWithAllocationConfig }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("matrix_with_allocation")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun modelType(modelType: JsonValue) = apply { this.modelType = modelType }
+
+                /** The name of the price. */
+                fun name(name: String) = name(JsonField.of(name))
+
+                /**
+                 * Sets [Builder.name] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.name] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun name(name: JsonField<String>) = apply { this.name = name }
+
+                /**
+                 * The id of the billable metric for the price. Only needed if the price is
+                 * usage-based.
+                 */
+                fun billableMetricId(billableMetricId: String?) =
+                    billableMetricId(JsonField.ofNullable(billableMetricId))
+
+                /**
+                 * Sets [Builder.billableMetricId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.billableMetricId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun billableMetricId(billableMetricId: JsonField<String>) = apply {
+                    this.billableMetricId = billableMetricId
+                }
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 */
+                fun billedInAdvance(billedInAdvance: Boolean?) =
+                    billedInAdvance(JsonField.ofNullable(billedInAdvance))
+
+                /**
+                 * Alias for [Builder.billedInAdvance].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun billedInAdvance(billedInAdvance: Boolean) =
+                    billedInAdvance(billedInAdvance as Boolean?)
+
+                /**
+                 * Sets [Builder.billedInAdvance] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.billedInAdvance] with a well-typed [Boolean]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun billedInAdvance(billedInAdvance: JsonField<Boolean>) = apply {
+                    this.billedInAdvance = billedInAdvance
+                }
+
+                /**
+                 * For custom cadence: specifies the duration of the billing period in days or
+                 * months.
+                 */
+                fun billingCycleConfiguration(
+                    billingCycleConfiguration: BillingCycleConfiguration?
+                ) = billingCycleConfiguration(JsonField.ofNullable(billingCycleConfiguration))
+
+                /**
+                 * Sets [Builder.billingCycleConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.billingCycleConfiguration] with a well-typed
+                 * [BillingCycleConfiguration] value instead. This method is primarily for setting
+                 * the field to an undocumented or not yet supported value.
+                 */
+                fun billingCycleConfiguration(
+                    billingCycleConfiguration: JsonField<BillingCycleConfiguration>
+                ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+                /** The per unit conversion rate of the price currency to the invoicing currency. */
+                fun conversionRate(conversionRate: Double?) =
+                    conversionRate(JsonField.ofNullable(conversionRate))
+
+                /**
+                 * Alias for [Builder.conversionRate].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun conversionRate(conversionRate: Double) =
+                    conversionRate(conversionRate as Double?)
+
+                /**
+                 * Sets [Builder.conversionRate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.conversionRate] with a well-typed [Double] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun conversionRate(conversionRate: JsonField<Double>) = apply {
+                    this.conversionRate = conversionRate
+                }
+
+                /**
+                 * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                 * price is billed.
+                 */
+                fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
+
+                /**
+                 * Sets [Builder.currency] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.currency] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
+                /** An alias for the price. */
+                fun externalPriceId(externalPriceId: String?) =
+                    externalPriceId(JsonField.ofNullable(externalPriceId))
+
+                /**
+                 * Sets [Builder.externalPriceId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalPriceId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                    this.externalPriceId = externalPriceId
+                }
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: Double?) =
+                    fixedPriceQuantity(JsonField.ofNullable(fixedPriceQuantity))
+
+                /**
+                 * Alias for [Builder.fixedPriceQuantity].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                    fixedPriceQuantity(fixedPriceQuantity as Double?)
+
+                /**
+                 * Sets [Builder.fixedPriceQuantity] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.fixedPriceQuantity] with a well-typed [Double]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
+                    this.fixedPriceQuantity = fixedPriceQuantity
+                }
+
+                /** The property used to group this price on an invoice */
+                fun invoiceGroupingKey(invoiceGroupingKey: String?) =
+                    invoiceGroupingKey(JsonField.ofNullable(invoiceGroupingKey))
+
+                /**
+                 * Sets [Builder.invoiceGroupingKey] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.invoiceGroupingKey] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun invoiceGroupingKey(invoiceGroupingKey: JsonField<String>) = apply {
+                    this.invoiceGroupingKey = invoiceGroupingKey
+                }
+
+                /**
+                 * Within each billing cycle, specifies the cadence at which invoices are produced.
+                 * If unspecified, a single invoice is produced per billing cycle.
+                 */
+                fun invoicingCycleConfiguration(
+                    invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                ) = invoicingCycleConfiguration(JsonField.ofNullable(invoicingCycleConfiguration))
+
+                /**
+                 * Sets [Builder.invoicingCycleConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.invoicingCycleConfiguration] with a well-typed
+                 * [InvoicingCycleConfiguration] value instead. This method is primarily for setting
+                 * the field to an undocumented or not yet supported value.
+                 */
+                fun invoicingCycleConfiguration(
+                    invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
+                ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+                /**
+                 * Sets [Builder.metadata] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [MatrixWithAllocation].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .itemId()
+                 * .matrixWithAllocationConfig()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): MatrixWithAllocation =
+                    MatrixWithAllocation(
+                        checkRequired("cadence", cadence),
+                        checkRequired("itemId", itemId),
+                        checkRequired("matrixWithAllocationConfig", matrixWithAllocationConfig),
+                        modelType,
+                        checkRequired("name", name),
+                        billableMetricId,
+                        billedInAdvance,
+                        billingCycleConfiguration,
+                        conversionRate,
+                        currency,
+                        dimensionalPriceConfiguration,
+                        externalPriceId,
+                        fixedPriceQuantity,
+                        invoiceGroupingKey,
+                        invoicingCycleConfiguration,
+                        metadata,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): MatrixWithAllocation = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                cadence().validate()
+                itemId()
+                matrixWithAllocationConfig().validate()
+                _modelType().let {
+                    if (it != JsonValue.from("matrix_with_allocation")) {
+                        throw OrbInvalidDataException("'modelType' is invalid, received $it")
+                    }
+                }
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                dimensionalPriceConfiguration()?.validate()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    (matrixWithAllocationConfig.asKnown()?.validity() ?: 0) +
+                    modelType.let { if (it == JsonValue.from("matrix_with_allocation")) 1 else 0 } +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
+
+            /** The cadence to bill for this price on. */
+            class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val ANNUAL = of("annual")
+
+                    val SEMI_ANNUAL = of("semi_annual")
+
+                    val MONTHLY = of("monthly")
+
+                    val QUARTERLY = of("quarterly")
+
+                    val ONE_TIME = of("one_time")
+
+                    val CUSTOM = of("custom")
+
+                    fun of(value: String) = Cadence(JsonField.of(value))
+                }
+
+                /** An enum containing [Cadence]'s known values. */
+                enum class Known {
+                    ANNUAL,
+                    SEMI_ANNUAL,
+                    MONTHLY,
+                    QUARTERLY,
+                    ONE_TIME,
+                    CUSTOM,
+                }
+
+                /**
+                 * An enum containing [Cadence]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Cadence] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    ANNUAL,
+                    SEMI_ANNUAL,
+                    MONTHLY,
+                    QUARTERLY,
+                    ONE_TIME,
+                    CUSTOM,
+                    /**
+                     * An enum member indicating that [Cadence] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        ANNUAL -> Value.ANNUAL
+                        SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                        MONTHLY -> Value.MONTHLY
+                        QUARTERLY -> Value.QUARTERLY
+                        ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        ANNUAL -> Known.ANNUAL
+                        SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                        MONTHLY -> Known.MONTHLY
+                        QUARTERLY -> Known.QUARTERLY
+                        ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
+                        else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value does not have the
+                 *   expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Cadence && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            class MatrixWithAllocationConfig
+            private constructor(
+                private val allocation: JsonField<Double>,
+                private val defaultUnitAmount: JsonField<String>,
+                private val dimensions: JsonField<List<String?>>,
+                private val matrixValues: JsonField<List<MatrixValue>>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("allocation")
+                    @ExcludeMissing
+                    allocation: JsonField<Double> = JsonMissing.of(),
+                    @JsonProperty("default_unit_amount")
+                    @ExcludeMissing
+                    defaultUnitAmount: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("dimensions")
+                    @ExcludeMissing
+                    dimensions: JsonField<List<String?>> = JsonMissing.of(),
+                    @JsonProperty("matrix_values")
+                    @ExcludeMissing
+                    matrixValues: JsonField<List<MatrixValue>> = JsonMissing.of(),
+                ) : this(allocation, defaultUnitAmount, dimensions, matrixValues, mutableMapOf())
+
+                /**
+                 * Allocation to be used to calculate the price
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun allocation(): Double = allocation.getRequired("allocation")
+
+                /**
+                 * Default per unit rate for any usage not bucketed into a specified matrix_value
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun defaultUnitAmount(): String =
+                    defaultUnitAmount.getRequired("default_unit_amount")
+
+                /**
+                 * One or two event property values to evaluate matrix groups by
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensions(): List<String?> = dimensions.getRequired("dimensions")
+
+                /**
+                 * Matrix values for specified matrix grouping keys
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun matrixValues(): List<MatrixValue> = matrixValues.getRequired("matrix_values")
+
+                /**
+                 * Returns the raw JSON value of [allocation].
+                 *
+                 * Unlike [allocation], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("allocation")
+                @ExcludeMissing
+                fun _allocation(): JsonField<Double> = allocation
+
+                /**
+                 * Returns the raw JSON value of [defaultUnitAmount].
+                 *
+                 * Unlike [defaultUnitAmount], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("default_unit_amount")
+                @ExcludeMissing
+                fun _defaultUnitAmount(): JsonField<String> = defaultUnitAmount
+
+                /**
+                 * Returns the raw JSON value of [dimensions].
+                 *
+                 * Unlike [dimensions], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimensions")
+                @ExcludeMissing
+                fun _dimensions(): JsonField<List<String?>> = dimensions
+
+                /**
+                 * Returns the raw JSON value of [matrixValues].
+                 *
+                 * Unlike [matrixValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("matrix_values")
+                @ExcludeMissing
+                fun _matrixValues(): JsonField<List<MatrixValue>> = matrixValues
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [MatrixWithAllocationConfig].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .allocation()
+                     * .defaultUnitAmount()
+                     * .dimensions()
+                     * .matrixValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [MatrixWithAllocationConfig]. */
+                class Builder internal constructor() {
+
+                    private var allocation: JsonField<Double>? = null
+                    private var defaultUnitAmount: JsonField<String>? = null
+                    private var dimensions: JsonField<MutableList<String?>>? = null
+                    private var matrixValues: JsonField<MutableList<MatrixValue>>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(matrixWithAllocationConfig: MatrixWithAllocationConfig) =
+                        apply {
+                            allocation = matrixWithAllocationConfig.allocation
+                            defaultUnitAmount = matrixWithAllocationConfig.defaultUnitAmount
+                            dimensions =
+                                matrixWithAllocationConfig.dimensions.map { it.toMutableList() }
+                            matrixValues =
+                                matrixWithAllocationConfig.matrixValues.map { it.toMutableList() }
+                            additionalProperties =
+                                matrixWithAllocationConfig.additionalProperties.toMutableMap()
+                        }
+
+                    /** Allocation to be used to calculate the price */
+                    fun allocation(allocation: Double) = allocation(JsonField.of(allocation))
+
+                    /**
+                     * Sets [Builder.allocation] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.allocation] with a well-typed [Double] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun allocation(allocation: JsonField<Double>) = apply {
+                        this.allocation = allocation
+                    }
+
+                    /**
+                     * Default per unit rate for any usage not bucketed into a specified
+                     * matrix_value
+                     */
+                    fun defaultUnitAmount(defaultUnitAmount: String) =
+                        defaultUnitAmount(JsonField.of(defaultUnitAmount))
+
+                    /**
+                     * Sets [Builder.defaultUnitAmount] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.defaultUnitAmount] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun defaultUnitAmount(defaultUnitAmount: JsonField<String>) = apply {
+                        this.defaultUnitAmount = defaultUnitAmount
+                    }
+
+                    /** One or two event property values to evaluate matrix groups by */
+                    fun dimensions(dimensions: List<String?>) = dimensions(JsonField.of(dimensions))
+
+                    /**
+                     * Sets [Builder.dimensions] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensions] with a well-typed
+                     * `List<String?>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensions(dimensions: JsonField<List<String?>>) = apply {
+                        this.dimensions = dimensions.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensions].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimension(dimension: String) = apply {
+                        dimensions =
+                            (dimensions ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensions", it).add(dimension)
+                            }
+                    }
+
+                    /** Matrix values for specified matrix grouping keys */
+                    fun matrixValues(matrixValues: List<MatrixValue>) =
+                        matrixValues(JsonField.of(matrixValues))
+
+                    /**
+                     * Sets [Builder.matrixValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.matrixValues] with a well-typed
+                     * `List<MatrixValue>` value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun matrixValues(matrixValues: JsonField<List<MatrixValue>>) = apply {
+                        this.matrixValues = matrixValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [MatrixValue] to [matrixValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addMatrixValue(matrixValue: MatrixValue) = apply {
+                        matrixValues =
+                            (matrixValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("matrixValues", it).add(matrixValue)
+                            }
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [MatrixWithAllocationConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .allocation()
+                     * .defaultUnitAmount()
+                     * .dimensions()
+                     * .matrixValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): MatrixWithAllocationConfig =
+                        MatrixWithAllocationConfig(
+                            checkRequired("allocation", allocation),
+                            checkRequired("defaultUnitAmount", defaultUnitAmount),
+                            checkRequired("dimensions", dimensions).map { it.toImmutable() },
+                            checkRequired("matrixValues", matrixValues).map { it.toImmutable() },
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): MatrixWithAllocationConfig = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    allocation()
+                    defaultUnitAmount()
+                    dimensions()
+                    matrixValues().forEach { it.validate() }
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (allocation.asKnown() == null) 0 else 1) +
+                        (if (defaultUnitAmount.asKnown() == null) 0 else 1) +
+                        (dimensions.asKnown()?.sumOf { (if (it == null) 0 else 1).toInt() } ?: 0) +
+                        (matrixValues.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+
+                class MatrixValue
+                private constructor(
+                    private val dimensionValues: JsonField<List<String?>>,
+                    private val unitAmount: JsonField<String>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
+                ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("dimension_values")
+                        @ExcludeMissing
+                        dimensionValues: JsonField<List<String?>> = JsonMissing.of(),
+                        @JsonProperty("unit_amount")
+                        @ExcludeMissing
+                        unitAmount: JsonField<String> = JsonMissing.of(),
+                    ) : this(dimensionValues, unitAmount, mutableMapOf())
+
+                    /**
+                     * One or two matrix keys to filter usage to this Matrix value by. For example,
+                     * ["region", "tier"] could be used to filter cloud usage by a cloud region and
+                     * an instance tier.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun dimensionValues(): List<String?> =
+                        dimensionValues.getRequired("dimension_values")
+
+                    /**
+                     * Unit price for the specified dimension_values
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun unitAmount(): String = unitAmount.getRequired("unit_amount")
+
+                    /**
+                     * Returns the raw JSON value of [dimensionValues].
+                     *
+                     * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    fun _dimensionValues(): JsonField<List<String?>> = dimensionValues
+
+                    /**
+                     * Returns the raw JSON value of [unitAmount].
+                     *
+                     * Unlike [unitAmount], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("unit_amount")
+                    @ExcludeMissing
+                    fun _unitAmount(): JsonField<String> = unitAmount
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /**
+                         * Returns a mutable builder for constructing an instance of [MatrixValue].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .dimensionValues()
+                         * .unitAmount()
+                         * ```
+                         */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [MatrixValue]. */
+                    class Builder internal constructor() {
+
+                        private var dimensionValues: JsonField<MutableList<String?>>? = null
+                        private var unitAmount: JsonField<String>? = null
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(matrixValue: MatrixValue) = apply {
+                            dimensionValues = matrixValue.dimensionValues.map { it.toMutableList() }
+                            unitAmount = matrixValue.unitAmount
+                            additionalProperties = matrixValue.additionalProperties.toMutableMap()
+                        }
+
+                        /**
+                         * One or two matrix keys to filter usage to this Matrix value by. For
+                         * example, ["region", "tier"] could be used to filter cloud usage by a
+                         * cloud region and an instance tier.
+                         */
+                        fun dimensionValues(dimensionValues: List<String?>) =
+                            dimensionValues(JsonField.of(dimensionValues))
+
+                        /**
+                         * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.dimensionValues] with a well-typed
+                         * `List<String?>` value instead. This method is primarily for setting the
+                         * field to an undocumented or not yet supported value.
+                         */
+                        fun dimensionValues(dimensionValues: JsonField<List<String?>>) = apply {
+                            this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [String] to [dimensionValues].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addDimensionValue(dimensionValue: String) = apply {
+                            dimensionValues =
+                                (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("dimensionValues", it).add(dimensionValue)
+                                }
+                        }
+
+                        /** Unit price for the specified dimension_values */
+                        fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
+
+                        /**
+                         * Sets [Builder.unitAmount] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.unitAmount] with a well-typed [String]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun unitAmount(unitAmount: JsonField<String>) = apply {
+                            this.unitAmount = unitAmount
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [MatrixValue].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .dimensionValues()
+                         * .unitAmount()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
+                        fun build(): MatrixValue =
+                            MatrixValue(
+                                checkRequired("dimensionValues", dimensionValues).map {
+                                    it.toImmutable()
+                                },
+                                checkRequired("unitAmount", unitAmount),
+                                additionalProperties.toMutableMap(),
+                            )
+                    }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): MatrixValue = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        dimensionValues()
+                        unitAmount()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (dimensionValues.asKnown()?.sumOf { (if (it == null) 0 else 1).toInt() }
+                            ?: 0) + (if (unitAmount.asKnown() == null) 0 else 1)
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is MatrixValue && dimensionValues == other.dimensionValues && unitAmount == other.unitAmount && additionalProperties == other.additionalProperties /* spotless:on */
+                    }
+
+                    /* spotless:off */
+                    private val hashCode: Int by lazy { Objects.hash(dimensionValues, unitAmount, additionalProperties) }
+                    /* spotless:on */
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() =
+                        "MatrixValue{dimensionValues=$dimensionValues, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is MatrixWithAllocationConfig && allocation == other.allocation && defaultUnitAmount == other.defaultUnitAmount && dimensions == other.dimensions && matrixValues == other.matrixValues && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(allocation, defaultUnitAmount, dimensions, matrixValues, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "MatrixWithAllocationConfig{allocation=$allocation, defaultUnitAmount=$defaultUnitAmount, dimensions=$dimensions, matrixValues=$matrixValues, additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             */
+            class BillingCycleConfiguration
+            private constructor(
+                private val duration: JsonField<Long>,
+                private val durationUnit: JsonField<DurationUnit>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("duration")
+                    @ExcludeMissing
+                    duration: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("duration_unit")
+                    @ExcludeMissing
+                    durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+                ) : this(duration, durationUnit, mutableMapOf())
+
+                /**
+                 * The duration of the billing period.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun duration(): Long = duration.getRequired("duration")
+
+                /**
+                 * The unit of billing period duration.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+                /**
+                 * Returns the raw JSON value of [duration].
+                 *
+                 * Unlike [duration], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("duration")
+                @ExcludeMissing
+                fun _duration(): JsonField<Long> = duration
+
+                /**
+                 * Returns the raw JSON value of [durationUnit].
+                 *
+                 * Unlike [durationUnit], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [BillingCycleConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [BillingCycleConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var duration: JsonField<Long>? = null
+                    private var durationUnit: JsonField<DurationUnit>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(billingCycleConfiguration: BillingCycleConfiguration) =
+                        apply {
+                            duration = billingCycleConfiguration.duration
+                            durationUnit = billingCycleConfiguration.durationUnit
+                            additionalProperties =
+                                billingCycleConfiguration.additionalProperties.toMutableMap()
+                        }
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                    /**
+                     * Sets [Builder.duration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.duration] with a well-typed [Long] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: DurationUnit) =
+                        durationUnit(JsonField.of(durationUnit))
+
+                    /**
+                     * Sets [Builder.durationUnit] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.durationUnit] with a well-typed
+                     * [DurationUnit] value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                        this.durationUnit = durationUnit
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): BillingCycleConfiguration =
+                        BillingCycleConfiguration(
+                            checkRequired("duration", duration),
+                            checkRequired("durationUnit", durationUnit),
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): BillingCycleConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    duration()
+                    durationUnit().validate()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
+
+                /** The unit of billing period duration. */
+                class DurationUnit
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val DAY = of("day")
+
+                        val MONTH = of("month")
+
+                        fun of(value: String) = DurationUnit(JsonField.of(value))
+                    }
+
+                    /** An enum containing [DurationUnit]'s known values. */
+                    enum class Known {
+                        DAY,
+                        MONTH,
+                    }
+
+                    /**
+                     * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [DurationUnit] can contain an unknown value in a couple of
+                     * cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        DAY,
+                        MONTH,
+                        /**
+                         * An enum member indicating that [DurationUnit] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            DAY -> Value.DAY
+                            MONTH -> Value.MONTH
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            DAY -> Known.DAY
+                            MONTH -> Known.MONTH
+                            else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is BillingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+            }
+
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             */
+            class InvoicingCycleConfiguration
+            private constructor(
+                private val duration: JsonField<Long>,
+                private val durationUnit: JsonField<DurationUnit>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("duration")
+                    @ExcludeMissing
+                    duration: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("duration_unit")
+                    @ExcludeMissing
+                    durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+                ) : this(duration, durationUnit, mutableMapOf())
+
+                /**
+                 * The duration of the billing period.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun duration(): Long = duration.getRequired("duration")
+
+                /**
+                 * The unit of billing period duration.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+                /**
+                 * Returns the raw JSON value of [duration].
+                 *
+                 * Unlike [duration], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("duration")
+                @ExcludeMissing
+                fun _duration(): JsonField<Long> = duration
+
+                /**
+                 * Returns the raw JSON value of [durationUnit].
+                 *
+                 * Unlike [durationUnit], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [InvoicingCycleConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [InvoicingCycleConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var duration: JsonField<Long>? = null
+                    private var durationUnit: JsonField<DurationUnit>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(invoicingCycleConfiguration: InvoicingCycleConfiguration) =
+                        apply {
+                            duration = invoicingCycleConfiguration.duration
+                            durationUnit = invoicingCycleConfiguration.durationUnit
+                            additionalProperties =
+                                invoicingCycleConfiguration.additionalProperties.toMutableMap()
+                        }
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                    /**
+                     * Sets [Builder.duration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.duration] with a well-typed [Long] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: DurationUnit) =
+                        durationUnit(JsonField.of(durationUnit))
+
+                    /**
+                     * Sets [Builder.durationUnit] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.durationUnit] with a well-typed
+                     * [DurationUnit] value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                        this.durationUnit = durationUnit
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): InvoicingCycleConfiguration =
+                        InvoicingCycleConfiguration(
+                            checkRequired("duration", duration),
+                            checkRequired("durationUnit", durationUnit),
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): InvoicingCycleConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    duration()
+                    durationUnit().validate()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
+
+                /** The unit of billing period duration. */
+                class DurationUnit
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val DAY = of("day")
+
+                        val MONTH = of("month")
+
+                        fun of(value: String) = DurationUnit(JsonField.of(value))
+                    }
+
+                    /** An enum containing [DurationUnit]'s known values. */
+                    enum class Known {
+                        DAY,
+                        MONTH,
+                    }
+
+                    /**
+                     * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [DurationUnit] can contain an unknown value in a couple of
+                     * cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        DAY,
+                        MONTH,
+                        /**
+                         * An enum member indicating that [DurationUnit] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            DAY -> Value.DAY
+                            MONTH -> Value.MONTH
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            DAY -> Known.DAY
+                            MONTH -> Known.MONTH
+                            else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is InvoicingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            class Metadata
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /** Returns a mutable builder for constructing an instance of [Metadata]. */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [Metadata]. */
+                class Builder internal constructor() {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties = metadata.additionalProperties.toMutableMap()
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Metadata = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is MatrixWithAllocation && cadence == other.cadence && itemId == other.itemId && matrixWithAllocationConfig == other.matrixWithAllocationConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, matrixWithAllocationConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "MatrixWithAllocation{cadence=$cadence, itemId=$itemId, matrixWithAllocationConfig=$matrixWithAllocationConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+        }
+
+        class GroupedTiered
+        private constructor(
+            private val cadence: JsonField<Cadence>,
+            private val groupedTieredConfig: JsonField<GroupedTieredConfig>,
+            private val itemId: JsonField<String>,
+            private val modelType: JsonValue,
+            private val name: JsonField<String>,
+            private val billableMetricId: JsonField<String>,
+            private val billedInAdvance: JsonField<Boolean>,
+            private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+            private val conversionRate: JsonField<Double>,
+            private val currency: JsonField<String>,
+            private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>,
+            private val externalPriceId: JsonField<String>,
+            private val fixedPriceQuantity: JsonField<Double>,
+            private val invoiceGroupingKey: JsonField<String>,
+            private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
+            private val metadata: JsonField<Metadata>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("cadence")
+                @ExcludeMissing
+                cadence: JsonField<Cadence> = JsonMissing.of(),
+                @JsonProperty("grouped_tiered_config")
+                @ExcludeMissing
+                groupedTieredConfig: JsonField<GroupedTieredConfig> = JsonMissing.of(),
+                @JsonProperty("item_id")
+                @ExcludeMissing
+                itemId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("model_type") @ExcludeMissing modelType: JsonValue = JsonMissing.of(),
+                @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("billable_metric_id")
+                @ExcludeMissing
+                billableMetricId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("billed_in_advance")
+                @ExcludeMissing
+                billedInAdvance: JsonField<Boolean> = JsonMissing.of(),
+                @JsonProperty("billing_cycle_configuration")
+                @ExcludeMissing
+                billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+                @JsonProperty("conversion_rate")
+                @ExcludeMissing
+                conversionRate: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of(),
+                @JsonProperty("external_price_id")
+                @ExcludeMissing
+                externalPriceId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("fixed_price_quantity")
+                @ExcludeMissing
+                fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("invoice_grouping_key")
+                @ExcludeMissing
+                invoiceGroupingKey: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("invoicing_cycle_configuration")
+                @ExcludeMissing
+                invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+                    JsonMissing.of(),
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                metadata: JsonField<Metadata> = JsonMissing.of(),
+            ) : this(
+                cadence,
+                groupedTieredConfig,
+                itemId,
+                modelType,
+                name,
+                billableMetricId,
+                billedInAdvance,
+                billingCycleConfiguration,
+                conversionRate,
+                currency,
+                dimensionalPriceConfiguration,
+                externalPriceId,
+                fixedPriceQuantity,
+                invoiceGroupingKey,
+                invoicingCycleConfiguration,
+                metadata,
+                mutableMapOf(),
+            )
+
+            /**
+             * The cadence to bill for this price on.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun cadence(): Cadence = cadence.getRequired("cadence")
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun groupedTieredConfig(): GroupedTieredConfig =
+                groupedTieredConfig.getRequired("grouped_tiered_config")
+
+            /**
+             * The id of the item the price will be associated with.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun itemId(): String = itemId.getRequired("item_id")
+
+            /**
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("grouped_tiered")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("model_type") @ExcludeMissing fun _modelType(): JsonValue = modelType
+
+            /**
+             * The name of the price.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun name(): String = name.getRequired("name")
+
+            /**
+             * The id of the billable metric for the price. Only needed if the price is usage-based.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun billableMetricId(): String? = billableMetricId.getNullable("billable_metric_id")
+
+            /**
+             * If the Price represents a fixed cost, the price will be billed in-advance if this is
+             * true, and in-arrears if this is false.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun billedInAdvance(): Boolean? = billedInAdvance.getNullable("billed_in_advance")
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun billingCycleConfiguration(): BillingCycleConfiguration? =
+                billingCycleConfiguration.getNullable("billing_cycle_configuration")
+
+            /**
+             * The per unit conversion rate of the price currency to the invoicing currency.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+            /**
+             * An ISO 4217 currency string, or custom pricing unit identifier, in which this price
+             * is billed.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * For dimensional price: specifies a price group and dimension values
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+                dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
+
+            /**
+             * An alias for the price.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
+
+            /**
+             * If the Price represents a fixed cost, this represents the quantity of units applied.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun fixedPriceQuantity(): Double? =
+                fixedPriceQuantity.getNullable("fixed_price_quantity")
+
+            /**
+             * The property used to group this price on an invoice
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun invoiceGroupingKey(): String? =
+                invoiceGroupingKey.getNullable("invoice_grouping_key")
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun invoicingCycleConfiguration(): InvoicingCycleConfiguration? =
+                invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+            /**
+             * Returns the raw JSON value of [cadence].
+             *
+             * Unlike [cadence], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("cadence") @ExcludeMissing fun _cadence(): JsonField<Cadence> = cadence
+
+            /**
+             * Returns the raw JSON value of [groupedTieredConfig].
+             *
+             * Unlike [groupedTieredConfig], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("grouped_tiered_config")
+            @ExcludeMissing
+            fun _groupedTieredConfig(): JsonField<GroupedTieredConfig> = groupedTieredConfig
+
+            /**
+             * Returns the raw JSON value of [itemId].
+             *
+             * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+            /**
+             * Returns the raw JSON value of [name].
+             *
+             * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+            /**
+             * Returns the raw JSON value of [billableMetricId].
+             *
+             * Unlike [billableMetricId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("billable_metric_id")
+            @ExcludeMissing
+            fun _billableMetricId(): JsonField<String> = billableMetricId
+
+            /**
+             * Returns the raw JSON value of [billedInAdvance].
+             *
+             * Unlike [billedInAdvance], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("billed_in_advance")
+            @ExcludeMissing
+            fun _billedInAdvance(): JsonField<Boolean> = billedInAdvance
+
+            /**
+             * Returns the raw JSON value of [billingCycleConfiguration].
+             *
+             * Unlike [billingCycleConfiguration], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
+            @JsonProperty("billing_cycle_configuration")
+            @ExcludeMissing
+            fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
+                billingCycleConfiguration
+
+            /**
+             * Returns the raw JSON value of [conversionRate].
+             *
+             * Unlike [conversionRate], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("conversion_rate")
+            @ExcludeMissing
+            fun _conversionRate(): JsonField<Double> = conversionRate
+
+            /**
+             * Returns the raw JSON value of [currency].
+             *
+             * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+            /**
+             * Returns the raw JSON value of [dimensionalPriceConfiguration].
+             *
+             * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON field
+             * has an unexpected type.
+             */
+            @JsonProperty("dimensional_price_configuration")
+            @ExcludeMissing
+            fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+                dimensionalPriceConfiguration
+
+            /**
+             * Returns the raw JSON value of [externalPriceId].
+             *
+             * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("external_price_id")
+            @ExcludeMissing
+            fun _externalPriceId(): JsonField<String> = externalPriceId
+
+            /**
+             * Returns the raw JSON value of [fixedPriceQuantity].
+             *
+             * Unlike [fixedPriceQuantity], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("fixed_price_quantity")
+            @ExcludeMissing
+            fun _fixedPriceQuantity(): JsonField<Double> = fixedPriceQuantity
+
+            /**
+             * Returns the raw JSON value of [invoiceGroupingKey].
+             *
+             * Unlike [invoiceGroupingKey], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("invoice_grouping_key")
+            @ExcludeMissing
+            fun _invoiceGroupingKey(): JsonField<String> = invoiceGroupingKey
+
+            /**
+             * Returns the raw JSON value of [invoicingCycleConfiguration].
+             *
+             * Unlike [invoicingCycleConfiguration], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
+            @JsonProperty("invoicing_cycle_configuration")
+            @ExcludeMissing
+            fun _invoicingCycleConfiguration(): JsonField<InvoicingCycleConfiguration> =
+                invoicingCycleConfiguration
+
+            /**
+             * Returns the raw JSON value of [metadata].
+             *
+             * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            fun _metadata(): JsonField<Metadata> = metadata
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [GroupedTiered].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .groupedTieredConfig()
+                 * .itemId()
+                 * .name()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [GroupedTiered]. */
+            class Builder internal constructor() {
+
+                private var cadence: JsonField<Cadence>? = null
+                private var groupedTieredConfig: JsonField<GroupedTieredConfig>? = null
+                private var itemId: JsonField<String>? = null
+                private var modelType: JsonValue = JsonValue.from("grouped_tiered")
+                private var name: JsonField<String>? = null
+                private var billableMetricId: JsonField<String> = JsonMissing.of()
+                private var billedInAdvance: JsonField<Boolean> = JsonMissing.of()
+                private var billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+                    JsonMissing.of()
+                private var conversionRate: JsonField<Double> = JsonMissing.of()
+                private var currency: JsonField<String> = JsonMissing.of()
+                private var dimensionalPriceConfiguration:
+                    JsonField<DimensionalPriceConfiguration> =
+                    JsonMissing.of()
+                private var externalPriceId: JsonField<String> = JsonMissing.of()
+                private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
+                private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
+                private var invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+                    JsonMissing.of()
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(groupedTiered: GroupedTiered) = apply {
+                    cadence = groupedTiered.cadence
+                    groupedTieredConfig = groupedTiered.groupedTieredConfig
+                    itemId = groupedTiered.itemId
+                    modelType = groupedTiered.modelType
+                    name = groupedTiered.name
+                    billableMetricId = groupedTiered.billableMetricId
+                    billedInAdvance = groupedTiered.billedInAdvance
+                    billingCycleConfiguration = groupedTiered.billingCycleConfiguration
+                    conversionRate = groupedTiered.conversionRate
+                    currency = groupedTiered.currency
+                    dimensionalPriceConfiguration = groupedTiered.dimensionalPriceConfiguration
+                    externalPriceId = groupedTiered.externalPriceId
+                    fixedPriceQuantity = groupedTiered.fixedPriceQuantity
+                    invoiceGroupingKey = groupedTiered.invoiceGroupingKey
+                    invoicingCycleConfiguration = groupedTiered.invoicingCycleConfiguration
+                    metadata = groupedTiered.metadata
+                    additionalProperties = groupedTiered.additionalProperties.toMutableMap()
+                }
+
+                /** The cadence to bill for this price on. */
+                fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
+
+                /**
+                 * Sets [Builder.cadence] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.cadence] with a well-typed [Cadence] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
+
+                fun groupedTieredConfig(groupedTieredConfig: GroupedTieredConfig) =
+                    groupedTieredConfig(JsonField.of(groupedTieredConfig))
+
+                /**
+                 * Sets [Builder.groupedTieredConfig] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.groupedTieredConfig] with a well-typed
+                 * [GroupedTieredConfig] value instead. This method is primarily for setting the
+                 * field to an undocumented or not yet supported value.
+                 */
+                fun groupedTieredConfig(groupedTieredConfig: JsonField<GroupedTieredConfig>) =
+                    apply {
+                        this.groupedTieredConfig = groupedTieredConfig
+                    }
+
+                /** The id of the item the price will be associated with. */
+                fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+                /**
+                 * Sets [Builder.itemId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.itemId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("grouped_tiered")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun modelType(modelType: JsonValue) = apply { this.modelType = modelType }
+
+                /** The name of the price. */
+                fun name(name: String) = name(JsonField.of(name))
+
+                /**
+                 * Sets [Builder.name] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.name] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun name(name: JsonField<String>) = apply { this.name = name }
+
+                /**
+                 * The id of the billable metric for the price. Only needed if the price is
+                 * usage-based.
+                 */
+                fun billableMetricId(billableMetricId: String?) =
+                    billableMetricId(JsonField.ofNullable(billableMetricId))
+
+                /**
+                 * Sets [Builder.billableMetricId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.billableMetricId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun billableMetricId(billableMetricId: JsonField<String>) = apply {
+                    this.billableMetricId = billableMetricId
+                }
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 */
+                fun billedInAdvance(billedInAdvance: Boolean?) =
+                    billedInAdvance(JsonField.ofNullable(billedInAdvance))
+
+                /**
+                 * Alias for [Builder.billedInAdvance].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun billedInAdvance(billedInAdvance: Boolean) =
+                    billedInAdvance(billedInAdvance as Boolean?)
+
+                /**
+                 * Sets [Builder.billedInAdvance] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.billedInAdvance] with a well-typed [Boolean]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun billedInAdvance(billedInAdvance: JsonField<Boolean>) = apply {
+                    this.billedInAdvance = billedInAdvance
+                }
+
+                /**
+                 * For custom cadence: specifies the duration of the billing period in days or
+                 * months.
+                 */
+                fun billingCycleConfiguration(
+                    billingCycleConfiguration: BillingCycleConfiguration?
+                ) = billingCycleConfiguration(JsonField.ofNullable(billingCycleConfiguration))
+
+                /**
+                 * Sets [Builder.billingCycleConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.billingCycleConfiguration] with a well-typed
+                 * [BillingCycleConfiguration] value instead. This method is primarily for setting
+                 * the field to an undocumented or not yet supported value.
+                 */
+                fun billingCycleConfiguration(
+                    billingCycleConfiguration: JsonField<BillingCycleConfiguration>
+                ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+                /** The per unit conversion rate of the price currency to the invoicing currency. */
+                fun conversionRate(conversionRate: Double?) =
+                    conversionRate(JsonField.ofNullable(conversionRate))
+
+                /**
+                 * Alias for [Builder.conversionRate].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun conversionRate(conversionRate: Double) =
+                    conversionRate(conversionRate as Double?)
+
+                /**
+                 * Sets [Builder.conversionRate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.conversionRate] with a well-typed [Double] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun conversionRate(conversionRate: JsonField<Double>) = apply {
+                    this.conversionRate = conversionRate
+                }
+
+                /**
+                 * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                 * price is billed.
+                 */
+                fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
+
+                /**
+                 * Sets [Builder.currency] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.currency] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                /** For dimensional price: specifies a price group and dimension values */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+                ) =
+                    dimensionalPriceConfiguration(
+                        JsonField.ofNullable(dimensionalPriceConfiguration)
+                    )
+
+                /**
+                 * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionalPriceConfiguration] with a well-typed
+                 * [DimensionalPriceConfiguration] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun dimensionalPriceConfiguration(
+                    dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+                ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
+                /** An alias for the price. */
+                fun externalPriceId(externalPriceId: String?) =
+                    externalPriceId(JsonField.ofNullable(externalPriceId))
+
+                /**
+                 * Sets [Builder.externalPriceId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.externalPriceId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                    this.externalPriceId = externalPriceId
+                }
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: Double?) =
+                    fixedPriceQuantity(JsonField.ofNullable(fixedPriceQuantity))
+
+                /**
+                 * Alias for [Builder.fixedPriceQuantity].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                    fixedPriceQuantity(fixedPriceQuantity as Double?)
+
+                /**
+                 * Sets [Builder.fixedPriceQuantity] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.fixedPriceQuantity] with a well-typed [Double]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
+                    this.fixedPriceQuantity = fixedPriceQuantity
+                }
+
+                /** The property used to group this price on an invoice */
+                fun invoiceGroupingKey(invoiceGroupingKey: String?) =
+                    invoiceGroupingKey(JsonField.ofNullable(invoiceGroupingKey))
+
+                /**
+                 * Sets [Builder.invoiceGroupingKey] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.invoiceGroupingKey] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun invoiceGroupingKey(invoiceGroupingKey: JsonField<String>) = apply {
+                    this.invoiceGroupingKey = invoiceGroupingKey
+                }
+
+                /**
+                 * Within each billing cycle, specifies the cadence at which invoices are produced.
+                 * If unspecified, a single invoice is produced per billing cycle.
+                 */
+                fun invoicingCycleConfiguration(
+                    invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                ) = invoicingCycleConfiguration(JsonField.ofNullable(invoicingCycleConfiguration))
+
+                /**
+                 * Sets [Builder.invoicingCycleConfiguration] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.invoicingCycleConfiguration] with a well-typed
+                 * [InvoicingCycleConfiguration] value instead. This method is primarily for setting
+                 * the field to an undocumented or not yet supported value.
+                 */
+                fun invoicingCycleConfiguration(
+                    invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
+                ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+                /**
+                 * Sets [Builder.metadata] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [GroupedTiered].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cadence()
+                 * .groupedTieredConfig()
+                 * .itemId()
+                 * .name()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): GroupedTiered =
+                    GroupedTiered(
+                        checkRequired("cadence", cadence),
+                        checkRequired("groupedTieredConfig", groupedTieredConfig),
+                        checkRequired("itemId", itemId),
+                        modelType,
+                        checkRequired("name", name),
+                        billableMetricId,
+                        billedInAdvance,
+                        billingCycleConfiguration,
+                        conversionRate,
+                        currency,
+                        dimensionalPriceConfiguration,
+                        externalPriceId,
+                        fixedPriceQuantity,
+                        invoiceGroupingKey,
+                        invoicingCycleConfiguration,
+                        metadata,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): GroupedTiered = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                cadence().validate()
+                groupedTieredConfig().validate()
+                itemId()
+                _modelType().let {
+                    if (it != JsonValue.from("grouped_tiered")) {
+                        throw OrbInvalidDataException("'modelType' is invalid, received $it")
+                    }
+                }
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                dimensionalPriceConfiguration()?.validate()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (cadence.asKnown()?.validity() ?: 0) +
+                    (groupedTieredConfig.asKnown()?.validity() ?: 0) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
+                    modelType.let { if (it == JsonValue.from("grouped_tiered")) 1 else 0 } +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (billableMetricId.asKnown() == null) 0 else 1) +
+                    (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                    (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
+                    (if (externalPriceId.asKnown() == null) 0 else 1) +
+                    (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                    (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                    (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                    (metadata.asKnown()?.validity() ?: 0)
+
+            /** The cadence to bill for this price on. */
+            class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val ANNUAL = of("annual")
+
+                    val SEMI_ANNUAL = of("semi_annual")
+
+                    val MONTHLY = of("monthly")
+
+                    val QUARTERLY = of("quarterly")
+
+                    val ONE_TIME = of("one_time")
+
+                    val CUSTOM = of("custom")
+
+                    fun of(value: String) = Cadence(JsonField.of(value))
+                }
+
+                /** An enum containing [Cadence]'s known values. */
+                enum class Known {
+                    ANNUAL,
+                    SEMI_ANNUAL,
+                    MONTHLY,
+                    QUARTERLY,
+                    ONE_TIME,
+                    CUSTOM,
+                }
+
+                /**
+                 * An enum containing [Cadence]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Cadence] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    ANNUAL,
+                    SEMI_ANNUAL,
+                    MONTHLY,
+                    QUARTERLY,
+                    ONE_TIME,
+                    CUSTOM,
+                    /**
+                     * An enum member indicating that [Cadence] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        ANNUAL -> Value.ANNUAL
+                        SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                        MONTHLY -> Value.MONTHLY
+                        QUARTERLY -> Value.QUARTERLY
+                        ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        ANNUAL -> Known.ANNUAL
+                        SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                        MONTHLY -> Known.MONTHLY
+                        QUARTERLY -> Known.QUARTERLY
+                        ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
+                        else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value does not have the
+                 *   expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): Cadence = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Cadence && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            class GroupedTieredConfig
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [GroupedTieredConfig].
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [GroupedTieredConfig]. */
+                class Builder internal constructor() {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(groupedTieredConfig: GroupedTieredConfig) = apply {
+                        additionalProperties =
+                            groupedTieredConfig.additionalProperties.toMutableMap()
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [GroupedTieredConfig].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
+                    fun build(): GroupedTieredConfig =
+                        GroupedTieredConfig(additionalProperties.toImmutable())
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): GroupedTieredConfig = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is GroupedTieredConfig && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "GroupedTieredConfig{additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             */
+            class BillingCycleConfiguration
+            private constructor(
+                private val duration: JsonField<Long>,
+                private val durationUnit: JsonField<DurationUnit>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("duration")
+                    @ExcludeMissing
+                    duration: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("duration_unit")
+                    @ExcludeMissing
+                    durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+                ) : this(duration, durationUnit, mutableMapOf())
+
+                /**
+                 * The duration of the billing period.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun duration(): Long = duration.getRequired("duration")
+
+                /**
+                 * The unit of billing period duration.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+                /**
+                 * Returns the raw JSON value of [duration].
+                 *
+                 * Unlike [duration], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("duration")
+                @ExcludeMissing
+                fun _duration(): JsonField<Long> = duration
+
+                /**
+                 * Returns the raw JSON value of [durationUnit].
+                 *
+                 * Unlike [durationUnit], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [BillingCycleConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [BillingCycleConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var duration: JsonField<Long>? = null
+                    private var durationUnit: JsonField<DurationUnit>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(billingCycleConfiguration: BillingCycleConfiguration) =
+                        apply {
+                            duration = billingCycleConfiguration.duration
+                            durationUnit = billingCycleConfiguration.durationUnit
+                            additionalProperties =
+                                billingCycleConfiguration.additionalProperties.toMutableMap()
+                        }
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                    /**
+                     * Sets [Builder.duration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.duration] with a well-typed [Long] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: DurationUnit) =
+                        durationUnit(JsonField.of(durationUnit))
+
+                    /**
+                     * Sets [Builder.durationUnit] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.durationUnit] with a well-typed
+                     * [DurationUnit] value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                        this.durationUnit = durationUnit
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [BillingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): BillingCycleConfiguration =
+                        BillingCycleConfiguration(
+                            checkRequired("duration", duration),
+                            checkRequired("durationUnit", durationUnit),
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): BillingCycleConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    duration()
+                    durationUnit().validate()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
+
+                /** The unit of billing period duration. */
+                class DurationUnit
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val DAY = of("day")
+
+                        val MONTH = of("month")
+
+                        fun of(value: String) = DurationUnit(JsonField.of(value))
+                    }
+
+                    /** An enum containing [DurationUnit]'s known values. */
+                    enum class Known {
+                        DAY,
+                        MONTH,
+                    }
+
+                    /**
+                     * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [DurationUnit] can contain an unknown value in a couple of
+                     * cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        DAY,
+                        MONTH,
+                        /**
+                         * An enum member indicating that [DurationUnit] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            DAY -> Value.DAY
+                            MONTH -> Value.MONTH
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            DAY -> Known.DAY
+                            MONTH -> Known.MONTH
+                            else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is BillingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+            }
+
+            /** For dimensional price: specifies a price group and dimension values */
+            class DimensionalPriceConfiguration
+            private constructor(
+                private val dimensionValues: JsonField<List<String>>,
+                private val dimensionalPriceGroupId: JsonField<String>,
+                private val externalDimensionalPriceGroupId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("dimension_values")
+                    @ExcludeMissing
+                    dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_group_id")
+                    @ExcludeMissing
+                    dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("external_dimensional_price_group_id")
+                    @ExcludeMissing
+                    externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    dimensionValues,
+                    dimensionalPriceGroupId,
+                    externalDimensionalPriceGroupId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The list of dimension values matching (in order) the dimensions of the price
+                 * group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun dimensionValues(): List<String> =
+                    dimensionValues.getRequired("dimension_values")
+
+                /**
+                 * The id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceGroupId(): String? =
+                    dimensionalPriceGroupId.getNullable("dimensional_price_group_id")
+
+                /**
+                 * The external id of the dimensional price group to include this price in
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalDimensionalPriceGroupId(): String? =
+                    externalDimensionalPriceGroupId.getNullable(
+                        "external_dimensional_price_group_id"
+                    )
+
+                /**
+                 * Returns the raw JSON value of [dimensionValues].
+                 *
+                 * Unlike [dimensionValues], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceGroupId].
+                 *
+                 * Unlike [dimensionalPriceGroupId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_group_id")
+                @ExcludeMissing
+                fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+                /**
+                 * Returns the raw JSON value of [externalDimensionalPriceGroupId].
+                 *
+                 * Unlike [externalDimensionalPriceGroupId], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("external_dimensional_price_group_id")
+                @ExcludeMissing
+                fun _externalDimensionalPriceGroupId(): JsonField<String> =
+                    externalDimensionalPriceGroupId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [DimensionalPriceConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [DimensionalPriceConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var dimensionValues: JsonField<MutableList<String>>? = null
+                    private var dimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
+                    private var externalDimensionalPriceGroupId: JsonField<String> =
+                        JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        dimensionalPriceConfiguration: DimensionalPriceConfiguration
+                    ) = apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        externalDimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.externalDimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The list of dimension values matching (in order) the dimensions of the price
+                     * group
+                     */
+                    fun dimensionValues(dimensionValues: List<String>) =
+                        dimensionValues(JsonField.of(dimensionValues))
+
+                    /**
+                     * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionValues] with a well-typed
+                     * `List<String>` value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [dimensionValues].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("dimensionValues", it).add(dimensionValue)
+                            }
+                    }
+
+                    /** The id of the dimensional price group to include this price in */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: String?) =
+                        dimensionalPriceGroupId(JsonField.ofNullable(dimensionalPriceGroupId))
+
+                    /**
+                     * Sets [Builder.dimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceGroupId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) =
+                        apply {
+                            this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                        }
+
+                    /** The external id of the dimensional price group to include this price in */
+                    fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+                        externalDimensionalPriceGroupId(
+                            JsonField.ofNullable(externalDimensionalPriceGroupId)
+                        )
+
+                    /**
+                     * Sets [Builder.externalDimensionalPriceGroupId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalDimensionalPriceGroupId] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun externalDimensionalPriceGroupId(
+                        externalDimensionalPriceGroupId: JsonField<String>
+                    ) = apply {
+                        this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [DimensionalPriceConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .dimensionValues()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): DimensionalPriceConfiguration =
+                        DimensionalPriceConfiguration(
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            dimensionalPriceGroupId,
+                            externalDimensionalPriceGroupId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): DimensionalPriceConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    dimensionValues()
+                    dimensionalPriceGroupId()
+                    externalDimensionalPriceGroupId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (dimensionValues.asKnown()?.size ?: 0) +
+                        (if (dimensionalPriceGroupId.asKnown() == null) 0 else 1) +
+                        (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, externalDimensionalPriceGroupId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             */
+            class InvoicingCycleConfiguration
+            private constructor(
+                private val duration: JsonField<Long>,
+                private val durationUnit: JsonField<DurationUnit>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("duration")
+                    @ExcludeMissing
+                    duration: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("duration_unit")
+                    @ExcludeMissing
+                    durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+                ) : this(duration, durationUnit, mutableMapOf())
+
+                /**
+                 * The duration of the billing period.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun duration(): Long = duration.getRequired("duration")
+
+                /**
+                 * The unit of billing period duration.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+                /**
+                 * Returns the raw JSON value of [duration].
+                 *
+                 * Unlike [duration], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("duration")
+                @ExcludeMissing
+                fun _duration(): JsonField<Long> = duration
+
+                /**
+                 * Returns the raw JSON value of [durationUnit].
+                 *
+                 * Unlike [durationUnit], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [InvoicingCycleConfiguration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [InvoicingCycleConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var duration: JsonField<Long>? = null
+                    private var durationUnit: JsonField<DurationUnit>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(invoicingCycleConfiguration: InvoicingCycleConfiguration) =
+                        apply {
+                            duration = invoicingCycleConfiguration.duration
+                            durationUnit = invoicingCycleConfiguration.durationUnit
+                            additionalProperties =
+                                invoicingCycleConfiguration.additionalProperties.toMutableMap()
+                        }
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                    /**
+                     * Sets [Builder.duration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.duration] with a well-typed [Long] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: DurationUnit) =
+                        durationUnit(JsonField.of(durationUnit))
+
+                    /**
+                     * Sets [Builder.durationUnit] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.durationUnit] with a well-typed
+                     * [DurationUnit] value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                        this.durationUnit = durationUnit
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [InvoicingCycleConfiguration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .duration()
+                     * .durationUnit()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): InvoicingCycleConfiguration =
+                        InvoicingCycleConfiguration(
+                            checkRequired("duration", duration),
+                            checkRequired("durationUnit", durationUnit),
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): InvoicingCycleConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    duration()
+                    durationUnit().validate()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (duration.asKnown() == null) 0 else 1) +
+                        (durationUnit.asKnown()?.validity() ?: 0)
+
+                /** The unit of billing period duration. */
+                class DurationUnit
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val DAY = of("day")
+
+                        val MONTH = of("month")
+
+                        fun of(value: String) = DurationUnit(JsonField.of(value))
+                    }
+
+                    /** An enum containing [DurationUnit]'s known values. */
+                    enum class Known {
+                        DAY,
+                        MONTH,
+                    }
+
+                    /**
+                     * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [DurationUnit] can contain an unknown value in a couple of
+                     * cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        DAY,
+                        MONTH,
+                        /**
+                         * An enum member indicating that [DurationUnit] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            DAY -> Value.DAY
+                            MONTH -> Value.MONTH
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            DAY -> Known.DAY
+                            MONTH -> Known.MONTH
+                            else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): DurationUnit = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is InvoicingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            class Metadata
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /** Returns a mutable builder for constructing an instance of [Metadata]. */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [Metadata]. */
+                class Builder internal constructor() {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties = metadata.additionalProperties.toMutableMap()
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Metadata = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is GroupedTiered && cadence == other.cadence && groupedTieredConfig == other.groupedTieredConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(cadence, groupedTieredConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "GroupedTiered{cadence=$cadence, groupedTieredConfig=$groupedTieredConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
     }
 

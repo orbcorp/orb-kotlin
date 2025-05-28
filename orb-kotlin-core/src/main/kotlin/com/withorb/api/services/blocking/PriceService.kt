@@ -7,6 +7,8 @@ import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Price
 import com.withorb.api.models.PriceCreateParams
+import com.withorb.api.models.PriceEvaluateMultipleParams
+import com.withorb.api.models.PriceEvaluateMultipleResponse
 import com.withorb.api.models.PriceEvaluateParams
 import com.withorb.api.models.PriceEvaluateResponse
 import com.withorb.api.models.PriceFetchParams
@@ -26,7 +28,7 @@ interface PriceService {
 
     /**
      * This endpoint is used to create a [price](/product-catalog/price-configuration). A price
-     * created using this endpoint is always an add-on, meaning that it’s not associated with a
+     * created using this endpoint is always an add-on, meaning that it's not associated with a
      * specific plan and can instead be individually added to subscriptions, including subscriptions
      * on different plans.
      *
@@ -75,6 +77,9 @@ interface PriceService {
         list(PriceListParams.none(), requestOptions)
 
     /**
+     * [NOTE] It is recommended to use the `/v1/prices/evaluate` which offers further functionality,
+     * such as multiple prices, inline price definitions, and querying over preview events.
+     *
      * This endpoint is used to evaluate the output of a price for a given customer and time range.
      * It enables filtering and grouping the output using
      * [computed properties](/extensibility/advanced-metrics#computed-properties), supporting the
@@ -104,6 +109,36 @@ interface PriceService {
         params: PriceEvaluateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PriceEvaluateResponse
+
+    /**
+     * This endpoint is used to evaluate the output of price(s) for a given customer and time range
+     * over either ingested events or preview events. It enables filtering and grouping the output
+     * using [computed properties](/extensibility/advanced-metrics#computed-properties), supporting
+     * the following workflows:
+     * 1. Showing detailed usage and costs to the end customer.
+     * 2. Auditing subtotals on invoice line items.
+     *
+     * Prices may either reference existing prices in your Orb account or be defined inline in the
+     * request body. Up to 100 prices can be evaluated in a single request.
+     *
+     * Price evaluation by default uses ingested events, but you can also provide a list of preview
+     * events to use instead. Up to 500 preview events can be provided in a single request. When
+     * using ingested events, the start of the time range must be no more than 100 days ago.
+     *
+     * For these workflows, the expressiveness of computed properties in both the filters and
+     * grouping is critical. For example, if you'd like to show your customer their usage grouped by
+     * hour and another property, you can do so with the following `grouping_keys`:
+     * `["hour_floor_timestamp_millis(timestamp_millis)", "my_property"]`. If you'd like to examine
+     * a customer's usage for a specific property value, you can do so with the following `filter`:
+     * `my_property = 'foo' AND my_other_property = 'bar'`.
+     *
+     * The length of the results must be no greater than 1000. Note that this is a POST endpoint
+     * rather than a GET endpoint because it employs a JSON body rather than query parameters.
+     */
+    fun evaluateMultiple(
+        params: PriceEvaluateMultipleParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PriceEvaluateMultipleResponse
 
     /** This endpoint returns a price given an identifier. */
     fun fetch(
@@ -194,6 +229,16 @@ interface PriceService {
             params: PriceEvaluateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PriceEvaluateResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /prices/evaluate`, but is otherwise the same as
+         * [PriceService.evaluateMultiple].
+         */
+        @MustBeClosed
+        fun evaluateMultiple(
+            params: PriceEvaluateMultipleParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PriceEvaluateMultipleResponse>
 
         /**
          * Returns a raw HTTP response for `get /prices/{price_id}`, but is otherwise the same as

@@ -34,9 +34,16 @@ internal class PriceCreateParamsTest {
                             .build()
                     )
                     .conversionRate(0.0)
+                    .dimensionalPriceConfiguration(
+                        PriceCreateParams.Body.Unit.DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
+                            .build()
+                    )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
-                    .invoiceGroupingKey("invoice_grouping_key")
+                    .invoiceGroupingKey("x")
                     .invoicingCycleConfiguration(
                         PriceCreateParams.Body.Unit.InvoicingCycleConfiguration.builder()
                             .duration(0L)
@@ -84,9 +91,18 @@ internal class PriceCreateParamsTest {
                                 .build()
                         )
                         .conversionRate(0.0)
+                        .dimensionalPriceConfiguration(
+                            PriceCreateParams.Body.Unit.DimensionalPriceConfiguration.builder()
+                                .addDimensionValue("string")
+                                .dimensionalPriceGroupId("dimensional_price_group_id")
+                                .externalDimensionalPriceGroupId(
+                                    "external_dimensional_price_group_id"
+                                )
+                                .build()
+                        )
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
-                        .invoiceGroupingKey("invoice_grouping_key")
+                        .invoiceGroupingKey("x")
                         .invoicingCycleConfiguration(
                             PriceCreateParams.Body.Unit.InvoicingCycleConfiguration.builder()
                                 .duration(0L)
@@ -134,9 +150,18 @@ internal class PriceCreateParamsTest {
                                 .build()
                         )
                         .conversionRate(0.0)
+                        .dimensionalPriceConfiguration(
+                            PriceCreateParams.Body.Unit.DimensionalPriceConfiguration.builder()
+                                .addDimensionValue("string")
+                                .dimensionalPriceGroupId("dimensional_price_group_id")
+                                .externalDimensionalPriceGroupId(
+                                    "external_dimensional_price_group_id"
+                                )
+                                .build()
+                        )
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
-                        .invoiceGroupingKey("invoice_grouping_key")
+                        .invoiceGroupingKey("x")
                         .invoicingCycleConfiguration(
                             PriceCreateParams.Body.Unit.InvoicingCycleConfiguration.builder()
                                 .duration(0L)

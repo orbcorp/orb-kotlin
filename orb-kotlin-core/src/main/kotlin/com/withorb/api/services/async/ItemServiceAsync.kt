@@ -6,6 +6,7 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Item
+import com.withorb.api.models.ItemArchiveParams
 import com.withorb.api.models.ItemCreateParams
 import com.withorb.api.models.ItemFetchParams
 import com.withorb.api.models.ItemListPageAsync
@@ -51,6 +52,23 @@ interface ItemServiceAsync {
     /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): ItemListPageAsync =
         list(ItemListParams.none(), requestOptions)
+
+    /** Archive item */
+    suspend fun archive(
+        itemId: String,
+        params: ItemArchiveParams = ItemArchiveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Item = archive(params.toBuilder().itemId(itemId).build(), requestOptions)
+
+    /** @see [archive] */
+    suspend fun archive(
+        params: ItemArchiveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Item
+
+    /** @see [archive] */
+    suspend fun archive(itemId: String, requestOptions: RequestOptions): Item =
+        archive(itemId, ItemArchiveParams.none(), requestOptions)
 
     /** This endpoint returns an item identified by its item_id. */
     suspend fun fetch(
@@ -119,6 +137,30 @@ interface ItemServiceAsync {
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<ItemListPageAsync> =
             list(ItemListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /items/{item_id}/archive`, but is otherwise the
+         * same as [ItemServiceAsync.archive].
+         */
+        @MustBeClosed
+        suspend fun archive(
+            itemId: String,
+            params: ItemArchiveParams = ItemArchiveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Item> =
+            archive(params.toBuilder().itemId(itemId).build(), requestOptions)
+
+        /** @see [archive] */
+        @MustBeClosed
+        suspend fun archive(
+            params: ItemArchiveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Item>
+
+        /** @see [archive] */
+        @MustBeClosed
+        suspend fun archive(itemId: String, requestOptions: RequestOptions): HttpResponseFor<Item> =
+            archive(itemId, ItemArchiveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /items/{item_id}`, but is otherwise the same as

@@ -14,16 +14,16 @@ internal class AmountDiscountTest {
         val amountDiscount =
             AmountDiscount.builder()
                 .amountDiscount("amount_discount")
+                .discountType(AmountDiscount.DiscountType.AMOUNT)
                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                .discountType(AmountDiscount.DiscountType.AMOUNT)
                 .reason("reason")
                 .build()
 
         assertThat(amountDiscount.amountDiscount()).isEqualTo("amount_discount")
+        assertThat(amountDiscount.discountType()).isEqualTo(AmountDiscount.DiscountType.AMOUNT)
         assertThat(amountDiscount.appliesToPriceIds())
             .containsExactly("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
-        assertThat(amountDiscount.discountType()).isEqualTo(AmountDiscount.DiscountType.AMOUNT)
         assertThat(amountDiscount.reason()).isEqualTo("reason")
     }
 
@@ -33,9 +33,9 @@ internal class AmountDiscountTest {
         val amountDiscount =
             AmountDiscount.builder()
                 .amountDiscount("amount_discount")
+                .discountType(AmountDiscount.DiscountType.AMOUNT)
                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                .discountType(AmountDiscount.DiscountType.AMOUNT)
                 .reason("reason")
                 .build()
 

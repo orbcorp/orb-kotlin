@@ -92,10 +92,10 @@ internal class InvoiceListPageResponseTest {
                         .discount(JsonValue.from(mapOf<String, Any>()))
                         .addDiscount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -119,6 +119,22 @@ internal class InvoiceListPageResponseTest {
                                         .id("id")
                                         .amount("amount")
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                .builder()
+                                                .field(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .Field
+                                                        .PRICE_ID
+                                                )
+                                                .operator(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .Operator
+                                                        .INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .isInvoiceLevel(true)
                                         .reason("reason")
                                         .usageDiscount(0.0)
@@ -128,10 +144,10 @@ internal class InvoiceListPageResponseTest {
                                 .creditsApplied("6.00")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -141,6 +157,18 @@ internal class InvoiceListPageResponseTest {
                                 .maximum(
                                     Invoice.LineItem.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.LineItem.Maximum.Filter.builder()
+                                                .field(
+                                                    Invoice.LineItem.Maximum.Filter.Field.PRICE_ID
+                                                )
+                                                .operator(
+                                                    Invoice.LineItem.Maximum.Filter.Operator
+                                                        .INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -148,6 +176,18 @@ internal class InvoiceListPageResponseTest {
                                 .minimum(
                                     Invoice.LineItem.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.LineItem.Minimum.Filter.builder()
+                                                .field(
+                                                    Invoice.LineItem.Minimum.Filter.Field.PRICE_ID
+                                                )
+                                                .operator(
+                                                    Invoice.LineItem.Minimum.Filter.Operator
+                                                        .INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -182,12 +222,12 @@ internal class InvoiceListPageResponseTest {
                                         .currency("currency")
                                         .discount(
                                             PercentageDiscount.builder()
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(0.15)
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -209,6 +249,18 @@ internal class InvoiceListPageResponseTest {
                                         .maximum(
                                             Price.Unit.Maximum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Price.Unit.Maximum.Filter.builder()
+                                                        .field(
+                                                            Price.Unit.Maximum.Filter.Field.PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Price.Unit.Maximum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
@@ -224,6 +276,18 @@ internal class InvoiceListPageResponseTest {
                                         .minimum(
                                             Price.Unit.Minimum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Price.Unit.Minimum.Filter.builder()
+                                                        .field(
+                                                            Price.Unit.Minimum.Filter.Field.PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Price.Unit.Minimum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
@@ -281,6 +345,13 @@ internal class InvoiceListPageResponseTest {
                         .maximum(
                             Invoice.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Invoice.Maximum.Filter.builder()
+                                        .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -294,6 +365,13 @@ internal class InvoiceListPageResponseTest {
                         .minimum(
                             Invoice.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Invoice.Minimum.Filter.builder()
+                                        .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -410,10 +488,10 @@ internal class InvoiceListPageResponseTest {
                     .discount(JsonValue.from(mapOf<String, Any>()))
                     .addDiscount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .reason("reason")
                             .build()
                     )
@@ -437,6 +515,21 @@ internal class InvoiceListPageResponseTest {
                                     .id("id")
                                     .amount("amount")
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Invoice.LineItem.Adjustment.UsageDiscount.Filter.builder()
+                                            .field(
+                                                Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                    .Field
+                                                    .PRICE_ID
+                                            )
+                                            .operator(
+                                                Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                    .Operator
+                                                    .INCLUDES
+                                            )
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .isInvoiceLevel(true)
                                     .reason("reason")
                                     .usageDiscount(0.0)
@@ -446,10 +539,10 @@ internal class InvoiceListPageResponseTest {
                             .creditsApplied("6.00")
                             .discount(
                                 PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .reason("reason")
                                     .build()
                             )
@@ -459,6 +552,15 @@ internal class InvoiceListPageResponseTest {
                             .maximum(
                                 Invoice.LineItem.Maximum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Invoice.LineItem.Maximum.Filter.builder()
+                                            .field(Invoice.LineItem.Maximum.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                Invoice.LineItem.Maximum.Filter.Operator.INCLUDES
+                                            )
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -466,6 +568,15 @@ internal class InvoiceListPageResponseTest {
                             .minimum(
                                 Invoice.LineItem.Minimum.builder()
                                     .addAppliesToPriceId("string")
+                                    .addFilter(
+                                        Invoice.LineItem.Minimum.Filter.builder()
+                                            .field(Invoice.LineItem.Minimum.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                Invoice.LineItem.Minimum.Filter.Operator.INCLUDES
+                                            )
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -499,12 +610,12 @@ internal class InvoiceListPageResponseTest {
                                     .currency("currency")
                                     .discount(
                                         PercentageDiscount.builder()
-                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
                                             .percentageDiscount(0.15)
+                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .reason("reason")
                                             .build()
                                     )
@@ -523,6 +634,15 @@ internal class InvoiceListPageResponseTest {
                                     .maximum(
                                         Price.Unit.Maximum.builder()
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Price.Unit.Maximum.Filter.builder()
+                                                    .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                    .operator(
+                                                        Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
@@ -535,6 +655,15 @@ internal class InvoiceListPageResponseTest {
                                     .minimum(
                                         Price.Unit.Minimum.builder()
                                             .addAppliesToPriceId("string")
+                                            .addFilter(
+                                                Price.Unit.Minimum.Filter.builder()
+                                                    .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                    .operator(
+                                                        Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .minimumAmount("minimum_amount")
                                             .build()
                                     )
@@ -589,6 +718,13 @@ internal class InvoiceListPageResponseTest {
                     .maximum(
                         Invoice.Maximum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Invoice.Maximum.Filter.builder()
+                                    .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -602,6 +738,13 @@ internal class InvoiceListPageResponseTest {
                     .minimum(
                         Invoice.Minimum.builder()
                             .addAppliesToPriceId("string")
+                            .addFilter(
+                                Invoice.Minimum.Filter.builder()
+                                    .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -725,10 +868,10 @@ internal class InvoiceListPageResponseTest {
                         .discount(JsonValue.from(mapOf<String, Any>()))
                         .addDiscount(
                             PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .reason("reason")
                                 .build()
                         )
@@ -752,6 +895,22 @@ internal class InvoiceListPageResponseTest {
                                         .id("id")
                                         .amount("amount")
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                .builder()
+                                                .field(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .Field
+                                                        .PRICE_ID
+                                                )
+                                                .operator(
+                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
+                                                        .Operator
+                                                        .INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .isInvoiceLevel(true)
                                         .reason("reason")
                                         .usageDiscount(0.0)
@@ -761,10 +920,10 @@ internal class InvoiceListPageResponseTest {
                                 .creditsApplied("6.00")
                                 .discount(
                                     PercentageDiscount.builder()
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .reason("reason")
                                         .build()
                                 )
@@ -774,6 +933,18 @@ internal class InvoiceListPageResponseTest {
                                 .maximum(
                                     Invoice.LineItem.Maximum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.LineItem.Maximum.Filter.builder()
+                                                .field(
+                                                    Invoice.LineItem.Maximum.Filter.Field.PRICE_ID
+                                                )
+                                                .operator(
+                                                    Invoice.LineItem.Maximum.Filter.Operator
+                                                        .INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -781,6 +952,18 @@ internal class InvoiceListPageResponseTest {
                                 .minimum(
                                     Invoice.LineItem.Minimum.builder()
                                         .addAppliesToPriceId("string")
+                                        .addFilter(
+                                            Invoice.LineItem.Minimum.Filter.builder()
+                                                .field(
+                                                    Invoice.LineItem.Minimum.Filter.Field.PRICE_ID
+                                                )
+                                                .operator(
+                                                    Invoice.LineItem.Minimum.Filter.Operator
+                                                        .INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -815,12 +998,12 @@ internal class InvoiceListPageResponseTest {
                                         .currency("currency")
                                         .discount(
                                             PercentageDiscount.builder()
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(0.15)
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -842,6 +1025,18 @@ internal class InvoiceListPageResponseTest {
                                         .maximum(
                                             Price.Unit.Maximum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Price.Unit.Maximum.Filter.builder()
+                                                        .field(
+                                                            Price.Unit.Maximum.Filter.Field.PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Price.Unit.Maximum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .maximumAmount("maximum_amount")
                                                 .build()
                                         )
@@ -857,6 +1052,18 @@ internal class InvoiceListPageResponseTest {
                                         .minimum(
                                             Price.Unit.Minimum.builder()
                                                 .addAppliesToPriceId("string")
+                                                .addFilter(
+                                                    Price.Unit.Minimum.Filter.builder()
+                                                        .field(
+                                                            Price.Unit.Minimum.Filter.Field.PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            Price.Unit.Minimum.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .minimumAmount("minimum_amount")
                                                 .build()
                                         )
@@ -914,6 +1121,13 @@ internal class InvoiceListPageResponseTest {
                         .maximum(
                             Invoice.Maximum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Invoice.Maximum.Filter.builder()
+                                        .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -927,6 +1141,13 @@ internal class InvoiceListPageResponseTest {
                         .minimum(
                             Invoice.Minimum.builder()
                                 .addAppliesToPriceId("string")
+                                .addFilter(
+                                    Invoice.Minimum.Filter.builder()
+                                        .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )

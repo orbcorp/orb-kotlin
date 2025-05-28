@@ -332,27 +332,49 @@ private constructor(
         /** Alias for calling [discount] with `Discount.ofPercentage(percentage)`. */
         fun discount(percentage: PercentageDiscount) = apply { body.discount(percentage) }
 
-        /** Alias for calling [discount] with `Discount.ofTrial(trial)`. */
-        fun discount(trial: TrialDiscount) = apply { body.discount(trial) }
-
         /**
          * Alias for calling [discount] with the following:
          * ```kotlin
-         * TrialDiscount.builder()
-         *     .discountType(TrialDiscount.DiscountType.TRIAL)
-         *     .appliesToPriceIds(appliesToPriceIds)
+         * PercentageDiscount.builder()
+         *     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+         *     .percentageDiscount(percentageDiscount)
          *     .build()
          * ```
          */
-        fun trialDiscount(appliesToPriceIds: List<String>) = apply {
-            body.trialDiscount(appliesToPriceIds)
+        fun percentageDiscount(percentageDiscount: Double) = apply {
+            body.percentageDiscount(percentageDiscount)
         }
+
+        /** Alias for calling [discount] with `Discount.ofTrial(trial)`. */
+        fun discount(trial: TrialDiscount) = apply { body.discount(trial) }
 
         /** Alias for calling [discount] with `Discount.ofUsage(usage)`. */
         fun discount(usage: UsageDiscount) = apply { body.discount(usage) }
 
+        /**
+         * Alias for calling [discount] with the following:
+         * ```kotlin
+         * UsageDiscount.builder()
+         *     .discountType(UsageDiscount.DiscountType.USAGE)
+         *     .usageDiscount(usageDiscount)
+         *     .build()
+         * ```
+         */
+        fun usageDiscount(usageDiscount: Double) = apply { body.usageDiscount(usageDiscount) }
+
         /** Alias for calling [discount] with `Discount.ofAmount(amount)`. */
         fun discount(amount: AmountDiscount) = apply { body.discount(amount) }
+
+        /**
+         * Alias for calling [discount] with the following:
+         * ```kotlin
+         * AmountDiscount.builder()
+         *     .discountType(AmountDiscount.DiscountType.AMOUNT)
+         *     .amountDiscount(amountDiscount)
+         *     .build()
+         * ```
+         */
+        fun amountDiscount(amountDiscount: String) = apply { body.amountDiscount(amountDiscount) }
 
         /**
          * The `external_customer_id` of the `Customer` to create this invoice for. One of
@@ -950,31 +972,65 @@ private constructor(
             fun discount(percentage: PercentageDiscount) =
                 discount(Discount.ofPercentage(percentage))
 
-            /** Alias for calling [discount] with `Discount.ofTrial(trial)`. */
-            fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
-
             /**
              * Alias for calling [discount] with the following:
              * ```kotlin
-             * TrialDiscount.builder()
-             *     .discountType(TrialDiscount.DiscountType.TRIAL)
-             *     .appliesToPriceIds(appliesToPriceIds)
+             * PercentageDiscount.builder()
+             *     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+             *     .percentageDiscount(percentageDiscount)
              *     .build()
              * ```
              */
-            fun trialDiscount(appliesToPriceIds: List<String>) =
+            fun percentageDiscount(percentageDiscount: Double) =
                 discount(
-                    TrialDiscount.builder()
-                        .discountType(TrialDiscount.DiscountType.TRIAL)
-                        .appliesToPriceIds(appliesToPriceIds)
+                    PercentageDiscount.builder()
+                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                        .percentageDiscount(percentageDiscount)
                         .build()
                 )
+
+            /** Alias for calling [discount] with `Discount.ofTrial(trial)`. */
+            fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
             /** Alias for calling [discount] with `Discount.ofUsage(usage)`. */
             fun discount(usage: UsageDiscount) = discount(Discount.ofUsage(usage))
 
+            /**
+             * Alias for calling [discount] with the following:
+             * ```kotlin
+             * UsageDiscount.builder()
+             *     .discountType(UsageDiscount.DiscountType.USAGE)
+             *     .usageDiscount(usageDiscount)
+             *     .build()
+             * ```
+             */
+            fun usageDiscount(usageDiscount: Double) =
+                discount(
+                    UsageDiscount.builder()
+                        .discountType(UsageDiscount.DiscountType.USAGE)
+                        .usageDiscount(usageDiscount)
+                        .build()
+                )
+
             /** Alias for calling [discount] with `Discount.ofAmount(amount)`. */
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
+
+            /**
+             * Alias for calling [discount] with the following:
+             * ```kotlin
+             * AmountDiscount.builder()
+             *     .discountType(AmountDiscount.DiscountType.AMOUNT)
+             *     .amountDiscount(amountDiscount)
+             *     .build()
+             * ```
+             */
+            fun amountDiscount(amountDiscount: String) =
+                discount(
+                    AmountDiscount.builder()
+                        .discountType(AmountDiscount.DiscountType.AMOUNT)
+                        .amountDiscount(amountDiscount)
+                        .build()
+                )
 
             /**
              * The `external_customer_id` of the `Customer` to create this invoice for. One of

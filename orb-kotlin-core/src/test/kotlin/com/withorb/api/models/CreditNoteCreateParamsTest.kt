@@ -16,8 +16,8 @@ internal class CreditNoteCreateParamsTest {
                     .invoiceLineItemId("4khy3nwzktxv7")
                     .build()
             )
-            .memo("An optional memo for my credit note.")
             .reason(CreditNoteCreateParams.Reason.DUPLICATE)
+            .memo("An optional memo for my credit note.")
             .build()
     }
 
@@ -31,8 +31,8 @@ internal class CreditNoteCreateParamsTest {
                         .invoiceLineItemId("4khy3nwzktxv7")
                         .build()
                 )
-                .memo("An optional memo for my credit note.")
                 .reason(CreditNoteCreateParams.Reason.DUPLICATE)
+                .memo("An optional memo for my credit note.")
                 .build()
 
         val body = params._body()
@@ -44,8 +44,8 @@ internal class CreditNoteCreateParamsTest {
                     .invoiceLineItemId("4khy3nwzktxv7")
                     .build()
             )
-        assertThat(body.memo()).isEqualTo("An optional memo for my credit note.")
         assertThat(body.reason()).isEqualTo(CreditNoteCreateParams.Reason.DUPLICATE)
+        assertThat(body.memo()).isEqualTo("An optional memo for my credit note.")
     }
 
     @Test
@@ -58,6 +58,7 @@ internal class CreditNoteCreateParamsTest {
                         .invoiceLineItemId("4khy3nwzktxv7")
                         .build()
                 )
+                .reason(CreditNoteCreateParams.Reason.DUPLICATE)
                 .build()
 
         val body = params._body()
@@ -69,5 +70,6 @@ internal class CreditNoteCreateParamsTest {
                     .invoiceLineItemId("4khy3nwzktxv7")
                     .build()
             )
+        assertThat(body.reason()).isEqualTo(CreditNoteCreateParams.Reason.DUPLICATE)
     }
 }

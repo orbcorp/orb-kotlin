@@ -100,10 +100,7 @@ interface CustomerService {
      *
      * **Note**: This operation happens asynchronously and can be expected to take a few minutes to
      * propagate to related resources. However, querying for the customer on subsequent GET requests
-     * while deletion is in process will reflect its deletion with a `deleted: true` property. Once
-     * the customer deletion has been fully processed, the customer will not be returned in the API.
-     *
-     * On successful processing, this returns an empty dictionary (`{}`) in the API.
+     * while deletion is in process will reflect its deletion.
      */
     fun delete(
         customerId: String,

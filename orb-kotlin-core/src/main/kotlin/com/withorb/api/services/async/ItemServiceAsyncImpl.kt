@@ -17,6 +17,7 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.models.Item
+import com.withorb.api.models.ItemArchiveParams
 import com.withorb.api.models.ItemCreateParams
 import com.withorb.api.models.ItemFetchParams
 import com.withorb.api.models.ItemListPageAsync
@@ -47,6 +48,10 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
     ): ItemListPageAsync =
         // get /items
         withRawResponse().list(params, requestOptions).parse()
+
+    override suspend fun archive(params: ItemArchiveParams, requestOptions: RequestOptions): Item =
+        // post /items/{item_id}/archive
+        withRawResponse().archive(params, requestOptions).parse()
 
     override suspend fun fetch(params: ItemFetchParams, requestOptions: RequestOptions): Item =
         // get /items/{item_id}
@@ -144,6 +149,36 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
                             .params(params)
                             .response(it)
                             .build()
+                    }
+            }
+        }
+
+        private val archiveHandler: Handler<Item> =
+            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun archive(
+            params: ItemArchiveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Item> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("itemId", params.itemId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("items", params._pathParam(0), "archive")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { archiveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
                     }
             }
         }

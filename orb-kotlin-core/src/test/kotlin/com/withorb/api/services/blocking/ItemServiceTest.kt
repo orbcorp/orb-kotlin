@@ -4,6 +4,7 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.ItemCreateParams
 import com.withorb.api.models.ItemUpdateParams
 import org.junit.jupiter.api.Test
@@ -21,7 +22,17 @@ internal class ItemServiceTest {
                 .build()
         val itemService = client.items()
 
-        val item = itemService.create(ItemCreateParams.builder().name("API requests").build())
+        val item =
+            itemService.create(
+                ItemCreateParams.builder()
+                    .name("API requests")
+                    .metadata(
+                        ItemCreateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .build()
+            )
 
         item.validate()
     }
@@ -47,6 +58,11 @@ internal class ItemServiceTest {
                             .externalEntityId("external_entity_id")
                             .build()
                     )
+                    .metadata(
+                        ItemUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .name("name")
                     .build()
             )
@@ -66,6 +82,20 @@ internal class ItemServiceTest {
         val page = itemService.list()
 
         page.response().validate()
+    }
+
+    @Test
+    fun archive() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val itemService = client.items()
+
+        val item = itemService.archive("item_id")
+
+        item.validate()
     }
 
     @Test
