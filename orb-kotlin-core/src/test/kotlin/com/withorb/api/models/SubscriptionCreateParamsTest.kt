@@ -37,6 +37,18 @@ internal class SubscriptionCreateParamsTest {
                                 SubscriptionCreateParams.AddPrice.AllocationPrice.Cadence.MONTHLY
                             )
                             .currency("USD")
+                            .customExpiration(
+                                SubscriptionCreateParams.AddPrice.AllocationPrice.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        SubscriptionCreateParams.AddPrice.AllocationPrice
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .expiresAtEndOfCadence(true)
                             .build()
                     )
@@ -191,6 +203,19 @@ internal class SubscriptionCreateParamsTest {
                                     .MONTHLY
                             )
                             .currency("USD")
+                            .customExpiration(
+                                SubscriptionCreateParams.ReplacePrice.AllocationPrice
+                                    .CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        SubscriptionCreateParams.ReplacePrice.AllocationPrice
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .expiresAtEndOfCadence(true)
                             .build()
                     )
@@ -313,6 +338,19 @@ internal class SubscriptionCreateParamsTest {
                                         .MONTHLY
                                 )
                                 .currency("USD")
+                                .customExpiration(
+                                    SubscriptionCreateParams.AddPrice.AllocationPrice
+                                        .CustomExpiration
+                                        .builder()
+                                        .duration(0L)
+                                        .durationUnit(
+                                            SubscriptionCreateParams.AddPrice.AllocationPrice
+                                                .CustomExpiration
+                                                .DurationUnit
+                                                .DAY
+                                        )
+                                        .build()
+                                )
                                 .expiresAtEndOfCadence(true)
                                 .build()
                         )
@@ -471,6 +509,19 @@ internal class SubscriptionCreateParamsTest {
                                         .MONTHLY
                                 )
                                 .currency("USD")
+                                .customExpiration(
+                                    SubscriptionCreateParams.ReplacePrice.AllocationPrice
+                                        .CustomExpiration
+                                        .builder()
+                                        .duration(0L)
+                                        .durationUnit(
+                                            SubscriptionCreateParams.ReplacePrice.AllocationPrice
+                                                .CustomExpiration
+                                                .DurationUnit
+                                                .DAY
+                                        )
+                                        .build()
+                                )
                                 .expiresAtEndOfCadence(true)
                                 .build()
                         )
@@ -592,6 +643,18 @@ internal class SubscriptionCreateParamsTest {
                                 SubscriptionCreateParams.AddPrice.AllocationPrice.Cadence.MONTHLY
                             )
                             .currency("USD")
+                            .customExpiration(
+                                SubscriptionCreateParams.AddPrice.AllocationPrice.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        SubscriptionCreateParams.AddPrice.AllocationPrice
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .expiresAtEndOfCadence(true)
                             .build()
                     )
@@ -754,6 +817,19 @@ internal class SubscriptionCreateParamsTest {
                                     .MONTHLY
                             )
                             .currency("USD")
+                            .customExpiration(
+                                SubscriptionCreateParams.ReplacePrice.AllocationPrice
+                                    .CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        SubscriptionCreateParams.ReplacePrice.AllocationPrice
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .expiresAtEndOfCadence(true)
                             .build()
                     )

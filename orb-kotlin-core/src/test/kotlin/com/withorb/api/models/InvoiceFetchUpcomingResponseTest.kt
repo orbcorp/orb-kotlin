@@ -224,6 +224,16 @@ internal class InvoiceFetchUpcomingResponseTest {
                                     Price.Unit.CreditAllocation.builder()
                                         .allowsRollover(true)
                                         .currency("currency")
+                                        .customExpiration(
+                                            Price.Unit.CreditAllocation.CustomExpiration.builder()
+                                                .duration(0L)
+                                                .durationUnit(
+                                                    Price.Unit.CreditAllocation.CustomExpiration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
+                                                .build()
+                                        )
                                         .build()
                                 )
                                 .currency("currency")
@@ -632,6 +642,16 @@ internal class InvoiceFetchUpcomingResponseTest {
                                 Price.Unit.CreditAllocation.builder()
                                     .allowsRollover(true)
                                     .currency("currency")
+                                    .customExpiration(
+                                        Price.Unit.CreditAllocation.CustomExpiration.builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                Price.Unit.CreditAllocation.CustomExpiration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
                                     .build()
                             )
                             .currency("currency")
@@ -1036,6 +1056,16 @@ internal class InvoiceFetchUpcomingResponseTest {
                                     Price.Unit.CreditAllocation.builder()
                                         .allowsRollover(true)
                                         .currency("currency")
+                                        .customExpiration(
+                                            Price.Unit.CreditAllocation.CustomExpiration.builder()
+                                                .duration(0L)
+                                                .durationUnit(
+                                                    Price.Unit.CreditAllocation.CustomExpiration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
+                                                .build()
+                                        )
                                         .build()
                                 )
                                 .currency("currency")

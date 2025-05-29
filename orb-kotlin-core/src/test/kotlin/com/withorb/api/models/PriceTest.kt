@@ -34,6 +34,14 @@ internal class PriceTest {
                     Price.Unit.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.Unit.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.Unit.CreditAllocation.CustomExpiration.DurationUnit.DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -153,6 +161,15 @@ internal class PriceTest {
                         Price.Unit.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.Unit.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.Unit.CreditAllocation.CustomExpiration.DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -245,6 +262,14 @@ internal class PriceTest {
                     Price.Package.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.Package.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.Package.CreditAllocation.CustomExpiration.DurationUnit.DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -369,6 +394,15 @@ internal class PriceTest {
                         Price.Package.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.Package.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.Package.CreditAllocation.CustomExpiration.DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -468,6 +502,14 @@ internal class PriceTest {
                     Price.Matrix.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.Matrix.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.Matrix.CreditAllocation.CustomExpiration.DurationUnit.DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -598,6 +640,15 @@ internal class PriceTest {
                         Price.Matrix.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.Matrix.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.Matrix.CreditAllocation.CustomExpiration.DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -701,6 +752,14 @@ internal class PriceTest {
                     Price.Tiered.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.Tiered.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.Tiered.CreditAllocation.CustomExpiration.DurationUnit.DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -830,6 +889,15 @@ internal class PriceTest {
                         Price.Tiered.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.Tiered.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.Tiered.CreditAllocation.CustomExpiration.DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -932,6 +1000,15 @@ internal class PriceTest {
                     Price.TieredBps.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.TieredBps.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.TieredBps.CreditAllocation.CustomExpiration.DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -1064,6 +1141,16 @@ internal class PriceTest {
                         Price.TieredBps.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.TieredBps.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.TieredBps.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -1175,6 +1262,14 @@ internal class PriceTest {
                     Price.Bps.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.Bps.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.Bps.CreditAllocation.CustomExpiration.DurationUnit.DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -1299,6 +1394,14 @@ internal class PriceTest {
                         Price.Bps.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.Bps.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.Bps.CreditAllocation.CustomExpiration.DurationUnit.DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -1401,6 +1504,14 @@ internal class PriceTest {
                     Price.BulkBps.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.BulkBps.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.BulkBps.CreditAllocation.CustomExpiration.DurationUnit.DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -1530,6 +1641,15 @@ internal class PriceTest {
                         Price.BulkBps.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.BulkBps.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.BulkBps.CreditAllocation.CustomExpiration.DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -1633,6 +1753,14 @@ internal class PriceTest {
                     Price.Bulk.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.Bulk.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.Bulk.CreditAllocation.CustomExpiration.DurationUnit.DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -1761,6 +1889,15 @@ internal class PriceTest {
                         Price.Bulk.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.Bulk.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.Bulk.CreditAllocation.CustomExpiration.DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -1856,6 +1993,16 @@ internal class PriceTest {
                     Price.ThresholdTotalAmount.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.ThresholdTotalAmount.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.ThresholdTotalAmount.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -1990,6 +2137,17 @@ internal class PriceTest {
                         Price.ThresholdTotalAmount.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.ThresholdTotalAmount.CreditAllocation.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.ThresholdTotalAmount.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -2095,6 +2253,16 @@ internal class PriceTest {
                     Price.TieredPackage.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.TieredPackage.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.TieredPackage.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -2222,6 +2390,16 @@ internal class PriceTest {
                         Price.TieredPackage.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.TieredPackage.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.TieredPackage.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -2322,6 +2500,16 @@ internal class PriceTest {
                     Price.GroupedTiered.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.GroupedTiered.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.GroupedTiered.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -2449,6 +2637,16 @@ internal class PriceTest {
                         Price.GroupedTiered.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.GroupedTiered.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.GroupedTiered.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -2549,6 +2747,16 @@ internal class PriceTest {
                     Price.TieredWithMinimum.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.TieredWithMinimum.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.TieredWithMinimum.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -2678,6 +2886,16 @@ internal class PriceTest {
                         Price.TieredWithMinimum.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.TieredWithMinimum.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.TieredWithMinimum.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -2785,6 +3003,17 @@ internal class PriceTest {
                     Price.TieredPackageWithMinimum.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.TieredPackageWithMinimum.CreditAllocation.CustomExpiration
+                                .builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.TieredPackageWithMinimum.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -2921,6 +3150,18 @@ internal class PriceTest {
                         Price.TieredPackageWithMinimum.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.TieredPackageWithMinimum.CreditAllocation.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.TieredPackageWithMinimum.CreditAllocation
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -3037,6 +3278,16 @@ internal class PriceTest {
                     Price.PackageWithAllocation.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.PackageWithAllocation.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.PackageWithAllocation.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -3171,6 +3422,18 @@ internal class PriceTest {
                         Price.PackageWithAllocation.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.PackageWithAllocation.CreditAllocation.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.PackageWithAllocation.CreditAllocation
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -3280,6 +3543,16 @@ internal class PriceTest {
                     Price.UnitWithPercent.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.UnitWithPercent.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.UnitWithPercent.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -3407,6 +3680,16 @@ internal class PriceTest {
                         Price.UnitWithPercent.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.UnitWithPercent.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.UnitWithPercent.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -3513,6 +3796,16 @@ internal class PriceTest {
                     Price.MatrixWithAllocation.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.MatrixWithAllocation.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.MatrixWithAllocation.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -3656,6 +3949,17 @@ internal class PriceTest {
                         Price.MatrixWithAllocation.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.MatrixWithAllocation.CreditAllocation.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.MatrixWithAllocation.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -3770,6 +4074,16 @@ internal class PriceTest {
                     Price.TieredWithProration.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.TieredWithProration.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.TieredWithProration.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -3903,6 +4217,17 @@ internal class PriceTest {
                         Price.TieredWithProration.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.TieredWithProration.CreditAllocation.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.TieredWithProration.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -4008,6 +4333,16 @@ internal class PriceTest {
                     Price.UnitWithProration.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.UnitWithProration.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.UnitWithProration.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -4137,6 +4472,16 @@ internal class PriceTest {
                         Price.UnitWithProration.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.UnitWithProration.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.UnitWithProration.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -4241,6 +4586,16 @@ internal class PriceTest {
                     Price.GroupedAllocation.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.GroupedAllocation.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.GroupedAllocation.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -4370,6 +4725,16 @@ internal class PriceTest {
                         Price.GroupedAllocation.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.GroupedAllocation.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.GroupedAllocation.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -4477,6 +4842,18 @@ internal class PriceTest {
                     Price.GroupedWithProratedMinimum.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.GroupedWithProratedMinimum.CreditAllocation.CustomExpiration
+                                .builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.GroupedWithProratedMinimum.CreditAllocation
+                                        .CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -4620,6 +4997,18 @@ internal class PriceTest {
                         Price.GroupedWithProratedMinimum.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.GroupedWithProratedMinimum.CreditAllocation.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.GroupedWithProratedMinimum.CreditAllocation
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -4742,6 +5131,18 @@ internal class PriceTest {
                     Price.GroupedWithMeteredMinimum.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.GroupedWithMeteredMinimum.CreditAllocation.CustomExpiration
+                                .builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.GroupedWithMeteredMinimum.CreditAllocation
+                                        .CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -4882,6 +5283,18 @@ internal class PriceTest {
                         Price.GroupedWithMeteredMinimum.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.GroupedWithMeteredMinimum.CreditAllocation.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.GroupedWithMeteredMinimum.CreditAllocation
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -5000,6 +5413,16 @@ internal class PriceTest {
                     Price.MatrixWithDisplayName.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.MatrixWithDisplayName.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.MatrixWithDisplayName.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -5134,6 +5557,18 @@ internal class PriceTest {
                         Price.MatrixWithDisplayName.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.MatrixWithDisplayName.CreditAllocation.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.MatrixWithDisplayName.CreditAllocation
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -5248,6 +5683,16 @@ internal class PriceTest {
                     Price.BulkWithProration.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.BulkWithProration.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.BulkWithProration.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -5377,6 +5822,16 @@ internal class PriceTest {
                         Price.BulkWithProration.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.BulkWithProration.CreditAllocation.CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.BulkWithProration.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -5478,6 +5933,16 @@ internal class PriceTest {
                     Price.GroupedTieredPackage.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.GroupedTieredPackage.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.GroupedTieredPackage.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -5612,6 +6077,17 @@ internal class PriceTest {
                         Price.GroupedTieredPackage.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.GroupedTieredPackage.CreditAllocation.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.GroupedTieredPackage.CreditAllocation.CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -5719,6 +6195,16 @@ internal class PriceTest {
                     Price.MaxGroupTieredPackage.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.MaxGroupTieredPackage.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.MaxGroupTieredPackage.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -5853,6 +6339,18 @@ internal class PriceTest {
                         Price.MaxGroupTieredPackage.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.MaxGroupTieredPackage.CreditAllocation.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.MaxGroupTieredPackage.CreditAllocation
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -5966,6 +6464,18 @@ internal class PriceTest {
                     Price.ScalableMatrixWithUnitPricing.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.ScalableMatrixWithUnitPricing.CreditAllocation.CustomExpiration
+                                .builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.ScalableMatrixWithUnitPricing.CreditAllocation
+                                        .CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -6116,6 +6626,19 @@ internal class PriceTest {
                         Price.ScalableMatrixWithUnitPricing.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.ScalableMatrixWithUnitPricing.CreditAllocation
+                                    .CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.ScalableMatrixWithUnitPricing.CreditAllocation
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -6240,6 +6763,18 @@ internal class PriceTest {
                     Price.ScalableMatrixWithTieredPricing.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.ScalableMatrixWithTieredPricing.CreditAllocation.CustomExpiration
+                                .builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.ScalableMatrixWithTieredPricing.CreditAllocation
+                                        .CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .currency("currency")
@@ -6394,6 +6929,19 @@ internal class PriceTest {
                         Price.ScalableMatrixWithTieredPricing.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.ScalableMatrixWithTieredPricing.CreditAllocation
+                                    .CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.ScalableMatrixWithTieredPricing.CreditAllocation
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .currency("currency")
@@ -6519,6 +7067,16 @@ internal class PriceTest {
                     Price.CumulativeGroupedBulk.CreditAllocation.builder()
                         .allowsRollover(true)
                         .currency("currency")
+                        .customExpiration(
+                            Price.CumulativeGroupedBulk.CreditAllocation.CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(
+                                    Price.CumulativeGroupedBulk.CreditAllocation.CustomExpiration
+                                        .DurationUnit
+                                        .DAY
+                                )
+                                .build()
+                        )
                         .build()
                 )
                 .cumulativeGroupedBulkConfig(
@@ -6653,6 +7211,18 @@ internal class PriceTest {
                         Price.CumulativeGroupedBulk.CreditAllocation.builder()
                             .allowsRollover(true)
                             .currency("currency")
+                            .customExpiration(
+                                Price.CumulativeGroupedBulk.CreditAllocation.CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.CumulativeGroupedBulk.CreditAllocation
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .build()
                     )
                     .cumulativeGroupedBulkConfig(

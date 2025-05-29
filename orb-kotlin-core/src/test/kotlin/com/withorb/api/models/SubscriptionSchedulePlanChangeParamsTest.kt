@@ -42,6 +42,20 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .MONTHLY
                             )
                             .currency("USD")
+                            .customExpiration(
+                                SubscriptionSchedulePlanChangeParams.AddPrice.AllocationPrice
+                                    .CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        SubscriptionSchedulePlanChangeParams.AddPrice
+                                            .AllocationPrice
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .expiresAtEndOfCadence(true)
                             .build()
                     )
@@ -195,6 +209,20 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .MONTHLY
                             )
                             .currency("USD")
+                            .customExpiration(
+                                SubscriptionSchedulePlanChangeParams.ReplacePrice.AllocationPrice
+                                    .CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        SubscriptionSchedulePlanChangeParams.ReplacePrice
+                                            .AllocationPrice
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .expiresAtEndOfCadence(true)
                             .build()
                     )
@@ -338,6 +366,20 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                         .MONTHLY
                                 )
                                 .currency("USD")
+                                .customExpiration(
+                                    SubscriptionSchedulePlanChangeParams.AddPrice.AllocationPrice
+                                        .CustomExpiration
+                                        .builder()
+                                        .duration(0L)
+                                        .durationUnit(
+                                            SubscriptionSchedulePlanChangeParams.AddPrice
+                                                .AllocationPrice
+                                                .CustomExpiration
+                                                .DurationUnit
+                                                .DAY
+                                        )
+                                        .build()
+                                )
                                 .expiresAtEndOfCadence(true)
                                 .build()
                         )
@@ -496,6 +538,21 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                         .MONTHLY
                                 )
                                 .currency("USD")
+                                .customExpiration(
+                                    SubscriptionSchedulePlanChangeParams.ReplacePrice
+                                        .AllocationPrice
+                                        .CustomExpiration
+                                        .builder()
+                                        .duration(0L)
+                                        .durationUnit(
+                                            SubscriptionSchedulePlanChangeParams.ReplacePrice
+                                                .AllocationPrice
+                                                .CustomExpiration
+                                                .DurationUnit
+                                                .DAY
+                                        )
+                                        .build()
+                                )
                                 .expiresAtEndOfCadence(true)
                                 .build()
                         )
@@ -628,6 +685,20 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .MONTHLY
                             )
                             .currency("USD")
+                            .customExpiration(
+                                SubscriptionSchedulePlanChangeParams.AddPrice.AllocationPrice
+                                    .CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        SubscriptionSchedulePlanChangeParams.AddPrice
+                                            .AllocationPrice
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .expiresAtEndOfCadence(true)
                             .build()
                     )
@@ -785,6 +856,20 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .MONTHLY
                             )
                             .currency("USD")
+                            .customExpiration(
+                                SubscriptionSchedulePlanChangeParams.ReplacePrice.AllocationPrice
+                                    .CustomExpiration
+                                    .builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        SubscriptionSchedulePlanChangeParams.ReplacePrice
+                                            .AllocationPrice
+                                            .CustomExpiration
+                                            .DurationUnit
+                                            .DAY
+                                    )
+                                    .build()
+                            )
                             .expiresAtEndOfCadence(true)
                             .build()
                     )
