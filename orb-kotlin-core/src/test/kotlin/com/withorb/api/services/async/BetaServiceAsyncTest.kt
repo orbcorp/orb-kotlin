@@ -53,6 +53,19 @@ internal class BetaServiceAsyncTest {
                                             .MONTHLY
                                     )
                                     .currency("USD")
+                                    .customExpiration(
+                                        BetaCreatePlanVersionParams.AddPrice.AllocationPrice
+                                            .CustomExpiration
+                                            .builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                BetaCreatePlanVersionParams.AddPrice.AllocationPrice
+                                                    .CustomExpiration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
                                     .expiresAtEndOfCadence(true)
                                     .build()
                             )
@@ -165,6 +178,20 @@ internal class BetaServiceAsyncTest {
                                             .MONTHLY
                                     )
                                     .currency("USD")
+                                    .customExpiration(
+                                        BetaCreatePlanVersionParams.ReplacePrice.AllocationPrice
+                                            .CustomExpiration
+                                            .builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                BetaCreatePlanVersionParams.ReplacePrice
+                                                    .AllocationPrice
+                                                    .CustomExpiration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
                                     .expiresAtEndOfCadence(true)
                                     .build()
                             )
