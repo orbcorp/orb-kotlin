@@ -506,8 +506,9 @@ private constructor(
         fun memo(): String? = memo.getNullable("memo")
 
         /**
-         * If true, new credit blocks created by this top-up will require that the corresponding
-         * invoice is paid before they can be drawn down from.
+         * When true, credit blocks created by this top-up will require that the corresponding
+         * invoice is paid before they are drawn down from. If any topup block is pending payment,
+         * further automatic top-ups will be paused until the invoice is paid or voided.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -638,8 +639,10 @@ private constructor(
             fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
             /**
-             * If true, new credit blocks created by this top-up will require that the corresponding
-             * invoice is paid before they can be drawn down from.
+             * When true, credit blocks created by this top-up will require that the corresponding
+             * invoice is paid before they are drawn down from. If any topup block is pending
+             * payment, further automatic top-ups will be paused until the invoice is paid or
+             * voided.
              */
             fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean) =
                 requireSuccessfulPayment(JsonField.of(requireSuccessfulPayment))

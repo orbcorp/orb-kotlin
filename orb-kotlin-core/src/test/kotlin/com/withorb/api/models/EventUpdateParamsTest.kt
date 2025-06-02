@@ -14,7 +14,11 @@ internal class EventUpdateParamsTest {
         EventUpdateParams.builder()
             .eventId("event_id")
             .eventName("event_name")
-            .properties(JsonValue.from(mapOf<String, Any>()))
+            .properties(
+                EventUpdateParams.Properties.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .build()
+            )
             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
             .customerId("customer_id")
             .externalCustomerId("external_customer_id")
@@ -27,7 +31,11 @@ internal class EventUpdateParamsTest {
             EventUpdateParams.builder()
                 .eventId("event_id")
                 .eventName("event_name")
-                .properties(JsonValue.from(mapOf<String, Any>()))
+                .properties(
+                    EventUpdateParams.Properties.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
                 .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                 .build()
 
@@ -42,7 +50,11 @@ internal class EventUpdateParamsTest {
             EventUpdateParams.builder()
                 .eventId("event_id")
                 .eventName("event_name")
-                .properties(JsonValue.from(mapOf<String, Any>()))
+                .properties(
+                    EventUpdateParams.Properties.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
                 .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                 .customerId("customer_id")
                 .externalCustomerId("external_customer_id")
@@ -51,7 +63,12 @@ internal class EventUpdateParamsTest {
         val body = params._body()
 
         assertThat(body.eventName()).isEqualTo("event_name")
-        assertThat(body._properties()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
+        assertThat(body.properties())
+            .isEqualTo(
+                EventUpdateParams.Properties.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .build()
+            )
         assertThat(body.timestamp()).isEqualTo(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
         assertThat(body.customerId()).isEqualTo("customer_id")
         assertThat(body.externalCustomerId()).isEqualTo("external_customer_id")
@@ -63,14 +80,23 @@ internal class EventUpdateParamsTest {
             EventUpdateParams.builder()
                 .eventId("event_id")
                 .eventName("event_name")
-                .properties(JsonValue.from(mapOf<String, Any>()))
+                .properties(
+                    EventUpdateParams.Properties.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
                 .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                 .build()
 
         val body = params._body()
 
         assertThat(body.eventName()).isEqualTo("event_name")
-        assertThat(body._properties()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
+        assertThat(body.properties())
+            .isEqualTo(
+                EventUpdateParams.Properties.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .build()
+            )
         assertThat(body.timestamp()).isEqualTo(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
     }
 }

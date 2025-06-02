@@ -10,6 +10,7 @@ import com.withorb.api.models.SubscriptionCreateParams
 import com.withorb.api.models.SubscriptionFetchCostsParams
 import com.withorb.api.models.SubscriptionFetchUsageParams
 import com.withorb.api.models.SubscriptionPriceIntervalsParams
+import com.withorb.api.models.SubscriptionRedeemCouponParams
 import com.withorb.api.models.SubscriptionSchedulePlanChangeParams
 import com.withorb.api.models.SubscriptionTriggerPhaseParams
 import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
@@ -658,6 +659,29 @@ internal class SubscriptionServiceTest {
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
+                    .build()
+            )
+
+        response.validate()
+    }
+
+    @Test
+    fun redeemCoupon() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val subscriptionService = client.subscriptions()
+
+        val response =
+            subscriptionService.redeemCoupon(
+                SubscriptionRedeemCouponParams.builder()
+                    .subscriptionId("subscription_id")
+                    .changeOption(SubscriptionRedeemCouponParams.ChangeOption.REQUESTED_DATE)
+                    .couponId("coupon_id")
+                    .allowInvoiceCreditOrVoid(true)
+                    .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                     .build()
             )
 

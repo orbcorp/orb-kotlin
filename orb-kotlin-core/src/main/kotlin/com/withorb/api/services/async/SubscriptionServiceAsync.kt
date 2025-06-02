@@ -20,6 +20,8 @@ import com.withorb.api.models.SubscriptionListPageAsync
 import com.withorb.api.models.SubscriptionListParams
 import com.withorb.api.models.SubscriptionPriceIntervalsParams
 import com.withorb.api.models.SubscriptionPriceIntervalsResponse
+import com.withorb.api.models.SubscriptionRedeemCouponParams
+import com.withorb.api.models.SubscriptionRedeemCouponResponse
 import com.withorb.api.models.SubscriptionSchedulePlanChangeParams
 import com.withorb.api.models.SubscriptionSchedulePlanChangeResponse
 import com.withorb.api.models.SubscriptionTriggerPhaseParams
@@ -758,6 +760,20 @@ interface SubscriptionServiceAsync {
     ): SubscriptionPriceIntervalsResponse =
         priceIntervals(subscriptionId, SubscriptionPriceIntervalsParams.none(), requestOptions)
 
+    /** Redeem a coupon effective at a given time. */
+    suspend fun redeemCoupon(
+        subscriptionId: String,
+        params: SubscriptionRedeemCouponParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionRedeemCouponResponse =
+        redeemCoupon(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+    /** @see [redeemCoupon] */
+    suspend fun redeemCoupon(
+        params: SubscriptionRedeemCouponParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionRedeemCouponResponse
+
     /**
      * This endpoint can be used to change an existing subscription's plan. It returns the
      * serialized updated subscription object.
@@ -1335,6 +1351,25 @@ interface SubscriptionServiceAsync {
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionPriceIntervalsResponse> =
             priceIntervals(subscriptionId, SubscriptionPriceIntervalsParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /subscriptions/{subscription_id}/redeem_coupon`,
+         * but is otherwise the same as [SubscriptionServiceAsync.redeemCoupon].
+         */
+        @MustBeClosed
+        suspend fun redeemCoupon(
+            subscriptionId: String,
+            params: SubscriptionRedeemCouponParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionRedeemCouponResponse> =
+            redeemCoupon(params.toBuilder().subscriptionId(subscriptionId).build(), requestOptions)
+
+        /** @see [redeemCoupon] */
+        @MustBeClosed
+        suspend fun redeemCoupon(
+            params: SubscriptionRedeemCouponParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionRedeemCouponResponse>
 
         /**
          * Returns a raw HTTP response for `post
