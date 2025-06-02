@@ -18,7 +18,11 @@ internal class PriceEvaluateMultipleParamsTest {
             .addEvent(
                 PriceEvaluateMultipleParams.Event.builder()
                     .eventName("event_name")
-                    .properties(JsonValue.from(mapOf<String, Any>()))
+                    .properties(
+                        PriceEvaluateMultipleParams.Event.Properties.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
                     .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                     .customerId("customer_id")
                     .externalCustomerId("external_customer_id")
@@ -111,7 +115,11 @@ internal class PriceEvaluateMultipleParamsTest {
                 .addEvent(
                     PriceEvaluateMultipleParams.Event.builder()
                         .eventName("event_name")
-                        .properties(JsonValue.from(mapOf<String, Any>()))
+                        .properties(
+                            PriceEvaluateMultipleParams.Event.Properties.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                .build()
+                        )
                         .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                         .customerId("customer_id")
                         .externalCustomerId("external_customer_id")
@@ -204,7 +212,11 @@ internal class PriceEvaluateMultipleParamsTest {
             .containsExactly(
                 PriceEvaluateMultipleParams.Event.builder()
                     .eventName("event_name")
-                    .properties(JsonValue.from(mapOf<String, Any>()))
+                    .properties(
+                        PriceEvaluateMultipleParams.Event.Properties.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
                     .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                     .customerId("customer_id")
                     .externalCustomerId("external_customer_id")

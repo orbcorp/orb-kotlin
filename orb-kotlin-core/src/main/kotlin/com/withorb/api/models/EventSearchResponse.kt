@@ -178,7 +178,7 @@ private constructor(
         private val deprecated: JsonField<Boolean>,
         private val eventName: JsonField<String>,
         private val externalCustomerId: JsonField<String>,
-        private val properties: JsonValue,
+        private val properties: JsonField<Properties>,
         private val timestamp: JsonField<OffsetDateTime>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -198,7 +198,9 @@ private constructor(
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             externalCustomerId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("properties") @ExcludeMissing properties: JsonValue = JsonMissing.of(),
+            @JsonProperty("properties")
+            @ExcludeMissing
+            properties: JsonField<Properties> = JsonMissing.of(),
             @JsonProperty("timestamp")
             @ExcludeMissing
             timestamp: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -258,8 +260,11 @@ private constructor(
         /**
          * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
          * strings. Nested dictionaries are disallowed.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        @JsonProperty("properties") @ExcludeMissing fun _properties(): JsonValue = properties
+        fun properties(): Properties = properties.getRequired("properties")
 
         /**
          * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
@@ -314,6 +319,15 @@ private constructor(
         fun _externalCustomerId(): JsonField<String> = externalCustomerId
 
         /**
+         * Returns the raw JSON value of [properties].
+         *
+         * Unlike [properties], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("properties")
+        @ExcludeMissing
+        fun _properties(): JsonField<Properties> = properties
+
+        /**
          * Returns the raw JSON value of [timestamp].
          *
          * Unlike [timestamp], this method doesn't throw if the JSON field has an unexpected type.
@@ -361,7 +375,7 @@ private constructor(
             private var deprecated: JsonField<Boolean>? = null
             private var eventName: JsonField<String>? = null
             private var externalCustomerId: JsonField<String>? = null
-            private var properties: JsonValue? = null
+            private var properties: JsonField<Properties>? = null
             private var timestamp: JsonField<OffsetDateTime>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -449,7 +463,18 @@ private constructor(
              * A dictionary of custom properties. Values in this dictionary must be numeric,
              * boolean, or strings. Nested dictionaries are disallowed.
              */
-            fun properties(properties: JsonValue) = apply { this.properties = properties }
+            fun properties(properties: Properties) = properties(JsonField.of(properties))
+
+            /**
+             * Sets [Builder.properties] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.properties] with a well-typed [Properties] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun properties(properties: JsonField<Properties>) = apply {
+                this.properties = properties
+            }
 
             /**
              * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
@@ -531,6 +556,7 @@ private constructor(
             deprecated()
             eventName()
             externalCustomerId()
+            properties().validate()
             timestamp()
             validated = true
         }
@@ -555,7 +581,114 @@ private constructor(
                 (if (deprecated.asKnown() == null) 0 else 1) +
                 (if (eventName.asKnown() == null) 0 else 1) +
                 (if (externalCustomerId.asKnown() == null) 0 else 1) +
+                (properties.asKnown()?.validity() ?: 0) +
                 (if (timestamp.asKnown() == null) 0 else 1)
+
+        /**
+         * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
+         * strings. Nested dictionaries are disallowed.
+         */
+        class Properties
+        @JsonCreator
+        private constructor(
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
+        ) {
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /** Returns a mutable builder for constructing an instance of [Properties]. */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Properties]. */
+            class Builder internal constructor() {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(properties: Properties) = apply {
+                    additionalProperties = properties.additionalProperties.toMutableMap()
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [Properties].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): Properties = Properties(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Properties = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Properties && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() = "Properties{additionalProperties=$additionalProperties}"
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
