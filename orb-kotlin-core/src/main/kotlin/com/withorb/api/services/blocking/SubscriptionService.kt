@@ -1035,6 +1035,7 @@ interface SubscriptionService {
 
     /**
      * This endpoint can be used to unschedule any pending plan changes on an existing subscription.
+     * When called, all upcoming plan changes will be unscheduled.
      */
     fun unschedulePendingPlanChanges(
         subscriptionId: String,
