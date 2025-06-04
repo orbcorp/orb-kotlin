@@ -122,9 +122,46 @@ internal class SubscriptionPriceIntervalsParamsTest {
                         SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment.PercentageDiscount
                             .builder()
                             .percentageDiscount(0.0)
+                            .appliesToAll(
+                                SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                    .PercentageDiscount
+                                    .AppliesToAll
+                                    .TRUE
+                            )
+                            .addAppliesToItemId("item_1")
+                            .addAppliesToItemId("item_2")
                             .addAppliesToPriceId("price_1")
                             .addAppliesToPriceId("price_2")
+                            .currency("currency")
+                            .addFilter(
+                                SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                    .PercentageDiscount
+                                    .Filter
+                                    .builder()
+                                    .field(
+                                        SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                            .PercentageDiscount
+                                            .Filter
+                                            .Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                            .PercentageDiscount
+                                            .Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .isInvoiceLevel(true)
+                            .priceType(
+                                SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                    .PercentageDiscount
+                                    .PriceType
+                                    .USAGE
+                            )
                             .build()
                     )
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -289,9 +326,48 @@ internal class SubscriptionPriceIntervalsParamsTest {
                                 .PercentageDiscount
                                 .builder()
                                 .percentageDiscount(0.0)
+                                .appliesToAll(
+                                    SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                        .PercentageDiscount
+                                        .AppliesToAll
+                                        .TRUE
+                                )
+                                .addAppliesToItemId("item_1")
+                                .addAppliesToItemId("item_2")
                                 .addAppliesToPriceId("price_1")
                                 .addAppliesToPriceId("price_2")
+                                .currency("currency")
+                                .addFilter(
+                                    SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                        .PercentageDiscount
+                                        .Filter
+                                        .builder()
+                                        .field(
+                                            SubscriptionPriceIntervalsParams.AddAdjustment
+                                                .Adjustment
+                                                .PercentageDiscount
+                                                .Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            SubscriptionPriceIntervalsParams.AddAdjustment
+                                                .Adjustment
+                                                .PercentageDiscount
+                                                .Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .isInvoiceLevel(true)
+                                .priceType(
+                                    SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                        .PercentageDiscount
+                                        .PriceType
+                                        .USAGE
+                                )
                                 .build()
                         )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -438,9 +514,46 @@ internal class SubscriptionPriceIntervalsParamsTest {
                         SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment.PercentageDiscount
                             .builder()
                             .percentageDiscount(0.0)
+                            .appliesToAll(
+                                SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                    .PercentageDiscount
+                                    .AppliesToAll
+                                    .TRUE
+                            )
+                            .addAppliesToItemId("item_1")
+                            .addAppliesToItemId("item_2")
                             .addAppliesToPriceId("price_1")
                             .addAppliesToPriceId("price_2")
+                            .currency("currency")
+                            .addFilter(
+                                SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                    .PercentageDiscount
+                                    .Filter
+                                    .builder()
+                                    .field(
+                                        SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                            .PercentageDiscount
+                                            .Filter
+                                            .Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                            .PercentageDiscount
+                                            .Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .isInvoiceLevel(true)
+                            .priceType(
+                                SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                    .PercentageDiscount
+                                    .PriceType
+                                    .USAGE
+                            )
                             .build()
                     )
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
