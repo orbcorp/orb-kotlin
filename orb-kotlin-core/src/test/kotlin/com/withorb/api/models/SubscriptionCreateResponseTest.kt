@@ -279,6 +279,13 @@ internal class SubscriptionCreateResponseTest {
                                 .percentageDiscount(0.15)
                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                .addFilter(
+                                    PercentageDiscount.Filter.builder()
+                                        .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                        .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .reason("reason")
                                 .build()
                         )
@@ -329,6 +336,15 @@ internal class SubscriptionCreateResponseTest {
                                         .percentageDiscount(0.15)
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .addFilter(
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .reason("reason")
                                         .build()
                                 )
@@ -410,6 +426,15 @@ internal class SubscriptionCreateResponseTest {
                                         .percentageDiscount(0.15)
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .addFilter(
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .reason("reason")
                                         .build()
                                 )
@@ -554,6 +579,15 @@ internal class SubscriptionCreateResponseTest {
                                         .percentageDiscount(0.15)
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .addFilter(
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .reason("reason")
                                         .build()
                                 )
@@ -813,6 +847,15 @@ internal class SubscriptionCreateResponseTest {
                                         .percentageDiscount(0.15)
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .addFilter(
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .reason("reason")
                                         .build()
                                 )
@@ -871,6 +914,18 @@ internal class SubscriptionCreateResponseTest {
                                                 .percentageDiscount(0.15)
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                .addFilter(
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -971,6 +1026,20 @@ internal class SubscriptionCreateResponseTest {
                                                         .percentageDiscount(0.15)
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                        .addFilter(
+                                                            PercentageDiscount.Filter.builder()
+                                                                .field(
+                                                                    PercentageDiscount.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .reason("reason")
                                                         .build()
                                                 )
@@ -1339,6 +1408,15 @@ internal class SubscriptionCreateResponseTest {
                                         .percentageDiscount(0.15)
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .addFilter(
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .reason("reason")
                                         .build()
                                 )
@@ -1397,6 +1475,18 @@ internal class SubscriptionCreateResponseTest {
                                                 .percentageDiscount(0.15)
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                .addFilter(
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -1497,6 +1587,20 @@ internal class SubscriptionCreateResponseTest {
                                                         .percentageDiscount(0.15)
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                        .addFilter(
+                                                            PercentageDiscount.Filter.builder()
+                                                                .field(
+                                                                    PercentageDiscount.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .reason("reason")
                                                         .build()
                                                 )
@@ -1971,6 +2075,13 @@ internal class SubscriptionCreateResponseTest {
                             .percentageDiscount(0.15)
                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .addFilter(
+                                PercentageDiscount.Filter.builder()
+                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                    .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .reason("reason")
                             .build()
                     )
@@ -2021,6 +2132,13 @@ internal class SubscriptionCreateResponseTest {
                                     .percentageDiscount(0.15)
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                    .addFilter(
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .reason("reason")
                                     .build()
                             )
@@ -2100,6 +2218,13 @@ internal class SubscriptionCreateResponseTest {
                                     .percentageDiscount(0.15)
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                    .addFilter(
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .reason("reason")
                                     .build()
                             )
@@ -2233,6 +2358,13 @@ internal class SubscriptionCreateResponseTest {
                                     .percentageDiscount(0.15)
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                    .addFilter(
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .reason("reason")
                                     .build()
                             )
@@ -2482,6 +2614,13 @@ internal class SubscriptionCreateResponseTest {
                                     .percentageDiscount(0.15)
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                    .addFilter(
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .reason("reason")
                                     .build()
                             )
@@ -2538,6 +2677,15 @@ internal class SubscriptionCreateResponseTest {
                                             .percentageDiscount(0.15)
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                            .addFilter(
+                                                PercentageDiscount.Filter.builder()
+                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                    .operator(
+                                                        PercentageDiscount.Filter.Operator.INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .reason("reason")
                                             .build()
                                     )
@@ -2634,6 +2782,19 @@ internal class SubscriptionCreateResponseTest {
                                                     .percentageDiscount(0.15)
                                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                    .addFilter(
+                                                        PercentageDiscount.Filter.builder()
+                                                            .field(
+                                                                PercentageDiscount.Filter.Field
+                                                                    .PRICE_ID
+                                                            )
+                                                            .operator(
+                                                                PercentageDiscount.Filter.Operator
+                                                                    .INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .reason("reason")
                                                     .build()
                                             )
@@ -2986,6 +3147,13 @@ internal class SubscriptionCreateResponseTest {
                                     .percentageDiscount(0.15)
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                    .addFilter(
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .reason("reason")
                                     .build()
                             )
@@ -3042,6 +3210,15 @@ internal class SubscriptionCreateResponseTest {
                                             .percentageDiscount(0.15)
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                            .addFilter(
+                                                PercentageDiscount.Filter.builder()
+                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                    .operator(
+                                                        PercentageDiscount.Filter.Operator.INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .reason("reason")
                                             .build()
                                     )
@@ -3138,6 +3315,19 @@ internal class SubscriptionCreateResponseTest {
                                                     .percentageDiscount(0.15)
                                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                    .addFilter(
+                                                        PercentageDiscount.Filter.builder()
+                                                            .field(
+                                                                PercentageDiscount.Filter.Field
+                                                                    .PRICE_ID
+                                                            )
+                                                            .operator(
+                                                                PercentageDiscount.Filter.Operator
+                                                                    .INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .reason("reason")
                                                     .build()
                                             )
@@ -3600,6 +3790,13 @@ internal class SubscriptionCreateResponseTest {
                                 .percentageDiscount(0.15)
                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                .addFilter(
+                                    PercentageDiscount.Filter.builder()
+                                        .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                        .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .reason("reason")
                                 .build()
                         )
@@ -3650,6 +3847,15 @@ internal class SubscriptionCreateResponseTest {
                                         .percentageDiscount(0.15)
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .addFilter(
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .reason("reason")
                                         .build()
                                 )
@@ -3731,6 +3937,15 @@ internal class SubscriptionCreateResponseTest {
                                         .percentageDiscount(0.15)
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .addFilter(
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .reason("reason")
                                         .build()
                                 )
@@ -3875,6 +4090,15 @@ internal class SubscriptionCreateResponseTest {
                                         .percentageDiscount(0.15)
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .addFilter(
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .reason("reason")
                                         .build()
                                 )
@@ -4134,6 +4358,15 @@ internal class SubscriptionCreateResponseTest {
                                         .percentageDiscount(0.15)
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .addFilter(
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .reason("reason")
                                         .build()
                                 )
@@ -4192,6 +4425,18 @@ internal class SubscriptionCreateResponseTest {
                                                 .percentageDiscount(0.15)
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                .addFilter(
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -4292,6 +4537,20 @@ internal class SubscriptionCreateResponseTest {
                                                         .percentageDiscount(0.15)
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                        .addFilter(
+                                                            PercentageDiscount.Filter.builder()
+                                                                .field(
+                                                                    PercentageDiscount.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .reason("reason")
                                                         .build()
                                                 )
@@ -4660,6 +4919,15 @@ internal class SubscriptionCreateResponseTest {
                                         .percentageDiscount(0.15)
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .addFilter(
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .reason("reason")
                                         .build()
                                 )
@@ -4718,6 +4986,18 @@ internal class SubscriptionCreateResponseTest {
                                                 .percentageDiscount(0.15)
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                .addFilter(
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
+                                                        .operator(
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .reason("reason")
                                                 .build()
                                         )
@@ -4818,6 +5098,20 @@ internal class SubscriptionCreateResponseTest {
                                                         .percentageDiscount(0.15)
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                        .addFilter(
+                                                            PercentageDiscount.Filter.builder()
+                                                                .field(
+                                                                    PercentageDiscount.Filter.Field
+                                                                        .PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .reason("reason")
                                                         .build()
                                                 )
