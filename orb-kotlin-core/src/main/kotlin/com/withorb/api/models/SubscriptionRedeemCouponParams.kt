@@ -38,14 +38,6 @@ private constructor(
     fun changeOption(): ChangeOption = body.changeOption()
 
     /**
-     * Coupon ID to be redeemed for this subscription.
-     *
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun couponId(): String = body.couponId()
-
-    /**
      * If false, this request will fail if it would void an issued invoice or create a credit note.
      * Consider using this as a safety mechanism if you do not expect existing invoices to be
      * changed.
@@ -65,18 +57,27 @@ private constructor(
     fun changeDate(): OffsetDateTime? = body.changeDate()
 
     /**
+     * Coupon ID to be redeemed for this subscription.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun couponId(): String? = body.couponId()
+
+    /**
+     * Redemption code of the coupon to be redeemed for this subscription.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun couponRedemptionCode(): String? = body.couponRedemptionCode()
+
+    /**
      * Returns the raw JSON value of [changeOption].
      *
      * Unlike [changeOption], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _changeOption(): JsonField<ChangeOption> = body._changeOption()
-
-    /**
-     * Returns the raw JSON value of [couponId].
-     *
-     * Unlike [couponId], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _couponId(): JsonField<String> = body._couponId()
 
     /**
      * Returns the raw JSON value of [allowInvoiceCreditOrVoid].
@@ -92,6 +93,21 @@ private constructor(
      * Unlike [changeDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _changeDate(): JsonField<OffsetDateTime> = body._changeDate()
+
+    /**
+     * Returns the raw JSON value of [couponId].
+     *
+     * Unlike [couponId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _couponId(): JsonField<String> = body._couponId()
+
+    /**
+     * Returns the raw JSON value of [couponRedemptionCode].
+     *
+     * Unlike [couponRedemptionCode], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _couponRedemptionCode(): JsonField<String> = body._couponRedemptionCode()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
@@ -110,7 +126,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .changeOption()
-         * .couponId()
          * ```
          */
         fun builder() = Builder()
@@ -139,9 +154,11 @@ private constructor(
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
          * - [changeOption]
-         * - [couponId]
          * - [allowInvoiceCreditOrVoid]
          * - [changeDate]
+         * - [couponId]
+         * - [couponRedemptionCode]
+         * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
 
@@ -157,17 +174,6 @@ private constructor(
         fun changeOption(changeOption: JsonField<ChangeOption>) = apply {
             body.changeOption(changeOption)
         }
-
-        /** Coupon ID to be redeemed for this subscription. */
-        fun couponId(couponId: String) = apply { body.couponId(couponId) }
-
-        /**
-         * Sets [Builder.couponId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.couponId] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun couponId(couponId: JsonField<String>) = apply { body.couponId(couponId) }
 
         /**
          * If false, this request will fail if it would void an issued invoice or create a credit
@@ -212,6 +218,33 @@ private constructor(
          */
         fun changeDate(changeDate: JsonField<OffsetDateTime>) = apply {
             body.changeDate(changeDate)
+        }
+
+        /** Coupon ID to be redeemed for this subscription. */
+        fun couponId(couponId: String?) = apply { body.couponId(couponId) }
+
+        /**
+         * Sets [Builder.couponId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.couponId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun couponId(couponId: JsonField<String>) = apply { body.couponId(couponId) }
+
+        /** Redemption code of the coupon to be redeemed for this subscription. */
+        fun couponRedemptionCode(couponRedemptionCode: String?) = apply {
+            body.couponRedemptionCode(couponRedemptionCode)
+        }
+
+        /**
+         * Sets [Builder.couponRedemptionCode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.couponRedemptionCode] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun couponRedemptionCode(couponRedemptionCode: JsonField<String>) = apply {
+            body.couponRedemptionCode(couponRedemptionCode)
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
@@ -339,7 +372,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .changeOption()
-         * .couponId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -368,9 +400,10 @@ private constructor(
     class Body
     private constructor(
         private val changeOption: JsonField<ChangeOption>,
-        private val couponId: JsonField<String>,
         private val allowInvoiceCreditOrVoid: JsonField<Boolean>,
         private val changeDate: JsonField<OffsetDateTime>,
+        private val couponId: JsonField<String>,
+        private val couponRedemptionCode: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -379,30 +412,32 @@ private constructor(
             @JsonProperty("change_option")
             @ExcludeMissing
             changeOption: JsonField<ChangeOption> = JsonMissing.of(),
-            @JsonProperty("coupon_id")
-            @ExcludeMissing
-            couponId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("allow_invoice_credit_or_void")
             @ExcludeMissing
             allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("change_date")
             @ExcludeMissing
             changeDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        ) : this(changeOption, couponId, allowInvoiceCreditOrVoid, changeDate, mutableMapOf())
+            @JsonProperty("coupon_id")
+            @ExcludeMissing
+            couponId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("coupon_redemption_code")
+            @ExcludeMissing
+            couponRedemptionCode: JsonField<String> = JsonMissing.of(),
+        ) : this(
+            changeOption,
+            allowInvoiceCreditOrVoid,
+            changeDate,
+            couponId,
+            couponRedemptionCode,
+            mutableMapOf(),
+        )
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun changeOption(): ChangeOption = changeOption.getRequired("change_option")
-
-        /**
-         * Coupon ID to be redeemed for this subscription.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun couponId(): String = couponId.getRequired("coupon_id")
 
         /**
          * If false, this request will fail if it would void an issued invoice or create a credit
@@ -425,6 +460,23 @@ private constructor(
         fun changeDate(): OffsetDateTime? = changeDate.getNullable("change_date")
 
         /**
+         * Coupon ID to be redeemed for this subscription.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun couponId(): String? = couponId.getNullable("coupon_id")
+
+        /**
+         * Redemption code of the coupon to be redeemed for this subscription.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun couponRedemptionCode(): String? =
+            couponRedemptionCode.getNullable("coupon_redemption_code")
+
+        /**
          * Returns the raw JSON value of [changeOption].
          *
          * Unlike [changeOption], this method doesn't throw if the JSON field has an unexpected
@@ -433,13 +485,6 @@ private constructor(
         @JsonProperty("change_option")
         @ExcludeMissing
         fun _changeOption(): JsonField<ChangeOption> = changeOption
-
-        /**
-         * Returns the raw JSON value of [couponId].
-         *
-         * Unlike [couponId], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("coupon_id") @ExcludeMissing fun _couponId(): JsonField<String> = couponId
 
         /**
          * Returns the raw JSON value of [allowInvoiceCreditOrVoid].
@@ -459,6 +504,23 @@ private constructor(
         @JsonProperty("change_date")
         @ExcludeMissing
         fun _changeDate(): JsonField<OffsetDateTime> = changeDate
+
+        /**
+         * Returns the raw JSON value of [couponId].
+         *
+         * Unlike [couponId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("coupon_id") @ExcludeMissing fun _couponId(): JsonField<String> = couponId
+
+        /**
+         * Returns the raw JSON value of [couponRedemptionCode].
+         *
+         * Unlike [couponRedemptionCode], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("coupon_redemption_code")
+        @ExcludeMissing
+        fun _couponRedemptionCode(): JsonField<String> = couponRedemptionCode
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -480,7 +542,6 @@ private constructor(
              * The following fields are required:
              * ```kotlin
              * .changeOption()
-             * .couponId()
              * ```
              */
             fun builder() = Builder()
@@ -490,16 +551,18 @@ private constructor(
         class Builder internal constructor() {
 
             private var changeOption: JsonField<ChangeOption>? = null
-            private var couponId: JsonField<String>? = null
             private var allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of()
             private var changeDate: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var couponId: JsonField<String> = JsonMissing.of()
+            private var couponRedemptionCode: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
                 changeOption = body.changeOption
-                couponId = body.couponId
                 allowInvoiceCreditOrVoid = body.allowInvoiceCreditOrVoid
                 changeDate = body.changeDate
+                couponId = body.couponId
+                couponRedemptionCode = body.couponRedemptionCode
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
 
@@ -515,18 +578,6 @@ private constructor(
             fun changeOption(changeOption: JsonField<ChangeOption>) = apply {
                 this.changeOption = changeOption
             }
-
-            /** Coupon ID to be redeemed for this subscription. */
-            fun couponId(couponId: String) = couponId(JsonField.of(couponId))
-
-            /**
-             * Sets [Builder.couponId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.couponId] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun couponId(couponId: JsonField<String>) = apply { this.couponId = couponId }
 
             /**
              * If false, this request will fail if it would void an issued invoice or create a
@@ -573,6 +624,33 @@ private constructor(
                 this.changeDate = changeDate
             }
 
+            /** Coupon ID to be redeemed for this subscription. */
+            fun couponId(couponId: String?) = couponId(JsonField.ofNullable(couponId))
+
+            /**
+             * Sets [Builder.couponId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.couponId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun couponId(couponId: JsonField<String>) = apply { this.couponId = couponId }
+
+            /** Redemption code of the coupon to be redeemed for this subscription. */
+            fun couponRedemptionCode(couponRedemptionCode: String?) =
+                couponRedemptionCode(JsonField.ofNullable(couponRedemptionCode))
+
+            /**
+             * Sets [Builder.couponRedemptionCode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.couponRedemptionCode] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun couponRedemptionCode(couponRedemptionCode: JsonField<String>) = apply {
+                this.couponRedemptionCode = couponRedemptionCode
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -600,7 +678,6 @@ private constructor(
              * The following fields are required:
              * ```kotlin
              * .changeOption()
-             * .couponId()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
@@ -608,9 +685,10 @@ private constructor(
             fun build(): Body =
                 Body(
                     checkRequired("changeOption", changeOption),
-                    checkRequired("couponId", couponId),
                     allowInvoiceCreditOrVoid,
                     changeDate,
+                    couponId,
+                    couponRedemptionCode,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -623,9 +701,10 @@ private constructor(
             }
 
             changeOption().validate()
-            couponId()
             allowInvoiceCreditOrVoid()
             changeDate()
+            couponId()
+            couponRedemptionCode()
             validated = true
         }
 
@@ -645,26 +724,27 @@ private constructor(
          */
         internal fun validity(): Int =
             (changeOption.asKnown()?.validity() ?: 0) +
-                (if (couponId.asKnown() == null) 0 else 1) +
                 (if (allowInvoiceCreditOrVoid.asKnown() == null) 0 else 1) +
-                (if (changeDate.asKnown() == null) 0 else 1)
+                (if (changeDate.asKnown() == null) 0 else 1) +
+                (if (couponId.asKnown() == null) 0 else 1) +
+                (if (couponRedemptionCode.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is Body && changeOption == other.changeOption && couponId == other.couponId && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && changeDate == other.changeDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && changeOption == other.changeOption && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && changeDate == other.changeDate && couponId == other.couponId && couponRedemptionCode == other.couponRedemptionCode && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(changeOption, couponId, allowInvoiceCreditOrVoid, changeDate, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(changeOption, allowInvoiceCreditOrVoid, changeDate, couponId, couponRedemptionCode, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{changeOption=$changeOption, couponId=$couponId, allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, changeDate=$changeDate, additionalProperties=$additionalProperties}"
+            "Body{changeOption=$changeOption, allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, changeDate=$changeDate, couponId=$couponId, couponRedemptionCode=$couponRedemptionCode, additionalProperties=$additionalProperties}"
     }
 
     class ChangeOption @JsonCreator private constructor(private val value: JsonField<String>) :
