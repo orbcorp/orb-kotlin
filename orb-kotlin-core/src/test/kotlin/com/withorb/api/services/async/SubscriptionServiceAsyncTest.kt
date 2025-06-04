@@ -679,9 +679,10 @@ internal class SubscriptionServiceAsyncTest {
                 SubscriptionRedeemCouponParams.builder()
                     .subscriptionId("subscription_id")
                     .changeOption(SubscriptionRedeemCouponParams.ChangeOption.REQUESTED_DATE)
-                    .couponId("coupon_id")
                     .allowInvoiceCreditOrVoid(true)
                     .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
+                    .couponId("coupon_id")
+                    .couponRedemptionCode("coupon_redemption_code")
                     .build()
             )
 
