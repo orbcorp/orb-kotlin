@@ -32,11 +32,6 @@ internal class NewPlanUnitWithPercentPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewPlanUnitWithPercentPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -83,19 +78,6 @@ internal class NewPlanUnitWithPercentPriceTest {
                     .build()
             )
         assertThat(newPlanUnitWithPercentPrice.conversionRate()).isEqualTo(0.0)
-        assertThat(newPlanUnitWithPercentPrice.conversionRateConfig())
-            .isEqualTo(
-                NewPlanUnitWithPercentPrice.ConversionRateConfig.ofUnit(
-                    NewPlanUnitWithPercentPrice.ConversionRateConfig.Unit.builder()
-                        .unitConfig(
-                            NewPlanUnitWithPercentPrice.ConversionRateConfig.Unit.UnitConfig
-                                .builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
-                        .build()
-                )
-            )
         assertThat(newPlanUnitWithPercentPrice.currency()).isEqualTo("currency")
         assertThat(newPlanUnitWithPercentPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -146,11 +128,6 @@ internal class NewPlanUnitWithPercentPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewPlanUnitWithPercentPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

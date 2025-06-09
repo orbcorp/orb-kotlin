@@ -40,11 +40,6 @@ internal class NewFloatingMatrixPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewFloatingMatrixPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -98,18 +93,6 @@ internal class NewFloatingMatrixPriceTest {
                     .build()
             )
         assertThat(newFloatingMatrixPrice.conversionRate()).isEqualTo(0.0)
-        assertThat(newFloatingMatrixPrice.conversionRateConfig())
-            .isEqualTo(
-                NewFloatingMatrixPrice.ConversionRateConfig.ofUnit(
-                    NewFloatingMatrixPrice.ConversionRateConfig.Unit.builder()
-                        .unitConfig(
-                            NewFloatingMatrixPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
-                        .build()
-                )
-            )
         assertThat(newFloatingMatrixPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -167,11 +150,6 @@ internal class NewFloatingMatrixPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewFloatingMatrixPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")

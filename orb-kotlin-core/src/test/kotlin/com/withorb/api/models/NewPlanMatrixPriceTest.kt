@@ -39,11 +39,6 @@ internal class NewPlanMatrixPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewPlanMatrixPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -95,18 +90,6 @@ internal class NewPlanMatrixPriceTest {
                     .build()
             )
         assertThat(newPlanMatrixPrice.conversionRate()).isEqualTo(0.0)
-        assertThat(newPlanMatrixPrice.conversionRateConfig())
-            .isEqualTo(
-                NewPlanMatrixPrice.ConversionRateConfig.ofUnit(
-                    NewPlanMatrixPrice.ConversionRateConfig.Unit.builder()
-                        .unitConfig(
-                            NewPlanMatrixPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
-                        .build()
-                )
-            )
         assertThat(newPlanMatrixPrice.currency()).isEqualTo("currency")
         assertThat(newPlanMatrixPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -164,11 +147,6 @@ internal class NewPlanMatrixPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewPlanMatrixPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

@@ -37,12 +37,6 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewFloatingGroupedWithProratedMinimumPrice.ConversionRateConfig.Unit.UnitConfig
-                        .builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -93,20 +87,6 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
                     .build()
             )
         assertThat(newFloatingGroupedWithProratedMinimumPrice.conversionRate()).isEqualTo(0.0)
-        assertThat(newFloatingGroupedWithProratedMinimumPrice.conversionRateConfig())
-            .isEqualTo(
-                NewFloatingGroupedWithProratedMinimumPrice.ConversionRateConfig.ofUnit(
-                    NewFloatingGroupedWithProratedMinimumPrice.ConversionRateConfig.Unit.builder()
-                        .unitConfig(
-                            NewFloatingGroupedWithProratedMinimumPrice.ConversionRateConfig.Unit
-                                .UnitConfig
-                                .builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
-                        .build()
-                )
-            )
         assertThat(newFloatingGroupedWithProratedMinimumPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -162,12 +142,6 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewFloatingGroupedWithProratedMinimumPrice.ConversionRateConfig.Unit.UnitConfig
-                        .builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")

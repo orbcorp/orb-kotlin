@@ -34,12 +34,6 @@ internal class NewPlanGroupedWithMeteredMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewPlanGroupedWithMeteredMinimumPrice.ConversionRateConfig.Unit.UnitConfig
-                        .builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -87,20 +81,6 @@ internal class NewPlanGroupedWithMeteredMinimumPriceTest {
                     .build()
             )
         assertThat(newPlanGroupedWithMeteredMinimumPrice.conversionRate()).isEqualTo(0.0)
-        assertThat(newPlanGroupedWithMeteredMinimumPrice.conversionRateConfig())
-            .isEqualTo(
-                NewPlanGroupedWithMeteredMinimumPrice.ConversionRateConfig.ofUnit(
-                    NewPlanGroupedWithMeteredMinimumPrice.ConversionRateConfig.Unit.builder()
-                        .unitConfig(
-                            NewPlanGroupedWithMeteredMinimumPrice.ConversionRateConfig.Unit
-                                .UnitConfig
-                                .builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
-                        .build()
-                )
-            )
         assertThat(newPlanGroupedWithMeteredMinimumPrice.currency()).isEqualTo("currency")
         assertThat(newPlanGroupedWithMeteredMinimumPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -154,12 +134,6 @@ internal class NewPlanGroupedWithMeteredMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewPlanGroupedWithMeteredMinimumPrice.ConversionRateConfig.Unit.UnitConfig
-                        .builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
