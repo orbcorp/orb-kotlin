@@ -29,6 +29,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.Unit.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.Unit.ConversionRateConfig.InnerUnit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -161,6 +166,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.Unit.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.Unit.ConversionRateConfig.InnerUnit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -266,6 +276,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.Package.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.Package.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -400,6 +415,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.Package.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.Package.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -510,6 +530,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.Matrix.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.Matrix.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -653,6 +678,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.Matrix.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.Matrix.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -769,6 +799,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.Tiered.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.Tiered.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -911,6 +946,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.Tiered.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.Tiered.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -1026,6 +1066,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.TieredBps.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.TieredBps.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -1169,6 +1214,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.TieredBps.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.TieredBps.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -1286,6 +1336,11 @@ internal class PriceTest {
                 .bpsConfig(BpsConfig.builder().bps(0.0).perUnitMaximum("per_unit_maximum").build())
                 .cadence(Price.Bps.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.Bps.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -1420,6 +1475,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.Bps.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.Bps.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -1535,6 +1595,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.BulkBps.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.BulkBps.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -1677,6 +1742,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.BulkBps.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.BulkBps.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -1788,6 +1858,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.Bulk.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.Bulk.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -1929,6 +2004,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.Bulk.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.Bulk.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -2033,6 +2113,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.ThresholdTotalAmount.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.ThresholdTotalAmount.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -2169,6 +2254,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.ThresholdTotalAmount.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.ThresholdTotalAmount.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -2278,6 +2368,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.TieredPackage.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.TieredPackage.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -2414,6 +2509,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.TieredPackage.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.TieredPackage.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -2523,6 +2623,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.GroupedTiered.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.GroupedTiered.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -2659,6 +2764,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.GroupedTiered.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.GroupedTiered.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -2768,6 +2878,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.TieredWithMinimum.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.TieredWithMinimum.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -2904,6 +3019,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.TieredWithMinimum.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.TieredWithMinimum.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -3013,6 +3133,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.TieredPackageWithMinimum.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.TieredPackageWithMinimum.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -3149,6 +3274,12 @@ internal class PriceTest {
                     )
                     .cadence(Price.TieredPackageWithMinimum.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.TieredPackageWithMinimum.ConversionRateConfig.Unit.UnitConfig
+                            .builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -3258,6 +3389,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.PackageWithAllocation.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.PackageWithAllocation.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -3394,6 +3530,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.PackageWithAllocation.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.PackageWithAllocation.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -3503,6 +3644,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.UnitWithPercent.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.UnitWithPercent.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -3639,6 +3785,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.UnitWithPercent.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.UnitWithPercent.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -3748,6 +3899,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.MatrixWithAllocation.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.MatrixWithAllocation.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -3892,6 +4048,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.MatrixWithAllocation.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.MatrixWithAllocation.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -4009,6 +4170,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.TieredWithProration.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.TieredWithProration.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -4145,6 +4311,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.TieredWithProration.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.TieredWithProration.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -4254,6 +4425,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.UnitWithProration.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.UnitWithProration.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -4390,6 +4566,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.UnitWithProration.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.UnitWithProration.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -4499,6 +4680,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.GroupedAllocation.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.GroupedAllocation.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -4635,6 +4821,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.GroupedAllocation.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.GroupedAllocation.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -4744,6 +4935,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.GroupedWithProratedMinimum.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.GroupedWithProratedMinimum.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -4880,6 +5076,12 @@ internal class PriceTest {
                     )
                     .cadence(Price.GroupedWithProratedMinimum.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.GroupedWithProratedMinimum.ConversionRateConfig.Unit.UnitConfig
+                            .builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -4989,6 +5191,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.GroupedWithMeteredMinimum.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.GroupedWithMeteredMinimum.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -5125,6 +5332,12 @@ internal class PriceTest {
                     )
                     .cadence(Price.GroupedWithMeteredMinimum.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.GroupedWithMeteredMinimum.ConversionRateConfig.Unit.UnitConfig
+                            .builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -5234,6 +5447,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.MatrixWithDisplayName.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.MatrixWithDisplayName.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -5370,6 +5588,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.MatrixWithDisplayName.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.MatrixWithDisplayName.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -5484,6 +5707,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.BulkWithProration.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.BulkWithProration.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -5620,6 +5848,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.BulkWithProration.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.BulkWithProration.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -5724,6 +5957,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.GroupedTieredPackage.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.GroupedTieredPackage.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -5860,6 +6098,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.GroupedTieredPackage.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.GroupedTieredPackage.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -5969,6 +6212,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.MaxGroupTieredPackage.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.MaxGroupTieredPackage.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -6105,6 +6353,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.MaxGroupTieredPackage.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.MaxGroupTieredPackage.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -6214,6 +6467,12 @@ internal class PriceTest {
                 )
                 .cadence(Price.ScalableMatrixWithUnitPricing.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.ScalableMatrixWithUnitPricing.ConversionRateConfig.Unit.UnitConfig
+                        .builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -6351,6 +6610,12 @@ internal class PriceTest {
                     )
                     .cadence(Price.ScalableMatrixWithUnitPricing.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.ScalableMatrixWithUnitPricing.ConversionRateConfig.Unit.UnitConfig
+                            .builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -6461,6 +6726,12 @@ internal class PriceTest {
                 )
                 .cadence(Price.ScalableMatrixWithTieredPricing.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.ScalableMatrixWithTieredPricing.ConversionRateConfig.Unit.UnitConfig
+                        .builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -6599,6 +6870,12 @@ internal class PriceTest {
                     )
                     .cadence(Price.ScalableMatrixWithTieredPricing.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.ScalableMatrixWithTieredPricing.ConversionRateConfig.Unit.UnitConfig
+                            .builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()
@@ -6709,6 +6986,11 @@ internal class PriceTest {
                 )
                 .cadence(Price.CumulativeGroupedBulk.Cadence.ONE_TIME)
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    Price.CumulativeGroupedBulk.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .creditAllocation(
                     Allocation.builder()
@@ -6845,6 +7127,11 @@ internal class PriceTest {
                     )
                     .cadence(Price.CumulativeGroupedBulk.Cadence.ONE_TIME)
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        Price.CumulativeGroupedBulk.ConversionRateConfig.Unit.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditAllocation(
                         Allocation.builder()

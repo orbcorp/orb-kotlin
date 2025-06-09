@@ -33,6 +33,11 @@ internal class NewFloatingUnitWithPercentPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewFloatingUnitWithPercentPrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -80,6 +85,19 @@ internal class NewFloatingUnitWithPercentPriceTest {
                     .build()
             )
         assertThat(newFloatingUnitWithPercentPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newFloatingUnitWithPercentPrice.conversionRateConfig())
+            .isEqualTo(
+                NewFloatingUnitWithPercentPrice.ConversionRateConfig.ofUnit(
+                    NewFloatingUnitWithPercentPrice.ConversionRateConfig.Unit.builder()
+                        .unitConfig(
+                            NewFloatingUnitWithPercentPrice.ConversionRateConfig.Unit.UnitConfig
+                                .builder()
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newFloatingUnitWithPercentPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -130,6 +148,11 @@ internal class NewFloatingUnitWithPercentPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewFloatingUnitWithPercentPrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")

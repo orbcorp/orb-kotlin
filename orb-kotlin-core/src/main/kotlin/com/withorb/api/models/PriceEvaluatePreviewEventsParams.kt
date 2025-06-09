@@ -33,30 +33,24 @@ import java.util.Objects
 
 /**
  * This endpoint is used to evaluate the output of price(s) for a given customer and time range over
- * either ingested events or preview events. It enables filtering and grouping the output using
+ * preview events. It enables filtering and grouping the output using
  * [computed properties](/extensibility/advanced-metrics#computed-properties), supporting the
  * following workflows:
  * 1. Showing detailed usage and costs to the end customer.
  * 2. Auditing subtotals on invoice line items.
  *
  * Prices may either reference existing prices in your Orb account or be defined inline in the
- * request body. Up to 100 prices can be evaluated in a single request.
+ * request body. The endpoint has the following limitations:
+ * 1. Up to 100 prices can be evaluated in a single request.
+ * 2. Up to 500 preview events can be provided in a single request.
  *
- * Price evaluation by default uses ingested events, but you can also provide a list of preview
- * events to use instead. Up to 500 preview events can be provided in a single request. When using
- * ingested events, the start of the time range must be no more than 100 days ago.
- *
- * For these workflows, the expressiveness of computed properties in both the filters and grouping
- * is critical. For example, if you'd like to show your customer their usage grouped by hour and
- * another property, you can do so with the following `grouping_keys`:
- * `["hour_floor_timestamp_millis(timestamp_millis)", "my_property"]`. If you'd like to examine a
- * customer's usage for a specific property value, you can do so with the following `filter`:
- * `my_property = 'foo' AND my_other_property = 'bar'`.
+ * A top-level customer_id is required to evaluate the preview events. Additionally, all events
+ * without a customer_id will have the top-level customer_id added.
  *
  * Note that this is a POST endpoint rather than a GET endpoint because it employs a JSON body
  * rather than query parameters.
  */
-class PriceEvaluateMultipleParams
+class PriceEvaluatePreviewEventsParams
 private constructor(
     private val body: Body,
     private val additionalHeaders: Headers,
@@ -88,7 +82,7 @@ private constructor(
     fun customerId(): String? = body.customerId()
 
     /**
-     * Optional list of preview events to use instead of actual usage data
+     * List of preview events to use instead of actual usage data
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -166,7 +160,8 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [PriceEvaluateMultipleParams].
+         * Returns a mutable builder for constructing an instance of
+         * [PriceEvaluatePreviewEventsParams].
          *
          * The following fields are required:
          * ```kotlin
@@ -177,18 +172,20 @@ private constructor(
         fun builder() = Builder()
     }
 
-    /** A builder for [PriceEvaluateMultipleParams]. */
+    /** A builder for [PriceEvaluatePreviewEventsParams]. */
     class Builder internal constructor() {
 
         private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
-        internal fun from(priceEvaluateMultipleParams: PriceEvaluateMultipleParams) = apply {
-            body = priceEvaluateMultipleParams.body.toBuilder()
-            additionalHeaders = priceEvaluateMultipleParams.additionalHeaders.toBuilder()
-            additionalQueryParams = priceEvaluateMultipleParams.additionalQueryParams.toBuilder()
-        }
+        internal fun from(priceEvaluatePreviewEventsParams: PriceEvaluatePreviewEventsParams) =
+            apply {
+                body = priceEvaluatePreviewEventsParams.body.toBuilder()
+                additionalHeaders = priceEvaluatePreviewEventsParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    priceEvaluatePreviewEventsParams.additionalQueryParams.toBuilder()
+            }
 
         /**
          * Sets the entire request body.
@@ -246,8 +243,8 @@ private constructor(
          */
         fun customerId(customerId: JsonField<String>) = apply { body.customerId(customerId) }
 
-        /** Optional list of preview events to use instead of actual usage data */
-        fun events(events: List<Event>?) = apply { body.events(events) }
+        /** List of preview events to use instead of actual usage data */
+        fun events(events: List<Event>) = apply { body.events(events) }
 
         /**
          * Sets [Builder.events] to an arbitrary JSON value.
@@ -424,7 +421,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [PriceEvaluateMultipleParams].
+         * Returns an immutable instance of [PriceEvaluatePreviewEventsParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -436,8 +433,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): PriceEvaluateMultipleParams =
-            PriceEvaluateMultipleParams(
+        fun build(): PriceEvaluatePreviewEventsParams =
+            PriceEvaluatePreviewEventsParams(
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -516,7 +513,7 @@ private constructor(
         fun customerId(): String? = customerId.getNullable("customer_id")
 
         /**
-         * Optional list of preview events to use instead of actual usage data
+         * List of preview events to use instead of actual usage data
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -685,8 +682,8 @@ private constructor(
              */
             fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
 
-            /** Optional list of preview events to use instead of actual usage data */
-            fun events(events: List<Event>?) = events(JsonField.ofNullable(events))
+            /** List of preview events to use instead of actual usage data */
+            fun events(events: List<Event>) = events(JsonField.of(events))
 
             /**
              * Sets [Builder.events] to an arbitrary JSON value.
@@ -2821,11 +2818,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PriceEvaluateMultipleParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is PriceEvaluatePreviewEventsParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PriceEvaluateMultipleParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "PriceEvaluatePreviewEventsParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
