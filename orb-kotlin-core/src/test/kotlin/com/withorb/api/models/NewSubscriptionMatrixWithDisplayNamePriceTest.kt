@@ -34,6 +34,12 @@ internal class NewSubscriptionMatrixWithDisplayNamePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewSubscriptionMatrixWithDisplayNamePrice.ConversionRateConfig.Unit.UnitConfig
+                        .builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -82,6 +88,20 @@ internal class NewSubscriptionMatrixWithDisplayNamePriceTest {
                     .build()
             )
         assertThat(newSubscriptionMatrixWithDisplayNamePrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newSubscriptionMatrixWithDisplayNamePrice.conversionRateConfig())
+            .isEqualTo(
+                NewSubscriptionMatrixWithDisplayNamePrice.ConversionRateConfig.ofUnit(
+                    NewSubscriptionMatrixWithDisplayNamePrice.ConversionRateConfig.Unit.builder()
+                        .unitConfig(
+                            NewSubscriptionMatrixWithDisplayNamePrice.ConversionRateConfig.Unit
+                                .UnitConfig
+                                .builder()
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newSubscriptionMatrixWithDisplayNamePrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionMatrixWithDisplayNamePrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -137,6 +157,12 @@ internal class NewSubscriptionMatrixWithDisplayNamePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewSubscriptionMatrixWithDisplayNamePrice.ConversionRateConfig.Unit.UnitConfig
+                        .builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

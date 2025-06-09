@@ -33,6 +33,11 @@ internal class NewFloatingTieredPackagePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewFloatingTieredPackagePrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -79,6 +84,19 @@ internal class NewFloatingTieredPackagePriceTest {
                     .build()
             )
         assertThat(newFloatingTieredPackagePrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newFloatingTieredPackagePrice.conversionRateConfig())
+            .isEqualTo(
+                NewFloatingTieredPackagePrice.ConversionRateConfig.ofUnit(
+                    NewFloatingTieredPackagePrice.ConversionRateConfig.Unit.builder()
+                        .unitConfig(
+                            NewFloatingTieredPackagePrice.ConversionRateConfig.Unit.UnitConfig
+                                .builder()
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newFloatingTieredPackagePrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -129,6 +147,11 @@ internal class NewFloatingTieredPackagePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewFloatingTieredPackagePrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")

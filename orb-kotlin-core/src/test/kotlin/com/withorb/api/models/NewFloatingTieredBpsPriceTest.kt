@@ -40,6 +40,11 @@ internal class NewFloatingTieredBpsPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewFloatingTieredBpsPrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -93,6 +98,18 @@ internal class NewFloatingTieredBpsPriceTest {
                     .build()
             )
         assertThat(newFloatingTieredBpsPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newFloatingTieredBpsPrice.conversionRateConfig())
+            .isEqualTo(
+                NewFloatingTieredBpsPrice.ConversionRateConfig.ofUnit(
+                    NewFloatingTieredBpsPrice.ConversionRateConfig.Unit.builder()
+                        .unitConfig(
+                            NewFloatingTieredBpsPrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newFloatingTieredBpsPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -150,6 +167,11 @@ internal class NewFloatingTieredBpsPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewFloatingTieredBpsPrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")

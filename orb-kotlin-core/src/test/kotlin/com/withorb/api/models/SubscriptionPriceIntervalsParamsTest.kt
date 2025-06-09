@@ -59,6 +59,11 @@ internal class SubscriptionPriceIntervalsParamsTest {
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                NewFloatingUnitPrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .build()
+                            )
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")
@@ -206,6 +211,12 @@ internal class SubscriptionPriceIntervalsParamsTest {
                                         .build()
                                 )
                                 .conversionRate(0.0)
+                                .unitConversionRateConfig(
+                                    NewFloatingUnitPrice.ConversionRateConfig.Unit.UnitConfig
+                                        .builder()
+                                        .unitAmount("unit_amount")
+                                        .build()
+                                )
                                 .dimensionalPriceConfiguration(
                                     NewDimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
@@ -340,6 +351,11 @@ internal class SubscriptionPriceIntervalsParamsTest {
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                NewFloatingUnitPrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .build()
+                            )
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")

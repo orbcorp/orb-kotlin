@@ -28,6 +28,11 @@ internal class NewSubscriptionUnitPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewSubscriptionUnitPrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -71,6 +76,18 @@ internal class NewSubscriptionUnitPriceTest {
                     .build()
             )
         assertThat(newSubscriptionUnitPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newSubscriptionUnitPrice.conversionRateConfig())
+            .isEqualTo(
+                NewSubscriptionUnitPrice.ConversionRateConfig.ofUnit(
+                    NewSubscriptionUnitPrice.ConversionRateConfig.Unit.builder()
+                        .unitConfig(
+                            NewSubscriptionUnitPrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newSubscriptionUnitPrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionUnitPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -118,6 +135,11 @@ internal class NewSubscriptionUnitPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewSubscriptionUnitPrice.ConversionRateConfig.Unit.UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

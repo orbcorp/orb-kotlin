@@ -33,6 +33,12 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewFloatingThresholdTotalAmountPrice.ConversionRateConfig.Unit.UnitConfig
+                        .builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -80,6 +86,20 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
                     .build()
             )
         assertThat(newFloatingThresholdTotalAmountPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newFloatingThresholdTotalAmountPrice.conversionRateConfig())
+            .isEqualTo(
+                NewFloatingThresholdTotalAmountPrice.ConversionRateConfig.ofUnit(
+                    NewFloatingThresholdTotalAmountPrice.ConversionRateConfig.Unit.builder()
+                        .unitConfig(
+                            NewFloatingThresholdTotalAmountPrice.ConversionRateConfig.Unit
+                                .UnitConfig
+                                .builder()
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newFloatingThresholdTotalAmountPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -131,6 +151,12 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    NewFloatingThresholdTotalAmountPrice.ConversionRateConfig.Unit.UnitConfig
+                        .builder()
+                        .unitAmount("unit_amount")
+                        .build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
