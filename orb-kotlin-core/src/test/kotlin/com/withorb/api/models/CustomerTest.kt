@@ -20,7 +20,7 @@ internal class CustomerTest {
                 .autoCollection(true)
                 .balance("balance")
                 .billingAddress(
-                    Customer.BillingAddress.builder()
+                    Address.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -38,13 +38,13 @@ internal class CustomerTest {
                 .hierarchy(
                     Customer.Hierarchy.builder()
                         .addChild(
-                            Customer.Hierarchy.Child.builder()
+                            CustomerMinified.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
                         )
                         .parent(
-                            Customer.Hierarchy.Parent.builder()
+                            CustomerMinified.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
@@ -61,7 +61,7 @@ internal class CustomerTest {
                 .paymentProviderId("payment_provider_id")
                 .portalUrl("portal_url")
                 .shippingAddress(
-                    Customer.ShippingAddress.builder()
+                    Address.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -71,9 +71,9 @@ internal class CustomerTest {
                         .build()
                 )
                 .taxId(
-                    Customer.TaxId.builder()
-                        .country(Customer.TaxId.Country.AD)
-                        .type(Customer.TaxId.Type.AD_NRT)
+                    CustomerTaxId.builder()
+                        .country(CustomerTaxId.Country.AD)
+                        .type(CustomerTaxId.Type.AD_NRT)
                         .value("value")
                         .build()
                 )
@@ -104,7 +104,7 @@ internal class CustomerTest {
         assertThat(customer.balance()).isEqualTo("balance")
         assertThat(customer.billingAddress())
             .isEqualTo(
-                Customer.BillingAddress.builder()
+                Address.builder()
                     .city("city")
                     .country("country")
                     .line1("line1")
@@ -123,13 +123,13 @@ internal class CustomerTest {
             .isEqualTo(
                 Customer.Hierarchy.builder()
                     .addChild(
-                        Customer.Hierarchy.Child.builder()
+                        CustomerMinified.builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
                             .build()
                     )
                     .parent(
-                        Customer.Hierarchy.Parent.builder()
+                        CustomerMinified.builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
                             .build()
@@ -148,7 +148,7 @@ internal class CustomerTest {
         assertThat(customer.portalUrl()).isEqualTo("portal_url")
         assertThat(customer.shippingAddress())
             .isEqualTo(
-                Customer.ShippingAddress.builder()
+                Address.builder()
                     .city("city")
                     .country("country")
                     .line1("line1")
@@ -159,9 +159,9 @@ internal class CustomerTest {
             )
         assertThat(customer.taxId())
             .isEqualTo(
-                Customer.TaxId.builder()
-                    .country(Customer.TaxId.Country.AD)
-                    .type(Customer.TaxId.Type.AD_NRT)
+                CustomerTaxId.builder()
+                    .country(CustomerTaxId.Country.AD)
+                    .type(CustomerTaxId.Type.AD_NRT)
                     .value("value")
                     .build()
             )
@@ -195,7 +195,7 @@ internal class CustomerTest {
                 .autoCollection(true)
                 .balance("balance")
                 .billingAddress(
-                    Customer.BillingAddress.builder()
+                    Address.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -213,13 +213,13 @@ internal class CustomerTest {
                 .hierarchy(
                     Customer.Hierarchy.builder()
                         .addChild(
-                            Customer.Hierarchy.Child.builder()
+                            CustomerMinified.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
                         )
                         .parent(
-                            Customer.Hierarchy.Parent.builder()
+                            CustomerMinified.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
@@ -236,7 +236,7 @@ internal class CustomerTest {
                 .paymentProviderId("payment_provider_id")
                 .portalUrl("portal_url")
                 .shippingAddress(
-                    Customer.ShippingAddress.builder()
+                    Address.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -246,9 +246,9 @@ internal class CustomerTest {
                         .build()
                 )
                 .taxId(
-                    Customer.TaxId.builder()
-                        .country(Customer.TaxId.Country.AD)
-                        .type(Customer.TaxId.Type.AD_NRT)
+                    CustomerTaxId.builder()
+                        .country(CustomerTaxId.Country.AD)
+                        .type(CustomerTaxId.Type.AD_NRT)
                         .value("value")
                         .build()
                 )

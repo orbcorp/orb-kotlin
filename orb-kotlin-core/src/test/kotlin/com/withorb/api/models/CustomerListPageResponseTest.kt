@@ -22,7 +22,7 @@ internal class CustomerListPageResponseTest {
                         .autoCollection(true)
                         .balance("balance")
                         .billingAddress(
-                            Customer.BillingAddress.builder()
+                            Address.builder()
                                 .city("city")
                                 .country("country")
                                 .line1("line1")
@@ -40,13 +40,13 @@ internal class CustomerListPageResponseTest {
                         .hierarchy(
                             Customer.Hierarchy.builder()
                                 .addChild(
-                                    Customer.Hierarchy.Child.builder()
+                                    CustomerMinified.builder()
                                         .id("id")
                                         .externalCustomerId("external_customer_id")
                                         .build()
                                 )
                                 .parent(
-                                    Customer.Hierarchy.Parent.builder()
+                                    CustomerMinified.builder()
                                         .id("id")
                                         .externalCustomerId("external_customer_id")
                                         .build()
@@ -63,7 +63,7 @@ internal class CustomerListPageResponseTest {
                         .paymentProviderId("payment_provider_id")
                         .portalUrl("portal_url")
                         .shippingAddress(
-                            Customer.ShippingAddress.builder()
+                            Address.builder()
                                 .city("city")
                                 .country("country")
                                 .line1("line1")
@@ -73,9 +73,9 @@ internal class CustomerListPageResponseTest {
                                 .build()
                         )
                         .taxId(
-                            Customer.TaxId.builder()
-                                .country(Customer.TaxId.Country.AD)
-                                .type(Customer.TaxId.Type.AD_NRT)
+                            CustomerTaxId.builder()
+                                .country(CustomerTaxId.Country.AD)
+                                .type(CustomerTaxId.Type.AD_NRT)
                                 .value("value")
                                 .build()
                         )
@@ -114,7 +114,7 @@ internal class CustomerListPageResponseTest {
                     .autoCollection(true)
                     .balance("balance")
                     .billingAddress(
-                        Customer.BillingAddress.builder()
+                        Address.builder()
                             .city("city")
                             .country("country")
                             .line1("line1")
@@ -132,13 +132,13 @@ internal class CustomerListPageResponseTest {
                     .hierarchy(
                         Customer.Hierarchy.builder()
                             .addChild(
-                                Customer.Hierarchy.Child.builder()
+                                CustomerMinified.builder()
                                     .id("id")
                                     .externalCustomerId("external_customer_id")
                                     .build()
                             )
                             .parent(
-                                Customer.Hierarchy.Parent.builder()
+                                CustomerMinified.builder()
                                     .id("id")
                                     .externalCustomerId("external_customer_id")
                                     .build()
@@ -155,7 +155,7 @@ internal class CustomerListPageResponseTest {
                     .paymentProviderId("payment_provider_id")
                     .portalUrl("portal_url")
                     .shippingAddress(
-                        Customer.ShippingAddress.builder()
+                        Address.builder()
                             .city("city")
                             .country("country")
                             .line1("line1")
@@ -165,9 +165,9 @@ internal class CustomerListPageResponseTest {
                             .build()
                     )
                     .taxId(
-                        Customer.TaxId.builder()
-                            .country(Customer.TaxId.Country.AD)
-                            .type(Customer.TaxId.Type.AD_NRT)
+                        CustomerTaxId.builder()
+                            .country(CustomerTaxId.Country.AD)
+                            .type(CustomerTaxId.Type.AD_NRT)
                             .value("value")
                             .build()
                     )
@@ -208,7 +208,7 @@ internal class CustomerListPageResponseTest {
                         .autoCollection(true)
                         .balance("balance")
                         .billingAddress(
-                            Customer.BillingAddress.builder()
+                            Address.builder()
                                 .city("city")
                                 .country("country")
                                 .line1("line1")
@@ -226,13 +226,13 @@ internal class CustomerListPageResponseTest {
                         .hierarchy(
                             Customer.Hierarchy.builder()
                                 .addChild(
-                                    Customer.Hierarchy.Child.builder()
+                                    CustomerMinified.builder()
                                         .id("id")
                                         .externalCustomerId("external_customer_id")
                                         .build()
                                 )
                                 .parent(
-                                    Customer.Hierarchy.Parent.builder()
+                                    CustomerMinified.builder()
                                         .id("id")
                                         .externalCustomerId("external_customer_id")
                                         .build()
@@ -249,7 +249,7 @@ internal class CustomerListPageResponseTest {
                         .paymentProviderId("payment_provider_id")
                         .portalUrl("portal_url")
                         .shippingAddress(
-                            Customer.ShippingAddress.builder()
+                            Address.builder()
                                 .city("city")
                                 .country("country")
                                 .line1("line1")
@@ -259,9 +259,9 @@ internal class CustomerListPageResponseTest {
                                 .build()
                         )
                         .taxId(
-                            Customer.TaxId.builder()
-                                .country(Customer.TaxId.Country.AD)
-                                .type(Customer.TaxId.Type.AD_NRT)
+                            CustomerTaxId.builder()
+                                .country(CustomerTaxId.Country.AD)
+                                .type(CustomerTaxId.Type.AD_NRT)
                                 .value("value")
                                 .build()
                         )

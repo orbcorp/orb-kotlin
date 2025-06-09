@@ -21,7 +21,7 @@ internal class CreditNoteListPageResponseTest {
                         .creditNoteNumber("credit_note_number")
                         .creditNotePdf("credit_note_pdf")
                         .customer(
-                            CreditNote.Customer.builder()
+                            CustomerMinified.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
@@ -36,7 +36,7 @@ internal class CreditNoteListPageResponseTest {
                                 .quantity(0.0)
                                 .subtotal("subtotal")
                                 .addTaxAmount(
-                                    CreditNote.LineItem.TaxAmount.builder()
+                                    TaxAmount.builder()
                                         .amount("amount")
                                         .taxRateDescription("tax_rate_description")
                                         .taxRatePercentage("tax_rate_percentage")
@@ -109,7 +109,7 @@ internal class CreditNoteListPageResponseTest {
                     .creditNoteNumber("credit_note_number")
                     .creditNotePdf("credit_note_pdf")
                     .customer(
-                        CreditNote.Customer.builder()
+                        CustomerMinified.builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
                             .build()
@@ -124,7 +124,7 @@ internal class CreditNoteListPageResponseTest {
                             .quantity(0.0)
                             .subtotal("subtotal")
                             .addTaxAmount(
-                                CreditNote.LineItem.TaxAmount.builder()
+                                TaxAmount.builder()
                                     .amount("amount")
                                     .taxRateDescription("tax_rate_description")
                                     .taxRatePercentage("tax_rate_percentage")
@@ -200,7 +200,7 @@ internal class CreditNoteListPageResponseTest {
                         .creditNoteNumber("credit_note_number")
                         .creditNotePdf("credit_note_pdf")
                         .customer(
-                            CreditNote.Customer.builder()
+                            CustomerMinified.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
@@ -215,7 +215,7 @@ internal class CreditNoteListPageResponseTest {
                                 .quantity(0.0)
                                 .subtotal("subtotal")
                                 .addTaxAmount(
-                                    CreditNote.LineItem.TaxAmount.builder()
+                                    TaxAmount.builder()
                                         .amount("amount")
                                         .taxRateDescription("tax_rate_description")
                                         .taxRatePercentage("tax_rate_percentage")

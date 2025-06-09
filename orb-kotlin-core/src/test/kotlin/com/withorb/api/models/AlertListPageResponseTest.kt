@@ -20,7 +20,7 @@ internal class AlertListPageResponseTest {
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .currency("currency")
                         .customer(
-                            Alert.Customer.builder()
+                            CustomerMinified.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
@@ -35,8 +35,8 @@ internal class AlertListPageResponseTest {
                                 .planVersion("plan_version")
                                 .build()
                         )
-                        .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
-                        .addThreshold(Alert.Threshold.builder().value(0.0).build())
+                        .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
+                        .addThreshold(Threshold.builder().value(0.0).build())
                         .type(Alert.Type.CREDIT_BALANCE_DEPLETED)
                         .addBalanceAlertStatus(
                             Alert.BalanceAlertStatus.builder()
@@ -58,7 +58,7 @@ internal class AlertListPageResponseTest {
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currency("currency")
                     .customer(
-                        Alert.Customer.builder()
+                        CustomerMinified.builder()
                             .id("id")
                             .externalCustomerId("external_customer_id")
                             .build()
@@ -73,8 +73,8 @@ internal class AlertListPageResponseTest {
                             .planVersion("plan_version")
                             .build()
                     )
-                    .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
-                    .addThreshold(Alert.Threshold.builder().value(0.0).build())
+                    .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
+                    .addThreshold(Threshold.builder().value(0.0).build())
                     .type(Alert.Type.CREDIT_BALANCE_DEPLETED)
                     .addBalanceAlertStatus(
                         Alert.BalanceAlertStatus.builder().inAlert(true).thresholdValue(0.0).build()
@@ -96,7 +96,7 @@ internal class AlertListPageResponseTest {
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .currency("currency")
                         .customer(
-                            Alert.Customer.builder()
+                            CustomerMinified.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
@@ -111,8 +111,8 @@ internal class AlertListPageResponseTest {
                                 .planVersion("plan_version")
                                 .build()
                         )
-                        .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
-                        .addThreshold(Alert.Threshold.builder().value(0.0).build())
+                        .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
+                        .addThreshold(Threshold.builder().value(0.0).build())
                         .type(Alert.Type.CREDIT_BALANCE_DEPLETED)
                         .addBalanceAlertStatus(
                             Alert.BalanceAlertStatus.builder()

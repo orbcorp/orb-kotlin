@@ -13,9 +13,7 @@ internal class AlertCreateForExternalCustomerParamsTest {
             .externalCustomerId("external_customer_id")
             .currency("currency")
             .type(AlertCreateForExternalCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
-            .addThreshold(
-                AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
-            )
+            .addThreshold(Threshold.builder().value(0.0).build())
             .build()
     }
 
@@ -40,9 +38,7 @@ internal class AlertCreateForExternalCustomerParamsTest {
                 .externalCustomerId("external_customer_id")
                 .currency("currency")
                 .type(AlertCreateForExternalCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
-                .addThreshold(
-                    AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
-                )
+                .addThreshold(Threshold.builder().value(0.0).build())
                 .build()
 
         val body = params._body()
@@ -50,10 +46,7 @@ internal class AlertCreateForExternalCustomerParamsTest {
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.type())
             .isEqualTo(AlertCreateForExternalCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
-        assertThat(body.thresholds())
-            .containsExactly(
-                AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
-            )
+        assertThat(body.thresholds()).containsExactly(Threshold.builder().value(0.0).build())
     }
 
     @Test

@@ -11,7 +11,7 @@ internal class AlertUpdateParamsTest {
     fun create() {
         AlertUpdateParams.builder()
             .alertConfigurationId("alert_configuration_id")
-            .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
+            .addThreshold(Threshold.builder().value(0.0).build())
             .build()
     }
 
@@ -20,7 +20,7 @@ internal class AlertUpdateParamsTest {
         val params =
             AlertUpdateParams.builder()
                 .alertConfigurationId("alert_configuration_id")
-                .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
+                .addThreshold(Threshold.builder().value(0.0).build())
                 .build()
 
         assertThat(params._pathParam(0)).isEqualTo("alert_configuration_id")
@@ -33,12 +33,11 @@ internal class AlertUpdateParamsTest {
         val params =
             AlertUpdateParams.builder()
                 .alertConfigurationId("alert_configuration_id")
-                .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
+                .addThreshold(Threshold.builder().value(0.0).build())
                 .build()
 
         val body = params._body()
 
-        assertThat(body.thresholds())
-            .containsExactly(AlertUpdateParams.Threshold.builder().value(0.0).build())
+        assertThat(body.thresholds()).containsExactly(Threshold.builder().value(0.0).build())
     }
 }

@@ -16,15 +16,16 @@ internal class PlanVersionTest {
         val planVersion =
             PlanVersion.builder()
                 .addAdjustment(
-                    PlanVersion.Adjustment.UsageDiscount.builder()
+                    PlanPhaseUsageDiscountAdjustment.builder()
                         .id("id")
+                        .adjustmentType(
+                            PlanPhaseUsageDiscountAdjustment.AdjustmentType.USAGE_DISCOUNT
+                        )
                         .addAppliesToPriceId("string")
                         .addFilter(
-                            PlanVersion.Adjustment.UsageDiscount.Filter.builder()
-                                .field(PlanVersion.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
-                                .operator(
-                                    PlanVersion.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
-                                )
+                            TransformPriceFilter.builder()
+                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
@@ -48,28 +49,24 @@ internal class PlanVersionTest {
                 .addPrice(
                     Price.Unit.builder()
                         .id("id")
-                        .billableMetric(Price.Unit.BillableMetric.builder().id("id").build())
+                        .billableMetric(BillableMetricTiny.builder().id("id").build())
                         .billingCycleConfiguration(
-                            Price.Unit.BillingCycleConfiguration.builder()
+                            BillingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(Price.Unit.BillingCycleConfiguration.DurationUnit.DAY)
+                                .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
                         .cadence(Price.Unit.Cadence.ONE_TIME)
                         .conversionRate(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditAllocation(
-                            Price.Unit.CreditAllocation.builder()
+                            Allocation.builder()
                                 .allowsRollover(true)
                                 .currency("currency")
                                 .customExpiration(
-                                    Price.Unit.CreditAllocation.CustomExpiration.builder()
+                                    CustomExpiration.builder()
                                         .duration(0L)
-                                        .durationUnit(
-                                            Price.Unit.CreditAllocation.CustomExpiration
-                                                .DurationUnit
-                                                .DAY
-                                        )
+                                        .durationUnit(CustomExpiration.DurationUnit.DAY)
                                         .build()
                                 )
                                 .build()
@@ -82,9 +79,9 @@ internal class PlanVersionTest {
                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .addFilter(
-                                    PercentageDiscount.Filter.builder()
-                                        .field(PercentageDiscount.Filter.Field.PRICE_ID)
-                                        .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -94,21 +91,19 @@ internal class PlanVersionTest {
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
                         .invoicingCycleConfiguration(
-                            Price.Unit.InvoicingCycleConfiguration.builder()
+                            BillingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(
-                                    Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
-                                )
+                                .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
-                        .item(Price.Unit.Item.builder().id("id").name("name").build())
+                        .item(ItemSlim.builder().id("id").name("name").build())
                         .maximum(
-                            Price.Unit.Maximum.builder()
+                            Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    Price.Unit.Maximum.Filter.builder()
-                                        .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
-                                        .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -122,12 +117,12 @@ internal class PlanVersionTest {
                                 .build()
                         )
                         .minimum(
-                            Price.Unit.Minimum.builder()
+                            Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    Price.Unit.Minimum.Filter.builder()
-                                        .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
-                                        .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -138,11 +133,9 @@ internal class PlanVersionTest {
                         .name("name")
                         .planPhaseOrder(0L)
                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
-                        .unitConfig(
-                            Price.Unit.UnitConfig.builder().unitAmount("unit_amount").build()
-                        )
+                        .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                         .dimensionalPriceConfiguration(
-                            Price.Unit.DimensionalPriceConfiguration.builder()
+                            DimensionalPriceConfiguration.builder()
                                 .addDimensionValue("string")
                                 .dimensionalPriceGroupId("dimensional_price_group_id")
                                 .build()
@@ -155,15 +148,16 @@ internal class PlanVersionTest {
         assertThat(planVersion.adjustments())
             .containsExactly(
                 PlanVersion.Adjustment.ofUsageDiscount(
-                    PlanVersion.Adjustment.UsageDiscount.builder()
+                    PlanPhaseUsageDiscountAdjustment.builder()
                         .id("id")
+                        .adjustmentType(
+                            PlanPhaseUsageDiscountAdjustment.AdjustmentType.USAGE_DISCOUNT
+                        )
                         .addAppliesToPriceId("string")
                         .addFilter(
-                            PlanVersion.Adjustment.UsageDiscount.Filter.builder()
-                                .field(PlanVersion.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
-                                .operator(
-                                    PlanVersion.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
-                                )
+                            TransformPriceFilter.builder()
+                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
@@ -192,28 +186,24 @@ internal class PlanVersionTest {
                 Price.ofUnit(
                     Price.Unit.builder()
                         .id("id")
-                        .billableMetric(Price.Unit.BillableMetric.builder().id("id").build())
+                        .billableMetric(BillableMetricTiny.builder().id("id").build())
                         .billingCycleConfiguration(
-                            Price.Unit.BillingCycleConfiguration.builder()
+                            BillingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(Price.Unit.BillingCycleConfiguration.DurationUnit.DAY)
+                                .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
                         .cadence(Price.Unit.Cadence.ONE_TIME)
                         .conversionRate(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditAllocation(
-                            Price.Unit.CreditAllocation.builder()
+                            Allocation.builder()
                                 .allowsRollover(true)
                                 .currency("currency")
                                 .customExpiration(
-                                    Price.Unit.CreditAllocation.CustomExpiration.builder()
+                                    CustomExpiration.builder()
                                         .duration(0L)
-                                        .durationUnit(
-                                            Price.Unit.CreditAllocation.CustomExpiration
-                                                .DurationUnit
-                                                .DAY
-                                        )
+                                        .durationUnit(CustomExpiration.DurationUnit.DAY)
                                         .build()
                                 )
                                 .build()
@@ -226,9 +216,9 @@ internal class PlanVersionTest {
                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .addFilter(
-                                    PercentageDiscount.Filter.builder()
-                                        .field(PercentageDiscount.Filter.Field.PRICE_ID)
-                                        .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -238,21 +228,19 @@ internal class PlanVersionTest {
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
                         .invoicingCycleConfiguration(
-                            Price.Unit.InvoicingCycleConfiguration.builder()
+                            BillingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(
-                                    Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
-                                )
+                                .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
-                        .item(Price.Unit.Item.builder().id("id").name("name").build())
+                        .item(ItemSlim.builder().id("id").name("name").build())
                         .maximum(
-                            Price.Unit.Maximum.builder()
+                            Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    Price.Unit.Maximum.Filter.builder()
-                                        .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
-                                        .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -266,12 +254,12 @@ internal class PlanVersionTest {
                                 .build()
                         )
                         .minimum(
-                            Price.Unit.Minimum.builder()
+                            Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    Price.Unit.Minimum.Filter.builder()
-                                        .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
-                                        .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -282,11 +270,9 @@ internal class PlanVersionTest {
                         .name("name")
                         .planPhaseOrder(0L)
                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
-                        .unitConfig(
-                            Price.Unit.UnitConfig.builder().unitAmount("unit_amount").build()
-                        )
+                        .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                         .dimensionalPriceConfiguration(
-                            Price.Unit.DimensionalPriceConfiguration.builder()
+                            DimensionalPriceConfiguration.builder()
                                 .addDimensionValue("string")
                                 .dimensionalPriceGroupId("dimensional_price_group_id")
                                 .build()
@@ -303,15 +289,16 @@ internal class PlanVersionTest {
         val planVersion =
             PlanVersion.builder()
                 .addAdjustment(
-                    PlanVersion.Adjustment.UsageDiscount.builder()
+                    PlanPhaseUsageDiscountAdjustment.builder()
                         .id("id")
+                        .adjustmentType(
+                            PlanPhaseUsageDiscountAdjustment.AdjustmentType.USAGE_DISCOUNT
+                        )
                         .addAppliesToPriceId("string")
                         .addFilter(
-                            PlanVersion.Adjustment.UsageDiscount.Filter.builder()
-                                .field(PlanVersion.Adjustment.UsageDiscount.Filter.Field.PRICE_ID)
-                                .operator(
-                                    PlanVersion.Adjustment.UsageDiscount.Filter.Operator.INCLUDES
-                                )
+                            TransformPriceFilter.builder()
+                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
@@ -335,28 +322,24 @@ internal class PlanVersionTest {
                 .addPrice(
                     Price.Unit.builder()
                         .id("id")
-                        .billableMetric(Price.Unit.BillableMetric.builder().id("id").build())
+                        .billableMetric(BillableMetricTiny.builder().id("id").build())
                         .billingCycleConfiguration(
-                            Price.Unit.BillingCycleConfiguration.builder()
+                            BillingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(Price.Unit.BillingCycleConfiguration.DurationUnit.DAY)
+                                .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
                         .cadence(Price.Unit.Cadence.ONE_TIME)
                         .conversionRate(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditAllocation(
-                            Price.Unit.CreditAllocation.builder()
+                            Allocation.builder()
                                 .allowsRollover(true)
                                 .currency("currency")
                                 .customExpiration(
-                                    Price.Unit.CreditAllocation.CustomExpiration.builder()
+                                    CustomExpiration.builder()
                                         .duration(0L)
-                                        .durationUnit(
-                                            Price.Unit.CreditAllocation.CustomExpiration
-                                                .DurationUnit
-                                                .DAY
-                                        )
+                                        .durationUnit(CustomExpiration.DurationUnit.DAY)
                                         .build()
                                 )
                                 .build()
@@ -369,9 +352,9 @@ internal class PlanVersionTest {
                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .addFilter(
-                                    PercentageDiscount.Filter.builder()
-                                        .field(PercentageDiscount.Filter.Field.PRICE_ID)
-                                        .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -381,21 +364,19 @@ internal class PlanVersionTest {
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
                         .invoicingCycleConfiguration(
-                            Price.Unit.InvoicingCycleConfiguration.builder()
+                            BillingCycleConfiguration.builder()
                                 .duration(0L)
-                                .durationUnit(
-                                    Price.Unit.InvoicingCycleConfiguration.DurationUnit.DAY
-                                )
+                                .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
-                        .item(Price.Unit.Item.builder().id("id").name("name").build())
+                        .item(ItemSlim.builder().id("id").name("name").build())
                         .maximum(
-                            Price.Unit.Maximum.builder()
+                            Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    Price.Unit.Maximum.Filter.builder()
-                                        .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
-                                        .operator(Price.Unit.Maximum.Filter.Operator.INCLUDES)
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -409,12 +390,12 @@ internal class PlanVersionTest {
                                 .build()
                         )
                         .minimum(
-                            Price.Unit.Minimum.builder()
+                            Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    Price.Unit.Minimum.Filter.builder()
-                                        .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
-                                        .operator(Price.Unit.Minimum.Filter.Operator.INCLUDES)
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -425,11 +406,9 @@ internal class PlanVersionTest {
                         .name("name")
                         .planPhaseOrder(0L)
                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
-                        .unitConfig(
-                            Price.Unit.UnitConfig.builder().unitAmount("unit_amount").build()
-                        )
+                        .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                         .dimensionalPriceConfiguration(
-                            Price.Unit.DimensionalPriceConfiguration.builder()
+                            DimensionalPriceConfiguration.builder()
                                 .addDimensionValue("string")
                                 .dimensionalPriceGroupId("dimensional_price_group_id")
                                 .build()

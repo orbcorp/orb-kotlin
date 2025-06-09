@@ -8,6 +8,14 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.models.BetaCreatePlanVersionParams
 import com.withorb.api.models.BetaFetchPlanVersionParams
 import com.withorb.api.models.BetaSetDefaultPlanVersionParams
+import com.withorb.api.models.CustomExpiration
+import com.withorb.api.models.NewAllocationPrice
+import com.withorb.api.models.NewBillingCycleConfiguration
+import com.withorb.api.models.NewDimensionalPriceConfiguration
+import com.withorb.api.models.NewPercentageDiscount
+import com.withorb.api.models.NewPlanUnitPrice
+import com.withorb.api.models.TransformPriceFilter
+import com.withorb.api.models.UnitConfig
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -31,50 +39,26 @@ internal class BetaServiceTest {
                     .addAddAdjustment(
                         BetaCreatePlanVersionParams.AddAdjustment.builder()
                             .adjustment(
-                                BetaCreatePlanVersionParams.AddAdjustment.Adjustment
-                                    .PercentageDiscount
-                                    .builder()
-                                    .percentageDiscount(0.0)
-                                    .appliesToAll(
-                                        BetaCreatePlanVersionParams.AddAdjustment.Adjustment
-                                            .PercentageDiscount
-                                            .AppliesToAll
-                                            .TRUE
+                                NewPercentageDiscount.builder()
+                                    .adjustmentType(
+                                        NewPercentageDiscount.AdjustmentType.PERCENTAGE_DISCOUNT
                                     )
+                                    .percentageDiscount(0.0)
+                                    .appliesToAll(NewPercentageDiscount.AppliesToAll.TRUE)
                                     .addAppliesToItemId("item_1")
                                     .addAppliesToItemId("item_2")
                                     .addAppliesToPriceId("price_1")
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        BetaCreatePlanVersionParams.AddAdjustment.Adjustment
-                                            .PercentageDiscount
-                                            .Filter
-                                            .builder()
-                                            .field(
-                                                BetaCreatePlanVersionParams.AddAdjustment.Adjustment
-                                                    .PercentageDiscount
-                                                    .Filter
-                                                    .Field
-                                                    .PRICE_ID
-                                            )
-                                            .operator(
-                                                BetaCreatePlanVersionParams.AddAdjustment.Adjustment
-                                                    .PercentageDiscount
-                                                    .Filter
-                                                    .Operator
-                                                    .INCLUDES
-                                            )
+                                        TransformPriceFilter.builder()
+                                            .field(TransformPriceFilter.Field.PRICE_ID)
+                                            .operator(TransformPriceFilter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
                                     .isInvoiceLevel(true)
-                                    .priceType(
-                                        BetaCreatePlanVersionParams.AddAdjustment.Adjustment
-                                            .PercentageDiscount
-                                            .PriceType
-                                            .USAGE
-                                    )
+                                    .priceType(NewPercentageDiscount.PriceType.USAGE)
                                     .build()
                             )
                             .planPhaseOrder(0L)
@@ -83,24 +67,14 @@ internal class BetaServiceTest {
                     .addAddPrice(
                         BetaCreatePlanVersionParams.AddPrice.builder()
                             .allocationPrice(
-                                BetaCreatePlanVersionParams.AddPrice.AllocationPrice.builder()
+                                NewAllocationPrice.builder()
                                     .amount("10.00")
-                                    .cadence(
-                                        BetaCreatePlanVersionParams.AddPrice.AllocationPrice.Cadence
-                                            .MONTHLY
-                                    )
+                                    .cadence(NewAllocationPrice.Cadence.MONTHLY)
                                     .currency("USD")
                                     .customExpiration(
-                                        BetaCreatePlanVersionParams.AddPrice.AllocationPrice
-                                            .CustomExpiration
-                                            .builder()
+                                        CustomExpiration.builder()
                                             .duration(0L)
-                                            .durationUnit(
-                                                BetaCreatePlanVersionParams.AddPrice.AllocationPrice
-                                                    .CustomExpiration
-                                                    .DurationUnit
-                                                    .DAY
-                                            )
+                                            .durationUnit(CustomExpiration.DurationUnit.DAY)
                                             .build()
                                     )
                                     .expiresAtEndOfCadence(true)
@@ -108,40 +82,28 @@ internal class BetaServiceTest {
                             )
                             .planPhaseOrder(0L)
                             .price(
-                                BetaCreatePlanVersionParams.AddPrice.Price.Unit.builder()
-                                    .cadence(
-                                        BetaCreatePlanVersionParams.AddPrice.Price.Unit.Cadence
-                                            .ANNUAL
-                                    )
+                                NewPlanUnitPrice.builder()
+                                    .cadence(NewPlanUnitPrice.Cadence.ANNUAL)
                                     .itemId("item_id")
+                                    .modelType(NewPlanUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
                                     .unitConfig(
-                                        BetaCreatePlanVersionParams.AddPrice.Price.Unit.UnitConfig
-                                            .builder()
-                                            .unitAmount("unit_amount")
-                                            .build()
+                                        UnitConfig.builder().unitAmount("unit_amount").build()
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
                                     .billingCycleConfiguration(
-                                        BetaCreatePlanVersionParams.AddPrice.Price.Unit
-                                            .BillingCycleConfiguration
-                                            .builder()
+                                        NewBillingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                BetaCreatePlanVersionParams.AddPrice.Price.Unit
-                                                    .BillingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
+                                                NewBillingCycleConfiguration.DurationUnit.DAY
                                             )
                                             .build()
                                     )
                                     .conversionRate(0.0)
                                     .currency("currency")
                                     .dimensionalPriceConfiguration(
-                                        BetaCreatePlanVersionParams.AddPrice.Price.Unit
-                                            .DimensionalPriceConfiguration
-                                            .builder()
+                                        NewDimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
                                             .externalDimensionalPriceGroupId(
@@ -153,21 +115,15 @@ internal class BetaServiceTest {
                                     .fixedPriceQuantity(0.0)
                                     .invoiceGroupingKey("x")
                                     .invoicingCycleConfiguration(
-                                        BetaCreatePlanVersionParams.AddPrice.Price.Unit
-                                            .InvoicingCycleConfiguration
-                                            .builder()
+                                        NewBillingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                BetaCreatePlanVersionParams.AddPrice.Price.Unit
-                                                    .InvoicingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
+                                                NewBillingCycleConfiguration.DurationUnit.DAY
                                             )
                                             .build()
                                     )
                                     .metadata(
-                                        BetaCreatePlanVersionParams.AddPrice.Price.Unit.Metadata
-                                            .builder()
+                                        NewPlanUnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
                                             .build()
                                     )
@@ -190,52 +146,26 @@ internal class BetaServiceTest {
                     .addReplaceAdjustment(
                         BetaCreatePlanVersionParams.ReplaceAdjustment.builder()
                             .adjustment(
-                                BetaCreatePlanVersionParams.ReplaceAdjustment.Adjustment
-                                    .PercentageDiscount
-                                    .builder()
-                                    .percentageDiscount(0.0)
-                                    .appliesToAll(
-                                        BetaCreatePlanVersionParams.ReplaceAdjustment.Adjustment
-                                            .PercentageDiscount
-                                            .AppliesToAll
-                                            .TRUE
+                                NewPercentageDiscount.builder()
+                                    .adjustmentType(
+                                        NewPercentageDiscount.AdjustmentType.PERCENTAGE_DISCOUNT
                                     )
+                                    .percentageDiscount(0.0)
+                                    .appliesToAll(NewPercentageDiscount.AppliesToAll.TRUE)
                                     .addAppliesToItemId("item_1")
                                     .addAppliesToItemId("item_2")
                                     .addAppliesToPriceId("price_1")
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        BetaCreatePlanVersionParams.ReplaceAdjustment.Adjustment
-                                            .PercentageDiscount
-                                            .Filter
-                                            .builder()
-                                            .field(
-                                                BetaCreatePlanVersionParams.ReplaceAdjustment
-                                                    .Adjustment
-                                                    .PercentageDiscount
-                                                    .Filter
-                                                    .Field
-                                                    .PRICE_ID
-                                            )
-                                            .operator(
-                                                BetaCreatePlanVersionParams.ReplaceAdjustment
-                                                    .Adjustment
-                                                    .PercentageDiscount
-                                                    .Filter
-                                                    .Operator
-                                                    .INCLUDES
-                                            )
+                                        TransformPriceFilter.builder()
+                                            .field(TransformPriceFilter.Field.PRICE_ID)
+                                            .operator(TransformPriceFilter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
                                     .isInvoiceLevel(true)
-                                    .priceType(
-                                        BetaCreatePlanVersionParams.ReplaceAdjustment.Adjustment
-                                            .PercentageDiscount
-                                            .PriceType
-                                            .USAGE
-                                    )
+                                    .priceType(NewPercentageDiscount.PriceType.USAGE)
                                     .build()
                             )
                             .replacesAdjustmentId("replaces_adjustment_id")
@@ -246,26 +176,14 @@ internal class BetaServiceTest {
                         BetaCreatePlanVersionParams.ReplacePrice.builder()
                             .replacesPriceId("replaces_price_id")
                             .allocationPrice(
-                                BetaCreatePlanVersionParams.ReplacePrice.AllocationPrice.builder()
+                                NewAllocationPrice.builder()
                                     .amount("10.00")
-                                    .cadence(
-                                        BetaCreatePlanVersionParams.ReplacePrice.AllocationPrice
-                                            .Cadence
-                                            .MONTHLY
-                                    )
+                                    .cadence(NewAllocationPrice.Cadence.MONTHLY)
                                     .currency("USD")
                                     .customExpiration(
-                                        BetaCreatePlanVersionParams.ReplacePrice.AllocationPrice
-                                            .CustomExpiration
-                                            .builder()
+                                        CustomExpiration.builder()
                                             .duration(0L)
-                                            .durationUnit(
-                                                BetaCreatePlanVersionParams.ReplacePrice
-                                                    .AllocationPrice
-                                                    .CustomExpiration
-                                                    .DurationUnit
-                                                    .DAY
-                                            )
+                                            .durationUnit(CustomExpiration.DurationUnit.DAY)
                                             .build()
                                     )
                                     .expiresAtEndOfCadence(true)
@@ -273,41 +191,28 @@ internal class BetaServiceTest {
                             )
                             .planPhaseOrder(0L)
                             .price(
-                                BetaCreatePlanVersionParams.ReplacePrice.Price.Unit.builder()
-                                    .cadence(
-                                        BetaCreatePlanVersionParams.ReplacePrice.Price.Unit.Cadence
-                                            .ANNUAL
-                                    )
+                                NewPlanUnitPrice.builder()
+                                    .cadence(NewPlanUnitPrice.Cadence.ANNUAL)
                                     .itemId("item_id")
+                                    .modelType(NewPlanUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
                                     .unitConfig(
-                                        BetaCreatePlanVersionParams.ReplacePrice.Price.Unit
-                                            .UnitConfig
-                                            .builder()
-                                            .unitAmount("unit_amount")
-                                            .build()
+                                        UnitConfig.builder().unitAmount("unit_amount").build()
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
                                     .billingCycleConfiguration(
-                                        BetaCreatePlanVersionParams.ReplacePrice.Price.Unit
-                                            .BillingCycleConfiguration
-                                            .builder()
+                                        NewBillingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                BetaCreatePlanVersionParams.ReplacePrice.Price.Unit
-                                                    .BillingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
+                                                NewBillingCycleConfiguration.DurationUnit.DAY
                                             )
                                             .build()
                                     )
                                     .conversionRate(0.0)
                                     .currency("currency")
                                     .dimensionalPriceConfiguration(
-                                        BetaCreatePlanVersionParams.ReplacePrice.Price.Unit
-                                            .DimensionalPriceConfiguration
-                                            .builder()
+                                        NewDimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
                                             .externalDimensionalPriceGroupId(
@@ -319,21 +224,15 @@ internal class BetaServiceTest {
                                     .fixedPriceQuantity(0.0)
                                     .invoiceGroupingKey("x")
                                     .invoicingCycleConfiguration(
-                                        BetaCreatePlanVersionParams.ReplacePrice.Price.Unit
-                                            .InvoicingCycleConfiguration
-                                            .builder()
+                                        NewBillingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                BetaCreatePlanVersionParams.ReplacePrice.Price.Unit
-                                                    .InvoicingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
+                                                NewBillingCycleConfiguration.DurationUnit.DAY
                                             )
                                             .build()
                                     )
                                     .metadata(
-                                        BetaCreatePlanVersionParams.ReplacePrice.Price.Unit.Metadata
-                                            .builder()
+                                        NewPlanUnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
                                             .build()
                                     )

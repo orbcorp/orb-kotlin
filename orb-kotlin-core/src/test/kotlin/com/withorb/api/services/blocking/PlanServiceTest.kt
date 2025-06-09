@@ -5,8 +5,12 @@ package com.withorb.api.services.blocking
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
+import com.withorb.api.models.NewBillingCycleConfiguration
+import com.withorb.api.models.NewDimensionalPriceConfiguration
+import com.withorb.api.models.NewPlanUnitPrice
 import com.withorb.api.models.PlanCreateParams
 import com.withorb.api.models.PlanUpdateParams
+import com.withorb.api.models.UnitConfig
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -28,31 +32,24 @@ internal class PlanServiceTest {
                     .currency("currency")
                     .name("name")
                     .addPrice(
-                        PlanCreateParams.Price.Unit.builder()
-                            .cadence(PlanCreateParams.Price.Unit.Cadence.ANNUAL)
+                        NewPlanUnitPrice.builder()
+                            .cadence(NewPlanUnitPrice.Cadence.ANNUAL)
                             .itemId("item_id")
+                            .modelType(NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(
-                                PlanCreateParams.Price.Unit.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
+                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                PlanCreateParams.Price.Unit.BillingCycleConfiguration.builder()
+                                NewBillingCycleConfiguration.builder()
                                     .duration(0L)
-                                    .durationUnit(
-                                        PlanCreateParams.Price.Unit.BillingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
-                                    )
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
                             .conversionRate(0.0)
                             .currency("currency")
                             .dimensionalPriceConfiguration(
-                                PlanCreateParams.Price.Unit.DimensionalPriceConfiguration.builder()
+                                NewDimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")
                                     .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .externalDimensionalPriceGroupId(
@@ -64,17 +61,13 @@ internal class PlanServiceTest {
                             .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("x")
                             .invoicingCycleConfiguration(
-                                PlanCreateParams.Price.Unit.InvoicingCycleConfiguration.builder()
+                                NewBillingCycleConfiguration.builder()
                                     .duration(0L)
-                                    .durationUnit(
-                                        PlanCreateParams.Price.Unit.InvoicingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
-                                    )
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
                             .metadata(
-                                PlanCreateParams.Price.Unit.Metadata.builder()
+                                NewPlanUnitPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
