@@ -33,6 +33,9 @@ internal class NewFloatingGroupedAllocationPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -80,6 +83,17 @@ internal class NewFloatingGroupedAllocationPriceTest {
                     .build()
             )
         assertThat(newFloatingGroupedAllocationPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newFloatingGroupedAllocationPrice.conversionRateConfig())
+            .isEqualTo(
+                NewFloatingGroupedAllocationPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newFloatingGroupedAllocationPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -131,6 +145,9 @@ internal class NewFloatingGroupedAllocationPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")

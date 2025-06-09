@@ -33,6 +33,9 @@ internal class NewFloatingGroupedTieredPackagePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -80,6 +83,17 @@ internal class NewFloatingGroupedTieredPackagePriceTest {
                     .build()
             )
         assertThat(newFloatingGroupedTieredPackagePrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newFloatingGroupedTieredPackagePrice.conversionRateConfig())
+            .isEqualTo(
+                NewFloatingGroupedTieredPackagePrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newFloatingGroupedTieredPackagePrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -131,6 +145,9 @@ internal class NewFloatingGroupedTieredPackagePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")

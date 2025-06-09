@@ -33,6 +33,9 @@ internal class NewFloatingBulkWithProrationPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -80,6 +83,17 @@ internal class NewFloatingBulkWithProrationPriceTest {
                     .build()
             )
         assertThat(newFloatingBulkWithProrationPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newFloatingBulkWithProrationPrice.conversionRateConfig())
+            .isEqualTo(
+                NewFloatingBulkWithProrationPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newFloatingBulkWithProrationPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -131,6 +145,9 @@ internal class NewFloatingBulkWithProrationPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")

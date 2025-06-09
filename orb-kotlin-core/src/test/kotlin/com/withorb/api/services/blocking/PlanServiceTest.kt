@@ -5,6 +5,7 @@ package com.withorb.api.services.blocking
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
+import com.withorb.api.models.ConversionRateUnitConfig
 import com.withorb.api.models.NewBillingCycleConfiguration
 import com.withorb.api.models.NewDimensionalPriceConfiguration
 import com.withorb.api.models.NewPlanUnitPrice
@@ -47,6 +48,9 @@ internal class PlanServiceTest {
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
                             .currency("currency")
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()

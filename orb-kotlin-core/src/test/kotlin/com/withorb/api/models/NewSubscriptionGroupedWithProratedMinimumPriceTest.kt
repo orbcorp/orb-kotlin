@@ -36,6 +36,9 @@ internal class NewSubscriptionGroupedWithProratedMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -90,6 +93,17 @@ internal class NewSubscriptionGroupedWithProratedMinimumPriceTest {
                     .build()
             )
         assertThat(newSubscriptionGroupedWithProratedMinimumPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newSubscriptionGroupedWithProratedMinimumPrice.conversionRateConfig())
+            .isEqualTo(
+                NewSubscriptionGroupedWithProratedMinimumPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newSubscriptionGroupedWithProratedMinimumPrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionGroupedWithProratedMinimumPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -149,6 +163,9 @@ internal class NewSubscriptionGroupedWithProratedMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

@@ -32,6 +32,9 @@ internal class NewSubscriptionUnitWithPercentPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -80,6 +83,17 @@ internal class NewSubscriptionUnitWithPercentPriceTest {
                     .build()
             )
         assertThat(newSubscriptionUnitWithPercentPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newSubscriptionUnitWithPercentPrice.conversionRateConfig())
+            .isEqualTo(
+                NewSubscriptionUnitWithPercentPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newSubscriptionUnitWithPercentPrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionUnitWithPercentPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -132,6 +146,9 @@ internal class NewSubscriptionUnitWithPercentPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

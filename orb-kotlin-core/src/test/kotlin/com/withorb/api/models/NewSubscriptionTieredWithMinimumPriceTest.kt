@@ -32,6 +32,9 @@ internal class NewSubscriptionTieredWithMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -80,6 +83,17 @@ internal class NewSubscriptionTieredWithMinimumPriceTest {
                     .build()
             )
         assertThat(newSubscriptionTieredWithMinimumPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newSubscriptionTieredWithMinimumPrice.conversionRateConfig())
+            .isEqualTo(
+                NewSubscriptionTieredWithMinimumPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newSubscriptionTieredWithMinimumPrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionTieredWithMinimumPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -132,6 +146,9 @@ internal class NewSubscriptionTieredWithMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

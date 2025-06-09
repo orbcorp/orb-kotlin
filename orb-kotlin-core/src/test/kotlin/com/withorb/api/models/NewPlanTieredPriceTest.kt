@@ -38,6 +38,9 @@ internal class NewPlanTieredPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -88,6 +91,17 @@ internal class NewPlanTieredPriceTest {
                     .build()
             )
         assertThat(newPlanTieredPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newPlanTieredPrice.conversionRateConfig())
+            .isEqualTo(
+                NewPlanTieredPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newPlanTieredPrice.currency()).isEqualTo("currency")
         assertThat(newPlanTieredPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -144,6 +158,9 @@ internal class NewPlanTieredPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

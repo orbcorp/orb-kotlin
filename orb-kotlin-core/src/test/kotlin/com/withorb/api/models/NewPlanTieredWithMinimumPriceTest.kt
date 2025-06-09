@@ -32,6 +32,9 @@ internal class NewPlanTieredWithMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -78,6 +81,17 @@ internal class NewPlanTieredWithMinimumPriceTest {
                     .build()
             )
         assertThat(newPlanTieredWithMinimumPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newPlanTieredWithMinimumPrice.conversionRateConfig())
+            .isEqualTo(
+                NewPlanTieredWithMinimumPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newPlanTieredWithMinimumPrice.currency()).isEqualTo("currency")
         assertThat(newPlanTieredWithMinimumPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -128,6 +142,9 @@ internal class NewPlanTieredWithMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

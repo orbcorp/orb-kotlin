@@ -32,6 +32,9 @@ internal class NewSubscriptionTierWithProrationPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -80,6 +83,17 @@ internal class NewSubscriptionTierWithProrationPriceTest {
                     .build()
             )
         assertThat(newSubscriptionTierWithProrationPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newSubscriptionTierWithProrationPrice.conversionRateConfig())
+            .isEqualTo(
+                NewSubscriptionTierWithProrationPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newSubscriptionTierWithProrationPrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionTierWithProrationPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -132,6 +146,9 @@ internal class NewSubscriptionTierWithProrationPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

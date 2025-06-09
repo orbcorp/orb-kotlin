@@ -972,6 +972,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -1007,6 +1008,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -1061,6 +1065,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -1113,6 +1118,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -1285,6 +1297,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -1479,6 +1501,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -1509,6 +1532,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -1537,6 +1561,7 @@ private constructor(
                 billingCycleConfiguration = unit.billingCycleConfiguration
                 cadence = unit.cadence
                 conversionRate = unit.conversionRate
+                conversionRateConfig = unit.conversionRateConfig
                 createdAt = unit.createdAt
                 creditAllocation = unit.creditAllocation
                 currency = unit.currency
@@ -1629,6 +1654,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -2004,6 +2091,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -2032,6 +2120,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -2067,6 +2156,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -2113,6 +2203,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -2283,6 +2374,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -2526,17 +2791,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Unit && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && unitConfig == other.unitConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Unit && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && unitConfig == other.unitConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, unitConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, unitConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Unit{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, unitConfig=$unitConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Unit{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, unitConfig=$unitConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class Package
@@ -2546,6 +2811,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -2581,6 +2847,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -2635,6 +2904,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -2687,6 +2957,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -2859,6 +3136,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -3054,6 +3341,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -3084,6 +3372,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -3112,6 +3401,7 @@ private constructor(
                 billingCycleConfiguration = package_.billingCycleConfiguration
                 cadence = package_.cadence
                 conversionRate = package_.conversionRate
+                conversionRateConfig = package_.conversionRateConfig
                 createdAt = package_.createdAt
                 creditAllocation = package_.creditAllocation
                 currency = package_.currency
@@ -3204,6 +3494,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -3580,6 +3932,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -3608,6 +3961,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -3643,6 +3997,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -3689,6 +4044,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -3859,6 +4215,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -4102,17 +4632,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Package && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && packageConfig == other.packageConfig && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Package && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && packageConfig == other.packageConfig && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, packageConfig, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, packageConfig, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Package{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, packageConfig=$packageConfig, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Package{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, packageConfig=$packageConfig, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class Matrix
@@ -4122,6 +4652,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -4157,6 +4688,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -4211,6 +4745,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -4263,6 +4798,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -4435,6 +4977,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -4630,6 +5182,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -4660,6 +5213,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -4688,6 +5242,7 @@ private constructor(
                 billingCycleConfiguration = matrix.billingCycleConfiguration
                 cadence = matrix.cadence
                 conversionRate = matrix.conversionRate
+                conversionRateConfig = matrix.conversionRateConfig
                 createdAt = matrix.createdAt
                 creditAllocation = matrix.creditAllocation
                 currency = matrix.currency
@@ -4780,6 +5335,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -5155,6 +5772,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -5183,6 +5801,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -5218,6 +5837,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -5264,6 +5884,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -5434,6 +6055,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -5677,17 +6472,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Matrix && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && matrixConfig == other.matrixConfig && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Matrix && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && matrixConfig == other.matrixConfig && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, matrixConfig, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, matrixConfig, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Matrix{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixConfig=$matrixConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Matrix{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixConfig=$matrixConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class Tiered
@@ -5697,6 +6492,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -5732,6 +6528,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -5786,6 +6585,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -5838,6 +6638,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -6010,6 +6817,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -6205,6 +7022,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -6235,6 +7053,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -6263,6 +7082,7 @@ private constructor(
                 billingCycleConfiguration = tiered.billingCycleConfiguration
                 cadence = tiered.cadence
                 conversionRate = tiered.conversionRate
+                conversionRateConfig = tiered.conversionRateConfig
                 createdAt = tiered.createdAt
                 creditAllocation = tiered.creditAllocation
                 currency = tiered.currency
@@ -6355,6 +7175,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -6730,6 +7612,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -6758,6 +7641,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -6793,6 +7677,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -6839,6 +7724,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -7009,6 +7895,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -7252,17 +8312,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Tiered && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredConfig == other.tieredConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Tiered && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredConfig == other.tieredConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Tiered{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredConfig=$tieredConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Tiered{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredConfig=$tieredConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class TieredBps
@@ -7272,6 +8332,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -7307,6 +8368,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -7361,6 +8425,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -7413,6 +8478,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -7585,6 +8657,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -7780,6 +8862,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -7810,6 +8893,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -7838,6 +8922,7 @@ private constructor(
                 billingCycleConfiguration = tieredBps.billingCycleConfiguration
                 cadence = tieredBps.cadence
                 conversionRate = tieredBps.conversionRate
+                conversionRateConfig = tieredBps.conversionRateConfig
                 createdAt = tieredBps.createdAt
                 creditAllocation = tieredBps.creditAllocation
                 currency = tieredBps.currency
@@ -7930,6 +9015,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -8306,6 +9453,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -8334,6 +9482,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -8369,6 +9518,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -8415,6 +9565,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -8585,6 +9736,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -8828,17 +10153,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TieredBps && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredBpsConfig == other.tieredBpsConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TieredBps && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredBpsConfig == other.tieredBpsConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredBpsConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredBpsConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TieredBps{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredBpsConfig=$tieredBpsConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "TieredBps{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredBpsConfig=$tieredBpsConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class Bps
@@ -8849,6 +10174,7 @@ private constructor(
         private val bpsConfig: JsonField<BpsConfig>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -8886,6 +10212,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -8938,6 +10267,7 @@ private constructor(
             bpsConfig,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -8995,6 +10325,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -9170,6 +10507,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -9356,6 +10703,7 @@ private constructor(
              * .bpsConfig()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -9386,6 +10734,7 @@ private constructor(
             private var bpsConfig: JsonField<BpsConfig>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -9414,6 +10763,7 @@ private constructor(
                 bpsConfig = bps.bpsConfig
                 cadence = bps.cadence
                 conversionRate = bps.conversionRate
+                conversionRateConfig = bps.conversionRateConfig
                 createdAt = bps.createdAt
                 creditAllocation = bps.creditAllocation
                 currency = bps.currency
@@ -9516,6 +10866,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -9879,6 +11291,7 @@ private constructor(
              * .bpsConfig()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -9907,6 +11320,7 @@ private constructor(
                     checkRequired("bpsConfig", bpsConfig),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -9942,6 +11356,7 @@ private constructor(
             bpsConfig().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -9988,6 +11403,7 @@ private constructor(
                 (bpsConfig.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -10157,6 +11573,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -10400,17 +11990,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Bps && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && bpsConfig == other.bpsConfig && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Bps && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && bpsConfig == other.bpsConfig && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, bpsConfig, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, bpsConfig, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Bps{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, bpsConfig=$bpsConfig, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Bps{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, bpsConfig=$bpsConfig, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class BulkBps
@@ -10421,6 +12011,7 @@ private constructor(
         private val bulkBpsConfig: JsonField<BulkBpsConfig>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -10458,6 +12049,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -10510,6 +12104,7 @@ private constructor(
             bulkBpsConfig,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -10567,6 +12162,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -10743,6 +12345,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -10929,6 +12541,7 @@ private constructor(
              * .bulkBpsConfig()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -10959,6 +12572,7 @@ private constructor(
             private var bulkBpsConfig: JsonField<BulkBpsConfig>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -10987,6 +12601,7 @@ private constructor(
                 bulkBpsConfig = bulkBps.bulkBpsConfig
                 cadence = bulkBps.cadence
                 conversionRate = bulkBps.conversionRate
+                conversionRateConfig = bulkBps.conversionRateConfig
                 createdAt = bulkBps.createdAt
                 creditAllocation = bulkBps.creditAllocation
                 currency = bulkBps.currency
@@ -11092,6 +12707,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -11455,6 +13132,7 @@ private constructor(
              * .bulkBpsConfig()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -11483,6 +13161,7 @@ private constructor(
                     checkRequired("bulkBpsConfig", bulkBpsConfig),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -11518,6 +13197,7 @@ private constructor(
             bulkBpsConfig().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -11564,6 +13244,7 @@ private constructor(
                 (bulkBpsConfig.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -11733,6 +13414,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -11976,17 +13831,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BulkBps && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && bulkBpsConfig == other.bulkBpsConfig && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is BulkBps && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && bulkBpsConfig == other.bulkBpsConfig && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, bulkBpsConfig, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, bulkBpsConfig, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BulkBps{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, bulkBpsConfig=$bulkBpsConfig, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "BulkBps{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, bulkBpsConfig=$bulkBpsConfig, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class Bulk
@@ -11997,6 +13852,7 @@ private constructor(
         private val bulkConfig: JsonField<BulkConfig>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -12034,6 +13890,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -12086,6 +13945,7 @@ private constructor(
             bulkConfig,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -12143,6 +14003,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -12318,6 +14185,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -12504,6 +14381,7 @@ private constructor(
              * .bulkConfig()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -12534,6 +14412,7 @@ private constructor(
             private var bulkConfig: JsonField<BulkConfig>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -12562,6 +14441,7 @@ private constructor(
                 bulkConfig = bulk.bulkConfig
                 cadence = bulk.cadence
                 conversionRate = bulk.conversionRate
+                conversionRateConfig = bulk.conversionRateConfig
                 createdAt = bulk.createdAt
                 creditAllocation = bulk.creditAllocation
                 currency = bulk.currency
@@ -12666,6 +14546,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -13029,6 +14971,7 @@ private constructor(
              * .bulkConfig()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -13057,6 +15000,7 @@ private constructor(
                     checkRequired("bulkConfig", bulkConfig),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -13092,6 +15036,7 @@ private constructor(
             bulkConfig().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -13138,6 +15083,7 @@ private constructor(
                 (bulkConfig.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -13307,6 +15253,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -13550,17 +15670,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Bulk && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && bulkConfig == other.bulkConfig && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Bulk && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && bulkConfig == other.bulkConfig && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, bulkConfig, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, bulkConfig, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Bulk{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, bulkConfig=$bulkConfig, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Bulk{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, bulkConfig=$bulkConfig, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class ThresholdTotalAmount
@@ -13570,6 +15690,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -13605,6 +15726,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -13659,6 +15783,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -13711,6 +15836,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -13884,6 +16016,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -14080,6 +16222,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -14110,6 +16253,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -14138,6 +16282,7 @@ private constructor(
                 billingCycleConfiguration = thresholdTotalAmount.billingCycleConfiguration
                 cadence = thresholdTotalAmount.cadence
                 conversionRate = thresholdTotalAmount.conversionRate
+                conversionRateConfig = thresholdTotalAmount.conversionRateConfig
                 createdAt = thresholdTotalAmount.createdAt
                 creditAllocation = thresholdTotalAmount.creditAllocation
                 currency = thresholdTotalAmount.currency
@@ -14230,6 +16375,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -14606,6 +16813,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -14634,6 +16842,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -14669,6 +16878,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -14715,6 +16925,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -14885,6 +17096,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -15236,17 +17621,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ThresholdTotalAmount && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && thresholdTotalAmountConfig == other.thresholdTotalAmountConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ThresholdTotalAmount && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && thresholdTotalAmountConfig == other.thresholdTotalAmountConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, thresholdTotalAmountConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, thresholdTotalAmountConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ThresholdTotalAmount{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "ThresholdTotalAmount{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class TieredPackage
@@ -15256,6 +17641,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -15291,6 +17677,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -15345,6 +17734,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -15397,6 +17787,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -15570,6 +17967,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -15765,6 +18172,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -15795,6 +18203,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -15823,6 +18232,7 @@ private constructor(
                 billingCycleConfiguration = tieredPackage.billingCycleConfiguration
                 cadence = tieredPackage.cadence
                 conversionRate = tieredPackage.conversionRate
+                conversionRateConfig = tieredPackage.conversionRateConfig
                 createdAt = tieredPackage.createdAt
                 creditAllocation = tieredPackage.creditAllocation
                 currency = tieredPackage.currency
@@ -15915,6 +18325,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -16291,6 +18763,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -16319,6 +18792,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -16354,6 +18828,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -16400,6 +18875,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -16570,6 +19046,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -16919,17 +19569,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TieredPackage && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredPackageConfig == other.tieredPackageConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TieredPackage && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredPackageConfig == other.tieredPackageConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredPackageConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredPackageConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredPackageConfig=$tieredPackageConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "TieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredPackageConfig=$tieredPackageConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class GroupedTiered
@@ -16939,6 +19589,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -16974,6 +19625,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -17028,6 +19682,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -17080,6 +19735,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -17253,6 +19915,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -17448,6 +20120,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -17478,6 +20151,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -17506,6 +20180,7 @@ private constructor(
                 billingCycleConfiguration = groupedTiered.billingCycleConfiguration
                 cadence = groupedTiered.cadence
                 conversionRate = groupedTiered.conversionRate
+                conversionRateConfig = groupedTiered.conversionRateConfig
                 createdAt = groupedTiered.createdAt
                 creditAllocation = groupedTiered.creditAllocation
                 currency = groupedTiered.currency
@@ -17598,6 +20273,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -17974,6 +20711,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -18002,6 +20740,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -18037,6 +20776,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -18083,6 +20823,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -18253,6 +20994,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         class GroupedTieredConfig
@@ -18602,17 +21517,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is GroupedTiered && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && groupedTieredConfig == other.groupedTieredConfig && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is GroupedTiered && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && groupedTieredConfig == other.groupedTieredConfig && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, groupedTieredConfig, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, groupedTieredConfig, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedTiered{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedTieredConfig=$groupedTieredConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "GroupedTiered{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedTieredConfig=$groupedTieredConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class TieredWithMinimum
@@ -18622,6 +21537,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -18657,6 +21573,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -18711,6 +21630,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -18763,6 +21683,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -18936,6 +21863,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -19131,6 +22068,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -19161,6 +22099,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -19189,6 +22128,7 @@ private constructor(
                 billingCycleConfiguration = tieredWithMinimum.billingCycleConfiguration
                 cadence = tieredWithMinimum.cadence
                 conversionRate = tieredWithMinimum.conversionRate
+                conversionRateConfig = tieredWithMinimum.conversionRateConfig
                 createdAt = tieredWithMinimum.createdAt
                 creditAllocation = tieredWithMinimum.creditAllocation
                 currency = tieredWithMinimum.currency
@@ -19281,6 +22221,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -19657,6 +22659,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -19685,6 +22688,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -19720,6 +22724,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -19766,6 +22771,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -19936,6 +22942,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -20287,17 +23467,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TieredWithMinimum && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredWithMinimumConfig == other.tieredWithMinimumConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TieredWithMinimum && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredWithMinimumConfig == other.tieredWithMinimumConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredWithMinimumConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredWithMinimumConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TieredWithMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredWithMinimumConfig=$tieredWithMinimumConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "TieredWithMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredWithMinimumConfig=$tieredWithMinimumConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class TieredPackageWithMinimum
@@ -20307,6 +23487,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -20342,6 +23523,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -20397,6 +23581,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -20449,6 +23634,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -20622,6 +23814,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -20818,6 +24020,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -20848,6 +24051,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -20877,6 +24081,7 @@ private constructor(
                 billingCycleConfiguration = tieredPackageWithMinimum.billingCycleConfiguration
                 cadence = tieredPackageWithMinimum.cadence
                 conversionRate = tieredPackageWithMinimum.conversionRate
+                conversionRateConfig = tieredPackageWithMinimum.conversionRateConfig
                 createdAt = tieredPackageWithMinimum.createdAt
                 creditAllocation = tieredPackageWithMinimum.creditAllocation
                 currency = tieredPackageWithMinimum.currency
@@ -20971,6 +24176,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -21348,6 +24615,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -21376,6 +24644,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -21411,6 +24680,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -21457,6 +24727,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -21629,6 +24900,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -21981,17 +25426,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TieredPackageWithMinimum && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredPackageWithMinimumConfig == other.tieredPackageWithMinimumConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TieredPackageWithMinimum && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredPackageWithMinimumConfig == other.tieredPackageWithMinimumConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredPackageWithMinimumConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredPackageWithMinimumConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TieredPackageWithMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredPackageWithMinimumConfig=$tieredPackageWithMinimumConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "TieredPackageWithMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredPackageWithMinimumConfig=$tieredPackageWithMinimumConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class PackageWithAllocation
@@ -22001,6 +25446,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -22036,6 +25482,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -22090,6 +25539,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -22142,6 +25592,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -22315,6 +25772,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -22511,6 +25978,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -22541,6 +26009,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -22569,6 +26038,7 @@ private constructor(
                 billingCycleConfiguration = packageWithAllocation.billingCycleConfiguration
                 cadence = packageWithAllocation.cadence
                 conversionRate = packageWithAllocation.conversionRate
+                conversionRateConfig = packageWithAllocation.conversionRateConfig
                 createdAt = packageWithAllocation.createdAt
                 creditAllocation = packageWithAllocation.creditAllocation
                 currency = packageWithAllocation.currency
@@ -22661,6 +26131,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -23038,6 +26570,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -23066,6 +26599,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -23101,6 +26635,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -23147,6 +26682,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -23317,6 +26853,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -23669,17 +27379,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PackageWithAllocation && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && packageWithAllocationConfig == other.packageWithAllocationConfig && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is PackageWithAllocation && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && packageWithAllocationConfig == other.packageWithAllocationConfig && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, packageWithAllocationConfig, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, packageWithAllocationConfig, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PackageWithAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, packageWithAllocationConfig=$packageWithAllocationConfig, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "PackageWithAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, packageWithAllocationConfig=$packageWithAllocationConfig, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class UnitWithPercent
@@ -23689,6 +27399,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -23724,6 +27435,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -23778,6 +27492,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -23830,6 +27545,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -24003,6 +27725,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -24198,6 +27930,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -24228,6 +27961,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -24256,6 +27990,7 @@ private constructor(
                 billingCycleConfiguration = unitWithPercent.billingCycleConfiguration
                 cadence = unitWithPercent.cadence
                 conversionRate = unitWithPercent.conversionRate
+                conversionRateConfig = unitWithPercent.conversionRateConfig
                 createdAt = unitWithPercent.createdAt
                 creditAllocation = unitWithPercent.creditAllocation
                 currency = unitWithPercent.currency
@@ -24348,6 +28083,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -24725,6 +28522,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -24753,6 +28551,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -24788,6 +28587,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -24834,6 +28634,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -25004,6 +28805,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -25354,17 +29329,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is UnitWithPercent && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && unitWithPercentConfig == other.unitWithPercentConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is UnitWithPercent && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && unitWithPercentConfig == other.unitWithPercentConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, unitWithPercentConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, unitWithPercentConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "UnitWithPercent{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, unitWithPercentConfig=$unitWithPercentConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "UnitWithPercent{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, unitWithPercentConfig=$unitWithPercentConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class MatrixWithAllocation
@@ -25374,6 +29349,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -25409,6 +29385,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -25463,6 +29442,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -25515,6 +29495,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -25688,6 +29675,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -25884,6 +29881,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -25914,6 +29912,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -25942,6 +29941,7 @@ private constructor(
                 billingCycleConfiguration = matrixWithAllocation.billingCycleConfiguration
                 cadence = matrixWithAllocation.cadence
                 conversionRate = matrixWithAllocation.conversionRate
+                conversionRateConfig = matrixWithAllocation.conversionRateConfig
                 createdAt = matrixWithAllocation.createdAt
                 creditAllocation = matrixWithAllocation.creditAllocation
                 currency = matrixWithAllocation.currency
@@ -26034,6 +30034,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -26410,6 +30472,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -26438,6 +30501,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -26473,6 +30537,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -26519,6 +30584,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -26689,6 +30755,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -26932,17 +31172,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is MatrixWithAllocation && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && matrixWithAllocationConfig == other.matrixWithAllocationConfig && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is MatrixWithAllocation && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && matrixWithAllocationConfig == other.matrixWithAllocationConfig && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, matrixWithAllocationConfig, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, matrixWithAllocationConfig, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MatrixWithAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixWithAllocationConfig=$matrixWithAllocationConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "MatrixWithAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixWithAllocationConfig=$matrixWithAllocationConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class TieredWithProration
@@ -26952,6 +31192,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -26987,6 +31228,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -27041,6 +31285,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -27093,6 +31338,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -27266,6 +31518,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -27462,6 +31724,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -27492,6 +31755,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -27520,6 +31784,7 @@ private constructor(
                 billingCycleConfiguration = tieredWithProration.billingCycleConfiguration
                 cadence = tieredWithProration.cadence
                 conversionRate = tieredWithProration.conversionRate
+                conversionRateConfig = tieredWithProration.conversionRateConfig
                 createdAt = tieredWithProration.createdAt
                 creditAllocation = tieredWithProration.creditAllocation
                 currency = tieredWithProration.currency
@@ -27612,6 +31877,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -27988,6 +32315,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -28016,6 +32344,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -28051,6 +32380,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -28097,6 +32427,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -28267,6 +32598,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -28618,17 +33123,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TieredWithProration && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredWithProrationConfig == other.tieredWithProrationConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TieredWithProration && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && tieredWithProrationConfig == other.tieredWithProrationConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredWithProrationConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, tieredWithProrationConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TieredWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredWithProrationConfig=$tieredWithProrationConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "TieredWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, tieredWithProrationConfig=$tieredWithProrationConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class UnitWithProration
@@ -28638,6 +33143,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -28673,6 +33179,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -28727,6 +33236,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -28779,6 +33289,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -28952,6 +33469,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -29147,6 +33674,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -29177,6 +33705,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -29205,6 +33734,7 @@ private constructor(
                 billingCycleConfiguration = unitWithProration.billingCycleConfiguration
                 cadence = unitWithProration.cadence
                 conversionRate = unitWithProration.conversionRate
+                conversionRateConfig = unitWithProration.conversionRateConfig
                 createdAt = unitWithProration.createdAt
                 creditAllocation = unitWithProration.creditAllocation
                 currency = unitWithProration.currency
@@ -29297,6 +33827,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -29673,6 +34265,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -29701,6 +34294,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -29736,6 +34330,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -29782,6 +34377,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -29952,6 +34548,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -30303,17 +35073,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is UnitWithProration && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && unitWithProrationConfig == other.unitWithProrationConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is UnitWithProration && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && unitWithProrationConfig == other.unitWithProrationConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, unitWithProrationConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, unitWithProrationConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "UnitWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, unitWithProrationConfig=$unitWithProrationConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "UnitWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, unitWithProrationConfig=$unitWithProrationConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class GroupedAllocation
@@ -30323,6 +35093,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -30358,6 +35129,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -30412,6 +35186,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -30464,6 +35239,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -30637,6 +35419,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -30832,6 +35624,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -30862,6 +35655,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -30890,6 +35684,7 @@ private constructor(
                 billingCycleConfiguration = groupedAllocation.billingCycleConfiguration
                 cadence = groupedAllocation.cadence
                 conversionRate = groupedAllocation.conversionRate
+                conversionRateConfig = groupedAllocation.conversionRateConfig
                 createdAt = groupedAllocation.createdAt
                 creditAllocation = groupedAllocation.creditAllocation
                 currency = groupedAllocation.currency
@@ -30982,6 +35777,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -31358,6 +36215,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -31386,6 +36244,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -31421,6 +36280,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -31467,6 +36327,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -31637,6 +36498,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         class GroupedAllocationConfig
@@ -31988,17 +37023,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is GroupedAllocation && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && groupedAllocationConfig == other.groupedAllocationConfig && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is GroupedAllocation && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && groupedAllocationConfig == other.groupedAllocationConfig && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, groupedAllocationConfig, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, groupedAllocationConfig, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedAllocationConfig=$groupedAllocationConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "GroupedAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedAllocationConfig=$groupedAllocationConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class GroupedWithProratedMinimum
@@ -32008,6 +37043,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -32043,6 +37079,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -32098,6 +37137,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -32150,6 +37190,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -32323,6 +37370,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -32520,6 +37577,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -32550,6 +37608,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -32580,6 +37639,7 @@ private constructor(
                 billingCycleConfiguration = groupedWithProratedMinimum.billingCycleConfiguration
                 cadence = groupedWithProratedMinimum.cadence
                 conversionRate = groupedWithProratedMinimum.conversionRate
+                conversionRateConfig = groupedWithProratedMinimum.conversionRateConfig
                 createdAt = groupedWithProratedMinimum.createdAt
                 creditAllocation = groupedWithProratedMinimum.creditAllocation
                 currency = groupedWithProratedMinimum.currency
@@ -32675,6 +37735,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -33052,6 +38174,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -33080,6 +38203,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -33118,6 +38242,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -33164,6 +38289,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -33336,6 +38462,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         class GroupedWithProratedMinimumConfig
@@ -33689,17 +38989,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is GroupedWithProratedMinimum && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && groupedWithProratedMinimumConfig == other.groupedWithProratedMinimumConfig && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is GroupedWithProratedMinimum && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && groupedWithProratedMinimumConfig == other.groupedWithProratedMinimumConfig && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, groupedWithProratedMinimumConfig, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, groupedWithProratedMinimumConfig, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedWithProratedMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "GroupedWithProratedMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class GroupedWithMeteredMinimum
@@ -33709,6 +39009,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -33744,6 +39045,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -33799,6 +39103,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -33851,6 +39156,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -34024,6 +39336,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -34221,6 +39543,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -34251,6 +39574,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -34281,6 +39605,7 @@ private constructor(
                 billingCycleConfiguration = groupedWithMeteredMinimum.billingCycleConfiguration
                 cadence = groupedWithMeteredMinimum.cadence
                 conversionRate = groupedWithMeteredMinimum.conversionRate
+                conversionRateConfig = groupedWithMeteredMinimum.conversionRateConfig
                 createdAt = groupedWithMeteredMinimum.createdAt
                 creditAllocation = groupedWithMeteredMinimum.creditAllocation
                 currency = groupedWithMeteredMinimum.currency
@@ -34375,6 +39700,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -34752,6 +40139,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -34780,6 +40168,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -34818,6 +40207,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -34864,6 +40254,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -35036,6 +40427,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         class GroupedWithMeteredMinimumConfig
@@ -35389,17 +40954,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is GroupedWithMeteredMinimum && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && groupedWithMeteredMinimumConfig == other.groupedWithMeteredMinimumConfig && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is GroupedWithMeteredMinimum && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && groupedWithMeteredMinimumConfig == other.groupedWithMeteredMinimumConfig && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, groupedWithMeteredMinimumConfig, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, groupedWithMeteredMinimumConfig, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedWithMeteredMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "GroupedWithMeteredMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class MatrixWithDisplayName
@@ -35409,6 +40974,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -35444,6 +41010,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -35498,6 +41067,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -35550,6 +41120,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -35723,6 +41300,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -35919,6 +41506,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -35949,6 +41537,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -35977,6 +41566,7 @@ private constructor(
                 billingCycleConfiguration = matrixWithDisplayName.billingCycleConfiguration
                 cadence = matrixWithDisplayName.cadence
                 conversionRate = matrixWithDisplayName.conversionRate
+                conversionRateConfig = matrixWithDisplayName.conversionRateConfig
                 createdAt = matrixWithDisplayName.createdAt
                 creditAllocation = matrixWithDisplayName.creditAllocation
                 currency = matrixWithDisplayName.currency
@@ -36069,6 +41659,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -36446,6 +42098,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -36474,6 +42127,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -36509,6 +42163,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -36555,6 +42210,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -36725,6 +42381,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         class MatrixWithDisplayNameConfig
@@ -37077,17 +42907,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is MatrixWithDisplayName && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && matrixWithDisplayNameConfig == other.matrixWithDisplayNameConfig && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is MatrixWithDisplayName && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && matrixWithDisplayNameConfig == other.matrixWithDisplayNameConfig && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, matrixWithDisplayNameConfig, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, matrixWithDisplayNameConfig, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MatrixWithDisplayName{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixWithDisplayNameConfig=$matrixWithDisplayNameConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "MatrixWithDisplayName{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixWithDisplayNameConfig=$matrixWithDisplayNameConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class BulkWithProration
@@ -37098,6 +42928,7 @@ private constructor(
         private val bulkWithProrationConfig: JsonField<BulkWithProrationConfig>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -37135,6 +42966,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -37187,6 +43021,7 @@ private constructor(
             bulkWithProrationConfig,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -37245,6 +43080,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -37421,6 +43263,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -37607,6 +43459,7 @@ private constructor(
              * .bulkWithProrationConfig()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -37637,6 +43490,7 @@ private constructor(
             private var bulkWithProrationConfig: JsonField<BulkWithProrationConfig>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -37665,6 +43519,7 @@ private constructor(
                 bulkWithProrationConfig = bulkWithProration.bulkWithProrationConfig
                 cadence = bulkWithProration.cadence
                 conversionRate = bulkWithProration.conversionRate
+                conversionRateConfig = bulkWithProration.conversionRateConfig
                 createdAt = bulkWithProration.createdAt
                 creditAllocation = bulkWithProration.creditAllocation
                 currency = bulkWithProration.currency
@@ -37770,6 +43625,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -38133,6 +44050,7 @@ private constructor(
              * .bulkWithProrationConfig()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -38161,6 +44079,7 @@ private constructor(
                     checkRequired("bulkWithProrationConfig", bulkWithProrationConfig),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -38196,6 +44115,7 @@ private constructor(
             bulkWithProrationConfig().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -38242,6 +44162,7 @@ private constructor(
                 (bulkWithProrationConfig.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -38521,6 +44442,180 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
+        }
+
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
@@ -38762,17 +44857,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BulkWithProration && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && bulkWithProrationConfig == other.bulkWithProrationConfig && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is BulkWithProration && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && bulkWithProrationConfig == other.bulkWithProrationConfig && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, bulkWithProrationConfig, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, bulkWithProrationConfig, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BulkWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, bulkWithProrationConfig=$bulkWithProrationConfig, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "BulkWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, bulkWithProrationConfig=$bulkWithProrationConfig, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class GroupedTieredPackage
@@ -38782,6 +44877,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -38817,6 +44913,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -38871,6 +44970,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -38923,6 +45023,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -39096,6 +45203,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -39292,6 +45409,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -39322,6 +45440,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -39350,6 +45469,7 @@ private constructor(
                 billingCycleConfiguration = groupedTieredPackage.billingCycleConfiguration
                 cadence = groupedTieredPackage.cadence
                 conversionRate = groupedTieredPackage.conversionRate
+                conversionRateConfig = groupedTieredPackage.conversionRateConfig
                 createdAt = groupedTieredPackage.createdAt
                 creditAllocation = groupedTieredPackage.creditAllocation
                 currency = groupedTieredPackage.currency
@@ -39442,6 +45562,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -39818,6 +46000,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -39846,6 +46029,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -39881,6 +46065,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -39927,6 +46112,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -40097,6 +46283,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         class GroupedTieredPackageConfig
@@ -40448,17 +46808,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is GroupedTieredPackage && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && groupedTieredPackageConfig == other.groupedTieredPackageConfig && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is GroupedTieredPackage && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && groupedTieredPackageConfig == other.groupedTieredPackageConfig && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, groupedTieredPackageConfig, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, groupedTieredPackageConfig, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedTieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedTieredPackageConfig=$groupedTieredPackageConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "GroupedTieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedTieredPackageConfig=$groupedTieredPackageConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class MaxGroupTieredPackage
@@ -40468,6 +46828,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -40503,6 +46864,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -40557,6 +46921,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -40609,6 +46974,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -40782,6 +47154,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -40978,6 +47360,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -41008,6 +47391,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -41036,6 +47420,7 @@ private constructor(
                 billingCycleConfiguration = maxGroupTieredPackage.billingCycleConfiguration
                 cadence = maxGroupTieredPackage.cadence
                 conversionRate = maxGroupTieredPackage.conversionRate
+                conversionRateConfig = maxGroupTieredPackage.conversionRateConfig
                 createdAt = maxGroupTieredPackage.createdAt
                 creditAllocation = maxGroupTieredPackage.creditAllocation
                 currency = maxGroupTieredPackage.currency
@@ -41128,6 +47513,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -41505,6 +47952,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -41533,6 +47981,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -41568,6 +48017,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -41614,6 +48064,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -41784,6 +48235,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         class MaxGroupTieredPackageConfig
@@ -42136,17 +48761,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is MaxGroupTieredPackage && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maxGroupTieredPackageConfig == other.maxGroupTieredPackageConfig && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is MaxGroupTieredPackage && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maxGroupTieredPackageConfig == other.maxGroupTieredPackageConfig && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maxGroupTieredPackageConfig, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maxGroupTieredPackageConfig, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MaxGroupTieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maxGroupTieredPackageConfig=$maxGroupTieredPackageConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "MaxGroupTieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maxGroupTieredPackageConfig=$maxGroupTieredPackageConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class ScalableMatrixWithUnitPricing
@@ -42156,6 +48781,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -42192,6 +48818,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -42247,6 +48876,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -42299,6 +48929,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -42474,6 +49111,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -42671,6 +49318,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -42701,6 +49349,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -42733,6 +49382,7 @@ private constructor(
                         scalableMatrixWithUnitPricing.billingCycleConfiguration
                     cadence = scalableMatrixWithUnitPricing.cadence
                     conversionRate = scalableMatrixWithUnitPricing.conversionRate
+                    conversionRateConfig = scalableMatrixWithUnitPricing.conversionRateConfig
                     createdAt = scalableMatrixWithUnitPricing.createdAt
                     creditAllocation = scalableMatrixWithUnitPricing.creditAllocation
                     currency = scalableMatrixWithUnitPricing.currency
@@ -42829,6 +49479,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -43211,6 +49923,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -43239,6 +49952,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -43277,6 +49991,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -43323,6 +50038,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -43495,6 +50211,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -43848,17 +50738,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ScalableMatrixWithUnitPricing && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && scalableMatrixWithUnitPricingConfig == other.scalableMatrixWithUnitPricingConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ScalableMatrixWithUnitPricing && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && scalableMatrixWithUnitPricingConfig == other.scalableMatrixWithUnitPricingConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, scalableMatrixWithUnitPricingConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, scalableMatrixWithUnitPricingConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ScalableMatrixWithUnitPricing{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, scalableMatrixWithUnitPricingConfig=$scalableMatrixWithUnitPricingConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "ScalableMatrixWithUnitPricing{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, scalableMatrixWithUnitPricingConfig=$scalableMatrixWithUnitPricingConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class ScalableMatrixWithTieredPricing
@@ -43868,6 +50758,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val currency: JsonField<String>,
@@ -43904,6 +50795,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -43960,6 +50854,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             currency,
@@ -44012,6 +50907,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -44187,6 +51089,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -44384,6 +51296,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -44414,6 +51327,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var currency: JsonField<String>? = null
@@ -44446,6 +51360,7 @@ private constructor(
                         scalableMatrixWithTieredPricing.billingCycleConfiguration
                     cadence = scalableMatrixWithTieredPricing.cadence
                     conversionRate = scalableMatrixWithTieredPricing.conversionRate
+                    conversionRateConfig = scalableMatrixWithTieredPricing.conversionRateConfig
                     createdAt = scalableMatrixWithTieredPricing.createdAt
                     creditAllocation = scalableMatrixWithTieredPricing.creditAllocation
                     currency = scalableMatrixWithTieredPricing.currency
@@ -44542,6 +51457,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -44925,6 +51902,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .currency()
@@ -44953,6 +51931,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("currency", currency),
@@ -44991,6 +51970,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             currency()
@@ -45037,6 +52017,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -45209,6 +52190,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         /**
@@ -45562,17 +52717,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ScalableMatrixWithTieredPricing && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && scalableMatrixWithTieredPricingConfig == other.scalableMatrixWithTieredPricingConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ScalableMatrixWithTieredPricing && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && scalableMatrixWithTieredPricingConfig == other.scalableMatrixWithTieredPricingConfig && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, scalableMatrixWithTieredPricingConfig, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, scalableMatrixWithTieredPricingConfig, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ScalableMatrixWithTieredPricing{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, scalableMatrixWithTieredPricingConfig=$scalableMatrixWithTieredPricingConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "ScalableMatrixWithTieredPricing{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, scalableMatrixWithTieredPricingConfig=$scalableMatrixWithTieredPricingConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class CumulativeGroupedBulk
@@ -45582,6 +52737,7 @@ private constructor(
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
         private val cadence: JsonField<Cadence>,
         private val conversionRate: JsonField<Double>,
+        private val conversionRateConfig: JsonField<ConversionRateConfig>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditAllocation: JsonField<Allocation>,
         private val cumulativeGroupedBulkConfig: JsonField<CumulativeGroupedBulkConfig>,
@@ -45617,6 +52773,9 @@ private constructor(
             @JsonProperty("conversion_rate")
             @ExcludeMissing
             conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("conversion_rate_config")
+            @ExcludeMissing
+            conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -45671,6 +52830,7 @@ private constructor(
             billingCycleConfiguration,
             cadence,
             conversionRate,
+            conversionRateConfig,
             createdAt,
             creditAllocation,
             cumulativeGroupedBulkConfig,
@@ -45723,6 +52883,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun conversionRateConfig(): ConversionRateConfig? =
+            conversionRateConfig.getNullable("conversion_rate_config")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -45896,6 +53063,16 @@ private constructor(
         @JsonProperty("conversion_rate")
         @ExcludeMissing
         fun _conversionRate(): JsonField<Double> = conversionRate
+
+        /**
+         * Returns the raw JSON value of [conversionRateConfig].
+         *
+         * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("conversion_rate_config")
+        @ExcludeMissing
+        fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
 
         /**
          * Returns the raw JSON value of [createdAt].
@@ -46092,6 +53269,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .cumulativeGroupedBulkConfig()
@@ -46122,6 +53300,7 @@ private constructor(
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
             private var cadence: JsonField<Cadence>? = null
             private var conversionRate: JsonField<Double>? = null
+            private var conversionRateConfig: JsonField<ConversionRateConfig>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditAllocation: JsonField<Allocation>? = null
             private var cumulativeGroupedBulkConfig: JsonField<CumulativeGroupedBulkConfig>? = null
@@ -46150,6 +53329,7 @@ private constructor(
                 billingCycleConfiguration = cumulativeGroupedBulk.billingCycleConfiguration
                 cadence = cumulativeGroupedBulk.cadence
                 conversionRate = cumulativeGroupedBulk.conversionRate
+                conversionRateConfig = cumulativeGroupedBulk.conversionRateConfig
                 createdAt = cumulativeGroupedBulk.createdAt
                 creditAllocation = cumulativeGroupedBulk.creditAllocation
                 cumulativeGroupedBulkConfig = cumulativeGroupedBulk.cumulativeGroupedBulkConfig
@@ -46242,6 +53422,68 @@ private constructor(
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
+
+            fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+            /**
+             * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.conversionRateConfig] with a well-typed
+             * [ConversionRateConfig] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun conversionRateConfig(conversionRateConfig: JsonField<ConversionRateConfig>) =
+                apply {
+                    this.conversionRateConfig = conversionRateConfig
+                }
+
+            /**
+             * Alias for calling [conversionRateConfig] with `ConversionRateConfig.ofUnit(unit)`.
+             */
+            fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * UnitConversionRateConfig.builder()
+             *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+             *     .unitConfig(unitConfig)
+             *     .build()
+             * ```
+             */
+            fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                conversionRateConfig(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(unitConfig)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [conversionRateConfig] with
+             * `ConversionRateConfig.ofTiered(tiered)`.
+             */
+            fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+            /**
+             * Alias for calling [conversionRateConfig] with the following:
+             * ```kotlin
+             * TieredConversionRateConfig.builder()
+             *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+             *     .tieredConfig(tieredConfig)
+             *     .build()
+             * ```
+             */
+            fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                conversionRateConfig(
+                    TieredConversionRateConfig.builder()
+                        .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                        .tieredConfig(tieredConfig)
+                        .build()
+                )
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -46619,6 +53861,7 @@ private constructor(
              * .billingCycleConfiguration()
              * .cadence()
              * .conversionRate()
+             * .conversionRateConfig()
              * .createdAt()
              * .creditAllocation()
              * .cumulativeGroupedBulkConfig()
@@ -46647,6 +53890,7 @@ private constructor(
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
                     checkRequired("cadence", cadence),
                     checkRequired("conversionRate", conversionRate),
+                    checkRequired("conversionRateConfig", conversionRateConfig),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditAllocation", creditAllocation),
                     checkRequired("cumulativeGroupedBulkConfig", cumulativeGroupedBulkConfig),
@@ -46682,6 +53926,7 @@ private constructor(
             billingCycleConfiguration().validate()
             cadence().validate()
             conversionRate()
+            conversionRateConfig()?.validate()
             createdAt()
             creditAllocation()?.validate()
             cumulativeGroupedBulkConfig().validate()
@@ -46728,6 +53973,7 @@ private constructor(
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
+                (conversionRateConfig.asKnown()?.validity() ?: 0) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditAllocation.asKnown()?.validity() ?: 0) +
                 (cumulativeGroupedBulkConfig.asKnown()?.validity() ?: 0) +
@@ -46898,6 +54144,180 @@ private constructor(
             override fun hashCode() = value.hashCode()
 
             override fun toString() = value.toString()
+        }
+
+        @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
+        @JsonSerialize(using = ConversionRateConfig.Serializer::class)
+        class ConversionRateConfig
+        private constructor(
+            private val unit: UnitConversionRateConfig? = null,
+            private val tiered: TieredConversionRateConfig? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun unit(): UnitConversionRateConfig? = unit
+
+            fun tiered(): TieredConversionRateConfig? = tiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
+
+            fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConversionRateConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) {
+                            unit.validate()
+                        }
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) {
+                            tiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
+
+                        override fun visitTiered(tiered: TieredConversionRateConfig) =
+                            tiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "ConversionRateConfig{unit=$unit}"
+                    tiered != null -> "ConversionRateConfig{tiered=$tiered}"
+                    _json != null -> "ConversionRateConfig{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
+
+                fun ofTiered(tiered: TieredConversionRateConfig) =
+                    ConversionRateConfig(tiered = tiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [ConversionRateConfig] to a
+             * value of type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: UnitConversionRateConfig): T
+
+                fun visitTiered(tiered: TieredConversionRateConfig): T
+
+                /**
+                 * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
+                 *
+                 * An instance of [ConversionRateConfig] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
+                    val json = JsonValue.fromJsonNode(node)
+                    val conversionRateType =
+                        json.asObject()?.get("conversion_rate_type")?.asString()
+
+                    when (conversionRateType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
+                                ?.let { ConversionRateConfig(unit = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<TieredConversionRateConfig>(),
+                                )
+                                ?.let { ConversionRateConfig(tiered = it, _json = json) }
+                                ?: ConversionRateConfig(_json = json)
+                        }
+                    }
+
+                    return ConversionRateConfig(_json = json)
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
+
+                override fun serialize(
+                    value: ConversionRateConfig,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid ConversionRateConfig")
+                    }
+                }
+            }
         }
 
         class CumulativeGroupedBulkConfig
@@ -47250,16 +54670,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CumulativeGroupedBulk && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && cumulativeGroupedBulkConfig == other.cumulativeGroupedBulkConfig && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CumulativeGroupedBulk && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && createdAt == other.createdAt && creditAllocation == other.creditAllocation && cumulativeGroupedBulkConfig == other.cumulativeGroupedBulkConfig && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, cumulativeGroupedBulkConfig, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, conversionRateConfig, createdAt, creditAllocation, cumulativeGroupedBulkConfig, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CumulativeGroupedBulk{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, cumulativeGroupedBulkConfig=$cumulativeGroupedBulkConfig, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "CumulativeGroupedBulk{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, cumulativeGroupedBulkConfig=$cumulativeGroupedBulkConfig, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 }

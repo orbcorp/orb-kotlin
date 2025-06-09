@@ -34,6 +34,9 @@ internal class NewSubscriptionBulkPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -81,6 +84,17 @@ internal class NewSubscriptionBulkPriceTest {
                     .build()
             )
         assertThat(newSubscriptionBulkPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newSubscriptionBulkPrice.conversionRateConfig())
+            .isEqualTo(
+                NewSubscriptionBulkPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newSubscriptionBulkPrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionBulkPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -134,6 +148,9 @@ internal class NewSubscriptionBulkPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

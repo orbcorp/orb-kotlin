@@ -32,6 +32,9 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -79,6 +82,17 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
                     .build()
             )
         assertThat(newPlanCumulativeGroupedBulkPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newPlanCumulativeGroupedBulkPrice.conversionRateConfig())
+            .isEqualTo(
+                NewPlanCumulativeGroupedBulkPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newPlanCumulativeGroupedBulkPrice.currency()).isEqualTo("currency")
         assertThat(newPlanCumulativeGroupedBulkPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -130,6 +144,9 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
