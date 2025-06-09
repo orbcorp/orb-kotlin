@@ -19,7 +19,7 @@ internal class CustomerCreditTopUpListByExternalIdPageResponseTest {
                         .amount("amount")
                         .currency("currency")
                         .invoiceSettings(
-                            CustomerCreditTopUpListByExternalIdResponse.InvoiceSettings.builder()
+                            TopUpInvoiceSettings.builder()
                                 .autoCollection(true)
                                 .netTerms(0L)
                                 .memo("memo")
@@ -46,7 +46,7 @@ internal class CustomerCreditTopUpListByExternalIdPageResponseTest {
                     .amount("amount")
                     .currency("currency")
                     .invoiceSettings(
-                        CustomerCreditTopUpListByExternalIdResponse.InvoiceSettings.builder()
+                        TopUpInvoiceSettings.builder()
                             .autoCollection(true)
                             .netTerms(0L)
                             .memo("memo")
@@ -76,7 +76,7 @@ internal class CustomerCreditTopUpListByExternalIdPageResponseTest {
                         .amount("amount")
                         .currency("currency")
                         .invoiceSettings(
-                            CustomerCreditTopUpListByExternalIdResponse.InvoiceSettings.builder()
+                            TopUpInvoiceSettings.builder()
                                 .autoCollection(true)
                                 .netTerms(0L)
                                 .memo("memo")

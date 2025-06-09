@@ -19,7 +19,7 @@ internal class CustomerCreditTopUpListPageResponseTest {
                         .amount("amount")
                         .currency("currency")
                         .invoiceSettings(
-                            CustomerCreditTopUpListResponse.InvoiceSettings.builder()
+                            TopUpInvoiceSettings.builder()
                                 .autoCollection(true)
                                 .netTerms(0L)
                                 .memo("memo")
@@ -44,7 +44,7 @@ internal class CustomerCreditTopUpListPageResponseTest {
                     .amount("amount")
                     .currency("currency")
                     .invoiceSettings(
-                        CustomerCreditTopUpListResponse.InvoiceSettings.builder()
+                        TopUpInvoiceSettings.builder()
                             .autoCollection(true)
                             .netTerms(0L)
                             .memo("memo")
@@ -72,7 +72,7 @@ internal class CustomerCreditTopUpListPageResponseTest {
                         .amount("amount")
                         .currency("currency")
                         .invoiceSettings(
-                            CustomerCreditTopUpListResponse.InvoiceSettings.builder()
+                            TopUpInvoiceSettings.builder()
                                 .autoCollection(true)
                                 .netTerms(0L)
                                 .memo("memo")

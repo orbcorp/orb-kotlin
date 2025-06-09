@@ -19,46 +19,24 @@ internal class SubscriptionChangeRetrieveResponseTest {
                 .expirationTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(SubscriptionChangeRetrieveResponse.Status.PENDING)
                 .subscription(
-                    SubscriptionChangeRetrieveResponse.Subscription.builder()
+                    MutatedSubscription.builder()
                         .id("id")
                         .activePlanPhaseOrder(0L)
                         .addAdjustmentInterval(
-                            SubscriptionChangeRetrieveResponse.Subscription.AdjustmentInterval
-                                .builder()
+                            AdjustmentInterval.builder()
                                 .id("id")
                                 .adjustment(
-                                    SubscriptionChangeRetrieveResponse.Subscription
-                                        .AdjustmentInterval
-                                        .Adjustment
-                                        .UsageDiscount
-                                        .builder()
+                                    PlanPhaseUsageDiscountAdjustment.builder()
                                         .id("id")
+                                        .adjustmentType(
+                                            PlanPhaseUsageDiscountAdjustment.AdjustmentType
+                                                .USAGE_DISCOUNT
+                                        )
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .AdjustmentInterval
-                                                .Adjustment
-                                                .UsageDiscount
-                                                .Filter
-                                                .builder()
-                                                .field(
-                                                    SubscriptionChangeRetrieveResponse.Subscription
-                                                        .AdjustmentInterval
-                                                        .Adjustment
-                                                        .UsageDiscount
-                                                        .Filter
-                                                        .Field
-                                                        .PRICE_ID
-                                                )
-                                                .operator(
-                                                    SubscriptionChangeRetrieveResponse.Subscription
-                                                        .AdjustmentInterval
-                                                        .Adjustment
-                                                        .UsageDiscount
-                                                        .Filter
-                                                        .Operator
-                                                        .INCLUDES
-                                                )
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -75,9 +53,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                         )
                         .autoCollection(true)
                         .billingCycleAnchorConfiguration(
-                            SubscriptionChangeRetrieveResponse.Subscription
-                                .BillingCycleAnchorConfiguration
-                                .builder()
+                            BillingCycleAnchorConfiguration.builder()
                                 .day(1L)
                                 .month(1L)
                                 .year(0L)
@@ -98,7 +74,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .autoCollection(true)
                                 .balance("balance")
                                 .billingAddress(
-                                    Customer.BillingAddress.builder()
+                                    Address.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -116,13 +92,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .hierarchy(
                                     Customer.Hierarchy.builder()
                                         .addChild(
-                                            Customer.Hierarchy.Child.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
                                         )
                                         .parent(
-                                            Customer.Hierarchy.Parent.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
@@ -139,7 +115,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .paymentProviderId("payment_provider_id")
                                 .portalUrl("portal_url")
                                 .shippingAddress(
-                                    Customer.ShippingAddress.builder()
+                                    Address.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -149,9 +125,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .build()
                                 )
                                 .taxId(
-                                    Customer.TaxId.builder()
-                                        .country(Customer.TaxId.Country.AD)
-                                        .type(Customer.TaxId.Type.AD_NRT)
+                                    CustomerTaxId.builder()
+                                        .country(CustomerTaxId.Country.AD)
+                                        .type(CustomerTaxId.Type.AD_NRT)
                                         .value("value")
                                         .build()
                                 )
@@ -180,32 +156,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                         )
                         .defaultInvoiceMemo("default_invoice_memo")
                         .addDiscountInterval(
-                            SubscriptionChangeRetrieveResponse.Subscription.DiscountInterval.Amount
-                                .builder()
+                            AmountDiscountInterval.builder()
                                 .amountDiscount("amount_discount")
                                 .addAppliesToPriceIntervalId("string")
+                                .discountType(AmountDiscountInterval.DiscountType.AMOUNT)
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    SubscriptionChangeRetrieveResponse.Subscription.DiscountInterval
-                                        .Amount
-                                        .Filter
-                                        .builder()
-                                        .field(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .DiscountInterval
-                                                .Amount
-                                                .Filter
-                                                .Field
-                                                .PRICE_ID
-                                        )
-                                        .operator(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .DiscountInterval
-                                                .Amount
-                                                .Filter
-                                                .Operator
-                                                .INCLUDES
-                                        )
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -214,8 +173,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                         )
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFixedFeeQuantitySchedule(
-                            SubscriptionChangeRetrieveResponse.Subscription.FixedFeeQuantitySchedule
-                                .builder()
+                            FixedFeeQuantityScheduleEntry.builder()
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .priceId("price_id")
                                 .quantity(0.0)
@@ -224,28 +182,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                         )
                         .invoicingThreshold("invoicing_threshold")
                         .addMaximumInterval(
-                            SubscriptionChangeRetrieveResponse.Subscription.MaximumInterval
-                                .builder()
+                            MaximumInterval.builder()
                                 .addAppliesToPriceIntervalId("string")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    SubscriptionChangeRetrieveResponse.Subscription.MaximumInterval
-                                        .Filter
-                                        .builder()
-                                        .field(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .MaximumInterval
-                                                .Filter
-                                                .Field
-                                                .PRICE_ID
-                                        )
-                                        .operator(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .MaximumInterval
-                                                .Filter
-                                                .Operator
-                                                .INCLUDES
-                                        )
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -254,33 +197,18 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .build()
                         )
                         .metadata(
-                            SubscriptionChangeRetrieveResponse.Subscription.Metadata.builder()
+                            MutatedSubscription.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
                         .addMinimumInterval(
-                            SubscriptionChangeRetrieveResponse.Subscription.MinimumInterval
-                                .builder()
+                            MinimumInterval.builder()
                                 .addAppliesToPriceIntervalId("string")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    SubscriptionChangeRetrieveResponse.Subscription.MinimumInterval
-                                        .Filter
-                                        .builder()
-                                        .field(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .MinimumInterval
-                                                .Filter
-                                                .Field
-                                                .PRICE_ID
-                                        )
-                                        .operator(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .MinimumInterval
-                                                .Filter
-                                                .Operator
-                                                .INCLUDES
-                                        )
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -291,29 +219,23 @@ internal class SubscriptionChangeRetrieveResponseTest {
                         .name("name")
                         .netTerms(0L)
                         .pendingSubscriptionChange(
-                            SubscriptionChangeRetrieveResponse.Subscription
-                                .PendingSubscriptionChange
-                                .builder()
-                                .id("id")
-                                .build()
+                            SubscriptionChangeMinified.builder().id("id").build()
                         )
                         .plan(
                             Plan.builder()
                                 .id("id")
                                 .addAdjustment(
-                                    Plan.Adjustment.UsageDiscount.builder()
+                                    PlanPhaseUsageDiscountAdjustment.builder()
                                         .id("id")
+                                        .adjustmentType(
+                                            PlanPhaseUsageDiscountAdjustment.AdjustmentType
+                                                .USAGE_DISCOUNT
+                                        )
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Plan.Adjustment.UsageDiscount.Filter.builder()
-                                                .field(
-                                                    Plan.Adjustment.UsageDiscount.Filter.Field
-                                                        .PRICE_ID
-                                                )
-                                                .operator(
-                                                    Plan.Adjustment.UsageDiscount.Filter.Operator
-                                                        .INCLUDES
-                                                )
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -342,11 +264,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            PercentageDiscount.Filter.builder()
-                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
-                                                .operator(
-                                                    PercentageDiscount.Filter.Operator.INCLUDES
-                                                )
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -356,12 +276,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .externalPlanId("external_plan_id")
                                 .invoicingCurrency("invoicing_currency")
                                 .maximum(
-                                    Plan.Maximum.builder()
+                                    Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Plan.Maximum.Filter.builder()
-                                                .field(Plan.Maximum.Filter.Field.PRICE_ID)
-                                                .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -375,12 +295,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .build()
                                 )
                                 .minimum(
-                                    Plan.Minimum.builder()
+                                    Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Plan.Minimum.Filter.builder()
-                                                .field(Plan.Minimum.Filter.Field.PRICE_ID)
-                                                .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -403,13 +323,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -420,17 +337,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .duration(0L)
                                         .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
                                         .maximum(
-                                            Plan.PlanPhase.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Plan.PlanPhase.Maximum.Filter.builder()
-                                                        .field(
-                                                            Plan.PlanPhase.Maximum.Filter.Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Plan.PlanPhase.Maximum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -440,17 +353,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         )
                                         .maximumAmount("maximum_amount")
                                         .minimum(
-                                            Plan.PlanPhase.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Plan.PlanPhase.Minimum.Filter.builder()
-                                                        .field(
-                                                            Plan.PlanPhase.Minimum.Filter.Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Plan.PlanPhase.Minimum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -467,15 +376,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     Price.Unit.builder()
                                         .id("id")
                                         .billableMetric(
-                                            Price.Unit.BillableMetric.builder().id("id").build()
+                                            BillableMetricTiny.builder().id("id").build()
                                         )
                                         .billingCycleConfiguration(
-                                            Price.Unit.BillingCycleConfiguration.builder()
+                                            BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.Unit.BillingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfiguration.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
@@ -483,18 +390,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
-                                            Price.Unit.CreditAllocation.builder()
+                                            Allocation.builder()
                                                 .allowsRollover(true)
                                                 .currency("currency")
                                                 .customExpiration(
-                                                    Price.Unit.CreditAllocation.CustomExpiration
-                                                        .builder()
+                                                    CustomExpiration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.Unit.CreditAllocation
-                                                                .CustomExpiration
-                                                                .DurationUnit
-                                                                .DAY
+                                                            CustomExpiration.DurationUnit.DAY
                                                         )
                                                         .build()
                                                 )
@@ -510,13 +413,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -527,29 +427,22 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
-                                            Price.Unit.InvoicingCycleConfiguration.builder()
+                                            BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.Unit.InvoicingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfiguration.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
-                                        .item(
-                                            Price.Unit.Item.builder().id("id").name("name").build()
-                                        )
+                                        .item(ItemSlim.builder().id("id").name("name").build())
                                         .maximum(
-                                            Price.Unit.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Price.Unit.Maximum.Filter.builder()
-                                                        .field(
-                                                            Price.Unit.Maximum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Price.Unit.Maximum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -567,16 +460,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Price.Unit.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Price.Unit.Minimum.Filter.builder()
-                                                        .field(
-                                                            Price.Unit.Minimum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Price.Unit.Minimum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -589,12 +479,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .planPhaseOrder(0L)
                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .unitConfig(
-                                            Price.Unit.UnitConfig.builder()
-                                                .unitAmount("unit_amount")
-                                                .build()
+                                            UnitConfig.builder().unitAmount("unit_amount").build()
                                         )
                                         .dimensionalPriceConfiguration(
-                                            Price.Unit.DimensionalPriceConfiguration.builder()
+                                            DimensionalPriceConfiguration.builder()
                                                 .addDimensionValue("string")
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
@@ -621,7 +509,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .build()
                         )
                         .addPriceInterval(
-                            SubscriptionChangeRetrieveResponse.Subscription.PriceInterval.builder()
+                            PriceInterval.builder()
                                 .id("id")
                                 .billingCycleDay(0L)
                                 .currentBillingPeriodEndDate(
@@ -633,9 +521,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .filter("filter")
                                 .addFixedFeeQuantityTransition(
-                                    SubscriptionChangeRetrieveResponse.Subscription.PriceInterval
-                                        .FixedFeeQuantityTransition
-                                        .builder()
+                                    FixedFeeQuantityTransition.builder()
                                         .effectiveDate(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
@@ -647,15 +533,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     Price.Unit.builder()
                                         .id("id")
                                         .billableMetric(
-                                            Price.Unit.BillableMetric.builder().id("id").build()
+                                            BillableMetricTiny.builder().id("id").build()
                                         )
                                         .billingCycleConfiguration(
-                                            Price.Unit.BillingCycleConfiguration.builder()
+                                            BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.Unit.BillingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfiguration.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
@@ -663,18 +547,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
-                                            Price.Unit.CreditAllocation.builder()
+                                            Allocation.builder()
                                                 .allowsRollover(true)
                                                 .currency("currency")
                                                 .customExpiration(
-                                                    Price.Unit.CreditAllocation.CustomExpiration
-                                                        .builder()
+                                                    CustomExpiration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.Unit.CreditAllocation
-                                                                .CustomExpiration
-                                                                .DurationUnit
-                                                                .DAY
+                                                            CustomExpiration.DurationUnit.DAY
                                                         )
                                                         .build()
                                                 )
@@ -690,13 +570,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -707,29 +584,22 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
-                                            Price.Unit.InvoicingCycleConfiguration.builder()
+                                            BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.Unit.InvoicingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfiguration.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
-                                        .item(
-                                            Price.Unit.Item.builder().id("id").name("name").build()
-                                        )
+                                        .item(ItemSlim.builder().id("id").name("name").build())
                                         .maximum(
-                                            Price.Unit.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Price.Unit.Maximum.Filter.builder()
-                                                        .field(
-                                                            Price.Unit.Maximum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Price.Unit.Maximum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -747,16 +617,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Price.Unit.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Price.Unit.Minimum.Filter.builder()
-                                                        .field(
-                                                            Price.Unit.Minimum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Price.Unit.Minimum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -769,12 +636,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .planPhaseOrder(0L)
                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .unitConfig(
-                                            Price.Unit.UnitConfig.builder()
-                                                .unitAmount("unit_amount")
-                                                .build()
+                                            UnitConfig.builder().unitAmount("unit_amount").build()
                                         )
                                         .dimensionalPriceConfiguration(
-                                            Price.Unit.DimensionalPriceConfiguration.builder()
+                                            DimensionalPriceConfiguration.builder()
                                                 .addDimensionValue("string")
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
@@ -788,22 +653,21 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .build()
                         )
                         .redeemedCoupon(
-                            SubscriptionChangeRetrieveResponse.Subscription.RedeemedCoupon.builder()
+                            CouponRedemption.builder()
                                 .couponId("coupon_id")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
                         )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .status(SubscriptionChangeRetrieveResponse.Subscription.Status.ACTIVE)
+                        .status(MutatedSubscription.Status.ACTIVE)
                         .trialInfo(
-                            SubscriptionChangeRetrieveResponse.Subscription.TrialInfo.builder()
+                            SubscriptionTrialInfo.builder()
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
                         )
                         .changedResources(
-                            SubscriptionChangeRetrieveResponse.Subscription.ChangedResources
-                                .builder()
+                            ChangedSubscriptionResources.builder()
                                 .addCreatedCreditNote(
                                     CreditNote.builder()
                                         .id("id")
@@ -811,7 +675,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .creditNoteNumber("credit_note_number")
                                         .creditNotePdf("credit_note_pdf")
                                         .customer(
-                                            CreditNote.Customer.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
@@ -826,7 +690,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .quantity(0.0)
                                                 .subtotal("subtotal")
                                                 .addTaxAmount(
-                                                    CreditNote.LineItem.TaxAmount.builder()
+                                                    TaxAmount.builder()
                                                         .amount("amount")
                                                         .taxRateDescription("tax_rate_description")
                                                         .taxRatePercentage("tax_rate_percentage")
@@ -910,7 +774,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .billingAddress(
-                                            Invoice.BillingAddress.builder()
+                                            Address.builder()
                                                 .city("city")
                                                 .country("country")
                                                 .line1("line1")
@@ -939,7 +803,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         )
                                         .currency("USD")
                                         .customer(
-                                            Invoice.Customer.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
@@ -958,16 +822,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     )
                                                 )
                                                 .creditNote(
-                                                    Invoice.CustomerBalanceTransaction.CreditNote
-                                                        .builder()
-                                                        .id("id")
-                                                        .build()
+                                                    CreditNoteTiny.builder().id("id").build()
                                                 )
                                                 .description("An optional description")
                                                 .endingBalance("22.00")
                                                 .invoice(
-                                                    Invoice.CustomerBalanceTransaction.InnerInvoice
-                                                        .builder()
+                                                    InvoiceTiny.builder()
                                                         .id("gXcsPTVyC4YZa3Sc")
                                                         .build()
                                                 )
@@ -979,9 +839,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .customerTaxId(
-                                            Invoice.CustomerTaxId.builder()
-                                                .country(Invoice.CustomerTaxId.Country.AD)
-                                                .type(Invoice.CustomerTaxId.Type.AD_NRT)
+                                            CustomerTaxId.builder()
+                                                .country(CustomerTaxId.Country.AD)
+                                                .type(CustomerTaxId.Type.AD_NRT)
                                                 .value("value")
                                                 .build()
                                         )
@@ -995,13 +855,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1031,28 +888,23 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .id("id")
                                                 .adjustedSubtotal("5.00")
                                                 .addAdjustment(
-                                                    Invoice.LineItem.Adjustment.UsageDiscount
-                                                        .builder()
+                                                    MonetaryUsageDiscountAdjustment.builder()
                                                         .id("id")
+                                                        .adjustmentType(
+                                                            MonetaryUsageDiscountAdjustment
+                                                                .AdjustmentType
+                                                                .USAGE_DISCOUNT
+                                                        )
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Adjustment
-                                                                .UsageDiscount
-                                                                .Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Adjustment
-                                                                        .UsageDiscount
-                                                                        .Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Adjustment
-                                                                        .UsageDiscount
-                                                                        .Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1075,14 +927,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            PercentageDiscount.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    PercentageDiscount.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    PercentageDiscount.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1099,19 +950,16 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .filter("filter")
                                                 .grouping("grouping")
                                                 .maximum(
-                                                    Invoice.LineItem.Maximum.builder()
+                                                    Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Maximum.Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Maximum.Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Maximum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1122,19 +970,16 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 )
                                                 .maximumAmount("maximum_amount")
                                                 .minimum(
-                                                    Invoice.LineItem.Minimum.builder()
+                                                    Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Minimum.Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Minimum.Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Minimum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1150,17 +995,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     Price.Unit.builder()
                                                         .id("id")
                                                         .billableMetric(
-                                                            Price.Unit.BillableMetric.builder()
+                                                            BillableMetricTiny.builder()
                                                                 .id("id")
                                                                 .build()
                                                         )
                                                         .billingCycleConfiguration(
-                                                            Price.Unit.BillingCycleConfiguration
-                                                                .builder()
+                                                            BillingCycleConfiguration.builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.Unit
-                                                                        .BillingCycleConfiguration
+                                                                    BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
@@ -1174,18 +1017,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                             )
                                                         )
                                                         .creditAllocation(
-                                                            Price.Unit.CreditAllocation.builder()
+                                                            Allocation.builder()
                                                                 .allowsRollover(true)
                                                                 .currency("currency")
                                                                 .customExpiration(
-                                                                    Price.Unit.CreditAllocation
-                                                                        .CustomExpiration
-                                                                        .builder()
+                                                                    CustomExpiration.builder()
                                                                         .duration(0L)
                                                                         .durationUnit(
-                                                                            Price.Unit
-                                                                                .CreditAllocation
-                                                                                .CustomExpiration
+                                                                            CustomExpiration
                                                                                 .DurationUnit
                                                                                 .DAY
                                                                         )
@@ -1208,17 +1047,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                     "7hfgtgjnbvc3ujkl"
                                                                 )
                                                                 .addFilter(
-                                                                    PercentageDiscount.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            PercentageDiscount
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            PercentageDiscount
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -1231,38 +1067,33 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .externalPriceId("external_price_id")
                                                         .fixedPriceQuantity(0.0)
                                                         .invoicingCycleConfiguration(
-                                                            Price.Unit.InvoicingCycleConfiguration
-                                                                .builder()
+                                                            BillingCycleConfiguration.builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.Unit
-                                                                        .InvoicingCycleConfiguration
+                                                                    BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
                                                                 .build()
                                                         )
                                                         .item(
-                                                            Price.Unit.Item.builder()
+                                                            ItemSlim.builder()
                                                                 .id("id")
                                                                 .name("name")
                                                                 .build()
                                                         )
                                                         .maximum(
-                                                            Price.Unit.Maximum.builder()
+                                                            Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    Price.Unit.Maximum.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            Price.Unit.Maximum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            Price.Unit.Maximum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -1282,20 +1113,17 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                 .build()
                                                         )
                                                         .minimum(
-                                                            Price.Unit.Minimum.builder()
+                                                            Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    Price.Unit.Minimum.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            Price.Unit.Minimum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            Price.Unit.Minimum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -1310,13 +1138,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .planPhaseOrder(0L)
                                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                         .unitConfig(
-                                                            Price.Unit.UnitConfig.builder()
+                                                            UnitConfig.builder()
                                                                 .unitAmount("unit_amount")
                                                                 .build()
                                                         )
                                                         .dimensionalPriceConfiguration(
-                                                            Price.Unit.DimensionalPriceConfiguration
-                                                                .builder()
+                                                            DimensionalPriceConfiguration.builder()
                                                                 .addDimensionValue("string")
                                                                 .dimensionalPriceGroupId(
                                                                     "dimensional_price_group_id"
@@ -1332,30 +1159,27 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     )
                                                 )
                                                 .addSubLineItem(
-                                                    Invoice.LineItem.SubLineItem.Matrix.builder()
+                                                    MatrixSubLineItem.builder()
                                                         .amount("9.00")
                                                         .grouping(
-                                                            Invoice.LineItem.SubLineItem.Matrix
-                                                                .Grouping
-                                                                .builder()
+                                                            SubLineItemGrouping.builder()
                                                                 .key("region")
                                                                 .value("west")
                                                                 .build()
                                                         )
                                                         .matrixConfig(
-                                                            Invoice.LineItem.SubLineItem.Matrix
-                                                                .MatrixConfig
-                                                                .builder()
+                                                            SubLineItemMatrixConfig.builder()
                                                                 .addDimensionValue("string")
                                                                 .build()
                                                         )
                                                         .name("Tier One")
                                                         .quantity(5.0)
+                                                        .type(MatrixSubLineItem.Type.MATRIX)
                                                         .build()
                                                 )
                                                 .subtotal("9.00")
                                                 .addTaxAmount(
-                                                    Invoice.LineItem.TaxAmount.builder()
+                                                    TaxAmount.builder()
                                                         .amount("amount")
                                                         .taxRateDescription("tax_rate_description")
                                                         .taxRatePercentage("tax_rate_percentage")
@@ -1365,15 +1189,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .maximum(
-                                            Invoice.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.Maximum.Filter.builder()
-                                                        .field(
-                                                            Invoice.Maximum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.Maximum.Filter.Operator.INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1392,15 +1214,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Invoice.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.Minimum.Filter.builder()
-                                                        .field(
-                                                            Invoice.Minimum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.Minimum.Filter.Operator.INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1434,7 +1254,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
                                         .shippingAddress(
-                                            Invoice.ShippingAddress.builder()
+                                            Address.builder()
                                                 .city("city")
                                                 .country("country")
                                                 .line1("line1")
@@ -1445,7 +1265,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         )
                                         .status(Invoice.Status.ISSUED)
                                         .subscription(
-                                            Invoice.Subscription.builder()
+                                            SubscriptionMinified.builder()
                                                 .id("VDGsT23osdLb84KD")
                                                 .build()
                                         )
@@ -1465,7 +1285,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .creditNoteNumber("credit_note_number")
                                         .creditNotePdf("credit_note_pdf")
                                         .customer(
-                                            CreditNote.Customer.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
@@ -1480,7 +1300,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .quantity(0.0)
                                                 .subtotal("subtotal")
                                                 .addTaxAmount(
-                                                    CreditNote.LineItem.TaxAmount.builder()
+                                                    TaxAmount.builder()
                                                         .amount("amount")
                                                         .taxRateDescription("tax_rate_description")
                                                         .taxRatePercentage("tax_rate_percentage")
@@ -1564,7 +1384,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .billingAddress(
-                                            Invoice.BillingAddress.builder()
+                                            Address.builder()
                                                 .city("city")
                                                 .country("country")
                                                 .line1("line1")
@@ -1593,7 +1413,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         )
                                         .currency("USD")
                                         .customer(
-                                            Invoice.Customer.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
@@ -1612,16 +1432,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     )
                                                 )
                                                 .creditNote(
-                                                    Invoice.CustomerBalanceTransaction.CreditNote
-                                                        .builder()
-                                                        .id("id")
-                                                        .build()
+                                                    CreditNoteTiny.builder().id("id").build()
                                                 )
                                                 .description("An optional description")
                                                 .endingBalance("22.00")
                                                 .invoice(
-                                                    Invoice.CustomerBalanceTransaction.InnerInvoice
-                                                        .builder()
+                                                    InvoiceTiny.builder()
                                                         .id("gXcsPTVyC4YZa3Sc")
                                                         .build()
                                                 )
@@ -1633,9 +1449,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .customerTaxId(
-                                            Invoice.CustomerTaxId.builder()
-                                                .country(Invoice.CustomerTaxId.Country.AD)
-                                                .type(Invoice.CustomerTaxId.Type.AD_NRT)
+                                            CustomerTaxId.builder()
+                                                .country(CustomerTaxId.Country.AD)
+                                                .type(CustomerTaxId.Type.AD_NRT)
                                                 .value("value")
                                                 .build()
                                         )
@@ -1649,13 +1465,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1685,28 +1498,23 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .id("id")
                                                 .adjustedSubtotal("5.00")
                                                 .addAdjustment(
-                                                    Invoice.LineItem.Adjustment.UsageDiscount
-                                                        .builder()
+                                                    MonetaryUsageDiscountAdjustment.builder()
                                                         .id("id")
+                                                        .adjustmentType(
+                                                            MonetaryUsageDiscountAdjustment
+                                                                .AdjustmentType
+                                                                .USAGE_DISCOUNT
+                                                        )
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Adjustment
-                                                                .UsageDiscount
-                                                                .Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Adjustment
-                                                                        .UsageDiscount
-                                                                        .Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Adjustment
-                                                                        .UsageDiscount
-                                                                        .Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1729,14 +1537,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            PercentageDiscount.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    PercentageDiscount.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    PercentageDiscount.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1753,19 +1560,16 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .filter("filter")
                                                 .grouping("grouping")
                                                 .maximum(
-                                                    Invoice.LineItem.Maximum.builder()
+                                                    Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Maximum.Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Maximum.Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Maximum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1776,19 +1580,16 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 )
                                                 .maximumAmount("maximum_amount")
                                                 .minimum(
-                                                    Invoice.LineItem.Minimum.builder()
+                                                    Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Minimum.Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Minimum.Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Minimum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1804,17 +1605,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     Price.Unit.builder()
                                                         .id("id")
                                                         .billableMetric(
-                                                            Price.Unit.BillableMetric.builder()
+                                                            BillableMetricTiny.builder()
                                                                 .id("id")
                                                                 .build()
                                                         )
                                                         .billingCycleConfiguration(
-                                                            Price.Unit.BillingCycleConfiguration
-                                                                .builder()
+                                                            BillingCycleConfiguration.builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.Unit
-                                                                        .BillingCycleConfiguration
+                                                                    BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
@@ -1828,18 +1627,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                             )
                                                         )
                                                         .creditAllocation(
-                                                            Price.Unit.CreditAllocation.builder()
+                                                            Allocation.builder()
                                                                 .allowsRollover(true)
                                                                 .currency("currency")
                                                                 .customExpiration(
-                                                                    Price.Unit.CreditAllocation
-                                                                        .CustomExpiration
-                                                                        .builder()
+                                                                    CustomExpiration.builder()
                                                                         .duration(0L)
                                                                         .durationUnit(
-                                                                            Price.Unit
-                                                                                .CreditAllocation
-                                                                                .CustomExpiration
+                                                                            CustomExpiration
                                                                                 .DurationUnit
                                                                                 .DAY
                                                                         )
@@ -1862,17 +1657,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                     "7hfgtgjnbvc3ujkl"
                                                                 )
                                                                 .addFilter(
-                                                                    PercentageDiscount.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            PercentageDiscount
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            PercentageDiscount
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -1885,38 +1677,33 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .externalPriceId("external_price_id")
                                                         .fixedPriceQuantity(0.0)
                                                         .invoicingCycleConfiguration(
-                                                            Price.Unit.InvoicingCycleConfiguration
-                                                                .builder()
+                                                            BillingCycleConfiguration.builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.Unit
-                                                                        .InvoicingCycleConfiguration
+                                                                    BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
                                                                 .build()
                                                         )
                                                         .item(
-                                                            Price.Unit.Item.builder()
+                                                            ItemSlim.builder()
                                                                 .id("id")
                                                                 .name("name")
                                                                 .build()
                                                         )
                                                         .maximum(
-                                                            Price.Unit.Maximum.builder()
+                                                            Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    Price.Unit.Maximum.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            Price.Unit.Maximum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            Price.Unit.Maximum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -1936,20 +1723,17 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                 .build()
                                                         )
                                                         .minimum(
-                                                            Price.Unit.Minimum.builder()
+                                                            Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    Price.Unit.Minimum.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            Price.Unit.Minimum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            Price.Unit.Minimum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -1964,13 +1748,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .planPhaseOrder(0L)
                                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                         .unitConfig(
-                                                            Price.Unit.UnitConfig.builder()
+                                                            UnitConfig.builder()
                                                                 .unitAmount("unit_amount")
                                                                 .build()
                                                         )
                                                         .dimensionalPriceConfiguration(
-                                                            Price.Unit.DimensionalPriceConfiguration
-                                                                .builder()
+                                                            DimensionalPriceConfiguration.builder()
                                                                 .addDimensionValue("string")
                                                                 .dimensionalPriceGroupId(
                                                                     "dimensional_price_group_id"
@@ -1986,30 +1769,27 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     )
                                                 )
                                                 .addSubLineItem(
-                                                    Invoice.LineItem.SubLineItem.Matrix.builder()
+                                                    MatrixSubLineItem.builder()
                                                         .amount("9.00")
                                                         .grouping(
-                                                            Invoice.LineItem.SubLineItem.Matrix
-                                                                .Grouping
-                                                                .builder()
+                                                            SubLineItemGrouping.builder()
                                                                 .key("region")
                                                                 .value("west")
                                                                 .build()
                                                         )
                                                         .matrixConfig(
-                                                            Invoice.LineItem.SubLineItem.Matrix
-                                                                .MatrixConfig
-                                                                .builder()
+                                                            SubLineItemMatrixConfig.builder()
                                                                 .addDimensionValue("string")
                                                                 .build()
                                                         )
                                                         .name("Tier One")
                                                         .quantity(5.0)
+                                                        .type(MatrixSubLineItem.Type.MATRIX)
                                                         .build()
                                                 )
                                                 .subtotal("9.00")
                                                 .addTaxAmount(
-                                                    Invoice.LineItem.TaxAmount.builder()
+                                                    TaxAmount.builder()
                                                         .amount("amount")
                                                         .taxRateDescription("tax_rate_description")
                                                         .taxRatePercentage("tax_rate_percentage")
@@ -2019,15 +1799,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .maximum(
-                                            Invoice.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.Maximum.Filter.builder()
-                                                        .field(
-                                                            Invoice.Maximum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.Maximum.Filter.Operator.INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -2046,15 +1824,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Invoice.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.Minimum.Filter.builder()
-                                                        .field(
-                                                            Invoice.Minimum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.Minimum.Filter.Operator.INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -2088,7 +1864,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
                                         .shippingAddress(
-                                            Invoice.ShippingAddress.builder()
+                                            Address.builder()
                                                 .city("city")
                                                 .country("country")
                                                 .line1("line1")
@@ -2099,7 +1875,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         )
                                         .status(Invoice.Status.ISSUED)
                                         .subscription(
-                                            Invoice.Subscription.builder()
+                                            SubscriptionMinified.builder()
                                                 .id("VDGsT23osdLb84KD")
                                                 .build()
                                         )
@@ -2127,44 +1903,24 @@ internal class SubscriptionChangeRetrieveResponseTest {
             .isEqualTo(SubscriptionChangeRetrieveResponse.Status.PENDING)
         assertThat(subscriptionChangeRetrieveResponse.subscription())
             .isEqualTo(
-                SubscriptionChangeRetrieveResponse.Subscription.builder()
+                MutatedSubscription.builder()
                     .id("id")
                     .activePlanPhaseOrder(0L)
                     .addAdjustmentInterval(
-                        SubscriptionChangeRetrieveResponse.Subscription.AdjustmentInterval.builder()
+                        AdjustmentInterval.builder()
                             .id("id")
                             .adjustment(
-                                SubscriptionChangeRetrieveResponse.Subscription.AdjustmentInterval
-                                    .Adjustment
-                                    .UsageDiscount
-                                    .builder()
+                                PlanPhaseUsageDiscountAdjustment.builder()
                                     .id("id")
+                                    .adjustmentType(
+                                        PlanPhaseUsageDiscountAdjustment.AdjustmentType
+                                            .USAGE_DISCOUNT
+                                    )
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        SubscriptionChangeRetrieveResponse.Subscription
-                                            .AdjustmentInterval
-                                            .Adjustment
-                                            .UsageDiscount
-                                            .Filter
-                                            .builder()
-                                            .field(
-                                                SubscriptionChangeRetrieveResponse.Subscription
-                                                    .AdjustmentInterval
-                                                    .Adjustment
-                                                    .UsageDiscount
-                                                    .Filter
-                                                    .Field
-                                                    .PRICE_ID
-                                            )
-                                            .operator(
-                                                SubscriptionChangeRetrieveResponse.Subscription
-                                                    .AdjustmentInterval
-                                                    .Adjustment
-                                                    .UsageDiscount
-                                                    .Filter
-                                                    .Operator
-                                                    .INCLUDES
-                                            )
+                                        TransformPriceFilter.builder()
+                                            .field(TransformPriceFilter.Field.PRICE_ID)
+                                            .operator(TransformPriceFilter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2181,13 +1937,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                     )
                     .autoCollection(true)
                     .billingCycleAnchorConfiguration(
-                        SubscriptionChangeRetrieveResponse.Subscription
-                            .BillingCycleAnchorConfiguration
-                            .builder()
-                            .day(1L)
-                            .month(1L)
-                            .year(0L)
-                            .build()
+                        BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
                     )
                     .billingCycleDay(1L)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -2200,7 +1950,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .autoCollection(true)
                             .balance("balance")
                             .billingAddress(
-                                Customer.BillingAddress.builder()
+                                Address.builder()
                                     .city("city")
                                     .country("country")
                                     .line1("line1")
@@ -2218,13 +1968,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .hierarchy(
                                 Customer.Hierarchy.builder()
                                     .addChild(
-                                        Customer.Hierarchy.Child.builder()
+                                        CustomerMinified.builder()
                                             .id("id")
                                             .externalCustomerId("external_customer_id")
                                             .build()
                                     )
                                     .parent(
-                                        Customer.Hierarchy.Parent.builder()
+                                        CustomerMinified.builder()
                                             .id("id")
                                             .externalCustomerId("external_customer_id")
                                             .build()
@@ -2241,7 +1991,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .paymentProviderId("payment_provider_id")
                             .portalUrl("portal_url")
                             .shippingAddress(
-                                Customer.ShippingAddress.builder()
+                                Address.builder()
                                     .city("city")
                                     .country("country")
                                     .line1("line1")
@@ -2251,9 +2001,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .build()
                             )
                             .taxId(
-                                Customer.TaxId.builder()
-                                    .country(Customer.TaxId.Country.AD)
-                                    .type(Customer.TaxId.Type.AD_NRT)
+                                CustomerTaxId.builder()
+                                    .country(CustomerTaxId.Country.AD)
+                                    .type(CustomerTaxId.Type.AD_NRT)
                                     .value("value")
                                     .build()
                             )
@@ -2282,32 +2032,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                     )
                     .defaultInvoiceMemo("default_invoice_memo")
                     .addDiscountInterval(
-                        SubscriptionChangeRetrieveResponse.Subscription.DiscountInterval.Amount
-                            .builder()
+                        AmountDiscountInterval.builder()
                             .amountDiscount("amount_discount")
                             .addAppliesToPriceIntervalId("string")
+                            .discountType(AmountDiscountInterval.DiscountType.AMOUNT)
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .addFilter(
-                                SubscriptionChangeRetrieveResponse.Subscription.DiscountInterval
-                                    .Amount
-                                    .Filter
-                                    .builder()
-                                    .field(
-                                        SubscriptionChangeRetrieveResponse.Subscription
-                                            .DiscountInterval
-                                            .Amount
-                                            .Filter
-                                            .Field
-                                            .PRICE_ID
-                                    )
-                                    .operator(
-                                        SubscriptionChangeRetrieveResponse.Subscription
-                                            .DiscountInterval
-                                            .Amount
-                                            .Filter
-                                            .Operator
-                                            .INCLUDES
-                                    )
+                                TransformPriceFilter.builder()
+                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                    .operator(TransformPriceFilter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
@@ -2316,8 +2049,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                     )
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addFixedFeeQuantitySchedule(
-                        SubscriptionChangeRetrieveResponse.Subscription.FixedFeeQuantitySchedule
-                            .builder()
+                        FixedFeeQuantityScheduleEntry.builder()
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .priceId("price_id")
                             .quantity(0.0)
@@ -2326,27 +2058,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                     )
                     .invoicingThreshold("invoicing_threshold")
                     .addMaximumInterval(
-                        SubscriptionChangeRetrieveResponse.Subscription.MaximumInterval.builder()
+                        MaximumInterval.builder()
                             .addAppliesToPriceIntervalId("string")
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .addFilter(
-                                SubscriptionChangeRetrieveResponse.Subscription.MaximumInterval
-                                    .Filter
-                                    .builder()
-                                    .field(
-                                        SubscriptionChangeRetrieveResponse.Subscription
-                                            .MaximumInterval
-                                            .Filter
-                                            .Field
-                                            .PRICE_ID
-                                    )
-                                    .operator(
-                                        SubscriptionChangeRetrieveResponse.Subscription
-                                            .MaximumInterval
-                                            .Filter
-                                            .Operator
-                                            .INCLUDES
-                                    )
+                                TransformPriceFilter.builder()
+                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                    .operator(TransformPriceFilter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
@@ -2355,32 +2073,18 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .build()
                     )
                     .metadata(
-                        SubscriptionChangeRetrieveResponse.Subscription.Metadata.builder()
+                        MutatedSubscription.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .addMinimumInterval(
-                        SubscriptionChangeRetrieveResponse.Subscription.MinimumInterval.builder()
+                        MinimumInterval.builder()
                             .addAppliesToPriceIntervalId("string")
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .addFilter(
-                                SubscriptionChangeRetrieveResponse.Subscription.MinimumInterval
-                                    .Filter
-                                    .builder()
-                                    .field(
-                                        SubscriptionChangeRetrieveResponse.Subscription
-                                            .MinimumInterval
-                                            .Filter
-                                            .Field
-                                            .PRICE_ID
-                                    )
-                                    .operator(
-                                        SubscriptionChangeRetrieveResponse.Subscription
-                                            .MinimumInterval
-                                            .Filter
-                                            .Operator
-                                            .INCLUDES
-                                    )
+                                TransformPriceFilter.builder()
+                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                    .operator(TransformPriceFilter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
@@ -2391,27 +2095,23 @@ internal class SubscriptionChangeRetrieveResponseTest {
                     .name("name")
                     .netTerms(0L)
                     .pendingSubscriptionChange(
-                        SubscriptionChangeRetrieveResponse.Subscription.PendingSubscriptionChange
-                            .builder()
-                            .id("id")
-                            .build()
+                        SubscriptionChangeMinified.builder().id("id").build()
                     )
                     .plan(
                         Plan.builder()
                             .id("id")
                             .addAdjustment(
-                                Plan.Adjustment.UsageDiscount.builder()
+                                PlanPhaseUsageDiscountAdjustment.builder()
                                     .id("id")
+                                    .adjustmentType(
+                                        PlanPhaseUsageDiscountAdjustment.AdjustmentType
+                                            .USAGE_DISCOUNT
+                                    )
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        Plan.Adjustment.UsageDiscount.Filter.builder()
-                                            .field(
-                                                Plan.Adjustment.UsageDiscount.Filter.Field.PRICE_ID
-                                            )
-                                            .operator(
-                                                Plan.Adjustment.UsageDiscount.Filter.Operator
-                                                    .INCLUDES
-                                            )
+                                        TransformPriceFilter.builder()
+                                            .field(TransformPriceFilter.Field.PRICE_ID)
+                                            .operator(TransformPriceFilter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2440,9 +2140,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .addFilter(
-                                        PercentageDiscount.Filter.builder()
-                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
-                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                        TransformPriceFilter.builder()
+                                            .field(TransformPriceFilter.Field.PRICE_ID)
+                                            .operator(TransformPriceFilter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2452,12 +2152,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .externalPlanId("external_plan_id")
                             .invoicingCurrency("invoicing_currency")
                             .maximum(
-                                Plan.Maximum.builder()
+                                Maximum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        Plan.Maximum.Filter.builder()
-                                            .field(Plan.Maximum.Filter.Field.PRICE_ID)
-                                            .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                        TransformPriceFilter.builder()
+                                            .field(TransformPriceFilter.Field.PRICE_ID)
+                                            .operator(TransformPriceFilter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2471,12 +2171,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .build()
                             )
                             .minimum(
-                                Plan.Minimum.builder()
+                                Minimum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        Plan.Minimum.Filter.builder()
-                                            .field(Plan.Minimum.Filter.Field.PRICE_ID)
-                                            .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                        TransformPriceFilter.builder()
+                                            .field(TransformPriceFilter.Field.PRICE_ID)
+                                            .operator(TransformPriceFilter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2499,10 +2199,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                PercentageDiscount.Filter.builder()
-                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        PercentageDiscount.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2513,16 +2213,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .duration(0L)
                                     .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
                                     .maximum(
-                                        Plan.PlanPhase.Maximum.builder()
+                                        Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                Plan.PlanPhase.Maximum.Filter.builder()
-                                                    .field(
-                                                        Plan.PlanPhase.Maximum.Filter.Field.PRICE_ID
-                                                    )
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        Plan.PlanPhase.Maximum.Filter.Operator
-                                                            .INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2532,16 +2229,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     )
                                     .maximumAmount("maximum_amount")
                                     .minimum(
-                                        Plan.PlanPhase.Minimum.builder()
+                                        Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                Plan.PlanPhase.Minimum.Filter.builder()
-                                                    .field(
-                                                        Plan.PlanPhase.Minimum.Filter.Field.PRICE_ID
-                                                    )
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        Plan.PlanPhase.Minimum.Filter.Operator
-                                                            .INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2557,15 +2251,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .addPrice(
                                 Price.Unit.builder()
                                     .id("id")
-                                    .billableMetric(
-                                        Price.Unit.BillableMetric.builder().id("id").build()
-                                    )
+                                    .billableMetric(BillableMetricTiny.builder().id("id").build())
                                     .billingCycleConfiguration(
-                                        Price.Unit.BillingCycleConfiguration.builder()
+                                        BillingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.Unit.BillingCycleConfiguration.DurationUnit
-                                                    .DAY
+                                                BillingCycleConfiguration.DurationUnit.DAY
                                             )
                                             .build()
                                     )
@@ -2573,18 +2264,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .conversionRate(0.0)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditAllocation(
-                                        Price.Unit.CreditAllocation.builder()
+                                        Allocation.builder()
                                             .allowsRollover(true)
                                             .currency("currency")
                                             .customExpiration(
-                                                Price.Unit.CreditAllocation.CustomExpiration
-                                                    .builder()
+                                                CustomExpiration.builder()
                                                     .duration(0L)
-                                                    .durationUnit(
-                                                        Price.Unit.CreditAllocation.CustomExpiration
-                                                            .DurationUnit
-                                                            .DAY
-                                                    )
+                                                    .durationUnit(CustomExpiration.DurationUnit.DAY)
                                                     .build()
                                             )
                                             .build()
@@ -2599,10 +2285,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                PercentageDiscount.Filter.builder()
-                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        PercentageDiscount.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2613,23 +2299,22 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(0.0)
                                     .invoicingCycleConfiguration(
-                                        Price.Unit.InvoicingCycleConfiguration.builder()
+                                        BillingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.Unit.InvoicingCycleConfiguration.DurationUnit
-                                                    .DAY
+                                                BillingCycleConfiguration.DurationUnit.DAY
                                             )
                                             .build()
                                     )
-                                    .item(Price.Unit.Item.builder().id("id").name("name").build())
+                                    .item(ItemSlim.builder().id("id").name("name").build())
                                     .maximum(
-                                        Price.Unit.Maximum.builder()
+                                        Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                Price.Unit.Maximum.Filter.builder()
-                                                    .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2644,13 +2329,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .build()
                                     )
                                     .minimum(
-                                        Price.Unit.Minimum.builder()
+                                        Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                Price.Unit.Minimum.Filter.builder()
-                                                    .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2663,12 +2348,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .planPhaseOrder(0L)
                                     .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                     .unitConfig(
-                                        Price.Unit.UnitConfig.builder()
-                                            .unitAmount("unit_amount")
-                                            .build()
+                                        UnitConfig.builder().unitAmount("unit_amount").build()
                                     )
                                     .dimensionalPriceConfiguration(
-                                        Price.Unit.DimensionalPriceConfiguration.builder()
+                                        DimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
                                             .build()
@@ -2693,7 +2376,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .build()
                     )
                     .addPriceInterval(
-                        SubscriptionChangeRetrieveResponse.Subscription.PriceInterval.builder()
+                        PriceInterval.builder()
                             .id("id")
                             .billingCycleDay(0L)
                             .currentBillingPeriodEndDate(
@@ -2705,9 +2388,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .filter("filter")
                             .addFixedFeeQuantityTransition(
-                                SubscriptionChangeRetrieveResponse.Subscription.PriceInterval
-                                    .FixedFeeQuantityTransition
-                                    .builder()
+                                FixedFeeQuantityTransition.builder()
                                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .priceId("price_id")
                                     .quantity(0L)
@@ -2716,15 +2397,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .price(
                                 Price.Unit.builder()
                                     .id("id")
-                                    .billableMetric(
-                                        Price.Unit.BillableMetric.builder().id("id").build()
-                                    )
+                                    .billableMetric(BillableMetricTiny.builder().id("id").build())
                                     .billingCycleConfiguration(
-                                        Price.Unit.BillingCycleConfiguration.builder()
+                                        BillingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.Unit.BillingCycleConfiguration.DurationUnit
-                                                    .DAY
+                                                BillingCycleConfiguration.DurationUnit.DAY
                                             )
                                             .build()
                                     )
@@ -2732,18 +2410,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .conversionRate(0.0)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditAllocation(
-                                        Price.Unit.CreditAllocation.builder()
+                                        Allocation.builder()
                                             .allowsRollover(true)
                                             .currency("currency")
                                             .customExpiration(
-                                                Price.Unit.CreditAllocation.CustomExpiration
-                                                    .builder()
+                                                CustomExpiration.builder()
                                                     .duration(0L)
-                                                    .durationUnit(
-                                                        Price.Unit.CreditAllocation.CustomExpiration
-                                                            .DurationUnit
-                                                            .DAY
-                                                    )
+                                                    .durationUnit(CustomExpiration.DurationUnit.DAY)
                                                     .build()
                                             )
                                             .build()
@@ -2758,10 +2431,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                PercentageDiscount.Filter.builder()
-                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        PercentageDiscount.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2772,23 +2445,22 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(0.0)
                                     .invoicingCycleConfiguration(
-                                        Price.Unit.InvoicingCycleConfiguration.builder()
+                                        BillingCycleConfiguration.builder()
                                             .duration(0L)
                                             .durationUnit(
-                                                Price.Unit.InvoicingCycleConfiguration.DurationUnit
-                                                    .DAY
+                                                BillingCycleConfiguration.DurationUnit.DAY
                                             )
                                             .build()
                                     )
-                                    .item(Price.Unit.Item.builder().id("id").name("name").build())
+                                    .item(ItemSlim.builder().id("id").name("name").build())
                                     .maximum(
-                                        Price.Unit.Maximum.builder()
+                                        Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                Price.Unit.Maximum.Filter.builder()
-                                                    .field(Price.Unit.Maximum.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        Price.Unit.Maximum.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2803,13 +2475,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .build()
                                     )
                                     .minimum(
-                                        Price.Unit.Minimum.builder()
+                                        Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                Price.Unit.Minimum.Filter.builder()
-                                                    .field(Price.Unit.Minimum.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        Price.Unit.Minimum.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2822,12 +2494,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .planPhaseOrder(0L)
                                     .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                     .unitConfig(
-                                        Price.Unit.UnitConfig.builder()
-                                            .unitAmount("unit_amount")
-                                            .build()
+                                        UnitConfig.builder().unitAmount("unit_amount").build()
                                     )
                                     .dimensionalPriceConfiguration(
-                                        Price.Unit.DimensionalPriceConfiguration.builder()
+                                        DimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
                                             .build()
@@ -2839,21 +2509,21 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .build()
                     )
                     .redeemedCoupon(
-                        SubscriptionChangeRetrieveResponse.Subscription.RedeemedCoupon.builder()
+                        CouponRedemption.builder()
                             .couponId("coupon_id")
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .status(SubscriptionChangeRetrieveResponse.Subscription.Status.ACTIVE)
+                    .status(MutatedSubscription.Status.ACTIVE)
                     .trialInfo(
-                        SubscriptionChangeRetrieveResponse.Subscription.TrialInfo.builder()
+                        SubscriptionTrialInfo.builder()
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
                     .changedResources(
-                        SubscriptionChangeRetrieveResponse.Subscription.ChangedResources.builder()
+                        ChangedSubscriptionResources.builder()
                             .addCreatedCreditNote(
                                 CreditNote.builder()
                                     .id("id")
@@ -2861,7 +2531,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .creditNoteNumber("credit_note_number")
                                     .creditNotePdf("credit_note_pdf")
                                     .customer(
-                                        CreditNote.Customer.builder()
+                                        CustomerMinified.builder()
                                             .id("id")
                                             .externalCustomerId("external_customer_id")
                                             .build()
@@ -2876,7 +2546,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .quantity(0.0)
                                             .subtotal("subtotal")
                                             .addTaxAmount(
-                                                CreditNote.LineItem.TaxAmount.builder()
+                                                TaxAmount.builder()
                                                     .amount("amount")
                                                     .taxRateDescription("tax_rate_description")
                                                     .taxRatePercentage("tax_rate_percentage")
@@ -2958,7 +2628,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .build()
                                     )
                                     .billingAddress(
-                                        Invoice.BillingAddress.builder()
+                                        Address.builder()
                                             .city("city")
                                             .country("country")
                                             .line1("line1")
@@ -2983,7 +2653,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     )
                                     .currency("USD")
                                     .customer(
-                                        Invoice.Customer.builder()
+                                        CustomerMinified.builder()
                                             .id("id")
                                             .externalCustomerId("external_customer_id")
                                             .build()
@@ -2999,28 +2669,20 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .createdAt(
                                                 OffsetDateTime.parse("2022-05-01T07:01:31+00:00")
                                             )
-                                            .creditNote(
-                                                Invoice.CustomerBalanceTransaction.CreditNote
-                                                    .builder()
-                                                    .id("id")
-                                                    .build()
-                                            )
+                                            .creditNote(CreditNoteTiny.builder().id("id").build())
                                             .description("An optional description")
                                             .endingBalance("22.00")
                                             .invoice(
-                                                Invoice.CustomerBalanceTransaction.InnerInvoice
-                                                    .builder()
-                                                    .id("gXcsPTVyC4YZa3Sc")
-                                                    .build()
+                                                InvoiceTiny.builder().id("gXcsPTVyC4YZa3Sc").build()
                                             )
                                             .startingBalance("33.00")
                                             .type(Invoice.CustomerBalanceTransaction.Type.INCREMENT)
                                             .build()
                                     )
                                     .customerTaxId(
-                                        Invoice.CustomerTaxId.builder()
-                                            .country(Invoice.CustomerTaxId.Country.AD)
-                                            .type(Invoice.CustomerTaxId.Type.AD_NRT)
+                                        CustomerTaxId.builder()
+                                            .country(CustomerTaxId.Country.AD)
+                                            .type(CustomerTaxId.Type.AD_NRT)
                                             .value("value")
                                             .build()
                                     )
@@ -3034,10 +2696,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                PercentageDiscount.Filter.builder()
-                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        PercentageDiscount.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -3063,26 +2725,22 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .id("id")
                                             .adjustedSubtotal("5.00")
                                             .addAdjustment(
-                                                Invoice.LineItem.Adjustment.UsageDiscount.builder()
+                                                MonetaryUsageDiscountAdjustment.builder()
                                                     .id("id")
+                                                    .adjustmentType(
+                                                        MonetaryUsageDiscountAdjustment
+                                                            .AdjustmentType
+                                                            .USAGE_DISCOUNT
+                                                    )
                                                     .amount("amount")
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        Invoice.LineItem.Adjustment.UsageDiscount
-                                                            .Filter
-                                                            .builder()
+                                                        TransformPriceFilter.builder()
                                                             .field(
-                                                                Invoice.LineItem.Adjustment
-                                                                    .UsageDiscount
-                                                                    .Filter
-                                                                    .Field
-                                                                    .PRICE_ID
+                                                                TransformPriceFilter.Field.PRICE_ID
                                                             )
                                                             .operator(
-                                                                Invoice.LineItem.Adjustment
-                                                                    .UsageDiscount
-                                                                    .Filter
-                                                                    .Operator
+                                                                TransformPriceFilter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3104,13 +2762,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .addFilter(
-                                                        PercentageDiscount.Filter.builder()
+                                                        TransformPriceFilter.builder()
                                                             .field(
-                                                                PercentageDiscount.Filter.Field
-                                                                    .PRICE_ID
+                                                                TransformPriceFilter.Field.PRICE_ID
                                                             )
                                                             .operator(
-                                                                PercentageDiscount.Filter.Operator
+                                                                TransformPriceFilter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3125,18 +2782,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .filter("filter")
                                             .grouping("grouping")
                                             .maximum(
-                                                Invoice.LineItem.Maximum.builder()
+                                                Maximum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        Invoice.LineItem.Maximum.Filter.builder()
+                                                        TransformPriceFilter.builder()
                                                             .field(
-                                                                Invoice.LineItem.Maximum.Filter
-                                                                    .Field
-                                                                    .PRICE_ID
+                                                                TransformPriceFilter.Field.PRICE_ID
                                                             )
                                                             .operator(
-                                                                Invoice.LineItem.Maximum.Filter
-                                                                    .Operator
+                                                                TransformPriceFilter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3147,18 +2801,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             )
                                             .maximumAmount("maximum_amount")
                                             .minimum(
-                                                Invoice.LineItem.Minimum.builder()
+                                                Minimum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        Invoice.LineItem.Minimum.Filter.builder()
+                                                        TransformPriceFilter.builder()
                                                             .field(
-                                                                Invoice.LineItem.Minimum.Filter
-                                                                    .Field
-                                                                    .PRICE_ID
+                                                                TransformPriceFilter.Field.PRICE_ID
                                                             )
                                                             .operator(
-                                                                Invoice.LineItem.Minimum.Filter
-                                                                    .Operator
+                                                                TransformPriceFilter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3174,16 +2825,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 Price.Unit.builder()
                                                     .id("id")
                                                     .billableMetric(
-                                                        Price.Unit.BillableMetric.builder()
+                                                        BillableMetricTiny.builder()
                                                             .id("id")
                                                             .build()
                                                     )
                                                     .billingCycleConfiguration(
-                                                        Price.Unit.BillingCycleConfiguration
-                                                            .builder()
+                                                        BillingCycleConfiguration.builder()
                                                             .duration(0L)
                                                             .durationUnit(
-                                                                Price.Unit.BillingCycleConfiguration
+                                                                BillingCycleConfiguration
                                                                     .DurationUnit
                                                                     .DAY
                                                             )
@@ -3197,17 +2847,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         )
                                                     )
                                                     .creditAllocation(
-                                                        Price.Unit.CreditAllocation.builder()
+                                                        Allocation.builder()
                                                             .allowsRollover(true)
                                                             .currency("currency")
                                                             .customExpiration(
-                                                                Price.Unit.CreditAllocation
-                                                                    .CustomExpiration
-                                                                    .builder()
+                                                                CustomExpiration.builder()
                                                                     .duration(0L)
                                                                     .durationUnit(
-                                                                        Price.Unit.CreditAllocation
-                                                                            .CustomExpiration
+                                                                        CustomExpiration
                                                                             .DurationUnit
                                                                             .DAY
                                                                     )
@@ -3226,14 +2873,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                             .addFilter(
-                                                                PercentageDiscount.Filter.builder()
+                                                                TransformPriceFilter.builder()
                                                                     .field(
-                                                                        PercentageDiscount.Filter
-                                                                            .Field
+                                                                        TransformPriceFilter.Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        PercentageDiscount.Filter
+                                                                        TransformPriceFilter
                                                                             .Operator
                                                                             .INCLUDES
                                                                     )
@@ -3246,35 +2892,32 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     .externalPriceId("external_price_id")
                                                     .fixedPriceQuantity(0.0)
                                                     .invoicingCycleConfiguration(
-                                                        Price.Unit.InvoicingCycleConfiguration
-                                                            .builder()
+                                                        BillingCycleConfiguration.builder()
                                                             .duration(0L)
                                                             .durationUnit(
-                                                                Price.Unit
-                                                                    .InvoicingCycleConfiguration
+                                                                BillingCycleConfiguration
                                                                     .DurationUnit
                                                                     .DAY
                                                             )
                                                             .build()
                                                     )
                                                     .item(
-                                                        Price.Unit.Item.builder()
+                                                        ItemSlim.builder()
                                                             .id("id")
                                                             .name("name")
                                                             .build()
                                                     )
                                                     .maximum(
-                                                        Price.Unit.Maximum.builder()
+                                                        Maximum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .addFilter(
-                                                                Price.Unit.Maximum.Filter.builder()
+                                                                TransformPriceFilter.builder()
                                                                     .field(
-                                                                        Price.Unit.Maximum.Filter
-                                                                            .Field
+                                                                        TransformPriceFilter.Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        Price.Unit.Maximum.Filter
+                                                                        TransformPriceFilter
                                                                             .Operator
                                                                             .INCLUDES
                                                                     )
@@ -3294,17 +2937,16 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                             .build()
                                                     )
                                                     .minimum(
-                                                        Price.Unit.Minimum.builder()
+                                                        Minimum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .addFilter(
-                                                                Price.Unit.Minimum.Filter.builder()
+                                                                TransformPriceFilter.builder()
                                                                     .field(
-                                                                        Price.Unit.Minimum.Filter
-                                                                            .Field
+                                                                        TransformPriceFilter.Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        Price.Unit.Minimum.Filter
+                                                                        TransformPriceFilter
                                                                             .Operator
                                                                             .INCLUDES
                                                                     )
@@ -3319,13 +2961,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     .planPhaseOrder(0L)
                                                     .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                     .unitConfig(
-                                                        Price.Unit.UnitConfig.builder()
+                                                        UnitConfig.builder()
                                                             .unitAmount("unit_amount")
                                                             .build()
                                                     )
                                                     .dimensionalPriceConfiguration(
-                                                        Price.Unit.DimensionalPriceConfiguration
-                                                            .builder()
+                                                        DimensionalPriceConfiguration.builder()
                                                             .addDimensionValue("string")
                                                             .dimensionalPriceGroupId(
                                                                 "dimensional_price_group_id"
@@ -3339,29 +2980,27 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 OffsetDateTime.parse("2022-02-01T08:00:00+00:00")
                                             )
                                             .addSubLineItem(
-                                                Invoice.LineItem.SubLineItem.Matrix.builder()
+                                                MatrixSubLineItem.builder()
                                                     .amount("9.00")
                                                     .grouping(
-                                                        Invoice.LineItem.SubLineItem.Matrix.Grouping
-                                                            .builder()
+                                                        SubLineItemGrouping.builder()
                                                             .key("region")
                                                             .value("west")
                                                             .build()
                                                     )
                                                     .matrixConfig(
-                                                        Invoice.LineItem.SubLineItem.Matrix
-                                                            .MatrixConfig
-                                                            .builder()
+                                                        SubLineItemMatrixConfig.builder()
                                                             .addDimensionValue("string")
                                                             .build()
                                                     )
                                                     .name("Tier One")
                                                     .quantity(5.0)
+                                                    .type(MatrixSubLineItem.Type.MATRIX)
                                                     .build()
                                             )
                                             .subtotal("9.00")
                                             .addTaxAmount(
-                                                Invoice.LineItem.TaxAmount.builder()
+                                                TaxAmount.builder()
                                                     .amount("amount")
                                                     .taxRateDescription("tax_rate_description")
                                                     .taxRatePercentage("tax_rate_percentage")
@@ -3371,13 +3010,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .build()
                                     )
                                     .maximum(
-                                        Invoice.Maximum.builder()
+                                        Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                Invoice.Maximum.Filter.builder()
-                                                    .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        Invoice.Maximum.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -3393,13 +3032,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .build()
                                     )
                                     .minimum(
-                                        Invoice.Minimum.builder()
+                                        Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                Invoice.Minimum.Filter.builder()
-                                                    .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        Invoice.Minimum.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -3433,7 +3072,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                     )
                                     .shippingAddress(
-                                        Invoice.ShippingAddress.builder()
+                                        Address.builder()
                                             .city("city")
                                             .country("country")
                                             .line1("line1")
@@ -3444,7 +3083,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     )
                                     .status(Invoice.Status.ISSUED)
                                     .subscription(
-                                        Invoice.Subscription.builder()
+                                        SubscriptionMinified.builder()
                                             .id("VDGsT23osdLb84KD")
                                             .build()
                                     )
@@ -3462,7 +3101,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .creditNoteNumber("credit_note_number")
                                     .creditNotePdf("credit_note_pdf")
                                     .customer(
-                                        CreditNote.Customer.builder()
+                                        CustomerMinified.builder()
                                             .id("id")
                                             .externalCustomerId("external_customer_id")
                                             .build()
@@ -3477,7 +3116,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .quantity(0.0)
                                             .subtotal("subtotal")
                                             .addTaxAmount(
-                                                CreditNote.LineItem.TaxAmount.builder()
+                                                TaxAmount.builder()
                                                     .amount("amount")
                                                     .taxRateDescription("tax_rate_description")
                                                     .taxRatePercentage("tax_rate_percentage")
@@ -3559,7 +3198,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .build()
                                     )
                                     .billingAddress(
-                                        Invoice.BillingAddress.builder()
+                                        Address.builder()
                                             .city("city")
                                             .country("country")
                                             .line1("line1")
@@ -3584,7 +3223,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     )
                                     .currency("USD")
                                     .customer(
-                                        Invoice.Customer.builder()
+                                        CustomerMinified.builder()
                                             .id("id")
                                             .externalCustomerId("external_customer_id")
                                             .build()
@@ -3600,28 +3239,20 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .createdAt(
                                                 OffsetDateTime.parse("2022-05-01T07:01:31+00:00")
                                             )
-                                            .creditNote(
-                                                Invoice.CustomerBalanceTransaction.CreditNote
-                                                    .builder()
-                                                    .id("id")
-                                                    .build()
-                                            )
+                                            .creditNote(CreditNoteTiny.builder().id("id").build())
                                             .description("An optional description")
                                             .endingBalance("22.00")
                                             .invoice(
-                                                Invoice.CustomerBalanceTransaction.InnerInvoice
-                                                    .builder()
-                                                    .id("gXcsPTVyC4YZa3Sc")
-                                                    .build()
+                                                InvoiceTiny.builder().id("gXcsPTVyC4YZa3Sc").build()
                                             )
                                             .startingBalance("33.00")
                                             .type(Invoice.CustomerBalanceTransaction.Type.INCREMENT)
                                             .build()
                                     )
                                     .customerTaxId(
-                                        Invoice.CustomerTaxId.builder()
-                                            .country(Invoice.CustomerTaxId.Country.AD)
-                                            .type(Invoice.CustomerTaxId.Type.AD_NRT)
+                                        CustomerTaxId.builder()
+                                            .country(CustomerTaxId.Country.AD)
+                                            .type(CustomerTaxId.Type.AD_NRT)
                                             .value("value")
                                             .build()
                                     )
@@ -3635,10 +3266,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                PercentageDiscount.Filter.builder()
-                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        PercentageDiscount.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -3664,26 +3295,22 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .id("id")
                                             .adjustedSubtotal("5.00")
                                             .addAdjustment(
-                                                Invoice.LineItem.Adjustment.UsageDiscount.builder()
+                                                MonetaryUsageDiscountAdjustment.builder()
                                                     .id("id")
+                                                    .adjustmentType(
+                                                        MonetaryUsageDiscountAdjustment
+                                                            .AdjustmentType
+                                                            .USAGE_DISCOUNT
+                                                    )
                                                     .amount("amount")
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        Invoice.LineItem.Adjustment.UsageDiscount
-                                                            .Filter
-                                                            .builder()
+                                                        TransformPriceFilter.builder()
                                                             .field(
-                                                                Invoice.LineItem.Adjustment
-                                                                    .UsageDiscount
-                                                                    .Filter
-                                                                    .Field
-                                                                    .PRICE_ID
+                                                                TransformPriceFilter.Field.PRICE_ID
                                                             )
                                                             .operator(
-                                                                Invoice.LineItem.Adjustment
-                                                                    .UsageDiscount
-                                                                    .Filter
-                                                                    .Operator
+                                                                TransformPriceFilter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3705,13 +3332,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .addFilter(
-                                                        PercentageDiscount.Filter.builder()
+                                                        TransformPriceFilter.builder()
                                                             .field(
-                                                                PercentageDiscount.Filter.Field
-                                                                    .PRICE_ID
+                                                                TransformPriceFilter.Field.PRICE_ID
                                                             )
                                                             .operator(
-                                                                PercentageDiscount.Filter.Operator
+                                                                TransformPriceFilter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3726,18 +3352,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .filter("filter")
                                             .grouping("grouping")
                                             .maximum(
-                                                Invoice.LineItem.Maximum.builder()
+                                                Maximum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        Invoice.LineItem.Maximum.Filter.builder()
+                                                        TransformPriceFilter.builder()
                                                             .field(
-                                                                Invoice.LineItem.Maximum.Filter
-                                                                    .Field
-                                                                    .PRICE_ID
+                                                                TransformPriceFilter.Field.PRICE_ID
                                                             )
                                                             .operator(
-                                                                Invoice.LineItem.Maximum.Filter
-                                                                    .Operator
+                                                                TransformPriceFilter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3748,18 +3371,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             )
                                             .maximumAmount("maximum_amount")
                                             .minimum(
-                                                Invoice.LineItem.Minimum.builder()
+                                                Minimum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        Invoice.LineItem.Minimum.Filter.builder()
+                                                        TransformPriceFilter.builder()
                                                             .field(
-                                                                Invoice.LineItem.Minimum.Filter
-                                                                    .Field
-                                                                    .PRICE_ID
+                                                                TransformPriceFilter.Field.PRICE_ID
                                                             )
                                                             .operator(
-                                                                Invoice.LineItem.Minimum.Filter
-                                                                    .Operator
+                                                                TransformPriceFilter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3775,16 +3395,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 Price.Unit.builder()
                                                     .id("id")
                                                     .billableMetric(
-                                                        Price.Unit.BillableMetric.builder()
+                                                        BillableMetricTiny.builder()
                                                             .id("id")
                                                             .build()
                                                     )
                                                     .billingCycleConfiguration(
-                                                        Price.Unit.BillingCycleConfiguration
-                                                            .builder()
+                                                        BillingCycleConfiguration.builder()
                                                             .duration(0L)
                                                             .durationUnit(
-                                                                Price.Unit.BillingCycleConfiguration
+                                                                BillingCycleConfiguration
                                                                     .DurationUnit
                                                                     .DAY
                                                             )
@@ -3798,17 +3417,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         )
                                                     )
                                                     .creditAllocation(
-                                                        Price.Unit.CreditAllocation.builder()
+                                                        Allocation.builder()
                                                             .allowsRollover(true)
                                                             .currency("currency")
                                                             .customExpiration(
-                                                                Price.Unit.CreditAllocation
-                                                                    .CustomExpiration
-                                                                    .builder()
+                                                                CustomExpiration.builder()
                                                                     .duration(0L)
                                                                     .durationUnit(
-                                                                        Price.Unit.CreditAllocation
-                                                                            .CustomExpiration
+                                                                        CustomExpiration
                                                                             .DurationUnit
                                                                             .DAY
                                                                     )
@@ -3827,14 +3443,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                             .addFilter(
-                                                                PercentageDiscount.Filter.builder()
+                                                                TransformPriceFilter.builder()
                                                                     .field(
-                                                                        PercentageDiscount.Filter
-                                                                            .Field
+                                                                        TransformPriceFilter.Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        PercentageDiscount.Filter
+                                                                        TransformPriceFilter
                                                                             .Operator
                                                                             .INCLUDES
                                                                     )
@@ -3847,35 +3462,32 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     .externalPriceId("external_price_id")
                                                     .fixedPriceQuantity(0.0)
                                                     .invoicingCycleConfiguration(
-                                                        Price.Unit.InvoicingCycleConfiguration
-                                                            .builder()
+                                                        BillingCycleConfiguration.builder()
                                                             .duration(0L)
                                                             .durationUnit(
-                                                                Price.Unit
-                                                                    .InvoicingCycleConfiguration
+                                                                BillingCycleConfiguration
                                                                     .DurationUnit
                                                                     .DAY
                                                             )
                                                             .build()
                                                     )
                                                     .item(
-                                                        Price.Unit.Item.builder()
+                                                        ItemSlim.builder()
                                                             .id("id")
                                                             .name("name")
                                                             .build()
                                                     )
                                                     .maximum(
-                                                        Price.Unit.Maximum.builder()
+                                                        Maximum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .addFilter(
-                                                                Price.Unit.Maximum.Filter.builder()
+                                                                TransformPriceFilter.builder()
                                                                     .field(
-                                                                        Price.Unit.Maximum.Filter
-                                                                            .Field
+                                                                        TransformPriceFilter.Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        Price.Unit.Maximum.Filter
+                                                                        TransformPriceFilter
                                                                             .Operator
                                                                             .INCLUDES
                                                                     )
@@ -3895,17 +3507,16 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                             .build()
                                                     )
                                                     .minimum(
-                                                        Price.Unit.Minimum.builder()
+                                                        Minimum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .addFilter(
-                                                                Price.Unit.Minimum.Filter.builder()
+                                                                TransformPriceFilter.builder()
                                                                     .field(
-                                                                        Price.Unit.Minimum.Filter
-                                                                            .Field
+                                                                        TransformPriceFilter.Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        Price.Unit.Minimum.Filter
+                                                                        TransformPriceFilter
                                                                             .Operator
                                                                             .INCLUDES
                                                                     )
@@ -3920,13 +3531,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     .planPhaseOrder(0L)
                                                     .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                     .unitConfig(
-                                                        Price.Unit.UnitConfig.builder()
+                                                        UnitConfig.builder()
                                                             .unitAmount("unit_amount")
                                                             .build()
                                                     )
                                                     .dimensionalPriceConfiguration(
-                                                        Price.Unit.DimensionalPriceConfiguration
-                                                            .builder()
+                                                        DimensionalPriceConfiguration.builder()
                                                             .addDimensionValue("string")
                                                             .dimensionalPriceGroupId(
                                                                 "dimensional_price_group_id"
@@ -3940,29 +3550,27 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 OffsetDateTime.parse("2022-02-01T08:00:00+00:00")
                                             )
                                             .addSubLineItem(
-                                                Invoice.LineItem.SubLineItem.Matrix.builder()
+                                                MatrixSubLineItem.builder()
                                                     .amount("9.00")
                                                     .grouping(
-                                                        Invoice.LineItem.SubLineItem.Matrix.Grouping
-                                                            .builder()
+                                                        SubLineItemGrouping.builder()
                                                             .key("region")
                                                             .value("west")
                                                             .build()
                                                     )
                                                     .matrixConfig(
-                                                        Invoice.LineItem.SubLineItem.Matrix
-                                                            .MatrixConfig
-                                                            .builder()
+                                                        SubLineItemMatrixConfig.builder()
                                                             .addDimensionValue("string")
                                                             .build()
                                                     )
                                                     .name("Tier One")
                                                     .quantity(5.0)
+                                                    .type(MatrixSubLineItem.Type.MATRIX)
                                                     .build()
                                             )
                                             .subtotal("9.00")
                                             .addTaxAmount(
-                                                Invoice.LineItem.TaxAmount.builder()
+                                                TaxAmount.builder()
                                                     .amount("amount")
                                                     .taxRateDescription("tax_rate_description")
                                                     .taxRatePercentage("tax_rate_percentage")
@@ -3972,13 +3580,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .build()
                                     )
                                     .maximum(
-                                        Invoice.Maximum.builder()
+                                        Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                Invoice.Maximum.Filter.builder()
-                                                    .field(Invoice.Maximum.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        Invoice.Maximum.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -3994,13 +3602,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .build()
                                     )
                                     .minimum(
-                                        Invoice.Minimum.builder()
+                                        Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                Invoice.Minimum.Filter.builder()
-                                                    .field(Invoice.Minimum.Filter.Field.PRICE_ID)
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
                                                     .operator(
-                                                        Invoice.Minimum.Filter.Operator.INCLUDES
+                                                        TransformPriceFilter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -4034,7 +3642,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                     )
                                     .shippingAddress(
-                                        Invoice.ShippingAddress.builder()
+                                        Address.builder()
                                             .city("city")
                                             .country("country")
                                             .line1("line1")
@@ -4045,7 +3653,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     )
                                     .status(Invoice.Status.ISSUED)
                                     .subscription(
-                                        Invoice.Subscription.builder()
+                                        SubscriptionMinified.builder()
                                             .id("VDGsT23osdLb84KD")
                                             .build()
                                     )
@@ -4075,46 +3683,24 @@ internal class SubscriptionChangeRetrieveResponseTest {
                 .expirationTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(SubscriptionChangeRetrieveResponse.Status.PENDING)
                 .subscription(
-                    SubscriptionChangeRetrieveResponse.Subscription.builder()
+                    MutatedSubscription.builder()
                         .id("id")
                         .activePlanPhaseOrder(0L)
                         .addAdjustmentInterval(
-                            SubscriptionChangeRetrieveResponse.Subscription.AdjustmentInterval
-                                .builder()
+                            AdjustmentInterval.builder()
                                 .id("id")
                                 .adjustment(
-                                    SubscriptionChangeRetrieveResponse.Subscription
-                                        .AdjustmentInterval
-                                        .Adjustment
-                                        .UsageDiscount
-                                        .builder()
+                                    PlanPhaseUsageDiscountAdjustment.builder()
                                         .id("id")
+                                        .adjustmentType(
+                                            PlanPhaseUsageDiscountAdjustment.AdjustmentType
+                                                .USAGE_DISCOUNT
+                                        )
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .AdjustmentInterval
-                                                .Adjustment
-                                                .UsageDiscount
-                                                .Filter
-                                                .builder()
-                                                .field(
-                                                    SubscriptionChangeRetrieveResponse.Subscription
-                                                        .AdjustmentInterval
-                                                        .Adjustment
-                                                        .UsageDiscount
-                                                        .Filter
-                                                        .Field
-                                                        .PRICE_ID
-                                                )
-                                                .operator(
-                                                    SubscriptionChangeRetrieveResponse.Subscription
-                                                        .AdjustmentInterval
-                                                        .Adjustment
-                                                        .UsageDiscount
-                                                        .Filter
-                                                        .Operator
-                                                        .INCLUDES
-                                                )
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4131,9 +3717,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                         )
                         .autoCollection(true)
                         .billingCycleAnchorConfiguration(
-                            SubscriptionChangeRetrieveResponse.Subscription
-                                .BillingCycleAnchorConfiguration
-                                .builder()
+                            BillingCycleAnchorConfiguration.builder()
                                 .day(1L)
                                 .month(1L)
                                 .year(0L)
@@ -4154,7 +3738,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .autoCollection(true)
                                 .balance("balance")
                                 .billingAddress(
-                                    Customer.BillingAddress.builder()
+                                    Address.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -4172,13 +3756,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .hierarchy(
                                     Customer.Hierarchy.builder()
                                         .addChild(
-                                            Customer.Hierarchy.Child.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
                                         )
                                         .parent(
-                                            Customer.Hierarchy.Parent.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
@@ -4195,7 +3779,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .paymentProviderId("payment_provider_id")
                                 .portalUrl("portal_url")
                                 .shippingAddress(
-                                    Customer.ShippingAddress.builder()
+                                    Address.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -4205,9 +3789,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .build()
                                 )
                                 .taxId(
-                                    Customer.TaxId.builder()
-                                        .country(Customer.TaxId.Country.AD)
-                                        .type(Customer.TaxId.Type.AD_NRT)
+                                    CustomerTaxId.builder()
+                                        .country(CustomerTaxId.Country.AD)
+                                        .type(CustomerTaxId.Type.AD_NRT)
                                         .value("value")
                                         .build()
                                 )
@@ -4236,32 +3820,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                         )
                         .defaultInvoiceMemo("default_invoice_memo")
                         .addDiscountInterval(
-                            SubscriptionChangeRetrieveResponse.Subscription.DiscountInterval.Amount
-                                .builder()
+                            AmountDiscountInterval.builder()
                                 .amountDiscount("amount_discount")
                                 .addAppliesToPriceIntervalId("string")
+                                .discountType(AmountDiscountInterval.DiscountType.AMOUNT)
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    SubscriptionChangeRetrieveResponse.Subscription.DiscountInterval
-                                        .Amount
-                                        .Filter
-                                        .builder()
-                                        .field(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .DiscountInterval
-                                                .Amount
-                                                .Filter
-                                                .Field
-                                                .PRICE_ID
-                                        )
-                                        .operator(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .DiscountInterval
-                                                .Amount
-                                                .Filter
-                                                .Operator
-                                                .INCLUDES
-                                        )
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -4270,8 +3837,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                         )
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFixedFeeQuantitySchedule(
-                            SubscriptionChangeRetrieveResponse.Subscription.FixedFeeQuantitySchedule
-                                .builder()
+                            FixedFeeQuantityScheduleEntry.builder()
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .priceId("price_id")
                                 .quantity(0.0)
@@ -4280,28 +3846,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                         )
                         .invoicingThreshold("invoicing_threshold")
                         .addMaximumInterval(
-                            SubscriptionChangeRetrieveResponse.Subscription.MaximumInterval
-                                .builder()
+                            MaximumInterval.builder()
                                 .addAppliesToPriceIntervalId("string")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    SubscriptionChangeRetrieveResponse.Subscription.MaximumInterval
-                                        .Filter
-                                        .builder()
-                                        .field(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .MaximumInterval
-                                                .Filter
-                                                .Field
-                                                .PRICE_ID
-                                        )
-                                        .operator(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .MaximumInterval
-                                                .Filter
-                                                .Operator
-                                                .INCLUDES
-                                        )
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -4310,33 +3861,18 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .build()
                         )
                         .metadata(
-                            SubscriptionChangeRetrieveResponse.Subscription.Metadata.builder()
+                            MutatedSubscription.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
                         .addMinimumInterval(
-                            SubscriptionChangeRetrieveResponse.Subscription.MinimumInterval
-                                .builder()
+                            MinimumInterval.builder()
                                 .addAppliesToPriceIntervalId("string")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    SubscriptionChangeRetrieveResponse.Subscription.MinimumInterval
-                                        .Filter
-                                        .builder()
-                                        .field(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .MinimumInterval
-                                                .Filter
-                                                .Field
-                                                .PRICE_ID
-                                        )
-                                        .operator(
-                                            SubscriptionChangeRetrieveResponse.Subscription
-                                                .MinimumInterval
-                                                .Filter
-                                                .Operator
-                                                .INCLUDES
-                                        )
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -4347,29 +3883,23 @@ internal class SubscriptionChangeRetrieveResponseTest {
                         .name("name")
                         .netTerms(0L)
                         .pendingSubscriptionChange(
-                            SubscriptionChangeRetrieveResponse.Subscription
-                                .PendingSubscriptionChange
-                                .builder()
-                                .id("id")
-                                .build()
+                            SubscriptionChangeMinified.builder().id("id").build()
                         )
                         .plan(
                             Plan.builder()
                                 .id("id")
                                 .addAdjustment(
-                                    Plan.Adjustment.UsageDiscount.builder()
+                                    PlanPhaseUsageDiscountAdjustment.builder()
                                         .id("id")
+                                        .adjustmentType(
+                                            PlanPhaseUsageDiscountAdjustment.AdjustmentType
+                                                .USAGE_DISCOUNT
+                                        )
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Plan.Adjustment.UsageDiscount.Filter.builder()
-                                                .field(
-                                                    Plan.Adjustment.UsageDiscount.Filter.Field
-                                                        .PRICE_ID
-                                                )
-                                                .operator(
-                                                    Plan.Adjustment.UsageDiscount.Filter.Operator
-                                                        .INCLUDES
-                                                )
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4398,11 +3928,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            PercentageDiscount.Filter.builder()
-                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
-                                                .operator(
-                                                    PercentageDiscount.Filter.Operator.INCLUDES
-                                                )
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4412,12 +3940,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .externalPlanId("external_plan_id")
                                 .invoicingCurrency("invoicing_currency")
                                 .maximum(
-                                    Plan.Maximum.builder()
+                                    Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Plan.Maximum.Filter.builder()
-                                                .field(Plan.Maximum.Filter.Field.PRICE_ID)
-                                                .operator(Plan.Maximum.Filter.Operator.INCLUDES)
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4431,12 +3959,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .build()
                                 )
                                 .minimum(
-                                    Plan.Minimum.builder()
+                                    Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Plan.Minimum.Filter.builder()
-                                                .field(Plan.Minimum.Filter.Field.PRICE_ID)
-                                                .operator(Plan.Minimum.Filter.Operator.INCLUDES)
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4459,13 +3987,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4476,17 +4001,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .duration(0L)
                                         .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
                                         .maximum(
-                                            Plan.PlanPhase.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Plan.PlanPhase.Maximum.Filter.builder()
-                                                        .field(
-                                                            Plan.PlanPhase.Maximum.Filter.Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Plan.PlanPhase.Maximum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4496,17 +4017,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         )
                                         .maximumAmount("maximum_amount")
                                         .minimum(
-                                            Plan.PlanPhase.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Plan.PlanPhase.Minimum.Filter.builder()
-                                                        .field(
-                                                            Plan.PlanPhase.Minimum.Filter.Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Plan.PlanPhase.Minimum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4523,15 +4040,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     Price.Unit.builder()
                                         .id("id")
                                         .billableMetric(
-                                            Price.Unit.BillableMetric.builder().id("id").build()
+                                            BillableMetricTiny.builder().id("id").build()
                                         )
                                         .billingCycleConfiguration(
-                                            Price.Unit.BillingCycleConfiguration.builder()
+                                            BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.Unit.BillingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfiguration.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
@@ -4539,18 +4054,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
-                                            Price.Unit.CreditAllocation.builder()
+                                            Allocation.builder()
                                                 .allowsRollover(true)
                                                 .currency("currency")
                                                 .customExpiration(
-                                                    Price.Unit.CreditAllocation.CustomExpiration
-                                                        .builder()
+                                                    CustomExpiration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.Unit.CreditAllocation
-                                                                .CustomExpiration
-                                                                .DurationUnit
-                                                                .DAY
+                                                            CustomExpiration.DurationUnit.DAY
                                                         )
                                                         .build()
                                                 )
@@ -4566,13 +4077,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4583,29 +4091,22 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
-                                            Price.Unit.InvoicingCycleConfiguration.builder()
+                                            BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.Unit.InvoicingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfiguration.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
-                                        .item(
-                                            Price.Unit.Item.builder().id("id").name("name").build()
-                                        )
+                                        .item(ItemSlim.builder().id("id").name("name").build())
                                         .maximum(
-                                            Price.Unit.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Price.Unit.Maximum.Filter.builder()
-                                                        .field(
-                                                            Price.Unit.Maximum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Price.Unit.Maximum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4623,16 +4124,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Price.Unit.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Price.Unit.Minimum.Filter.builder()
-                                                        .field(
-                                                            Price.Unit.Minimum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Price.Unit.Minimum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4645,12 +4143,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .planPhaseOrder(0L)
                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .unitConfig(
-                                            Price.Unit.UnitConfig.builder()
-                                                .unitAmount("unit_amount")
-                                                .build()
+                                            UnitConfig.builder().unitAmount("unit_amount").build()
                                         )
                                         .dimensionalPriceConfiguration(
-                                            Price.Unit.DimensionalPriceConfiguration.builder()
+                                            DimensionalPriceConfiguration.builder()
                                                 .addDimensionValue("string")
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
@@ -4677,7 +4173,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .build()
                         )
                         .addPriceInterval(
-                            SubscriptionChangeRetrieveResponse.Subscription.PriceInterval.builder()
+                            PriceInterval.builder()
                                 .id("id")
                                 .billingCycleDay(0L)
                                 .currentBillingPeriodEndDate(
@@ -4689,9 +4185,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .filter("filter")
                                 .addFixedFeeQuantityTransition(
-                                    SubscriptionChangeRetrieveResponse.Subscription.PriceInterval
-                                        .FixedFeeQuantityTransition
-                                        .builder()
+                                    FixedFeeQuantityTransition.builder()
                                         .effectiveDate(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
@@ -4703,15 +4197,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     Price.Unit.builder()
                                         .id("id")
                                         .billableMetric(
-                                            Price.Unit.BillableMetric.builder().id("id").build()
+                                            BillableMetricTiny.builder().id("id").build()
                                         )
                                         .billingCycleConfiguration(
-                                            Price.Unit.BillingCycleConfiguration.builder()
+                                            BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.Unit.BillingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfiguration.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
@@ -4719,18 +4211,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
-                                            Price.Unit.CreditAllocation.builder()
+                                            Allocation.builder()
                                                 .allowsRollover(true)
                                                 .currency("currency")
                                                 .customExpiration(
-                                                    Price.Unit.CreditAllocation.CustomExpiration
-                                                        .builder()
+                                                    CustomExpiration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.Unit.CreditAllocation
-                                                                .CustomExpiration
-                                                                .DurationUnit
-                                                                .DAY
+                                                            CustomExpiration.DurationUnit.DAY
                                                         )
                                                         .build()
                                                 )
@@ -4746,13 +4234,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4763,29 +4248,22 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
-                                            Price.Unit.InvoicingCycleConfiguration.builder()
+                                            BillingCycleConfiguration.builder()
                                                 .duration(0L)
                                                 .durationUnit(
-                                                    Price.Unit.InvoicingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                                    BillingCycleConfiguration.DurationUnit.DAY
                                                 )
                                                 .build()
                                         )
-                                        .item(
-                                            Price.Unit.Item.builder().id("id").name("name").build()
-                                        )
+                                        .item(ItemSlim.builder().id("id").name("name").build())
                                         .maximum(
-                                            Price.Unit.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Price.Unit.Maximum.Filter.builder()
-                                                        .field(
-                                                            Price.Unit.Maximum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Price.Unit.Maximum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4803,16 +4281,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Price.Unit.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Price.Unit.Minimum.Filter.builder()
-                                                        .field(
-                                                            Price.Unit.Minimum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Price.Unit.Minimum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4825,12 +4300,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .planPhaseOrder(0L)
                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .unitConfig(
-                                            Price.Unit.UnitConfig.builder()
-                                                .unitAmount("unit_amount")
-                                                .build()
+                                            UnitConfig.builder().unitAmount("unit_amount").build()
                                         )
                                         .dimensionalPriceConfiguration(
-                                            Price.Unit.DimensionalPriceConfiguration.builder()
+                                            DimensionalPriceConfiguration.builder()
                                                 .addDimensionValue("string")
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
@@ -4844,22 +4317,21 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .build()
                         )
                         .redeemedCoupon(
-                            SubscriptionChangeRetrieveResponse.Subscription.RedeemedCoupon.builder()
+                            CouponRedemption.builder()
                                 .couponId("coupon_id")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
                         )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .status(SubscriptionChangeRetrieveResponse.Subscription.Status.ACTIVE)
+                        .status(MutatedSubscription.Status.ACTIVE)
                         .trialInfo(
-                            SubscriptionChangeRetrieveResponse.Subscription.TrialInfo.builder()
+                            SubscriptionTrialInfo.builder()
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
                         )
                         .changedResources(
-                            SubscriptionChangeRetrieveResponse.Subscription.ChangedResources
-                                .builder()
+                            ChangedSubscriptionResources.builder()
                                 .addCreatedCreditNote(
                                     CreditNote.builder()
                                         .id("id")
@@ -4867,7 +4339,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .creditNoteNumber("credit_note_number")
                                         .creditNotePdf("credit_note_pdf")
                                         .customer(
-                                            CreditNote.Customer.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
@@ -4882,7 +4354,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .quantity(0.0)
                                                 .subtotal("subtotal")
                                                 .addTaxAmount(
-                                                    CreditNote.LineItem.TaxAmount.builder()
+                                                    TaxAmount.builder()
                                                         .amount("amount")
                                                         .taxRateDescription("tax_rate_description")
                                                         .taxRatePercentage("tax_rate_percentage")
@@ -4966,7 +4438,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .billingAddress(
-                                            Invoice.BillingAddress.builder()
+                                            Address.builder()
                                                 .city("city")
                                                 .country("country")
                                                 .line1("line1")
@@ -4995,7 +4467,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         )
                                         .currency("USD")
                                         .customer(
-                                            Invoice.Customer.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
@@ -5014,16 +4486,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     )
                                                 )
                                                 .creditNote(
-                                                    Invoice.CustomerBalanceTransaction.CreditNote
-                                                        .builder()
-                                                        .id("id")
-                                                        .build()
+                                                    CreditNoteTiny.builder().id("id").build()
                                                 )
                                                 .description("An optional description")
                                                 .endingBalance("22.00")
                                                 .invoice(
-                                                    Invoice.CustomerBalanceTransaction.InnerInvoice
-                                                        .builder()
+                                                    InvoiceTiny.builder()
                                                         .id("gXcsPTVyC4YZa3Sc")
                                                         .build()
                                                 )
@@ -5035,9 +4503,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .customerTaxId(
-                                            Invoice.CustomerTaxId.builder()
-                                                .country(Invoice.CustomerTaxId.Country.AD)
-                                                .type(Invoice.CustomerTaxId.Type.AD_NRT)
+                                            CustomerTaxId.builder()
+                                                .country(CustomerTaxId.Country.AD)
+                                                .type(CustomerTaxId.Type.AD_NRT)
                                                 .value("value")
                                                 .build()
                                         )
@@ -5051,13 +4519,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -5087,28 +4552,23 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .id("id")
                                                 .adjustedSubtotal("5.00")
                                                 .addAdjustment(
-                                                    Invoice.LineItem.Adjustment.UsageDiscount
-                                                        .builder()
+                                                    MonetaryUsageDiscountAdjustment.builder()
                                                         .id("id")
+                                                        .adjustmentType(
+                                                            MonetaryUsageDiscountAdjustment
+                                                                .AdjustmentType
+                                                                .USAGE_DISCOUNT
+                                                        )
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Adjustment
-                                                                .UsageDiscount
-                                                                .Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Adjustment
-                                                                        .UsageDiscount
-                                                                        .Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Adjustment
-                                                                        .UsageDiscount
-                                                                        .Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5131,14 +4591,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            PercentageDiscount.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    PercentageDiscount.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    PercentageDiscount.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5155,19 +4614,16 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .filter("filter")
                                                 .grouping("grouping")
                                                 .maximum(
-                                                    Invoice.LineItem.Maximum.builder()
+                                                    Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Maximum.Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Maximum.Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Maximum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5178,19 +4634,16 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 )
                                                 .maximumAmount("maximum_amount")
                                                 .minimum(
-                                                    Invoice.LineItem.Minimum.builder()
+                                                    Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Minimum.Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Minimum.Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Minimum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5206,17 +4659,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     Price.Unit.builder()
                                                         .id("id")
                                                         .billableMetric(
-                                                            Price.Unit.BillableMetric.builder()
+                                                            BillableMetricTiny.builder()
                                                                 .id("id")
                                                                 .build()
                                                         )
                                                         .billingCycleConfiguration(
-                                                            Price.Unit.BillingCycleConfiguration
-                                                                .builder()
+                                                            BillingCycleConfiguration.builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.Unit
-                                                                        .BillingCycleConfiguration
+                                                                    BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
@@ -5230,18 +4681,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                             )
                                                         )
                                                         .creditAllocation(
-                                                            Price.Unit.CreditAllocation.builder()
+                                                            Allocation.builder()
                                                                 .allowsRollover(true)
                                                                 .currency("currency")
                                                                 .customExpiration(
-                                                                    Price.Unit.CreditAllocation
-                                                                        .CustomExpiration
-                                                                        .builder()
+                                                                    CustomExpiration.builder()
                                                                         .duration(0L)
                                                                         .durationUnit(
-                                                                            Price.Unit
-                                                                                .CreditAllocation
-                                                                                .CustomExpiration
+                                                                            CustomExpiration
                                                                                 .DurationUnit
                                                                                 .DAY
                                                                         )
@@ -5264,17 +4711,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                     "7hfgtgjnbvc3ujkl"
                                                                 )
                                                                 .addFilter(
-                                                                    PercentageDiscount.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            PercentageDiscount
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            PercentageDiscount
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -5287,38 +4731,33 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .externalPriceId("external_price_id")
                                                         .fixedPriceQuantity(0.0)
                                                         .invoicingCycleConfiguration(
-                                                            Price.Unit.InvoicingCycleConfiguration
-                                                                .builder()
+                                                            BillingCycleConfiguration.builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.Unit
-                                                                        .InvoicingCycleConfiguration
+                                                                    BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
                                                                 .build()
                                                         )
                                                         .item(
-                                                            Price.Unit.Item.builder()
+                                                            ItemSlim.builder()
                                                                 .id("id")
                                                                 .name("name")
                                                                 .build()
                                                         )
                                                         .maximum(
-                                                            Price.Unit.Maximum.builder()
+                                                            Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    Price.Unit.Maximum.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            Price.Unit.Maximum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            Price.Unit.Maximum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -5338,20 +4777,17 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                 .build()
                                                         )
                                                         .minimum(
-                                                            Price.Unit.Minimum.builder()
+                                                            Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    Price.Unit.Minimum.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            Price.Unit.Minimum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            Price.Unit.Minimum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -5366,13 +4802,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .planPhaseOrder(0L)
                                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                         .unitConfig(
-                                                            Price.Unit.UnitConfig.builder()
+                                                            UnitConfig.builder()
                                                                 .unitAmount("unit_amount")
                                                                 .build()
                                                         )
                                                         .dimensionalPriceConfiguration(
-                                                            Price.Unit.DimensionalPriceConfiguration
-                                                                .builder()
+                                                            DimensionalPriceConfiguration.builder()
                                                                 .addDimensionValue("string")
                                                                 .dimensionalPriceGroupId(
                                                                     "dimensional_price_group_id"
@@ -5388,30 +4823,27 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     )
                                                 )
                                                 .addSubLineItem(
-                                                    Invoice.LineItem.SubLineItem.Matrix.builder()
+                                                    MatrixSubLineItem.builder()
                                                         .amount("9.00")
                                                         .grouping(
-                                                            Invoice.LineItem.SubLineItem.Matrix
-                                                                .Grouping
-                                                                .builder()
+                                                            SubLineItemGrouping.builder()
                                                                 .key("region")
                                                                 .value("west")
                                                                 .build()
                                                         )
                                                         .matrixConfig(
-                                                            Invoice.LineItem.SubLineItem.Matrix
-                                                                .MatrixConfig
-                                                                .builder()
+                                                            SubLineItemMatrixConfig.builder()
                                                                 .addDimensionValue("string")
                                                                 .build()
                                                         )
                                                         .name("Tier One")
                                                         .quantity(5.0)
+                                                        .type(MatrixSubLineItem.Type.MATRIX)
                                                         .build()
                                                 )
                                                 .subtotal("9.00")
                                                 .addTaxAmount(
-                                                    Invoice.LineItem.TaxAmount.builder()
+                                                    TaxAmount.builder()
                                                         .amount("amount")
                                                         .taxRateDescription("tax_rate_description")
                                                         .taxRatePercentage("tax_rate_percentage")
@@ -5421,15 +4853,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .maximum(
-                                            Invoice.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.Maximum.Filter.builder()
-                                                        .field(
-                                                            Invoice.Maximum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.Maximum.Filter.Operator.INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -5448,15 +4878,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Invoice.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.Minimum.Filter.builder()
-                                                        .field(
-                                                            Invoice.Minimum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.Minimum.Filter.Operator.INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -5490,7 +4918,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
                                         .shippingAddress(
-                                            Invoice.ShippingAddress.builder()
+                                            Address.builder()
                                                 .city("city")
                                                 .country("country")
                                                 .line1("line1")
@@ -5501,7 +4929,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         )
                                         .status(Invoice.Status.ISSUED)
                                         .subscription(
-                                            Invoice.Subscription.builder()
+                                            SubscriptionMinified.builder()
                                                 .id("VDGsT23osdLb84KD")
                                                 .build()
                                         )
@@ -5521,7 +4949,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .creditNoteNumber("credit_note_number")
                                         .creditNotePdf("credit_note_pdf")
                                         .customer(
-                                            CreditNote.Customer.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
@@ -5536,7 +4964,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .quantity(0.0)
                                                 .subtotal("subtotal")
                                                 .addTaxAmount(
-                                                    CreditNote.LineItem.TaxAmount.builder()
+                                                    TaxAmount.builder()
                                                         .amount("amount")
                                                         .taxRateDescription("tax_rate_description")
                                                         .taxRatePercentage("tax_rate_percentage")
@@ -5620,7 +5048,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .billingAddress(
-                                            Invoice.BillingAddress.builder()
+                                            Address.builder()
                                                 .city("city")
                                                 .country("country")
                                                 .line1("line1")
@@ -5649,7 +5077,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         )
                                         .currency("USD")
                                         .customer(
-                                            Invoice.Customer.builder()
+                                            CustomerMinified.builder()
                                                 .id("id")
                                                 .externalCustomerId("external_customer_id")
                                                 .build()
@@ -5668,16 +5096,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     )
                                                 )
                                                 .creditNote(
-                                                    Invoice.CustomerBalanceTransaction.CreditNote
-                                                        .builder()
-                                                        .id("id")
-                                                        .build()
+                                                    CreditNoteTiny.builder().id("id").build()
                                                 )
                                                 .description("An optional description")
                                                 .endingBalance("22.00")
                                                 .invoice(
-                                                    Invoice.CustomerBalanceTransaction.InnerInvoice
-                                                        .builder()
+                                                    InvoiceTiny.builder()
                                                         .id("gXcsPTVyC4YZa3Sc")
                                                         .build()
                                                 )
@@ -5689,9 +5113,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .customerTaxId(
-                                            Invoice.CustomerTaxId.builder()
-                                                .country(Invoice.CustomerTaxId.Country.AD)
-                                                .type(Invoice.CustomerTaxId.Type.AD_NRT)
+                                            CustomerTaxId.builder()
+                                                .country(CustomerTaxId.Country.AD)
+                                                .type(CustomerTaxId.Type.AD_NRT)
                                                 .value("value")
                                                 .build()
                                         )
@@ -5705,13 +5129,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -5741,28 +5162,23 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .id("id")
                                                 .adjustedSubtotal("5.00")
                                                 .addAdjustment(
-                                                    Invoice.LineItem.Adjustment.UsageDiscount
-                                                        .builder()
+                                                    MonetaryUsageDiscountAdjustment.builder()
                                                         .id("id")
+                                                        .adjustmentType(
+                                                            MonetaryUsageDiscountAdjustment
+                                                                .AdjustmentType
+                                                                .USAGE_DISCOUNT
+                                                        )
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Adjustment
-                                                                .UsageDiscount
-                                                                .Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Adjustment
-                                                                        .UsageDiscount
-                                                                        .Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Adjustment
-                                                                        .UsageDiscount
-                                                                        .Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5785,14 +5201,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            PercentageDiscount.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    PercentageDiscount.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    PercentageDiscount.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5809,19 +5224,16 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .filter("filter")
                                                 .grouping("grouping")
                                                 .maximum(
-                                                    Invoice.LineItem.Maximum.builder()
+                                                    Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Maximum.Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Maximum.Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Maximum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5832,19 +5244,16 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 )
                                                 .maximumAmount("maximum_amount")
                                                 .minimum(
-                                                    Invoice.LineItem.Minimum.builder()
+                                                    Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Invoice.LineItem.Minimum.Filter
-                                                                .builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Invoice.LineItem.Minimum.Filter
-                                                                        .Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Invoice.LineItem.Minimum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5860,17 +5269,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     Price.Unit.builder()
                                                         .id("id")
                                                         .billableMetric(
-                                                            Price.Unit.BillableMetric.builder()
+                                                            BillableMetricTiny.builder()
                                                                 .id("id")
                                                                 .build()
                                                         )
                                                         .billingCycleConfiguration(
-                                                            Price.Unit.BillingCycleConfiguration
-                                                                .builder()
+                                                            BillingCycleConfiguration.builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.Unit
-                                                                        .BillingCycleConfiguration
+                                                                    BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
@@ -5884,18 +5291,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                             )
                                                         )
                                                         .creditAllocation(
-                                                            Price.Unit.CreditAllocation.builder()
+                                                            Allocation.builder()
                                                                 .allowsRollover(true)
                                                                 .currency("currency")
                                                                 .customExpiration(
-                                                                    Price.Unit.CreditAllocation
-                                                                        .CustomExpiration
-                                                                        .builder()
+                                                                    CustomExpiration.builder()
                                                                         .duration(0L)
                                                                         .durationUnit(
-                                                                            Price.Unit
-                                                                                .CreditAllocation
-                                                                                .CustomExpiration
+                                                                            CustomExpiration
                                                                                 .DurationUnit
                                                                                 .DAY
                                                                         )
@@ -5918,17 +5321,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                     "7hfgtgjnbvc3ujkl"
                                                                 )
                                                                 .addFilter(
-                                                                    PercentageDiscount.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            PercentageDiscount
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            PercentageDiscount
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -5941,38 +5341,33 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .externalPriceId("external_price_id")
                                                         .fixedPriceQuantity(0.0)
                                                         .invoicingCycleConfiguration(
-                                                            Price.Unit.InvoicingCycleConfiguration
-                                                                .builder()
+                                                            BillingCycleConfiguration.builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.Unit
-                                                                        .InvoicingCycleConfiguration
+                                                                    BillingCycleConfiguration
                                                                         .DurationUnit
                                                                         .DAY
                                                                 )
                                                                 .build()
                                                         )
                                                         .item(
-                                                            Price.Unit.Item.builder()
+                                                            ItemSlim.builder()
                                                                 .id("id")
                                                                 .name("name")
                                                                 .build()
                                                         )
                                                         .maximum(
-                                                            Price.Unit.Maximum.builder()
+                                                            Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    Price.Unit.Maximum.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            Price.Unit.Maximum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            Price.Unit.Maximum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -5992,20 +5387,17 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                 .build()
                                                         )
                                                         .minimum(
-                                                            Price.Unit.Minimum.builder()
+                                                            Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    Price.Unit.Minimum.Filter
-                                                                        .builder()
+                                                                    TransformPriceFilter.builder()
                                                                         .field(
-                                                                            Price.Unit.Minimum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            Price.Unit.Minimum
-                                                                                .Filter
+                                                                            TransformPriceFilter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -6020,13 +5412,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .planPhaseOrder(0L)
                                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                         .unitConfig(
-                                                            Price.Unit.UnitConfig.builder()
+                                                            UnitConfig.builder()
                                                                 .unitAmount("unit_amount")
                                                                 .build()
                                                         )
                                                         .dimensionalPriceConfiguration(
-                                                            Price.Unit.DimensionalPriceConfiguration
-                                                                .builder()
+                                                            DimensionalPriceConfiguration.builder()
                                                                 .addDimensionValue("string")
                                                                 .dimensionalPriceGroupId(
                                                                     "dimensional_price_group_id"
@@ -6042,30 +5433,27 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     )
                                                 )
                                                 .addSubLineItem(
-                                                    Invoice.LineItem.SubLineItem.Matrix.builder()
+                                                    MatrixSubLineItem.builder()
                                                         .amount("9.00")
                                                         .grouping(
-                                                            Invoice.LineItem.SubLineItem.Matrix
-                                                                .Grouping
-                                                                .builder()
+                                                            SubLineItemGrouping.builder()
                                                                 .key("region")
                                                                 .value("west")
                                                                 .build()
                                                         )
                                                         .matrixConfig(
-                                                            Invoice.LineItem.SubLineItem.Matrix
-                                                                .MatrixConfig
-                                                                .builder()
+                                                            SubLineItemMatrixConfig.builder()
                                                                 .addDimensionValue("string")
                                                                 .build()
                                                         )
                                                         .name("Tier One")
                                                         .quantity(5.0)
+                                                        .type(MatrixSubLineItem.Type.MATRIX)
                                                         .build()
                                                 )
                                                 .subtotal("9.00")
                                                 .addTaxAmount(
-                                                    Invoice.LineItem.TaxAmount.builder()
+                                                    TaxAmount.builder()
                                                         .amount("amount")
                                                         .taxRateDescription("tax_rate_description")
                                                         .taxRatePercentage("tax_rate_percentage")
@@ -6075,15 +5463,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .maximum(
-                                            Invoice.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.Maximum.Filter.builder()
-                                                        .field(
-                                                            Invoice.Maximum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.Maximum.Filter.Operator.INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -6102,15 +5488,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .minimum(
-                                            Invoice.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.Minimum.Filter.builder()
-                                                        .field(
-                                                            Invoice.Minimum.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.Minimum.Filter.Operator.INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -6144,7 +5528,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
                                         .shippingAddress(
-                                            Invoice.ShippingAddress.builder()
+                                            Address.builder()
                                                 .city("city")
                                                 .country("country")
                                                 .line1("line1")
@@ -6155,7 +5539,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         )
                                         .status(Invoice.Status.ISSUED)
                                         .subscription(
-                                            Invoice.Subscription.builder()
+                                            SubscriptionMinified.builder()
                                                 .id("VDGsT23osdLb84KD")
                                                 .build()
                                         )

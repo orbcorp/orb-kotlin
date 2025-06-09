@@ -34,40 +34,24 @@ internal class PriceEvaluateMultipleParamsTest {
                     .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                     .addGroupingKey("case when my_event_type = 'foo' then true else false end")
                     .price(
-                        PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit.builder()
-                            .cadence(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit.Cadence
-                                    .ANNUAL
-                            )
+                        NewFloatingUnitPrice.builder()
+                            .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
                             .currency("currency")
                             .itemId("item_id")
+                            .modelType(NewFloatingUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit.UnitConfig
-                                    .builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
+                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                    .BillingCycleConfiguration
-                                    .builder()
+                                NewBillingCycleConfiguration.builder()
                                     .duration(0L)
-                                    .durationUnit(
-                                        PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                            .BillingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
-                                    )
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
                             .conversionRate(0.0)
                             .dimensionalPriceConfiguration(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                    .DimensionalPriceConfiguration
-                                    .builder()
+                                NewDimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")
                                     .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .externalDimensionalPriceGroupId(
@@ -79,21 +63,13 @@ internal class PriceEvaluateMultipleParamsTest {
                             .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("x")
                             .invoicingCycleConfiguration(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                    .InvoicingCycleConfiguration
-                                    .builder()
+                                NewBillingCycleConfiguration.builder()
                                     .duration(0L)
-                                    .durationUnit(
-                                        PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                            .InvoicingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
-                                    )
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
                             .metadata(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit.Metadata
-                                    .builder()
+                                NewFloatingUnitPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
@@ -131,41 +107,24 @@ internal class PriceEvaluateMultipleParamsTest {
                         .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                         .addGroupingKey("case when my_event_type = 'foo' then true else false end")
                         .price(
-                            PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit.builder()
-                                .cadence(
-                                    PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit.Cadence
-                                        .ANNUAL
-                                )
+                            NewFloatingUnitPrice.builder()
+                                .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
                                 .currency("currency")
                                 .itemId("item_id")
+                                .modelType(NewFloatingUnitPrice.ModelType.UNIT)
                                 .name("Annual fee")
-                                .unitConfig(
-                                    PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                        .UnitConfig
-                                        .builder()
-                                        .unitAmount("unit_amount")
-                                        .build()
-                                )
+                                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                                 .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .billingCycleConfiguration(
-                                    PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                        .BillingCycleConfiguration
-                                        .builder()
+                                    NewBillingCycleConfiguration.builder()
                                         .duration(0L)
-                                        .durationUnit(
-                                            PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                                .BillingCycleConfiguration
-                                                .DurationUnit
-                                                .DAY
-                                        )
+                                        .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                         .build()
                                 )
                                 .conversionRate(0.0)
                                 .dimensionalPriceConfiguration(
-                                    PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                        .DimensionalPriceConfiguration
-                                        .builder()
+                                    NewDimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
                                         .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .externalDimensionalPriceGroupId(
@@ -177,21 +136,13 @@ internal class PriceEvaluateMultipleParamsTest {
                                 .fixedPriceQuantity(0.0)
                                 .invoiceGroupingKey("x")
                                 .invoicingCycleConfiguration(
-                                    PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                        .InvoicingCycleConfiguration
-                                        .builder()
+                                    NewBillingCycleConfiguration.builder()
                                         .duration(0L)
-                                        .durationUnit(
-                                            PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                                .InvoicingCycleConfiguration
-                                                .DurationUnit
-                                                .DAY
-                                        )
+                                        .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                         .build()
                                 )
                                 .metadata(
-                                    PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit.Metadata
-                                        .builder()
+                                    NewFloatingUnitPrice.Metadata.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
@@ -229,40 +180,24 @@ internal class PriceEvaluateMultipleParamsTest {
                     .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                     .addGroupingKey("case when my_event_type = 'foo' then true else false end")
                     .price(
-                        PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit.builder()
-                            .cadence(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit.Cadence
-                                    .ANNUAL
-                            )
+                        NewFloatingUnitPrice.builder()
+                            .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
                             .currency("currency")
                             .itemId("item_id")
+                            .modelType(NewFloatingUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit.UnitConfig
-                                    .builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
+                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                    .BillingCycleConfiguration
-                                    .builder()
+                                NewBillingCycleConfiguration.builder()
                                     .duration(0L)
-                                    .durationUnit(
-                                        PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                            .BillingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
-                                    )
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
                             .conversionRate(0.0)
                             .dimensionalPriceConfiguration(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                    .DimensionalPriceConfiguration
-                                    .builder()
+                                NewDimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")
                                     .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .externalDimensionalPriceGroupId(
@@ -274,21 +209,13 @@ internal class PriceEvaluateMultipleParamsTest {
                             .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("x")
                             .invoicingCycleConfiguration(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                    .InvoicingCycleConfiguration
-                                    .builder()
+                                NewBillingCycleConfiguration.builder()
                                     .duration(0L)
-                                    .durationUnit(
-                                        PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit
-                                            .InvoicingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
-                                    )
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
                             .metadata(
-                                PriceEvaluateMultipleParams.PriceEvaluation.Price.Unit.Metadata
-                                    .builder()
+                                NewFloatingUnitPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )

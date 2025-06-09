@@ -15,7 +15,14 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
+import com.withorb.api.models.AccountingProviderConfig
+import com.withorb.api.models.AddressInput
 import com.withorb.api.models.CustomerCreateParams
+import com.withorb.api.models.CustomerHierarchyConfig
+import com.withorb.api.models.CustomerTaxId
+import com.withorb.api.models.NewAccountingSyncConfiguration
+import com.withorb.api.models.NewAvalaraTaxConfiguration
+import com.withorb.api.models.NewReportingConfiguration
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.parallel.ResourceLock
@@ -45,10 +52,9 @@ internal class ServiceParamsTest {
                 .email("dev@stainless.com")
                 .name("x")
                 .accountingSyncConfiguration(
-                    CustomerCreateParams.AccountingSyncConfiguration.builder()
+                    NewAccountingSyncConfiguration.builder()
                         .addAccountingProvider(
-                            CustomerCreateParams.AccountingSyncConfiguration.AccountingProvider
-                                .builder()
+                            AccountingProviderConfig.builder()
                                 .externalProviderId("external_provider_id")
                                 .providerType("provider_type")
                                 .build()
@@ -59,7 +65,7 @@ internal class ServiceParamsTest {
                 .addAdditionalEmail("dev@stainless.com")
                 .autoCollection(true)
                 .billingAddress(
-                    CustomerCreateParams.BillingAddress.builder()
+                    AddressInput.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -72,7 +78,7 @@ internal class ServiceParamsTest {
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
                 .hierarchy(
-                    CustomerCreateParams.Hierarchy.builder()
+                    CustomerHierarchyConfig.builder()
                         .addChildCustomerId("string")
                         .parentCustomerId("parent_customer_id")
                         .build()
@@ -84,11 +90,9 @@ internal class ServiceParamsTest {
                 )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
-                .reportingConfiguration(
-                    CustomerCreateParams.ReportingConfiguration.builder().exempt(true).build()
-                )
+                .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())
                 .shippingAddress(
-                    CustomerCreateParams.ShippingAddress.builder()
+                    AddressInput.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -98,15 +102,16 @@ internal class ServiceParamsTest {
                         .build()
                 )
                 .taxConfiguration(
-                    CustomerCreateParams.TaxConfiguration.Avalara.builder()
+                    NewAvalaraTaxConfiguration.builder()
                         .taxExempt(true)
+                        .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
                         .taxExemptionCode("tax_exemption_code")
                         .build()
                 )
                 .taxId(
-                    CustomerCreateParams.TaxId.builder()
-                        .country(CustomerCreateParams.TaxId.Country.AD)
-                        .type(CustomerCreateParams.TaxId.Type.AD_NRT)
+                    CustomerTaxId.builder()
+                        .country(CustomerTaxId.Country.AD)
+                        .type(CustomerTaxId.Type.AD_NRT)
                         .value("value")
                         .build()
                 )

@@ -16,12 +16,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
         val customerCreditLedgerListPageResponse =
             CustomerCreditLedgerListPageResponse.builder()
                 .addData(
-                    CustomerCreditLedgerListResponse.Increment.builder()
+                    IncrementLedgerEntry.builder()
                         .id("id")
                         .amount(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditBlock(
-                            CustomerCreditLedgerListResponse.Increment.CreditBlock.builder()
+                            AffectedBlock.builder()
                                 .id("id")
                                 .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .perUnitCostBasis("per_unit_cost_basis")
@@ -29,19 +29,18 @@ internal class CustomerCreditLedgerListPageResponseTest {
                         )
                         .currency("currency")
                         .customer(
-                            CustomerCreditLedgerListResponse.Increment.Customer.builder()
+                            CustomerMinified.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
                         )
                         .description("description")
                         .endingBalance(0.0)
-                        .entryStatus(
-                            CustomerCreditLedgerListResponse.Increment.EntryStatus.COMMITTED
-                        )
+                        .entryStatus(IncrementLedgerEntry.EntryStatus.COMMITTED)
+                        .entryType(IncrementLedgerEntry.EntryType.INCREMENT)
                         .ledgerSequenceNumber(0L)
                         .metadata(
-                            CustomerCreditLedgerListResponse.Increment.Metadata.builder()
+                            IncrementLedgerEntry.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
@@ -63,7 +62,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .build()
                                 )
                                 .billingAddress(
-                                    Invoice.BillingAddress.builder()
+                                    Address.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -86,7 +85,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                 )
                                 .currency("USD")
                                 .customer(
-                                    Invoice.Customer.builder()
+                                    CustomerMinified.builder()
                                         .id("id")
                                         .externalCustomerId("external_customer_id")
                                         .build()
@@ -102,27 +101,20 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .createdAt(
                                             OffsetDateTime.parse("2022-05-01T07:01:31+00:00")
                                         )
-                                        .creditNote(
-                                            Invoice.CustomerBalanceTransaction.CreditNote.builder()
-                                                .id("id")
-                                                .build()
-                                        )
+                                        .creditNote(CreditNoteTiny.builder().id("id").build())
                                         .description("An optional description")
                                         .endingBalance("22.00")
                                         .invoice(
-                                            Invoice.CustomerBalanceTransaction.InnerInvoice
-                                                .builder()
-                                                .id("gXcsPTVyC4YZa3Sc")
-                                                .build()
+                                            InvoiceTiny.builder().id("gXcsPTVyC4YZa3Sc").build()
                                         )
                                         .startingBalance("33.00")
                                         .type(Invoice.CustomerBalanceTransaction.Type.INCREMENT)
                                         .build()
                                 )
                                 .customerTaxId(
-                                    Invoice.CustomerTaxId.builder()
-                                        .country(Invoice.CustomerTaxId.Country.AD)
-                                        .type(Invoice.CustomerTaxId.Type.AD_NRT)
+                                    CustomerTaxId.builder()
+                                        .country(CustomerTaxId.Country.AD)
+                                        .type(CustomerTaxId.Type.AD_NRT)
                                         .value("value")
                                         .build()
                                 )
@@ -134,11 +126,9 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            PercentageDiscount.Filter.builder()
-                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
-                                                .operator(
-                                                    PercentageDiscount.Filter.Operator.INCLUDES
-                                                )
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -161,26 +151,19 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .id("id")
                                         .adjustedSubtotal("5.00")
                                         .addAdjustment(
-                                            Invoice.LineItem.Adjustment.UsageDiscount.builder()
+                                            MonetaryUsageDiscountAdjustment.builder()
                                                 .id("id")
+                                                .adjustmentType(
+                                                    MonetaryUsageDiscountAdjustment.AdjustmentType
+                                                        .USAGE_DISCOUNT
+                                                )
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
-                                                        .builder()
-                                                        .field(
-                                                            Invoice.LineItem.Adjustment
-                                                                .UsageDiscount
-                                                                .Filter
-                                                                .Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.LineItem.Adjustment
-                                                                .UsageDiscount
-                                                                .Filter
-                                                                .Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -201,13 +184,10 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -219,17 +199,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .filter("filter")
                                         .grouping("grouping")
                                         .maximum(
-                                            Invoice.LineItem.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.LineItem.Maximum.Filter.builder()
-                                                        .field(
-                                                            Invoice.LineItem.Maximum.Filter.Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.LineItem.Maximum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -239,17 +215,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         )
                                         .maximumAmount("maximum_amount")
                                         .minimum(
-                                            Invoice.LineItem.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.LineItem.Minimum.Filter.builder()
-                                                        .field(
-                                                            Invoice.LineItem.Minimum.Filter.Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.LineItem.Minimum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -264,16 +236,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                             Price.Unit.builder()
                                                 .id("id")
                                                 .billableMetric(
-                                                    Price.Unit.BillableMetric.builder()
-                                                        .id("id")
-                                                        .build()
+                                                    BillableMetricTiny.builder().id("id").build()
                                                 )
                                                 .billingCycleConfiguration(
-                                                    Price.Unit.BillingCycleConfiguration.builder()
+                                                    BillingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.Unit.BillingCycleConfiguration
-                                                                .DurationUnit
+                                                            BillingCycleConfiguration.DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
@@ -284,18 +253,14 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                                 )
                                                 .creditAllocation(
-                                                    Price.Unit.CreditAllocation.builder()
+                                                    Allocation.builder()
                                                         .allowsRollover(true)
                                                         .currency("currency")
                                                         .customExpiration(
-                                                            Price.Unit.CreditAllocation
-                                                                .CustomExpiration
-                                                                .builder()
+                                                            CustomExpiration.builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.Unit.CreditAllocation
-                                                                        .CustomExpiration
-                                                                        .DurationUnit
+                                                                    CustomExpiration.DurationUnit
                                                                         .DAY
                                                                 )
                                                                 .build()
@@ -313,14 +278,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            PercentageDiscount.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    PercentageDiscount.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    PercentageDiscount.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -332,33 +296,28 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(0.0)
                                                 .invoicingCycleConfiguration(
-                                                    Price.Unit.InvoicingCycleConfiguration.builder()
+                                                    BillingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.Unit.InvoicingCycleConfiguration
-                                                                .DurationUnit
+                                                            BillingCycleConfiguration.DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
                                                 )
                                                 .item(
-                                                    Price.Unit.Item.builder()
-                                                        .id("id")
-                                                        .name("name")
-                                                        .build()
+                                                    ItemSlim.builder().id("id").name("name").build()
                                                 )
                                                 .maximum(
-                                                    Price.Unit.Maximum.builder()
+                                                    Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Price.Unit.Maximum.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Price.Unit.Maximum.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Price.Unit.Maximum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -377,17 +336,16 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                         .build()
                                                 )
                                                 .minimum(
-                                                    Price.Unit.Minimum.builder()
+                                                    Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Price.Unit.Minimum.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Price.Unit.Minimum.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Price.Unit.Minimum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -401,13 +359,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                 .planPhaseOrder(0L)
                                                 .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                 .unitConfig(
-                                                    Price.Unit.UnitConfig.builder()
+                                                    UnitConfig.builder()
                                                         .unitAmount("unit_amount")
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
-                                                    Price.Unit.DimensionalPriceConfiguration
-                                                        .builder()
+                                                    DimensionalPriceConfiguration.builder()
                                                         .addDimensionValue("string")
                                                         .dimensionalPriceGroupId(
                                                             "dimensional_price_group_id"
@@ -421,28 +378,27 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                             OffsetDateTime.parse("2022-02-01T08:00:00+00:00")
                                         )
                                         .addSubLineItem(
-                                            Invoice.LineItem.SubLineItem.Matrix.builder()
+                                            MatrixSubLineItem.builder()
                                                 .amount("9.00")
                                                 .grouping(
-                                                    Invoice.LineItem.SubLineItem.Matrix.Grouping
-                                                        .builder()
+                                                    SubLineItemGrouping.builder()
                                                         .key("region")
                                                         .value("west")
                                                         .build()
                                                 )
                                                 .matrixConfig(
-                                                    Invoice.LineItem.SubLineItem.Matrix.MatrixConfig
-                                                        .builder()
+                                                    SubLineItemMatrixConfig.builder()
                                                         .addDimensionValue("string")
                                                         .build()
                                                 )
                                                 .name("Tier One")
                                                 .quantity(5.0)
+                                                .type(MatrixSubLineItem.Type.MATRIX)
                                                 .build()
                                         )
                                         .subtotal("9.00")
                                         .addTaxAmount(
-                                            Invoice.LineItem.TaxAmount.builder()
+                                            TaxAmount.builder()
                                                 .amount("amount")
                                                 .taxRateDescription("tax_rate_description")
                                                 .taxRatePercentage("tax_rate_percentage")
@@ -452,12 +408,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .build()
                                 )
                                 .maximum(
-                                    Invoice.Maximum.builder()
+                                    Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Invoice.Maximum.Filter.builder()
-                                                .field(Invoice.Maximum.Filter.Field.PRICE_ID)
-                                                .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -472,12 +428,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .build()
                                 )
                                 .minimum(
-                                    Invoice.Minimum.builder()
+                                    Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Invoice.Minimum.Filter.builder()
-                                                .field(Invoice.Minimum.Filter.Field.PRICE_ID)
-                                                .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -502,7 +458,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                 .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .shippingAddress(
-                                    Invoice.ShippingAddress.builder()
+                                    Address.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -513,7 +469,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                 )
                                 .status(Invoice.Status.ISSUED)
                                 .subscription(
-                                    Invoice.Subscription.builder().id("VDGsT23osdLb84KD").build()
+                                    SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build()
                                 )
                                 .subtotal("8.00")
                                 .syncFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -532,12 +488,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
         assertThat(customerCreditLedgerListPageResponse.data())
             .containsExactly(
                 CustomerCreditLedgerListResponse.ofIncrement(
-                    CustomerCreditLedgerListResponse.Increment.builder()
+                    IncrementLedgerEntry.builder()
                         .id("id")
                         .amount(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditBlock(
-                            CustomerCreditLedgerListResponse.Increment.CreditBlock.builder()
+                            AffectedBlock.builder()
                                 .id("id")
                                 .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .perUnitCostBasis("per_unit_cost_basis")
@@ -545,19 +501,18 @@ internal class CustomerCreditLedgerListPageResponseTest {
                         )
                         .currency("currency")
                         .customer(
-                            CustomerCreditLedgerListResponse.Increment.Customer.builder()
+                            CustomerMinified.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
                         )
                         .description("description")
                         .endingBalance(0.0)
-                        .entryStatus(
-                            CustomerCreditLedgerListResponse.Increment.EntryStatus.COMMITTED
-                        )
+                        .entryStatus(IncrementLedgerEntry.EntryStatus.COMMITTED)
+                        .entryType(IncrementLedgerEntry.EntryType.INCREMENT)
                         .ledgerSequenceNumber(0L)
                         .metadata(
-                            CustomerCreditLedgerListResponse.Increment.Metadata.builder()
+                            IncrementLedgerEntry.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
@@ -579,7 +534,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .build()
                                 )
                                 .billingAddress(
-                                    Invoice.BillingAddress.builder()
+                                    Address.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -602,7 +557,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                 )
                                 .currency("USD")
                                 .customer(
-                                    Invoice.Customer.builder()
+                                    CustomerMinified.builder()
                                         .id("id")
                                         .externalCustomerId("external_customer_id")
                                         .build()
@@ -618,27 +573,20 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .createdAt(
                                             OffsetDateTime.parse("2022-05-01T07:01:31+00:00")
                                         )
-                                        .creditNote(
-                                            Invoice.CustomerBalanceTransaction.CreditNote.builder()
-                                                .id("id")
-                                                .build()
-                                        )
+                                        .creditNote(CreditNoteTiny.builder().id("id").build())
                                         .description("An optional description")
                                         .endingBalance("22.00")
                                         .invoice(
-                                            Invoice.CustomerBalanceTransaction.InnerInvoice
-                                                .builder()
-                                                .id("gXcsPTVyC4YZa3Sc")
-                                                .build()
+                                            InvoiceTiny.builder().id("gXcsPTVyC4YZa3Sc").build()
                                         )
                                         .startingBalance("33.00")
                                         .type(Invoice.CustomerBalanceTransaction.Type.INCREMENT)
                                         .build()
                                 )
                                 .customerTaxId(
-                                    Invoice.CustomerTaxId.builder()
-                                        .country(Invoice.CustomerTaxId.Country.AD)
-                                        .type(Invoice.CustomerTaxId.Type.AD_NRT)
+                                    CustomerTaxId.builder()
+                                        .country(CustomerTaxId.Country.AD)
+                                        .type(CustomerTaxId.Type.AD_NRT)
                                         .value("value")
                                         .build()
                                 )
@@ -650,11 +598,9 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            PercentageDiscount.Filter.builder()
-                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
-                                                .operator(
-                                                    PercentageDiscount.Filter.Operator.INCLUDES
-                                                )
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -677,26 +623,19 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .id("id")
                                         .adjustedSubtotal("5.00")
                                         .addAdjustment(
-                                            Invoice.LineItem.Adjustment.UsageDiscount.builder()
+                                            MonetaryUsageDiscountAdjustment.builder()
                                                 .id("id")
+                                                .adjustmentType(
+                                                    MonetaryUsageDiscountAdjustment.AdjustmentType
+                                                        .USAGE_DISCOUNT
+                                                )
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
-                                                        .builder()
-                                                        .field(
-                                                            Invoice.LineItem.Adjustment
-                                                                .UsageDiscount
-                                                                .Filter
-                                                                .Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.LineItem.Adjustment
-                                                                .UsageDiscount
-                                                                .Filter
-                                                                .Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -717,13 +656,10 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -735,17 +671,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .filter("filter")
                                         .grouping("grouping")
                                         .maximum(
-                                            Invoice.LineItem.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.LineItem.Maximum.Filter.builder()
-                                                        .field(
-                                                            Invoice.LineItem.Maximum.Filter.Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.LineItem.Maximum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -755,17 +687,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         )
                                         .maximumAmount("maximum_amount")
                                         .minimum(
-                                            Invoice.LineItem.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.LineItem.Minimum.Filter.builder()
-                                                        .field(
-                                                            Invoice.LineItem.Minimum.Filter.Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.LineItem.Minimum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -780,16 +708,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                             Price.Unit.builder()
                                                 .id("id")
                                                 .billableMetric(
-                                                    Price.Unit.BillableMetric.builder()
-                                                        .id("id")
-                                                        .build()
+                                                    BillableMetricTiny.builder().id("id").build()
                                                 )
                                                 .billingCycleConfiguration(
-                                                    Price.Unit.BillingCycleConfiguration.builder()
+                                                    BillingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.Unit.BillingCycleConfiguration
-                                                                .DurationUnit
+                                                            BillingCycleConfiguration.DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
@@ -800,18 +725,14 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                                 )
                                                 .creditAllocation(
-                                                    Price.Unit.CreditAllocation.builder()
+                                                    Allocation.builder()
                                                         .allowsRollover(true)
                                                         .currency("currency")
                                                         .customExpiration(
-                                                            Price.Unit.CreditAllocation
-                                                                .CustomExpiration
-                                                                .builder()
+                                                            CustomExpiration.builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.Unit.CreditAllocation
-                                                                        .CustomExpiration
-                                                                        .DurationUnit
+                                                                    CustomExpiration.DurationUnit
                                                                         .DAY
                                                                 )
                                                                 .build()
@@ -829,14 +750,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            PercentageDiscount.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    PercentageDiscount.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    PercentageDiscount.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -848,33 +768,28 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(0.0)
                                                 .invoicingCycleConfiguration(
-                                                    Price.Unit.InvoicingCycleConfiguration.builder()
+                                                    BillingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.Unit.InvoicingCycleConfiguration
-                                                                .DurationUnit
+                                                            BillingCycleConfiguration.DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
                                                 )
                                                 .item(
-                                                    Price.Unit.Item.builder()
-                                                        .id("id")
-                                                        .name("name")
-                                                        .build()
+                                                    ItemSlim.builder().id("id").name("name").build()
                                                 )
                                                 .maximum(
-                                                    Price.Unit.Maximum.builder()
+                                                    Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Price.Unit.Maximum.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Price.Unit.Maximum.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Price.Unit.Maximum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -893,17 +808,16 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                         .build()
                                                 )
                                                 .minimum(
-                                                    Price.Unit.Minimum.builder()
+                                                    Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Price.Unit.Minimum.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Price.Unit.Minimum.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Price.Unit.Minimum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -917,13 +831,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                 .planPhaseOrder(0L)
                                                 .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                 .unitConfig(
-                                                    Price.Unit.UnitConfig.builder()
+                                                    UnitConfig.builder()
                                                         .unitAmount("unit_amount")
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
-                                                    Price.Unit.DimensionalPriceConfiguration
-                                                        .builder()
+                                                    DimensionalPriceConfiguration.builder()
                                                         .addDimensionValue("string")
                                                         .dimensionalPriceGroupId(
                                                             "dimensional_price_group_id"
@@ -937,28 +850,27 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                             OffsetDateTime.parse("2022-02-01T08:00:00+00:00")
                                         )
                                         .addSubLineItem(
-                                            Invoice.LineItem.SubLineItem.Matrix.builder()
+                                            MatrixSubLineItem.builder()
                                                 .amount("9.00")
                                                 .grouping(
-                                                    Invoice.LineItem.SubLineItem.Matrix.Grouping
-                                                        .builder()
+                                                    SubLineItemGrouping.builder()
                                                         .key("region")
                                                         .value("west")
                                                         .build()
                                                 )
                                                 .matrixConfig(
-                                                    Invoice.LineItem.SubLineItem.Matrix.MatrixConfig
-                                                        .builder()
+                                                    SubLineItemMatrixConfig.builder()
                                                         .addDimensionValue("string")
                                                         .build()
                                                 )
                                                 .name("Tier One")
                                                 .quantity(5.0)
+                                                .type(MatrixSubLineItem.Type.MATRIX)
                                                 .build()
                                         )
                                         .subtotal("9.00")
                                         .addTaxAmount(
-                                            Invoice.LineItem.TaxAmount.builder()
+                                            TaxAmount.builder()
                                                 .amount("amount")
                                                 .taxRateDescription("tax_rate_description")
                                                 .taxRatePercentage("tax_rate_percentage")
@@ -968,12 +880,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .build()
                                 )
                                 .maximum(
-                                    Invoice.Maximum.builder()
+                                    Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Invoice.Maximum.Filter.builder()
-                                                .field(Invoice.Maximum.Filter.Field.PRICE_ID)
-                                                .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -988,12 +900,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .build()
                                 )
                                 .minimum(
-                                    Invoice.Minimum.builder()
+                                    Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Invoice.Minimum.Filter.builder()
-                                                .field(Invoice.Minimum.Filter.Field.PRICE_ID)
-                                                .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -1018,7 +930,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                 .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .shippingAddress(
-                                    Invoice.ShippingAddress.builder()
+                                    Address.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -1029,7 +941,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                 )
                                 .status(Invoice.Status.ISSUED)
                                 .subscription(
-                                    Invoice.Subscription.builder().id("VDGsT23osdLb84KD").build()
+                                    SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build()
                                 )
                                 .subtotal("8.00")
                                 .syncFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1051,12 +963,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
         val customerCreditLedgerListPageResponse =
             CustomerCreditLedgerListPageResponse.builder()
                 .addData(
-                    CustomerCreditLedgerListResponse.Increment.builder()
+                    IncrementLedgerEntry.builder()
                         .id("id")
                         .amount(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditBlock(
-                            CustomerCreditLedgerListResponse.Increment.CreditBlock.builder()
+                            AffectedBlock.builder()
                                 .id("id")
                                 .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .perUnitCostBasis("per_unit_cost_basis")
@@ -1064,19 +976,18 @@ internal class CustomerCreditLedgerListPageResponseTest {
                         )
                         .currency("currency")
                         .customer(
-                            CustomerCreditLedgerListResponse.Increment.Customer.builder()
+                            CustomerMinified.builder()
                                 .id("id")
                                 .externalCustomerId("external_customer_id")
                                 .build()
                         )
                         .description("description")
                         .endingBalance(0.0)
-                        .entryStatus(
-                            CustomerCreditLedgerListResponse.Increment.EntryStatus.COMMITTED
-                        )
+                        .entryStatus(IncrementLedgerEntry.EntryStatus.COMMITTED)
+                        .entryType(IncrementLedgerEntry.EntryType.INCREMENT)
                         .ledgerSequenceNumber(0L)
                         .metadata(
-                            CustomerCreditLedgerListResponse.Increment.Metadata.builder()
+                            IncrementLedgerEntry.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
@@ -1098,7 +1009,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .build()
                                 )
                                 .billingAddress(
-                                    Invoice.BillingAddress.builder()
+                                    Address.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -1121,7 +1032,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                 )
                                 .currency("USD")
                                 .customer(
-                                    Invoice.Customer.builder()
+                                    CustomerMinified.builder()
                                         .id("id")
                                         .externalCustomerId("external_customer_id")
                                         .build()
@@ -1137,27 +1048,20 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .createdAt(
                                             OffsetDateTime.parse("2022-05-01T07:01:31+00:00")
                                         )
-                                        .creditNote(
-                                            Invoice.CustomerBalanceTransaction.CreditNote.builder()
-                                                .id("id")
-                                                .build()
-                                        )
+                                        .creditNote(CreditNoteTiny.builder().id("id").build())
                                         .description("An optional description")
                                         .endingBalance("22.00")
                                         .invoice(
-                                            Invoice.CustomerBalanceTransaction.InnerInvoice
-                                                .builder()
-                                                .id("gXcsPTVyC4YZa3Sc")
-                                                .build()
+                                            InvoiceTiny.builder().id("gXcsPTVyC4YZa3Sc").build()
                                         )
                                         .startingBalance("33.00")
                                         .type(Invoice.CustomerBalanceTransaction.Type.INCREMENT)
                                         .build()
                                 )
                                 .customerTaxId(
-                                    Invoice.CustomerTaxId.builder()
-                                        .country(Invoice.CustomerTaxId.Country.AD)
-                                        .type(Invoice.CustomerTaxId.Type.AD_NRT)
+                                    CustomerTaxId.builder()
+                                        .country(CustomerTaxId.Country.AD)
+                                        .type(CustomerTaxId.Type.AD_NRT)
                                         .value("value")
                                         .build()
                                 )
@@ -1169,11 +1073,9 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            PercentageDiscount.Filter.builder()
-                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
-                                                .operator(
-                                                    PercentageDiscount.Filter.Operator.INCLUDES
-                                                )
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -1196,26 +1098,19 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .id("id")
                                         .adjustedSubtotal("5.00")
                                         .addAdjustment(
-                                            Invoice.LineItem.Adjustment.UsageDiscount.builder()
+                                            MonetaryUsageDiscountAdjustment.builder()
                                                 .id("id")
+                                                .adjustmentType(
+                                                    MonetaryUsageDiscountAdjustment.AdjustmentType
+                                                        .USAGE_DISCOUNT
+                                                )
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.LineItem.Adjustment.UsageDiscount.Filter
-                                                        .builder()
-                                                        .field(
-                                                            Invoice.LineItem.Adjustment
-                                                                .UsageDiscount
-                                                                .Filter
-                                                                .Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.LineItem.Adjustment
-                                                                .UsageDiscount
-                                                                .Filter
-                                                                .Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1236,13 +1131,10 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1254,17 +1146,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .filter("filter")
                                         .grouping("grouping")
                                         .maximum(
-                                            Invoice.LineItem.Maximum.builder()
+                                            Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.LineItem.Maximum.Filter.builder()
-                                                        .field(
-                                                            Invoice.LineItem.Maximum.Filter.Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.LineItem.Maximum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1274,17 +1162,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         )
                                         .maximumAmount("maximum_amount")
                                         .minimum(
-                                            Invoice.LineItem.Minimum.builder()
+                                            Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    Invoice.LineItem.Minimum.Filter.builder()
-                                                        .field(
-                                                            Invoice.LineItem.Minimum.Filter.Field
-                                                                .PRICE_ID
-                                                        )
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
                                                         .operator(
-                                                            Invoice.LineItem.Minimum.Filter.Operator
-                                                                .INCLUDES
+                                                            TransformPriceFilter.Operator.INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1299,16 +1183,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                             Price.Unit.builder()
                                                 .id("id")
                                                 .billableMetric(
-                                                    Price.Unit.BillableMetric.builder()
-                                                        .id("id")
-                                                        .build()
+                                                    BillableMetricTiny.builder().id("id").build()
                                                 )
                                                 .billingCycleConfiguration(
-                                                    Price.Unit.BillingCycleConfiguration.builder()
+                                                    BillingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.Unit.BillingCycleConfiguration
-                                                                .DurationUnit
+                                                            BillingCycleConfiguration.DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
@@ -1319,18 +1200,14 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                                 )
                                                 .creditAllocation(
-                                                    Price.Unit.CreditAllocation.builder()
+                                                    Allocation.builder()
                                                         .allowsRollover(true)
                                                         .currency("currency")
                                                         .customExpiration(
-                                                            Price.Unit.CreditAllocation
-                                                                .CustomExpiration
-                                                                .builder()
+                                                            CustomExpiration.builder()
                                                                 .duration(0L)
                                                                 .durationUnit(
-                                                                    Price.Unit.CreditAllocation
-                                                                        .CustomExpiration
-                                                                        .DurationUnit
+                                                                    CustomExpiration.DurationUnit
                                                                         .DAY
                                                                 )
                                                                 .build()
@@ -1348,14 +1225,13 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            PercentageDiscount.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    PercentageDiscount.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    PercentageDiscount.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1367,33 +1243,28 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(0.0)
                                                 .invoicingCycleConfiguration(
-                                                    Price.Unit.InvoicingCycleConfiguration.builder()
+                                                    BillingCycleConfiguration.builder()
                                                         .duration(0L)
                                                         .durationUnit(
-                                                            Price.Unit.InvoicingCycleConfiguration
-                                                                .DurationUnit
+                                                            BillingCycleConfiguration.DurationUnit
                                                                 .DAY
                                                         )
                                                         .build()
                                                 )
                                                 .item(
-                                                    Price.Unit.Item.builder()
-                                                        .id("id")
-                                                        .name("name")
-                                                        .build()
+                                                    ItemSlim.builder().id("id").name("name").build()
                                                 )
                                                 .maximum(
-                                                    Price.Unit.Maximum.builder()
+                                                    Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Price.Unit.Maximum.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Price.Unit.Maximum.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Price.Unit.Maximum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1412,17 +1283,16 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                         .build()
                                                 )
                                                 .minimum(
-                                                    Price.Unit.Minimum.builder()
+                                                    Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            Price.Unit.Minimum.Filter.builder()
+                                                            TransformPriceFilter.builder()
                                                                 .field(
-                                                                    Price.Unit.Minimum.Filter.Field
+                                                                    TransformPriceFilter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    Price.Unit.Minimum.Filter
-                                                                        .Operator
+                                                                    TransformPriceFilter.Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1436,13 +1306,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                                 .planPhaseOrder(0L)
                                                 .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                                 .unitConfig(
-                                                    Price.Unit.UnitConfig.builder()
+                                                    UnitConfig.builder()
                                                         .unitAmount("unit_amount")
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
-                                                    Price.Unit.DimensionalPriceConfiguration
-                                                        .builder()
+                                                    DimensionalPriceConfiguration.builder()
                                                         .addDimensionValue("string")
                                                         .dimensionalPriceGroupId(
                                                             "dimensional_price_group_id"
@@ -1456,28 +1325,27 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                             OffsetDateTime.parse("2022-02-01T08:00:00+00:00")
                                         )
                                         .addSubLineItem(
-                                            Invoice.LineItem.SubLineItem.Matrix.builder()
+                                            MatrixSubLineItem.builder()
                                                 .amount("9.00")
                                                 .grouping(
-                                                    Invoice.LineItem.SubLineItem.Matrix.Grouping
-                                                        .builder()
+                                                    SubLineItemGrouping.builder()
                                                         .key("region")
                                                         .value("west")
                                                         .build()
                                                 )
                                                 .matrixConfig(
-                                                    Invoice.LineItem.SubLineItem.Matrix.MatrixConfig
-                                                        .builder()
+                                                    SubLineItemMatrixConfig.builder()
                                                         .addDimensionValue("string")
                                                         .build()
                                                 )
                                                 .name("Tier One")
                                                 .quantity(5.0)
+                                                .type(MatrixSubLineItem.Type.MATRIX)
                                                 .build()
                                         )
                                         .subtotal("9.00")
                                         .addTaxAmount(
-                                            Invoice.LineItem.TaxAmount.builder()
+                                            TaxAmount.builder()
                                                 .amount("amount")
                                                 .taxRateDescription("tax_rate_description")
                                                 .taxRatePercentage("tax_rate_percentage")
@@ -1487,12 +1355,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .build()
                                 )
                                 .maximum(
-                                    Invoice.Maximum.builder()
+                                    Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Invoice.Maximum.Filter.builder()
-                                                .field(Invoice.Maximum.Filter.Field.PRICE_ID)
-                                                .operator(Invoice.Maximum.Filter.Operator.INCLUDES)
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -1507,12 +1375,12 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                         .build()
                                 )
                                 .minimum(
-                                    Invoice.Minimum.builder()
+                                    Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            Invoice.Minimum.Filter.builder()
-                                                .field(Invoice.Minimum.Filter.Field.PRICE_ID)
-                                                .operator(Invoice.Minimum.Filter.Operator.INCLUDES)
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -1537,7 +1405,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                 .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .shippingAddress(
-                                    Invoice.ShippingAddress.builder()
+                                    Address.builder()
                                         .city("city")
                                         .country("country")
                                         .line1("line1")
@@ -1548,7 +1416,7 @@ internal class CustomerCreditLedgerListPageResponseTest {
                                 )
                                 .status(Invoice.Status.ISSUED)
                                 .subscription(
-                                    Invoice.Subscription.builder().id("VDGsT23osdLb84KD").build()
+                                    SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build()
                                 )
                                 .subtotal("8.00")
                                 .syncFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
