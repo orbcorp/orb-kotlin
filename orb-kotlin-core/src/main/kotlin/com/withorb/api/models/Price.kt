@@ -27,6 +27,7 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
+import kotlin.Unit as KUnit
 
 /**
  * The Price resource represents a price that can be billed on a subscription, resulting in a charge
@@ -310,7 +311,7 @@ private constructor(
         }
 
         accept(
-            object : Visitor<Unit> {
+            object : Visitor<KUnit> {
                 override fun visitUnit(unit: Unit) {
                     unit.validate()
                 }
@@ -2414,7 +2415,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -4255,7 +4256,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -6095,7 +6096,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -7935,7 +7936,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -9776,7 +9777,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -11613,7 +11614,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -13454,7 +13455,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -15293,7 +15294,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -17136,7 +17137,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -19086,7 +19087,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -21034,7 +21035,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -22982,7 +22983,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -24940,7 +24941,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -26893,7 +26894,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -28845,7 +28846,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -30795,7 +30796,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -32638,7 +32639,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -34588,7 +34589,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -36538,7 +36539,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -38502,7 +38503,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -40467,7 +40468,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -42421,7 +42422,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -44480,7 +44481,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -46323,7 +46324,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -48275,7 +48276,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -50251,7 +50252,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -52230,7 +52231,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
@@ -54184,7 +54185,7 @@ private constructor(
                 }
 
                 accept(
-                    object : Visitor<Unit> {
+                    object : Visitor<KUnit> {
                         override fun visitUnit(unit: UnitConversionRateConfig) {
                             unit.validate()
                         }
