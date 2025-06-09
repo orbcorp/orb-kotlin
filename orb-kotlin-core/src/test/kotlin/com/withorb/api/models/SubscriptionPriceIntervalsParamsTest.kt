@@ -59,6 +59,9 @@ internal class SubscriptionPriceIntervalsParamsTest {
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")
@@ -206,6 +209,11 @@ internal class SubscriptionPriceIntervalsParamsTest {
                                         .build()
                                 )
                                 .conversionRate(0.0)
+                                .unitConversionRateConfig(
+                                    ConversionRateUnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .build()
+                                )
                                 .dimensionalPriceConfiguration(
                                     NewDimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
@@ -340,6 +348,9 @@ internal class SubscriptionPriceIntervalsParamsTest {
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")

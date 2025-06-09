@@ -32,32 +32,23 @@ import java.util.Collections
 import java.util.Objects
 
 /**
- * This endpoint is used to evaluate the output of price(s) for a given customer and time range over
- * ingested events. It enables filtering and grouping the output using
- * [computed properties](/extensibility/advanced-metrics#computed-properties), supporting the
- * following workflows:
- * 1. Showing detailed usage and costs to the end customer.
- * 2. Auditing subtotals on invoice line items.
- *
- * For these workflows, the expressiveness of computed properties in both the filters and grouping
- * is critical. For example, if you'd like to show your customer their usage grouped by hour and
- * another property, you can do so with the following `grouping_keys`:
- * `["hour_floor_timestamp_millis(timestamp_millis)", "my_property"]`. If you'd like to examine a
- * customer's usage for a specific property value, you can do so with the following `filter`:
- * `my_property = 'foo' AND my_other_property = 'bar'`.
+ * This endpoint evaluates prices on preview events instead of actual usage, making it ideal for
+ * building price calculators and cost estimation tools. You can filter and group results using
+ * [computed properties](/extensibility/advanced-metrics#computed-properties) to analyze pricing
+ * across different dimensions.
  *
  * Prices may either reference existing prices in your Orb account or be defined inline in the
- * request body. Up to 100 prices can be evaluated in a single request.
+ * request body. The endpoint has the following limitations:
+ * 1. Up to 100 prices can be evaluated in a single request.
+ * 2. Up to 500 preview events can be provided in a single request.
  *
- * Prices are evaluated on ingested events and the start of the time range must be no more than 100
- * days ago. To evaluate based off a set of provided events, the
- * [evaluate preview events](/api-reference/price/evaluate-preview-events) endpoint can be used
- * instead.
+ * A top-level customer_id is required to evaluate the preview events. Additionally, all events
+ * without a customer_id will have the top-level customer_id added.
  *
  * Note that this is a POST endpoint rather than a GET endpoint because it employs a JSON body
  * rather than query parameters.
  */
-class PriceEvaluateMultipleParams
+class PriceEvaluatePreviewEventsParams
 private constructor(
     private val body: Body,
     private val additionalHeaders: Headers,
@@ -87,6 +78,14 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun customerId(): String? = body.customerId()
+
+    /**
+     * List of preview events to use instead of actual usage data
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun events(): List<Event>? = body.events()
 
     /**
      * The external customer ID of the customer to which this evaluation is scoped.
@@ -126,6 +125,13 @@ private constructor(
     fun _customerId(): JsonField<String> = body._customerId()
 
     /**
+     * Returns the raw JSON value of [events].
+     *
+     * Unlike [events], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _events(): JsonField<List<Event>> = body._events()
+
+    /**
      * Returns the raw JSON value of [externalCustomerId].
      *
      * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an unexpected
@@ -152,7 +158,8 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [PriceEvaluateMultipleParams].
+         * Returns a mutable builder for constructing an instance of
+         * [PriceEvaluatePreviewEventsParams].
          *
          * The following fields are required:
          * ```kotlin
@@ -163,18 +170,20 @@ private constructor(
         fun builder() = Builder()
     }
 
-    /** A builder for [PriceEvaluateMultipleParams]. */
+    /** A builder for [PriceEvaluatePreviewEventsParams]. */
     class Builder internal constructor() {
 
         private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
-        internal fun from(priceEvaluateMultipleParams: PriceEvaluateMultipleParams) = apply {
-            body = priceEvaluateMultipleParams.body.toBuilder()
-            additionalHeaders = priceEvaluateMultipleParams.additionalHeaders.toBuilder()
-            additionalQueryParams = priceEvaluateMultipleParams.additionalQueryParams.toBuilder()
-        }
+        internal fun from(priceEvaluatePreviewEventsParams: PriceEvaluatePreviewEventsParams) =
+            apply {
+                body = priceEvaluatePreviewEventsParams.body.toBuilder()
+                additionalHeaders = priceEvaluatePreviewEventsParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    priceEvaluatePreviewEventsParams.additionalQueryParams.toBuilder()
+            }
 
         /**
          * Sets the entire request body.
@@ -184,8 +193,8 @@ private constructor(
          * - [timeframeEnd]
          * - [timeframeStart]
          * - [customerId]
+         * - [events]
          * - [externalCustomerId]
-         * - [priceEvaluations]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
@@ -231,6 +240,25 @@ private constructor(
          * value.
          */
         fun customerId(customerId: JsonField<String>) = apply { body.customerId(customerId) }
+
+        /** List of preview events to use instead of actual usage data */
+        fun events(events: List<Event>) = apply { body.events(events) }
+
+        /**
+         * Sets [Builder.events] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.events] with a well-typed `List<Event>` value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun events(events: JsonField<List<Event>>) = apply { body.events(events) }
+
+        /**
+         * Adds a single [Event] to [events].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addEvent(event: Event) = apply { body.addEvent(event) }
 
         /** The external customer ID of the customer to which this evaluation is scoped. */
         fun externalCustomerId(externalCustomerId: String?) = apply {
@@ -391,7 +419,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [PriceEvaluateMultipleParams].
+         * Returns an immutable instance of [PriceEvaluatePreviewEventsParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -403,8 +431,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): PriceEvaluateMultipleParams =
-            PriceEvaluateMultipleParams(
+        fun build(): PriceEvaluatePreviewEventsParams =
+            PriceEvaluatePreviewEventsParams(
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -422,6 +450,7 @@ private constructor(
         private val timeframeEnd: JsonField<OffsetDateTime>,
         private val timeframeStart: JsonField<OffsetDateTime>,
         private val customerId: JsonField<String>,
+        private val events: JsonField<List<Event>>,
         private val externalCustomerId: JsonField<String>,
         private val priceEvaluations: JsonField<List<PriceEvaluation>>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -438,6 +467,9 @@ private constructor(
             @JsonProperty("customer_id")
             @ExcludeMissing
             customerId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("events")
+            @ExcludeMissing
+            events: JsonField<List<Event>> = JsonMissing.of(),
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             externalCustomerId: JsonField<String> = JsonMissing.of(),
@@ -448,6 +480,7 @@ private constructor(
             timeframeEnd,
             timeframeStart,
             customerId,
+            events,
             externalCustomerId,
             priceEvaluations,
             mutableMapOf(),
@@ -476,6 +509,14 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun customerId(): String? = customerId.getNullable("customer_id")
+
+        /**
+         * List of preview events to use instead of actual usage data
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun events(): List<Event>? = events.getNullable("events")
 
         /**
          * The external customer ID of the customer to which this evaluation is scoped.
@@ -522,6 +563,13 @@ private constructor(
         @JsonProperty("customer_id")
         @ExcludeMissing
         fun _customerId(): JsonField<String> = customerId
+
+        /**
+         * Returns the raw JSON value of [events].
+         *
+         * Unlike [events], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("events") @ExcludeMissing fun _events(): JsonField<List<Event>> = events
 
         /**
          * Returns the raw JSON value of [externalCustomerId].
@@ -575,6 +623,7 @@ private constructor(
             private var timeframeEnd: JsonField<OffsetDateTime>? = null
             private var timeframeStart: JsonField<OffsetDateTime>? = null
             private var customerId: JsonField<String> = JsonMissing.of()
+            private var events: JsonField<MutableList<Event>>? = null
             private var externalCustomerId: JsonField<String> = JsonMissing.of()
             private var priceEvaluations: JsonField<MutableList<PriceEvaluation>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -583,6 +632,7 @@ private constructor(
                 timeframeEnd = body.timeframeEnd
                 timeframeStart = body.timeframeStart
                 customerId = body.customerId
+                events = body.events.map { it.toMutableList() }
                 externalCustomerId = body.externalCustomerId
                 priceEvaluations = body.priceEvaluations.map { it.toMutableList() }
                 additionalProperties = body.additionalProperties.toMutableMap()
@@ -629,6 +679,32 @@ private constructor(
              * supported value.
              */
             fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
+
+            /** List of preview events to use instead of actual usage data */
+            fun events(events: List<Event>) = events(JsonField.of(events))
+
+            /**
+             * Sets [Builder.events] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.events] with a well-typed `List<Event>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun events(events: JsonField<List<Event>>) = apply {
+                this.events = events.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Event] to [events].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addEvent(event: Event) = apply {
+                events =
+                    (events ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("events", it).add(event)
+                    }
+            }
 
             /** The external customer ID of the customer to which this evaluation is scoped. */
             fun externalCustomerId(externalCustomerId: String?) =
@@ -709,6 +785,7 @@ private constructor(
                     checkRequired("timeframeEnd", timeframeEnd),
                     checkRequired("timeframeStart", timeframeStart),
                     customerId,
+                    (events ?: JsonMissing.of()).map { it.toImmutable() },
                     externalCustomerId,
                     (priceEvaluations ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toMutableMap(),
@@ -725,6 +802,7 @@ private constructor(
             timeframeEnd()
             timeframeStart()
             customerId()
+            events()?.forEach { it.validate() }
             externalCustomerId()
             priceEvaluations()?.forEach { it.validate() }
             validated = true
@@ -748,6 +826,7 @@ private constructor(
             (if (timeframeEnd.asKnown() == null) 0 else 1) +
                 (if (timeframeStart.asKnown() == null) 0 else 1) +
                 (if (customerId.asKnown() == null) 0 else 1) +
+                (events.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (externalCustomerId.asKnown() == null) 0 else 1) +
                 (priceEvaluations.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
@@ -756,17 +835,459 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && customerId == other.customerId && externalCustomerId == other.externalCustomerId && priceEvaluations == other.priceEvaluations && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && customerId == other.customerId && events == other.events && externalCustomerId == other.externalCustomerId && priceEvaluations == other.priceEvaluations && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(timeframeEnd, timeframeStart, customerId, externalCustomerId, priceEvaluations, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(timeframeEnd, timeframeStart, customerId, events, externalCustomerId, priceEvaluations, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, customerId=$customerId, externalCustomerId=$externalCustomerId, priceEvaluations=$priceEvaluations, additionalProperties=$additionalProperties}"
+            "Body{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, customerId=$customerId, events=$events, externalCustomerId=$externalCustomerId, priceEvaluations=$priceEvaluations, additionalProperties=$additionalProperties}"
+    }
+
+    class Event
+    private constructor(
+        private val eventName: JsonField<String>,
+        private val properties: JsonField<Properties>,
+        private val timestamp: JsonField<OffsetDateTime>,
+        private val customerId: JsonField<String>,
+        private val externalCustomerId: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("event_name")
+            @ExcludeMissing
+            eventName: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("properties")
+            @ExcludeMissing
+            properties: JsonField<Properties> = JsonMissing.of(),
+            @JsonProperty("timestamp")
+            @ExcludeMissing
+            timestamp: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("customer_id")
+            @ExcludeMissing
+            customerId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            externalCustomerId: JsonField<String> = JsonMissing.of(),
+        ) : this(eventName, properties, timestamp, customerId, externalCustomerId, mutableMapOf())
+
+        /**
+         * A name to meaningfully identify the action or event type.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun eventName(): String = eventName.getRequired("event_name")
+
+        /**
+         * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
+         * strings. Nested dictionaries are disallowed.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun properties(): Properties = properties.getRequired("properties")
+
+        /**
+         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
+         * time that usage was recorded, and is particularly important to attribute usage to a given
+         * billing period.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun timestamp(): OffsetDateTime = timestamp.getRequired("timestamp")
+
+        /**
+         * The Orb Customer identifier
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun customerId(): String? = customerId.getNullable("customer_id")
+
+        /**
+         * An alias for the Orb customer, whose mapping is specified when creating the customer
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
+
+        /**
+         * Returns the raw JSON value of [eventName].
+         *
+         * Unlike [eventName], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("event_name") @ExcludeMissing fun _eventName(): JsonField<String> = eventName
+
+        /**
+         * Returns the raw JSON value of [properties].
+         *
+         * Unlike [properties], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("properties")
+        @ExcludeMissing
+        fun _properties(): JsonField<Properties> = properties
+
+        /**
+         * Returns the raw JSON value of [timestamp].
+         *
+         * Unlike [timestamp], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("timestamp")
+        @ExcludeMissing
+        fun _timestamp(): JsonField<OffsetDateTime> = timestamp
+
+        /**
+         * Returns the raw JSON value of [customerId].
+         *
+         * Unlike [customerId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("customer_id")
+        @ExcludeMissing
+        fun _customerId(): JsonField<String> = customerId
+
+        /**
+         * Returns the raw JSON value of [externalCustomerId].
+         *
+         * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("external_customer_id")
+        @ExcludeMissing
+        fun _externalCustomerId(): JsonField<String> = externalCustomerId
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Event].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .eventName()
+             * .properties()
+             * .timestamp()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Event]. */
+        class Builder internal constructor() {
+
+            private var eventName: JsonField<String>? = null
+            private var properties: JsonField<Properties>? = null
+            private var timestamp: JsonField<OffsetDateTime>? = null
+            private var customerId: JsonField<String> = JsonMissing.of()
+            private var externalCustomerId: JsonField<String> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(event: Event) = apply {
+                eventName = event.eventName
+                properties = event.properties
+                timestamp = event.timestamp
+                customerId = event.customerId
+                externalCustomerId = event.externalCustomerId
+                additionalProperties = event.additionalProperties.toMutableMap()
+            }
+
+            /** A name to meaningfully identify the action or event type. */
+            fun eventName(eventName: String) = eventName(JsonField.of(eventName))
+
+            /**
+             * Sets [Builder.eventName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.eventName] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun eventName(eventName: JsonField<String>) = apply { this.eventName = eventName }
+
+            /**
+             * A dictionary of custom properties. Values in this dictionary must be numeric,
+             * boolean, or strings. Nested dictionaries are disallowed.
+             */
+            fun properties(properties: Properties) = properties(JsonField.of(properties))
+
+            /**
+             * Sets [Builder.properties] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.properties] with a well-typed [Properties] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun properties(properties: JsonField<Properties>) = apply {
+                this.properties = properties
+            }
+
+            /**
+             * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
+             * time that usage was recorded, and is particularly important to attribute usage to a
+             * given billing period.
+             */
+            fun timestamp(timestamp: OffsetDateTime) = timestamp(JsonField.of(timestamp))
+
+            /**
+             * Sets [Builder.timestamp] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timestamp] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun timestamp(timestamp: JsonField<OffsetDateTime>) = apply {
+                this.timestamp = timestamp
+            }
+
+            /** The Orb Customer identifier */
+            fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
+
+            /**
+             * Sets [Builder.customerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
+
+            /**
+             * An alias for the Orb customer, whose mapping is specified when creating the customer
+             */
+            fun externalCustomerId(externalCustomerId: String?) =
+                externalCustomerId(JsonField.ofNullable(externalCustomerId))
+
+            /**
+             * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
+                this.externalCustomerId = externalCustomerId
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Event].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .eventName()
+             * .properties()
+             * .timestamp()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Event =
+                Event(
+                    checkRequired("eventName", eventName),
+                    checkRequired("properties", properties),
+                    checkRequired("timestamp", timestamp),
+                    customerId,
+                    externalCustomerId,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Event = apply {
+            if (validated) {
+                return@apply
+            }
+
+            eventName()
+            properties().validate()
+            timestamp()
+            customerId()
+            externalCustomerId()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (eventName.asKnown() == null) 0 else 1) +
+                (properties.asKnown()?.validity() ?: 0) +
+                (if (timestamp.asKnown() == null) 0 else 1) +
+                (if (customerId.asKnown() == null) 0 else 1) +
+                (if (externalCustomerId.asKnown() == null) 0 else 1)
+
+        /**
+         * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
+         * strings. Nested dictionaries are disallowed.
+         */
+        class Properties
+        @JsonCreator
+        private constructor(
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
+        ) {
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /** Returns a mutable builder for constructing an instance of [Properties]. */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Properties]. */
+            class Builder internal constructor() {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(properties: Properties) = apply {
+                    additionalProperties = properties.additionalProperties.toMutableMap()
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [Properties].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): Properties = Properties(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Properties = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Properties && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() = "Properties{additionalProperties=$additionalProperties}"
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Event && eventName == other.eventName && properties == other.properties && timestamp == other.timestamp && customerId == other.customerId && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(eventName, properties, timestamp, customerId, externalCustomerId, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Event{eventName=$eventName, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
     }
 
     class PriceEvaluation
@@ -2295,11 +2816,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PriceEvaluateMultipleParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is PriceEvaluatePreviewEventsParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PriceEvaluateMultipleParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "PriceEvaluatePreviewEventsParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

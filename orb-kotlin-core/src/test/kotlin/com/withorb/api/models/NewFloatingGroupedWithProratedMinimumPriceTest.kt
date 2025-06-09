@@ -37,6 +37,9 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -87,6 +90,17 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
                     .build()
             )
         assertThat(newFloatingGroupedWithProratedMinimumPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newFloatingGroupedWithProratedMinimumPrice.conversionRateConfig())
+            .isEqualTo(
+                NewFloatingGroupedWithProratedMinimumPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newFloatingGroupedWithProratedMinimumPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -142,6 +156,9 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")

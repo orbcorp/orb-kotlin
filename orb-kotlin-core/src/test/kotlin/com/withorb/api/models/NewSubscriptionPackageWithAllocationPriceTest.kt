@@ -34,6 +34,9 @@ internal class NewSubscriptionPackageWithAllocationPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -82,6 +85,17 @@ internal class NewSubscriptionPackageWithAllocationPriceTest {
                     .build()
             )
         assertThat(newSubscriptionPackageWithAllocationPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newSubscriptionPackageWithAllocationPrice.conversionRateConfig())
+            .isEqualTo(
+                NewSubscriptionPackageWithAllocationPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newSubscriptionPackageWithAllocationPrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionPackageWithAllocationPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -137,6 +151,9 @@ internal class NewSubscriptionPackageWithAllocationPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

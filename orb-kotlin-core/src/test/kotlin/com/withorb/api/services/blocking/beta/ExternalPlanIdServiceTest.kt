@@ -8,6 +8,7 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.models.BetaExternalPlanIdCreatePlanVersionParams
 import com.withorb.api.models.BetaExternalPlanIdFetchPlanVersionParams
 import com.withorb.api.models.BetaExternalPlanIdSetDefaultPlanVersionParams
+import com.withorb.api.models.ConversionRateUnitConfig
 import com.withorb.api.models.CustomExpiration
 import com.withorb.api.models.NewAllocationPrice
 import com.withorb.api.models.NewBillingCycleConfiguration
@@ -101,6 +102,11 @@ internal class ExternalPlanIdServiceTest {
                                             .build()
                                     )
                                     .conversionRate(0.0)
+                                    .unitConversionRateConfig(
+                                        ConversionRateUnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
                                     .currency("currency")
                                     .dimensionalPriceConfiguration(
                                         NewDimensionalPriceConfiguration.builder()
@@ -210,6 +216,11 @@ internal class ExternalPlanIdServiceTest {
                                             .build()
                                     )
                                     .conversionRate(0.0)
+                                    .unitConversionRateConfig(
+                                        ConversionRateUnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
                                     .currency("currency")
                                     .dimensionalPriceConfiguration(
                                         NewDimensionalPriceConfiguration.builder()

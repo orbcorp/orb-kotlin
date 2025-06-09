@@ -32,6 +32,9 @@ internal class NewPlanUnitWithProrationPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -78,6 +81,17 @@ internal class NewPlanUnitWithProrationPriceTest {
                     .build()
             )
         assertThat(newPlanUnitWithProrationPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newPlanUnitWithProrationPrice.conversionRateConfig())
+            .isEqualTo(
+                NewPlanUnitWithProrationPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newPlanUnitWithProrationPrice.currency()).isEqualTo("currency")
         assertThat(newPlanUnitWithProrationPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -128,6 +142,9 @@ internal class NewPlanUnitWithProrationPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

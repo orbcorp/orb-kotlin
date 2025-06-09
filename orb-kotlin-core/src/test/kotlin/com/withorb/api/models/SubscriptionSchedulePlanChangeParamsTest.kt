@@ -89,6 +89,9 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
                             .currency("currency")
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()
@@ -225,6 +228,9 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
                             .currency("currency")
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()
@@ -354,6 +360,11 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                         .build()
                                 )
                                 .conversionRate(0.0)
+                                .unitConversionRateConfig(
+                                    ConversionRateUnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .build()
+                                )
                                 .currency("currency")
                                 .dimensionalPriceConfiguration(
                                     NewDimensionalPriceConfiguration.builder()
@@ -490,6 +501,11 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                         .build()
                                 )
                                 .conversionRate(0.0)
+                                .unitConversionRateConfig(
+                                    ConversionRateUnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .build()
+                                )
                                 .currency("currency")
                                 .dimensionalPriceConfiguration(
                                     NewDimensionalPriceConfiguration.builder()
@@ -605,6 +621,9 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
                             .currency("currency")
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()
@@ -743,6 +762,9 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
                             .currency("currency")
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()

@@ -6,6 +6,7 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.BillingCycleAnchorConfiguration
+import com.withorb.api.models.ConversionRateUnitConfig
 import com.withorb.api.models.CustomExpiration
 import com.withorb.api.models.DiscountOverride
 import com.withorb.api.models.NewAllocationPrice
@@ -128,6 +129,11 @@ internal class SubscriptionServiceAsyncTest {
                                             .build()
                                     )
                                     .conversionRate(0.0)
+                                    .unitConversionRateConfig(
+                                        ConversionRateUnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
                                     .currency("currency")
                                     .dimensionalPriceConfiguration(
                                         NewDimensionalPriceConfiguration.builder()
@@ -279,6 +285,11 @@ internal class SubscriptionServiceAsyncTest {
                                             .build()
                                     )
                                     .conversionRate(0.0)
+                                    .unitConversionRateConfig(
+                                        ConversionRateUnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
                                     .currency("currency")
                                     .dimensionalPriceConfiguration(
                                         NewDimensionalPriceConfiguration.builder()
@@ -530,6 +541,11 @@ internal class SubscriptionServiceAsyncTest {
                                             .build()
                                     )
                                     .conversionRate(0.0)
+                                    .unitConversionRateConfig(
+                                        ConversionRateUnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
                                     .dimensionalPriceConfiguration(
                                         NewDimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
@@ -738,6 +754,11 @@ internal class SubscriptionServiceAsyncTest {
                                             .build()
                                     )
                                     .conversionRate(0.0)
+                                    .unitConversionRateConfig(
+                                        ConversionRateUnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
                                     .currency("currency")
                                     .dimensionalPriceConfiguration(
                                         NewDimensionalPriceConfiguration.builder()
@@ -880,6 +901,11 @@ internal class SubscriptionServiceAsyncTest {
                                             .build()
                                     )
                                     .conversionRate(0.0)
+                                    .unitConversionRateConfig(
+                                        ConversionRateUnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
                                     .currency("currency")
                                     .dimensionalPriceConfiguration(
                                         NewDimensionalPriceConfiguration.builder()

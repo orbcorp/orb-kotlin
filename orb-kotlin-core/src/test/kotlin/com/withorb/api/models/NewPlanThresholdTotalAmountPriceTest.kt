@@ -32,6 +32,9 @@ internal class NewPlanThresholdTotalAmountPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -79,6 +82,17 @@ internal class NewPlanThresholdTotalAmountPriceTest {
                     .build()
             )
         assertThat(newPlanThresholdTotalAmountPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newPlanThresholdTotalAmountPrice.conversionRateConfig())
+            .isEqualTo(
+                NewPlanThresholdTotalAmountPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newPlanThresholdTotalAmountPrice.currency()).isEqualTo("currency")
         assertThat(newPlanThresholdTotalAmountPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -130,6 +144,9 @@ internal class NewPlanThresholdTotalAmountPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

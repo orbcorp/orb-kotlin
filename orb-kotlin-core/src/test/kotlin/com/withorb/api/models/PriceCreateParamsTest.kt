@@ -28,6 +28,9 @@ internal class PriceCreateParamsTest {
                             .build()
                     )
                     .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                    )
                     .dimensionalPriceConfiguration(
                         NewDimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -75,6 +78,9 @@ internal class PriceCreateParamsTest {
                                 .build()
                         )
                         .conversionRate(0.0)
+                        .unitConversionRateConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
                         .dimensionalPriceConfiguration(
                             NewDimensionalPriceConfiguration.builder()
                                 .addDimensionValue("string")
@@ -123,6 +129,9 @@ internal class PriceCreateParamsTest {
                                 .build()
                         )
                         .conversionRate(0.0)
+                        .unitConversionRateConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
                         .dimensionalPriceConfiguration(
                             NewDimensionalPriceConfiguration.builder()
                                 .addDimensionValue("string")

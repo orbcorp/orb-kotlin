@@ -34,6 +34,9 @@ internal class NewSubscriptionThresholdTotalAmountPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -82,6 +85,17 @@ internal class NewSubscriptionThresholdTotalAmountPriceTest {
                     .build()
             )
         assertThat(newSubscriptionThresholdTotalAmountPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newSubscriptionThresholdTotalAmountPrice.conversionRateConfig())
+            .isEqualTo(
+                NewSubscriptionThresholdTotalAmountPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newSubscriptionThresholdTotalAmountPrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionThresholdTotalAmountPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -136,6 +150,9 @@ internal class NewSubscriptionThresholdTotalAmountPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

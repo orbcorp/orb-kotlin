@@ -39,6 +39,9 @@ internal class NewSubscriptionTieredBpsPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -93,6 +96,17 @@ internal class NewSubscriptionTieredBpsPriceTest {
                     .build()
             )
         assertThat(newSubscriptionTieredBpsPrice.conversionRate()).isEqualTo(0.0)
+        assertThat(newSubscriptionTieredBpsPrice.conversionRateConfig())
+            .isEqualTo(
+                NewSubscriptionTieredBpsPrice.ConversionRateConfig.ofUnit(
+                    UnitConversionRateConfig.builder()
+                        .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                        .unitConfig(
+                            ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .build()
+                )
+            )
         assertThat(newSubscriptionTieredBpsPrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionTieredBpsPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -151,6 +165,9 @@ internal class NewSubscriptionTieredBpsPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
