@@ -10,8 +10,6 @@ import com.withorb.api.models.PriceCreateParams
 import com.withorb.api.models.PriceEvaluateMultipleParams
 import com.withorb.api.models.PriceEvaluateMultipleResponse
 import com.withorb.api.models.PriceEvaluateParams
-import com.withorb.api.models.PriceEvaluatePreviewEventsParams
-import com.withorb.api.models.PriceEvaluatePreviewEventsResponse
 import com.withorb.api.models.PriceEvaluateResponse
 import com.withorb.api.models.PriceFetchParams
 import com.withorb.api.models.PriceListPageAsync
@@ -134,37 +132,13 @@ interface PriceServiceAsync {
      * a customer's usage for a specific property value, you can do so with the following `filter`:
      * `my_property = 'foo' AND my_other_property = 'bar'`.
      *
-     * Note that this is a POST endpoint rather than a GET endpoint because it employs a JSON body
-     * rather than query parameters.
+     * The length of the results must be no greater than 1000. Note that this is a POST endpoint
+     * rather than a GET endpoint because it employs a JSON body rather than query parameters.
      */
     suspend fun evaluateMultiple(
         params: PriceEvaluateMultipleParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PriceEvaluateMultipleResponse
-
-    /**
-     * This endpoint is used to evaluate the output of price(s) for a given customer and time range
-     * over preview events. It enables filtering and grouping the output using
-     * [computed properties](/extensibility/advanced-metrics#computed-properties), supporting the
-     * following workflows:
-     * 1. Showing detailed usage and costs to the end customer.
-     * 2. Auditing subtotals on invoice line items.
-     *
-     * Prices may either reference existing prices in your Orb account or be defined inline in the
-     * request body. The endpoint has the following limitations:
-     * 1. Up to 100 prices can be evaluated in a single request.
-     * 2. Up to 500 preview events can be provided in a single request.
-     *
-     * A top-level customer_id is required to evaluate the preview events. Additionally, all events
-     * without a customer_id will have the top-level customer_id added.
-     *
-     * Note that this is a POST endpoint rather than a GET endpoint because it employs a JSON body
-     * rather than query parameters.
-     */
-    suspend fun evaluatePreviewEvents(
-        params: PriceEvaluatePreviewEventsParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): PriceEvaluatePreviewEventsResponse
 
     /** This endpoint returns a price given an identifier. */
     suspend fun fetch(
@@ -267,16 +241,6 @@ interface PriceServiceAsync {
             params: PriceEvaluateMultipleParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PriceEvaluateMultipleResponse>
-
-        /**
-         * Returns a raw HTTP response for `post /prices/evaluate_preview_events`, but is otherwise
-         * the same as [PriceServiceAsync.evaluatePreviewEvents].
-         */
-        @MustBeClosed
-        suspend fun evaluatePreviewEvents(
-            params: PriceEvaluatePreviewEventsParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PriceEvaluatePreviewEventsResponse>
 
         /**
          * Returns a raw HTTP response for `get /prices/{price_id}`, but is otherwise the same as

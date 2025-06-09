@@ -35,11 +35,6 @@ internal class NewFloatingBulkPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewFloatingBulkPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -84,18 +79,6 @@ internal class NewFloatingBulkPriceTest {
                     .build()
             )
         assertThat(newFloatingBulkPrice.conversionRate()).isEqualTo(0.0)
-        assertThat(newFloatingBulkPrice.conversionRateConfig())
-            .isEqualTo(
-                NewFloatingBulkPrice.ConversionRateConfig.ofUnit(
-                    NewFloatingBulkPrice.ConversionRateConfig.Unit.builder()
-                        .unitConfig(
-                            NewFloatingBulkPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
-                        .build()
-                )
-            )
         assertThat(newFloatingBulkPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -148,11 +131,6 @@ internal class NewFloatingBulkPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewFloatingBulkPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")

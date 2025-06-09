@@ -388,12 +388,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                         )
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .conversionRate(0.0)
-                                        .unitConversionRateConfig(
-                                            Price.Unit.ConversionRateConfig.InnerUnit.UnitConfig
-                                                .builder()
-                                                .unitAmount("unit_amount")
-                                                .build()
-                                        )
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
                                             Allocation.builder()
@@ -551,12 +545,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                         )
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .conversionRate(0.0)
-                                        .unitConversionRateConfig(
-                                            Price.Unit.ConversionRateConfig.InnerUnit.UnitConfig
-                                                .builder()
-                                                .unitAmount("unit_amount")
-                                                .build()
-                                        )
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
                                             Allocation.builder()
@@ -1023,14 +1011,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .conversionRate(0.0)
-                                                        .unitConversionRateConfig(
-                                                            Price.Unit.ConversionRateConfig
-                                                                .InnerUnit
-                                                                .UnitConfig
-                                                                .builder()
-                                                                .unitAmount("unit_amount")
-                                                                .build()
-                                                        )
                                                         .createdAt(
                                                             OffsetDateTime.parse(
                                                                 "2019-12-27T18:11:19.117Z"
@@ -1641,14 +1621,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .conversionRate(0.0)
-                                                        .unitConversionRateConfig(
-                                                            Price.Unit.ConversionRateConfig
-                                                                .InnerUnit
-                                                                .UnitConfig
-                                                                .builder()
-                                                                .unitAmount("unit_amount")
-                                                                .build()
-                                                        )
                                                         .createdAt(
                                                             OffsetDateTime.parse(
                                                                 "2019-12-27T18:11:19.117Z"
@@ -2290,12 +2262,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                     )
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                     .conversionRate(0.0)
-                                    .unitConversionRateConfig(
-                                        Price.Unit.ConversionRateConfig.InnerUnit.UnitConfig
-                                            .builder()
-                                            .unitAmount("unit_amount")
-                                            .build()
-                                    )
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditAllocation(
                                         Allocation.builder()
@@ -2442,12 +2408,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                     )
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                     .conversionRate(0.0)
-                                    .unitConversionRateConfig(
-                                        Price.Unit.ConversionRateConfig.InnerUnit.UnitConfig
-                                            .builder()
-                                            .unitAmount("unit_amount")
-                                            .build()
-                                    )
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditAllocation(
                                         Allocation.builder()
@@ -2881,13 +2841,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     )
                                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                                     .conversionRate(0.0)
-                                                    .unitConversionRateConfig(
-                                                        Price.Unit.ConversionRateConfig.InnerUnit
-                                                            .UnitConfig
-                                                            .builder()
-                                                            .unitAmount("unit_amount")
-                                                            .build()
-                                                    )
                                                     .createdAt(
                                                         OffsetDateTime.parse(
                                                             "2019-12-27T18:11:19.117Z"
@@ -3458,13 +3411,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                     )
                                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                                     .conversionRate(0.0)
-                                                    .unitConversionRateConfig(
-                                                        Price.Unit.ConversionRateConfig.InnerUnit
-                                                            .UnitConfig
-                                                            .builder()
-                                                            .unitAmount("unit_amount")
-                                                            .build()
-                                                    )
                                                     .createdAt(
                                                         OffsetDateTime.parse(
                                                             "2019-12-27T18:11:19.117Z"
@@ -4106,12 +4052,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                         )
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .conversionRate(0.0)
-                                        .unitConversionRateConfig(
-                                            Price.Unit.ConversionRateConfig.InnerUnit.UnitConfig
-                                                .builder()
-                                                .unitAmount("unit_amount")
-                                                .build()
-                                        )
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
                                             Allocation.builder()
@@ -4269,12 +4209,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                         )
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .conversionRate(0.0)
-                                        .unitConversionRateConfig(
-                                            Price.Unit.ConversionRateConfig.InnerUnit.UnitConfig
-                                                .builder()
-                                                .unitAmount("unit_amount")
-                                                .build()
-                                        )
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
                                             Allocation.builder()
@@ -4741,14 +4675,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .conversionRate(0.0)
-                                                        .unitConversionRateConfig(
-                                                            Price.Unit.ConversionRateConfig
-                                                                .InnerUnit
-                                                                .UnitConfig
-                                                                .builder()
-                                                                .unitAmount("unit_amount")
-                                                                .build()
-                                                        )
                                                         .createdAt(
                                                             OffsetDateTime.parse(
                                                                 "2019-12-27T18:11:19.117Z"
@@ -5359,14 +5285,6 @@ internal class SubscriptionChangeApplyResponseTest {
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .conversionRate(0.0)
-                                                        .unitConversionRateConfig(
-                                                            Price.Unit.ConversionRateConfig
-                                                                .InnerUnit
-                                                                .UnitConfig
-                                                                .builder()
-                                                                .unitAmount("unit_amount")
-                                                                .build()
-                                                        )
                                                         .createdAt(
                                                             OffsetDateTime.parse(
                                                                 "2019-12-27T18:11:19.117Z"

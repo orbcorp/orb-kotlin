@@ -39,11 +39,6 @@ internal class NewFloatingBulkBpsPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewFloatingBulkBpsPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -96,18 +91,6 @@ internal class NewFloatingBulkBpsPriceTest {
                     .build()
             )
         assertThat(newFloatingBulkBpsPrice.conversionRate()).isEqualTo(0.0)
-        assertThat(newFloatingBulkBpsPrice.conversionRateConfig())
-            .isEqualTo(
-                NewFloatingBulkBpsPrice.ConversionRateConfig.ofUnit(
-                    NewFloatingBulkBpsPrice.ConversionRateConfig.Unit.builder()
-                        .unitConfig(
-                            NewFloatingBulkBpsPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
-                        .build()
-                )
-            )
         assertThat(newFloatingBulkBpsPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -164,11 +147,6 @@ internal class NewFloatingBulkBpsPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewFloatingBulkBpsPrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")

@@ -32,12 +32,6 @@ internal class NewSubscriptionUnitWithPercentPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewSubscriptionUnitWithPercentPrice.ConversionRateConfig.Unit.UnitConfig
-                        .builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -86,19 +80,6 @@ internal class NewSubscriptionUnitWithPercentPriceTest {
                     .build()
             )
         assertThat(newSubscriptionUnitWithPercentPrice.conversionRate()).isEqualTo(0.0)
-        assertThat(newSubscriptionUnitWithPercentPrice.conversionRateConfig())
-            .isEqualTo(
-                NewSubscriptionUnitWithPercentPrice.ConversionRateConfig.ofUnit(
-                    NewSubscriptionUnitWithPercentPrice.ConversionRateConfig.Unit.builder()
-                        .unitConfig(
-                            NewSubscriptionUnitWithPercentPrice.ConversionRateConfig.Unit.UnitConfig
-                                .builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
-                        .build()
-                )
-            )
         assertThat(newSubscriptionUnitWithPercentPrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionUnitWithPercentPrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -151,12 +132,6 @@ internal class NewSubscriptionUnitWithPercentPriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewSubscriptionUnitWithPercentPrice.ConversionRateConfig.Unit.UnitConfig
-                        .builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

@@ -34,12 +34,6 @@ internal class NewSubscriptionGroupedTieredPackagePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewSubscriptionGroupedTieredPackagePrice.ConversionRateConfig.Unit.UnitConfig
-                        .builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -88,20 +82,6 @@ internal class NewSubscriptionGroupedTieredPackagePriceTest {
                     .build()
             )
         assertThat(newSubscriptionGroupedTieredPackagePrice.conversionRate()).isEqualTo(0.0)
-        assertThat(newSubscriptionGroupedTieredPackagePrice.conversionRateConfig())
-            .isEqualTo(
-                NewSubscriptionGroupedTieredPackagePrice.ConversionRateConfig.ofUnit(
-                    NewSubscriptionGroupedTieredPackagePrice.ConversionRateConfig.Unit.builder()
-                        .unitConfig(
-                            NewSubscriptionGroupedTieredPackagePrice.ConversionRateConfig.Unit
-                                .UnitConfig
-                                .builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
-                        .build()
-                )
-            )
         assertThat(newSubscriptionGroupedTieredPackagePrice.currency()).isEqualTo("currency")
         assertThat(newSubscriptionGroupedTieredPackagePrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -156,12 +136,6 @@ internal class NewSubscriptionGroupedTieredPackagePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewSubscriptionGroupedTieredPackagePrice.ConversionRateConfig.Unit.UnitConfig
-                        .builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

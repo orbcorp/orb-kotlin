@@ -32,11 +32,6 @@ internal class NewPlanTieredPackagePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewPlanTieredPackagePrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
@@ -83,18 +78,6 @@ internal class NewPlanTieredPackagePriceTest {
                     .build()
             )
         assertThat(newPlanTieredPackagePrice.conversionRate()).isEqualTo(0.0)
-        assertThat(newPlanTieredPackagePrice.conversionRateConfig())
-            .isEqualTo(
-                NewPlanTieredPackagePrice.ConversionRateConfig.ofUnit(
-                    NewPlanTieredPackagePrice.ConversionRateConfig.Unit.builder()
-                        .unitConfig(
-                            NewPlanTieredPackagePrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
-                        .build()
-                )
-            )
         assertThat(newPlanTieredPackagePrice.currency()).isEqualTo("currency")
         assertThat(newPlanTieredPackagePrice.dimensionalPriceConfiguration())
             .isEqualTo(
@@ -145,11 +128,6 @@ internal class NewPlanTieredPackagePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewPlanTieredPackagePrice.ConversionRateConfig.Unit.UnitConfig.builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()

@@ -33,12 +33,6 @@ internal class NewFloatingMatrixWithDisplayNamePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewFloatingMatrixWithDisplayNamePrice.ConversionRateConfig.Unit.UnitConfig
-                        .builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -86,20 +80,6 @@ internal class NewFloatingMatrixWithDisplayNamePriceTest {
                     .build()
             )
         assertThat(newFloatingMatrixWithDisplayNamePrice.conversionRate()).isEqualTo(0.0)
-        assertThat(newFloatingMatrixWithDisplayNamePrice.conversionRateConfig())
-            .isEqualTo(
-                NewFloatingMatrixWithDisplayNamePrice.ConversionRateConfig.ofUnit(
-                    NewFloatingMatrixWithDisplayNamePrice.ConversionRateConfig.Unit.builder()
-                        .unitConfig(
-                            NewFloatingMatrixWithDisplayNamePrice.ConversionRateConfig.Unit
-                                .UnitConfig
-                                .builder()
-                                .unitAmount("unit_amount")
-                                .build()
-                        )
-                        .build()
-                )
-            )
         assertThat(newFloatingMatrixWithDisplayNamePrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
@@ -151,12 +131,6 @@ internal class NewFloatingMatrixWithDisplayNamePriceTest {
                         .build()
                 )
                 .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    NewFloatingMatrixWithDisplayNamePrice.ConversionRateConfig.Unit.UnitConfig
-                        .builder()
-                        .unitAmount("unit_amount")
-                        .build()
-                )
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
