@@ -36,13 +36,13 @@ import java.util.Objects
  */
 class SubscriptionUpdateFixedFeeQuantityParams
 private constructor(
-    private val subscriptionId: String,
+    private val subscriptionId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun subscriptionId(): String = subscriptionId
+    fun subscriptionId(): String? = subscriptionId
 
     /**
      * Price for which the quantity should be updated. Must be a fixed fee.
@@ -80,7 +80,7 @@ private constructor(
 
     /**
      * The date that the quantity change should take effect, localized to the customer's timezone.
-     * Ifthis parameter is not passed in, the quantity change is effective according to
+     * If this parameter is not passed in, the quantity change is effective according to
      * `change_option`.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
@@ -140,7 +140,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .subscriptionId()
          * .priceId()
          * .quantity()
          * ```
@@ -167,7 +166,7 @@ private constructor(
                 subscriptionUpdateFixedFeeQuantityParams.additionalQueryParams.toBuilder()
         }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String?) = apply { this.subscriptionId = subscriptionId }
 
         /**
          * Sets the entire request body.
@@ -252,7 +251,7 @@ private constructor(
 
         /**
          * The date that the quantity change should take effect, localized to the customer's
-         * timezone. Ifthis parameter is not passed in, the quantity change is effective according
+         * timezone. If this parameter is not passed in, the quantity change is effective according
          * to `change_option`.
          */
         fun effectiveDate(effectiveDate: LocalDate?) = apply { body.effectiveDate(effectiveDate) }
@@ -392,7 +391,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .subscriptionId()
          * .priceId()
          * .quantity()
          * ```
@@ -401,7 +399,7 @@ private constructor(
          */
         fun build(): SubscriptionUpdateFixedFeeQuantityParams =
             SubscriptionUpdateFixedFeeQuantityParams(
-                checkRequired("subscriptionId", subscriptionId),
+                subscriptionId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -412,7 +410,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> subscriptionId
+            0 -> subscriptionId ?: ""
             else -> ""
         }
 
@@ -491,7 +489,7 @@ private constructor(
 
         /**
          * The date that the quantity change should take effect, localized to the customer's
-         * timezone. Ifthis parameter is not passed in, the quantity change is effective according
+         * timezone. If this parameter is not passed in, the quantity change is effective according
          * to `change_option`.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -658,7 +656,7 @@ private constructor(
 
             /**
              * The date that the quantity change should take effect, localized to the customer's
-             * timezone. Ifthis parameter is not passed in, the quantity change is effective
+             * timezone. If this parameter is not passed in, the quantity change is effective
              * according to `change_option`.
              */
             fun effectiveDate(effectiveDate: LocalDate?) =

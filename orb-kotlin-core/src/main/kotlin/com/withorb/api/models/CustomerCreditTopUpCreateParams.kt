@@ -30,13 +30,13 @@ import java.util.Objects
  */
 class CustomerCreditTopUpCreateParams
 private constructor(
-    private val customerId: String,
+    private val customerId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun customerId(): String = customerId
+    fun customerId(): String? = customerId
 
     /**
      * The amount to increment when the threshold is reached.
@@ -82,6 +82,7 @@ private constructor(
 
     /**
      * The date from which the top-up is active. If unspecified, the top-up is active immediately.
+     * This should not be more than 10 days in the past.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -179,7 +180,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .customerId()
          * .amount()
          * .currency()
          * .invoiceSettings()
@@ -207,7 +207,7 @@ private constructor(
                     customerCreditTopUpCreateParams.additionalQueryParams.toBuilder()
             }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
         /**
          * Sets the entire request body.
@@ -297,7 +297,7 @@ private constructor(
 
         /**
          * The date from which the top-up is active. If unspecified, the top-up is active
-         * immediately.
+         * immediately. This should not be more than 10 days in the past.
          */
         fun activeFrom(activeFrom: OffsetDateTime?) = apply { body.activeFrom(activeFrom) }
 
@@ -474,7 +474,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .customerId()
          * .amount()
          * .currency()
          * .invoiceSettings()
@@ -486,7 +485,7 @@ private constructor(
          */
         fun build(): CustomerCreditTopUpCreateParams =
             CustomerCreditTopUpCreateParams(
-                checkRequired("customerId", customerId),
+                customerId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -497,7 +496,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> customerId
+            0 -> customerId ?: ""
             else -> ""
         }
 
@@ -598,7 +597,7 @@ private constructor(
 
         /**
          * The date from which the top-up is active. If unspecified, the top-up is active
-         * immediately.
+         * immediately. This should not be more than 10 days in the past.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -821,7 +820,7 @@ private constructor(
 
             /**
              * The date from which the top-up is active. If unspecified, the top-up is active
-             * immediately.
+             * immediately. This should not be more than 10 days in the past.
              */
             fun activeFrom(activeFrom: OffsetDateTime?) =
                 activeFrom(JsonField.ofNullable(activeFrom))
@@ -1034,8 +1033,9 @@ private constructor(
         fun memo(): String? = memo.getNullable("memo")
 
         /**
-         * If true, new credit blocks created by this top-up will require that the corresponding
-         * invoice is paid before they can be drawn down from.
+         * When true, credit blocks created by this top-up will require that the corresponding
+         * invoice is paid before they are drawn down from. If any topup block is pending payment,
+         * further automatic top-ups will be paused until the invoice is paid or voided.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1166,8 +1166,10 @@ private constructor(
             fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
             /**
-             * If true, new credit blocks created by this top-up will require that the corresponding
-             * invoice is paid before they can be drawn down from.
+             * When true, credit blocks created by this top-up will require that the corresponding
+             * invoice is paid before they are drawn down from. If any topup block is pending
+             * payment, further automatic top-ups will be paused until the invoice is paid or
+             * voided.
              */
             fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean) =
                 requireSuccessfulPayment(JsonField.of(requireSuccessfulPayment))

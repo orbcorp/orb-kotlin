@@ -7,7 +7,11 @@ import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Price
 import com.withorb.api.models.PriceCreateParams
+import com.withorb.api.models.PriceEvaluateMultipleParams
+import com.withorb.api.models.PriceEvaluateMultipleResponse
 import com.withorb.api.models.PriceEvaluateParams
+import com.withorb.api.models.PriceEvaluatePreviewEventsParams
+import com.withorb.api.models.PriceEvaluatePreviewEventsResponse
 import com.withorb.api.models.PriceEvaluateResponse
 import com.withorb.api.models.PriceFetchParams
 import com.withorb.api.models.PriceListPageAsync
@@ -26,7 +30,7 @@ interface PriceServiceAsync {
 
     /**
      * This endpoint is used to create a [price](/product-catalog/price-configuration). A price
-     * created using this endpoint is always an add-on, meaning that it’s not associated with a
+     * created using this endpoint is always an add-on, meaning that it's not associated with a
      * specific plan and can instead be individually added to subscriptions, including subscriptions
      * on different plans.
      *
@@ -46,9 +50,20 @@ interface PriceServiceAsync {
      * the metadata value, it will clear any existing metadata for that price.
      */
     suspend fun update(
+        priceId: String,
+        params: PriceUpdateParams = PriceUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = update(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+    /** @see [update] */
+    suspend fun update(
         params: PriceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
+
+    /** @see [update] */
+    suspend fun update(priceId: String, requestOptions: RequestOptions): Price =
+        update(priceId, PriceUpdateParams.none(), requestOptions)
 
     /**
      * This endpoint is used to list all add-on prices created using the
@@ -64,6 +79,9 @@ interface PriceServiceAsync {
         list(PriceListParams.none(), requestOptions)
 
     /**
+     * [NOTE] It is recommended to use the `/v1/prices/evaluate` which offers further functionality,
+     * such as multiple prices, inline price definitions, and querying over preview events.
+     *
      * This endpoint is used to evaluate the output of a price for a given customer and time range.
      * It enables filtering and grouping the output using
      * [computed properties](/extensibility/advanced-metrics#computed-properties), supporting the
@@ -83,15 +101,86 @@ interface PriceServiceAsync {
      * endpoint because it employs a JSON body rather than query parameters.
      */
     suspend fun evaluate(
+        priceId: String,
+        params: PriceEvaluateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PriceEvaluateResponse = evaluate(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+    /** @see [evaluate] */
+    suspend fun evaluate(
         params: PriceEvaluateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PriceEvaluateResponse
 
+    /**
+     * This endpoint is used to evaluate the output of price(s) for a given customer and time range
+     * over ingested events. It enables filtering and grouping the output using
+     * [computed properties](/extensibility/advanced-metrics#computed-properties), supporting the
+     * following workflows:
+     * 1. Showing detailed usage and costs to the end customer.
+     * 2. Auditing subtotals on invoice line items.
+     *
+     * For these workflows, the expressiveness of computed properties in both the filters and
+     * grouping is critical. For example, if you'd like to show your customer their usage grouped by
+     * hour and another property, you can do so with the following `grouping_keys`:
+     * `["hour_floor_timestamp_millis(timestamp_millis)", "my_property"]`. If you'd like to examine
+     * a customer's usage for a specific property value, you can do so with the following `filter`:
+     * `my_property = 'foo' AND my_other_property = 'bar'`.
+     *
+     * Prices may either reference existing prices in your Orb account or be defined inline in the
+     * request body. Up to 100 prices can be evaluated in a single request.
+     *
+     * Prices are evaluated on ingested events and the start of the time range must be no more than
+     * 100 days ago. To evaluate based off a set of provided events, the
+     * [evaluate preview events](/api-reference/price/evaluate-preview-events) endpoint can be used
+     * instead.
+     *
+     * Note that this is a POST endpoint rather than a GET endpoint because it employs a JSON body
+     * rather than query parameters.
+     */
+    suspend fun evaluateMultiple(
+        params: PriceEvaluateMultipleParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PriceEvaluateMultipleResponse
+
+    /**
+     * This endpoint evaluates prices on preview events instead of actual usage, making it ideal for
+     * building price calculators and cost estimation tools. You can filter and group results using
+     * [computed properties](/extensibility/advanced-metrics#computed-properties) to analyze pricing
+     * across different dimensions.
+     *
+     * Prices may either reference existing prices in your Orb account or be defined inline in the
+     * request body. The endpoint has the following limitations:
+     * 1. Up to 100 prices can be evaluated in a single request.
+     * 2. Up to 500 preview events can be provided in a single request.
+     *
+     * A top-level customer_id is required to evaluate the preview events. Additionally, all events
+     * without a customer_id will have the top-level customer_id added.
+     *
+     * Note that this is a POST endpoint rather than a GET endpoint because it employs a JSON body
+     * rather than query parameters.
+     */
+    suspend fun evaluatePreviewEvents(
+        params: PriceEvaluatePreviewEventsParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PriceEvaluatePreviewEventsResponse
+
     /** This endpoint returns a price given an identifier. */
+    suspend fun fetch(
+        priceId: String,
+        params: PriceFetchParams = PriceFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = fetch(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+    /** @see [fetch] */
     suspend fun fetch(
         params: PriceFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
+
+    /** @see [fetch] */
+    suspend fun fetch(priceId: String, requestOptions: RequestOptions): Price =
+        fetch(priceId, PriceFetchParams.none(), requestOptions)
 
     /** A view of [PriceServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -114,9 +203,25 @@ interface PriceServiceAsync {
          */
         @MustBeClosed
         suspend fun update(
+            priceId: String,
+            params: PriceUpdateParams = PriceUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            update(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
             params: PriceUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price>
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
+            priceId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Price> = update(priceId, PriceUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /prices`, but is otherwise the same as
@@ -139,9 +244,38 @@ interface PriceServiceAsync {
          */
         @MustBeClosed
         suspend fun evaluate(
+            priceId: String,
+            params: PriceEvaluateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PriceEvaluateResponse> =
+            evaluate(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+        /** @see [evaluate] */
+        @MustBeClosed
+        suspend fun evaluate(
             params: PriceEvaluateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PriceEvaluateResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /prices/evaluate`, but is otherwise the same as
+         * [PriceServiceAsync.evaluateMultiple].
+         */
+        @MustBeClosed
+        suspend fun evaluateMultiple(
+            params: PriceEvaluateMultipleParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PriceEvaluateMultipleResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /prices/evaluate_preview_events`, but is otherwise
+         * the same as [PriceServiceAsync.evaluatePreviewEvents].
+         */
+        @MustBeClosed
+        suspend fun evaluatePreviewEvents(
+            params: PriceEvaluatePreviewEventsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PriceEvaluatePreviewEventsResponse>
 
         /**
          * Returns a raw HTTP response for `get /prices/{price_id}`, but is otherwise the same as
@@ -149,8 +283,22 @@ interface PriceServiceAsync {
          */
         @MustBeClosed
         suspend fun fetch(
+            priceId: String,
+            params: PriceFetchParams = PriceFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            fetch(params.toBuilder().priceId(priceId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
             params: PriceFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(priceId: String, requestOptions: RequestOptions): HttpResponseFor<Price> =
+            fetch(priceId, PriceFetchParams.none(), requestOptions)
     }
 }

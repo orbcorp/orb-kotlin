@@ -139,91 +139,56 @@ private constructor(
 
         /**
          * Alias for calling [addData] with
-         * `CustomerCreditLedgerListByExternalIdResponse.ofIncrementLedgerEntry(incrementLedgerEntry)`.
+         * `CustomerCreditLedgerListByExternalIdResponse.ofIncrement(increment)`.
          */
-        fun addData(
-            incrementLedgerEntry: CustomerCreditLedgerListByExternalIdResponse.IncrementLedgerEntry
-        ) =
+        fun addData(increment: IncrementLedgerEntry) =
+            addData(CustomerCreditLedgerListByExternalIdResponse.ofIncrement(increment))
+
+        /**
+         * Alias for calling [addData] with
+         * `CustomerCreditLedgerListByExternalIdResponse.ofDecrement(decrement)`.
+         */
+        fun addData(decrement: DecrementLedgerEntry) =
+            addData(CustomerCreditLedgerListByExternalIdResponse.ofDecrement(decrement))
+
+        /**
+         * Alias for calling [addData] with
+         * `CustomerCreditLedgerListByExternalIdResponse.ofExpirationChange(expirationChange)`.
+         */
+        fun addData(expirationChange: ExpirationChangeLedgerEntry) =
             addData(
-                CustomerCreditLedgerListByExternalIdResponse.ofIncrementLedgerEntry(
-                    incrementLedgerEntry
-                )
+                CustomerCreditLedgerListByExternalIdResponse.ofExpirationChange(expirationChange)
             )
 
         /**
          * Alias for calling [addData] with
-         * `CustomerCreditLedgerListByExternalIdResponse.ofDecrementLedgerEntry(decrementLedgerEntry)`.
+         * `CustomerCreditLedgerListByExternalIdResponse.ofCreditBlockExpiry(creditBlockExpiry)`.
          */
-        fun addData(
-            decrementLedgerEntry: CustomerCreditLedgerListByExternalIdResponse.DecrementLedgerEntry
-        ) =
+        fun addData(creditBlockExpiry: CreditBlockExpiryLedgerEntry) =
             addData(
-                CustomerCreditLedgerListByExternalIdResponse.ofDecrementLedgerEntry(
-                    decrementLedgerEntry
-                )
+                CustomerCreditLedgerListByExternalIdResponse.ofCreditBlockExpiry(creditBlockExpiry)
             )
 
         /**
          * Alias for calling [addData] with
-         * `CustomerCreditLedgerListByExternalIdResponse.ofExpirationChangeLedgerEntry(expirationChangeLedgerEntry)`.
+         * `CustomerCreditLedgerListByExternalIdResponse.ofVoid(void)`.
          */
-        fun addData(
-            expirationChangeLedgerEntry:
-                CustomerCreditLedgerListByExternalIdResponse.ExpirationChangeLedgerEntry
-        ) =
-            addData(
-                CustomerCreditLedgerListByExternalIdResponse.ofExpirationChangeLedgerEntry(
-                    expirationChangeLedgerEntry
-                )
-            )
+        fun addData(void: VoidLedgerEntry) =
+            addData(CustomerCreditLedgerListByExternalIdResponse.ofVoid(void))
 
         /**
          * Alias for calling [addData] with
-         * `CustomerCreditLedgerListByExternalIdResponse.ofCreditBlockExpiryLedgerEntry(creditBlockExpiryLedgerEntry)`.
+         * `CustomerCreditLedgerListByExternalIdResponse.ofVoidInitiated(voidInitiated)`.
          */
-        fun addData(
-            creditBlockExpiryLedgerEntry:
-                CustomerCreditLedgerListByExternalIdResponse.CreditBlockExpiryLedgerEntry
-        ) =
-            addData(
-                CustomerCreditLedgerListByExternalIdResponse.ofCreditBlockExpiryLedgerEntry(
-                    creditBlockExpiryLedgerEntry
-                )
-            )
+        fun addData(voidInitiated: VoidInitiatedLedgerEntry) =
+            addData(CustomerCreditLedgerListByExternalIdResponse.ofVoidInitiated(voidInitiated))
 
         /**
          * Alias for calling [addData] with
-         * `CustomerCreditLedgerListByExternalIdResponse.ofVoidLedgerEntry(voidLedgerEntry)`.
+         * `CustomerCreditLedgerListByExternalIdResponse.ofAmendment(amendment)`.
          */
-        fun addData(voidLedgerEntry: CustomerCreditLedgerListByExternalIdResponse.VoidLedgerEntry) =
-            addData(CustomerCreditLedgerListByExternalIdResponse.ofVoidLedgerEntry(voidLedgerEntry))
-
-        /**
-         * Alias for calling [addData] with
-         * `CustomerCreditLedgerListByExternalIdResponse.ofVoidInitiatedLedgerEntry(voidInitiatedLedgerEntry)`.
-         */
-        fun addData(
-            voidInitiatedLedgerEntry:
-                CustomerCreditLedgerListByExternalIdResponse.VoidInitiatedLedgerEntry
-        ) =
-            addData(
-                CustomerCreditLedgerListByExternalIdResponse.ofVoidInitiatedLedgerEntry(
-                    voidInitiatedLedgerEntry
-                )
-            )
-
-        /**
-         * Alias for calling [addData] with
-         * `CustomerCreditLedgerListByExternalIdResponse.ofAmendmentLedgerEntry(amendmentLedgerEntry)`.
-         */
-        fun addData(
-            amendmentLedgerEntry: CustomerCreditLedgerListByExternalIdResponse.AmendmentLedgerEntry
-        ) =
-            addData(
-                CustomerCreditLedgerListByExternalIdResponse.ofAmendmentLedgerEntry(
-                    amendmentLedgerEntry
-                )
-            )
+        fun addData(amendment: AmendmentLedgerEntry) =
+            addData(CustomerCreditLedgerListByExternalIdResponse.ofAmendment(amendment))
 
         fun paginationMetadata(paginationMetadata: PaginationMetadata) =
             paginationMetadata(JsonField.of(paginationMetadata))

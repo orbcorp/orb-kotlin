@@ -4,9 +4,7 @@ package com.withorb.api.services.async
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
-import com.withorb.api.models.CouponArchiveParams
 import com.withorb.api.models.CouponCreateParams
-import com.withorb.api.models.CouponFetchParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -25,7 +23,7 @@ internal class CouponServiceAsyncTest {
         val coupon =
             couponServiceAsync.create(
                 CouponCreateParams.builder()
-                    .newCouponPercentageDiscount(0.0)
+                    .percentageDiscount(0.0)
                     .redemptionCode("HALFOFF")
                     .durationInMonths(12L)
                     .maxRedemptions(1L)
@@ -58,8 +56,7 @@ internal class CouponServiceAsyncTest {
                 .build()
         val couponServiceAsync = client.coupons()
 
-        val coupon =
-            couponServiceAsync.archive(CouponArchiveParams.builder().couponId("coupon_id").build())
+        val coupon = couponServiceAsync.archive("coupon_id")
 
         coupon.validate()
     }
@@ -73,8 +70,7 @@ internal class CouponServiceAsyncTest {
                 .build()
         val couponServiceAsync = client.coupons()
 
-        val coupon =
-            couponServiceAsync.fetch(CouponFetchParams.builder().couponId("coupon_id").build())
+        val coupon = couponServiceAsync.fetch("coupon_id")
 
         coupon.validate()
     }

@@ -4,7 +4,6 @@ package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
@@ -20,20 +19,17 @@ import java.util.Objects
  *
  * **Note**: This operation happens asynchronously and can be expected to take a few minutes to
  * propagate to related resources. However, querying for the customer on subsequent GET requests
- * while deletion is in process will reflect its deletion with a `deleted: true` property. Once the
- * customer deletion has been fully processed, the customer will not be returned in the API.
- *
- * On successful processing, this returns an empty dictionary (`{}`) in the API.
+ * while deletion is in process will reflect its deletion.
  */
 class CustomerDeleteParams
 private constructor(
-    private val customerId: String,
+    private val customerId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
-    fun customerId(): String = customerId
+    fun customerId(): String? = customerId
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -45,14 +41,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [CustomerDeleteParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .customerId()
-         * ```
-         */
+        fun none(): CustomerDeleteParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [CustomerDeleteParams]. */
         fun builder() = Builder()
     }
 
@@ -71,7 +62,7 @@ private constructor(
             additionalBodyProperties = customerDeleteParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -197,17 +188,10 @@ private constructor(
          * Returns an immutable instance of [CustomerDeleteParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .customerId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): CustomerDeleteParams =
             CustomerDeleteParams(
-                checkRequired("customerId", customerId),
+                customerId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -218,7 +202,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> customerId
+            0 -> customerId ?: ""
             else -> ""
         }
 

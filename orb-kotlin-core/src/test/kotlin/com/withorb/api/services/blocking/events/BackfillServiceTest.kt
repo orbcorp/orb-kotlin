@@ -4,10 +4,7 @@ package com.withorb.api.services.blocking.events
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.EventBackfillCloseParams
 import com.withorb.api.models.EventBackfillCreateParams
-import com.withorb.api.models.EventBackfillFetchParams
-import com.withorb.api.models.EventBackfillRevertParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -63,10 +60,7 @@ internal class BackfillServiceTest {
                 .build()
         val backfillService = client.events().backfills()
 
-        val response =
-            backfillService.close(
-                EventBackfillCloseParams.builder().backfillId("backfill_id").build()
-            )
+        val response = backfillService.close("backfill_id")
 
         response.validate()
     }
@@ -80,10 +74,7 @@ internal class BackfillServiceTest {
                 .build()
         val backfillService = client.events().backfills()
 
-        val response =
-            backfillService.fetch(
-                EventBackfillFetchParams.builder().backfillId("backfill_id").build()
-            )
+        val response = backfillService.fetch("backfill_id")
 
         response.validate()
     }
@@ -97,10 +88,7 @@ internal class BackfillServiceTest {
                 .build()
         val backfillService = client.events().backfills()
 
-        val response =
-            backfillService.revert(
-                EventBackfillRevertParams.builder().backfillId("backfill_id").build()
-            )
+        val response = backfillService.revert("backfill_id")
 
         response.validate()
     }

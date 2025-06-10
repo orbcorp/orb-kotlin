@@ -6,6 +6,8 @@ import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.getPackageVersion
 import com.withorb.api.services.blocking.AlertService
 import com.withorb.api.services.blocking.AlertServiceImpl
+import com.withorb.api.services.blocking.BetaService
+import com.withorb.api.services.blocking.BetaServiceImpl
 import com.withorb.api.services.blocking.CouponService
 import com.withorb.api.services.blocking.CouponServiceImpl
 import com.withorb.api.services.blocking.CreditNoteService
@@ -58,6 +60,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
         TopLevelServiceImpl(clientOptionsWithUserAgent)
     }
 
+    private val beta: BetaService by lazy { BetaServiceImpl(clientOptionsWithUserAgent) }
+
     private val coupons: CouponService by lazy { CouponServiceImpl(clientOptionsWithUserAgent) }
 
     private val creditNotes: CreditNoteService by lazy {
@@ -106,6 +110,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
     override fun topLevel(): TopLevelService = topLevel
 
+    override fun beta(): BetaService = beta
+
     override fun coupons(): CouponService = coupons
 
     override fun creditNotes(): CreditNoteService = creditNotes
@@ -143,6 +149,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
         private val topLevel: TopLevelService.WithRawResponse by lazy {
             TopLevelServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val beta: BetaService.WithRawResponse by lazy {
+            BetaServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
         private val coupons: CouponService.WithRawResponse by lazy {
@@ -202,6 +212,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
         }
 
         override fun topLevel(): TopLevelService.WithRawResponse = topLevel
+
+        override fun beta(): BetaService.WithRawResponse = beta
 
         override fun coupons(): CouponService.WithRawResponse = coupons
 

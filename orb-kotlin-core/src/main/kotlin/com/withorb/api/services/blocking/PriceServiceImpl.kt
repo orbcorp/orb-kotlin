@@ -5,6 +5,7 @@ package com.withorb.api.services.blocking
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
 import com.withorb.api.core.handlers.withErrorHandler
@@ -17,7 +18,11 @@ import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.models.Price
 import com.withorb.api.models.PriceCreateParams
+import com.withorb.api.models.PriceEvaluateMultipleParams
+import com.withorb.api.models.PriceEvaluateMultipleResponse
 import com.withorb.api.models.PriceEvaluateParams
+import com.withorb.api.models.PriceEvaluatePreviewEventsParams
+import com.withorb.api.models.PriceEvaluatePreviewEventsResponse
 import com.withorb.api.models.PriceEvaluateResponse
 import com.withorb.api.models.PriceFetchParams
 import com.withorb.api.models.PriceListPage
@@ -60,6 +65,20 @@ class PriceServiceImpl internal constructor(private val clientOptions: ClientOpt
     ): PriceEvaluateResponse =
         // post /prices/{price_id}/evaluate
         withRawResponse().evaluate(params, requestOptions).parse()
+
+    override fun evaluateMultiple(
+        params: PriceEvaluateMultipleParams,
+        requestOptions: RequestOptions,
+    ): PriceEvaluateMultipleResponse =
+        // post /prices/evaluate
+        withRawResponse().evaluateMultiple(params, requestOptions).parse()
+
+    override fun evaluatePreviewEvents(
+        params: PriceEvaluatePreviewEventsParams,
+        requestOptions: RequestOptions,
+    ): PriceEvaluatePreviewEventsResponse =
+        // post /prices/evaluate_preview_events
+        withRawResponse().evaluatePreviewEvents(params, requestOptions).parse()
 
     override fun fetch(params: PriceFetchParams, requestOptions: RequestOptions): Price =
         // get /prices/{price_id}
@@ -110,6 +129,9 @@ class PriceServiceImpl internal constructor(private val clientOptions: ClientOpt
             params: PriceUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Price> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("priceId", params.priceId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -172,6 +194,9 @@ class PriceServiceImpl internal constructor(private val clientOptions: ClientOpt
             params: PriceEvaluateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PriceEvaluateResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("priceId", params.priceId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -192,6 +217,62 @@ class PriceServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
+        private val evaluateMultipleHandler: Handler<PriceEvaluateMultipleResponse> =
+            jsonHandler<PriceEvaluateMultipleResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun evaluateMultiple(
+            params: PriceEvaluateMultipleParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PriceEvaluateMultipleResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("prices", "evaluate")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { evaluateMultipleHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val evaluatePreviewEventsHandler: Handler<PriceEvaluatePreviewEventsResponse> =
+            jsonHandler<PriceEvaluatePreviewEventsResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun evaluatePreviewEvents(
+            params: PriceEvaluatePreviewEventsParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PriceEvaluatePreviewEventsResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("prices", "evaluate_preview_events")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { evaluatePreviewEventsHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
         private val fetchHandler: Handler<Price> =
             jsonHandler<Price>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
@@ -199,6 +280,9 @@ class PriceServiceImpl internal constructor(private val clientOptions: ClientOpt
             params: PriceFetchParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Price> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("priceId", params.priceId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

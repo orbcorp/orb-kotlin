@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -19,7 +18,7 @@ import java.util.Objects
  */
 class CustomerCreditListParams
 private constructor(
-    private val customerId: String,
+    private val customerId: String?,
     private val currency: String?,
     private val cursor: String?,
     private val includeAllBlocks: Boolean?,
@@ -28,7 +27,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun customerId(): String = customerId
+    fun customerId(): String? = customerId
 
     /** The ledger currency or custom pricing unit to use. */
     fun currency(): String? = currency
@@ -55,14 +54,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [CustomerCreditListParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .customerId()
-         * ```
-         */
+        fun none(): CustomerCreditListParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [CustomerCreditListParams]. */
         fun builder() = Builder()
     }
 
@@ -87,7 +81,7 @@ private constructor(
             additionalQueryParams = customerCreditListParams.additionalQueryParams.toBuilder()
         }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
         /** The ledger currency or custom pricing unit to use. */
         fun currency(currency: String?) = apply { this.currency = currency }
@@ -226,17 +220,10 @@ private constructor(
          * Returns an immutable instance of [CustomerCreditListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .customerId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): CustomerCreditListParams =
             CustomerCreditListParams(
-                checkRequired("customerId", customerId),
+                customerId,
                 currency,
                 cursor,
                 includeAllBlocks,
@@ -248,7 +235,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> customerId
+            0 -> customerId ?: ""
             else -> ""
         }
 

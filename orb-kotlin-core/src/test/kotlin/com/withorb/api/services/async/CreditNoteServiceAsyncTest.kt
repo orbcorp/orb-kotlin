@@ -5,7 +5,6 @@ package com.withorb.api.services.async
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.CreditNoteCreateParams
-import com.withorb.api.models.CreditNoteFetchParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -30,8 +29,8 @@ internal class CreditNoteServiceAsyncTest {
                             .invoiceLineItemId("4khy3nwzktxv7")
                             .build()
                     )
-                    .memo("An optional memo for my credit note.")
                     .reason(CreditNoteCreateParams.Reason.DUPLICATE)
+                    .memo("An optional memo for my credit note.")
                     .build()
             )
 
@@ -61,10 +60,7 @@ internal class CreditNoteServiceAsyncTest {
                 .build()
         val creditNoteServiceAsync = client.creditNotes()
 
-        val creditNote =
-            creditNoteServiceAsync.fetch(
-                CreditNoteFetchParams.builder().creditNoteId("credit_note_id").build()
-            )
+        val creditNote = creditNoteServiceAsync.fetch("credit_note_id")
 
         creditNote.validate()
     }

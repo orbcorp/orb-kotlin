@@ -4,8 +4,6 @@ package com.withorb.api.services.blocking.customers
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.CustomerCreditListByExternalIdParams
-import com.withorb.api.models.CustomerCreditListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -21,8 +19,7 @@ internal class CreditServiceTest {
                 .build()
         val creditService = client.customers().credits()
 
-        val page =
-            creditService.list(CustomerCreditListParams.builder().customerId("customer_id").build())
+        val page = creditService.list("customer_id")
 
         page.response().validate()
     }
@@ -36,12 +33,7 @@ internal class CreditServiceTest {
                 .build()
         val creditService = client.customers().credits()
 
-        val page =
-            creditService.listByExternalId(
-                CustomerCreditListByExternalIdParams.builder()
-                    .externalCustomerId("external_customer_id")
-                    .build()
-            )
+        val page = creditService.listByExternalId("external_customer_id")
 
         page.response().validate()
     }

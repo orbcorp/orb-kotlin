@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/0.1.0-alpha.49)
+[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/1.0.0)
 
 <!-- x-release-please-end -->
 
@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.withorb.com](https://docs.witho
 ### Gradle
 
 ```kotlin
-implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.49")
+implementation("com.withorb.api:orb-kotlin:1.0.0")
 ```
 
 ### Maven
@@ -28,7 +28,7 @@ implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.49")
 <dependency>
   <groupId>com.withorb.api</groupId>
   <artifactId>orb-kotlin</artifactId>
-  <version>0.1.0-alpha.49</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 
@@ -213,48 +213,54 @@ The SDK throws custom unchecked exception types:
 
 ## Pagination
 
-For methods that return a paginated list of results, this library provides convenient ways access the results either one page at a time, or item-by-item across all pages.
+The SDK defines methods that return a paginated lists of results. It provides convenient ways to access the results either one page at a time or item-by-item across all pages.
 
 ### Auto-pagination
 
-To iterate through all results across all pages, you can use `autoPager`, which automatically handles fetching more pages for you:
+To iterate through all results across all pages, use the `autoPager()` method, which automatically fetches more pages as needed.
 
-### Synchronous
+When using the synchronous client, the method returns a [`Sequence`](https://kotlinlang.org/docs/sequences.html)
 
 ```kotlin
-import com.withorb.api.models.Coupon
 import com.withorb.api.models.CouponListPage
 
-// As a Sequence:
-client.coupons().list(params).autoPager()
+val page: CouponListPage = client.coupons().list()
+page.autoPager()
     .take(50)
-    .forEach { coupon -> print(coupon) }
+    .forEach { coupon -> println(coupon) }
 ```
 
-### Asynchronous
+When using the asynchronous client, the method returns a [`Flow`](https://kotlinlang.org/docs/flow.html):
 
 ```kotlin
-// As a Flow:
-asyncClient.coupons().list(params).autoPager()
+import com.withorb.api.models.CouponListPageAsync
+
+val page: CouponListPageAsync = client.async().coupons().list()
+page.autoPager()
     .take(50)
-    .collect { coupon -> print(coupon) }
+    .forEach { coupon -> println(coupon) }
 ```
 
 ### Manual pagination
 
-If none of the above helpers meet your needs, you can also manually request pages one-by-one. A page of results has a `data()` method to fetch the list of objects, as well as top-level `response` and other methods to fetch top-level data about the page. It also has methods `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
+To access individual page items and manually request the next page, use the `items()`,
+`hasNextPage()`, and `nextPage()` methods:
 
 ```kotlin
 import com.withorb.api.models.Coupon
 import com.withorb.api.models.CouponListPage
 
-val page = client.coupons().list(params)
-while (page != null) {
-    for (coupon in page.data) {
-        print(coupon)
+val page: CouponListPage = client.coupons().list()
+while (true) {
+    for (coupon in page.items()) {
+        println(coupon)
     }
 
-    page = page.getNextPage()
+    if (!page.hasNextPage()) {
+        break
+    }
+
+    page = page.nextPage()
 }
 ```
 
@@ -283,6 +289,17 @@ both of which will raise an error if the signature is invalid.
 
 Note that the `body` parameter must be the raw JSON string sent from the server (do not parse it first).
 The `.unwrap()` method can parse this JSON for you.
+
+## Jackson
+
+The SDK depends on [Jackson](https://github.com/FasterXML/jackson) for JSON serialization/deserialization. It is compatible with version 2.13.4 or higher, but depends on version 2.18.2 by default.
+
+The SDK throws an exception if it detects an incompatible Jackson version at runtime (e.g. if the default version was overridden in your Maven or Gradle config).
+
+If the SDK threw an exception, but you're _certain_ the version is compatible, then disable the version check using the `checkJacksonVersionCompatibility` on [`OrbOkHttpClient`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClient.kt) or [`OrbOkHttpClientAsync`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClientAsync.kt).
+
+> [!CAUTION]
+> We make no guarantee that the SDK works correctly when the Jackson version check is disabled.
 
 ## Network options
 
@@ -320,7 +337,6 @@ To set a custom timeout, configure the method call using the `timeout` method:
 
 ```kotlin
 import com.withorb.api.models.Customer
-import com.withorb.api.models.CustomerCreateParams
 
 val customer: Customer = client.customers().create(
   params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
@@ -360,6 +376,42 @@ val client: OrbClient = OrbOkHttpClient.builder()
     .build()
 ```
 
+### Custom HTTP client
+
+The SDK consists of three artifacts:
+
+- `orb-kotlin-core`
+  - Contains core SDK logic
+  - Does not depend on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`OrbClient`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClient.kt), [`OrbClientAsync`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientAsync.kt), [`OrbClientImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientImpl.kt), and [`OrbClientAsyncImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientAsyncImpl.kt), all of which can work with any HTTP client
+- `orb-kotlin-client-okhttp`
+  - Depends on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`OrbOkHttpClient`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClient.kt) and [`OrbOkHttpClientAsync`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClientAsync.kt), which provide a way to construct [`OrbClientImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientImpl.kt) and [`OrbClientAsyncImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientAsyncImpl.kt), respectively, using OkHttp
+- `orb-kotlin`
+  - Depends on and exposes the APIs of both `orb-kotlin-core` and `orb-kotlin-client-okhttp`
+  - Does not have its own logic
+
+This structure allows replacing the SDK's default HTTP client without pulling in unnecessary dependencies.
+
+#### Customized [`OkHttpClient`](https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.html)
+
+> [!TIP]
+> Try the available [network options](#network-options) before replacing the default client.
+
+To use a customized `OkHttpClient`:
+
+1. Replace your [`orb-kotlin` dependency](#installation) with `orb-kotlin-core`
+2. Copy `orb-kotlin-client-okhttp`'s [`OkHttpClient`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OkHttpClient.kt) class into your code and customize it
+3. Construct [`OrbClientImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientImpl.kt) or [`OrbClientAsyncImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientAsyncImpl.kt), similarly to [`OrbOkHttpClient`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClient.kt) or [`OrbOkHttpClientAsync`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClientAsync.kt), using your customized client
+
+### Completely custom HTTP client
+
+To use a completely custom HTTP client:
+
+1. Replace your [`orb-kotlin` dependency](#installation) with `orb-kotlin-core`
+2. Write a class that implements the [`HttpClient`](orb-kotlin-core/src/main/kotlin/com/withorb/api/core/http/HttpClient.kt) interface
+3. Construct [`OrbClientImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientImpl.kt) or [`OrbClientAsyncImpl`](orb-kotlin-core/src/main/kotlin/com/withorb/api/client/OrbClientAsyncImpl.kt), similarly to [`OrbOkHttpClient`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClient.kt) or [`OrbOkHttpClientAsync`](orb-kotlin-client-okhttp/src/main/kotlin/com/withorb/api/client/okhttp/OrbOkHttpClientAsync.kt), using your new client class
+
 ## Undocumented API functionality
 
 The SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.
@@ -385,10 +437,11 @@ To set undocumented parameters on _nested_ headers, query params, or body classe
 
 ```kotlin
 import com.withorb.api.core.JsonValue
+import com.withorb.api.models.AddressInput
 import com.withorb.api.models.CustomerCreateParams
 
 val params: CustomerCreateParams = CustomerCreateParams.builder()
-    .billingAddress(CustomerCreateParams.BillingAddress.builder()
+    .billingAddress(AddressInput.builder()
         .putAdditionalProperty("secretProperty", JsonValue.from("42"))
         .build())
     .build()
@@ -518,7 +571,6 @@ Or configure the method call to validate the response using the `responseValidat
 
 ```kotlin
 import com.withorb.api.models.Customer
-import com.withorb.api.models.CustomerCreateParams
 
 val customer: Customer = client.customers().create(
   params, RequestOptions.builder().responseValidation(true).build()

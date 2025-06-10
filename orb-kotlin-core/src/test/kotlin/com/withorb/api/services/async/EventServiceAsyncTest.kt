@@ -5,7 +5,6 @@ package com.withorb.api.services.async
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
-import com.withorb.api.models.EventDeprecateParams
 import com.withorb.api.models.EventIngestParams
 import com.withorb.api.models.EventSearchParams
 import com.withorb.api.models.EventUpdateParams
@@ -30,7 +29,11 @@ internal class EventServiceAsyncTest {
                 EventUpdateParams.builder()
                     .eventId("event_id")
                     .eventName("event_name")
-                    .properties(JsonValue.from(mapOf<String, Any>()))
+                    .properties(
+                        EventUpdateParams.Properties.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
                     .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                     .customerId("customer_id")
                     .externalCustomerId("external_customer_id")
@@ -49,8 +52,7 @@ internal class EventServiceAsyncTest {
                 .build()
         val eventServiceAsync = client.events()
 
-        val response =
-            eventServiceAsync.deprecate(EventDeprecateParams.builder().eventId("event_id").build())
+        val response = eventServiceAsync.deprecate("event_id")
 
         response.validate()
     }
@@ -73,7 +75,11 @@ internal class EventServiceAsyncTest {
                         EventIngestParams.Event.builder()
                             .eventName("event_name")
                             .idempotencyKey("idempotency_key")
-                            .properties(JsonValue.from(mapOf<String, Any>()))
+                            .properties(
+                                EventIngestParams.Event.Properties.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .build()
+                            )
                             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                             .customerId("customer_id")
                             .externalCustomerId("external_customer_id")

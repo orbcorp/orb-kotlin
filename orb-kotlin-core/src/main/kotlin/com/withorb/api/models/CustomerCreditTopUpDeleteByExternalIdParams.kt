@@ -17,7 +17,7 @@ import java.util.Objects
 class CustomerCreditTopUpDeleteByExternalIdParams
 private constructor(
     private val externalCustomerId: String,
-    private val topUpId: String,
+    private val topUpId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -25,7 +25,7 @@ private constructor(
 
     fun externalCustomerId(): String = externalCustomerId
 
-    fun topUpId(): String = topUpId
+    fun topUpId(): String? = topUpId
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -44,7 +44,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .externalCustomerId()
-         * .topUpId()
          * ```
          */
         fun builder() = Builder()
@@ -76,7 +75,7 @@ private constructor(
             this.externalCustomerId = externalCustomerId
         }
 
-        fun topUpId(topUpId: String) = apply { this.topUpId = topUpId }
+        fun topUpId(topUpId: String?) = apply { this.topUpId = topUpId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -206,7 +205,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .externalCustomerId()
-         * .topUpId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -214,7 +212,7 @@ private constructor(
         fun build(): CustomerCreditTopUpDeleteByExternalIdParams =
             CustomerCreditTopUpDeleteByExternalIdParams(
                 checkRequired("externalCustomerId", externalCustomerId),
-                checkRequired("topUpId", topUpId),
+                topUpId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -226,7 +224,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> externalCustomerId
-            1 -> topUpId
+            1 -> topUpId ?: ""
             else -> ""
         }
 

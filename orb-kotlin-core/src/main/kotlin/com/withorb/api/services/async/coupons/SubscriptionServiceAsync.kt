@@ -22,9 +22,24 @@ interface SubscriptionServiceAsync {
      * [Subscription](/core-concepts#subscription).
      */
     suspend fun list(
+        couponId: String,
+        params: CouponSubscriptionListParams = CouponSubscriptionListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CouponSubscriptionListPageAsync =
+        list(params.toBuilder().couponId(couponId).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: CouponSubscriptionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CouponSubscriptionListPageAsync
+
+    /** @see [list] */
+    suspend fun list(
+        couponId: String,
+        requestOptions: RequestOptions,
+    ): CouponSubscriptionListPageAsync =
+        list(couponId, CouponSubscriptionListParams.none(), requestOptions)
 
     /**
      * A view of [SubscriptionServiceAsync] that provides access to raw HTTP responses for each
@@ -38,8 +53,25 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            couponId: String,
+            params: CouponSubscriptionListParams = CouponSubscriptionListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CouponSubscriptionListPageAsync> =
+            list(params.toBuilder().couponId(couponId).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: CouponSubscriptionListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CouponSubscriptionListPageAsync>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            couponId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CouponSubscriptionListPageAsync> =
+            list(couponId, CouponSubscriptionListParams.none(), requestOptions)
     }
 }

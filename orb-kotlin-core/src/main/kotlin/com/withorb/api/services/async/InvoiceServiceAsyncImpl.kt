@@ -5,6 +5,7 @@ package com.withorb.api.services.async
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
 import com.withorb.api.core.handlers.withErrorHandler
@@ -134,6 +135,9 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: InvoiceUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Invoice> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("invoiceId", params.invoiceId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -195,6 +199,9 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: InvoiceFetchParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Invoice> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("invoiceId", params.invoiceId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -248,6 +255,9 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: InvoiceIssueParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Invoice> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("invoiceId", params.invoiceId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -275,6 +285,9 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: InvoiceMarkPaidParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Invoice> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("invoiceId", params.invoiceId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -302,6 +315,9 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: InvoicePayParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Invoice> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("invoiceId", params.invoiceId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -329,6 +345,9 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: InvoiceVoidParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Invoice> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("invoiceId", params.invoiceId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

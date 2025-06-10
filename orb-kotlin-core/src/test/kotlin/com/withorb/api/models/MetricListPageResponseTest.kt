@@ -31,6 +31,11 @@ internal class MetricListPageResponseTest {
                                         .externalEntityId("external_entity_id")
                                         .build()
                                 )
+                                .metadata(
+                                    Item.Metadata.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                                        .build()
+                                )
                                 .name("name")
                                 .build()
                         )
@@ -63,6 +68,11 @@ internal class MetricListPageResponseTest {
                                         Item.ExternalConnection.ExternalConnectionName.STRIPE
                                     )
                                     .externalEntityId("external_entity_id")
+                                    .build()
+                            )
+                            .metadata(
+                                Item.Metadata.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
                             .name("name")
@@ -100,6 +110,11 @@ internal class MetricListPageResponseTest {
                                             Item.ExternalConnection.ExternalConnectionName.STRIPE
                                         )
                                         .externalEntityId("external_entity_id")
+                                        .build()
+                                )
+                                .metadata(
+                                    Item.Metadata.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
                                 .name("name")

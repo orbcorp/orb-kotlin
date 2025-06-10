@@ -5,10 +5,16 @@ package com.withorb.api.services.async
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
+import com.withorb.api.models.ConversionRateUnitConfig
+import com.withorb.api.models.NewBillingCycleConfiguration
+import com.withorb.api.models.NewDimensionalPriceConfiguration
+import com.withorb.api.models.NewFloatingUnitPrice
 import com.withorb.api.models.PriceCreateParams
+import com.withorb.api.models.PriceEvaluateMultipleParams
 import com.withorb.api.models.PriceEvaluateParams
-import com.withorb.api.models.PriceFetchParams
+import com.withorb.api.models.PriceEvaluatePreviewEventsParams
 import com.withorb.api.models.PriceUpdateParams
+import com.withorb.api.models.UnitConfig
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -29,51 +35,45 @@ internal class PriceServiceAsyncTest {
             priceServiceAsync.create(
                 PriceCreateParams.builder()
                     .body(
-                        PriceCreateParams.Body.NewFloatingUnitPrice.builder()
-                            .cadence(PriceCreateParams.Body.NewFloatingUnitPrice.Cadence.ANNUAL)
+                        NewFloatingUnitPrice.builder()
+                            .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
                             .currency("currency")
                             .itemId("item_id")
-                            .modelType(PriceCreateParams.Body.NewFloatingUnitPrice.ModelType.UNIT)
+                            .modelType(NewFloatingUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(
-                                PriceCreateParams.Body.NewFloatingUnitPrice.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
+                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                PriceCreateParams.Body.NewFloatingUnitPrice
-                                    .BillingCycleConfiguration
-                                    .builder()
+                                NewBillingCycleConfiguration.builder()
                                     .duration(0L)
-                                    .durationUnit(
-                                        PriceCreateParams.Body.NewFloatingUnitPrice
-                                            .BillingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
-                                    )
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
                             .conversionRate(0.0)
-                            .externalPriceId("external_price_id")
-                            .fixedPriceQuantity(0.0)
-                            .invoiceGroupingKey("invoice_grouping_key")
-                            .invoicingCycleConfiguration(
-                                PriceCreateParams.Body.NewFloatingUnitPrice
-                                    .InvoicingCycleConfiguration
-                                    .builder()
-                                    .duration(0L)
-                                    .durationUnit(
-                                        PriceCreateParams.Body.NewFloatingUnitPrice
-                                            .InvoicingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
+                            .dimensionalPriceConfiguration(
+                                NewDimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .externalDimensionalPriceGroupId(
+                                        "external_dimensional_price_group_id"
                                     )
                                     .build()
                             )
+                            .externalPriceId("external_price_id")
+                            .fixedPriceQuantity(0.0)
+                            .invoiceGroupingKey("x")
+                            .invoicingCycleConfiguration(
+                                NewBillingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                    .build()
+                            )
                             .metadata(
-                                PriceCreateParams.Body.NewFloatingUnitPrice.Metadata.builder()
+                                NewFloatingUnitPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
@@ -149,6 +149,187 @@ internal class PriceServiceAsyncTest {
     }
 
     @Test
+    suspend fun evaluateMultiple() {
+        val client =
+            OrbOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val priceServiceAsync = client.prices()
+
+        val response =
+            priceServiceAsync.evaluateMultiple(
+                PriceEvaluateMultipleParams.builder()
+                    .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .customerId("customer_id")
+                    .externalCustomerId("external_customer_id")
+                    .addPriceEvaluation(
+                        PriceEvaluateMultipleParams.PriceEvaluation.builder()
+                            .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
+                            .addGroupingKey(
+                                "case when my_event_type = 'foo' then true else false end"
+                            )
+                            .price(
+                                NewFloatingUnitPrice.builder()
+                                    .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
+                                    .currency("currency")
+                                    .itemId("item_id")
+                                    .modelType(NewFloatingUnitPrice.ModelType.UNIT)
+                                    .name("Annual fee")
+                                    .unitConfig(
+                                        UnitConfig.builder().unitAmount("unit_amount").build()
+                                    )
+                                    .billableMetricId("billable_metric_id")
+                                    .billedInAdvance(true)
+                                    .billingCycleConfiguration(
+                                        NewBillingCycleConfiguration.builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                NewBillingCycleConfiguration.DurationUnit.DAY
+                                            )
+                                            .build()
+                                    )
+                                    .conversionRate(0.0)
+                                    .unitConversionRateConfig(
+                                        ConversionRateUnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
+                                    .dimensionalPriceConfiguration(
+                                        NewDimensionalPriceConfiguration.builder()
+                                            .addDimensionValue("string")
+                                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                                            .externalDimensionalPriceGroupId(
+                                                "external_dimensional_price_group_id"
+                                            )
+                                            .build()
+                                    )
+                                    .externalPriceId("external_price_id")
+                                    .fixedPriceQuantity(0.0)
+                                    .invoiceGroupingKey("x")
+                                    .invoicingCycleConfiguration(
+                                        NewBillingCycleConfiguration.builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                NewBillingCycleConfiguration.DurationUnit.DAY
+                                            )
+                                            .build()
+                                    )
+                                    .metadata(
+                                        NewFloatingUnitPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
+                                    .build()
+                            )
+                            .priceId("price_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        response.validate()
+    }
+
+    @Test
+    suspend fun evaluatePreviewEvents() {
+        val client =
+            OrbOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val priceServiceAsync = client.prices()
+
+        val response =
+            priceServiceAsync.evaluatePreviewEvents(
+                PriceEvaluatePreviewEventsParams.builder()
+                    .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .customerId("customer_id")
+                    .addEvent(
+                        PriceEvaluatePreviewEventsParams.Event.builder()
+                            .eventName("event_name")
+                            .properties(
+                                PriceEvaluatePreviewEventsParams.Event.Properties.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .build()
+                            )
+                            .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
+                            .customerId("customer_id")
+                            .externalCustomerId("external_customer_id")
+                            .build()
+                    )
+                    .externalCustomerId("external_customer_id")
+                    .addPriceEvaluation(
+                        PriceEvaluatePreviewEventsParams.PriceEvaluation.builder()
+                            .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
+                            .addGroupingKey(
+                                "case when my_event_type = 'foo' then true else false end"
+                            )
+                            .price(
+                                NewFloatingUnitPrice.builder()
+                                    .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
+                                    .currency("currency")
+                                    .itemId("item_id")
+                                    .modelType(NewFloatingUnitPrice.ModelType.UNIT)
+                                    .name("Annual fee")
+                                    .unitConfig(
+                                        UnitConfig.builder().unitAmount("unit_amount").build()
+                                    )
+                                    .billableMetricId("billable_metric_id")
+                                    .billedInAdvance(true)
+                                    .billingCycleConfiguration(
+                                        NewBillingCycleConfiguration.builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                NewBillingCycleConfiguration.DurationUnit.DAY
+                                            )
+                                            .build()
+                                    )
+                                    .conversionRate(0.0)
+                                    .unitConversionRateConfig(
+                                        ConversionRateUnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
+                                    .dimensionalPriceConfiguration(
+                                        NewDimensionalPriceConfiguration.builder()
+                                            .addDimensionValue("string")
+                                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                                            .externalDimensionalPriceGroupId(
+                                                "external_dimensional_price_group_id"
+                                            )
+                                            .build()
+                                    )
+                                    .externalPriceId("external_price_id")
+                                    .fixedPriceQuantity(0.0)
+                                    .invoiceGroupingKey("x")
+                                    .invoicingCycleConfiguration(
+                                        NewBillingCycleConfiguration.builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                NewBillingCycleConfiguration.DurationUnit.DAY
+                                            )
+                                            .build()
+                                    )
+                                    .metadata(
+                                        NewFloatingUnitPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
+                                    .build()
+                            )
+                            .priceId("price_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        response.validate()
+    }
+
+    @Test
     suspend fun fetch() {
         val client =
             OrbOkHttpClientAsync.builder()
@@ -157,7 +338,7 @@ internal class PriceServiceAsyncTest {
                 .build()
         val priceServiceAsync = client.prices()
 
-        val price = priceServiceAsync.fetch(PriceFetchParams.builder().priceId("price_id").build())
+        val price = priceServiceAsync.fetch("price_id")
 
         price.validate()
     }

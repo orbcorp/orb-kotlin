@@ -18,10 +18,17 @@ internal class InvoiceLevelDiscountTest {
     fun ofPercentage() {
         val percentage =
             PercentageDiscount.builder()
-                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                 .percentageDiscount(0.15)
+                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                .addFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .reason("reason")
                 .build()
 
@@ -38,10 +45,17 @@ internal class InvoiceLevelDiscountTest {
         val invoiceLevelDiscount =
             InvoiceLevelDiscount.ofPercentage(
                 PercentageDiscount.builder()
-                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                     .percentageDiscount(0.15)
+                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                    .addFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .reason("reason")
                     .build()
             )
@@ -60,9 +74,16 @@ internal class InvoiceLevelDiscountTest {
         val amount =
             AmountDiscount.builder()
                 .amountDiscount("amount_discount")
+                .discountType(AmountDiscount.DiscountType.AMOUNT)
                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                .discountType(AmountDiscount.DiscountType.AMOUNT)
+                .addFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .reason("reason")
                 .build()
 
@@ -80,9 +101,16 @@ internal class InvoiceLevelDiscountTest {
             InvoiceLevelDiscount.ofAmount(
                 AmountDiscount.builder()
                     .amountDiscount("amount_discount")
+                    .discountType(AmountDiscount.DiscountType.AMOUNT)
                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                    .discountType(AmountDiscount.DiscountType.AMOUNT)
+                    .addFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .reason("reason")
                     .build()
             )
@@ -100,9 +128,16 @@ internal class InvoiceLevelDiscountTest {
     fun ofTrial() {
         val trial =
             TrialDiscount.builder()
+                .discountType(TrialDiscount.DiscountType.TRIAL)
                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                .discountType(TrialDiscount.DiscountType.TRIAL)
+                .addFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .reason("reason")
                 .trialAmountDiscount("trial_amount_discount")
                 .trialPercentageDiscount(0.0)
@@ -121,9 +156,16 @@ internal class InvoiceLevelDiscountTest {
         val invoiceLevelDiscount =
             InvoiceLevelDiscount.ofTrial(
                 TrialDiscount.builder()
+                    .discountType(TrialDiscount.DiscountType.TRIAL)
                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                    .discountType(TrialDiscount.DiscountType.TRIAL)
+                    .addFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .reason("reason")
                     .trialAmountDiscount("trial_amount_discount")
                     .trialPercentageDiscount(0.0)

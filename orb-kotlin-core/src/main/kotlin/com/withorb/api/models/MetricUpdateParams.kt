@@ -11,7 +11,6 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
@@ -25,13 +24,13 @@ import java.util.Objects
  */
 class MetricUpdateParams
 private constructor(
-    private val metricId: String,
+    private val metricId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun metricId(): String = metricId
+    fun metricId(): String? = metricId
 
     /**
      * User-specified key/value pairs for the resource. Individual keys can be removed by setting
@@ -60,14 +59,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [MetricUpdateParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .metricId()
-         * ```
-         */
+        fun none(): MetricUpdateParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [MetricUpdateParams]. */
         fun builder() = Builder()
     }
 
@@ -86,7 +80,7 @@ private constructor(
             additionalQueryParams = metricUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun metricId(metricId: String) = apply { this.metricId = metricId }
+        fun metricId(metricId: String?) = apply { this.metricId = metricId }
 
         /**
          * Sets the entire request body.
@@ -234,17 +228,10 @@ private constructor(
          * Returns an immutable instance of [MetricUpdateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .metricId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): MetricUpdateParams =
             MetricUpdateParams(
-                checkRequired("metricId", metricId),
+                metricId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -255,7 +242,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> metricId
+            0 -> metricId ?: ""
             else -> ""
         }
 

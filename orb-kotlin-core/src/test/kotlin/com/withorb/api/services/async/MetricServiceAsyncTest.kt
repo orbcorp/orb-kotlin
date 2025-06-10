@@ -6,7 +6,6 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.MetricCreateParams
-import com.withorb.api.models.MetricFetchParams
 import com.withorb.api.models.MetricUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -88,8 +87,7 @@ internal class MetricServiceAsyncTest {
                 .build()
         val metricServiceAsync = client.metrics()
 
-        val billableMetric =
-            metricServiceAsync.fetch(MetricFetchParams.builder().metricId("metric_id").build())
+        val billableMetric = metricServiceAsync.fetch("metric_id")
 
         billableMetric.validate()
     }

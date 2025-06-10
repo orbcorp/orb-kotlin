@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.errors.OrbInvalidDataException
@@ -93,7 +92,7 @@ import java.util.Objects
  */
 class CustomerCreditLedgerListByExternalIdParams
 private constructor(
-    private val externalCustomerId: String,
+    private val externalCustomerId: String?,
     private val createdAtGt: OffsetDateTime?,
     private val createdAtGte: OffsetDateTime?,
     private val createdAtLt: OffsetDateTime?,
@@ -108,7 +107,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun externalCustomerId(): String = externalCustomerId
+    fun externalCustomerId(): String? = externalCustomerId
 
     fun createdAtGt(): OffsetDateTime? = createdAtGt
 
@@ -144,14 +143,11 @@ private constructor(
 
     companion object {
 
+        fun none(): CustomerCreditLedgerListByExternalIdParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [CustomerCreditLedgerListByExternalIdParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalCustomerId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -193,7 +189,7 @@ private constructor(
                 customerCreditLedgerListByExternalIdParams.additionalQueryParams.toBuilder()
         }
 
-        fun externalCustomerId(externalCustomerId: String) = apply {
+        fun externalCustomerId(externalCustomerId: String?) = apply {
             this.externalCustomerId = externalCustomerId
         }
 
@@ -332,17 +328,10 @@ private constructor(
          * Returns an immutable instance of [CustomerCreditLedgerListByExternalIdParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalCustomerId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): CustomerCreditLedgerListByExternalIdParams =
             CustomerCreditLedgerListByExternalIdParams(
-                checkRequired("externalCustomerId", externalCustomerId),
+                externalCustomerId,
                 createdAtGt,
                 createdAtGte,
                 createdAtLt,
@@ -360,7 +349,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalCustomerId
+            0 -> externalCustomerId ?: ""
             else -> ""
         }
 

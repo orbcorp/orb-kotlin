@@ -1,5 +1,70 @@
 # Changelog
 
+## 1.0.0 (2025-06-09)
+
+Full Changelog: [v0.1.0-alpha.49...v1.0.0](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.49...v1.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** breaking change to re-use types
+* **client:** improve some class names
+* **client:** extract auto pagination to shared classes
+* **client:** **Migration:** - If you were referencing the `AutoPager` class on a specific `*Page` or `*PageAsync` type, then you should instead reference the shared `AutoPager` and `AutoPagerAsync` types, under the `core` package
+    - If you were referencing `getNextPage` or `getNextPageParams`:
+       - Swap to `nextPage()` and `nextPageParams()`
+       - Note that these both now return non-nullable types (use `hasNextPage()` before calling these, since they will throw if it's impossible to get another page)
+* **client:** don't require end-users to specify constants
+* **client:** **Migration:** Builder methods that previously accepted a single possible value no longer need to be called.
+
+### Features
+
+* **api:** api update ([3b9407e](https://github.com/orbcorp/orb-kotlin/commit/3b9407eefe54073789b6ca7d5cdc40d105ad5625))
+* **api:** api update ([b78da47](https://github.com/orbcorp/orb-kotlin/commit/b78da4710a9f080243f2caa20798d76b5581f936))
+* **api:** api update ([da539d4](https://github.com/orbcorp/orb-kotlin/commit/da539d4ace6b9fe6b0fae7d334f6b517810515c3))
+* **api:** api update ([ee340f8](https://github.com/orbcorp/orb-kotlin/commit/ee340f8f9117e5b6ef6666b143f55cba39e47950))
+* **api:** api update ([57c7ae5](https://github.com/orbcorp/orb-kotlin/commit/57c7ae5fb4b17cdbf5630da78be823ff170f5f74))
+* **api:** api update ([9be4d13](https://github.com/orbcorp/orb-kotlin/commit/9be4d133974c1ca7a7e86df204642bf6a979caff))
+* **api:** api update ([9e0351e](https://github.com/orbcorp/orb-kotlin/commit/9e0351eb9a9e88eb00c286735615984bc9e6d2ad))
+* **api:** manual updates ([e542313](https://github.com/orbcorp/orb-kotlin/commit/e542313e1987661d8b148a574b2bea9c9ddc1ebc))
+* **api:** manual updates ([03ff701](https://github.com/orbcorp/orb-kotlin/commit/03ff7011525c66139163ee63a6e06b711d22ed10))
+* **client:** allow providing some params positionally ([e63933b](https://github.com/orbcorp/orb-kotlin/commit/e63933b343f5e66391b126189c54974b745543ba))
+* **client:** breaking change to re-use types ([faf0b26](https://github.com/orbcorp/orb-kotlin/commit/faf0b26c7873ac6b96e19757f081cf0a4fd54693))
+* **client:** don't require end-users to specify constants ([774695b](https://github.com/orbcorp/orb-kotlin/commit/774695b17c960586c2360b900dc8c8454717891f))
+* **client:** extract auto pagination to shared classes ([168d895](https://github.com/orbcorp/orb-kotlin/commit/168d895518b908bf5ba991e12ef19e874e6654d9))
+
+
+### Bug Fixes
+
+* **internal:** Unit collision ([ee16d77](https://github.com/orbcorp/orb-kotlin/commit/ee16d77b3286bfd6bfd937cf75332669248f5ef1))
+
+
+### Performance Improvements
+
+* **internal:** improve compilation+test speed ([584c9a8](https://github.com/orbcorp/orb-kotlin/commit/584c9a8d1fe53bc222ca43948e698f8688ff619a))
+
+
+### Chores
+
+* **ci:** add timeout thresholds for CI jobs ([261ff43](https://github.com/orbcorp/orb-kotlin/commit/261ff43829eb1c39d822fb6dafe944852f8d1e63))
+* **ci:** only use depot for staging repos ([02184a1](https://github.com/orbcorp/orb-kotlin/commit/02184a18559bc1b6d7ddada87ea09e4449881131))
+* **ci:** run on more branches and use depot runners ([364e334](https://github.com/orbcorp/orb-kotlin/commit/364e334a45578e97fe43011537f8afd7496a056a))
+* **docs:** grammar improvements ([c07512e](https://github.com/orbcorp/orb-kotlin/commit/c07512e4f3ed6f7e7e4c49e5fa4b962ec3e92f00))
+* **internal:** java 17 -&gt; 21 on ci ([53f3070](https://github.com/orbcorp/orb-kotlin/commit/53f30701a3d88779701a55f565f98d949435e8de))
+* **internal:** remove flaky `-Xbackend-threads=0` option ([11ec748](https://github.com/orbcorp/orb-kotlin/commit/11ec748fa186978defd611a90f86865dbbfe574c))
+* **internal:** update java toolchain ([f39ba67](https://github.com/orbcorp/orb-kotlin/commit/f39ba6773452d655b1c66f01a4e4967897950cf5))
+
+
+### Documentation
+
+* **client:** update jackson compat error message ([a435863](https://github.com/orbcorp/orb-kotlin/commit/a4358631f628c1dbe2dae8f2b804ab49c88f742e))
+* explain http client customization ([bc9ebe0](https://github.com/orbcorp/orb-kotlin/commit/bc9ebe05f5700bd8d61366d697ce3d74d6f45ddc))
+* explain jackson compat in readme ([68e656c](https://github.com/orbcorp/orb-kotlin/commit/68e656c524120aacaa8f54694c23812bd12ca551))
+
+
+### Refactors
+
+* **client:** improve some class names ([7d52bb5](https://github.com/orbcorp/orb-kotlin/commit/7d52bb524df45f0f8142609b0e95c48ba2c12053))
+
 ## 0.1.0-alpha.49 (2025-04-09)
 
 Full Changelog: [v0.1.0-alpha.48...v0.1.0-alpha.49](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.48...v0.1.0-alpha.49)

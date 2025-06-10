@@ -6,14 +6,13 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.InvoiceCreateParams
-import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceMarkPaidParams
-import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
-import com.withorb.api.models.InvoiceVoidParams
 import com.withorb.api.models.PercentageDiscount
+import com.withorb.api.models.TransformPriceFilter
+import com.withorb.api.models.UnitConfig
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -44,21 +43,24 @@ internal class InvoiceServiceTest {
                             .name("Line Item Name")
                             .quantity(1.0)
                             .startDate(LocalDate.parse("2023-09-22"))
-                            .unitConfig(
-                                InvoiceCreateParams.LineItem.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
+                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                             .build()
                     )
                     .netTerms(0L)
                     .customerId("4khy3nwzktxv7")
                     .discount(
                         PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .addFilter(
+                                TransformPriceFilter.builder()
+                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .reason("reason")
                             .build()
                     )
@@ -123,8 +125,7 @@ internal class InvoiceServiceTest {
                 .build()
         val invoiceService = client.invoices()
 
-        val invoice =
-            invoiceService.fetch(InvoiceFetchParams.builder().invoiceId("invoice_id").build())
+        val invoice = invoiceService.fetch("invoice_id")
 
         invoice.validate()
     }
@@ -194,7 +195,7 @@ internal class InvoiceServiceTest {
                 .build()
         val invoiceService = client.invoices()
 
-        val invoice = invoiceService.pay(InvoicePayParams.builder().invoiceId("invoice_id").build())
+        val invoice = invoiceService.pay("invoice_id")
 
         invoice.validate()
     }
@@ -208,8 +209,7 @@ internal class InvoiceServiceTest {
                 .build()
         val invoiceService = client.invoices()
 
-        val invoice =
-            invoiceService.void(InvoiceVoidParams.builder().invoiceId("invoice_id").build())
+        val invoice = invoiceService.void("invoice_id")
 
         invoice.validate()
     }

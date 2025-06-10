@@ -21,8 +21,9 @@ import java.util.Objects
 class AmountDiscount
 private constructor(
     private val amountDiscount: JsonField<String>,
-    private val appliesToPriceIds: JsonField<List<String>>,
     private val discountType: JsonField<DiscountType>,
+    private val appliesToPriceIds: JsonField<List<String>>,
+    private val filters: JsonField<List<TransformPriceFilter>>,
     private val reason: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -32,14 +33,17 @@ private constructor(
         @JsonProperty("amount_discount")
         @ExcludeMissing
         amountDiscount: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("applies_to_price_ids")
-        @ExcludeMissing
-        appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
         @JsonProperty("discount_type")
         @ExcludeMissing
         discountType: JsonField<DiscountType> = JsonMissing.of(),
+        @JsonProperty("applies_to_price_ids")
+        @ExcludeMissing
+        appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("filters")
+        @ExcludeMissing
+        filters: JsonField<List<TransformPriceFilter>> = JsonMissing.of(),
         @JsonProperty("reason") @ExcludeMissing reason: JsonField<String> = JsonMissing.of(),
-    ) : this(amountDiscount, appliesToPriceIds, discountType, reason, mutableMapOf())
+    ) : this(amountDiscount, discountType, appliesToPriceIds, filters, reason, mutableMapOf())
 
     /**
      * Only available if discount_type is `amount`.
@@ -50,19 +54,27 @@ private constructor(
     fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
 
     /**
-     * List of price_ids that this discount applies to. For plan/plan phase discounts, this can be a
-     * subset of prices.
-     *
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
-
-    /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun discountType(): DiscountType = discountType.getRequired("discount_type")
+
+    /**
+     * List of price_ids that this discount applies to. For plan/plan phase discounts, this can be a
+     * subset of prices.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun appliesToPriceIds(): List<String>? = appliesToPriceIds.getNullable("applies_to_price_ids")
+
+    /**
+     * The filters that determine which prices to apply this discount to.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun filters(): List<TransformPriceFilter>? = filters.getNullable("filters")
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
@@ -80,6 +92,15 @@ private constructor(
     fun _amountDiscount(): JsonField<String> = amountDiscount
 
     /**
+     * Returns the raw JSON value of [discountType].
+     *
+     * Unlike [discountType], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("discount_type")
+    @ExcludeMissing
+    fun _discountType(): JsonField<DiscountType> = discountType
+
+    /**
      * Returns the raw JSON value of [appliesToPriceIds].
      *
      * Unlike [appliesToPriceIds], this method doesn't throw if the JSON field has an unexpected
@@ -90,13 +111,13 @@ private constructor(
     fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
     /**
-     * Returns the raw JSON value of [discountType].
+     * Returns the raw JSON value of [filters].
      *
-     * Unlike [discountType], this method doesn't throw if the JSON field has an unexpected type.
+     * Unlike [filters], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("discount_type")
+    @JsonProperty("filters")
     @ExcludeMissing
-    fun _discountType(): JsonField<DiscountType> = discountType
+    fun _filters(): JsonField<List<TransformPriceFilter>> = filters
 
     /**
      * Returns the raw JSON value of [reason].
@@ -125,7 +146,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .amountDiscount()
-         * .appliesToPriceIds()
          * .discountType()
          * ```
          */
@@ -136,15 +156,17 @@ private constructor(
     class Builder internal constructor() {
 
         private var amountDiscount: JsonField<String>? = null
-        private var appliesToPriceIds: JsonField<MutableList<String>>? = null
         private var discountType: JsonField<DiscountType>? = null
+        private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+        private var filters: JsonField<MutableList<TransformPriceFilter>>? = null
         private var reason: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(amountDiscount: AmountDiscount) = apply {
             this.amountDiscount = amountDiscount.amountDiscount
-            appliesToPriceIds = amountDiscount.appliesToPriceIds.map { it.toMutableList() }
             discountType = amountDiscount.discountType
+            appliesToPriceIds = amountDiscount.appliesToPriceIds.map { it.toMutableList() }
+            filters = amountDiscount.filters.map { it.toMutableList() }
             reason = amountDiscount.reason
             additionalProperties = amountDiscount.additionalProperties.toMutableMap()
         }
@@ -163,12 +185,25 @@ private constructor(
             this.amountDiscount = amountDiscount
         }
 
+        fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
+
+        /**
+         * Sets [Builder.discountType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.discountType] with a well-typed [DiscountType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun discountType(discountType: JsonField<DiscountType>) = apply {
+            this.discountType = discountType
+        }
+
         /**
          * List of price_ids that this discount applies to. For plan/plan phase discounts, this can
          * be a subset of prices.
          */
-        fun appliesToPriceIds(appliesToPriceIds: List<String>) =
-            appliesToPriceIds(JsonField.of(appliesToPriceIds))
+        fun appliesToPriceIds(appliesToPriceIds: List<String>?) =
+            appliesToPriceIds(JsonField.ofNullable(appliesToPriceIds))
 
         /**
          * Sets [Builder.appliesToPriceIds] to an arbitrary JSON value.
@@ -193,17 +228,30 @@ private constructor(
                 }
         }
 
-        fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
+        /** The filters that determine which prices to apply this discount to. */
+        fun filters(filters: List<TransformPriceFilter>?) = filters(JsonField.ofNullable(filters))
 
         /**
-         * Sets [Builder.discountType] to an arbitrary JSON value.
+         * Sets [Builder.filters] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.discountType] with a well-typed [DiscountType] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
+         * You should usually call [Builder.filters] with a well-typed `List<TransformPriceFilter>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
-        fun discountType(discountType: JsonField<DiscountType>) = apply {
-            this.discountType = discountType
+        fun filters(filters: JsonField<List<TransformPriceFilter>>) = apply {
+            this.filters = filters.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [TransformPriceFilter] to [filters].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addFilter(filter: TransformPriceFilter) = apply {
+            filters =
+                (filters ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("filters", it).add(filter)
+                }
         }
 
         fun reason(reason: String?) = reason(JsonField.ofNullable(reason))
@@ -243,7 +291,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .amountDiscount()
-         * .appliesToPriceIds()
          * .discountType()
          * ```
          *
@@ -252,8 +299,9 @@ private constructor(
         fun build(): AmountDiscount =
             AmountDiscount(
                 checkRequired("amountDiscount", amountDiscount),
-                checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
                 checkRequired("discountType", discountType),
+                (appliesToPriceIds ?: JsonMissing.of()).map { it.toImmutable() },
+                (filters ?: JsonMissing.of()).map { it.toImmutable() },
                 reason,
                 additionalProperties.toMutableMap(),
             )
@@ -267,8 +315,9 @@ private constructor(
         }
 
         amountDiscount()
-        appliesToPriceIds()
         discountType().validate()
+        appliesToPriceIds()
+        filters()?.forEach { it.validate() }
         reason()
         validated = true
     }
@@ -288,8 +337,9 @@ private constructor(
      */
     internal fun validity(): Int =
         (if (amountDiscount.asKnown() == null) 0 else 1) +
-            (appliesToPriceIds.asKnown()?.size ?: 0) +
             (discountType.asKnown()?.validity() ?: 0) +
+            (appliesToPriceIds.asKnown()?.size ?: 0) +
+            (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (reason.asKnown() == null) 0 else 1)
 
     class DiscountType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -418,15 +468,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AmountDiscount && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && discountType == other.discountType && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is AmountDiscount && amountDiscount == other.amountDiscount && discountType == other.discountType && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(amountDiscount, appliesToPriceIds, discountType, reason, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(amountDiscount, discountType, appliesToPriceIds, filters, reason, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AmountDiscount{amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, discountType=$discountType, reason=$reason, additionalProperties=$additionalProperties}"
+        "AmountDiscount{amountDiscount=$amountDiscount, discountType=$discountType, appliesToPriceIds=$appliesToPriceIds, filters=$filters, reason=$reason, additionalProperties=$additionalProperties}"
 }

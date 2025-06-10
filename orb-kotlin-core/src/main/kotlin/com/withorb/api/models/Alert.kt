@@ -30,13 +30,14 @@ private constructor(
     private val id: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
     private val currency: JsonField<String>,
-    private val customer: JsonField<Customer>,
+    private val customer: JsonField<CustomerMinified>,
     private val enabled: JsonField<Boolean>,
     private val metric: JsonField<Metric>,
     private val plan: JsonField<Plan>,
-    private val subscription: JsonField<Subscription>,
+    private val subscription: JsonField<SubscriptionMinified>,
     private val thresholds: JsonField<List<Threshold>>,
     private val type: JsonField<Type>,
+    private val balanceAlertStatus: JsonField<List<BalanceAlertStatus>>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -47,17 +48,22 @@ private constructor(
         @ExcludeMissing
         createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("customer") @ExcludeMissing customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        customer: JsonField<CustomerMinified> = JsonMissing.of(),
         @JsonProperty("enabled") @ExcludeMissing enabled: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("metric") @ExcludeMissing metric: JsonField<Metric> = JsonMissing.of(),
         @JsonProperty("plan") @ExcludeMissing plan: JsonField<Plan> = JsonMissing.of(),
         @JsonProperty("subscription")
         @ExcludeMissing
-        subscription: JsonField<Subscription> = JsonMissing.of(),
+        subscription: JsonField<SubscriptionMinified> = JsonMissing.of(),
         @JsonProperty("thresholds")
         @ExcludeMissing
         thresholds: JsonField<List<Threshold>> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+        @JsonProperty("balance_alert_status")
+        @ExcludeMissing
+        balanceAlertStatus: JsonField<List<BalanceAlertStatus>> = JsonMissing.of(),
     ) : this(
         id,
         createdAt,
@@ -69,6 +75,7 @@ private constructor(
         subscription,
         thresholds,
         type,
+        balanceAlertStatus,
         mutableMapOf(),
     )
 
@@ -102,7 +109,7 @@ private constructor(
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
-    fun customer(): Customer? = customer.getNullable("customer")
+    fun customer(): CustomerMinified? = customer.getNullable("customer")
 
     /**
      * Whether the alert is enabled or disabled.
@@ -134,7 +141,7 @@ private constructor(
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
-    fun subscription(): Subscription? = subscription.getNullable("subscription")
+    fun subscription(): SubscriptionMinified? = subscription.getNullable("subscription")
 
     /**
      * The thresholds that define the conditions under which the alert will be triggered.
@@ -151,6 +158,15 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun type(): Type = type.getRequired("type")
+
+    /**
+     * The current status of the alert. This field is only present for credit balance alerts.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun balanceAlertStatus(): List<BalanceAlertStatus>? =
+        balanceAlertStatus.getNullable("balance_alert_status")
 
     /**
      * Returns the raw JSON value of [id].
@@ -180,7 +196,9 @@ private constructor(
      *
      * Unlike [customer], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
+    @JsonProperty("customer")
+    @ExcludeMissing
+    fun _customer(): JsonField<CustomerMinified> = customer
 
     /**
      * Returns the raw JSON value of [enabled].
@@ -210,7 +228,7 @@ private constructor(
      */
     @JsonProperty("subscription")
     @ExcludeMissing
-    fun _subscription(): JsonField<Subscription> = subscription
+    fun _subscription(): JsonField<SubscriptionMinified> = subscription
 
     /**
      * Returns the raw JSON value of [thresholds].
@@ -227,6 +245,16 @@ private constructor(
      * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
+
+    /**
+     * Returns the raw JSON value of [balanceAlertStatus].
+     *
+     * Unlike [balanceAlertStatus], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("balance_alert_status")
+    @ExcludeMissing
+    fun _balanceAlertStatus(): JsonField<List<BalanceAlertStatus>> = balanceAlertStatus
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -268,13 +296,14 @@ private constructor(
         private var id: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var currency: JsonField<String>? = null
-        private var customer: JsonField<Customer>? = null
+        private var customer: JsonField<CustomerMinified>? = null
         private var enabled: JsonField<Boolean>? = null
         private var metric: JsonField<Metric>? = null
         private var plan: JsonField<Plan>? = null
-        private var subscription: JsonField<Subscription>? = null
+        private var subscription: JsonField<SubscriptionMinified>? = null
         private var thresholds: JsonField<MutableList<Threshold>>? = null
         private var type: JsonField<Type>? = null
+        private var balanceAlertStatus: JsonField<MutableList<BalanceAlertStatus>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(alert: Alert) = apply {
@@ -288,6 +317,7 @@ private constructor(
             subscription = alert.subscription
             thresholds = alert.thresholds.map { it.toMutableList() }
             type = alert.type
+            balanceAlertStatus = alert.balanceAlertStatus.map { it.toMutableList() }
             additionalProperties = alert.additionalProperties.toMutableMap()
         }
 
@@ -326,16 +356,16 @@ private constructor(
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /** The customer the alert applies to. */
-        fun customer(customer: Customer?) = customer(JsonField.ofNullable(customer))
+        fun customer(customer: CustomerMinified?) = customer(JsonField.ofNullable(customer))
 
         /**
          * Sets [Builder.customer] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.customer] with a well-typed [Customer] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.customer] with a well-typed [CustomerMinified] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+        fun customer(customer: JsonField<CustomerMinified>) = apply { this.customer = customer }
 
         /** Whether the alert is enabled or disabled. */
         fun enabled(enabled: Boolean) = enabled(JsonField.of(enabled))
@@ -371,17 +401,17 @@ private constructor(
         fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
         /** The subscription the alert applies to. */
-        fun subscription(subscription: Subscription?) =
+        fun subscription(subscription: SubscriptionMinified?) =
             subscription(JsonField.ofNullable(subscription))
 
         /**
          * Sets [Builder.subscription] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.subscription] with a well-typed [Subscription] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
+         * You should usually call [Builder.subscription] with a well-typed [SubscriptionMinified]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
-        fun subscription(subscription: JsonField<Subscription>) = apply {
+        fun subscription(subscription: JsonField<SubscriptionMinified>) = apply {
             this.subscription = subscription
         }
 
@@ -421,6 +451,35 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun type(type: JsonField<Type>) = apply { this.type = type }
+
+        /**
+         * The current status of the alert. This field is only present for credit balance alerts.
+         */
+        fun balanceAlertStatus(balanceAlertStatus: List<BalanceAlertStatus>?) =
+            balanceAlertStatus(JsonField.ofNullable(balanceAlertStatus))
+
+        /**
+         * Sets [Builder.balanceAlertStatus] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.balanceAlertStatus] with a well-typed
+         * `List<BalanceAlertStatus>` value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
+         */
+        fun balanceAlertStatus(balanceAlertStatus: JsonField<List<BalanceAlertStatus>>) = apply {
+            this.balanceAlertStatus = balanceAlertStatus.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [BalanceAlertStatus] to [Builder.balanceAlertStatus].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addBalanceAlertStatus(balanceAlertStatus: BalanceAlertStatus) = apply {
+            this.balanceAlertStatus =
+                (this.balanceAlertStatus ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("balanceAlertStatus", it).add(balanceAlertStatus)
+                }
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -474,6 +533,7 @@ private constructor(
                 checkRequired("subscription", subscription),
                 checkRequired("thresholds", thresholds).map { it.toImmutable() },
                 checkRequired("type", type),
+                (balanceAlertStatus ?: JsonMissing.of()).map { it.toImmutable() },
                 additionalProperties.toMutableMap(),
             )
     }
@@ -495,6 +555,7 @@ private constructor(
         subscription()?.validate()
         thresholds()?.forEach { it.validate() }
         type().validate()
+        balanceAlertStatus()?.forEach { it.validate() }
         validated = true
     }
 
@@ -521,204 +582,8 @@ private constructor(
             (plan.asKnown()?.validity() ?: 0) +
             (subscription.asKnown()?.validity() ?: 0) +
             (thresholds.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
-            (type.asKnown()?.validity() ?: 0)
-
-    /** The customer the alert applies to. */
-    class Customer
-    private constructor(
-        private val id: JsonField<String>,
-        private val externalCustomerId: JsonField<String>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
-
-        @JsonCreator
-        private constructor(
-            @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("external_customer_id")
-            @ExcludeMissing
-            externalCustomerId: JsonField<String> = JsonMissing.of(),
-        ) : this(id, externalCustomerId, mutableMapOf())
-
-        /**
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun id(): String = id.getRequired("id")
-
-        /**
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
-
-        /**
-         * Returns the raw JSON value of [id].
-         *
-         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-        /**
-         * Returns the raw JSON value of [externalCustomerId].
-         *
-         * Unlike [externalCustomerId], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
-        fun _externalCustomerId(): JsonField<String> = externalCustomerId
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Customer].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .id()
-             * .externalCustomerId()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Customer]. */
-        class Builder internal constructor() {
-
-            private var id: JsonField<String>? = null
-            private var externalCustomerId: JsonField<String>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(customer: Customer) = apply {
-                id = customer.id
-                externalCustomerId = customer.externalCustomerId
-                additionalProperties = customer.additionalProperties.toMutableMap()
-            }
-
-            fun id(id: String) = id(JsonField.of(id))
-
-            /**
-             * Sets [Builder.id] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.id] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            fun externalCustomerId(externalCustomerId: String?) =
-                externalCustomerId(JsonField.ofNullable(externalCustomerId))
-
-            /**
-             * Sets [Builder.externalCustomerId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.externalCustomerId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
-                this.externalCustomerId = externalCustomerId
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Customer].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .id()
-             * .externalCustomerId()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Customer =
-                Customer(
-                    checkRequired("id", id),
-                    checkRequired("externalCustomerId", externalCustomerId),
-                    additionalProperties.toMutableMap(),
-                )
-        }
-
-        private var validated: Boolean = false
-
-        fun validate(): Customer = apply {
-            if (validated) {
-                return@apply
-            }
-
-            id()
-            externalCustomerId()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: OrbInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int =
-            (if (id.asKnown() == null) 0 else 1) +
-                (if (externalCustomerId.asKnown() == null) 0 else 1)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Customer && id == other.id && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, externalCustomerId, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
-    }
+            (type.asKnown()?.validity() ?: 0) +
+            (balanceAlertStatus.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
     /** The metric the alert applies to. */
     class Metric
@@ -1149,318 +1014,6 @@ private constructor(
             "Plan{id=$id, externalPlanId=$externalPlanId, name=$name, planVersion=$planVersion, additionalProperties=$additionalProperties}"
     }
 
-    /** The subscription the alert applies to. */
-    class Subscription
-    private constructor(
-        private val id: JsonField<String>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
-
-        @JsonCreator
-        private constructor(
-            @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of()
-        ) : this(id, mutableMapOf())
-
-        /**
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun id(): String = id.getRequired("id")
-
-        /**
-         * Returns the raw JSON value of [id].
-         *
-         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Subscription].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .id()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Subscription]. */
-        class Builder internal constructor() {
-
-            private var id: JsonField<String>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(subscription: Subscription) = apply {
-                id = subscription.id
-                additionalProperties = subscription.additionalProperties.toMutableMap()
-            }
-
-            fun id(id: String) = id(JsonField.of(id))
-
-            /**
-             * Sets [Builder.id] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.id] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Subscription].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .id()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Subscription =
-                Subscription(checkRequired("id", id), additionalProperties.toMutableMap())
-        }
-
-        private var validated: Boolean = false
-
-        fun validate(): Subscription = apply {
-            if (validated) {
-                return@apply
-            }
-
-            id()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: OrbInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int = (if (id.asKnown() == null) 0 else 1)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Subscription && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() = "Subscription{id=$id, additionalProperties=$additionalProperties}"
-    }
-
-    /** Thresholds are used to define the conditions under which an alert will be triggered. */
-    class Threshold
-    private constructor(
-        private val value: JsonField<Double>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
-
-        @JsonCreator
-        private constructor(
-            @JsonProperty("value") @ExcludeMissing value: JsonField<Double> = JsonMissing.of()
-        ) : this(value, mutableMapOf())
-
-        /**
-         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
-         * or below this value. For usage and cost alerts, the alert will fire at or above this
-         * value.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun value(): Double = value.getRequired("value")
-
-        /**
-         * Returns the raw JSON value of [value].
-         *
-         * Unlike [value], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Double> = value
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Threshold].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .value()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [Threshold]. */
-        class Builder internal constructor() {
-
-            private var value: JsonField<Double>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(threshold: Threshold) = apply {
-                value = threshold.value
-                additionalProperties = threshold.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * The value at which an alert will fire. For credit balance alerts, the alert will fire
-             * at or below this value. For usage and cost alerts, the alert will fire at or above
-             * this value.
-             */
-            fun value(value: Double) = value(JsonField.of(value))
-
-            /**
-             * Sets [Builder.value] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.value] with a well-typed [Double] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun value(value: JsonField<Double>) = apply { this.value = value }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Threshold].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .value()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Threshold =
-                Threshold(checkRequired("value", value), additionalProperties.toMutableMap())
-        }
-
-        private var validated: Boolean = false
-
-        fun validate(): Threshold = apply {
-            if (validated) {
-                return@apply
-            }
-
-            value()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: OrbInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int = (if (value.asKnown() == null) 0 else 1)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Threshold && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(value, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Threshold{value=$value, additionalProperties=$additionalProperties}"
-    }
-
     /** The type of alert. This must be a valid alert type. */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -1604,20 +1157,225 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Alert status is used to determine if an alert is currently in-alert or not. */
+    class BalanceAlertStatus
+    private constructor(
+        private val inAlert: JsonField<Boolean>,
+        private val thresholdValue: JsonField<Double>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("in_alert")
+            @ExcludeMissing
+            inAlert: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("threshold_value")
+            @ExcludeMissing
+            thresholdValue: JsonField<Double> = JsonMissing.of(),
+        ) : this(inAlert, thresholdValue, mutableMapOf())
+
+        /**
+         * Whether the alert is currently in-alert or not.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun inAlert(): Boolean = inAlert.getRequired("in_alert")
+
+        /**
+         * The value of the threshold that defines the alert status.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun thresholdValue(): Double = thresholdValue.getRequired("threshold_value")
+
+        /**
+         * Returns the raw JSON value of [inAlert].
+         *
+         * Unlike [inAlert], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("in_alert") @ExcludeMissing fun _inAlert(): JsonField<Boolean> = inAlert
+
+        /**
+         * Returns the raw JSON value of [thresholdValue].
+         *
+         * Unlike [thresholdValue], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("threshold_value")
+        @ExcludeMissing
+        fun _thresholdValue(): JsonField<Double> = thresholdValue
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [BalanceAlertStatus].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .inAlert()
+             * .thresholdValue()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [BalanceAlertStatus]. */
+        class Builder internal constructor() {
+
+            private var inAlert: JsonField<Boolean>? = null
+            private var thresholdValue: JsonField<Double>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(balanceAlertStatus: BalanceAlertStatus) = apply {
+                inAlert = balanceAlertStatus.inAlert
+                thresholdValue = balanceAlertStatus.thresholdValue
+                additionalProperties = balanceAlertStatus.additionalProperties.toMutableMap()
+            }
+
+            /** Whether the alert is currently in-alert or not. */
+            fun inAlert(inAlert: Boolean) = inAlert(JsonField.of(inAlert))
+
+            /**
+             * Sets [Builder.inAlert] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.inAlert] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun inAlert(inAlert: JsonField<Boolean>) = apply { this.inAlert = inAlert }
+
+            /** The value of the threshold that defines the alert status. */
+            fun thresholdValue(thresholdValue: Double) =
+                thresholdValue(JsonField.of(thresholdValue))
+
+            /**
+             * Sets [Builder.thresholdValue] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.thresholdValue] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun thresholdValue(thresholdValue: JsonField<Double>) = apply {
+                this.thresholdValue = thresholdValue
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [BalanceAlertStatus].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .inAlert()
+             * .thresholdValue()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): BalanceAlertStatus =
+                BalanceAlertStatus(
+                    checkRequired("inAlert", inAlert),
+                    checkRequired("thresholdValue", thresholdValue),
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): BalanceAlertStatus = apply {
+            if (validated) {
+                return@apply
+            }
+
+            inAlert()
+            thresholdValue()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (inAlert.asKnown() == null) 0 else 1) +
+                (if (thresholdValue.asKnown() == null) 0 else 1)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is BalanceAlertStatus && inAlert == other.inAlert && thresholdValue == other.thresholdValue && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(inAlert, thresholdValue, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "BalanceAlertStatus{inAlert=$inAlert, thresholdValue=$thresholdValue, additionalProperties=$additionalProperties}"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is Alert && id == other.id && createdAt == other.createdAt && currency == other.currency && customer == other.customer && enabled == other.enabled && metric == other.metric && plan == other.plan && subscription == other.subscription && thresholds == other.thresholds && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Alert && id == other.id && createdAt == other.createdAt && currency == other.currency && customer == other.customer && enabled == other.enabled && metric == other.metric && plan == other.plan && subscription == other.subscription && thresholds == other.thresholds && type == other.type && balanceAlertStatus == other.balanceAlertStatus && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, createdAt, currency, customer, enabled, metric, plan, subscription, thresholds, type, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, createdAt, currency, customer, enabled, metric, plan, subscription, thresholds, type, balanceAlertStatus, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Alert{id=$id, createdAt=$createdAt, currency=$currency, customer=$customer, enabled=$enabled, metric=$metric, plan=$plan, subscription=$subscription, thresholds=$thresholds, type=$type, additionalProperties=$additionalProperties}"
+        "Alert{id=$id, createdAt=$createdAt, currency=$currency, customer=$customer, enabled=$enabled, metric=$metric, plan=$plan, subscription=$subscription, thresholds=$thresholds, type=$type, balanceAlertStatus=$balanceAlertStatus, additionalProperties=$additionalProperties}"
 }

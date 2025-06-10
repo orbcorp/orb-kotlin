@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -11,12 +10,12 @@ import java.util.Objects
 /** Fetch dimensional price group by external ID */
 class DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams
 private constructor(
-    private val externalDimensionalPriceGroupId: String,
+    private val externalDimensionalPriceGroupId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun externalDimensionalPriceGroupId(): String = externalDimensionalPriceGroupId
+    fun externalDimensionalPriceGroupId(): String? = externalDimensionalPriceGroupId
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,14 +25,12 @@ private constructor(
 
     companion object {
 
+        fun none(): DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams =
+            builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalDimensionalPriceGroupId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -61,7 +58,7 @@ private constructor(
                     .toBuilder()
         }
 
-        fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String) = apply {
+        fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) = apply {
             this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
         }
 
@@ -168,17 +165,10 @@ private constructor(
          * [DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalDimensionalPriceGroupId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams =
             DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams(
-                checkRequired("externalDimensionalPriceGroupId", externalDimensionalPriceGroupId),
+                externalDimensionalPriceGroupId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -186,7 +176,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalDimensionalPriceGroupId
+            0 -> externalDimensionalPriceGroupId ?: ""
             else -> ""
         }
 

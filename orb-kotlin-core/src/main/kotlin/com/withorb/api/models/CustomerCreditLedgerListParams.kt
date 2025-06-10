@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.errors.OrbInvalidDataException
@@ -93,7 +92,7 @@ import java.util.Objects
  */
 class CustomerCreditLedgerListParams
 private constructor(
-    private val customerId: String,
+    private val customerId: String?,
     private val createdAtGt: OffsetDateTime?,
     private val createdAtGte: OffsetDateTime?,
     private val createdAtLt: OffsetDateTime?,
@@ -108,7 +107,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun customerId(): String = customerId
+    fun customerId(): String? = customerId
 
     fun createdAtGt(): OffsetDateTime? = createdAtGt
 
@@ -144,14 +143,11 @@ private constructor(
 
     companion object {
 
+        fun none(): CustomerCreditLedgerListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [CustomerCreditLedgerListParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .customerId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -189,7 +185,7 @@ private constructor(
             additionalQueryParams = customerCreditLedgerListParams.additionalQueryParams.toBuilder()
         }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
         fun createdAtGt(createdAtGt: OffsetDateTime?) = apply { this.createdAtGt = createdAtGt }
 
@@ -326,17 +322,10 @@ private constructor(
          * Returns an immutable instance of [CustomerCreditLedgerListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .customerId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): CustomerCreditLedgerListParams =
             CustomerCreditLedgerListParams(
-                checkRequired("customerId", customerId),
+                customerId,
                 createdAtGt,
                 createdAtGte,
                 createdAtLt,
@@ -354,7 +343,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> customerId
+            0 -> customerId ?: ""
             else -> ""
         }
 

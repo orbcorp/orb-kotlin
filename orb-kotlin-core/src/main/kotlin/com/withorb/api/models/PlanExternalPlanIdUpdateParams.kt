@@ -11,7 +11,6 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
@@ -22,17 +21,17 @@ import java.util.Objects
 /**
  * This endpoint can be used to update the `external_plan_id`, and `metadata` of an existing plan.
  *
- * Other fields on a customer are currently immutable.
+ * Other fields on a plan are currently immutable.
  */
 class PlanExternalPlanIdUpdateParams
 private constructor(
-    private val otherExternalPlanId: String,
+    private val otherExternalPlanId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun otherExternalPlanId(): String = otherExternalPlanId
+    fun otherExternalPlanId(): String? = otherExternalPlanId
 
     /**
      * An optional user-defined ID for this plan resource, used throughout the system as an alias
@@ -77,14 +76,11 @@ private constructor(
 
     companion object {
 
+        fun none(): PlanExternalPlanIdUpdateParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [PlanExternalPlanIdUpdateParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .otherExternalPlanId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -104,7 +100,7 @@ private constructor(
             additionalQueryParams = planExternalPlanIdUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun otherExternalPlanId(otherExternalPlanId: String) = apply {
+        fun otherExternalPlanId(otherExternalPlanId: String?) = apply {
             this.otherExternalPlanId = otherExternalPlanId
         }
 
@@ -273,17 +269,10 @@ private constructor(
          * Returns an immutable instance of [PlanExternalPlanIdUpdateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .otherExternalPlanId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PlanExternalPlanIdUpdateParams =
             PlanExternalPlanIdUpdateParams(
-                checkRequired("otherExternalPlanId", otherExternalPlanId),
+                otherExternalPlanId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -294,7 +283,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> otherExternalPlanId
+            0 -> otherExternalPlanId ?: ""
             else -> ""
         }
 

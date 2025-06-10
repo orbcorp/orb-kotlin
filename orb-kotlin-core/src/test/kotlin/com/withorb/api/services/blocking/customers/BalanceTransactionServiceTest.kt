@@ -5,7 +5,6 @@ package com.withorb.api.services.blocking.customers
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.models.CustomerBalanceTransactionCreateParams
-import com.withorb.api.models.CustomerBalanceTransactionListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -43,10 +42,7 @@ internal class BalanceTransactionServiceTest {
                 .build()
         val balanceTransactionService = client.customers().balanceTransactions()
 
-        val page =
-            balanceTransactionService.list(
-                CustomerBalanceTransactionListParams.builder().customerId("customer_id").build()
-            )
+        val page = balanceTransactionService.list("customer_id")
 
         page.response().validate()
     }

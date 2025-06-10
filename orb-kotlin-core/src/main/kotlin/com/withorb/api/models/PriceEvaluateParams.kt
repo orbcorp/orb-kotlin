@@ -22,6 +22,9 @@ import java.util.Collections
 import java.util.Objects
 
 /**
+ * [NOTE] It is recommended to use the `/v1/prices/evaluate` which offers further functionality,
+ * such as multiple prices, inline price definitions, and querying over preview events.
+ *
  * This endpoint is used to evaluate the output of a price for a given customer and time range. It
  * enables filtering and grouping the output using
  * [computed properties](/extensibility/advanced-metrics#computed-properties), supporting the
@@ -42,13 +45,13 @@ import java.util.Objects
  */
 class PriceEvaluateParams
 private constructor(
-    private val priceId: String,
+    private val priceId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun priceId(): String = priceId
+    fun priceId(): String? = priceId
 
     /**
      * The exclusive upper bound for event timestamps
@@ -158,7 +161,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .priceId()
          * .timeframeEnd()
          * .timeframeStart()
          * ```
@@ -181,7 +183,7 @@ private constructor(
             additionalQueryParams = priceEvaluateParams.additionalQueryParams.toBuilder()
         }
 
-        fun priceId(priceId: String) = apply { this.priceId = priceId }
+        fun priceId(priceId: String?) = apply { this.priceId = priceId }
 
         /**
          * Sets the entire request body.
@@ -418,7 +420,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .priceId()
          * .timeframeEnd()
          * .timeframeStart()
          * ```
@@ -427,7 +428,7 @@ private constructor(
          */
         fun build(): PriceEvaluateParams =
             PriceEvaluateParams(
-                checkRequired("priceId", priceId),
+                priceId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -438,7 +439,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> priceId
+            0 -> priceId ?: ""
             else -> ""
         }
 

@@ -10,7 +10,7 @@ internal class CouponCreateParamsTest {
     @Test
     fun create() {
         CouponCreateParams.builder()
-            .newCouponPercentageDiscount(0.0)
+            .percentageDiscount(0.0)
             .redemptionCode("HALFOFF")
             .durationInMonths(12L)
             .maxRedemptions(1L)
@@ -21,7 +21,7 @@ internal class CouponCreateParamsTest {
     fun body() {
         val params =
             CouponCreateParams.builder()
-                .newCouponPercentageDiscount(0.0)
+                .percentageDiscount(0.0)
                 .redemptionCode("HALFOFF")
                 .durationInMonths(12L)
                 .maxRedemptions(1L)
@@ -31,14 +31,8 @@ internal class CouponCreateParamsTest {
 
         assertThat(body.discount())
             .isEqualTo(
-                CouponCreateParams.Discount.ofNewCouponPercentage(
-                    CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                        .discountType(
-                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                .PERCENTAGE
-                        )
-                        .percentageDiscount(0.0)
-                        .build()
+                CouponCreateParams.Discount.ofPercentage(
+                    CouponCreateParams.Discount.Percentage.builder().percentageDiscount(0.0).build()
                 )
             )
         assertThat(body.redemptionCode()).isEqualTo("HALFOFF")
@@ -49,23 +43,14 @@ internal class CouponCreateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params =
-            CouponCreateParams.builder()
-                .newCouponPercentageDiscount(0.0)
-                .redemptionCode("HALFOFF")
-                .build()
+            CouponCreateParams.builder().percentageDiscount(0.0).redemptionCode("HALFOFF").build()
 
         val body = params._body()
 
         assertThat(body.discount())
             .isEqualTo(
-                CouponCreateParams.Discount.ofNewCouponPercentage(
-                    CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                        .discountType(
-                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                .PERCENTAGE
-                        )
-                        .percentageDiscount(0.0)
-                        .build()
+                CouponCreateParams.Discount.ofPercentage(
+                    CouponCreateParams.Discount.Percentage.builder().percentageDiscount(0.0).build()
                 )
             )
         assertThat(body.redemptionCode()).isEqualTo("HALFOFF")

@@ -36,20 +36,20 @@ private constructor(
     fun lineItems(): List<LineItem> = body.lineItems()
 
     /**
+     * An optional reason for the credit note.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun reason(): Reason = body.reason()
+
+    /**
      * An optional memo to attach to the credit note.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
     fun memo(): String? = body.memo()
-
-    /**
-     * An optional reason for the credit note.
-     *
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
-     *   responded with an unexpected value).
-     */
-    fun reason(): Reason? = body.reason()
 
     /**
      * Returns the raw JSON value of [lineItems].
@@ -59,18 +59,18 @@ private constructor(
     fun _lineItems(): JsonField<List<LineItem>> = body._lineItems()
 
     /**
-     * Returns the raw JSON value of [memo].
-     *
-     * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _memo(): JsonField<String> = body._memo()
-
-    /**
      * Returns the raw JSON value of [reason].
      *
      * Unlike [reason], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _reason(): JsonField<Reason> = body._reason()
+
+    /**
+     * Returns the raw JSON value of [memo].
+     *
+     * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _memo(): JsonField<String> = body._memo()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
@@ -88,6 +88,7 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .lineItems()
+         * .reason()
          * ```
          */
         fun builder() = Builder()
@@ -112,8 +113,8 @@ private constructor(
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
          * - [lineItems]
-         * - [memo]
          * - [reason]
+         * - [memo]
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
 
@@ -135,6 +136,17 @@ private constructor(
          */
         fun addLineItem(lineItem: LineItem) = apply { body.addLineItem(lineItem) }
 
+        /** An optional reason for the credit note. */
+        fun reason(reason: Reason) = apply { body.reason(reason) }
+
+        /**
+         * Sets [Builder.reason] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.reason] with a well-typed [Reason] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun reason(reason: JsonField<Reason>) = apply { body.reason(reason) }
+
         /** An optional memo to attach to the credit note. */
         fun memo(memo: String?) = apply { body.memo(memo) }
 
@@ -145,17 +157,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun memo(memo: JsonField<String>) = apply { body.memo(memo) }
-
-        /** An optional reason for the credit note. */
-        fun reason(reason: Reason?) = apply { body.reason(reason) }
-
-        /**
-         * Sets [Builder.reason] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.reason] with a well-typed [Reason] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun reason(reason: JsonField<Reason>) = apply { body.reason(reason) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
@@ -282,6 +283,7 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .lineItems()
+         * .reason()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -303,8 +305,8 @@ private constructor(
     class Body
     private constructor(
         private val lineItems: JsonField<List<LineItem>>,
-        private val memo: JsonField<String>,
         private val reason: JsonField<Reason>,
+        private val memo: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -313,9 +315,9 @@ private constructor(
             @JsonProperty("line_items")
             @ExcludeMissing
             lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
-            @JsonProperty("memo") @ExcludeMissing memo: JsonField<String> = JsonMissing.of(),
             @JsonProperty("reason") @ExcludeMissing reason: JsonField<Reason> = JsonMissing.of(),
-        ) : this(lineItems, memo, reason, mutableMapOf())
+            @JsonProperty("memo") @ExcludeMissing memo: JsonField<String> = JsonMissing.of(),
+        ) : this(lineItems, reason, memo, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -324,20 +326,20 @@ private constructor(
         fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
 
         /**
+         * An optional reason for the credit note.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun reason(): Reason = reason.getRequired("reason")
+
+        /**
          * An optional memo to attach to the credit note.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
         fun memo(): String? = memo.getNullable("memo")
-
-        /**
-         * An optional reason for the credit note.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun reason(): Reason? = reason.getNullable("reason")
 
         /**
          * Returns the raw JSON value of [lineItems].
@@ -349,18 +351,18 @@ private constructor(
         fun _lineItems(): JsonField<List<LineItem>> = lineItems
 
         /**
-         * Returns the raw JSON value of [memo].
-         *
-         * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
-
-        /**
          * Returns the raw JSON value of [reason].
          *
          * Unlike [reason], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<Reason> = reason
+
+        /**
+         * Returns the raw JSON value of [memo].
+         *
+         * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -382,6 +384,7 @@ private constructor(
              * The following fields are required:
              * ```kotlin
              * .lineItems()
+             * .reason()
              * ```
              */
             fun builder() = Builder()
@@ -391,14 +394,14 @@ private constructor(
         class Builder internal constructor() {
 
             private var lineItems: JsonField<MutableList<LineItem>>? = null
+            private var reason: JsonField<Reason>? = null
             private var memo: JsonField<String> = JsonMissing.of()
-            private var reason: JsonField<Reason> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
                 lineItems = body.lineItems.map { it.toMutableList() }
-                memo = body.memo
                 reason = body.reason
+                memo = body.memo
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
 
@@ -427,6 +430,18 @@ private constructor(
                     }
             }
 
+            /** An optional reason for the credit note. */
+            fun reason(reason: Reason) = reason(JsonField.of(reason))
+
+            /**
+             * Sets [Builder.reason] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.reason] with a well-typed [Reason] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
+
             /** An optional memo to attach to the credit note. */
             fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
 
@@ -438,18 +453,6 @@ private constructor(
              * value.
              */
             fun memo(memo: JsonField<String>) = apply { this.memo = memo }
-
-            /** An optional reason for the credit note. */
-            fun reason(reason: Reason?) = reason(JsonField.ofNullable(reason))
-
-            /**
-             * Sets [Builder.reason] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.reason] with a well-typed [Reason] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -478,6 +481,7 @@ private constructor(
              * The following fields are required:
              * ```kotlin
              * .lineItems()
+             * .reason()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
@@ -485,8 +489,8 @@ private constructor(
             fun build(): Body =
                 Body(
                     checkRequired("lineItems", lineItems).map { it.toImmutable() },
+                    checkRequired("reason", reason),
                     memo,
-                    reason,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -499,8 +503,8 @@ private constructor(
             }
 
             lineItems().forEach { it.validate() }
+            reason().validate()
             memo()
-            reason()?.validate()
             validated = true
         }
 
@@ -520,25 +524,25 @@ private constructor(
          */
         internal fun validity(): Int =
             (lineItems.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
-                (if (memo.asKnown() == null) 0 else 1) +
-                (reason.asKnown()?.validity() ?: 0)
+                (reason.asKnown()?.validity() ?: 0) +
+                (if (memo.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is Body && lineItems == other.lineItems && memo == other.memo && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && lineItems == other.lineItems && reason == other.reason && memo == other.memo && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(lineItems, memo, reason, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(lineItems, reason, memo, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{lineItems=$lineItems, memo=$memo, reason=$reason, additionalProperties=$additionalProperties}"
+            "Body{lineItems=$lineItems, reason=$reason, memo=$memo, additionalProperties=$additionalProperties}"
     }
 
     class LineItem

@@ -5,8 +5,6 @@ package com.withorb.api.services.blocking
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.models.SubscriptionChangeApplyParams
-import com.withorb.api.models.SubscriptionChangeCancelParams
-import com.withorb.api.models.SubscriptionChangeRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -22,12 +20,7 @@ internal class SubscriptionChangeServiceTest {
                 .build()
         val subscriptionChangeService = client.subscriptionChanges()
 
-        val subscriptionChange =
-            subscriptionChangeService.retrieve(
-                SubscriptionChangeRetrieveParams.builder()
-                    .subscriptionChangeId("subscription_change_id")
-                    .build()
-            )
+        val subscriptionChange = subscriptionChangeService.retrieve("subscription_change_id")
 
         subscriptionChange.validate()
     }
@@ -62,12 +55,7 @@ internal class SubscriptionChangeServiceTest {
                 .build()
         val subscriptionChangeService = client.subscriptionChanges()
 
-        val response =
-            subscriptionChangeService.cancel(
-                SubscriptionChangeCancelParams.builder()
-                    .subscriptionChangeId("subscription_change_id")
-                    .build()
-            )
+        val response = subscriptionChangeService.cancel("subscription_change_id")
 
         response.validate()
     }

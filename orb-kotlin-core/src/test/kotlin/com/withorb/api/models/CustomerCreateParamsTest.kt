@@ -14,10 +14,9 @@ internal class CustomerCreateParamsTest {
             .email("dev@stainless.com")
             .name("x")
             .accountingSyncConfiguration(
-                CustomerCreateParams.AccountingSyncConfiguration.builder()
+                NewAccountingSyncConfiguration.builder()
                     .addAccountingProvider(
-                        CustomerCreateParams.AccountingSyncConfiguration.AccountingProvider
-                            .builder()
+                        AccountingProviderConfig.builder()
                             .externalProviderId("external_provider_id")
                             .providerType("provider_type")
                             .build()
@@ -28,7 +27,7 @@ internal class CustomerCreateParamsTest {
             .addAdditionalEmail("dev@stainless.com")
             .autoCollection(true)
             .billingAddress(
-                CustomerCreateParams.BillingAddress.builder()
+                AddressInput.builder()
                     .city("city")
                     .country("country")
                     .line1("line1")
@@ -41,7 +40,7 @@ internal class CustomerCreateParamsTest {
             .emailDelivery(true)
             .externalCustomerId("external_customer_id")
             .hierarchy(
-                CustomerCreateParams.Hierarchy.builder()
+                CustomerHierarchyConfig.builder()
                     .addChildCustomerId("string")
                     .parentCustomerId("parent_customer_id")
                     .build()
@@ -53,11 +52,9 @@ internal class CustomerCreateParamsTest {
             )
             .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
             .paymentProviderId("payment_provider_id")
-            .reportingConfiguration(
-                CustomerCreateParams.ReportingConfiguration.builder().exempt(true).build()
-            )
+            .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())
             .shippingAddress(
-                CustomerCreateParams.ShippingAddress.builder()
+                AddressInput.builder()
                     .city("city")
                     .country("country")
                     .line1("line1")
@@ -67,19 +64,16 @@ internal class CustomerCreateParamsTest {
                     .build()
             )
             .taxConfiguration(
-                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                NewAvalaraTaxConfiguration.builder()
                     .taxExempt(true)
-                    .taxProvider(
-                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.TaxProvider
-                            .AVALARA
-                    )
+                    .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
                     .taxExemptionCode("tax_exemption_code")
                     .build()
             )
             .taxId(
-                CustomerCreateParams.TaxId.builder()
-                    .country(CustomerCreateParams.TaxId.Country.AD)
-                    .type(CustomerCreateParams.TaxId.Type.AD_NRT)
+                CustomerTaxId.builder()
+                    .country(CustomerTaxId.Country.AD)
+                    .type(CustomerTaxId.Type.AD_NRT)
                     .value("value")
                     .build()
             )
@@ -94,10 +88,9 @@ internal class CustomerCreateParamsTest {
                 .email("dev@stainless.com")
                 .name("x")
                 .accountingSyncConfiguration(
-                    CustomerCreateParams.AccountingSyncConfiguration.builder()
+                    NewAccountingSyncConfiguration.builder()
                         .addAccountingProvider(
-                            CustomerCreateParams.AccountingSyncConfiguration.AccountingProvider
-                                .builder()
+                            AccountingProviderConfig.builder()
                                 .externalProviderId("external_provider_id")
                                 .providerType("provider_type")
                                 .build()
@@ -108,7 +101,7 @@ internal class CustomerCreateParamsTest {
                 .addAdditionalEmail("dev@stainless.com")
                 .autoCollection(true)
                 .billingAddress(
-                    CustomerCreateParams.BillingAddress.builder()
+                    AddressInput.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -121,7 +114,7 @@ internal class CustomerCreateParamsTest {
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
                 .hierarchy(
-                    CustomerCreateParams.Hierarchy.builder()
+                    CustomerHierarchyConfig.builder()
                         .addChildCustomerId("string")
                         .parentCustomerId("parent_customer_id")
                         .build()
@@ -133,11 +126,9 @@ internal class CustomerCreateParamsTest {
                 )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
-                .reportingConfiguration(
-                    CustomerCreateParams.ReportingConfiguration.builder().exempt(true).build()
-                )
+                .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())
                 .shippingAddress(
-                    CustomerCreateParams.ShippingAddress.builder()
+                    AddressInput.builder()
                         .city("city")
                         .country("country")
                         .line1("line1")
@@ -147,20 +138,16 @@ internal class CustomerCreateParamsTest {
                         .build()
                 )
                 .taxConfiguration(
-                    CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                    NewAvalaraTaxConfiguration.builder()
                         .taxExempt(true)
-                        .taxProvider(
-                            CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
-                                .TaxProvider
-                                .AVALARA
-                        )
+                        .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
                         .taxExemptionCode("tax_exemption_code")
                         .build()
                 )
                 .taxId(
-                    CustomerCreateParams.TaxId.builder()
-                        .country(CustomerCreateParams.TaxId.Country.AD)
-                        .type(CustomerCreateParams.TaxId.Type.AD_NRT)
+                    CustomerTaxId.builder()
+                        .country(CustomerTaxId.Country.AD)
+                        .type(CustomerTaxId.Type.AD_NRT)
                         .value("value")
                         .build()
                 )
@@ -173,10 +160,9 @@ internal class CustomerCreateParamsTest {
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.accountingSyncConfiguration())
             .isEqualTo(
-                CustomerCreateParams.AccountingSyncConfiguration.builder()
+                NewAccountingSyncConfiguration.builder()
                     .addAccountingProvider(
-                        CustomerCreateParams.AccountingSyncConfiguration.AccountingProvider
-                            .builder()
+                        AccountingProviderConfig.builder()
                             .externalProviderId("external_provider_id")
                             .providerType("provider_type")
                             .build()
@@ -188,7 +174,7 @@ internal class CustomerCreateParamsTest {
         assertThat(body.autoCollection()).isEqualTo(true)
         assertThat(body.billingAddress())
             .isEqualTo(
-                CustomerCreateParams.BillingAddress.builder()
+                AddressInput.builder()
                     .city("city")
                     .country("country")
                     .line1("line1")
@@ -202,7 +188,7 @@ internal class CustomerCreateParamsTest {
         assertThat(body.externalCustomerId()).isEqualTo("external_customer_id")
         assertThat(body.hierarchy())
             .isEqualTo(
-                CustomerCreateParams.Hierarchy.builder()
+                CustomerHierarchyConfig.builder()
                     .addChildCustomerId("string")
                     .parentCustomerId("parent_customer_id")
                     .build()
@@ -217,10 +203,10 @@ internal class CustomerCreateParamsTest {
             .isEqualTo(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
         assertThat(body.paymentProviderId()).isEqualTo("payment_provider_id")
         assertThat(body.reportingConfiguration())
-            .isEqualTo(CustomerCreateParams.ReportingConfiguration.builder().exempt(true).build())
+            .isEqualTo(NewReportingConfiguration.builder().exempt(true).build())
         assertThat(body.shippingAddress())
             .isEqualTo(
-                CustomerCreateParams.ShippingAddress.builder()
+                AddressInput.builder()
                     .city("city")
                     .country("country")
                     .line1("line1")
@@ -231,23 +217,19 @@ internal class CustomerCreateParamsTest {
             )
         assertThat(body.taxConfiguration())
             .isEqualTo(
-                CustomerCreateParams.TaxConfiguration.ofNewAvalara(
-                    CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                CustomerCreateParams.TaxConfiguration.ofAvalara(
+                    NewAvalaraTaxConfiguration.builder()
                         .taxExempt(true)
-                        .taxProvider(
-                            CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
-                                .TaxProvider
-                                .AVALARA
-                        )
+                        .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
                         .taxExemptionCode("tax_exemption_code")
                         .build()
                 )
             )
         assertThat(body.taxId())
             .isEqualTo(
-                CustomerCreateParams.TaxId.builder()
-                    .country(CustomerCreateParams.TaxId.Country.AD)
-                    .type(CustomerCreateParams.TaxId.Type.AD_NRT)
+                CustomerTaxId.builder()
+                    .country(CustomerTaxId.Country.AD)
+                    .type(CustomerTaxId.Type.AD_NRT)
                     .value("value")
                     .build()
             )

@@ -17,7 +17,7 @@ internal class CustomerCreditTopUpCreateByExternalIdResponseTest {
                 .amount("amount")
                 .currency("currency")
                 .invoiceSettings(
-                    CustomerCreditTopUpCreateByExternalIdResponse.InvoiceSettings.builder()
+                    TopUpInvoiceSettings.builder()
                         .autoCollection(true)
                         .netTerms(0L)
                         .memo("memo")
@@ -37,7 +37,7 @@ internal class CustomerCreditTopUpCreateByExternalIdResponseTest {
         assertThat(customerCreditTopUpCreateByExternalIdResponse.currency()).isEqualTo("currency")
         assertThat(customerCreditTopUpCreateByExternalIdResponse.invoiceSettings())
             .isEqualTo(
-                CustomerCreditTopUpCreateByExternalIdResponse.InvoiceSettings.builder()
+                TopUpInvoiceSettings.builder()
                     .autoCollection(true)
                     .netTerms(0L)
                     .memo("memo")
@@ -61,7 +61,7 @@ internal class CustomerCreditTopUpCreateByExternalIdResponseTest {
                 .amount("amount")
                 .currency("currency")
                 .invoiceSettings(
-                    CustomerCreditTopUpCreateByExternalIdResponse.InvoiceSettings.builder()
+                    TopUpInvoiceSettings.builder()
                         .autoCollection(true)
                         .netTerms(0L)
                         .memo("memo")

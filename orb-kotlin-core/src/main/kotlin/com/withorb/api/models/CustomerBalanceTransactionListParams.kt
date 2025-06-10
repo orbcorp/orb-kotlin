@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.time.OffsetDateTime
@@ -29,16 +28,10 @@ import java.util.Objects
  *
  * This endpoint retrieves all customer balance transactions in reverse chronological order for a
  * single customer, providing a complete audit trail of all adjustments and invoice applications.
- *
- * ## Eligibility
- *
- * The customer balance can only be applied to invoices or adjusted manually if invoices are not
- * synced to a separate invoicing provider. If a payment gateway such as Stripe is used, the balance
- * will be applied to the invoice before forwarding payment to the gateway.
  */
 class CustomerBalanceTransactionListParams
 private constructor(
-    private val customerId: String,
+    private val customerId: String?,
     private val cursor: String?,
     private val limit: Long?,
     private val operationTimeGt: OffsetDateTime?,
@@ -49,7 +42,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun customerId(): String = customerId
+    fun customerId(): String? = customerId
 
     /**
      * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
@@ -76,14 +69,11 @@ private constructor(
 
     companion object {
 
+        fun none(): CustomerBalanceTransactionListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [CustomerBalanceTransactionListParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .customerId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -116,7 +106,7 @@ private constructor(
                 customerBalanceTransactionListParams.additionalQueryParams.toBuilder()
         }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
         /**
          * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
@@ -252,17 +242,10 @@ private constructor(
          * Returns an immutable instance of [CustomerBalanceTransactionListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .customerId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): CustomerBalanceTransactionListParams =
             CustomerBalanceTransactionListParams(
-                checkRequired("customerId", customerId),
+                customerId,
                 cursor,
                 limit,
                 operationTimeGt,
@@ -276,7 +259,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> customerId
+            0 -> customerId ?: ""
             else -> ""
         }
 

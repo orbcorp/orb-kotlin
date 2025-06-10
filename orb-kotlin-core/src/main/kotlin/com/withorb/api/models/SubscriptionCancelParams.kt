@@ -73,13 +73,13 @@ import java.util.Objects
  */
 class SubscriptionCancelParams
 private constructor(
-    private val subscriptionId: String,
+    private val subscriptionId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun subscriptionId(): String = subscriptionId
+    fun subscriptionId(): String? = subscriptionId
 
     /**
      * Determines the timing of subscription cancellation
@@ -146,7 +146,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .subscriptionId()
          * .cancelOption()
          * ```
          */
@@ -168,7 +167,7 @@ private constructor(
             additionalQueryParams = subscriptionCancelParams.additionalQueryParams.toBuilder()
         }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String?) = apply { this.subscriptionId = subscriptionId }
 
         /**
          * Sets the entire request body.
@@ -366,7 +365,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .subscriptionId()
          * .cancelOption()
          * ```
          *
@@ -374,7 +372,7 @@ private constructor(
          */
         fun build(): SubscriptionCancelParams =
             SubscriptionCancelParams(
-                checkRequired("subscriptionId", subscriptionId),
+                subscriptionId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -385,7 +383,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> subscriptionId
+            0 -> subscriptionId ?: ""
             else -> ""
         }
 

@@ -5,6 +5,7 @@ package com.withorb.api.services.async.events
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
 import com.withorb.api.core.handlers.withErrorHandler
@@ -146,6 +147,9 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
             params: EventBackfillCloseParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<EventBackfillCloseResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("backfillId", params.backfillId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -174,6 +178,9 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
             params: EventBackfillFetchParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<EventBackfillFetchResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("backfillId", params.backfillId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -201,6 +208,9 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
             params: EventBackfillRevertParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<EventBackfillRevertResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("backfillId", params.backfillId())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

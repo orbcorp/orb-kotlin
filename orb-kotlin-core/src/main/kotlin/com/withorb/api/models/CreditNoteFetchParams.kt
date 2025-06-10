@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -14,12 +13,12 @@ import java.util.Objects
  */
 class CreditNoteFetchParams
 private constructor(
-    private val creditNoteId: String,
+    private val creditNoteId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun creditNoteId(): String = creditNoteId
+    fun creditNoteId(): String? = creditNoteId
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -29,14 +28,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [CreditNoteFetchParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .creditNoteId()
-         * ```
-         */
+        fun none(): CreditNoteFetchParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [CreditNoteFetchParams]. */
         fun builder() = Builder()
     }
 
@@ -53,7 +47,7 @@ private constructor(
             additionalQueryParams = creditNoteFetchParams.additionalQueryParams.toBuilder()
         }
 
-        fun creditNoteId(creditNoteId: String) = apply { this.creditNoteId = creditNoteId }
+        fun creditNoteId(creditNoteId: String?) = apply { this.creditNoteId = creditNoteId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -157,17 +151,10 @@ private constructor(
          * Returns an immutable instance of [CreditNoteFetchParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .creditNoteId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): CreditNoteFetchParams =
             CreditNoteFetchParams(
-                checkRequired("creditNoteId", creditNoteId),
+                creditNoteId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -175,7 +162,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> creditNoteId
+            0 -> creditNoteId ?: ""
             else -> ""
         }
 

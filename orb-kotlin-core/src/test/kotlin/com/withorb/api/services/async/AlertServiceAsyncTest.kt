@@ -9,8 +9,8 @@ import com.withorb.api.models.AlertCreateForExternalCustomerParams
 import com.withorb.api.models.AlertCreateForSubscriptionParams
 import com.withorb.api.models.AlertDisableParams
 import com.withorb.api.models.AlertEnableParams
-import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
+import com.withorb.api.models.Threshold
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -27,8 +27,7 @@ internal class AlertServiceAsyncTest {
                 .build()
         val alertServiceAsync = client.alerts()
 
-        val alert =
-            alertServiceAsync.retrieve(AlertRetrieveParams.builder().alertId("alert_id").build())
+        val alert = alertServiceAsync.retrieve("alert_id")
 
         alert.validate()
     }
@@ -46,7 +45,7 @@ internal class AlertServiceAsyncTest {
             alertServiceAsync.update(
                 AlertUpdateParams.builder()
                     .alertConfigurationId("alert_configuration_id")
-                    .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
+                    .addThreshold(Threshold.builder().value(0.0).build())
                     .build()
             )
 
@@ -83,9 +82,7 @@ internal class AlertServiceAsyncTest {
                     .customerId("customer_id")
                     .currency("currency")
                     .type(AlertCreateForCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
-                    .addThreshold(
-                        AlertCreateForCustomerParams.Threshold.builder().value(0.0).build()
-                    )
+                    .addThreshold(Threshold.builder().value(0.0).build())
                     .build()
             )
 
@@ -107,9 +104,7 @@ internal class AlertServiceAsyncTest {
                     .externalCustomerId("external_customer_id")
                     .currency("currency")
                     .type(AlertCreateForExternalCustomerParams.Type.CREDIT_BALANCE_DEPLETED)
-                    .addThreshold(
-                        AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
-                    )
+                    .addThreshold(Threshold.builder().value(0.0).build())
                     .build()
             )
 
@@ -129,9 +124,7 @@ internal class AlertServiceAsyncTest {
             alertServiceAsync.createForSubscription(
                 AlertCreateForSubscriptionParams.builder()
                     .subscriptionId("subscription_id")
-                    .addThreshold(
-                        AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build()
-                    )
+                    .addThreshold(Threshold.builder().value(0.0).build())
                     .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                     .metricId("metric_id")
                     .build()

@@ -27,8 +27,8 @@ interface DimensionalPriceGroupService {
      *
      * For example, suppose we have a billable metric that measures the number of widgets used and
      * we want to charge differently depending on the color of the widget. We can create a price
-     * group with a dimension "color" and two prices: one that charges $10 per red widget and one
-     * that charges $20 per blue widget.
+     * group with a dimension "color" and two prices: one that charges \$10 per red widget and one
+     * that charges \$20 per blue widget.
      */
     fun create(
         params: DimensionalPriceGroupCreateParams,
@@ -37,9 +37,31 @@ interface DimensionalPriceGroupService {
 
     /** Fetch dimensional price group */
     fun retrieve(
+        dimensionalPriceGroupId: String,
+        params: DimensionalPriceGroupRetrieveParams = DimensionalPriceGroupRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DimensionalPriceGroup =
+        retrieve(
+            params.toBuilder().dimensionalPriceGroupId(dimensionalPriceGroupId).build(),
+            requestOptions,
+        )
+
+    /** @see [retrieve] */
+    fun retrieve(
         params: DimensionalPriceGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroup
+
+    /** @see [retrieve] */
+    fun retrieve(
+        dimensionalPriceGroupId: String,
+        requestOptions: RequestOptions,
+    ): DimensionalPriceGroup =
+        retrieve(
+            dimensionalPriceGroupId,
+            DimensionalPriceGroupRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** List dimensional price groups */
     fun list(
@@ -77,9 +99,34 @@ interface DimensionalPriceGroupService {
          */
         @MustBeClosed
         fun retrieve(
+            dimensionalPriceGroupId: String,
+            params: DimensionalPriceGroupRetrieveParams =
+                DimensionalPriceGroupRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroup> =
+            retrieve(
+                params.toBuilder().dimensionalPriceGroupId(dimensionalPriceGroupId).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
             params: DimensionalPriceGroupRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DimensionalPriceGroup>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            dimensionalPriceGroupId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DimensionalPriceGroup> =
+            retrieve(
+                dimensionalPriceGroupId,
+                DimensionalPriceGroupRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /dimensional_price_groups`, but is otherwise the

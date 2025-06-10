@@ -2,6 +2,8 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.AutoPager
+import com.withorb.api.core.Page
 import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.SubscriptionService
 import java.util.Objects
@@ -12,7 +14,7 @@ private constructor(
     private val service: SubscriptionService,
     private val params: SubscriptionFetchScheduleParams,
     private val response: SubscriptionFetchSchedulePageResponse,
-) {
+) : Page<SubscriptionFetchScheduleResponse> {
 
     /**
      * Delegates to [SubscriptionFetchSchedulePageResponse], but gracefully handles missing data.
@@ -30,29 +32,22 @@ private constructor(
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")
 
-    fun hasNextPage(): Boolean =
-        data().isNotEmpty() &&
+    override fun items(): List<SubscriptionFetchScheduleResponse> = data()
+
+    override fun hasNextPage(): Boolean =
+        items().isNotEmpty() &&
             paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") } != null
 
-    fun getNextPageParams(): SubscriptionFetchScheduleParams? {
-        if (!hasNextPage()) {
-            return null
-        }
-
-        return params
-            .toBuilder()
-            .apply {
-                paginationMetadata()
-                    ?.let { it._nextCursor().getNullable("next_cursor") }
-                    ?.let { cursor(it) }
-            }
-            .build()
+    fun nextPageParams(): SubscriptionFetchScheduleParams {
+        val nextCursor =
+            paginationMetadata()?.let { it._nextCursor().getNullable("next_cursor") }
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().cursor(nextCursor).build()
     }
 
-    fun getNextPage(): SubscriptionFetchSchedulePage? =
-        getNextPageParams()?.let { service.fetchSchedule(it) }
+    override fun nextPage(): SubscriptionFetchSchedulePage = service.fetchSchedule(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<SubscriptionFetchScheduleResponse> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): SubscriptionFetchScheduleParams = params
@@ -121,22 +116,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: SubscriptionFetchSchedulePage) :
-        Sequence<SubscriptionFetchScheduleResponse> {
-
-        override fun iterator(): Iterator<SubscriptionFetchScheduleResponse> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

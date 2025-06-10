@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -11,14 +10,14 @@ import java.util.Objects
 /** List top-ups */
 class CustomerCreditTopUpListParams
 private constructor(
-    private val customerId: String,
+    private val customerId: String?,
     private val cursor: String?,
     private val limit: Long?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun customerId(): String = customerId
+    fun customerId(): String? = customerId
 
     /**
      * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
@@ -37,14 +36,11 @@ private constructor(
 
     companion object {
 
+        fun none(): CustomerCreditTopUpListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [CustomerCreditTopUpListParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .customerId()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -66,7 +62,7 @@ private constructor(
             additionalQueryParams = customerCreditTopUpListParams.additionalQueryParams.toBuilder()
         }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
         /**
          * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
@@ -186,17 +182,10 @@ private constructor(
          * Returns an immutable instance of [CustomerCreditTopUpListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .customerId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): CustomerCreditTopUpListParams =
             CustomerCreditTopUpListParams(
-                checkRequired("customerId", customerId),
+                customerId,
                 cursor,
                 limit,
                 additionalHeaders.build(),
@@ -206,7 +195,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> customerId
+            0 -> customerId ?: ""
             else -> ""
         }
 

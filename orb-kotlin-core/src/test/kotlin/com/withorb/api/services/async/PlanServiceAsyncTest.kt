@@ -5,9 +5,13 @@ package com.withorb.api.services.async
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
+import com.withorb.api.models.ConversionRateUnitConfig
+import com.withorb.api.models.NewBillingCycleConfiguration
+import com.withorb.api.models.NewDimensionalPriceConfiguration
+import com.withorb.api.models.NewPlanUnitPrice
 import com.withorb.api.models.PlanCreateParams
-import com.withorb.api.models.PlanFetchParams
 import com.withorb.api.models.PlanUpdateParams
+import com.withorb.api.models.UnitConfig
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -29,49 +33,45 @@ internal class PlanServiceAsyncTest {
                     .currency("currency")
                     .name("name")
                     .addPrice(
-                        PlanCreateParams.Price.NewPlanUnitPrice.builder()
-                            .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
+                        NewPlanUnitPrice.builder()
+                            .cadence(NewPlanUnitPrice.Cadence.ANNUAL)
                             .itemId("item_id")
-                            .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
+                            .modelType(NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(
-                                PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
+                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
-                                PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration
-                                    .builder()
+                                NewBillingCycleConfiguration.builder()
                                     .duration(0L)
-                                    .durationUnit(
-                                        PlanCreateParams.Price.NewPlanUnitPrice
-                                            .BillingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
-                                    )
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
                             .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
                             .currency("currency")
-                            .externalPriceId("external_price_id")
-                            .fixedPriceQuantity(0.0)
-                            .invoiceGroupingKey("invoice_grouping_key")
-                            .invoicingCycleConfiguration(
-                                PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
-                                    .builder()
-                                    .duration(0L)
-                                    .durationUnit(
-                                        PlanCreateParams.Price.NewPlanUnitPrice
-                                            .InvoicingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
+                            .dimensionalPriceConfiguration(
+                                NewDimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .externalDimensionalPriceGroupId(
+                                        "external_dimensional_price_group_id"
                                     )
                                     .build()
                             )
+                            .externalPriceId("external_price_id")
+                            .fixedPriceQuantity(0.0)
+                            .invoiceGroupingKey("x")
+                            .invoicingCycleConfiguration(
+                                NewBillingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                    .build()
+                            )
                             .metadata(
-                                PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
+                                NewPlanUnitPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
@@ -140,7 +140,7 @@ internal class PlanServiceAsyncTest {
                 .build()
         val planServiceAsync = client.plans()
 
-        val plan = planServiceAsync.fetch(PlanFetchParams.builder().planId("plan_id").build())
+        val plan = planServiceAsync.fetch("plan_id")
 
         plan.validate()
     }

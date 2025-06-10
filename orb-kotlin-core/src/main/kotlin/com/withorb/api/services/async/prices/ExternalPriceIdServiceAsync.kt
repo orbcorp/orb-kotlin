@@ -21,9 +21,20 @@ interface ExternalPriceIdServiceAsync {
      * the metadata value, it will clear any existing metadata for that price.
      */
     suspend fun update(
+        externalPriceId: String,
+        params: PriceExternalPriceIdUpdateParams = PriceExternalPriceIdUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = update(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
+
+    /** @see [update] */
+    suspend fun update(
         params: PriceExternalPriceIdUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
+
+    /** @see [update] */
+    suspend fun update(externalPriceId: String, requestOptions: RequestOptions): Price =
+        update(externalPriceId, PriceExternalPriceIdUpdateParams.none(), requestOptions)
 
     /**
      * This endpoint returns a price given an external price id. See the
@@ -31,9 +42,20 @@ interface ExternalPriceIdServiceAsync {
      * price aliases.
      */
     suspend fun fetch(
+        externalPriceId: String,
+        params: PriceExternalPriceIdFetchParams = PriceExternalPriceIdFetchParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = fetch(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
+
+    /** @see [fetch] */
+    suspend fun fetch(
         params: PriceExternalPriceIdFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
+
+    /** @see [fetch] */
+    suspend fun fetch(externalPriceId: String, requestOptions: RequestOptions): Price =
+        fetch(externalPriceId, PriceExternalPriceIdFetchParams.none(), requestOptions)
 
     /**
      * A view of [ExternalPriceIdServiceAsync] that provides access to raw HTTP responses for each
@@ -47,9 +69,26 @@ interface ExternalPriceIdServiceAsync {
          */
         @MustBeClosed
         suspend fun update(
+            externalPriceId: String,
+            params: PriceExternalPriceIdUpdateParams = PriceExternalPriceIdUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            update(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
             params: PriceExternalPriceIdUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price>
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
+            externalPriceId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Price> =
+            update(externalPriceId, PriceExternalPriceIdUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /prices/external_price_id/{external_price_id}`, but
@@ -57,8 +96,25 @@ interface ExternalPriceIdServiceAsync {
          */
         @MustBeClosed
         suspend fun fetch(
+            externalPriceId: String,
+            params: PriceExternalPriceIdFetchParams = PriceExternalPriceIdFetchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            fetch(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
             params: PriceExternalPriceIdFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price>
+
+        /** @see [fetch] */
+        @MustBeClosed
+        suspend fun fetch(
+            externalPriceId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Price> =
+            fetch(externalPriceId, PriceExternalPriceIdFetchParams.none(), requestOptions)
     }
 }

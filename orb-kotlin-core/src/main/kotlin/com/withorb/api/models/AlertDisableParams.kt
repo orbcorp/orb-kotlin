@@ -4,7 +4,6 @@ package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
@@ -17,14 +16,14 @@ import java.util.Objects
  */
 class AlertDisableParams
 private constructor(
-    private val alertConfigurationId: String,
+    private val alertConfigurationId: String?,
     private val subscriptionId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
-    fun alertConfigurationId(): String = alertConfigurationId
+    fun alertConfigurationId(): String? = alertConfigurationId
 
     /** Used to update the status of a plan alert scoped to this subscription_id */
     fun subscriptionId(): String? = subscriptionId
@@ -39,14 +38,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [AlertDisableParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .alertConfigurationId()
-         * ```
-         */
+        fun none(): AlertDisableParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [AlertDisableParams]. */
         fun builder() = Builder()
     }
 
@@ -67,7 +61,7 @@ private constructor(
             additionalBodyProperties = alertDisableParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun alertConfigurationId(alertConfigurationId: String) = apply {
+        fun alertConfigurationId(alertConfigurationId: String?) = apply {
             this.alertConfigurationId = alertConfigurationId
         }
 
@@ -198,17 +192,10 @@ private constructor(
          * Returns an immutable instance of [AlertDisableParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .alertConfigurationId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): AlertDisableParams =
             AlertDisableParams(
-                checkRequired("alertConfigurationId", alertConfigurationId),
+                alertConfigurationId,
                 subscriptionId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -220,7 +207,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> alertConfigurationId
+            0 -> alertConfigurationId ?: ""
             else -> ""
         }
 

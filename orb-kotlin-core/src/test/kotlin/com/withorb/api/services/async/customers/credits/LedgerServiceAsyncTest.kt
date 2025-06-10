@@ -7,8 +7,6 @@ import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryParams
-import com.withorb.api.models.CustomerCreditLedgerListByExternalIdParams
-import com.withorb.api.models.CustomerCreditLedgerListParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -25,10 +23,7 @@ internal class LedgerServiceAsyncTest {
                 .build()
         val ledgerServiceAsync = client.customers().credits().ledger()
 
-        val page =
-            ledgerServiceAsync.list(
-                CustomerCreditLedgerListParams.builder().customerId("customer_id").build()
-            )
+        val page = ledgerServiceAsync.list("customer_id")
 
         page.response().validate()
     }
@@ -47,24 +42,14 @@ internal class LedgerServiceAsyncTest {
                 CustomerCreditLedgerCreateEntryParams.builder()
                     .customerId("customer_id")
                     .body(
-                        CustomerCreditLedgerCreateEntryParams.Body
-                            .AddIncrementCreditLedgerEntryRequestParams
-                            .builder()
+                        CustomerCreditLedgerCreateEntryParams.Body.Increment.builder()
                             .amount(0.0)
-                            .entryType(
-                                CustomerCreditLedgerCreateEntryParams.Body
-                                    .AddIncrementCreditLedgerEntryRequestParams
-                                    .EntryType
-                                    .INCREMENT
-                            )
                             .currency("currency")
                             .description("description")
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .invoiceSettings(
-                                CustomerCreditLedgerCreateEntryParams.Body
-                                    .AddIncrementCreditLedgerEntryRequestParams
-                                    .InvoiceSettings
+                                CustomerCreditLedgerCreateEntryParams.Body.Increment.InvoiceSettings
                                     .builder()
                                     .autoCollection(true)
                                     .netTerms(0L)
@@ -73,9 +58,7 @@ internal class LedgerServiceAsyncTest {
                                     .build()
                             )
                             .metadata(
-                                CustomerCreditLedgerCreateEntryParams.Body
-                                    .AddIncrementCreditLedgerEntryRequestParams
-                                    .Metadata
+                                CustomerCreditLedgerCreateEntryParams.Body.Increment.Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
@@ -103,23 +86,14 @@ internal class LedgerServiceAsyncTest {
                 CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
                     .externalCustomerId("external_customer_id")
                     .body(
-                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                            .AddIncrementCreditLedgerEntryRequestParams
-                            .builder()
+                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment.builder()
                             .amount(0.0)
-                            .entryType(
-                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                                    .AddIncrementCreditLedgerEntryRequestParams
-                                    .EntryType
-                                    .INCREMENT
-                            )
                             .currency("currency")
                             .description("description")
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .invoiceSettings(
-                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                                    .AddIncrementCreditLedgerEntryRequestParams
+                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
                                     .InvoiceSettings
                                     .builder()
                                     .autoCollection(true)
@@ -129,8 +103,7 @@ internal class LedgerServiceAsyncTest {
                                     .build()
                             )
                             .metadata(
-                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
-                                    .AddIncrementCreditLedgerEntryRequestParams
+                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
                                     .Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -154,12 +127,7 @@ internal class LedgerServiceAsyncTest {
                 .build()
         val ledgerServiceAsync = client.customers().credits().ledger()
 
-        val page =
-            ledgerServiceAsync.listByExternalId(
-                CustomerCreditLedgerListByExternalIdParams.builder()
-                    .externalCustomerId("external_customer_id")
-                    .build()
-            )
+        val page = ledgerServiceAsync.listByExternalId("external_customer_id")
 
         page.response().validate()
     }

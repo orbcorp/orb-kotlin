@@ -3,6 +3,7 @@
 package com.withorb.api.client
 
 import com.withorb.api.services.async.AlertServiceAsync
+import com.withorb.api.services.async.BetaServiceAsync
 import com.withorb.api.services.async.CouponServiceAsync
 import com.withorb.api.services.async.CreditNoteServiceAsync
 import com.withorb.api.services.async.CustomerServiceAsync
@@ -49,6 +50,8 @@ interface OrbClientAsync {
 
     fun topLevel(): TopLevelServiceAsync
 
+    fun beta(): BetaServiceAsync
+
     fun coupons(): CouponServiceAsync
 
     fun creditNotes(): CreditNoteServiceAsync
@@ -94,6 +97,8 @@ interface OrbClientAsync {
     interface WithRawResponse {
 
         fun topLevel(): TopLevelServiceAsync.WithRawResponse
+
+        fun beta(): BetaServiceAsync.WithRawResponse
 
         fun coupons(): CouponServiceAsync.WithRawResponse
 

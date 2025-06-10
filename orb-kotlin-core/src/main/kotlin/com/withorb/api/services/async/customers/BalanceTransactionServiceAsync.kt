@@ -22,6 +22,14 @@ interface BalanceTransactionServiceAsync {
      * the newly created transaction.
      */
     suspend fun create(
+        customerId: String,
+        params: CustomerBalanceTransactionCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerBalanceTransactionCreateResponse =
+        create(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+    /** @see [create] */
+    suspend fun create(
         params: CustomerBalanceTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerBalanceTransactionCreateResponse
@@ -46,17 +54,26 @@ interface BalanceTransactionServiceAsync {
      * This endpoint retrieves all customer balance transactions in reverse chronological order for
      * a single customer, providing a complete audit trail of all adjustments and invoice
      * applications.
-     *
-     * ## Eligibility
-     *
-     * The customer balance can only be applied to invoices or adjusted manually if invoices are not
-     * synced to a separate invoicing provider. If a payment gateway such as Stripe is used, the
-     * balance will be applied to the invoice before forwarding payment to the gateway.
      */
+    suspend fun list(
+        customerId: String,
+        params: CustomerBalanceTransactionListParams = CustomerBalanceTransactionListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerBalanceTransactionListPageAsync =
+        list(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+    /** @see [list] */
     suspend fun list(
         params: CustomerBalanceTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerBalanceTransactionListPageAsync
+
+    /** @see [list] */
+    suspend fun list(
+        customerId: String,
+        requestOptions: RequestOptions,
+    ): CustomerBalanceTransactionListPageAsync =
+        list(customerId, CustomerBalanceTransactionListParams.none(), requestOptions)
 
     /**
      * A view of [BalanceTransactionServiceAsync] that provides access to raw HTTP responses for
@@ -70,6 +87,15 @@ interface BalanceTransactionServiceAsync {
          */
         @MustBeClosed
         suspend fun create(
+            customerId: String,
+            params: CustomerBalanceTransactionCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerBalanceTransactionCreateResponse> =
+            create(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+        /** @see [create] */
+        @MustBeClosed
+        suspend fun create(
             params: CustomerBalanceTransactionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerBalanceTransactionCreateResponse>
@@ -80,8 +106,26 @@ interface BalanceTransactionServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            customerId: String,
+            params: CustomerBalanceTransactionListParams =
+                CustomerBalanceTransactionListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerBalanceTransactionListPageAsync> =
+            list(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: CustomerBalanceTransactionListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerBalanceTransactionListPageAsync>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            customerId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerBalanceTransactionListPageAsync> =
+            list(customerId, CustomerBalanceTransactionListParams.none(), requestOptions)
     }
 }

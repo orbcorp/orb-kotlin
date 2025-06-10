@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -14,12 +13,12 @@ import java.util.Objects
  */
 class MetricFetchParams
 private constructor(
-    private val metricId: String,
+    private val metricId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun metricId(): String = metricId
+    fun metricId(): String? = metricId
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -29,14 +28,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [MetricFetchParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .metricId()
-         * ```
-         */
+        fun none(): MetricFetchParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [MetricFetchParams]. */
         fun builder() = Builder()
     }
 
@@ -53,7 +47,7 @@ private constructor(
             additionalQueryParams = metricFetchParams.additionalQueryParams.toBuilder()
         }
 
-        fun metricId(metricId: String) = apply { this.metricId = metricId }
+        fun metricId(metricId: String?) = apply { this.metricId = metricId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -157,25 +151,14 @@ private constructor(
          * Returns an immutable instance of [MetricFetchParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .metricId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): MetricFetchParams =
-            MetricFetchParams(
-                checkRequired("metricId", metricId),
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
-            )
+            MetricFetchParams(metricId, additionalHeaders.build(), additionalQueryParams.build())
     }
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> metricId
+            0 -> metricId ?: ""
             else -> ""
         }
 

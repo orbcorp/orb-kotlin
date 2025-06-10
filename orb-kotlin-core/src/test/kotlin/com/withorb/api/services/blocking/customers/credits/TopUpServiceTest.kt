@@ -8,8 +8,6 @@ import com.withorb.api.models.CustomerCreditTopUpCreateByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpCreateParams
 import com.withorb.api.models.CustomerCreditTopUpDeleteByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpDeleteParams
-import com.withorb.api.models.CustomerCreditTopUpListByExternalIdParams
-import com.withorb.api.models.CustomerCreditTopUpListParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -60,10 +58,7 @@ internal class TopUpServiceTest {
                 .build()
         val topUpService = client.customers().credits().topUps()
 
-        val page =
-            topUpService.list(
-                CustomerCreditTopUpListParams.builder().customerId("customer_id").build()
-            )
+        val page = topUpService.list("customer_id")
 
         page.response().validate()
     }
@@ -147,12 +142,7 @@ internal class TopUpServiceTest {
                 .build()
         val topUpService = client.customers().credits().topUps()
 
-        val page =
-            topUpService.listByExternalId(
-                CustomerCreditTopUpListByExternalIdParams.builder()
-                    .externalCustomerId("external_customer_id")
-                    .build()
-            )
+        val page = topUpService.listByExternalId("external_customer_id")
 
         page.response().validate()
     }

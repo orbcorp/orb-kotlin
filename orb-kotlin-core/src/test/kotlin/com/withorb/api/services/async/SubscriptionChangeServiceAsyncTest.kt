@@ -5,8 +5,6 @@ package com.withorb.api.services.async
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.SubscriptionChangeApplyParams
-import com.withorb.api.models.SubscriptionChangeCancelParams
-import com.withorb.api.models.SubscriptionChangeRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -22,12 +20,7 @@ internal class SubscriptionChangeServiceAsyncTest {
                 .build()
         val subscriptionChangeServiceAsync = client.subscriptionChanges()
 
-        val subscriptionChange =
-            subscriptionChangeServiceAsync.retrieve(
-                SubscriptionChangeRetrieveParams.builder()
-                    .subscriptionChangeId("subscription_change_id")
-                    .build()
-            )
+        val subscriptionChange = subscriptionChangeServiceAsync.retrieve("subscription_change_id")
 
         subscriptionChange.validate()
     }
@@ -62,12 +55,7 @@ internal class SubscriptionChangeServiceAsyncTest {
                 .build()
         val subscriptionChangeServiceAsync = client.subscriptionChanges()
 
-        val response =
-            subscriptionChangeServiceAsync.cancel(
-                SubscriptionChangeCancelParams.builder()
-                    .subscriptionChangeId("subscription_change_id")
-                    .build()
-            )
+        val response = subscriptionChangeServiceAsync.cancel("subscription_change_id")
 
         response.validate()
     }

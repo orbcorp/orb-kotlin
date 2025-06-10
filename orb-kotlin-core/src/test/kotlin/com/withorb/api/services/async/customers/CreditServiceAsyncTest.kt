@@ -4,8 +4,6 @@ package com.withorb.api.services.async.customers
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
-import com.withorb.api.models.CustomerCreditListByExternalIdParams
-import com.withorb.api.models.CustomerCreditListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -21,10 +19,7 @@ internal class CreditServiceAsyncTest {
                 .build()
         val creditServiceAsync = client.customers().credits()
 
-        val page =
-            creditServiceAsync.list(
-                CustomerCreditListParams.builder().customerId("customer_id").build()
-            )
+        val page = creditServiceAsync.list("customer_id")
 
         page.response().validate()
     }
@@ -38,12 +33,7 @@ internal class CreditServiceAsyncTest {
                 .build()
         val creditServiceAsync = client.customers().credits()
 
-        val page =
-            creditServiceAsync.listByExternalId(
-                CustomerCreditListByExternalIdParams.builder()
-                    .externalCustomerId("external_customer_id")
-                    .build()
-            )
+        val page = creditServiceAsync.listByExternalId("external_customer_id")
 
         page.response().validate()
     }
