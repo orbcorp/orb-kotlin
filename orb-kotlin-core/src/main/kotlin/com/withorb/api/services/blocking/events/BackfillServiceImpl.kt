@@ -88,6 +88,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "backfills")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -116,6 +117,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "backfills")
                     .build()
                     .prepare(clientOptions, params)
@@ -153,6 +155,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "backfills", params._pathParam(0), "close")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -184,6 +187,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "backfills", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -214,6 +218,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "backfills", params._pathParam(0), "revert")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

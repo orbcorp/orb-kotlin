@@ -49,6 +49,7 @@ class TopLevelServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("ping")
                     .build()
                     .prepareAsync(clientOptions, params)

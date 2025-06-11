@@ -50,6 +50,7 @@ class InvoiceLineItemServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("invoice_line_items")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
