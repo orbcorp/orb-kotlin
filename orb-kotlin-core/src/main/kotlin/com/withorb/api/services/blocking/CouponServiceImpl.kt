@@ -78,6 +78,7 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("coupons")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -106,6 +107,7 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("coupons")
                     .build()
                     .prepare(clientOptions, params)
@@ -142,6 +144,7 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("coupons", params._pathParam(0), "archive")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -172,6 +175,7 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("coupons", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)

@@ -53,6 +53,7 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("coupons", params._pathParam(0), "subscriptions")
                     .build()
                     .prepareAsync(clientOptions, params)
