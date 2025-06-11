@@ -49,6 +49,7 @@ class TopLevelServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("ping")
                     .build()
                     .prepare(clientOptions, params)

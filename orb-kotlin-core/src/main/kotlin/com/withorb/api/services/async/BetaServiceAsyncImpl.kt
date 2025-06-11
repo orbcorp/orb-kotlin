@@ -84,6 +84,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans", params._pathParam(0), "versions")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -114,6 +115,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "plans",
                         params._pathParam(0),
@@ -148,6 +150,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans", params._pathParam(0), "set_default_version")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()

@@ -45,6 +45,7 @@ class VolumeServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "volume")
                     .build()
                     .prepare(clientOptions, params)

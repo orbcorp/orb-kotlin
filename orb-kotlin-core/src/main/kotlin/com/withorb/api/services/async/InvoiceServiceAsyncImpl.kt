@@ -111,6 +111,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("invoices")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -141,6 +142,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("invoices", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -169,6 +171,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("invoices")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -205,6 +208,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("invoices", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -232,6 +236,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("invoices", "upcoming")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -261,6 +266,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("invoices", params._pathParam(0), "issue")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -291,6 +297,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("invoices", params._pathParam(0), "mark_paid")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -321,6 +328,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("invoices", params._pathParam(0), "pay")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -351,6 +359,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("invoices", params._pathParam(0), "void")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
